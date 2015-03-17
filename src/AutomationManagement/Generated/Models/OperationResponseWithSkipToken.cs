@@ -21,19 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The operation response model with skip token.
     /// </summary>
-    public partial class OperationResponseWithSkipToken : OperationResponse
+    public partial class OperationResponseWithSkipToken : AzureOperationResponse
     {
+        private string _nextLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the next link.
+        /// </summary>
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
         private string _skipToken;
         
         /// <summary>
-        /// Optional. The skip token.
+        /// Optional. Gets or sets the skip token.
         /// </summary>
         public string SkipToken
         {

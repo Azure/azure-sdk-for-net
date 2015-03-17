@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// A response to a request for a list of regions.
     /// </summary>
-    public partial class ServiceBusRegionsResponse : OperationResponse, IEnumerable<ServiceBusLocation>
+    public partial class ServiceBusRegionsResponse : AzureOperationResponse, IEnumerable<ServiceBusLocation>
     {
         private IList<ServiceBusLocation> _regions;
         

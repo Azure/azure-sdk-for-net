@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -68,13 +68,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._eula = value; }
         }
         
-        private Uri _iconUri;
+        private string _iconUri;
         
         /// <summary>
         /// Optional. Specifies the URI to the icon that is displayed for the
         /// image in the Management Portal.
         /// </summary>
-        public Uri IconUri
+        public string IconUri
         {
             get { return this._iconUri; }
             set { this._iconUri = value; }
@@ -173,13 +173,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._showInGui = value; }
         }
         
-        private Uri _smallIconUri;
+        private string _smallIconUri;
         
         /// <summary>
         /// Optional. Specifies the URI to the small icon that is displayed
         /// when the image is presented in the Azure Management Portal.
         /// </summary>
-        public Uri SmallIconUri
+        public string SmallIconUri
         {
             get { return this._smallIconUri; }
             set { this._smallIconUri = value; }

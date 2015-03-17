@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -36,6 +36,33 @@ namespace Microsoft.Azure.Management.Sql
     /// </summary>
     public partial interface IDatabaseOperations
     {
+        /// <summary>
+        /// Begins creating a new Azure SQL Database or updating an existing
+        /// Azure SQL Database. To determine the status of the operation call
+        /// GetDatabaseOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server on which the database is
+        /// hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to be operated on (Updated or
+        /// created).
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for createing or updating a database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running database operations.
+        /// </returns>
+        Task<DatabaseCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Creates a new Azure SQL Database or updates an existing Azure SQL
         /// Database.
@@ -58,9 +85,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Response for long running database operations.
         /// </returns>
-        Task<DatabaseGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<DatabaseCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes the Azure SQL Database with the given name.
@@ -82,7 +109,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns information about an Azure SQL Database.
@@ -125,6 +152,20 @@ namespace Microsoft.Azure.Management.Sql
         /// Represents the response to a Get Database request.
         /// </returns>
         Task<DatabaseListResponse> GetByIdAsync(string resourceGroupName, string serverName, string databaseId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the status of a database create or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running database operations.
+        /// </returns>
+        Task<DatabaseCreateOrUpdateResponse> GetDatabaseOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns information about an Azure SQL Database.

@@ -86,14 +86,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
         /// <summary>
         /// Build the metric source of a virtual machine resource.
         /// </summary>
-        /// <param name="virtualMachineName">The virtual machine name.</param>
+        /// <param name="cloudServiceName">Name of the cloud service.</param>
         /// <param name="availabilitySetName">The availability set name.</param>
-        /// <returns>The metric source.</returns>
-        public static string BuildVirtualMachineMetricSource(string virtualMachineName, string availabilitySetName)
+        public static string BuildVirtualMachineMetricSource(string cloudServiceName, string availabilitySetName)
         {
-            if (string.IsNullOrWhiteSpace(virtualMachineName))
+            if (string.IsNullOrWhiteSpace(cloudServiceName))
             {
-                throw new ArgumentException("virtualMachineName");
+                throw new ArgumentException("cloudServiceName");
             }
 
             if (string.IsNullOrWhiteSpace(availabilitySetName))
@@ -101,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("availabilitySetName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/VirtualMachinesAvailabilitySet/{0}/{1}", virtualMachineName, availabilitySetName);
+            return string.Format(CultureInfo.InvariantCulture, "/VirtualMachinesAvailabilitySet/{0}/{1}", cloudServiceName, availabilitySetName);
         }
 
         /// <summary>

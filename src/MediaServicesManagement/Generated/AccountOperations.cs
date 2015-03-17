@@ -29,16 +29,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices
 {
-    internal partial class AccountOperations : IServiceOperations<MediaServicesManagementClient>, Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations
+    internal partial class AccountOperations : IServiceOperations<MediaServicesManagementClient>, IAccountOperations
     {
         /// <summary>
         /// Initializes a new instance of the AccountOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <returns>
         /// The Create Media Services Account operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountCreateResponse> CreateAsync(MediaServicesAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<MediaServicesAccountCreateResponse> CreateAsync(MediaServicesAccountCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -146,18 +146,24 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/mediaservices/Accounts";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -223,13 +229,13 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -238,7 +244,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -246,42 +252,45 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     // Create Result
                     MediaServicesAccountCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MediaServicesAccountCreateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MediaServicesAccountCreateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            MediaServicesCreatedAccount accountInstance = new MediaServicesCreatedAccount();
+                            result.Account = accountInstance;
+                            
+                            JToken accountIdValue = responseDoc["AccountId"];
+                            if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                            {
+                                string accountIdInstance = ((string)accountIdValue);
+                                accountInstance.AccountId = accountIdInstance;
+                            }
+                            
+                            JToken accountNameValue = responseDoc["AccountName"];
+                            if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
+                            {
+                                string accountNameInstance = ((string)accountNameValue);
+                                accountInstance.AccountName = accountNameInstance;
+                            }
+                            
+                            JToken subscriptionValue = responseDoc["Subscription"];
+                            if (subscriptionValue != null && subscriptionValue.Type != JTokenType.Null)
+                            {
+                                string subscriptionInstance = ((string)subscriptionValue);
+                                accountInstance.SubscriptionId = subscriptionInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        MediaServicesCreatedAccount accountInstance = new MediaServicesCreatedAccount();
-                        result.Account = accountInstance;
-                        
-                        JToken accountIdValue = responseDoc["AccountId"];
-                        if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
-                        {
-                            string accountIdInstance = ((string)accountIdValue);
-                            accountInstance.AccountId = accountIdInstance;
-                        }
-                        
-                        JToken accountNameValue = responseDoc["AccountName"];
-                        if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
-                        {
-                            string accountNameInstance = ((string)accountNameValue);
-                            accountInstance.AccountName = accountNameInstance;
-                        }
-                        
-                        JToken subscriptionValue = responseDoc["Subscription"];
-                        if (subscriptionValue != null && subscriptionValue.Type != JTokenType.Null)
-                        {
-                            string subscriptionInstance = ((string)subscriptionValue);
-                            accountInstance.SubscriptionId = subscriptionInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -290,7 +299,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -327,7 +336,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
             if (accountName == null)
@@ -336,18 +345,25 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts/" + accountName.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/mediaservices/Accounts/";
+            url = url + Uri.EscapeDataString(accountName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -382,13 +398,13 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.NoContent)
@@ -397,14 +413,15 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -413,7 +430,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -449,7 +466,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <returns>
         /// The Get Media Services Account operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountGetResponse> GetAsync(string accountName, CancellationToken cancellationToken)
+        public async Task<MediaServicesAccountGetResponse> GetAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
             if (accountName == null)
@@ -458,18 +475,25 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts/" + accountName.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/mediaservices/Accounts/";
+            url = url + Uri.EscapeDataString(accountName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -504,13 +528,13 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -519,7 +543,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -527,70 +551,73 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     // Create Result
                     MediaServicesAccountGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MediaServicesAccountGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        MediaServicesAccount accountInstance = new MediaServicesAccount();
-                        result.Account = accountInstance;
-                        
-                        JToken accountNameValue = responseDoc["AccountName"];
-                        if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MediaServicesAccountGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string accountNameInstance = ((string)accountNameValue);
-                            accountInstance.AccountName = accountNameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken accountKeyValue = responseDoc["AccountKey"];
-                        if (accountKeyValue != null && accountKeyValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string accountKeyInstance = ((string)accountKeyValue);
-                            accountInstance.AccountKey = accountKeyInstance;
-                        }
-                        
-                        JToken accountKeysValue = responseDoc["AccountKeys"];
-                        if (accountKeysValue != null && accountKeysValue.Type != JTokenType.Null)
-                        {
-                            MediaServicesAccount.AccountKeys accountKeysInstance = new MediaServicesAccount.AccountKeys();
-                            accountInstance.StorageAccountKeys = accountKeysInstance;
+                            MediaServicesAccount accountInstance = new MediaServicesAccount();
+                            result.Account = accountInstance;
                             
-                            JToken primaryValue = accountKeysValue["Primary"];
-                            if (primaryValue != null && primaryValue.Type != JTokenType.Null)
+                            JToken accountNameValue = responseDoc["AccountName"];
+                            if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
                             {
-                                string primaryInstance = ((string)primaryValue);
-                                accountKeysInstance.Primary = primaryInstance;
+                                string accountNameInstance = ((string)accountNameValue);
+                                accountInstance.AccountName = accountNameInstance;
                             }
                             
-                            JToken secondaryValue = accountKeysValue["Secondary"];
-                            if (secondaryValue != null && secondaryValue.Type != JTokenType.Null)
+                            JToken accountKeyValue = responseDoc["AccountKey"];
+                            if (accountKeyValue != null && accountKeyValue.Type != JTokenType.Null)
                             {
-                                string secondaryInstance = ((string)secondaryValue);
-                                accountKeysInstance.Secondary = secondaryInstance;
+                                string accountKeyInstance = ((string)accountKeyValue);
+                                accountInstance.AccountKey = accountKeyInstance;
+                            }
+                            
+                            JToken accountKeysValue = responseDoc["AccountKeys"];
+                            if (accountKeysValue != null && accountKeysValue.Type != JTokenType.Null)
+                            {
+                                MediaServicesAccount.AccountKeys accountKeysInstance = new MediaServicesAccount.AccountKeys();
+                                accountInstance.StorageAccountKeys = accountKeysInstance;
+                                
+                                JToken primaryValue = accountKeysValue["Primary"];
+                                if (primaryValue != null && primaryValue.Type != JTokenType.Null)
+                                {
+                                    string primaryInstance = ((string)primaryValue);
+                                    accountKeysInstance.Primary = primaryInstance;
+                                }
+                                
+                                JToken secondaryValue = accountKeysValue["Secondary"];
+                                if (secondaryValue != null && secondaryValue.Type != JTokenType.Null)
+                                {
+                                    string secondaryInstance = ((string)secondaryValue);
+                                    accountKeysInstance.Secondary = secondaryInstance;
+                                }
+                            }
+                            
+                            JToken accountRegionValue = responseDoc["AccountRegion"];
+                            if (accountRegionValue != null && accountRegionValue.Type != JTokenType.Null)
+                            {
+                                string accountRegionInstance = ((string)accountRegionValue);
+                                accountInstance.AccountRegion = accountRegionInstance;
+                            }
+                            
+                            JToken storageAccountNameValue = responseDoc["StorageAccountName"];
+                            if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                            {
+                                string storageAccountNameInstance = ((string)storageAccountNameValue);
+                                accountInstance.StorageAccountName = storageAccountNameInstance;
                             }
                         }
                         
-                        JToken accountRegionValue = responseDoc["AccountRegion"];
-                        if (accountRegionValue != null && accountRegionValue.Type != JTokenType.Null)
-                        {
-                            string accountRegionInstance = ((string)accountRegionValue);
-                            accountInstance.AccountRegion = accountRegionInstance;
-                        }
-                        
-                        JToken storageAccountNameValue = responseDoc["StorageAccountName"];
-                        if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
-                        {
-                            string storageAccountNameInstance = ((string)storageAccountNameValue);
-                            accountInstance.StorageAccountName = storageAccountNameInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -599,7 +626,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -633,22 +660,28 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <returns>
         /// The List Media Accounts operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<MediaServicesAccountListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/mediaservices/Accounts";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -683,13 +716,13 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -698,7 +731,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -706,63 +739,66 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     // Create Result
                     MediaServicesAccountListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MediaServicesAccountListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MediaServicesAccountListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourcesSequenceElement != null)
                         {
-                            MediaServicesAccountListResponse.MediaServiceAccount serviceResourceInstance = new MediaServicesAccountListResponse.MediaServiceAccount();
-                            result.Accounts.Add(serviceResourceInstance);
-                            
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
-                            }
-                            
-                            XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
-                            {
-                                Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
-                                serviceResourceInstance.Uri = selfLinkInstance;
-                            }
-                            
-                            XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null)
-                            {
-                                Uri parentLinkInstance = TypeConversion.TryParseUri(parentLinkElement.Value);
-                                serviceResourceInstance.ParentUri = parentLinkInstance;
-                            }
-                            
-                            XElement accountIdElement = serviceResourcesElement.Element(XName.Get("AccountId", "http://schemas.microsoft.com/windowsazure"));
-                            if (accountIdElement != null)
-                            {
-                                string accountIdInstance = accountIdElement.Value;
-                                serviceResourceInstance.AccountId = accountIdInstance;
+                                MediaServicesAccountListResponse.MediaServiceAccount serviceResourceInstance = new MediaServicesAccountListResponse.MediaServiceAccount();
+                                result.Accounts.Add(serviceResourceInstance);
+                                
+                                XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    serviceResourceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                if (typeElement != null)
+                                {
+                                    string typeInstance = typeElement.Value;
+                                    serviceResourceInstance.Type = typeInstance;
+                                }
+                                
+                                XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                if (stateElement != null)
+                                {
+                                    string stateInstance = stateElement.Value;
+                                    serviceResourceInstance.State = stateInstance;
+                                }
+                                
+                                XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (selfLinkElement != null)
+                                {
+                                    Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
+                                    serviceResourceInstance.Uri = selfLinkInstance;
+                                }
+                                
+                                XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (parentLinkElement != null)
+                                {
+                                    Uri parentLinkInstance = TypeConversion.TryParseUri(parentLinkElement.Value);
+                                    serviceResourceInstance.ParentUri = parentLinkInstance;
+                                }
+                                
+                                XElement accountIdElement = serviceResourcesElement.Element(XName.Get("AccountId", "http://schemas.microsoft.com/windowsazure"));
+                                if (accountIdElement != null)
+                                {
+                                    string accountIdInstance = accountIdElement.Value;
+                                    serviceResourceInstance.AccountId = accountIdInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -771,7 +807,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -812,7 +848,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> RegenerateKeyAsync(string accountName, MediaServicesKeyType keyType, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> RegenerateKeyAsync(string accountName, MediaServicesKeyType keyType, CancellationToken cancellationToken)
         {
             // Validate
             if (accountName == null)
@@ -821,19 +857,29 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("keyType", keyType);
-                Tracing.Enter(invocationId, this, "RegenerateKeyAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RegenerateKeyAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts/" + accountName.Trim() + "/AccountKeys/" + keyType + "/Regenerate";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/mediaservices/Accounts/";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + "/AccountKeys/";
+            url = url + Uri.EscapeDataString(keyType.ToString());
+            url = url + "/Regenerate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -868,13 +914,13 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.NoContent)
@@ -883,14 +929,15 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -899,7 +946,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

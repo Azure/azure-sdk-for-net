@@ -27,9 +27,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
@@ -41,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780776.aspx for
     /// more information)
     /// </summary>
-    public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.IServiceBusManagementClient
+    public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, IServiceBusManagementClient
     {
         private string _apiVersion;
         
@@ -155,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Initializes a new instance of the ServiceBusManagementClient class.
         /// </summary>
-        private ServiceBusManagementClient()
+        public ServiceBusManagementClient()
             : base()
         {
             this._namespaces = new NamespaceOperations(this);
@@ -225,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private ServiceBusManagementClient(HttpClient httpClient)
+        public ServiceBusManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._namespaces = new NamespaceOperations(this);
@@ -347,7 +346,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -356,18 +355,25 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("requestId", requestId);
-                Tracing.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/operations/" + requestId.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/operations/";
+            url = url + Uri.EscapeDataString(requestId);
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -402,13 +408,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -417,7 +423,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -425,57 +431,60 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     // Create Result
                     OperationStatusResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationStatusResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            string idInstance = idElement.Value;
-                            result.Id = idInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationStatusResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
+                        if (operationElement != null)
                         {
-                            OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true));
-                            result.Status = statusInstance;
-                        }
-                        
-                        XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
-                        {
-                            HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
-                            result.HttpStatusCode = httpStatusCodeInstance;
-                        }
-                        
-                        XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
-                        {
-                            OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
-                            result.Error = errorInstance;
-                            
-                            XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
+                            XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
                             {
-                                string codeInstance = codeElement.Value;
-                                errorInstance.Code = codeInstance;
+                                string idInstance = idElement.Value;
+                                result.Id = idInstance;
                             }
                             
-                            XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
+                            XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
                             {
-                                string messageInstance = messageElement.Value;
-                                errorInstance.Message = messageInstance;
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
+                            }
+                            
+                            XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
+                            if (httpStatusCodeElement != null)
+                            {
+                                HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
+                                result.HttpStatusCode = httpStatusCodeInstance;
+                            }
+                            
+                            XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
+                            if (errorElement != null)
+                            {
+                                OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
+                                result.Error = errorInstance;
+                                
+                                XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
+                                if (codeElement != null)
+                                {
+                                    string codeInstance = codeElement.Value;
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    errorInstance.Message = messageInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -484,7 +493,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -517,22 +526,28 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a list of regions.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusRegionsResponse> GetServiceBusRegionsAsync(CancellationToken cancellationToken)
+        public async Task<ServiceBusRegionsResponse> GetServiceBusRegionsAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "GetServiceBusRegionsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetServiceBusRegionsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/servicebus/regions";
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/regions";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -568,13 +583,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -583,7 +598,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -591,46 +606,49 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     // Create Result
                     ServiceBusRegionsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServiceBusRegionsResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement feedElement = responseDoc.Element(XName.Get("feed", "http://www.w3.org/2005/Atom"));
-                    if (feedElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServiceBusRegionsResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement feedElement = responseDoc.Element(XName.Get("feed", "http://www.w3.org/2005/Atom"));
                         if (feedElement != null)
                         {
-                            foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
+                            if (feedElement != null)
                             {
-                                ServiceBusLocation entryInstance = new ServiceBusLocation();
-                                result.Regions.Add(entryInstance);
-                                
-                                XElement contentElement = entriesElement.Element(XName.Get("content", "http://www.w3.org/2005/Atom"));
-                                if (contentElement != null)
+                                foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
                                 {
-                                    XElement regionCodeDescriptionElement = contentElement.Element(XName.Get("RegionCodeDescription", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                    if (regionCodeDescriptionElement != null)
+                                    ServiceBusLocation entryInstance = new ServiceBusLocation();
+                                    result.Regions.Add(entryInstance);
+                                    
+                                    XElement contentElement = entriesElement.Element(XName.Get("content", "http://www.w3.org/2005/Atom"));
+                                    if (contentElement != null)
                                     {
-                                        XElement codeElement = regionCodeDescriptionElement.Element(XName.Get("Code", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                        if (codeElement != null)
+                                        XElement regionCodeDescriptionElement = contentElement.Element(XName.Get("RegionCodeDescription", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                        if (regionCodeDescriptionElement != null)
                                         {
-                                            string codeInstance = codeElement.Value;
-                                            entryInstance.Code = codeInstance;
-                                        }
-                                        
-                                        XElement fullNameElement = regionCodeDescriptionElement.Element(XName.Get("FullName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                        if (fullNameElement != null)
-                                        {
-                                            string fullNameInstance = fullNameElement.Value;
-                                            entryInstance.FullName = fullNameInstance;
+                                            XElement codeElement = regionCodeDescriptionElement.Element(XName.Get("Code", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                            if (codeElement != null)
+                                            {
+                                                string codeInstance = codeElement.Value;
+                                                entryInstance.Code = codeInstance;
+                                            }
+                                            
+                                            XElement fullNameElement = regionCodeDescriptionElement.Element(XName.Get("FullName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                            if (fullNameElement != null)
+                                            {
+                                                string fullNameInstance = fullNameElement.Value;
+                                                entryInstance.FullName = fullNameInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -639,7 +657,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

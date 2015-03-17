@@ -4,7 +4,6 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -12,158 +11,18 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.WebSites</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>174234d6</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>fe7ddb34</NuGetPackageImportStamp>
   </PropertyGroup>
-  <Import Project="..\library.props" />
+  <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\ContinuousWebJobOperations.cs" />
-    <Compile Include="Generated\ContinuousWebJobOperationsExtensions.cs" />
-    <Compile Include="Generated\DeploymentOperations.cs" />
-    <Compile Include="Generated\DeploymentOperationsExtensions.cs" />
-    <Compile Include="Generated\DiagnosticOperations.cs" />
-    <Compile Include="Generated\DiagnosticOperationsExtensions.cs" />
-    <Compile Include="Generated\IContinuousWebJobOperations.cs" />
-    <Compile Include="Generated\IDeploymentOperations.cs" />
-    <Compile Include="Generated\IDiagnosticOperations.cs" />
-    <Compile Include="Generated\IRepositoryOperations.cs" />
-    <Compile Include="Generated\ISettingsOperations.cs" />
-    <Compile Include="Generated\ITriggeredWebJobOperations.cs" />
-    <Compile Include="Generated\IWebHostingPlanOperations.cs" />
-    <Compile Include="Generated\IWebSiteExtensionsClient.cs" />
-    <Compile Include="Generated\IWebSiteManagementClient.cs" />
-    <Compile Include="Generated\IWebSiteOperations.cs" />
-    <Compile Include="Generated\IWebSpaceOperations.cs" />
-    <Compile Include="Generated\Models\BackupItem.cs" />
-    <Compile Include="Generated\Models\BackupItemStatus.cs" />
-    <Compile Include="Generated\Models\BackupRequest.cs" />
-    <Compile Include="Generated\Models\BackupSchedule.cs" />
-    <Compile Include="Generated\Models\ConnectionStringType.cs" />
-    <Compile Include="Generated\Models\ContinuousWebJob.cs" />
-    <Compile Include="Generated\Models\ContinuousWebJobGetResponse.cs" />
-    <Compile Include="Generated\Models\ContinuousWebJobListResponse.cs" />
-    <Compile Include="Generated\Models\ContinuousWebJobSettingsResponse.cs" />
-    <Compile Include="Generated\Models\ContinuousWebJobSettingsUpdateParameters.cs" />
-    <Compile Include="Generated\Models\DatabaseBackupSetting.cs" />
-    <Compile Include="Generated\Models\Deployment.cs" />
-    <Compile Include="Generated\Models\DeploymentGetLogResponse.cs" />
-    <Compile Include="Generated\Models\DeploymentGetResponse.cs" />
-    <Compile Include="Generated\Models\DeploymentListLogsResponse.cs" />
-    <Compile Include="Generated\Models\DeploymentListParameters.cs" />
-    <Compile Include="Generated\Models\DeploymentListResponse.cs" />
-    <Compile Include="Generated\Models\DeploymentLog.cs" />
-    <Compile Include="Generated\Models\DeployStatus.cs" />
-    <Compile Include="Generated\Models\DiagnosticGetResponse.cs" />
-    <Compile Include="Generated\Models\DiagnosticUpdateParameters.cs" />
-    <Compile Include="Generated\Models\FrequencyUnit.cs" />
-    <Compile Include="Generated\Models\GeoRegionNames.cs" />
-    <Compile Include="Generated\Models\HistoricalUsageMetric.cs" />
-    <Compile Include="Generated\Models\HistoricalUsageMetricData.cs" />
-    <Compile Include="Generated\Models\HistoricalUsageMetricNames.cs" />
-    <Compile Include="Generated\Models\HistoricalUsageMetricSample.cs" />
-    <Compile Include="Generated\Models\LogEntryType.cs" />
-    <Compile Include="Generated\Models\ManagedPipelineMode.cs" />
-    <Compile Include="Generated\Models\RampUpRule.cs" />
-    <Compile Include="Generated\Models\RemoteDebuggingVersion.cs" />
-    <Compile Include="Generated\Models\RestoreRequest.cs" />
-    <Compile Include="Generated\Models\RoutingRule.cs" />
-    <Compile Include="Generated\Models\SettingsGetResponse.cs" />
-    <Compile Include="Generated\Models\SettingsListResponse.cs" />
-    <Compile Include="Generated\Models\SettingsUpdateParameters.cs" />
-    <Compile Include="Generated\Models\SkuOptions.cs" />
-    <Compile Include="Generated\Models\SlotConfigNames.cs" />
-    <Compile Include="Generated\Models\SlotConfigNamesUpdate.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJob.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobGetResponse.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobGetRunResponse.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobListResponse.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobRun.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobRunListResponse.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobSettingsResponse.cs" />
-    <Compile Include="Generated\Models\TriggeredWebJobSettingsUpdateParameters.cs" />
-    <Compile Include="Generated\Models\WebHostingPlan.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanCreateParameters.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanCreateResponse.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanGetHistoricalUsageMetricsParameters.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanGetHistoricalUsageMetricsResponse.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanGetResponse.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanListResponse.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanUpdateParameters.cs" />
-    <Compile Include="Generated\Models\WebHostingPlanUpdateResponse.cs" />
-    <Compile Include="Generated\Models\WebJobBase.cs" />
-    <Compile Include="Generated\Models\WebJobType.cs" />
-    <Compile Include="Generated\Models\WebSite.cs" />
-    <Compile Include="Generated\Models\WebSiteBackupResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteComputeMode.cs" />
-    <Compile Include="Generated\Models\WebSiteCreateParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteCreateResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteDeleteParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteDeleteRepositoryResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetBackupConfigurationResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetBackupsResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetConfigurationResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetHistoricalUsageMetricsParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteGetHistoricalUsageMetricsResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteGetPublishProfileResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetRepositoryResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteGetUsageMetricsResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteInstanceIdsResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteIsHostnameAvailableResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteListParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteMode.cs" />
-    <Compile Include="Generated\Models\WebSiteOperationStatus.cs" />
-    <Compile Include="Generated\Models\WebSiteOperationStatusResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteRestoreDiscoverResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteRestoreResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteRuntimeAvailabilityState.cs" />
-    <Compile Include="Generated\Models\WebSiteSslState.cs" />
-    <Compile Include="Generated\Models\WebSiteUpdateConfigurationParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteUpdateParameters.cs" />
-    <Compile Include="Generated\Models\WebSiteUpdateResponse.cs" />
-    <Compile Include="Generated\Models\WebSiteUsageState.cs" />
-    <Compile Include="Generated\Models\WebSpaceAvailabilityState.cs" />
-    <Compile Include="Generated\Models\WebSpaceNames.cs" />
-    <Compile Include="Generated\Models\WebSpacePlanNames.cs" />
-    <Compile Include="Generated\Models\WebSpacesCreatePublishingUserParameters.cs" />
-    <Compile Include="Generated\Models\WebSpacesCreatePublishingUserResponse.cs" />
-    <Compile Include="Generated\Models\WebSpacesGetDnsSuffixResponse.cs" />
-    <Compile Include="Generated\Models\WebSpacesGetResponse.cs" />
-    <Compile Include="Generated\Models\WebSpacesListGeoRegionsResponse.cs" />
-    <Compile Include="Generated\Models\WebSpacesListPublishingUsersResponse.cs" />
-    <Compile Include="Generated\Models\WebSpacesListResponse.cs" />
-    <Compile Include="Generated\Models\WebSpacesListWebSitesResponse.cs" />
-    <Compile Include="Generated\Models\WebSpaceStatus.cs" />
-    <Compile Include="Generated\Models\WebSpaceWorkerSize.cs" />
-    <Compile Include="Generated\Models\WorkerSizeOptions.cs" />
-    <Compile Include="Generated\RepositoryOperations.cs" />
-    <Compile Include="Generated\RepositoryOperationsExtensions.cs" />
-    <Compile Include="Generated\SettingsOperations.cs" />
-    <Compile Include="Generated\SettingsOperationsExtensions.cs" />
-    <Compile Include="Generated\TriggeredWebJobOperations.cs" />
-    <Compile Include="Generated\TriggeredWebJobOperationsExtensions.cs" />
-    <Compile Include="Generated\WebHostingPlanOperations.cs" />
-    <Compile Include="Generated\WebHostingPlanOperationsExtensions.cs" />
-    <Compile Include="Generated\WebSiteExtendedErrorCodes.cs" />
-    <Compile Include="Generated\WebSiteExtensionsClient.cs" />
-    <Compile Include="Generated\WebSiteExtensionsClientExtensions.cs" />
-    <Compile Include="Generated\WebSiteManagementClient.cs" />
-    <Compile Include="Generated\WebSiteManagementClientExtensions.cs" />
-    <Compile Include="Generated\WebSiteOperations.cs" />
-    <Compile Include="Generated\WebSiteOperationsExtensions.cs" />
-    <Compile Include="Generated\WebSpaceOperations.cs" />
-    <Compile Include="Generated\WebSpaceOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSiteCloudException.cs" />
-    <Compile Include="WebSiteExtensionsClient.Customization.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="WebSiteManagementClient.Customization.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenerateCode.props" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -171,35 +30,14 @@
     <None Include="Microsoft.WindowsAzure.Management.WebSites.nuget.proj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hyak.xml" />
-    <Content Include="websites.hyak.xml" />
-    <Content Include="websitesextensions.hyak.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.WindowsAzure.Common">
-      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\portable-net45+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\..\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.4\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
-  <Import Project="$(SolutionDir)\src\library.targets" />
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
-    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementWebSitesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.WebSites.Specification.3.0.5424.10966-prerelease\tools\Microsoft.WindowsAzure.Management.WebSites.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.3.0.5424.10967-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
-  </Target>
 </Project>

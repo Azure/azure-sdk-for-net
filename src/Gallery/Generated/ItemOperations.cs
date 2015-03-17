@@ -26,11 +26,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Gallery;
 using Microsoft.Azure.Gallery.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Gallery
@@ -78,18 +76,23 @@ namespace Microsoft.Azure.Gallery
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("itemIdentity", itemIdentity);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/Microsoft.Gallery/galleryitems/" + (itemIdentity != null ? itemIdentity.Trim() : "");
+            string url = "";
+            url = url + "/Microsoft.Gallery/galleryitems/";
+            if (itemIdentity != null)
+            {
+                url = url + Uri.EscapeDataString(itemIdentity);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -123,13 +126,13 @@ namespace Microsoft.Azure.Gallery
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -138,7 +141,7 @@ namespace Microsoft.Azure.Gallery
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -146,145 +149,148 @@ namespace Microsoft.Azure.Gallery
                     // Create Result
                     ItemGetParameters result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ItemGetParameters();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        GalleryItem itemInstance = new GalleryItem();
-                        result.Item = itemInstance;
-                        
-                        JToken identityValue = responseDoc["identity"];
-                        if (identityValue != null && identityValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ItemGetParameters();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string identityInstance = ((string)identityValue);
-                            itemInstance.Identity = identityInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken itemNameValue = responseDoc["itemName"];
-                        if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string itemNameInstance = ((string)itemNameValue);
-                            itemInstance.Name = itemNameInstance;
-                        }
-                        
-                        JToken itemDisplayNameValue = responseDoc["itemDisplayName"];
-                        if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
-                        {
-                            string itemDisplayNameInstance = ((string)itemDisplayNameValue);
-                            itemInstance.DisplayName = itemDisplayNameInstance;
-                        }
-                        
-                        JToken publisherValue = responseDoc["publisher"];
-                        if (publisherValue != null && publisherValue.Type != JTokenType.Null)
-                        {
-                            string publisherInstance = ((string)publisherValue);
-                            itemInstance.Publisher = publisherInstance;
-                        }
-                        
-                        JToken publisherDisplayNameValue = responseDoc["publisherDisplayName"];
-                        if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
-                        {
-                            string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
-                            itemInstance.PublisherDisplayName = publisherDisplayNameInstance;
-                        }
-                        
-                        JToken versionValue = responseDoc["version"];
-                        if (versionValue != null && versionValue.Type != JTokenType.Null)
-                        {
-                            string versionInstance = ((string)versionValue);
-                            itemInstance.Version = versionInstance;
-                        }
-                        
-                        JToken summaryValue = responseDoc["summary"];
-                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                        {
-                            string summaryInstance = ((string)summaryValue);
-                            itemInstance.Summary = summaryInstance;
-                        }
-                        
-                        JToken descriptionValue = responseDoc["description"];
-                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                        {
-                            string descriptionInstance = ((string)descriptionValue);
-                            itemInstance.Description = descriptionInstance;
-                        }
-                        
-                        JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                        {
-                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                            itemInstance.ResourceGroupName = resourceGroupNameInstance;
-                        }
-                        
-                        JToken definitionTemplatesValue = responseDoc["definitionTemplates"];
-                        if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
-                        {
-                            DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
-                            itemInstance.DefinitionTemplates = definitionTemplatesInstance;
+                            GalleryItem itemInstance = new GalleryItem();
+                            result.Item = itemInstance;
                             
-                            JToken uiDefinitionFileUrlValue = definitionTemplatesValue["uiDefinitionFileUrl"];
-                            if (uiDefinitionFileUrlValue != null && uiDefinitionFileUrlValue.Type != JTokenType.Null)
+                            JToken identityValue = responseDoc["identity"];
+                            if (identityValue != null && identityValue.Type != JTokenType.Null)
                             {
-                                string uiDefinitionFileUrlInstance = ((string)uiDefinitionFileUrlValue);
-                                definitionTemplatesInstance.UiDefinitionFileUrl = uiDefinitionFileUrlInstance;
+                                string identityInstance = ((string)identityValue);
+                                itemInstance.Identity = identityInstance;
                             }
                             
-                            JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
-                            if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
+                            JToken itemNameValue = responseDoc["itemName"];
+                            if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
                             {
-                                string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
-                                definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
+                                string itemNameInstance = ((string)itemNameValue);
+                                itemInstance.Name = itemNameInstance;
                             }
                             
-                            JToken deploymentTemplateFileUrlsSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUrls"]);
-                            if (deploymentTemplateFileUrlsSequenceElement != null && deploymentTemplateFileUrlsSequenceElement.Type != JTokenType.Null)
+                            JToken itemDisplayNameValue = responseDoc["itemDisplayName"];
+                            if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in deploymentTemplateFileUrlsSequenceElement)
+                                string itemDisplayNameInstance = ((string)itemDisplayNameValue);
+                                itemInstance.DisplayName = itemDisplayNameInstance;
+                            }
+                            
+                            JToken publisherValue = responseDoc["publisher"];
+                            if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                            {
+                                string publisherInstance = ((string)publisherValue);
+                                itemInstance.Publisher = publisherInstance;
+                            }
+                            
+                            JToken publisherDisplayNameValue = responseDoc["publisherDisplayName"];
+                            if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
+                            {
+                                string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
+                                itemInstance.PublisherDisplayName = publisherDisplayNameInstance;
+                            }
+                            
+                            JToken versionValue = responseDoc["version"];
+                            if (versionValue != null && versionValue.Type != JTokenType.Null)
+                            {
+                                string versionInstance = ((string)versionValue);
+                                itemInstance.Version = versionInstance;
+                            }
+                            
+                            JToken summaryValue = responseDoc["summary"];
+                            if (summaryValue != null && summaryValue.Type != JTokenType.Null)
+                            {
+                                string summaryInstance = ((string)summaryValue);
+                                itemInstance.Summary = summaryInstance;
+                            }
+                            
+                            JToken descriptionValue = responseDoc["description"];
+                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                            {
+                                string descriptionInstance = ((string)descriptionValue);
+                                itemInstance.Description = descriptionInstance;
+                            }
+                            
+                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
+                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                            {
+                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                itemInstance.ResourceGroupName = resourceGroupNameInstance;
+                            }
+                            
+                            JToken definitionTemplatesValue = responseDoc["definitionTemplates"];
+                            if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
+                            {
+                                DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
+                                itemInstance.DefinitionTemplates = definitionTemplatesInstance;
+                                
+                                JToken uiDefinitionFileUrlValue = definitionTemplatesValue["uiDefinitionFileUrl"];
+                                if (uiDefinitionFileUrlValue != null && uiDefinitionFileUrlValue.Type != JTokenType.Null)
                                 {
-                                    string deploymentTemplateFileUrlsKey = ((string)property.Name);
-                                    string deploymentTemplateFileUrlsValue = ((string)property.Value);
-                                    definitionTemplatesInstance.DeploymentTemplateFileUrls.Add(deploymentTemplateFileUrlsKey, deploymentTemplateFileUrlsValue);
+                                    string uiDefinitionFileUrlInstance = ((string)uiDefinitionFileUrlValue);
+                                    definitionTemplatesInstance.UiDefinitionFileUrl = uiDefinitionFileUrlInstance;
+                                }
+                                
+                                JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
+                                if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
+                                {
+                                    string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
+                                    definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
+                                }
+                                
+                                JToken deploymentTemplateFileUrlsSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUrls"]);
+                                if (deploymentTemplateFileUrlsSequenceElement != null && deploymentTemplateFileUrlsSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in deploymentTemplateFileUrlsSequenceElement)
+                                    {
+                                        string deploymentTemplateFileUrlsKey = ((string)property.Name);
+                                        string deploymentTemplateFileUrlsValue = ((string)property.Value);
+                                        definitionTemplatesInstance.DeploymentTemplateFileUrls.Add(deploymentTemplateFileUrlsKey, deploymentTemplateFileUrlsValue);
+                                    }
+                                }
+                            }
+                            
+                            JToken categoryIdsArray = responseDoc["categoryIds"];
+                            if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
+                                {
+                                    itemInstance.CategoryIds.Add(((string)categoryIdsValue));
+                                }
+                            }
+                            
+                            JToken screenshotUrlsArray = responseDoc["screenshotUrls"];
+                            if (screenshotUrlsArray != null && screenshotUrlsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken screenshotUrlsValue in ((JArray)screenshotUrlsArray))
+                                {
+                                    itemInstance.ScreenshotUrls.Add(((string)screenshotUrlsValue));
+                                }
+                            }
+                            
+                            JToken iconFileUrlsSequenceElement = ((JToken)responseDoc["iconFileUrls"]);
+                            if (iconFileUrlsSequenceElement != null && iconFileUrlsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property2 in iconFileUrlsSequenceElement)
+                                {
+                                    string iconFileUrlsKey = ((string)property2.Name);
+                                    string iconFileUrlsValue = ((string)property2.Value);
+                                    itemInstance.IconFileUrls.Add(iconFileUrlsKey, iconFileUrlsValue);
                                 }
                             }
                         }
                         
-                        JToken categoryIdsArray = responseDoc["categoryIds"];
-                        if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
-                            {
-                                itemInstance.CategoryIds.Add(((string)categoryIdsValue));
-                            }
-                        }
-                        
-                        JToken screenshotUrlsArray = responseDoc["screenshotUrls"];
-                        if (screenshotUrlsArray != null && screenshotUrlsArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken screenshotUrlsValue in ((JArray)screenshotUrlsArray))
-                            {
-                                itemInstance.ScreenshotUrls.Add(((string)screenshotUrlsValue));
-                            }
-                        }
-                        
-                        JToken iconFileUrlsSequenceElement = ((JToken)responseDoc["iconFileUrls"]);
-                        if (iconFileUrlsSequenceElement != null && iconFileUrlsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property2 in iconFileUrlsSequenceElement)
-                            {
-                                string iconFileUrlsKey = ((string)property2.Name);
-                                string iconFileUrlsValue = ((string)property2.Value);
-                                itemInstance.IconFileUrls.Add(iconFileUrlsKey, iconFileUrlsValue);
-                            }
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -293,7 +299,7 @@ namespace Microsoft.Azure.Gallery
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -332,27 +338,36 @@ namespace Microsoft.Azure.Gallery
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/Microsoft.Gallery/galleryitems?";
-            bool appendFilter = true;
+            string url = "";
+            url = url + "/Microsoft.Gallery/galleryitems";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.Filter != null)
             {
-                appendFilter = false;
-                url = url + "$filter=" + Uri.EscapeDataString(parameters.Filter != null ? parameters.Filter.Trim() : "");
+                odataFilter.Add(Uri.EscapeDataString(parameters.Filter));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -387,13 +402,13 @@ namespace Microsoft.Azure.Gallery
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -402,7 +417,7 @@ namespace Microsoft.Azure.Gallery
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -410,152 +425,155 @@ namespace Microsoft.Azure.Gallery
                     // Create Result
                     ItemListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ItemListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken itemsArray = responseDoc;
-                        if (itemsArray != null && itemsArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ItemListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken itemsValue in ((JArray)itemsArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken itemsArray = responseDoc;
+                            if (itemsArray != null && itemsArray.Type != JTokenType.Null)
                             {
-                                GalleryItem galleryItemInstance = new GalleryItem();
-                                result.Items.Add(galleryItemInstance);
-                                
-                                JToken identityValue = itemsValue["identity"];
-                                if (identityValue != null && identityValue.Type != JTokenType.Null)
+                                foreach (JToken itemsValue in ((JArray)itemsArray))
                                 {
-                                    string identityInstance = ((string)identityValue);
-                                    galleryItemInstance.Identity = identityInstance;
-                                }
-                                
-                                JToken itemNameValue = itemsValue["itemName"];
-                                if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
-                                {
-                                    string itemNameInstance = ((string)itemNameValue);
-                                    galleryItemInstance.Name = itemNameInstance;
-                                }
-                                
-                                JToken itemDisplayNameValue = itemsValue["itemDisplayName"];
-                                if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
-                                {
-                                    string itemDisplayNameInstance = ((string)itemDisplayNameValue);
-                                    galleryItemInstance.DisplayName = itemDisplayNameInstance;
-                                }
-                                
-                                JToken publisherValue = itemsValue["publisher"];
-                                if (publisherValue != null && publisherValue.Type != JTokenType.Null)
-                                {
-                                    string publisherInstance = ((string)publisherValue);
-                                    galleryItemInstance.Publisher = publisherInstance;
-                                }
-                                
-                                JToken publisherDisplayNameValue = itemsValue["publisherDisplayName"];
-                                if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
-                                {
-                                    string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
-                                    galleryItemInstance.PublisherDisplayName = publisherDisplayNameInstance;
-                                }
-                                
-                                JToken versionValue = itemsValue["version"];
-                                if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                {
-                                    string versionInstance = ((string)versionValue);
-                                    galleryItemInstance.Version = versionInstance;
-                                }
-                                
-                                JToken summaryValue = itemsValue["summary"];
-                                if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                {
-                                    string summaryInstance = ((string)summaryValue);
-                                    galleryItemInstance.Summary = summaryInstance;
-                                }
-                                
-                                JToken descriptionValue = itemsValue["description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    galleryItemInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = itemsValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                {
-                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                    galleryItemInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken definitionTemplatesValue = itemsValue["definitionTemplates"];
-                                if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
-                                {
-                                    DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
-                                    galleryItemInstance.DefinitionTemplates = definitionTemplatesInstance;
+                                    GalleryItem galleryItemInstance = new GalleryItem();
+                                    result.Items.Add(galleryItemInstance);
                                     
-                                    JToken uiDefinitionFileUrlValue = definitionTemplatesValue["uiDefinitionFileUrl"];
-                                    if (uiDefinitionFileUrlValue != null && uiDefinitionFileUrlValue.Type != JTokenType.Null)
+                                    JToken identityValue = itemsValue["identity"];
+                                    if (identityValue != null && identityValue.Type != JTokenType.Null)
                                     {
-                                        string uiDefinitionFileUrlInstance = ((string)uiDefinitionFileUrlValue);
-                                        definitionTemplatesInstance.UiDefinitionFileUrl = uiDefinitionFileUrlInstance;
+                                        string identityInstance = ((string)identityValue);
+                                        galleryItemInstance.Identity = identityInstance;
                                     }
                                     
-                                    JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
-                                    if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
+                                    JToken itemNameValue = itemsValue["itemName"];
+                                    if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
                                     {
-                                        string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
-                                        definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
+                                        string itemNameInstance = ((string)itemNameValue);
+                                        galleryItemInstance.Name = itemNameInstance;
                                     }
                                     
-                                    JToken deploymentTemplateFileUrlsSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUrls"]);
-                                    if (deploymentTemplateFileUrlsSequenceElement != null && deploymentTemplateFileUrlsSequenceElement.Type != JTokenType.Null)
+                                    JToken itemDisplayNameValue = itemsValue["itemDisplayName"];
+                                    if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in deploymentTemplateFileUrlsSequenceElement)
+                                        string itemDisplayNameInstance = ((string)itemDisplayNameValue);
+                                        galleryItemInstance.DisplayName = itemDisplayNameInstance;
+                                    }
+                                    
+                                    JToken publisherValue = itemsValue["publisher"];
+                                    if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                    {
+                                        string publisherInstance = ((string)publisherValue);
+                                        galleryItemInstance.Publisher = publisherInstance;
+                                    }
+                                    
+                                    JToken publisherDisplayNameValue = itemsValue["publisherDisplayName"];
+                                    if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
+                                    {
+                                        string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
+                                        galleryItemInstance.PublisherDisplayName = publisherDisplayNameInstance;
+                                    }
+                                    
+                                    JToken versionValue = itemsValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        string versionInstance = ((string)versionValue);
+                                        galleryItemInstance.Version = versionInstance;
+                                    }
+                                    
+                                    JToken summaryValue = itemsValue["summary"];
+                                    if (summaryValue != null && summaryValue.Type != JTokenType.Null)
+                                    {
+                                        string summaryInstance = ((string)summaryValue);
+                                        galleryItemInstance.Summary = summaryInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = itemsValue["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        galleryItemInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken resourceGroupNameValue = itemsValue["resourceGroupName"];
+                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                        galleryItemInstance.ResourceGroupName = resourceGroupNameInstance;
+                                    }
+                                    
+                                    JToken definitionTemplatesValue = itemsValue["definitionTemplates"];
+                                    if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
+                                    {
+                                        DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
+                                        galleryItemInstance.DefinitionTemplates = definitionTemplatesInstance;
+                                        
+                                        JToken uiDefinitionFileUrlValue = definitionTemplatesValue["uiDefinitionFileUrl"];
+                                        if (uiDefinitionFileUrlValue != null && uiDefinitionFileUrlValue.Type != JTokenType.Null)
                                         {
-                                            string deploymentTemplateFileUrlsKey = ((string)property.Name);
-                                            string deploymentTemplateFileUrlsValue = ((string)property.Value);
-                                            definitionTemplatesInstance.DeploymentTemplateFileUrls.Add(deploymentTemplateFileUrlsKey, deploymentTemplateFileUrlsValue);
+                                            string uiDefinitionFileUrlInstance = ((string)uiDefinitionFileUrlValue);
+                                            definitionTemplatesInstance.UiDefinitionFileUrl = uiDefinitionFileUrlInstance;
+                                        }
+                                        
+                                        JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
+                                        if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
+                                        {
+                                            string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
+                                            definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
+                                        }
+                                        
+                                        JToken deploymentTemplateFileUrlsSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUrls"]);
+                                        if (deploymentTemplateFileUrlsSequenceElement != null && deploymentTemplateFileUrlsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in deploymentTemplateFileUrlsSequenceElement)
+                                            {
+                                                string deploymentTemplateFileUrlsKey = ((string)property.Name);
+                                                string deploymentTemplateFileUrlsValue = ((string)property.Value);
+                                                definitionTemplatesInstance.DeploymentTemplateFileUrls.Add(deploymentTemplateFileUrlsKey, deploymentTemplateFileUrlsValue);
+                                            }
                                         }
                                     }
-                                }
-                                
-                                JToken categoryIdsArray = itemsValue["categoryIds"];
-                                if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
+                                    
+                                    JToken categoryIdsArray = itemsValue["categoryIds"];
+                                    if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
                                     {
-                                        galleryItemInstance.CategoryIds.Add(((string)categoryIdsValue));
+                                        foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
+                                        {
+                                            galleryItemInstance.CategoryIds.Add(((string)categoryIdsValue));
+                                        }
                                     }
-                                }
-                                
-                                JToken screenshotUrlsArray = itemsValue["screenshotUrls"];
-                                if (screenshotUrlsArray != null && screenshotUrlsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken screenshotUrlsValue in ((JArray)screenshotUrlsArray))
+                                    
+                                    JToken screenshotUrlsArray = itemsValue["screenshotUrls"];
+                                    if (screenshotUrlsArray != null && screenshotUrlsArray.Type != JTokenType.Null)
                                     {
-                                        galleryItemInstance.ScreenshotUrls.Add(((string)screenshotUrlsValue));
+                                        foreach (JToken screenshotUrlsValue in ((JArray)screenshotUrlsArray))
+                                        {
+                                            galleryItemInstance.ScreenshotUrls.Add(((string)screenshotUrlsValue));
+                                        }
                                     }
-                                }
-                                
-                                JToken iconFileUrlsSequenceElement = ((JToken)itemsValue["iconFileUrls"]);
-                                if (iconFileUrlsSequenceElement != null && iconFileUrlsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property2 in iconFileUrlsSequenceElement)
+                                    
+                                    JToken iconFileUrlsSequenceElement = ((JToken)itemsValue["iconFileUrls"]);
+                                    if (iconFileUrlsSequenceElement != null && iconFileUrlsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        string iconFileUrlsKey = ((string)property2.Name);
-                                        string iconFileUrlsValue = ((string)property2.Value);
-                                        galleryItemInstance.IconFileUrls.Add(iconFileUrlsKey, iconFileUrlsValue);
+                                        foreach (JProperty property2 in iconFileUrlsSequenceElement)
+                                        {
+                                            string iconFileUrlsKey = ((string)property2.Name);
+                                            string iconFileUrlsValue = ((string)property2.Value);
+                                            galleryItemInstance.IconFileUrls.Add(iconFileUrlsKey, iconFileUrlsValue);
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -564,7 +582,7 @@ namespace Microsoft.Azure.Gallery
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

@@ -14,8 +14,8 @@
 //
 
 using System;
+using Microsoft.Azure.Common.OData;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common.OData;
 
 namespace Microsoft.Azure.Insights
 {
@@ -35,6 +35,18 @@ namespace Microsoft.Azure.Insights
         /// </summary>
         [FilterParameter("eventChannels")]
         public EventChannels? EventChannels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status
+        /// </summary>
+        [FilterParameter("status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the caller
+        /// </summary>
+        [FilterParameter("caller")]
+        public string Caller { get; set; }
     }
 
     /// <summary>
@@ -95,5 +107,17 @@ namespace Microsoft.Azure.Insights
         /// </summary>
         [FilterParameter("resourceProvider")]
         public string ResourceProvider { get; set; }
+    }
+
+    /// <summary>
+    /// The parameters to get the events for a event id
+    /// </summary>
+    public class ListEventsForEventIdParameters
+    {
+        /// <summary>
+        /// Get or set the id
+        /// </summary>
+        [FilterParameter("id")]
+        public string Id { get; set; }
     }
 }

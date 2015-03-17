@@ -29,9 +29,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
@@ -45,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// Transact-SQL statements against the master or individual user
     /// databases.
     /// </summary>
-    internal partial class FirewallRuleOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations
+    internal partial class FirewallRuleOperations : IServiceOperations<SqlManagementClient>, IFirewallRuleOperations
     {
         /// <summary>
         /// Initializes a new instance of the FirewallRuleOperations class.
@@ -86,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response to a Create Firewall Rule operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -111,19 +110,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/firewallrules";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/firewallrules";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -181,13 +188,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -196,7 +203,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -204,53 +211,56 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     FirewallRuleCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new FirewallRuleCreateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null)
+                    if (statusCode == HttpStatusCode.Created)
                     {
-                        FirewallRule serviceResourceInstance = new FirewallRule();
-                        result.FirewallRule = serviceResourceInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FirewallRuleCreateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null)
+                        XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourceElement2 != null)
                         {
-                            string startIPAddressInstance = startIPAddressElement2.Value;
-                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            FirewallRule serviceResourceInstance = new FirewallRule();
+                            result.FirewallRule = serviceResourceInstance;
+                            
+                            XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (startIPAddressElement2 != null)
+                            {
+                                string startIPAddressInstance = startIPAddressElement2.Value;
+                                serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            }
+                            
+                            XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (endIPAddressElement2 != null)
+                            {
+                                string endIPAddressInstance = endIPAddressElement2.Value;
+                                serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            }
+                            
+                            XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance = nameElement2.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
+                            }
                         }
                         
-                        XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null)
-                        {
-                            string endIPAddressInstance = endIPAddressElement2.Value;
-                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
-                        }
-                        
-                        XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -259,7 +269,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -298,7 +308,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serverName, string ruleName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string serverName, string ruleName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -311,19 +321,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/firewallrules/" + Uri.EscapeDataString(ruleName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/firewallrules/";
+            url = url + Uri.EscapeDataString(ruleName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -358,13 +377,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -373,14 +392,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -389,7 +409,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -427,7 +447,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response from a request to Get Firewall Rule.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleGetResponse> GetAsync(string serverName, string ruleName, CancellationToken cancellationToken)
+        public async Task<FirewallRuleGetResponse> GetAsync(string serverName, string ruleName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -440,19 +460,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/firewallrules/" + Uri.EscapeDataString(ruleName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/firewallrules/";
+            url = url + Uri.EscapeDataString(ruleName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -487,13 +516,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -502,7 +531,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -510,53 +539,56 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     FirewallRuleGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new FirewallRuleGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        FirewallRule serviceResourceInstance = new FirewallRule();
-                        result.FirewallRule = serviceResourceInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FirewallRuleGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement startIPAddressElement = serviceResourceElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement != null)
+                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourceElement != null)
                         {
-                            string startIPAddressInstance = startIPAddressElement.Value;
-                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            FirewallRule serviceResourceInstance = new FirewallRule();
+                            result.FirewallRule = serviceResourceInstance;
+                            
+                            XElement startIPAddressElement = serviceResourceElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (startIPAddressElement != null)
+                            {
+                                string startIPAddressInstance = startIPAddressElement.Value;
+                                serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            }
+                            
+                            XElement endIPAddressElement = serviceResourceElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (endIPAddressElement != null)
+                            {
+                                string endIPAddressInstance = endIPAddressElement.Value;
+                                serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            }
+                            
+                            XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
+                            }
                         }
                         
-                        XElement endIPAddressElement = serviceResourceElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement != null)
-                        {
-                            string endIPAddressInstance = endIPAddressElement.Value;
-                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
-                        }
-                        
-                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -565,7 +597,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -600,7 +632,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response from a request to List Firewall Rules.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
+        public async Task<FirewallRuleListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -609,18 +641,26 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/firewallrules";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/firewallrules";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -655,13 +695,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -670,7 +710,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -678,56 +718,59 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     FirewallRuleListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new FirewallRuleListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FirewallRuleListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourcesSequenceElement != null)
                         {
-                            FirewallRule serviceResourceInstance = new FirewallRule();
-                            result.FirewallRules.Add(serviceResourceInstance);
-                            
-                            XElement startIPAddressElement = serviceResourcesElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (startIPAddressElement != null)
+                            foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string startIPAddressInstance = startIPAddressElement.Value;
-                                serviceResourceInstance.StartIPAddress = startIPAddressInstance;
-                            }
-                            
-                            XElement endIPAddressElement = serviceResourcesElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (endIPAddressElement != null)
-                            {
-                                string endIPAddressInstance = endIPAddressElement.Value;
-                                serviceResourceInstance.EndIPAddress = endIPAddressInstance;
-                            }
-                            
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
+                                FirewallRule serviceResourceInstance = new FirewallRule();
+                                result.FirewallRules.Add(serviceResourceInstance);
+                                
+                                XElement startIPAddressElement = serviceResourcesElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                if (startIPAddressElement != null)
+                                {
+                                    string startIPAddressInstance = startIPAddressElement.Value;
+                                    serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                                }
+                                
+                                XElement endIPAddressElement = serviceResourcesElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                if (endIPAddressElement != null)
+                                {
+                                    string endIPAddressInstance = endIPAddressElement.Value;
+                                    serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                                }
+                                
+                                XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    serviceResourceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                if (typeElement != null)
+                                {
+                                    string typeInstance = typeElement.Value;
+                                    serviceResourceInstance.Type = typeInstance;
+                                }
+                                
+                                XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                if (stateElement != null)
+                                {
+                                    string stateInstance = stateElement.Value;
+                                    serviceResourceInstance.State = stateInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -736,7 +779,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -777,7 +820,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Represents the firewall rule update response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -806,20 +849,29 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/firewallrules/" + Uri.EscapeDataString(ruleName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/firewallrules/";
+            url = url + Uri.EscapeDataString(ruleName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -877,13 +929,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -892,7 +944,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -900,53 +952,56 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     FirewallRuleUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new FirewallRuleUpdateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        FirewallRule serviceResourceInstance = new FirewallRule();
-                        result.FirewallRule = serviceResourceInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FirewallRuleUpdateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null)
+                        XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourceElement2 != null)
                         {
-                            string startIPAddressInstance = startIPAddressElement2.Value;
-                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            FirewallRule serviceResourceInstance = new FirewallRule();
+                            result.FirewallRule = serviceResourceInstance;
+                            
+                            XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (startIPAddressElement2 != null)
+                            {
+                                string startIPAddressInstance = startIPAddressElement2.Value;
+                                serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            }
+                            
+                            XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (endIPAddressElement2 != null)
+                            {
+                                string endIPAddressInstance = endIPAddressElement2.Value;
+                                serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            }
+                            
+                            XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance = nameElement2.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
+                            }
                         }
                         
-                        XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null)
-                        {
-                            string endIPAddressInstance = endIPAddressElement2.Value;
-                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
-                        }
-                        
-                        XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -955,7 +1010,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

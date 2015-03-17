@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Authorization
 {
@@ -119,13 +119,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// Initializes a new instance of the AuthorizationManagementClient
         /// class.
         /// </summary>
-        private AuthorizationManagementClient()
+        public AuthorizationManagementClient()
             : base()
         {
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2014-07-01-preview";
+            this._apiVersion = "2014-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -190,13 +190,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private AuthorizationManagementClient(HttpClient httpClient)
+        public AuthorizationManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2014-07-01-preview";
+            this._apiVersion = "2014-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

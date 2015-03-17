@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
@@ -358,6 +358,58 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayOperationResponse> BeginRemoveDefaultSitesAsync(this IGatewayOperations operations, string networkName)
         {
             return operations.BeginRemoveDefaultSitesAsync(networkName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Reset Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginReset(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginResetAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Reset Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginResetAsync(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return operations.BeginResetAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -1538,6 +1590,72 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayGetOperationStatusResponse> RemoveDefaultSitesAsync(this IGatewayOperations operations, string networkName)
         {
             return operations.RemoveDefaultSitesAsync(networkName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static GatewayGetOperationStatusResponse Reset(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).ResetAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<GatewayGetOperationStatusResponse> ResetAsync(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return operations.ResetAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>

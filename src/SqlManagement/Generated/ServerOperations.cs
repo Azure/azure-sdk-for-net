@@ -29,9 +29,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
@@ -41,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// Contains methods to allow various operations on Azure SQL Database
     /// Servers.
     /// </summary>
-    internal partial class ServerOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IServerOperations
+    internal partial class ServerOperations : IServiceOperations<SqlManagementClient>, IServerOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServerOperations class.
@@ -84,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -101,19 +100,32 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ChangeAdministratorPasswordAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ChangeAdministratorPasswordAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "?op=ResetPassword";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("op=ResetPassword");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -161,13 +173,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -176,14 +188,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -192,7 +205,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -227,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// contains all the information returned from the service when a
         /// server is created.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -248,18 +261,24 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -324,13 +343,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -339,7 +358,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -347,23 +366,26 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     ServerCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServerCreateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serverNameElement = responseDoc.Element(XName.Get("ServerName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                    if (serverNameElement != null)
+                    if (statusCode == HttpStatusCode.Created)
                     {
-                        XAttribute fullyQualifiedDomainNameAttribute = serverNameElement.Attribute(XName.Get("FullyQualifiedDomainName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                        if (fullyQualifiedDomainNameAttribute != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerCreateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement serverNameElement = responseDoc.Element(XName.Get("ServerName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                        if (serverNameElement != null)
                         {
-                            result.FullyQualifiedDomainName = fullyQualifiedDomainNameAttribute.Value;
+                            XAttribute fullyQualifiedDomainNameAttribute = serverNameElement.Attribute(XName.Get("FullyQualifiedDomainName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                            if (fullyQualifiedDomainNameAttribute != null)
+                            {
+                                result.FullyQualifiedDomainName = fullyQualifiedDomainNameAttribute.Value;
+                            }
+                            
+                            result.ServerName = serverNameElement.Value;
                         }
                         
-                        result.ServerName = serverNameElement.Value;
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -372,7 +394,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -406,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -415,18 +437,25 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverName", serverName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -461,13 +490,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -476,14 +505,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -492,7 +522,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -524,22 +554,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// The response structure for the Server List operation.  Contains a
         /// list of all the servers in a subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServerListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<ServerListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -574,13 +610,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -589,7 +625,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -597,63 +633,66 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     ServerListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServerListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serversSequenceElement = responseDoc.Element(XName.Get("Servers", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                    if (serversSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement serversElement in serversSequenceElement.Elements(XName.Get("Server", "http://schemas.microsoft.com/sqlazure/2010/12/")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement serversSequenceElement = responseDoc.Element(XName.Get("Servers", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                        if (serversSequenceElement != null)
                         {
-                            Server serverInstance = new Server();
-                            result.Servers.Add(serverInstance);
-                            
-                            XElement nameElement = serversElement.Element(XName.Get("Name", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (nameElement != null)
+                            foreach (XElement serversElement in serversSequenceElement.Elements(XName.Get("Server", "http://schemas.microsoft.com/sqlazure/2010/12/")))
                             {
-                                string nameInstance = nameElement.Value;
-                                serverInstance.Name = nameInstance;
-                            }
-                            
-                            XElement administratorLoginElement = serversElement.Element(XName.Get("AdministratorLogin", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (administratorLoginElement != null)
-                            {
-                                string administratorLoginInstance = administratorLoginElement.Value;
-                                serverInstance.AdministratorUserName = administratorLoginInstance;
-                            }
-                            
-                            XElement locationElement = serversElement.Element(XName.Get("Location", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                serverInstance.Location = locationInstance;
-                            }
-                            
-                            XElement fullyQualifiedDomainNameElement = serversElement.Element(XName.Get("FullyQualifiedDomainName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (fullyQualifiedDomainNameElement != null)
-                            {
-                                string fullyQualifiedDomainNameInstance = fullyQualifiedDomainNameElement.Value;
-                                serverInstance.FullyQualifiedDomainName = fullyQualifiedDomainNameInstance;
-                            }
-                            
-                            XElement stateElement = serversElement.Element(XName.Get("State", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serverInstance.State = stateInstance;
-                            }
-                            
-                            XElement versionElement = serversElement.Element(XName.Get("Version", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (versionElement != null)
-                            {
-                                string versionInstance = versionElement.Value;
-                                serverInstance.Version = versionInstance;
+                                Server serverInstance = new Server();
+                                result.Servers.Add(serverInstance);
+                                
+                                XElement nameElement = serversElement.Element(XName.Get("Name", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    serverInstance.Name = nameInstance;
+                                }
+                                
+                                XElement administratorLoginElement = serversElement.Element(XName.Get("AdministratorLogin", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                                if (administratorLoginElement != null)
+                                {
+                                    string administratorLoginInstance = administratorLoginElement.Value;
+                                    serverInstance.AdministratorUserName = administratorLoginInstance;
+                                }
+                                
+                                XElement locationElement = serversElement.Element(XName.Get("Location", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    serverInstance.Location = locationInstance;
+                                }
+                                
+                                XElement fullyQualifiedDomainNameElement = serversElement.Element(XName.Get("FullyQualifiedDomainName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                                if (fullyQualifiedDomainNameElement != null)
+                                {
+                                    string fullyQualifiedDomainNameInstance = fullyQualifiedDomainNameElement.Value;
+                                    serverInstance.FullyQualifiedDomainName = fullyQualifiedDomainNameInstance;
+                                }
+                                
+                                XElement stateElement = serversElement.Element(XName.Get("State", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                                if (stateElement != null)
+                                {
+                                    string stateInstance = stateElement.Value;
+                                    serverInstance.State = stateInstance;
+                                }
+                                
+                                XElement versionElement = serversElement.Element(XName.Get("Version", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                                if (versionElement != null)
+                                {
+                                    string versionInstance = versionElement.Value;
+                                    serverInstance.Version = versionInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -662,7 +701,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

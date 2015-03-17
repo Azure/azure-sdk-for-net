@@ -29,17 +29,16 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler;
 using Microsoft.WindowsAzure.Scheduler.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Scheduler
 {
-    internal partial class JobOperations : IServiceOperations<SchedulerClient>, Microsoft.WindowsAzure.Scheduler.IJobOperations
+    internal partial class JobOperations : IServiceOperations<SchedulerClient>, IJobOperations
     {
         /// <summary>
         /// Initializes a new instance of the JobOperations class.
@@ -77,7 +76,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCreateResponse> CreateAsync(JobCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobCreateResponse> CreateAsync(JobCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -153,19 +152,37 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -580,7 +597,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -590,13 +607,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -605,7 +622,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -613,643 +630,646 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobCreateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobCreateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobInstance.Id = idInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                jobInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken actionValue2 = responseDoc["action"];
+                            if (actionValue2 != null && actionValue2.Type != JTokenType.Null)
+                            {
+                                JobAction actionInstance = new JobAction();
+                                jobInstance.Action = actionInstance;
+                                
+                                JToken typeValue = actionValue2["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                    actionInstance.Type = typeInstance;
+                                }
+                                
+                                JToken retryPolicyValue2 = actionValue2["retryPolicy"];
+                                if (retryPolicyValue2 != null && retryPolicyValue2.Type != JTokenType.Null)
+                                {
+                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                    actionInstance.RetryPolicy = retryPolicyInstance;
+                                    
+                                    JToken retryTypeValue = retryPolicyValue2["retryType"];
+                                    if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
+                                    {
+                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                        retryPolicyInstance.RetryType = retryTypeInstance;
+                                    }
+                                    
+                                    JToken retryIntervalValue = retryPolicyValue2["retryInterval"];
+                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = retryPolicyValue2["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        retryPolicyInstance.RetryCount = retryCountInstance;
+                                    }
+                                }
+                                
+                                JToken errorActionValue2 = actionValue2["errorAction"];
+                                if (errorActionValue2 != null && errorActionValue2.Type != JTokenType.Null)
+                                {
+                                    JobErrorAction errorActionInstance = new JobErrorAction();
+                                    actionInstance.ErrorAction = errorActionInstance;
+                                    
+                                    JToken typeValue2 = errorActionValue2["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    {
+                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                        errorActionInstance.Type = typeInstance2;
+                                    }
+                                    
+                                    JToken requestValue3 = errorActionValue2["request"];
+                                    if (requestValue3 != null && requestValue3.Type != JTokenType.Null)
+                                    {
+                                        JobHttpRequest requestInstance = new JobHttpRequest();
+                                        errorActionInstance.Request = requestInstance;
+                                        
+                                        JToken uriValue = requestValue3["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                            requestInstance.Uri = uriInstance;
+                                        }
+                                        
+                                        JToken methodValue = requestValue3["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            requestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken headersSequenceElement = ((JToken)requestValue3["headers"]);
+                                        if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in headersSequenceElement)
+                                            {
+                                                string headersKey3 = ((string)property.Name);
+                                                string headersValue3 = ((string)property.Value);
+                                                requestInstance.Headers.Add(headersKey3, headersValue3);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue = requestValue3["body"];
+                                        if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                        {
+                                            string bodyInstance = ((string)bodyValue);
+                                            requestInstance.Body = bodyInstance;
+                                        }
+                                        
+                                        JToken authenticationValue3 = requestValue3["authentication"];
+                                        if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)authenticationValue3["type"]);
+                                            if (typeName == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue = authenticationValue3["password"];
+                                                if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance = ((string)passwordValue);
+                                                    clientCertAuthenticationInstance.Password = passwordInstance;
+                                                }
+                                                
+                                                JToken pfxValue = authenticationValue3["pfx"];
+                                                if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance = ((string)pfxValue);
+                                                    clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
+                                                if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                    clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                }
+                                                
+                                                JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
+                                                if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                    clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
+                                                if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                    clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                }
+                                                
+                                                JToken typeValue3 = authenticationValue3["type"];
+                                                if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                    clientCertAuthenticationInstance.Type = typeInstance3;
+                                                }
+                                                requestInstance.Authentication = clientCertAuthenticationInstance;
+                                            }
+                                            if (typeName == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue = authenticationValue3["secret"];
+                                                if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance = ((string)secretValue);
+                                                    aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                }
+                                                
+                                                JToken tenantValue = authenticationValue3["tenant"];
+                                                if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance = ((string)tenantValue);
+                                                    aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                }
+                                                
+                                                JToken audienceValue = authenticationValue3["audience"];
+                                                if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance = ((string)audienceValue);
+                                                    aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                }
+                                                
+                                                JToken clientIdValue = authenticationValue3["clientId"];
+                                                if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance = ((string)clientIdValue);
+                                                    aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue3["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                }
+                                                requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                            }
+                                            if (typeName == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                
+                                                JToken usernameValue = authenticationValue3["username"];
+                                                if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance = ((string)usernameValue);
+                                                    basicAuthenticationInstance.Username = usernameInstance;
+                                                }
+                                                
+                                                JToken passwordValue2 = authenticationValue3["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    basicAuthenticationInstance.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken typeValue5 = authenticationValue3["type"];
+                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                    basicAuthenticationInstance.Type = typeInstance5;
+                                                }
+                                                requestInstance.Authentication = basicAuthenticationInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue3 = errorActionValue2["queueMessage"];
+                                    if (queueMessageValue3 != null && queueMessageValue3.Type != JTokenType.Null)
+                                    {
+                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                        errorActionInstance.QueueMessage = queueMessageInstance;
+                                        
+                                        JToken storageAccountValue = queueMessageValue3["storageAccount"];
+                                        if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                        {
+                                            string storageAccountInstance = ((string)storageAccountValue);
+                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                        }
+                                        
+                                        JToken queueNameValue = queueMessageValue3["queueName"];
+                                        if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance = ((string)queueNameValue);
+                                            queueMessageInstance.QueueName = queueNameInstance;
+                                        }
+                                        
+                                        JToken sasTokenValue = queueMessageValue3["sasToken"];
+                                        if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                        {
+                                            string sasTokenInstance = ((string)sasTokenValue);
+                                            queueMessageInstance.SasToken = sasTokenInstance;
+                                        }
+                                        
+                                        JToken messageValue = queueMessageValue3["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            queueMessageInstance.Message = messageInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken requestValue4 = actionValue2["request"];
+                                if (requestValue4 != null && requestValue4.Type != JTokenType.Null)
+                                {
+                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                    actionInstance.Request = requestInstance2;
+                                    
+                                    JToken uriValue2 = requestValue4["uri"];
+                                    if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                        requestInstance2.Uri = uriInstance2;
+                                    }
+                                    
+                                    JToken methodValue2 = requestValue4["method"];
+                                    if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                    {
+                                        string methodInstance2 = ((string)methodValue2);
+                                        requestInstance2.Method = methodInstance2;
+                                    }
+                                    
+                                    JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
+                                    if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        {
+                                            string headersKey4 = ((string)property2.Name);
+                                            string headersValue4 = ((string)property2.Value);
+                                            requestInstance2.Headers.Add(headersKey4, headersValue4);
+                                        }
+                                    }
+                                    
+                                    JToken bodyValue2 = requestValue4["body"];
+                                    if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
+                                    {
+                                        string bodyInstance2 = ((string)bodyValue2);
+                                        requestInstance2.Body = bodyInstance2;
+                                    }
+                                    
+                                    JToken authenticationValue4 = requestValue4["authentication"];
+                                    if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)authenticationValue4["type"]);
+                                        if (typeName2 == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue3 = authenticationValue4["password"];
+                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance3 = ((string)passwordValue3);
+                                                clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                            }
+                                            
+                                            JToken pfxValue2 = authenticationValue4["pfx"];
+                                            if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance2 = ((string)pfxValue2);
+                                                clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
+                                            if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                            }
+                                            
+                                            JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
+                                            if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
+                                            if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue4["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                            }
+                                            requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue2 = authenticationValue4["secret"];
+                                            if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance2 = ((string)secretValue2);
+                                                aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                            }
+                                            
+                                            JToken tenantValue2 = authenticationValue4["tenant"];
+                                            if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance2 = ((string)tenantValue2);
+                                                aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                            }
+                                            
+                                            JToken audienceValue2 = authenticationValue4["audience"];
+                                            if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance2 = ((string)audienceValue2);
+                                                aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                            }
+                                            
+                                            JToken clientIdValue2 = authenticationValue4["clientId"];
+                                            if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance2 = ((string)clientIdValue2);
+                                                aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue4["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                            }
+                                            requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                            
+                                            JToken usernameValue2 = authenticationValue4["username"];
+                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance2 = ((string)usernameValue2);
+                                                basicAuthenticationInstance2.Username = usernameInstance2;
+                                            }
+                                            
+                                            JToken passwordValue4 = authenticationValue4["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                basicAuthenticationInstance2.Password = passwordInstance4;
+                                            }
+                                            
+                                            JToken typeValue8 = authenticationValue4["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                            }
+                                            requestInstance2.Authentication = basicAuthenticationInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken queueMessageValue4 = actionValue2["queueMessage"];
+                                if (queueMessageValue4 != null && queueMessageValue4.Type != JTokenType.Null)
+                                {
+                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                    actionInstance.QueueMessage = queueMessageInstance2;
+                                    
+                                    JToken storageAccountValue2 = queueMessageValue4["storageAccount"];
+                                    if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountInstance2 = ((string)storageAccountValue2);
+                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                    }
+                                    
+                                    JToken queueNameValue2 = queueMessageValue4["queueName"];
+                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance2 = ((string)queueNameValue2);
+                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                    }
+                                    
+                                    JToken sasTokenValue2 = queueMessageValue4["sasToken"];
+                                    if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                    {
+                                        string sasTokenInstance2 = ((string)sasTokenValue2);
+                                        queueMessageInstance2.SasToken = sasTokenInstance2;
+                                    }
+                                    
+                                    JToken messageValue2 = queueMessageValue4["message"];
+                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance2 = ((string)messageValue2);
+                                        queueMessageInstance2.Message = messageInstance2;
+                                    }
+                                }
+                            }
+                            
+                            JToken recurrenceValue2 = responseDoc["recurrence"];
+                            if (recurrenceValue2 != null && recurrenceValue2.Type != JTokenType.Null)
+                            {
+                                JobRecurrence recurrenceInstance = new JobRecurrence();
+                                jobInstance.Recurrence = recurrenceInstance;
+                                
+                                JToken frequencyValue = recurrenceValue2["frequency"];
+                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                    recurrenceInstance.Frequency = frequencyInstance;
+                                }
+                                
+                                JToken intervalValue = recurrenceValue2["interval"];
+                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                {
+                                    int intervalInstance = ((int)intervalValue);
+                                    recurrenceInstance.Interval = intervalInstance;
+                                }
+                                
+                                JToken countValue = recurrenceValue2["count"];
+                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                {
+                                    int countInstance = ((int)countValue);
+                                    recurrenceInstance.Count = countInstance;
+                                }
+                                
+                                JToken endTimeValue = recurrenceValue2["endTime"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                    recurrenceInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken scheduleValue2 = recurrenceValue2["schedule"];
+                                if (scheduleValue2 != null && scheduleValue2.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                    recurrenceInstance.Schedule = scheduleInstance;
+                                    
+                                    JToken minutesArray2 = scheduleValue2["minutes"];
+                                    if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Minutes = new List<int>();
+                                        foreach (JToken minutesValue in ((JArray)minutesArray2))
+                                        {
+                                            scheduleInstance.Minutes.Add(((int)minutesValue));
+                                        }
+                                    }
+                                    
+                                    JToken hoursArray2 = scheduleValue2["hours"];
+                                    if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Hours = new List<int>();
+                                        foreach (JToken hoursValue in ((JArray)hoursArray2))
+                                        {
+                                            scheduleInstance.Hours.Add(((int)hoursValue));
+                                        }
+                                    }
+                                    
+                                    JToken weekDaysArray2 = scheduleValue2["weekDays"];
+                                    if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Days = new List<JobScheduleDay>();
+                                        foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
+                                        {
+                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
+                                        }
+                                    }
+                                    
+                                    JToken monthsArray2 = scheduleValue2["months"];
+                                    if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Months = new List<int>();
+                                        foreach (JToken monthsValue in ((JArray)monthsArray2))
+                                        {
+                                            scheduleInstance.Months.Add(((int)monthsValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthDaysArray2 = scheduleValue2["monthDays"];
+                                    if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthDays = new List<int>();
+                                        foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
+                                        {
+                                            scheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
+                                    if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                        foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
+                                        {
+                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            
+                                            JToken dayValue = monthlyOccurrencesValue["day"];
+                                            if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                            {
+                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                            }
+                                            
+                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                            if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                            {
+                                                int occurrenceInstance = ((int)occurrenceValue);
+                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                JobStatus statusInstance = new JobStatus();
+                                jobInstance.Status = statusInstance;
+                                
+                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                }
+                                
+                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                }
+                                
+                                JToken executionCountValue = statusValue["executionCount"];
+                                if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
+                                {
+                                    int executionCountInstance = ((int)executionCountValue);
+                                    statusInstance.ExecutionCount = executionCountInstance;
+                                }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
+                                {
+                                    int failureCountInstance = ((int)failureCountValue);
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
+                                {
+                                    int faultedCountInstance = ((int)faultedCountValue);
+                                    statusInstance.FaultedCount = faultedCountInstance;
+                                }
+                            }
+                            
+                            JToken stateValue = responseDoc["state"];
+                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                            {
+                                JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                jobInstance.State = stateInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Job jobInstance = new Job();
-                        result.Job = jobInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            jobInstance.Id = idInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                            jobInstance.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken actionValue2 = responseDoc["action"];
-                        if (actionValue2 != null && actionValue2.Type != JTokenType.Null)
-                        {
-                            JobAction actionInstance = new JobAction();
-                            jobInstance.Action = actionInstance;
-                            
-                            JToken typeValue = actionValue2["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                actionInstance.Type = typeInstance;
-                            }
-                            
-                            JToken retryPolicyValue2 = actionValue2["retryPolicy"];
-                            if (retryPolicyValue2 != null && retryPolicyValue2.Type != JTokenType.Null)
-                            {
-                                RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                actionInstance.RetryPolicy = retryPolicyInstance;
-                                
-                                JToken retryTypeValue = retryPolicyValue2["retryType"];
-                                if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                {
-                                    RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                    retryPolicyInstance.RetryType = retryTypeInstance;
-                                }
-                                
-                                JToken retryIntervalValue = retryPolicyValue2["retryInterval"];
-                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                    retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                }
-                                
-                                JToken retryCountValue = retryPolicyValue2["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    retryPolicyInstance.RetryCount = retryCountInstance;
-                                }
-                            }
-                            
-                            JToken errorActionValue2 = actionValue2["errorAction"];
-                            if (errorActionValue2 != null && errorActionValue2.Type != JTokenType.Null)
-                            {
-                                JobErrorAction errorActionInstance = new JobErrorAction();
-                                actionInstance.ErrorAction = errorActionInstance;
-                                
-                                JToken typeValue2 = errorActionValue2["type"];
-                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                                {
-                                    JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                    errorActionInstance.Type = typeInstance2;
-                                }
-                                
-                                JToken requestValue3 = errorActionValue2["request"];
-                                if (requestValue3 != null && requestValue3.Type != JTokenType.Null)
-                                {
-                                    JobHttpRequest requestInstance = new JobHttpRequest();
-                                    errorActionInstance.Request = requestInstance;
-                                    
-                                    JToken uriValue = requestValue3["uri"];
-                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                    {
-                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                        requestInstance.Uri = uriInstance;
-                                    }
-                                    
-                                    JToken methodValue = requestValue3["method"];
-                                    if (methodValue != null && methodValue.Type != JTokenType.Null)
-                                    {
-                                        string methodInstance = ((string)methodValue);
-                                        requestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken headersSequenceElement = ((JToken)requestValue3["headers"]);
-                                    if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in headersSequenceElement)
-                                        {
-                                            string headersKey3 = ((string)property.Name);
-                                            string headersValue3 = ((string)property.Value);
-                                            requestInstance.Headers.Add(headersKey3, headersValue3);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue = requestValue3["body"];
-                                    if (bodyValue != null && bodyValue.Type != JTokenType.Null)
-                                    {
-                                        string bodyInstance = ((string)bodyValue);
-                                        requestInstance.Body = bodyInstance;
-                                    }
-                                    
-                                    JToken authenticationValue3 = requestValue3["authentication"];
-                                    if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
-                                    {
-                                        string typeName = ((string)authenticationValue3["type"]);
-                                        if (typeName == "ClientCertificate")
-                                        {
-                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                            
-                                            JToken passwordValue = authenticationValue3["password"];
-                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance = ((string)passwordValue);
-                                                clientCertAuthenticationInstance.Password = passwordInstance;
-                                            }
-                                            
-                                            JToken pfxValue = authenticationValue3["pfx"];
-                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                            {
-                                                string pfxInstance = ((string)pfxValue);
-                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                            }
-                                            
-                                            JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
-                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                            }
-                                            
-                                            JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
-                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                            {
-                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                            }
-                                            
-                                            JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
-                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                            }
-                                            
-                                            JToken typeValue3 = authenticationValue3["type"];
-                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                clientCertAuthenticationInstance.Type = typeInstance3;
-                                            }
-                                            requestInstance.Authentication = clientCertAuthenticationInstance;
-                                        }
-                                        if (typeName == "ActiveDirectoryOAuth")
-                                        {
-                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                            
-                                            JToken secretValue = authenticationValue3["secret"];
-                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                            {
-                                                string secretInstance = ((string)secretValue);
-                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                            }
-                                            
-                                            JToken tenantValue = authenticationValue3["tenant"];
-                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantInstance = ((string)tenantValue);
-                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                            }
-                                            
-                                            JToken audienceValue = authenticationValue3["audience"];
-                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                            {
-                                                string audienceInstance = ((string)audienceValue);
-                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                            }
-                                            
-                                            JToken clientIdValue = authenticationValue3["clientId"];
-                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                            {
-                                                string clientIdInstance = ((string)clientIdValue);
-                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                            }
-                                            
-                                            JToken typeValue4 = authenticationValue3["type"];
-                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                            }
-                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                        }
-                                        if (typeName == "Basic")
-                                        {
-                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                            
-                                            JToken usernameValue = authenticationValue3["username"];
-                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                            {
-                                                string usernameInstance = ((string)usernameValue);
-                                                basicAuthenticationInstance.Username = usernameInstance;
-                                            }
-                                            
-                                            JToken passwordValue2 = authenticationValue3["password"];
-                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance2 = ((string)passwordValue2);
-                                                basicAuthenticationInstance.Password = passwordInstance2;
-                                            }
-                                            
-                                            JToken typeValue5 = authenticationValue3["type"];
-                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                basicAuthenticationInstance.Type = typeInstance5;
-                                            }
-                                            requestInstance.Authentication = basicAuthenticationInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken queueMessageValue3 = errorActionValue2["queueMessage"];
-                                if (queueMessageValue3 != null && queueMessageValue3.Type != JTokenType.Null)
-                                {
-                                    JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                    errorActionInstance.QueueMessage = queueMessageInstance;
-                                    
-                                    JToken storageAccountValue = queueMessageValue3["storageAccount"];
-                                    if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                    {
-                                        string storageAccountInstance = ((string)storageAccountValue);
-                                        queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                    }
-                                    
-                                    JToken queueNameValue = queueMessageValue3["queueName"];
-                                    if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
-                                    {
-                                        string queueNameInstance = ((string)queueNameValue);
-                                        queueMessageInstance.QueueName = queueNameInstance;
-                                    }
-                                    
-                                    JToken sasTokenValue = queueMessageValue3["sasToken"];
-                                    if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
-                                    {
-                                        string sasTokenInstance = ((string)sasTokenValue);
-                                        queueMessageInstance.SasToken = sasTokenInstance;
-                                    }
-                                    
-                                    JToken messageValue = queueMessageValue3["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        queueMessageInstance.Message = messageInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken requestValue4 = actionValue2["request"];
-                            if (requestValue4 != null && requestValue4.Type != JTokenType.Null)
-                            {
-                                JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                actionInstance.Request = requestInstance2;
-                                
-                                JToken uriValue2 = requestValue4["uri"];
-                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
-                                {
-                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                    requestInstance2.Uri = uriInstance2;
-                                }
-                                
-                                JToken methodValue2 = requestValue4["method"];
-                                if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
-                                {
-                                    string methodInstance2 = ((string)methodValue2);
-                                    requestInstance2.Method = methodInstance2;
-                                }
-                                
-                                JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
-                                if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property2 in headersSequenceElement2)
-                                    {
-                                        string headersKey4 = ((string)property2.Name);
-                                        string headersValue4 = ((string)property2.Value);
-                                        requestInstance2.Headers.Add(headersKey4, headersValue4);
-                                    }
-                                }
-                                
-                                JToken bodyValue2 = requestValue4["body"];
-                                if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                {
-                                    string bodyInstance2 = ((string)bodyValue2);
-                                    requestInstance2.Body = bodyInstance2;
-                                }
-                                
-                                JToken authenticationValue4 = requestValue4["authentication"];
-                                if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
-                                {
-                                    string typeName2 = ((string)authenticationValue4["type"]);
-                                    if (typeName2 == "ClientCertificate")
-                                    {
-                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                        
-                                        JToken passwordValue3 = authenticationValue4["password"];
-                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance3 = ((string)passwordValue3);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
-                                        }
-                                        
-                                        JToken pfxValue2 = authenticationValue4["pfx"];
-                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                        {
-                                            string pfxInstance2 = ((string)pfxValue2);
-                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                        }
-                                        
-                                        JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
-                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                        }
-                                        
-                                        JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
-                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                        }
-                                        
-                                        JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
-                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                        }
-                                        
-                                        JToken typeValue6 = authenticationValue4["type"];
-                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                            clientCertAuthenticationInstance2.Type = typeInstance6;
-                                        }
-                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "ActiveDirectoryOAuth")
-                                    {
-                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                        
-                                        JToken secretValue2 = authenticationValue4["secret"];
-                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
-                                        {
-                                            string secretInstance2 = ((string)secretValue2);
-                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
-                                        }
-                                        
-                                        JToken tenantValue2 = authenticationValue4["tenant"];
-                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                        {
-                                            string tenantInstance2 = ((string)tenantValue2);
-                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                        }
-                                        
-                                        JToken audienceValue2 = authenticationValue4["audience"];
-                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                        {
-                                            string audienceInstance2 = ((string)audienceValue2);
-                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                        }
-                                        
-                                        JToken clientIdValue2 = authenticationValue4["clientId"];
-                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                        {
-                                            string clientIdInstance2 = ((string)clientIdValue2);
-                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                        }
-                                        
-                                        JToken typeValue7 = authenticationValue4["type"];
-                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                        }
-                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "Basic")
-                                    {
-                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                        
-                                        JToken usernameValue2 = authenticationValue4["username"];
-                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
-                                        {
-                                            string usernameInstance2 = ((string)usernameValue2);
-                                            basicAuthenticationInstance2.Username = usernameInstance2;
-                                        }
-                                        
-                                        JToken passwordValue4 = authenticationValue4["password"];
-                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance4 = ((string)passwordValue4);
-                                            basicAuthenticationInstance2.Password = passwordInstance4;
-                                        }
-                                        
-                                        JToken typeValue8 = authenticationValue4["type"];
-                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                            basicAuthenticationInstance2.Type = typeInstance8;
-                                        }
-                                        requestInstance2.Authentication = basicAuthenticationInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken queueMessageValue4 = actionValue2["queueMessage"];
-                            if (queueMessageValue4 != null && queueMessageValue4.Type != JTokenType.Null)
-                            {
-                                JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                actionInstance.QueueMessage = queueMessageInstance2;
-                                
-                                JToken storageAccountValue2 = queueMessageValue4["storageAccount"];
-                                if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
-                                {
-                                    string storageAccountInstance2 = ((string)storageAccountValue2);
-                                    queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                }
-                                
-                                JToken queueNameValue2 = queueMessageValue4["queueName"];
-                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
-                                {
-                                    string queueNameInstance2 = ((string)queueNameValue2);
-                                    queueMessageInstance2.QueueName = queueNameInstance2;
-                                }
-                                
-                                JToken sasTokenValue2 = queueMessageValue4["sasToken"];
-                                if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
-                                {
-                                    string sasTokenInstance2 = ((string)sasTokenValue2);
-                                    queueMessageInstance2.SasToken = sasTokenInstance2;
-                                }
-                                
-                                JToken messageValue2 = queueMessageValue4["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
-                                {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    queueMessageInstance2.Message = messageInstance2;
-                                }
-                            }
-                        }
-                        
-                        JToken recurrenceValue2 = responseDoc["recurrence"];
-                        if (recurrenceValue2 != null && recurrenceValue2.Type != JTokenType.Null)
-                        {
-                            JobRecurrence recurrenceInstance = new JobRecurrence();
-                            jobInstance.Recurrence = recurrenceInstance;
-                            
-                            JToken frequencyValue = recurrenceValue2["frequency"];
-                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                recurrenceInstance.Frequency = frequencyInstance;
-                            }
-                            
-                            JToken intervalValue = recurrenceValue2["interval"];
-                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                            {
-                                int intervalInstance = ((int)intervalValue);
-                                recurrenceInstance.Interval = intervalInstance;
-                            }
-                            
-                            JToken countValue = recurrenceValue2["count"];
-                            if (countValue != null && countValue.Type != JTokenType.Null)
-                            {
-                                int countInstance = ((int)countValue);
-                                recurrenceInstance.Count = countInstance;
-                            }
-                            
-                            JToken endTimeValue = recurrenceValue2["endTime"];
-                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                recurrenceInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken scheduleValue2 = recurrenceValue2["schedule"];
-                            if (scheduleValue2 != null && scheduleValue2.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                recurrenceInstance.Schedule = scheduleInstance;
-                                
-                                JToken minutesArray2 = scheduleValue2["minutes"];
-                                if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Minutes = new List<int>();
-                                    foreach (JToken minutesValue in ((JArray)minutesArray2))
-                                    {
-                                        scheduleInstance.Minutes.Add(((int)minutesValue));
-                                    }
-                                }
-                                
-                                JToken hoursArray2 = scheduleValue2["hours"];
-                                if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Hours = new List<int>();
-                                    foreach (JToken hoursValue in ((JArray)hoursArray2))
-                                    {
-                                        scheduleInstance.Hours.Add(((int)hoursValue));
-                                    }
-                                }
-                                
-                                JToken weekDaysArray2 = scheduleValue2["weekDays"];
-                                if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Days = new List<JobScheduleDay>();
-                                    foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
-                                    {
-                                        scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                    }
-                                }
-                                
-                                JToken monthsArray2 = scheduleValue2["months"];
-                                if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Months = new List<int>();
-                                    foreach (JToken monthsValue in ((JArray)monthsArray2))
-                                    {
-                                        scheduleInstance.Months.Add(((int)monthsValue));
-                                    }
-                                }
-                                
-                                JToken monthDaysArray2 = scheduleValue2["monthDays"];
-                                if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthDays = new List<int>();
-                                    foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
-                                    {
-                                        scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                    }
-                                }
-                                
-                                JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
-                                if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                    foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
-                                    {
-                                        JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                        scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                        
-                                        JToken dayValue = monthlyOccurrencesValue["day"];
-                                        if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                        {
-                                            JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                            jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                        }
-                                        
-                                        JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                        if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                        {
-                                            int occurrenceInstance = ((int)occurrenceValue);
-                                            jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        JToken statusValue = responseDoc["status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                        {
-                            JobStatus statusInstance = new JobStatus();
-                            jobInstance.Status = statusInstance;
-                            
-                            JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                            if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                statusInstance.LastExecutionTime = lastExecutionTimeInstance;
-                            }
-                            
-                            JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                            if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                            }
-                            
-                            JToken executionCountValue = statusValue["executionCount"];
-                            if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                            {
-                                int executionCountInstance = ((int)executionCountValue);
-                                statusInstance.ExecutionCount = executionCountInstance;
-                            }
-                            
-                            JToken failureCountValue = statusValue["failureCount"];
-                            if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                            {
-                                int failureCountInstance = ((int)failureCountValue);
-                                statusInstance.FailureCount = failureCountInstance;
-                            }
-                            
-                            JToken faultedCountValue = statusValue["faultedCount"];
-                            if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                            {
-                                int faultedCountInstance = ((int)faultedCountValue);
-                                statusInstance.FaultedCount = faultedCountInstance;
-                            }
-                        }
-                        
-                        JToken stateValue = responseDoc["state"];
-                        if (stateValue != null && stateValue.Type != JTokenType.Null)
-                        {
-                            JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                            jobInstance.State = stateInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1258,7 +1278,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1296,7 +1316,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The CreateOrUpdate Job operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCreateOrUpdateResponse> CreateOrUpdateAsync(string jobId, JobCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobCreateOrUpdateResponse> CreateOrUpdateAsync(string jobId, JobCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -1376,20 +1396,39 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1804,7 +1843,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -1814,13 +1853,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -1829,7 +1868,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1837,643 +1876,646 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobInstance.Id = idInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                jobInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken actionValue2 = responseDoc["action"];
+                            if (actionValue2 != null && actionValue2.Type != JTokenType.Null)
+                            {
+                                JobAction actionInstance = new JobAction();
+                                jobInstance.Action = actionInstance;
+                                
+                                JToken typeValue = actionValue2["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                    actionInstance.Type = typeInstance;
+                                }
+                                
+                                JToken retryPolicyValue2 = actionValue2["retryPolicy"];
+                                if (retryPolicyValue2 != null && retryPolicyValue2.Type != JTokenType.Null)
+                                {
+                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                    actionInstance.RetryPolicy = retryPolicyInstance;
+                                    
+                                    JToken retryTypeValue = retryPolicyValue2["retryType"];
+                                    if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
+                                    {
+                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                        retryPolicyInstance.RetryType = retryTypeInstance;
+                                    }
+                                    
+                                    JToken retryIntervalValue = retryPolicyValue2["retryInterval"];
+                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = retryPolicyValue2["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        retryPolicyInstance.RetryCount = retryCountInstance;
+                                    }
+                                }
+                                
+                                JToken errorActionValue2 = actionValue2["errorAction"];
+                                if (errorActionValue2 != null && errorActionValue2.Type != JTokenType.Null)
+                                {
+                                    JobErrorAction errorActionInstance = new JobErrorAction();
+                                    actionInstance.ErrorAction = errorActionInstance;
+                                    
+                                    JToken typeValue2 = errorActionValue2["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    {
+                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                        errorActionInstance.Type = typeInstance2;
+                                    }
+                                    
+                                    JToken requestValue3 = errorActionValue2["request"];
+                                    if (requestValue3 != null && requestValue3.Type != JTokenType.Null)
+                                    {
+                                        JobHttpRequest requestInstance = new JobHttpRequest();
+                                        errorActionInstance.Request = requestInstance;
+                                        
+                                        JToken uriValue = requestValue3["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                            requestInstance.Uri = uriInstance;
+                                        }
+                                        
+                                        JToken methodValue = requestValue3["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            requestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken headersSequenceElement = ((JToken)requestValue3["headers"]);
+                                        if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in headersSequenceElement)
+                                            {
+                                                string headersKey3 = ((string)property.Name);
+                                                string headersValue3 = ((string)property.Value);
+                                                requestInstance.Headers.Add(headersKey3, headersValue3);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue = requestValue3["body"];
+                                        if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                        {
+                                            string bodyInstance = ((string)bodyValue);
+                                            requestInstance.Body = bodyInstance;
+                                        }
+                                        
+                                        JToken authenticationValue3 = requestValue3["authentication"];
+                                        if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)authenticationValue3["type"]);
+                                            if (typeName == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue = authenticationValue3["password"];
+                                                if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance = ((string)passwordValue);
+                                                    clientCertAuthenticationInstance.Password = passwordInstance;
+                                                }
+                                                
+                                                JToken pfxValue = authenticationValue3["pfx"];
+                                                if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance = ((string)pfxValue);
+                                                    clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
+                                                if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                    clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                }
+                                                
+                                                JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
+                                                if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                    clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
+                                                if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                    clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                }
+                                                
+                                                JToken typeValue3 = authenticationValue3["type"];
+                                                if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                    clientCertAuthenticationInstance.Type = typeInstance3;
+                                                }
+                                                requestInstance.Authentication = clientCertAuthenticationInstance;
+                                            }
+                                            if (typeName == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue = authenticationValue3["secret"];
+                                                if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance = ((string)secretValue);
+                                                    aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                }
+                                                
+                                                JToken tenantValue = authenticationValue3["tenant"];
+                                                if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance = ((string)tenantValue);
+                                                    aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                }
+                                                
+                                                JToken audienceValue = authenticationValue3["audience"];
+                                                if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance = ((string)audienceValue);
+                                                    aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                }
+                                                
+                                                JToken clientIdValue = authenticationValue3["clientId"];
+                                                if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance = ((string)clientIdValue);
+                                                    aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue3["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                }
+                                                requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                            }
+                                            if (typeName == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                
+                                                JToken usernameValue = authenticationValue3["username"];
+                                                if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance = ((string)usernameValue);
+                                                    basicAuthenticationInstance.Username = usernameInstance;
+                                                }
+                                                
+                                                JToken passwordValue2 = authenticationValue3["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    basicAuthenticationInstance.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken typeValue5 = authenticationValue3["type"];
+                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                    basicAuthenticationInstance.Type = typeInstance5;
+                                                }
+                                                requestInstance.Authentication = basicAuthenticationInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue3 = errorActionValue2["queueMessage"];
+                                    if (queueMessageValue3 != null && queueMessageValue3.Type != JTokenType.Null)
+                                    {
+                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                        errorActionInstance.QueueMessage = queueMessageInstance;
+                                        
+                                        JToken storageAccountValue = queueMessageValue3["storageAccount"];
+                                        if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                        {
+                                            string storageAccountInstance = ((string)storageAccountValue);
+                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                        }
+                                        
+                                        JToken queueNameValue = queueMessageValue3["queueName"];
+                                        if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance = ((string)queueNameValue);
+                                            queueMessageInstance.QueueName = queueNameInstance;
+                                        }
+                                        
+                                        JToken sasTokenValue = queueMessageValue3["sasToken"];
+                                        if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                        {
+                                            string sasTokenInstance = ((string)sasTokenValue);
+                                            queueMessageInstance.SasToken = sasTokenInstance;
+                                        }
+                                        
+                                        JToken messageValue = queueMessageValue3["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            queueMessageInstance.Message = messageInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken requestValue4 = actionValue2["request"];
+                                if (requestValue4 != null && requestValue4.Type != JTokenType.Null)
+                                {
+                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                    actionInstance.Request = requestInstance2;
+                                    
+                                    JToken uriValue2 = requestValue4["uri"];
+                                    if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                        requestInstance2.Uri = uriInstance2;
+                                    }
+                                    
+                                    JToken methodValue2 = requestValue4["method"];
+                                    if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                    {
+                                        string methodInstance2 = ((string)methodValue2);
+                                        requestInstance2.Method = methodInstance2;
+                                    }
+                                    
+                                    JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
+                                    if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        {
+                                            string headersKey4 = ((string)property2.Name);
+                                            string headersValue4 = ((string)property2.Value);
+                                            requestInstance2.Headers.Add(headersKey4, headersValue4);
+                                        }
+                                    }
+                                    
+                                    JToken bodyValue2 = requestValue4["body"];
+                                    if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
+                                    {
+                                        string bodyInstance2 = ((string)bodyValue2);
+                                        requestInstance2.Body = bodyInstance2;
+                                    }
+                                    
+                                    JToken authenticationValue4 = requestValue4["authentication"];
+                                    if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)authenticationValue4["type"]);
+                                        if (typeName2 == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue3 = authenticationValue4["password"];
+                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance3 = ((string)passwordValue3);
+                                                clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                            }
+                                            
+                                            JToken pfxValue2 = authenticationValue4["pfx"];
+                                            if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance2 = ((string)pfxValue2);
+                                                clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
+                                            if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                            }
+                                            
+                                            JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
+                                            if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
+                                            if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue4["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                            }
+                                            requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue2 = authenticationValue4["secret"];
+                                            if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance2 = ((string)secretValue2);
+                                                aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                            }
+                                            
+                                            JToken tenantValue2 = authenticationValue4["tenant"];
+                                            if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance2 = ((string)tenantValue2);
+                                                aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                            }
+                                            
+                                            JToken audienceValue2 = authenticationValue4["audience"];
+                                            if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance2 = ((string)audienceValue2);
+                                                aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                            }
+                                            
+                                            JToken clientIdValue2 = authenticationValue4["clientId"];
+                                            if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance2 = ((string)clientIdValue2);
+                                                aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue4["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                            }
+                                            requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                            
+                                            JToken usernameValue2 = authenticationValue4["username"];
+                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance2 = ((string)usernameValue2);
+                                                basicAuthenticationInstance2.Username = usernameInstance2;
+                                            }
+                                            
+                                            JToken passwordValue4 = authenticationValue4["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                basicAuthenticationInstance2.Password = passwordInstance4;
+                                            }
+                                            
+                                            JToken typeValue8 = authenticationValue4["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                            }
+                                            requestInstance2.Authentication = basicAuthenticationInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken queueMessageValue4 = actionValue2["queueMessage"];
+                                if (queueMessageValue4 != null && queueMessageValue4.Type != JTokenType.Null)
+                                {
+                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                    actionInstance.QueueMessage = queueMessageInstance2;
+                                    
+                                    JToken storageAccountValue2 = queueMessageValue4["storageAccount"];
+                                    if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountInstance2 = ((string)storageAccountValue2);
+                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                    }
+                                    
+                                    JToken queueNameValue2 = queueMessageValue4["queueName"];
+                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance2 = ((string)queueNameValue2);
+                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                    }
+                                    
+                                    JToken sasTokenValue2 = queueMessageValue4["sasToken"];
+                                    if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                    {
+                                        string sasTokenInstance2 = ((string)sasTokenValue2);
+                                        queueMessageInstance2.SasToken = sasTokenInstance2;
+                                    }
+                                    
+                                    JToken messageValue2 = queueMessageValue4["message"];
+                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance2 = ((string)messageValue2);
+                                        queueMessageInstance2.Message = messageInstance2;
+                                    }
+                                }
+                            }
+                            
+                            JToken recurrenceValue2 = responseDoc["recurrence"];
+                            if (recurrenceValue2 != null && recurrenceValue2.Type != JTokenType.Null)
+                            {
+                                JobRecurrence recurrenceInstance = new JobRecurrence();
+                                jobInstance.Recurrence = recurrenceInstance;
+                                
+                                JToken frequencyValue = recurrenceValue2["frequency"];
+                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                    recurrenceInstance.Frequency = frequencyInstance;
+                                }
+                                
+                                JToken intervalValue = recurrenceValue2["interval"];
+                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                {
+                                    int intervalInstance = ((int)intervalValue);
+                                    recurrenceInstance.Interval = intervalInstance;
+                                }
+                                
+                                JToken countValue = recurrenceValue2["count"];
+                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                {
+                                    int countInstance = ((int)countValue);
+                                    recurrenceInstance.Count = countInstance;
+                                }
+                                
+                                JToken endTimeValue = recurrenceValue2["endTime"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                    recurrenceInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken scheduleValue2 = recurrenceValue2["schedule"];
+                                if (scheduleValue2 != null && scheduleValue2.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                    recurrenceInstance.Schedule = scheduleInstance;
+                                    
+                                    JToken minutesArray2 = scheduleValue2["minutes"];
+                                    if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Minutes = new List<int>();
+                                        foreach (JToken minutesValue in ((JArray)minutesArray2))
+                                        {
+                                            scheduleInstance.Minutes.Add(((int)minutesValue));
+                                        }
+                                    }
+                                    
+                                    JToken hoursArray2 = scheduleValue2["hours"];
+                                    if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Hours = new List<int>();
+                                        foreach (JToken hoursValue in ((JArray)hoursArray2))
+                                        {
+                                            scheduleInstance.Hours.Add(((int)hoursValue));
+                                        }
+                                    }
+                                    
+                                    JToken weekDaysArray2 = scheduleValue2["weekDays"];
+                                    if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Days = new List<JobScheduleDay>();
+                                        foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
+                                        {
+                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
+                                        }
+                                    }
+                                    
+                                    JToken monthsArray2 = scheduleValue2["months"];
+                                    if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Months = new List<int>();
+                                        foreach (JToken monthsValue in ((JArray)monthsArray2))
+                                        {
+                                            scheduleInstance.Months.Add(((int)monthsValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthDaysArray2 = scheduleValue2["monthDays"];
+                                    if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthDays = new List<int>();
+                                        foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
+                                        {
+                                            scheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
+                                    if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                        foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
+                                        {
+                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            
+                                            JToken dayValue = monthlyOccurrencesValue["day"];
+                                            if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                            {
+                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                            }
+                                            
+                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                            if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                            {
+                                                int occurrenceInstance = ((int)occurrenceValue);
+                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                JobStatus statusInstance = new JobStatus();
+                                jobInstance.Status = statusInstance;
+                                
+                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                }
+                                
+                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                }
+                                
+                                JToken executionCountValue = statusValue["executionCount"];
+                                if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
+                                {
+                                    int executionCountInstance = ((int)executionCountValue);
+                                    statusInstance.ExecutionCount = executionCountInstance;
+                                }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
+                                {
+                                    int failureCountInstance = ((int)failureCountValue);
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
+                                {
+                                    int faultedCountInstance = ((int)faultedCountValue);
+                                    statusInstance.FaultedCount = faultedCountInstance;
+                                }
+                            }
+                            
+                            JToken stateValue = responseDoc["state"];
+                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                            {
+                                JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                jobInstance.State = stateInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Job jobInstance = new Job();
-                        result.Job = jobInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            jobInstance.Id = idInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                            jobInstance.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken actionValue2 = responseDoc["action"];
-                        if (actionValue2 != null && actionValue2.Type != JTokenType.Null)
-                        {
-                            JobAction actionInstance = new JobAction();
-                            jobInstance.Action = actionInstance;
-                            
-                            JToken typeValue = actionValue2["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                actionInstance.Type = typeInstance;
-                            }
-                            
-                            JToken retryPolicyValue2 = actionValue2["retryPolicy"];
-                            if (retryPolicyValue2 != null && retryPolicyValue2.Type != JTokenType.Null)
-                            {
-                                RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                actionInstance.RetryPolicy = retryPolicyInstance;
-                                
-                                JToken retryTypeValue = retryPolicyValue2["retryType"];
-                                if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                {
-                                    RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                    retryPolicyInstance.RetryType = retryTypeInstance;
-                                }
-                                
-                                JToken retryIntervalValue = retryPolicyValue2["retryInterval"];
-                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                    retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                }
-                                
-                                JToken retryCountValue = retryPolicyValue2["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    retryPolicyInstance.RetryCount = retryCountInstance;
-                                }
-                            }
-                            
-                            JToken errorActionValue2 = actionValue2["errorAction"];
-                            if (errorActionValue2 != null && errorActionValue2.Type != JTokenType.Null)
-                            {
-                                JobErrorAction errorActionInstance = new JobErrorAction();
-                                actionInstance.ErrorAction = errorActionInstance;
-                                
-                                JToken typeValue2 = errorActionValue2["type"];
-                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                                {
-                                    JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                    errorActionInstance.Type = typeInstance2;
-                                }
-                                
-                                JToken requestValue3 = errorActionValue2["request"];
-                                if (requestValue3 != null && requestValue3.Type != JTokenType.Null)
-                                {
-                                    JobHttpRequest requestInstance = new JobHttpRequest();
-                                    errorActionInstance.Request = requestInstance;
-                                    
-                                    JToken uriValue = requestValue3["uri"];
-                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                    {
-                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                        requestInstance.Uri = uriInstance;
-                                    }
-                                    
-                                    JToken methodValue = requestValue3["method"];
-                                    if (methodValue != null && methodValue.Type != JTokenType.Null)
-                                    {
-                                        string methodInstance = ((string)methodValue);
-                                        requestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken headersSequenceElement = ((JToken)requestValue3["headers"]);
-                                    if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in headersSequenceElement)
-                                        {
-                                            string headersKey3 = ((string)property.Name);
-                                            string headersValue3 = ((string)property.Value);
-                                            requestInstance.Headers.Add(headersKey3, headersValue3);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue = requestValue3["body"];
-                                    if (bodyValue != null && bodyValue.Type != JTokenType.Null)
-                                    {
-                                        string bodyInstance = ((string)bodyValue);
-                                        requestInstance.Body = bodyInstance;
-                                    }
-                                    
-                                    JToken authenticationValue3 = requestValue3["authentication"];
-                                    if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
-                                    {
-                                        string typeName = ((string)authenticationValue3["type"]);
-                                        if (typeName == "ClientCertificate")
-                                        {
-                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                            
-                                            JToken passwordValue = authenticationValue3["password"];
-                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance = ((string)passwordValue);
-                                                clientCertAuthenticationInstance.Password = passwordInstance;
-                                            }
-                                            
-                                            JToken pfxValue = authenticationValue3["pfx"];
-                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                            {
-                                                string pfxInstance = ((string)pfxValue);
-                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                            }
-                                            
-                                            JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
-                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                            }
-                                            
-                                            JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
-                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                            {
-                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                            }
-                                            
-                                            JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
-                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                            }
-                                            
-                                            JToken typeValue3 = authenticationValue3["type"];
-                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                clientCertAuthenticationInstance.Type = typeInstance3;
-                                            }
-                                            requestInstance.Authentication = clientCertAuthenticationInstance;
-                                        }
-                                        if (typeName == "ActiveDirectoryOAuth")
-                                        {
-                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                            
-                                            JToken secretValue = authenticationValue3["secret"];
-                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                            {
-                                                string secretInstance = ((string)secretValue);
-                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                            }
-                                            
-                                            JToken tenantValue = authenticationValue3["tenant"];
-                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantInstance = ((string)tenantValue);
-                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                            }
-                                            
-                                            JToken audienceValue = authenticationValue3["audience"];
-                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                            {
-                                                string audienceInstance = ((string)audienceValue);
-                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                            }
-                                            
-                                            JToken clientIdValue = authenticationValue3["clientId"];
-                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                            {
-                                                string clientIdInstance = ((string)clientIdValue);
-                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                            }
-                                            
-                                            JToken typeValue4 = authenticationValue3["type"];
-                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                            }
-                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                        }
-                                        if (typeName == "Basic")
-                                        {
-                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                            
-                                            JToken usernameValue = authenticationValue3["username"];
-                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                            {
-                                                string usernameInstance = ((string)usernameValue);
-                                                basicAuthenticationInstance.Username = usernameInstance;
-                                            }
-                                            
-                                            JToken passwordValue2 = authenticationValue3["password"];
-                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance2 = ((string)passwordValue2);
-                                                basicAuthenticationInstance.Password = passwordInstance2;
-                                            }
-                                            
-                                            JToken typeValue5 = authenticationValue3["type"];
-                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                basicAuthenticationInstance.Type = typeInstance5;
-                                            }
-                                            requestInstance.Authentication = basicAuthenticationInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken queueMessageValue3 = errorActionValue2["queueMessage"];
-                                if (queueMessageValue3 != null && queueMessageValue3.Type != JTokenType.Null)
-                                {
-                                    JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                    errorActionInstance.QueueMessage = queueMessageInstance;
-                                    
-                                    JToken storageAccountValue = queueMessageValue3["storageAccount"];
-                                    if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                    {
-                                        string storageAccountInstance = ((string)storageAccountValue);
-                                        queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                    }
-                                    
-                                    JToken queueNameValue = queueMessageValue3["queueName"];
-                                    if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
-                                    {
-                                        string queueNameInstance = ((string)queueNameValue);
-                                        queueMessageInstance.QueueName = queueNameInstance;
-                                    }
-                                    
-                                    JToken sasTokenValue = queueMessageValue3["sasToken"];
-                                    if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
-                                    {
-                                        string sasTokenInstance = ((string)sasTokenValue);
-                                        queueMessageInstance.SasToken = sasTokenInstance;
-                                    }
-                                    
-                                    JToken messageValue = queueMessageValue3["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        queueMessageInstance.Message = messageInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken requestValue4 = actionValue2["request"];
-                            if (requestValue4 != null && requestValue4.Type != JTokenType.Null)
-                            {
-                                JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                actionInstance.Request = requestInstance2;
-                                
-                                JToken uriValue2 = requestValue4["uri"];
-                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
-                                {
-                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                    requestInstance2.Uri = uriInstance2;
-                                }
-                                
-                                JToken methodValue2 = requestValue4["method"];
-                                if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
-                                {
-                                    string methodInstance2 = ((string)methodValue2);
-                                    requestInstance2.Method = methodInstance2;
-                                }
-                                
-                                JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
-                                if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property2 in headersSequenceElement2)
-                                    {
-                                        string headersKey4 = ((string)property2.Name);
-                                        string headersValue4 = ((string)property2.Value);
-                                        requestInstance2.Headers.Add(headersKey4, headersValue4);
-                                    }
-                                }
-                                
-                                JToken bodyValue2 = requestValue4["body"];
-                                if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                {
-                                    string bodyInstance2 = ((string)bodyValue2);
-                                    requestInstance2.Body = bodyInstance2;
-                                }
-                                
-                                JToken authenticationValue4 = requestValue4["authentication"];
-                                if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
-                                {
-                                    string typeName2 = ((string)authenticationValue4["type"]);
-                                    if (typeName2 == "ClientCertificate")
-                                    {
-                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                        
-                                        JToken passwordValue3 = authenticationValue4["password"];
-                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance3 = ((string)passwordValue3);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
-                                        }
-                                        
-                                        JToken pfxValue2 = authenticationValue4["pfx"];
-                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                        {
-                                            string pfxInstance2 = ((string)pfxValue2);
-                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                        }
-                                        
-                                        JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
-                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                        }
-                                        
-                                        JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
-                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                        }
-                                        
-                                        JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
-                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                        }
-                                        
-                                        JToken typeValue6 = authenticationValue4["type"];
-                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                            clientCertAuthenticationInstance2.Type = typeInstance6;
-                                        }
-                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "ActiveDirectoryOAuth")
-                                    {
-                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                        
-                                        JToken secretValue2 = authenticationValue4["secret"];
-                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
-                                        {
-                                            string secretInstance2 = ((string)secretValue2);
-                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
-                                        }
-                                        
-                                        JToken tenantValue2 = authenticationValue4["tenant"];
-                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                        {
-                                            string tenantInstance2 = ((string)tenantValue2);
-                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                        }
-                                        
-                                        JToken audienceValue2 = authenticationValue4["audience"];
-                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                        {
-                                            string audienceInstance2 = ((string)audienceValue2);
-                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                        }
-                                        
-                                        JToken clientIdValue2 = authenticationValue4["clientId"];
-                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                        {
-                                            string clientIdInstance2 = ((string)clientIdValue2);
-                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                        }
-                                        
-                                        JToken typeValue7 = authenticationValue4["type"];
-                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                        }
-                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "Basic")
-                                    {
-                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                        
-                                        JToken usernameValue2 = authenticationValue4["username"];
-                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
-                                        {
-                                            string usernameInstance2 = ((string)usernameValue2);
-                                            basicAuthenticationInstance2.Username = usernameInstance2;
-                                        }
-                                        
-                                        JToken passwordValue4 = authenticationValue4["password"];
-                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance4 = ((string)passwordValue4);
-                                            basicAuthenticationInstance2.Password = passwordInstance4;
-                                        }
-                                        
-                                        JToken typeValue8 = authenticationValue4["type"];
-                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                            basicAuthenticationInstance2.Type = typeInstance8;
-                                        }
-                                        requestInstance2.Authentication = basicAuthenticationInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken queueMessageValue4 = actionValue2["queueMessage"];
-                            if (queueMessageValue4 != null && queueMessageValue4.Type != JTokenType.Null)
-                            {
-                                JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                actionInstance.QueueMessage = queueMessageInstance2;
-                                
-                                JToken storageAccountValue2 = queueMessageValue4["storageAccount"];
-                                if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
-                                {
-                                    string storageAccountInstance2 = ((string)storageAccountValue2);
-                                    queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                }
-                                
-                                JToken queueNameValue2 = queueMessageValue4["queueName"];
-                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
-                                {
-                                    string queueNameInstance2 = ((string)queueNameValue2);
-                                    queueMessageInstance2.QueueName = queueNameInstance2;
-                                }
-                                
-                                JToken sasTokenValue2 = queueMessageValue4["sasToken"];
-                                if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
-                                {
-                                    string sasTokenInstance2 = ((string)sasTokenValue2);
-                                    queueMessageInstance2.SasToken = sasTokenInstance2;
-                                }
-                                
-                                JToken messageValue2 = queueMessageValue4["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
-                                {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    queueMessageInstance2.Message = messageInstance2;
-                                }
-                            }
-                        }
-                        
-                        JToken recurrenceValue2 = responseDoc["recurrence"];
-                        if (recurrenceValue2 != null && recurrenceValue2.Type != JTokenType.Null)
-                        {
-                            JobRecurrence recurrenceInstance = new JobRecurrence();
-                            jobInstance.Recurrence = recurrenceInstance;
-                            
-                            JToken frequencyValue = recurrenceValue2["frequency"];
-                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                recurrenceInstance.Frequency = frequencyInstance;
-                            }
-                            
-                            JToken intervalValue = recurrenceValue2["interval"];
-                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                            {
-                                int intervalInstance = ((int)intervalValue);
-                                recurrenceInstance.Interval = intervalInstance;
-                            }
-                            
-                            JToken countValue = recurrenceValue2["count"];
-                            if (countValue != null && countValue.Type != JTokenType.Null)
-                            {
-                                int countInstance = ((int)countValue);
-                                recurrenceInstance.Count = countInstance;
-                            }
-                            
-                            JToken endTimeValue = recurrenceValue2["endTime"];
-                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                recurrenceInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken scheduleValue2 = recurrenceValue2["schedule"];
-                            if (scheduleValue2 != null && scheduleValue2.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                recurrenceInstance.Schedule = scheduleInstance;
-                                
-                                JToken minutesArray2 = scheduleValue2["minutes"];
-                                if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Minutes = new List<int>();
-                                    foreach (JToken minutesValue in ((JArray)minutesArray2))
-                                    {
-                                        scheduleInstance.Minutes.Add(((int)minutesValue));
-                                    }
-                                }
-                                
-                                JToken hoursArray2 = scheduleValue2["hours"];
-                                if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Hours = new List<int>();
-                                    foreach (JToken hoursValue in ((JArray)hoursArray2))
-                                    {
-                                        scheduleInstance.Hours.Add(((int)hoursValue));
-                                    }
-                                }
-                                
-                                JToken weekDaysArray2 = scheduleValue2["weekDays"];
-                                if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Days = new List<JobScheduleDay>();
-                                    foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
-                                    {
-                                        scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                    }
-                                }
-                                
-                                JToken monthsArray2 = scheduleValue2["months"];
-                                if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Months = new List<int>();
-                                    foreach (JToken monthsValue in ((JArray)monthsArray2))
-                                    {
-                                        scheduleInstance.Months.Add(((int)monthsValue));
-                                    }
-                                }
-                                
-                                JToken monthDaysArray2 = scheduleValue2["monthDays"];
-                                if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthDays = new List<int>();
-                                    foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
-                                    {
-                                        scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                    }
-                                }
-                                
-                                JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
-                                if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                    foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
-                                    {
-                                        JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                        scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                        
-                                        JToken dayValue = monthlyOccurrencesValue["day"];
-                                        if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                        {
-                                            JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                            jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                        }
-                                        
-                                        JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                        if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                        {
-                                            int occurrenceInstance = ((int)occurrenceValue);
-                                            jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        JToken statusValue = responseDoc["status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                        {
-                            JobStatus statusInstance = new JobStatus();
-                            jobInstance.Status = statusInstance;
-                            
-                            JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                            if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                statusInstance.LastExecutionTime = lastExecutionTimeInstance;
-                            }
-                            
-                            JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                            if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                            }
-                            
-                            JToken executionCountValue = statusValue["executionCount"];
-                            if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                            {
-                                int executionCountInstance = ((int)executionCountValue);
-                                statusInstance.ExecutionCount = executionCountInstance;
-                            }
-                            
-                            JToken failureCountValue = statusValue["failureCount"];
-                            if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                            {
-                                int failureCountInstance = ((int)failureCountValue);
-                                statusInstance.FailureCount = failureCountInstance;
-                            }
-                            
-                            JToken faultedCountValue = statusValue["faultedCount"];
-                            if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                            {
-                                int faultedCountInstance = ((int)faultedCountValue);
-                                statusInstance.FaultedCount = faultedCountInstance;
-                            }
-                        }
-                        
-                        JToken stateValue = responseDoc["state"];
-                        if (stateValue != null && stateValue.Type != JTokenType.Null)
-                        {
-                            JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                            jobInstance.State = stateInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2482,7 +2524,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2516,7 +2558,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string jobId, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -2525,19 +2567,38 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2572,13 +2633,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2587,14 +2648,15 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2603,7 +2665,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2636,7 +2698,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Get Job operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<JobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -2645,19 +2707,38 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2692,13 +2773,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2707,7 +2788,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2715,643 +2796,646 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobInstance.Id = idInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                jobInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken actionValue = responseDoc["action"];
+                            if (actionValue != null && actionValue.Type != JTokenType.Null)
+                            {
+                                JobAction actionInstance = new JobAction();
+                                jobInstance.Action = actionInstance;
+                                
+                                JToken typeValue = actionValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                    actionInstance.Type = typeInstance;
+                                }
+                                
+                                JToken retryPolicyValue = actionValue["retryPolicy"];
+                                if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
+                                {
+                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                    actionInstance.RetryPolicy = retryPolicyInstance;
+                                    
+                                    JToken retryTypeValue = retryPolicyValue["retryType"];
+                                    if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
+                                    {
+                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                        retryPolicyInstance.RetryType = retryTypeInstance;
+                                    }
+                                    
+                                    JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = retryPolicyValue["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        retryPolicyInstance.RetryCount = retryCountInstance;
+                                    }
+                                }
+                                
+                                JToken errorActionValue = actionValue["errorAction"];
+                                if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                {
+                                    JobErrorAction errorActionInstance = new JobErrorAction();
+                                    actionInstance.ErrorAction = errorActionInstance;
+                                    
+                                    JToken typeValue2 = errorActionValue["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    {
+                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                        errorActionInstance.Type = typeInstance2;
+                                    }
+                                    
+                                    JToken requestValue = errorActionValue["request"];
+                                    if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                    {
+                                        JobHttpRequest requestInstance = new JobHttpRequest();
+                                        errorActionInstance.Request = requestInstance;
+                                        
+                                        JToken uriValue = requestValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                            requestInstance.Uri = uriInstance;
+                                        }
+                                        
+                                        JToken methodValue = requestValue["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            requestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken headersSequenceElement = ((JToken)requestValue["headers"]);
+                                        if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in headersSequenceElement)
+                                            {
+                                                string headersKey = ((string)property.Name);
+                                                string headersValue = ((string)property.Value);
+                                                requestInstance.Headers.Add(headersKey, headersValue);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue = requestValue["body"];
+                                        if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                        {
+                                            string bodyInstance = ((string)bodyValue);
+                                            requestInstance.Body = bodyInstance;
+                                        }
+                                        
+                                        JToken authenticationValue = requestValue["authentication"];
+                                        if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)authenticationValue["type"]);
+                                            if (typeName == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue = authenticationValue["password"];
+                                                if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance = ((string)passwordValue);
+                                                    clientCertAuthenticationInstance.Password = passwordInstance;
+                                                }
+                                                
+                                                JToken pfxValue = authenticationValue["pfx"];
+                                                if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance = ((string)pfxValue);
+                                                    clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                    clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                }
+                                                
+                                                JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                    clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                    clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                }
+                                                
+                                                JToken typeValue3 = authenticationValue["type"];
+                                                if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                    clientCertAuthenticationInstance.Type = typeInstance3;
+                                                }
+                                                requestInstance.Authentication = clientCertAuthenticationInstance;
+                                            }
+                                            if (typeName == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue = authenticationValue["secret"];
+                                                if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance = ((string)secretValue);
+                                                    aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                }
+                                                
+                                                JToken tenantValue = authenticationValue["tenant"];
+                                                if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance = ((string)tenantValue);
+                                                    aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                }
+                                                
+                                                JToken audienceValue = authenticationValue["audience"];
+                                                if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance = ((string)audienceValue);
+                                                    aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                }
+                                                
+                                                JToken clientIdValue = authenticationValue["clientId"];
+                                                if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance = ((string)clientIdValue);
+                                                    aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                }
+                                                requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                            }
+                                            if (typeName == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                
+                                                JToken usernameValue = authenticationValue["username"];
+                                                if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance = ((string)usernameValue);
+                                                    basicAuthenticationInstance.Username = usernameInstance;
+                                                }
+                                                
+                                                JToken passwordValue2 = authenticationValue["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    basicAuthenticationInstance.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken typeValue5 = authenticationValue["type"];
+                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                    basicAuthenticationInstance.Type = typeInstance5;
+                                                }
+                                                requestInstance.Authentication = basicAuthenticationInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue = errorActionValue["queueMessage"];
+                                    if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
+                                    {
+                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                        errorActionInstance.QueueMessage = queueMessageInstance;
+                                        
+                                        JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                        if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                        {
+                                            string storageAccountInstance = ((string)storageAccountValue);
+                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                        }
+                                        
+                                        JToken queueNameValue = queueMessageValue["queueName"];
+                                        if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance = ((string)queueNameValue);
+                                            queueMessageInstance.QueueName = queueNameInstance;
+                                        }
+                                        
+                                        JToken sasTokenValue = queueMessageValue["sasToken"];
+                                        if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                        {
+                                            string sasTokenInstance = ((string)sasTokenValue);
+                                            queueMessageInstance.SasToken = sasTokenInstance;
+                                        }
+                                        
+                                        JToken messageValue = queueMessageValue["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            queueMessageInstance.Message = messageInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken requestValue2 = actionValue["request"];
+                                if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                {
+                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                    actionInstance.Request = requestInstance2;
+                                    
+                                    JToken uriValue2 = requestValue2["uri"];
+                                    if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                        requestInstance2.Uri = uriInstance2;
+                                    }
+                                    
+                                    JToken methodValue2 = requestValue2["method"];
+                                    if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                    {
+                                        string methodInstance2 = ((string)methodValue2);
+                                        requestInstance2.Method = methodInstance2;
+                                    }
+                                    
+                                    JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
+                                    if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        {
+                                            string headersKey2 = ((string)property2.Name);
+                                            string headersValue2 = ((string)property2.Value);
+                                            requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                        }
+                                    }
+                                    
+                                    JToken bodyValue2 = requestValue2["body"];
+                                    if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
+                                    {
+                                        string bodyInstance2 = ((string)bodyValue2);
+                                        requestInstance2.Body = bodyInstance2;
+                                    }
+                                    
+                                    JToken authenticationValue2 = requestValue2["authentication"];
+                                    if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)authenticationValue2["type"]);
+                                        if (typeName2 == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue3 = authenticationValue2["password"];
+                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance3 = ((string)passwordValue3);
+                                                clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                            }
+                                            
+                                            JToken pfxValue2 = authenticationValue2["pfx"];
+                                            if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance2 = ((string)pfxValue2);
+                                                clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                            if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                            }
+                                            
+                                            JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                            if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                            if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue2["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                            }
+                                            requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue2 = authenticationValue2["secret"];
+                                            if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance2 = ((string)secretValue2);
+                                                aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                            }
+                                            
+                                            JToken tenantValue2 = authenticationValue2["tenant"];
+                                            if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance2 = ((string)tenantValue2);
+                                                aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                            }
+                                            
+                                            JToken audienceValue2 = authenticationValue2["audience"];
+                                            if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance2 = ((string)audienceValue2);
+                                                aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                            }
+                                            
+                                            JToken clientIdValue2 = authenticationValue2["clientId"];
+                                            if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance2 = ((string)clientIdValue2);
+                                                aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue2["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                            }
+                                            requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                            
+                                            JToken usernameValue2 = authenticationValue2["username"];
+                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance2 = ((string)usernameValue2);
+                                                basicAuthenticationInstance2.Username = usernameInstance2;
+                                            }
+                                            
+                                            JToken passwordValue4 = authenticationValue2["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                basicAuthenticationInstance2.Password = passwordInstance4;
+                                            }
+                                            
+                                            JToken typeValue8 = authenticationValue2["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                            }
+                                            requestInstance2.Authentication = basicAuthenticationInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken queueMessageValue2 = actionValue["queueMessage"];
+                                if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                {
+                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                    actionInstance.QueueMessage = queueMessageInstance2;
+                                    
+                                    JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                    if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountInstance2 = ((string)storageAccountValue2);
+                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                    }
+                                    
+                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance2 = ((string)queueNameValue2);
+                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                    }
+                                    
+                                    JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                    if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                    {
+                                        string sasTokenInstance2 = ((string)sasTokenValue2);
+                                        queueMessageInstance2.SasToken = sasTokenInstance2;
+                                    }
+                                    
+                                    JToken messageValue2 = queueMessageValue2["message"];
+                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance2 = ((string)messageValue2);
+                                        queueMessageInstance2.Message = messageInstance2;
+                                    }
+                                }
+                            }
+                            
+                            JToken recurrenceValue = responseDoc["recurrence"];
+                            if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
+                            {
+                                JobRecurrence recurrenceInstance = new JobRecurrence();
+                                jobInstance.Recurrence = recurrenceInstance;
+                                
+                                JToken frequencyValue = recurrenceValue["frequency"];
+                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                    recurrenceInstance.Frequency = frequencyInstance;
+                                }
+                                
+                                JToken intervalValue = recurrenceValue["interval"];
+                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                {
+                                    int intervalInstance = ((int)intervalValue);
+                                    recurrenceInstance.Interval = intervalInstance;
+                                }
+                                
+                                JToken countValue = recurrenceValue["count"];
+                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                {
+                                    int countInstance = ((int)countValue);
+                                    recurrenceInstance.Count = countInstance;
+                                }
+                                
+                                JToken endTimeValue = recurrenceValue["endTime"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                    recurrenceInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken scheduleValue = recurrenceValue["schedule"];
+                                if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                    recurrenceInstance.Schedule = scheduleInstance;
+                                    
+                                    JToken minutesArray = scheduleValue["minutes"];
+                                    if (minutesArray != null && minutesArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Minutes = new List<int>();
+                                        foreach (JToken minutesValue in ((JArray)minutesArray))
+                                        {
+                                            scheduleInstance.Minutes.Add(((int)minutesValue));
+                                        }
+                                    }
+                                    
+                                    JToken hoursArray = scheduleValue["hours"];
+                                    if (hoursArray != null && hoursArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Hours = new List<int>();
+                                        foreach (JToken hoursValue in ((JArray)hoursArray))
+                                        {
+                                            scheduleInstance.Hours.Add(((int)hoursValue));
+                                        }
+                                    }
+                                    
+                                    JToken weekDaysArray = scheduleValue["weekDays"];
+                                    if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Days = new List<JobScheduleDay>();
+                                        foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
+                                        {
+                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
+                                        }
+                                    }
+                                    
+                                    JToken monthsArray = scheduleValue["months"];
+                                    if (monthsArray != null && monthsArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Months = new List<int>();
+                                        foreach (JToken monthsValue in ((JArray)monthsArray))
+                                        {
+                                            scheduleInstance.Months.Add(((int)monthsValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthDaysArray = scheduleValue["monthDays"];
+                                    if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthDays = new List<int>();
+                                        foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
+                                        {
+                                            scheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
+                                    if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                        foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
+                                        {
+                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            
+                                            JToken dayValue = monthlyOccurrencesValue["day"];
+                                            if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                            {
+                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                            }
+                                            
+                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                            if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                            {
+                                                int occurrenceInstance = ((int)occurrenceValue);
+                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                JobStatus statusInstance = new JobStatus();
+                                jobInstance.Status = statusInstance;
+                                
+                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                }
+                                
+                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                }
+                                
+                                JToken executionCountValue = statusValue["executionCount"];
+                                if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
+                                {
+                                    int executionCountInstance = ((int)executionCountValue);
+                                    statusInstance.ExecutionCount = executionCountInstance;
+                                }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
+                                {
+                                    int failureCountInstance = ((int)failureCountValue);
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
+                                {
+                                    int faultedCountInstance = ((int)faultedCountValue);
+                                    statusInstance.FaultedCount = faultedCountInstance;
+                                }
+                            }
+                            
+                            JToken stateValue = responseDoc["state"];
+                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                            {
+                                JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                jobInstance.State = stateInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Job jobInstance = new Job();
-                        result.Job = jobInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            jobInstance.Id = idInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                            jobInstance.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken actionValue = responseDoc["action"];
-                        if (actionValue != null && actionValue.Type != JTokenType.Null)
-                        {
-                            JobAction actionInstance = new JobAction();
-                            jobInstance.Action = actionInstance;
-                            
-                            JToken typeValue = actionValue["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                actionInstance.Type = typeInstance;
-                            }
-                            
-                            JToken retryPolicyValue = actionValue["retryPolicy"];
-                            if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
-                            {
-                                RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                actionInstance.RetryPolicy = retryPolicyInstance;
-                                
-                                JToken retryTypeValue = retryPolicyValue["retryType"];
-                                if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                {
-                                    RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                    retryPolicyInstance.RetryType = retryTypeInstance;
-                                }
-                                
-                                JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                    retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                }
-                                
-                                JToken retryCountValue = retryPolicyValue["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    retryPolicyInstance.RetryCount = retryCountInstance;
-                                }
-                            }
-                            
-                            JToken errorActionValue = actionValue["errorAction"];
-                            if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
-                            {
-                                JobErrorAction errorActionInstance = new JobErrorAction();
-                                actionInstance.ErrorAction = errorActionInstance;
-                                
-                                JToken typeValue2 = errorActionValue["type"];
-                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                                {
-                                    JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                    errorActionInstance.Type = typeInstance2;
-                                }
-                                
-                                JToken requestValue = errorActionValue["request"];
-                                if (requestValue != null && requestValue.Type != JTokenType.Null)
-                                {
-                                    JobHttpRequest requestInstance = new JobHttpRequest();
-                                    errorActionInstance.Request = requestInstance;
-                                    
-                                    JToken uriValue = requestValue["uri"];
-                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                    {
-                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                        requestInstance.Uri = uriInstance;
-                                    }
-                                    
-                                    JToken methodValue = requestValue["method"];
-                                    if (methodValue != null && methodValue.Type != JTokenType.Null)
-                                    {
-                                        string methodInstance = ((string)methodValue);
-                                        requestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken headersSequenceElement = ((JToken)requestValue["headers"]);
-                                    if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in headersSequenceElement)
-                                        {
-                                            string headersKey = ((string)property.Name);
-                                            string headersValue = ((string)property.Value);
-                                            requestInstance.Headers.Add(headersKey, headersValue);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue = requestValue["body"];
-                                    if (bodyValue != null && bodyValue.Type != JTokenType.Null)
-                                    {
-                                        string bodyInstance = ((string)bodyValue);
-                                        requestInstance.Body = bodyInstance;
-                                    }
-                                    
-                                    JToken authenticationValue = requestValue["authentication"];
-                                    if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
-                                    {
-                                        string typeName = ((string)authenticationValue["type"]);
-                                        if (typeName == "ClientCertificate")
-                                        {
-                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                            
-                                            JToken passwordValue = authenticationValue["password"];
-                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance = ((string)passwordValue);
-                                                clientCertAuthenticationInstance.Password = passwordInstance;
-                                            }
-                                            
-                                            JToken pfxValue = authenticationValue["pfx"];
-                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                            {
-                                                string pfxInstance = ((string)pfxValue);
-                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                            }
-                                            
-                                            JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
-                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                            }
-                                            
-                                            JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
-                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                            {
-                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                            }
-                                            
-                                            JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
-                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                            }
-                                            
-                                            JToken typeValue3 = authenticationValue["type"];
-                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                clientCertAuthenticationInstance.Type = typeInstance3;
-                                            }
-                                            requestInstance.Authentication = clientCertAuthenticationInstance;
-                                        }
-                                        if (typeName == "ActiveDirectoryOAuth")
-                                        {
-                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                            
-                                            JToken secretValue = authenticationValue["secret"];
-                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                            {
-                                                string secretInstance = ((string)secretValue);
-                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                            }
-                                            
-                                            JToken tenantValue = authenticationValue["tenant"];
-                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantInstance = ((string)tenantValue);
-                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                            }
-                                            
-                                            JToken audienceValue = authenticationValue["audience"];
-                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                            {
-                                                string audienceInstance = ((string)audienceValue);
-                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                            }
-                                            
-                                            JToken clientIdValue = authenticationValue["clientId"];
-                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                            {
-                                                string clientIdInstance = ((string)clientIdValue);
-                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                            }
-                                            
-                                            JToken typeValue4 = authenticationValue["type"];
-                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                            }
-                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                        }
-                                        if (typeName == "Basic")
-                                        {
-                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                            
-                                            JToken usernameValue = authenticationValue["username"];
-                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                            {
-                                                string usernameInstance = ((string)usernameValue);
-                                                basicAuthenticationInstance.Username = usernameInstance;
-                                            }
-                                            
-                                            JToken passwordValue2 = authenticationValue["password"];
-                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance2 = ((string)passwordValue2);
-                                                basicAuthenticationInstance.Password = passwordInstance2;
-                                            }
-                                            
-                                            JToken typeValue5 = authenticationValue["type"];
-                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                basicAuthenticationInstance.Type = typeInstance5;
-                                            }
-                                            requestInstance.Authentication = basicAuthenticationInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken queueMessageValue = errorActionValue["queueMessage"];
-                                if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
-                                {
-                                    JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                    errorActionInstance.QueueMessage = queueMessageInstance;
-                                    
-                                    JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                    if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                    {
-                                        string storageAccountInstance = ((string)storageAccountValue);
-                                        queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                    }
-                                    
-                                    JToken queueNameValue = queueMessageValue["queueName"];
-                                    if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
-                                    {
-                                        string queueNameInstance = ((string)queueNameValue);
-                                        queueMessageInstance.QueueName = queueNameInstance;
-                                    }
-                                    
-                                    JToken sasTokenValue = queueMessageValue["sasToken"];
-                                    if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
-                                    {
-                                        string sasTokenInstance = ((string)sasTokenValue);
-                                        queueMessageInstance.SasToken = sasTokenInstance;
-                                    }
-                                    
-                                    JToken messageValue = queueMessageValue["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        queueMessageInstance.Message = messageInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken requestValue2 = actionValue["request"];
-                            if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
-                            {
-                                JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                actionInstance.Request = requestInstance2;
-                                
-                                JToken uriValue2 = requestValue2["uri"];
-                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
-                                {
-                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                    requestInstance2.Uri = uriInstance2;
-                                }
-                                
-                                JToken methodValue2 = requestValue2["method"];
-                                if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
-                                {
-                                    string methodInstance2 = ((string)methodValue2);
-                                    requestInstance2.Method = methodInstance2;
-                                }
-                                
-                                JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
-                                if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property2 in headersSequenceElement2)
-                                    {
-                                        string headersKey2 = ((string)property2.Name);
-                                        string headersValue2 = ((string)property2.Value);
-                                        requestInstance2.Headers.Add(headersKey2, headersValue2);
-                                    }
-                                }
-                                
-                                JToken bodyValue2 = requestValue2["body"];
-                                if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                {
-                                    string bodyInstance2 = ((string)bodyValue2);
-                                    requestInstance2.Body = bodyInstance2;
-                                }
-                                
-                                JToken authenticationValue2 = requestValue2["authentication"];
-                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
-                                {
-                                    string typeName2 = ((string)authenticationValue2["type"]);
-                                    if (typeName2 == "ClientCertificate")
-                                    {
-                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                        
-                                        JToken passwordValue3 = authenticationValue2["password"];
-                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance3 = ((string)passwordValue3);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
-                                        }
-                                        
-                                        JToken pfxValue2 = authenticationValue2["pfx"];
-                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                        {
-                                            string pfxInstance2 = ((string)pfxValue2);
-                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                        }
-                                        
-                                        JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
-                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                        }
-                                        
-                                        JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
-                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                        }
-                                        
-                                        JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
-                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                        }
-                                        
-                                        JToken typeValue6 = authenticationValue2["type"];
-                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                            clientCertAuthenticationInstance2.Type = typeInstance6;
-                                        }
-                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "ActiveDirectoryOAuth")
-                                    {
-                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                        
-                                        JToken secretValue2 = authenticationValue2["secret"];
-                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
-                                        {
-                                            string secretInstance2 = ((string)secretValue2);
-                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
-                                        }
-                                        
-                                        JToken tenantValue2 = authenticationValue2["tenant"];
-                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                        {
-                                            string tenantInstance2 = ((string)tenantValue2);
-                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                        }
-                                        
-                                        JToken audienceValue2 = authenticationValue2["audience"];
-                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                        {
-                                            string audienceInstance2 = ((string)audienceValue2);
-                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                        }
-                                        
-                                        JToken clientIdValue2 = authenticationValue2["clientId"];
-                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                        {
-                                            string clientIdInstance2 = ((string)clientIdValue2);
-                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                        }
-                                        
-                                        JToken typeValue7 = authenticationValue2["type"];
-                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                        }
-                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "Basic")
-                                    {
-                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                        
-                                        JToken usernameValue2 = authenticationValue2["username"];
-                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
-                                        {
-                                            string usernameInstance2 = ((string)usernameValue2);
-                                            basicAuthenticationInstance2.Username = usernameInstance2;
-                                        }
-                                        
-                                        JToken passwordValue4 = authenticationValue2["password"];
-                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance4 = ((string)passwordValue4);
-                                            basicAuthenticationInstance2.Password = passwordInstance4;
-                                        }
-                                        
-                                        JToken typeValue8 = authenticationValue2["type"];
-                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                            basicAuthenticationInstance2.Type = typeInstance8;
-                                        }
-                                        requestInstance2.Authentication = basicAuthenticationInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken queueMessageValue2 = actionValue["queueMessage"];
-                            if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
-                            {
-                                JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                actionInstance.QueueMessage = queueMessageInstance2;
-                                
-                                JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
-                                {
-                                    string storageAccountInstance2 = ((string)storageAccountValue2);
-                                    queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                }
-                                
-                                JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
-                                {
-                                    string queueNameInstance2 = ((string)queueNameValue2);
-                                    queueMessageInstance2.QueueName = queueNameInstance2;
-                                }
-                                
-                                JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
-                                {
-                                    string sasTokenInstance2 = ((string)sasTokenValue2);
-                                    queueMessageInstance2.SasToken = sasTokenInstance2;
-                                }
-                                
-                                JToken messageValue2 = queueMessageValue2["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
-                                {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    queueMessageInstance2.Message = messageInstance2;
-                                }
-                            }
-                        }
-                        
-                        JToken recurrenceValue = responseDoc["recurrence"];
-                        if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
-                        {
-                            JobRecurrence recurrenceInstance = new JobRecurrence();
-                            jobInstance.Recurrence = recurrenceInstance;
-                            
-                            JToken frequencyValue = recurrenceValue["frequency"];
-                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                recurrenceInstance.Frequency = frequencyInstance;
-                            }
-                            
-                            JToken intervalValue = recurrenceValue["interval"];
-                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                            {
-                                int intervalInstance = ((int)intervalValue);
-                                recurrenceInstance.Interval = intervalInstance;
-                            }
-                            
-                            JToken countValue = recurrenceValue["count"];
-                            if (countValue != null && countValue.Type != JTokenType.Null)
-                            {
-                                int countInstance = ((int)countValue);
-                                recurrenceInstance.Count = countInstance;
-                            }
-                            
-                            JToken endTimeValue = recurrenceValue["endTime"];
-                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                recurrenceInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken scheduleValue = recurrenceValue["schedule"];
-                            if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                recurrenceInstance.Schedule = scheduleInstance;
-                                
-                                JToken minutesArray = scheduleValue["minutes"];
-                                if (minutesArray != null && minutesArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Minutes = new List<int>();
-                                    foreach (JToken minutesValue in ((JArray)minutesArray))
-                                    {
-                                        scheduleInstance.Minutes.Add(((int)minutesValue));
-                                    }
-                                }
-                                
-                                JToken hoursArray = scheduleValue["hours"];
-                                if (hoursArray != null && hoursArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Hours = new List<int>();
-                                    foreach (JToken hoursValue in ((JArray)hoursArray))
-                                    {
-                                        scheduleInstance.Hours.Add(((int)hoursValue));
-                                    }
-                                }
-                                
-                                JToken weekDaysArray = scheduleValue["weekDays"];
-                                if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Days = new List<JobScheduleDay>();
-                                    foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
-                                    {
-                                        scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                    }
-                                }
-                                
-                                JToken monthsArray = scheduleValue["months"];
-                                if (monthsArray != null && monthsArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Months = new List<int>();
-                                    foreach (JToken monthsValue in ((JArray)monthsArray))
-                                    {
-                                        scheduleInstance.Months.Add(((int)monthsValue));
-                                    }
-                                }
-                                
-                                JToken monthDaysArray = scheduleValue["monthDays"];
-                                if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthDays = new List<int>();
-                                    foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
-                                    {
-                                        scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                    }
-                                }
-                                
-                                JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
-                                if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                    foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
-                                    {
-                                        JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                        scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                        
-                                        JToken dayValue = monthlyOccurrencesValue["day"];
-                                        if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                        {
-                                            JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                            jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                        }
-                                        
-                                        JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                        if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                        {
-                                            int occurrenceInstance = ((int)occurrenceValue);
-                                            jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        JToken statusValue = responseDoc["status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                        {
-                            JobStatus statusInstance = new JobStatus();
-                            jobInstance.Status = statusInstance;
-                            
-                            JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                            if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                statusInstance.LastExecutionTime = lastExecutionTimeInstance;
-                            }
-                            
-                            JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                            if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                            }
-                            
-                            JToken executionCountValue = statusValue["executionCount"];
-                            if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                            {
-                                int executionCountInstance = ((int)executionCountValue);
-                                statusInstance.ExecutionCount = executionCountInstance;
-                            }
-                            
-                            JToken failureCountValue = statusValue["failureCount"];
-                            if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                            {
-                                int failureCountInstance = ((int)failureCountValue);
-                                statusInstance.FailureCount = failureCountInstance;
-                            }
-                            
-                            JToken faultedCountValue = statusValue["faultedCount"];
-                            if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                            {
-                                int faultedCountInstance = ((int)faultedCountValue);
-                                statusInstance.FaultedCount = faultedCountInstance;
-                            }
-                        }
-                        
-                        JToken stateValue = responseDoc["state"];
-                        if (stateValue != null && stateValue.Type != JTokenType.Null)
-                        {
-                            JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                            jobInstance.State = stateInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3360,7 +3444,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3396,7 +3480,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Get Job History operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobGetHistoryResponse> GetHistoryAsync(string jobId, JobGetHistoryParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobGetHistoryResponse> GetHistoryAsync(string jobId, JobGetHistoryParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -3409,27 +3493,47 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetHistoryAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetHistoryAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            url = url + "/history";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
             if (parameters.Skip != null)
             {
-                url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString());
+                queryParameters.Add("$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString()));
             }
             if (parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3465,13 +3569,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3480,7 +3584,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3488,98 +3592,101 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobGetHistoryResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobGetHistoryResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken jobHistoryArray = responseDoc;
-                        if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobGetHistoryResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken jobHistoryValue in ((JArray)jobHistoryArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken jobHistoryArray = responseDoc;
+                            if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
                             {
-                                JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
-                                result.JobHistory.Add(jobHistoryEntryInstance);
-                                
-                                JToken jobIdValue = jobHistoryValue["jobId"];
-                                if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                foreach (JToken jobHistoryValue in ((JArray)jobHistoryArray))
                                 {
-                                    string jobIdInstance = ((string)jobIdValue);
-                                    jobHistoryEntryInstance.Id = jobIdInstance;
-                                }
-                                
-                                JToken timestampValue = jobHistoryValue["timestamp"];
-                                if (timestampValue != null && timestampValue.Type != JTokenType.Null)
-                                {
-                                    DateTime timestampInstance = ((DateTime)timestampValue);
-                                    jobHistoryEntryInstance.Timestamp = timestampInstance;
-                                }
-                                
-                                JToken startTimeValue = jobHistoryValue["startTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    jobHistoryEntryInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken endTimeValue = jobHistoryValue["endTime"];
-                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                    jobHistoryEntryInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken stateValue = jobHistoryValue["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                                    jobHistoryEntryInstance.State = stateInstance;
-                                }
-                                
-                                JToken messageValue = jobHistoryValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    jobHistoryEntryInstance.Message = messageInstance;
-                                }
-                                
-                                JToken statusValue = jobHistoryValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus(((string)statusValue));
-                                    jobHistoryEntryInstance.Status = statusInstance;
-                                }
-                                
-                                JToken actionNameValue = jobHistoryValue["actionName"];
-                                if (actionNameValue != null && actionNameValue.Type != JTokenType.Null)
-                                {
-                                    JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName(((string)actionNameValue));
-                                    jobHistoryEntryInstance.ActionName = actionNameInstance;
-                                }
-                                
-                                JToken repeatCountValue = jobHistoryValue["repeatCount"];
-                                if (repeatCountValue != null && repeatCountValue.Type != JTokenType.Null)
-                                {
-                                    int repeatCountInstance = ((int)repeatCountValue);
-                                    jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
-                                }
-                                
-                                JToken retryCountValue = jobHistoryValue["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                    JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
+                                    result.JobHistory.Add(jobHistoryEntryInstance);
+                                    
+                                    JToken jobIdValue = jobHistoryValue["jobId"];
+                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                    {
+                                        string jobIdInstance = ((string)jobIdValue);
+                                        jobHistoryEntryInstance.Id = jobIdInstance;
+                                    }
+                                    
+                                    JToken timestampValue = jobHistoryValue["timestamp"];
+                                    if (timestampValue != null && timestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime timestampInstance = ((DateTime)timestampValue);
+                                        jobHistoryEntryInstance.Timestamp = timestampInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = jobHistoryValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobHistoryEntryInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = jobHistoryValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        jobHistoryEntryInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken stateValue = jobHistoryValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                    {
+                                        JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                        jobHistoryEntryInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken messageValue = jobHistoryValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        jobHistoryEntryInstance.Message = messageInstance;
+                                    }
+                                    
+                                    JToken statusValue = jobHistoryValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus(((string)statusValue));
+                                        jobHistoryEntryInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken actionNameValue = jobHistoryValue["actionName"];
+                                    if (actionNameValue != null && actionNameValue.Type != JTokenType.Null)
+                                    {
+                                        JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName(((string)actionNameValue));
+                                        jobHistoryEntryInstance.ActionName = actionNameInstance;
+                                    }
+                                    
+                                    JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                                    if (repeatCountValue != null && repeatCountValue.Type != JTokenType.Null)
+                                    {
+                                        int repeatCountInstance = ((int)repeatCountValue);
+                                        jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = jobHistoryValue["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3588,7 +3695,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3625,7 +3732,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Get Job History operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobGetHistoryResponse> GetHistoryWithFilterAsync(string jobId, JobGetHistoryWithFilterParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobGetHistoryResponse> GetHistoryWithFilterAsync(string jobId, JobGetHistoryWithFilterParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -3638,28 +3745,53 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetHistoryWithFilterAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetHistoryWithFilterAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=status eq " + Uri.EscapeDataString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            url = url + "/history";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add("status eq " + Uri.EscapeDataString(SchedulerClient.JobHistoryStatusToString(parameters.Status)));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (parameters.Skip != null)
             {
-                url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString());
+                queryParameters.Add("$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString()));
             }
             if (parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3695,13 +3827,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3710,7 +3842,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3718,98 +3850,101 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobGetHistoryResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobGetHistoryResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken jobHistoryArray = responseDoc;
-                        if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobGetHistoryResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken jobHistoryValue in ((JArray)jobHistoryArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken jobHistoryArray = responseDoc;
+                            if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
                             {
-                                JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
-                                result.JobHistory.Add(jobHistoryEntryInstance);
-                                
-                                JToken jobIdValue = jobHistoryValue["jobId"];
-                                if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                foreach (JToken jobHistoryValue in ((JArray)jobHistoryArray))
                                 {
-                                    string jobIdInstance = ((string)jobIdValue);
-                                    jobHistoryEntryInstance.Id = jobIdInstance;
-                                }
-                                
-                                JToken timestampValue = jobHistoryValue["timestamp"];
-                                if (timestampValue != null && timestampValue.Type != JTokenType.Null)
-                                {
-                                    DateTime timestampInstance = ((DateTime)timestampValue);
-                                    jobHistoryEntryInstance.Timestamp = timestampInstance;
-                                }
-                                
-                                JToken startTimeValue = jobHistoryValue["startTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    jobHistoryEntryInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken endTimeValue = jobHistoryValue["endTime"];
-                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                    jobHistoryEntryInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken stateValue = jobHistoryValue["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                                    jobHistoryEntryInstance.State = stateInstance;
-                                }
-                                
-                                JToken messageValue = jobHistoryValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    jobHistoryEntryInstance.Message = messageInstance;
-                                }
-                                
-                                JToken statusValue = jobHistoryValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus(((string)statusValue));
-                                    jobHistoryEntryInstance.Status = statusInstance;
-                                }
-                                
-                                JToken actionNameValue = jobHistoryValue["actionName"];
-                                if (actionNameValue != null && actionNameValue.Type != JTokenType.Null)
-                                {
-                                    JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName(((string)actionNameValue));
-                                    jobHistoryEntryInstance.ActionName = actionNameInstance;
-                                }
-                                
-                                JToken repeatCountValue = jobHistoryValue["repeatCount"];
-                                if (repeatCountValue != null && repeatCountValue.Type != JTokenType.Null)
-                                {
-                                    int repeatCountInstance = ((int)repeatCountValue);
-                                    jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
-                                }
-                                
-                                JToken retryCountValue = jobHistoryValue["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                    JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
+                                    result.JobHistory.Add(jobHistoryEntryInstance);
+                                    
+                                    JToken jobIdValue = jobHistoryValue["jobId"];
+                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                    {
+                                        string jobIdInstance = ((string)jobIdValue);
+                                        jobHistoryEntryInstance.Id = jobIdInstance;
+                                    }
+                                    
+                                    JToken timestampValue = jobHistoryValue["timestamp"];
+                                    if (timestampValue != null && timestampValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime timestampInstance = ((DateTime)timestampValue);
+                                        jobHistoryEntryInstance.Timestamp = timestampInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = jobHistoryValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobHistoryEntryInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = jobHistoryValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        jobHistoryEntryInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken stateValue = jobHistoryValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                    {
+                                        JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                        jobHistoryEntryInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken messageValue = jobHistoryValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        jobHistoryEntryInstance.Message = messageInstance;
+                                    }
+                                    
+                                    JToken statusValue = jobHistoryValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus(((string)statusValue));
+                                        jobHistoryEntryInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken actionNameValue = jobHistoryValue["actionName"];
+                                    if (actionNameValue != null && actionNameValue.Type != JTokenType.Null)
+                                    {
+                                        JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName(((string)actionNameValue));
+                                        jobHistoryEntryInstance.ActionName = actionNameInstance;
+                                    }
+                                    
+                                    JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                                    if (repeatCountValue != null && repeatCountValue.Type != JTokenType.Null)
+                                    {
+                                        int repeatCountInstance = ((int)repeatCountValue);
+                                        jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = jobHistoryValue["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3818,7 +3953,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3851,7 +3986,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The List Jobs operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobListResponse> ListAsync(JobListParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobListResponse> ListAsync(JobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -3860,26 +3995,44 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
             if (parameters.Skip != null)
             {
-                url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString());
+                queryParameters.Add("$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString()));
             }
             if (parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3915,13 +4068,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3930,7 +4083,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3938,650 +4091,653 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken jobsArray = responseDoc;
-                        if (jobsArray != null && jobsArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken jobsValue in ((JArray)jobsArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken jobsArray = responseDoc;
+                            if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                             {
-                                Job jobInstance = new Job();
-                                result.Jobs.Add(jobInstance);
-                                
-                                JToken idValue = jobsValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken jobsValue in ((JArray)jobsArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    jobInstance.Id = idInstance;
-                                }
-                                
-                                JToken startTimeValue = jobsValue["startTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    jobInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken actionValue = jobsValue["action"];
-                                if (actionValue != null && actionValue.Type != JTokenType.Null)
-                                {
-                                    JobAction actionInstance = new JobAction();
-                                    jobInstance.Action = actionInstance;
+                                    Job jobInstance = new Job();
+                                    result.Jobs.Add(jobInstance);
                                     
-                                    JToken typeValue = actionValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken idValue = jobsValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                        actionInstance.Type = typeInstance;
+                                        string idInstance = ((string)idValue);
+                                        jobInstance.Id = idInstance;
                                     }
                                     
-                                    JToken retryPolicyValue = actionValue["retryPolicy"];
-                                    if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
+                                    JToken startTimeValue = jobsValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
-                                        RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                        actionInstance.RetryPolicy = retryPolicyInstance;
-                                        
-                                        JToken retryTypeValue = retryPolicyValue["retryType"];
-                                        if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                        {
-                                            RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                            retryPolicyInstance.RetryType = retryTypeInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryCountValue = retryPolicyValue["retryCount"];
-                                        if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                        {
-                                            int retryCountInstance = ((int)retryCountValue);
-                                            retryPolicyInstance.RetryCount = retryCountInstance;
-                                        }
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobInstance.StartTime = startTimeInstance;
                                     }
                                     
-                                    JToken errorActionValue = actionValue["errorAction"];
-                                    if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                    JToken actionValue = jobsValue["action"];
+                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
                                     {
-                                        JobErrorAction errorActionInstance = new JobErrorAction();
-                                        actionInstance.ErrorAction = errorActionInstance;
+                                        JobAction actionInstance = new JobAction();
+                                        jobInstance.Action = actionInstance;
                                         
-                                        JToken typeValue2 = errorActionValue["type"];
-                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        JToken typeValue = actionValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
-                                            JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                            errorActionInstance.Type = typeInstance2;
+                                            JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                            actionInstance.Type = typeInstance;
                                         }
                                         
-                                        JToken requestValue = errorActionValue["request"];
-                                        if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                        JToken retryPolicyValue = actionValue["retryPolicy"];
+                                        if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
                                         {
-                                            JobHttpRequest requestInstance = new JobHttpRequest();
-                                            errorActionInstance.Request = requestInstance;
+                                            RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                            actionInstance.RetryPolicy = retryPolicyInstance;
                                             
-                                            JToken uriValue = requestValue["uri"];
-                                            if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                            JToken retryTypeValue = retryPolicyValue["retryType"];
+                                            if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
                                             {
-                                                Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                                requestInstance.Uri = uriInstance;
+                                                RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                                retryPolicyInstance.RetryType = retryTypeInstance;
                                             }
                                             
-                                            JToken methodValue = requestValue["method"];
-                                            if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                            JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                            if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
                                             {
-                                                string methodInstance = ((string)methodValue);
-                                                requestInstance.Method = methodInstance;
+                                                TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                             }
                                             
-                                            JToken headersSequenceElement = ((JToken)requestValue["headers"]);
-                                            if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                            JToken retryCountValue = retryPolicyValue["retryCount"];
+                                            if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property in headersSequenceElement)
+                                                int retryCountInstance = ((int)retryCountValue);
+                                                retryPolicyInstance.RetryCount = retryCountInstance;
+                                            }
+                                        }
+                                        
+                                        JToken errorActionValue = actionValue["errorAction"];
+                                        if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                        {
+                                            JobErrorAction errorActionInstance = new JobErrorAction();
+                                            actionInstance.ErrorAction = errorActionInstance;
+                                            
+                                            JToken typeValue2 = errorActionValue["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                                errorActionInstance.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken requestValue = errorActionValue["request"];
+                                            if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                            {
+                                                JobHttpRequest requestInstance = new JobHttpRequest();
+                                                errorActionInstance.Request = requestInstance;
+                                                
+                                                JToken uriValue = requestValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
                                                 {
-                                                    string headersKey = ((string)property.Name);
-                                                    string headersValue = ((string)property.Value);
-                                                    requestInstance.Headers.Add(headersKey, headersValue);
+                                                    Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                                    requestInstance.Uri = uriInstance;
+                                                }
+                                                
+                                                JToken methodValue = requestValue["method"];
+                                                if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                                {
+                                                    string methodInstance = ((string)methodValue);
+                                                    requestInstance.Method = methodInstance;
+                                                }
+                                                
+                                                JToken headersSequenceElement = ((JToken)requestValue["headers"]);
+                                                if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in headersSequenceElement)
+                                                    {
+                                                        string headersKey = ((string)property.Name);
+                                                        string headersValue = ((string)property.Value);
+                                                        requestInstance.Headers.Add(headersKey, headersValue);
+                                                    }
+                                                }
+                                                
+                                                JToken bodyValue = requestValue["body"];
+                                                if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                                {
+                                                    string bodyInstance = ((string)bodyValue);
+                                                    requestInstance.Body = bodyInstance;
+                                                }
+                                                
+                                                JToken authenticationValue = requestValue["authentication"];
+                                                if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                                {
+                                                    string typeName = ((string)authenticationValue["type"]);
+                                                    if (typeName == "ClientCertificate")
+                                                    {
+                                                        ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                        
+                                                        JToken passwordValue = authenticationValue["password"];
+                                                        if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                        {
+                                                            string passwordInstance = ((string)passwordValue);
+                                                            clientCertAuthenticationInstance.Password = passwordInstance;
+                                                        }
+                                                        
+                                                        JToken pfxValue = authenticationValue["pfx"];
+                                                        if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                        {
+                                                            string pfxInstance = ((string)pfxValue);
+                                                            clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                        }
+                                                        
+                                                        JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                        if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                        {
+                                                            string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                            clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                        }
+                                                        
+                                                        JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                        if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                            clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                        }
+                                                        
+                                                        JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                        if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                            clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                        }
+                                                        
+                                                        JToken typeValue3 = authenticationValue["type"];
+                                                        if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                            clientCertAuthenticationInstance.Type = typeInstance3;
+                                                        }
+                                                        requestInstance.Authentication = clientCertAuthenticationInstance;
+                                                    }
+                                                    if (typeName == "ActiveDirectoryOAuth")
+                                                    {
+                                                        AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                        
+                                                        JToken secretValue = authenticationValue["secret"];
+                                                        if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                        {
+                                                            string secretInstance = ((string)secretValue);
+                                                            aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                        }
+                                                        
+                                                        JToken tenantValue = authenticationValue["tenant"];
+                                                        if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tenantInstance = ((string)tenantValue);
+                                                            aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                        }
+                                                        
+                                                        JToken audienceValue = authenticationValue["audience"];
+                                                        if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string audienceInstance = ((string)audienceValue);
+                                                            aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                        }
+                                                        
+                                                        JToken clientIdValue = authenticationValue["clientId"];
+                                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string clientIdInstance = ((string)clientIdValue);
+                                                            aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                        }
+                                                        
+                                                        JToken typeValue4 = authenticationValue["type"];
+                                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                            aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                        }
+                                                        requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                                    }
+                                                    if (typeName == "Basic")
+                                                    {
+                                                        BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                        
+                                                        JToken usernameValue = authenticationValue["username"];
+                                                        if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string usernameInstance = ((string)usernameValue);
+                                                            basicAuthenticationInstance.Username = usernameInstance;
+                                                        }
+                                                        
+                                                        JToken passwordValue2 = authenticationValue["password"];
+                                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string passwordInstance2 = ((string)passwordValue2);
+                                                            basicAuthenticationInstance.Password = passwordInstance2;
+                                                        }
+                                                        
+                                                        JToken typeValue5 = authenticationValue["type"];
+                                                        if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                            basicAuthenticationInstance.Type = typeInstance5;
+                                                        }
+                                                        requestInstance.Authentication = basicAuthenticationInstance;
+                                                    }
                                                 }
                                             }
                                             
-                                            JToken bodyValue = requestValue["body"];
-                                            if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                            JToken queueMessageValue = errorActionValue["queueMessage"];
+                                            if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
                                             {
-                                                string bodyInstance = ((string)bodyValue);
-                                                requestInstance.Body = bodyInstance;
+                                                JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                                errorActionInstance.QueueMessage = queueMessageInstance;
+                                                
+                                                JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                                if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                                {
+                                                    string storageAccountInstance = ((string)storageAccountValue);
+                                                    queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                                }
+                                                
+                                                JToken queueNameValue = queueMessageValue["queueName"];
+                                                if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string queueNameInstance = ((string)queueNameValue);
+                                                    queueMessageInstance.QueueName = queueNameInstance;
+                                                }
+                                                
+                                                JToken sasTokenValue = queueMessageValue["sasToken"];
+                                                if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                                {
+                                                    string sasTokenInstance = ((string)sasTokenValue);
+                                                    queueMessageInstance.SasToken = sasTokenInstance;
+                                                }
+                                                
+                                                JToken messageValue = queueMessageValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    queueMessageInstance.Message = messageInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken requestValue2 = actionValue["request"];
+                                        if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                        {
+                                            JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                            actionInstance.Request = requestInstance2;
+                                            
+                                            JToken uriValue2 = requestValue2["uri"];
+                                            if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                            {
+                                                Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                                requestInstance2.Uri = uriInstance2;
                                             }
                                             
-                                            JToken authenticationValue = requestValue["authentication"];
-                                            if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                            JToken methodValue2 = requestValue2["method"];
+                                            if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
                                             {
-                                                string typeName = ((string)authenticationValue["type"]);
-                                                if (typeName == "ClientCertificate")
-                                                {
-                                                    ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                                    
-                                                    JToken passwordValue = authenticationValue["password"];
-                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance = ((string)passwordValue);
-                                                        clientCertAuthenticationInstance.Password = passwordInstance;
-                                                    }
-                                                    
-                                                    JToken pfxValue = authenticationValue["pfx"];
-                                                    if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                                    {
-                                                        string pfxInstance = ((string)pfxValue);
-                                                        clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                                    }
-                                                    
-                                                    JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
-                                                    if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                                    {
-                                                        string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                        clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                                    }
-                                                    
-                                                    JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
-                                                    if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                        clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                                    }
-                                                    
-                                                    JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
-                                                    if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                        clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                                    }
-                                                    
-                                                    JToken typeValue3 = authenticationValue["type"];
-                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                        clientCertAuthenticationInstance.Type = typeInstance3;
-                                                    }
-                                                    requestInstance.Authentication = clientCertAuthenticationInstance;
-                                                }
-                                                if (typeName == "ActiveDirectoryOAuth")
-                                                {
-                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                                    
-                                                    JToken secretValue = authenticationValue["secret"];
-                                                    if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                                    {
-                                                        string secretInstance = ((string)secretValue);
-                                                        aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                                    }
-                                                    
-                                                    JToken tenantValue = authenticationValue["tenant"];
-                                                    if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                                    {
-                                                        string tenantInstance = ((string)tenantValue);
-                                                        aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                                    }
-                                                    
-                                                    JToken audienceValue = authenticationValue["audience"];
-                                                    if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                                    {
-                                                        string audienceInstance = ((string)audienceValue);
-                                                        aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                                    }
-                                                    
-                                                    JToken clientIdValue = authenticationValue["clientId"];
-                                                    if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string clientIdInstance = ((string)clientIdValue);
-                                                        aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                                    }
-                                                    
-                                                    JToken typeValue4 = authenticationValue["type"];
-                                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                        aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                                    }
-                                                    requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                                }
-                                                if (typeName == "Basic")
-                                                {
-                                                    BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                                    
-                                                    JToken usernameValue = authenticationValue["username"];
-                                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string usernameInstance = ((string)usernameValue);
-                                                        basicAuthenticationInstance.Username = usernameInstance;
-                                                    }
-                                                    
-                                                    JToken passwordValue2 = authenticationValue["password"];
-                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance2 = ((string)passwordValue2);
-                                                        basicAuthenticationInstance.Password = passwordInstance2;
-                                                    }
-                                                    
-                                                    JToken typeValue5 = authenticationValue["type"];
-                                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                        basicAuthenticationInstance.Type = typeInstance5;
-                                                    }
-                                                    requestInstance.Authentication = basicAuthenticationInstance;
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken queueMessageValue = errorActionValue["queueMessage"];
-                                        if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
-                                        {
-                                            JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                            errorActionInstance.QueueMessage = queueMessageInstance;
-                                            
-                                            JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                            if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                            {
-                                                string storageAccountInstance = ((string)storageAccountValue);
-                                                queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                                string methodInstance2 = ((string)methodValue2);
+                                                requestInstance2.Method = methodInstance2;
                                             }
                                             
-                                            JToken queueNameValue = queueMessageValue["queueName"];
-                                            if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                            JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
+                                            if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                             {
-                                                string queueNameInstance = ((string)queueNameValue);
-                                                queueMessageInstance.QueueName = queueNameInstance;
+                                                foreach (JProperty property2 in headersSequenceElement2)
+                                                {
+                                                    string headersKey2 = ((string)property2.Name);
+                                                    string headersValue2 = ((string)property2.Value);
+                                                    requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                                }
                                             }
                                             
-                                            JToken sasTokenValue = queueMessageValue["sasToken"];
-                                            if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                            JToken bodyValue2 = requestValue2["body"];
+                                            if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
                                             {
-                                                string sasTokenInstance = ((string)sasTokenValue);
-                                                queueMessageInstance.SasToken = sasTokenInstance;
+                                                string bodyInstance2 = ((string)bodyValue2);
+                                                requestInstance2.Body = bodyInstance2;
                                             }
                                             
-                                            JToken messageValue = queueMessageValue["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            JToken authenticationValue2 = requestValue2["authentication"];
+                                            if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
                                             {
-                                                string messageInstance = ((string)messageValue);
-                                                queueMessageInstance.Message = messageInstance;
+                                                string typeName2 = ((string)authenticationValue2["type"]);
+                                                if (typeName2 == "ClientCertificate")
+                                                {
+                                                    ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                                    
+                                                    JToken passwordValue3 = authenticationValue2["password"];
+                                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance3 = ((string)passwordValue3);
+                                                        clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                                    }
+                                                    
+                                                    JToken pfxValue2 = authenticationValue2["pfx"];
+                                                    if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string pfxInstance2 = ((string)pfxValue2);
+                                                        clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                    if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                        clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                    if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                        clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                    if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                        clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = authenticationValue2["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                        clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                    }
+                                                    requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                                }
+                                                if (typeName2 == "ActiveDirectoryOAuth")
+                                                {
+                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                                    
+                                                    JToken secretValue2 = authenticationValue2["secret"];
+                                                    if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string secretInstance2 = ((string)secretValue2);
+                                                        aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                    }
+                                                    
+                                                    JToken tenantValue2 = authenticationValue2["tenant"];
+                                                    if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string tenantInstance2 = ((string)tenantValue2);
+                                                        aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                                    }
+                                                    
+                                                    JToken audienceValue2 = authenticationValue2["audience"];
+                                                    if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string audienceInstance2 = ((string)audienceValue2);
+                                                        aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                                    }
+                                                    
+                                                    JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                    if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string clientIdInstance2 = ((string)clientIdValue2);
+                                                        aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue7 = authenticationValue2["type"];
+                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                        aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                    }
+                                                    requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                                }
+                                                if (typeName2 == "Basic")
+                                                {
+                                                    BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                                    
+                                                    JToken usernameValue2 = authenticationValue2["username"];
+                                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string usernameInstance2 = ((string)usernameValue2);
+                                                        basicAuthenticationInstance2.Username = usernameInstance2;
+                                                    }
+                                                    
+                                                    JToken passwordValue4 = authenticationValue2["password"];
+                                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance4 = ((string)passwordValue4);
+                                                        basicAuthenticationInstance2.Password = passwordInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue8 = authenticationValue2["type"];
+                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                        basicAuthenticationInstance2.Type = typeInstance8;
+                                                    }
+                                                    requestInstance2.Authentication = basicAuthenticationInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken queueMessageValue2 = actionValue["queueMessage"];
+                                        if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                            actionInstance.QueueMessage = queueMessageInstance2;
+                                            
+                                            JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                            if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                            {
+                                                string storageAccountInstance2 = ((string)storageAccountValue2);
+                                                queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                            }
+                                            
+                                            JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                            if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance2 = ((string)queueNameValue2);
+                                                queueMessageInstance2.QueueName = queueNameInstance2;
+                                            }
+                                            
+                                            JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                            if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasTokenInstance2 = ((string)sasTokenValue2);
+                                                queueMessageInstance2.SasToken = sasTokenInstance2;
+                                            }
+                                            
+                                            JToken messageValue2 = queueMessageValue2["message"];
+                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance2 = ((string)messageValue2);
+                                                queueMessageInstance2.Message = messageInstance2;
                                             }
                                         }
                                     }
                                     
-                                    JToken requestValue2 = actionValue["request"];
-                                    if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                    JToken recurrenceValue = jobsValue["recurrence"];
+                                    if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
                                     {
-                                        JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                        actionInstance.Request = requestInstance2;
+                                        JobRecurrence recurrenceInstance = new JobRecurrence();
+                                        jobInstance.Recurrence = recurrenceInstance;
                                         
-                                        JToken uriValue2 = requestValue2["uri"];
-                                        if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                        JToken frequencyValue = recurrenceValue["frequency"];
+                                        if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                         {
-                                            Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                            requestInstance2.Uri = uriInstance2;
+                                            JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                            recurrenceInstance.Frequency = frequencyInstance;
                                         }
                                         
-                                        JToken methodValue2 = requestValue2["method"];
-                                        if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                        JToken intervalValue = recurrenceValue["interval"];
+                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
                                         {
-                                            string methodInstance2 = ((string)methodValue2);
-                                            requestInstance2.Method = methodInstance2;
+                                            int intervalInstance = ((int)intervalValue);
+                                            recurrenceInstance.Interval = intervalInstance;
                                         }
                                         
-                                        JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
-                                        if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                        JToken countValue = recurrenceValue["count"];
+                                        if (countValue != null && countValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property2 in headersSequenceElement2)
+                                            int countInstance = ((int)countValue);
+                                            recurrenceInstance.Count = countInstance;
+                                        }
+                                        
+                                        JToken endTimeValue = recurrenceValue["endTime"];
+                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                            recurrenceInstance.EndTime = endTimeInstance;
+                                        }
+                                        
+                                        JToken scheduleValue = recurrenceValue["schedule"];
+                                        if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                        {
+                                            JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                            recurrenceInstance.Schedule = scheduleInstance;
+                                            
+                                            JToken minutesArray = scheduleValue["minutes"];
+                                            if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                             {
-                                                string headersKey2 = ((string)property2.Name);
-                                                string headersValue2 = ((string)property2.Value);
-                                                requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                                scheduleInstance.Minutes = new List<int>();
+                                                foreach (JToken minutesValue in ((JArray)minutesArray))
+                                                {
+                                                    scheduleInstance.Minutes.Add(((int)minutesValue));
+                                                }
                                             }
-                                        }
-                                        
-                                        JToken bodyValue2 = requestValue2["body"];
-                                        if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                        {
-                                            string bodyInstance2 = ((string)bodyValue2);
-                                            requestInstance2.Body = bodyInstance2;
-                                        }
-                                        
-                                        JToken authenticationValue2 = requestValue2["authentication"];
-                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
-                                        {
-                                            string typeName2 = ((string)authenticationValue2["type"]);
-                                            if (typeName2 == "ClientCertificate")
+                                            
+                                            JToken hoursArray = scheduleValue["hours"];
+                                            if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                             {
-                                                ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                                
-                                                JToken passwordValue3 = authenticationValue2["password"];
-                                                if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                                scheduleInstance.Hours = new List<int>();
+                                                foreach (JToken hoursValue in ((JArray)hoursArray))
                                                 {
-                                                    string passwordInstance3 = ((string)passwordValue3);
-                                                    clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                                    scheduleInstance.Hours.Add(((int)hoursValue));
                                                 }
-                                                
-                                                JToken pfxValue2 = authenticationValue2["pfx"];
-                                                if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                                {
-                                                    string pfxInstance2 = ((string)pfxValue2);
-                                                    clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                                }
-                                                
-                                                JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
-                                                if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                                {
-                                                    string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                                    clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                                }
-                                                
-                                                JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
-                                                if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                                {
-                                                    DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                                    clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                                }
-                                                
-                                                JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
-                                                if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                                {
-                                                    string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                                    clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                                }
-                                                
-                                                JToken typeValue6 = authenticationValue2["type"];
-                                                if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                                {
-                                                    HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                    clientCertAuthenticationInstance2.Type = typeInstance6;
-                                                }
-                                                requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                             }
-                                            if (typeName2 == "ActiveDirectoryOAuth")
+                                            
+                                            JToken weekDaysArray = scheduleValue["weekDays"];
+                                            if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                             {
-                                                AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                                
-                                                JToken secretValue2 = authenticationValue2["secret"];
-                                                if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                scheduleInstance.Days = new List<JobScheduleDay>();
+                                                foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
                                                 {
-                                                    string secretInstance2 = ((string)secretValue2);
-                                                    aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                    scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
                                                 }
-                                                
-                                                JToken tenantValue2 = authenticationValue2["tenant"];
-                                                if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                                {
-                                                    string tenantInstance2 = ((string)tenantValue2);
-                                                    aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                                }
-                                                
-                                                JToken audienceValue2 = authenticationValue2["audience"];
-                                                if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                                {
-                                                    string audienceInstance2 = ((string)audienceValue2);
-                                                    aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                                }
-                                                
-                                                JToken clientIdValue2 = authenticationValue2["clientId"];
-                                                if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                                {
-                                                    string clientIdInstance2 = ((string)clientIdValue2);
-                                                    aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                                }
-                                                
-                                                JToken typeValue7 = authenticationValue2["type"];
-                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                                {
-                                                    HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                    aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                                }
-                                                requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                             }
-                                            if (typeName2 == "Basic")
+                                            
+                                            JToken monthsArray = scheduleValue["months"];
+                                            if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                             {
-                                                BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                                
-                                                JToken usernameValue2 = authenticationValue2["username"];
-                                                if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                scheduleInstance.Months = new List<int>();
+                                                foreach (JToken monthsValue in ((JArray)monthsArray))
                                                 {
-                                                    string usernameInstance2 = ((string)usernameValue2);
-                                                    basicAuthenticationInstance2.Username = usernameInstance2;
+                                                    scheduleInstance.Months.Add(((int)monthsValue));
                                                 }
-                                                
-                                                JToken passwordValue4 = authenticationValue2["password"];
-                                                if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            }
+                                            
+                                            JToken monthDaysArray = scheduleValue["monthDays"];
+                                            if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                            {
+                                                scheduleInstance.MonthDays = new List<int>();
+                                                foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
                                                 {
-                                                    string passwordInstance4 = ((string)passwordValue4);
-                                                    basicAuthenticationInstance2.Password = passwordInstance4;
+                                                    scheduleInstance.MonthDays.Add(((int)monthDaysValue));
                                                 }
-                                                
-                                                JToken typeValue8 = authenticationValue2["type"];
-                                                if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            }
+                                            
+                                            JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
+                                            if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                            {
+                                                scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                                foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
                                                 {
-                                                    HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                    basicAuthenticationInstance2.Type = typeInstance8;
+                                                    JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                                    scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                                    
+                                                    JToken dayValue = monthlyOccurrencesValue["day"];
+                                                    if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                                    {
+                                                        JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                        jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                    }
+                                                    
+                                                    JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                    if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        int occurrenceInstance = ((int)occurrenceValue);
+                                                        jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                    }
                                                 }
-                                                requestInstance2.Authentication = basicAuthenticationInstance2;
                                             }
                                         }
                                     }
                                     
-                                    JToken queueMessageValue2 = actionValue["queueMessage"];
-                                    if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                    JToken statusValue = jobsValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
-                                        JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                        actionInstance.QueueMessage = queueMessageInstance2;
+                                        JobStatus statusInstance = new JobStatus();
+                                        jobInstance.Status = statusInstance;
                                         
-                                        JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                        if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                        JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                        if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
                                         {
-                                            string storageAccountInstance2 = ((string)storageAccountValue2);
-                                            queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                            DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                            statusInstance.LastExecutionTime = lastExecutionTimeInstance;
                                         }
                                         
-                                        JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                        if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
                                         {
-                                            string queueNameInstance2 = ((string)queueNameValue2);
-                                            queueMessageInstance2.QueueName = queueNameInstance2;
+                                            DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                            statusInstance.NextExecutionTime = nextExecutionTimeInstance;
                                         }
                                         
-                                        JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                        if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                        JToken executionCountValue = statusValue["executionCount"];
+                                        if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
                                         {
-                                            string sasTokenInstance2 = ((string)sasTokenValue2);
-                                            queueMessageInstance2.SasToken = sasTokenInstance2;
+                                            int executionCountInstance = ((int)executionCountValue);
+                                            statusInstance.ExecutionCount = executionCountInstance;
                                         }
                                         
-                                        JToken messageValue2 = queueMessageValue2["message"];
-                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        JToken failureCountValue = statusValue["failureCount"];
+                                        if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
                                         {
-                                            string messageInstance2 = ((string)messageValue2);
-                                            queueMessageInstance2.Message = messageInstance2;
-                                        }
-                                    }
-                                }
-                                
-                                JToken recurrenceValue = jobsValue["recurrence"];
-                                if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
-                                {
-                                    JobRecurrence recurrenceInstance = new JobRecurrence();
-                                    jobInstance.Recurrence = recurrenceInstance;
-                                    
-                                    JToken frequencyValue = recurrenceValue["frequency"];
-                                    if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                                    {
-                                        JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                        recurrenceInstance.Frequency = frequencyInstance;
-                                    }
-                                    
-                                    JToken intervalValue = recurrenceValue["interval"];
-                                    if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                                    {
-                                        int intervalInstance = ((int)intervalValue);
-                                        recurrenceInstance.Interval = intervalInstance;
-                                    }
-                                    
-                                    JToken countValue = recurrenceValue["count"];
-                                    if (countValue != null && countValue.Type != JTokenType.Null)
-                                    {
-                                        int countInstance = ((int)countValue);
-                                        recurrenceInstance.Count = countInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = recurrenceValue["endTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        recurrenceInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken scheduleValue = recurrenceValue["schedule"];
-                                    if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
-                                    {
-                                        JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                        recurrenceInstance.Schedule = scheduleInstance;
-                                        
-                                        JToken minutesArray = scheduleValue["minutes"];
-                                        if (minutesArray != null && minutesArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Minutes = new List<int>();
-                                            foreach (JToken minutesValue in ((JArray)minutesArray))
-                                            {
-                                                scheduleInstance.Minutes.Add(((int)minutesValue));
-                                            }
+                                            int failureCountInstance = ((int)failureCountValue);
+                                            statusInstance.FailureCount = failureCountInstance;
                                         }
                                         
-                                        JToken hoursArray = scheduleValue["hours"];
-                                        if (hoursArray != null && hoursArray.Type != JTokenType.Null)
+                                        JToken faultedCountValue = statusValue["faultedCount"];
+                                        if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
                                         {
-                                            scheduleInstance.Hours = new List<int>();
-                                            foreach (JToken hoursValue in ((JArray)hoursArray))
-                                            {
-                                                scheduleInstance.Hours.Add(((int)hoursValue));
-                                            }
-                                        }
-                                        
-                                        JToken weekDaysArray = scheduleValue["weekDays"];
-                                        if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Days = new List<JobScheduleDay>();
-                                            foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
-                                            {
-                                                scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                            }
-                                        }
-                                        
-                                        JToken monthsArray = scheduleValue["months"];
-                                        if (monthsArray != null && monthsArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Months = new List<int>();
-                                            foreach (JToken monthsValue in ((JArray)monthsArray))
-                                            {
-                                                scheduleInstance.Months.Add(((int)monthsValue));
-                                            }
-                                        }
-                                        
-                                        JToken monthDaysArray = scheduleValue["monthDays"];
-                                        if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.MonthDays = new List<int>();
-                                            foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
-                                            {
-                                                scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                            }
-                                        }
-                                        
-                                        JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
-                                        if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                            foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
-                                            {
-                                                JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                                scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                                
-                                                JToken dayValue = monthlyOccurrencesValue["day"];
-                                                if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                                {
-                                                    JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                                    jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                                }
-                                                
-                                                JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                                if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                                {
-                                                    int occurrenceInstance = ((int)occurrenceValue);
-                                                    jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                                }
-                                            }
+                                            int faultedCountInstance = ((int)faultedCountValue);
+                                            statusInstance.FaultedCount = faultedCountInstance;
                                         }
                                     }
-                                }
-                                
-                                JToken statusValue = jobsValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    JobStatus statusInstance = new JobStatus();
-                                    jobInstance.Status = statusInstance;
                                     
-                                    JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                                    if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                    JToken stateValue = jobsValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                        statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                        JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                        jobInstance.State = stateInstance;
                                     }
-                                    
-                                    JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                                    if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                        statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                                    }
-                                    
-                                    JToken executionCountValue = statusValue["executionCount"];
-                                    if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                                    {
-                                        int executionCountInstance = ((int)executionCountValue);
-                                        statusInstance.ExecutionCount = executionCountInstance;
-                                    }
-                                    
-                                    JToken failureCountValue = statusValue["failureCount"];
-                                    if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                                    {
-                                        int failureCountInstance = ((int)failureCountValue);
-                                        statusInstance.FailureCount = failureCountInstance;
-                                    }
-                                    
-                                    JToken faultedCountValue = statusValue["faultedCount"];
-                                    if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                                    {
-                                        int faultedCountInstance = ((int)faultedCountValue);
-                                        statusInstance.FaultedCount = faultedCountInstance;
-                                    }
-                                }
-                                
-                                JToken stateValue = jobsValue["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                                    jobInstance.State = stateInstance;
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -4590,7 +4746,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -4625,7 +4781,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The List Jobs operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobListResponse> ListWithFilterAsync(JobListWithFilterParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobListResponse> ListWithFilterAsync(JobListWithFilterParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -4634,27 +4790,50 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListWithFilterAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListWithFilterAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=state eq " + Uri.EscapeDataString(SchedulerClient.JobStateToString(parameters.State));
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add("state eq " + Uri.EscapeDataString(SchedulerClient.JobStateToString(parameters.State)));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (parameters.Skip != null)
             {
-                url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString());
+                queryParameters.Add("$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString()));
             }
             if (parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -4690,13 +4869,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -4705,7 +4884,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -4713,650 +4892,653 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken jobsArray = responseDoc;
-                        if (jobsArray != null && jobsArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken jobsValue in ((JArray)jobsArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken jobsArray = responseDoc;
+                            if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                             {
-                                Job jobInstance = new Job();
-                                result.Jobs.Add(jobInstance);
-                                
-                                JToken idValue = jobsValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken jobsValue in ((JArray)jobsArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    jobInstance.Id = idInstance;
-                                }
-                                
-                                JToken startTimeValue = jobsValue["startTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    jobInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken actionValue = jobsValue["action"];
-                                if (actionValue != null && actionValue.Type != JTokenType.Null)
-                                {
-                                    JobAction actionInstance = new JobAction();
-                                    jobInstance.Action = actionInstance;
+                                    Job jobInstance = new Job();
+                                    result.Jobs.Add(jobInstance);
                                     
-                                    JToken typeValue = actionValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken idValue = jobsValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                        actionInstance.Type = typeInstance;
+                                        string idInstance = ((string)idValue);
+                                        jobInstance.Id = idInstance;
                                     }
                                     
-                                    JToken retryPolicyValue = actionValue["retryPolicy"];
-                                    if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
+                                    JToken startTimeValue = jobsValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
-                                        RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                        actionInstance.RetryPolicy = retryPolicyInstance;
-                                        
-                                        JToken retryTypeValue = retryPolicyValue["retryType"];
-                                        if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                        {
-                                            RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                            retryPolicyInstance.RetryType = retryTypeInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryCountValue = retryPolicyValue["retryCount"];
-                                        if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                        {
-                                            int retryCountInstance = ((int)retryCountValue);
-                                            retryPolicyInstance.RetryCount = retryCountInstance;
-                                        }
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobInstance.StartTime = startTimeInstance;
                                     }
                                     
-                                    JToken errorActionValue = actionValue["errorAction"];
-                                    if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                    JToken actionValue = jobsValue["action"];
+                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
                                     {
-                                        JobErrorAction errorActionInstance = new JobErrorAction();
-                                        actionInstance.ErrorAction = errorActionInstance;
+                                        JobAction actionInstance = new JobAction();
+                                        jobInstance.Action = actionInstance;
                                         
-                                        JToken typeValue2 = errorActionValue["type"];
-                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        JToken typeValue = actionValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
-                                            JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                            errorActionInstance.Type = typeInstance2;
+                                            JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                            actionInstance.Type = typeInstance;
                                         }
                                         
-                                        JToken requestValue = errorActionValue["request"];
-                                        if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                        JToken retryPolicyValue = actionValue["retryPolicy"];
+                                        if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
                                         {
-                                            JobHttpRequest requestInstance = new JobHttpRequest();
-                                            errorActionInstance.Request = requestInstance;
+                                            RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                            actionInstance.RetryPolicy = retryPolicyInstance;
                                             
-                                            JToken uriValue = requestValue["uri"];
-                                            if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                            JToken retryTypeValue = retryPolicyValue["retryType"];
+                                            if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
                                             {
-                                                Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                                requestInstance.Uri = uriInstance;
+                                                RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                                retryPolicyInstance.RetryType = retryTypeInstance;
                                             }
                                             
-                                            JToken methodValue = requestValue["method"];
-                                            if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                            JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                            if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
                                             {
-                                                string methodInstance = ((string)methodValue);
-                                                requestInstance.Method = methodInstance;
+                                                TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                             }
                                             
-                                            JToken headersSequenceElement = ((JToken)requestValue["headers"]);
-                                            if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                            JToken retryCountValue = retryPolicyValue["retryCount"];
+                                            if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property in headersSequenceElement)
+                                                int retryCountInstance = ((int)retryCountValue);
+                                                retryPolicyInstance.RetryCount = retryCountInstance;
+                                            }
+                                        }
+                                        
+                                        JToken errorActionValue = actionValue["errorAction"];
+                                        if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                        {
+                                            JobErrorAction errorActionInstance = new JobErrorAction();
+                                            actionInstance.ErrorAction = errorActionInstance;
+                                            
+                                            JToken typeValue2 = errorActionValue["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                                errorActionInstance.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken requestValue = errorActionValue["request"];
+                                            if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                            {
+                                                JobHttpRequest requestInstance = new JobHttpRequest();
+                                                errorActionInstance.Request = requestInstance;
+                                                
+                                                JToken uriValue = requestValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
                                                 {
-                                                    string headersKey = ((string)property.Name);
-                                                    string headersValue = ((string)property.Value);
-                                                    requestInstance.Headers.Add(headersKey, headersValue);
+                                                    Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                                    requestInstance.Uri = uriInstance;
+                                                }
+                                                
+                                                JToken methodValue = requestValue["method"];
+                                                if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                                {
+                                                    string methodInstance = ((string)methodValue);
+                                                    requestInstance.Method = methodInstance;
+                                                }
+                                                
+                                                JToken headersSequenceElement = ((JToken)requestValue["headers"]);
+                                                if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in headersSequenceElement)
+                                                    {
+                                                        string headersKey = ((string)property.Name);
+                                                        string headersValue = ((string)property.Value);
+                                                        requestInstance.Headers.Add(headersKey, headersValue);
+                                                    }
+                                                }
+                                                
+                                                JToken bodyValue = requestValue["body"];
+                                                if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                                {
+                                                    string bodyInstance = ((string)bodyValue);
+                                                    requestInstance.Body = bodyInstance;
+                                                }
+                                                
+                                                JToken authenticationValue = requestValue["authentication"];
+                                                if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                                {
+                                                    string typeName = ((string)authenticationValue["type"]);
+                                                    if (typeName == "ClientCertificate")
+                                                    {
+                                                        ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                        
+                                                        JToken passwordValue = authenticationValue["password"];
+                                                        if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                        {
+                                                            string passwordInstance = ((string)passwordValue);
+                                                            clientCertAuthenticationInstance.Password = passwordInstance;
+                                                        }
+                                                        
+                                                        JToken pfxValue = authenticationValue["pfx"];
+                                                        if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                        {
+                                                            string pfxInstance = ((string)pfxValue);
+                                                            clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                        }
+                                                        
+                                                        JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                        if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                        {
+                                                            string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                            clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                        }
+                                                        
+                                                        JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                        if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                            clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                        }
+                                                        
+                                                        JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                        if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                            clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                        }
+                                                        
+                                                        JToken typeValue3 = authenticationValue["type"];
+                                                        if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                            clientCertAuthenticationInstance.Type = typeInstance3;
+                                                        }
+                                                        requestInstance.Authentication = clientCertAuthenticationInstance;
+                                                    }
+                                                    if (typeName == "ActiveDirectoryOAuth")
+                                                    {
+                                                        AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                        
+                                                        JToken secretValue = authenticationValue["secret"];
+                                                        if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                        {
+                                                            string secretInstance = ((string)secretValue);
+                                                            aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                        }
+                                                        
+                                                        JToken tenantValue = authenticationValue["tenant"];
+                                                        if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tenantInstance = ((string)tenantValue);
+                                                            aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                        }
+                                                        
+                                                        JToken audienceValue = authenticationValue["audience"];
+                                                        if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string audienceInstance = ((string)audienceValue);
+                                                            aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                        }
+                                                        
+                                                        JToken clientIdValue = authenticationValue["clientId"];
+                                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string clientIdInstance = ((string)clientIdValue);
+                                                            aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                        }
+                                                        
+                                                        JToken typeValue4 = authenticationValue["type"];
+                                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                            aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                        }
+                                                        requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                                    }
+                                                    if (typeName == "Basic")
+                                                    {
+                                                        BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                        
+                                                        JToken usernameValue = authenticationValue["username"];
+                                                        if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string usernameInstance = ((string)usernameValue);
+                                                            basicAuthenticationInstance.Username = usernameInstance;
+                                                        }
+                                                        
+                                                        JToken passwordValue2 = authenticationValue["password"];
+                                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string passwordInstance2 = ((string)passwordValue2);
+                                                            basicAuthenticationInstance.Password = passwordInstance2;
+                                                        }
+                                                        
+                                                        JToken typeValue5 = authenticationValue["type"];
+                                                        if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                            basicAuthenticationInstance.Type = typeInstance5;
+                                                        }
+                                                        requestInstance.Authentication = basicAuthenticationInstance;
+                                                    }
                                                 }
                                             }
                                             
-                                            JToken bodyValue = requestValue["body"];
-                                            if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                            JToken queueMessageValue = errorActionValue["queueMessage"];
+                                            if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
                                             {
-                                                string bodyInstance = ((string)bodyValue);
-                                                requestInstance.Body = bodyInstance;
+                                                JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                                errorActionInstance.QueueMessage = queueMessageInstance;
+                                                
+                                                JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                                if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                                {
+                                                    string storageAccountInstance = ((string)storageAccountValue);
+                                                    queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                                }
+                                                
+                                                JToken queueNameValue = queueMessageValue["queueName"];
+                                                if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string queueNameInstance = ((string)queueNameValue);
+                                                    queueMessageInstance.QueueName = queueNameInstance;
+                                                }
+                                                
+                                                JToken sasTokenValue = queueMessageValue["sasToken"];
+                                                if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                                {
+                                                    string sasTokenInstance = ((string)sasTokenValue);
+                                                    queueMessageInstance.SasToken = sasTokenInstance;
+                                                }
+                                                
+                                                JToken messageValue = queueMessageValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    queueMessageInstance.Message = messageInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken requestValue2 = actionValue["request"];
+                                        if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                        {
+                                            JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                            actionInstance.Request = requestInstance2;
+                                            
+                                            JToken uriValue2 = requestValue2["uri"];
+                                            if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                            {
+                                                Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                                requestInstance2.Uri = uriInstance2;
                                             }
                                             
-                                            JToken authenticationValue = requestValue["authentication"];
-                                            if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                            JToken methodValue2 = requestValue2["method"];
+                                            if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
                                             {
-                                                string typeName = ((string)authenticationValue["type"]);
-                                                if (typeName == "ClientCertificate")
-                                                {
-                                                    ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                                    
-                                                    JToken passwordValue = authenticationValue["password"];
-                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance = ((string)passwordValue);
-                                                        clientCertAuthenticationInstance.Password = passwordInstance;
-                                                    }
-                                                    
-                                                    JToken pfxValue = authenticationValue["pfx"];
-                                                    if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                                    {
-                                                        string pfxInstance = ((string)pfxValue);
-                                                        clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                                    }
-                                                    
-                                                    JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
-                                                    if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                                    {
-                                                        string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                        clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                                    }
-                                                    
-                                                    JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
-                                                    if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                        clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                                    }
-                                                    
-                                                    JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
-                                                    if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                        clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                                    }
-                                                    
-                                                    JToken typeValue3 = authenticationValue["type"];
-                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                        clientCertAuthenticationInstance.Type = typeInstance3;
-                                                    }
-                                                    requestInstance.Authentication = clientCertAuthenticationInstance;
-                                                }
-                                                if (typeName == "ActiveDirectoryOAuth")
-                                                {
-                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                                    
-                                                    JToken secretValue = authenticationValue["secret"];
-                                                    if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                                    {
-                                                        string secretInstance = ((string)secretValue);
-                                                        aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                                    }
-                                                    
-                                                    JToken tenantValue = authenticationValue["tenant"];
-                                                    if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                                    {
-                                                        string tenantInstance = ((string)tenantValue);
-                                                        aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                                    }
-                                                    
-                                                    JToken audienceValue = authenticationValue["audience"];
-                                                    if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                                    {
-                                                        string audienceInstance = ((string)audienceValue);
-                                                        aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                                    }
-                                                    
-                                                    JToken clientIdValue = authenticationValue["clientId"];
-                                                    if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string clientIdInstance = ((string)clientIdValue);
-                                                        aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                                    }
-                                                    
-                                                    JToken typeValue4 = authenticationValue["type"];
-                                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                        aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                                    }
-                                                    requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                                }
-                                                if (typeName == "Basic")
-                                                {
-                                                    BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                                    
-                                                    JToken usernameValue = authenticationValue["username"];
-                                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string usernameInstance = ((string)usernameValue);
-                                                        basicAuthenticationInstance.Username = usernameInstance;
-                                                    }
-                                                    
-                                                    JToken passwordValue2 = authenticationValue["password"];
-                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance2 = ((string)passwordValue2);
-                                                        basicAuthenticationInstance.Password = passwordInstance2;
-                                                    }
-                                                    
-                                                    JToken typeValue5 = authenticationValue["type"];
-                                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                        basicAuthenticationInstance.Type = typeInstance5;
-                                                    }
-                                                    requestInstance.Authentication = basicAuthenticationInstance;
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken queueMessageValue = errorActionValue["queueMessage"];
-                                        if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
-                                        {
-                                            JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                            errorActionInstance.QueueMessage = queueMessageInstance;
-                                            
-                                            JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                            if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                            {
-                                                string storageAccountInstance = ((string)storageAccountValue);
-                                                queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                                string methodInstance2 = ((string)methodValue2);
+                                                requestInstance2.Method = methodInstance2;
                                             }
                                             
-                                            JToken queueNameValue = queueMessageValue["queueName"];
-                                            if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                            JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
+                                            if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                             {
-                                                string queueNameInstance = ((string)queueNameValue);
-                                                queueMessageInstance.QueueName = queueNameInstance;
+                                                foreach (JProperty property2 in headersSequenceElement2)
+                                                {
+                                                    string headersKey2 = ((string)property2.Name);
+                                                    string headersValue2 = ((string)property2.Value);
+                                                    requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                                }
                                             }
                                             
-                                            JToken sasTokenValue = queueMessageValue["sasToken"];
-                                            if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                            JToken bodyValue2 = requestValue2["body"];
+                                            if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
                                             {
-                                                string sasTokenInstance = ((string)sasTokenValue);
-                                                queueMessageInstance.SasToken = sasTokenInstance;
+                                                string bodyInstance2 = ((string)bodyValue2);
+                                                requestInstance2.Body = bodyInstance2;
                                             }
                                             
-                                            JToken messageValue = queueMessageValue["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            JToken authenticationValue2 = requestValue2["authentication"];
+                                            if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
                                             {
-                                                string messageInstance = ((string)messageValue);
-                                                queueMessageInstance.Message = messageInstance;
+                                                string typeName2 = ((string)authenticationValue2["type"]);
+                                                if (typeName2 == "ClientCertificate")
+                                                {
+                                                    ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                                    
+                                                    JToken passwordValue3 = authenticationValue2["password"];
+                                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance3 = ((string)passwordValue3);
+                                                        clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                                    }
+                                                    
+                                                    JToken pfxValue2 = authenticationValue2["pfx"];
+                                                    if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string pfxInstance2 = ((string)pfxValue2);
+                                                        clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                    if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                        clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                    if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                        clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                    if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                        clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = authenticationValue2["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                        clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                    }
+                                                    requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                                }
+                                                if (typeName2 == "ActiveDirectoryOAuth")
+                                                {
+                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                                    
+                                                    JToken secretValue2 = authenticationValue2["secret"];
+                                                    if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string secretInstance2 = ((string)secretValue2);
+                                                        aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                    }
+                                                    
+                                                    JToken tenantValue2 = authenticationValue2["tenant"];
+                                                    if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string tenantInstance2 = ((string)tenantValue2);
+                                                        aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                                    }
+                                                    
+                                                    JToken audienceValue2 = authenticationValue2["audience"];
+                                                    if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string audienceInstance2 = ((string)audienceValue2);
+                                                        aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                                    }
+                                                    
+                                                    JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                    if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string clientIdInstance2 = ((string)clientIdValue2);
+                                                        aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue7 = authenticationValue2["type"];
+                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                        aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                    }
+                                                    requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                                }
+                                                if (typeName2 == "Basic")
+                                                {
+                                                    BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                                    
+                                                    JToken usernameValue2 = authenticationValue2["username"];
+                                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string usernameInstance2 = ((string)usernameValue2);
+                                                        basicAuthenticationInstance2.Username = usernameInstance2;
+                                                    }
+                                                    
+                                                    JToken passwordValue4 = authenticationValue2["password"];
+                                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance4 = ((string)passwordValue4);
+                                                        basicAuthenticationInstance2.Password = passwordInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue8 = authenticationValue2["type"];
+                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                        basicAuthenticationInstance2.Type = typeInstance8;
+                                                    }
+                                                    requestInstance2.Authentication = basicAuthenticationInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken queueMessageValue2 = actionValue["queueMessage"];
+                                        if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                            actionInstance.QueueMessage = queueMessageInstance2;
+                                            
+                                            JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                            if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                            {
+                                                string storageAccountInstance2 = ((string)storageAccountValue2);
+                                                queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                            }
+                                            
+                                            JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                            if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance2 = ((string)queueNameValue2);
+                                                queueMessageInstance2.QueueName = queueNameInstance2;
+                                            }
+                                            
+                                            JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                            if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasTokenInstance2 = ((string)sasTokenValue2);
+                                                queueMessageInstance2.SasToken = sasTokenInstance2;
+                                            }
+                                            
+                                            JToken messageValue2 = queueMessageValue2["message"];
+                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance2 = ((string)messageValue2);
+                                                queueMessageInstance2.Message = messageInstance2;
                                             }
                                         }
                                     }
                                     
-                                    JToken requestValue2 = actionValue["request"];
-                                    if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                    JToken recurrenceValue = jobsValue["recurrence"];
+                                    if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
                                     {
-                                        JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                        actionInstance.Request = requestInstance2;
+                                        JobRecurrence recurrenceInstance = new JobRecurrence();
+                                        jobInstance.Recurrence = recurrenceInstance;
                                         
-                                        JToken uriValue2 = requestValue2["uri"];
-                                        if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                        JToken frequencyValue = recurrenceValue["frequency"];
+                                        if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                         {
-                                            Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                            requestInstance2.Uri = uriInstance2;
+                                            JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                            recurrenceInstance.Frequency = frequencyInstance;
                                         }
                                         
-                                        JToken methodValue2 = requestValue2["method"];
-                                        if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                        JToken intervalValue = recurrenceValue["interval"];
+                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
                                         {
-                                            string methodInstance2 = ((string)methodValue2);
-                                            requestInstance2.Method = methodInstance2;
+                                            int intervalInstance = ((int)intervalValue);
+                                            recurrenceInstance.Interval = intervalInstance;
                                         }
                                         
-                                        JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
-                                        if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                        JToken countValue = recurrenceValue["count"];
+                                        if (countValue != null && countValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property2 in headersSequenceElement2)
+                                            int countInstance = ((int)countValue);
+                                            recurrenceInstance.Count = countInstance;
+                                        }
+                                        
+                                        JToken endTimeValue = recurrenceValue["endTime"];
+                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                            recurrenceInstance.EndTime = endTimeInstance;
+                                        }
+                                        
+                                        JToken scheduleValue = recurrenceValue["schedule"];
+                                        if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                        {
+                                            JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                            recurrenceInstance.Schedule = scheduleInstance;
+                                            
+                                            JToken minutesArray = scheduleValue["minutes"];
+                                            if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                             {
-                                                string headersKey2 = ((string)property2.Name);
-                                                string headersValue2 = ((string)property2.Value);
-                                                requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                                scheduleInstance.Minutes = new List<int>();
+                                                foreach (JToken minutesValue in ((JArray)minutesArray))
+                                                {
+                                                    scheduleInstance.Minutes.Add(((int)minutesValue));
+                                                }
                                             }
-                                        }
-                                        
-                                        JToken bodyValue2 = requestValue2["body"];
-                                        if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                        {
-                                            string bodyInstance2 = ((string)bodyValue2);
-                                            requestInstance2.Body = bodyInstance2;
-                                        }
-                                        
-                                        JToken authenticationValue2 = requestValue2["authentication"];
-                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
-                                        {
-                                            string typeName2 = ((string)authenticationValue2["type"]);
-                                            if (typeName2 == "ClientCertificate")
+                                            
+                                            JToken hoursArray = scheduleValue["hours"];
+                                            if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                             {
-                                                ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                                
-                                                JToken passwordValue3 = authenticationValue2["password"];
-                                                if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                                scheduleInstance.Hours = new List<int>();
+                                                foreach (JToken hoursValue in ((JArray)hoursArray))
                                                 {
-                                                    string passwordInstance3 = ((string)passwordValue3);
-                                                    clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                                    scheduleInstance.Hours.Add(((int)hoursValue));
                                                 }
-                                                
-                                                JToken pfxValue2 = authenticationValue2["pfx"];
-                                                if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                                {
-                                                    string pfxInstance2 = ((string)pfxValue2);
-                                                    clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                                }
-                                                
-                                                JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
-                                                if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                                {
-                                                    string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                                    clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                                }
-                                                
-                                                JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
-                                                if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                                {
-                                                    DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                                    clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                                }
-                                                
-                                                JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
-                                                if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                                {
-                                                    string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                                    clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                                }
-                                                
-                                                JToken typeValue6 = authenticationValue2["type"];
-                                                if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                                {
-                                                    HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                    clientCertAuthenticationInstance2.Type = typeInstance6;
-                                                }
-                                                requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                             }
-                                            if (typeName2 == "ActiveDirectoryOAuth")
+                                            
+                                            JToken weekDaysArray = scheduleValue["weekDays"];
+                                            if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                             {
-                                                AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                                
-                                                JToken secretValue2 = authenticationValue2["secret"];
-                                                if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                scheduleInstance.Days = new List<JobScheduleDay>();
+                                                foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
                                                 {
-                                                    string secretInstance2 = ((string)secretValue2);
-                                                    aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                    scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
                                                 }
-                                                
-                                                JToken tenantValue2 = authenticationValue2["tenant"];
-                                                if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                                {
-                                                    string tenantInstance2 = ((string)tenantValue2);
-                                                    aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                                }
-                                                
-                                                JToken audienceValue2 = authenticationValue2["audience"];
-                                                if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                                {
-                                                    string audienceInstance2 = ((string)audienceValue2);
-                                                    aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                                }
-                                                
-                                                JToken clientIdValue2 = authenticationValue2["clientId"];
-                                                if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                                {
-                                                    string clientIdInstance2 = ((string)clientIdValue2);
-                                                    aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                                }
-                                                
-                                                JToken typeValue7 = authenticationValue2["type"];
-                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                                {
-                                                    HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                    aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                                }
-                                                requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                             }
-                                            if (typeName2 == "Basic")
+                                            
+                                            JToken monthsArray = scheduleValue["months"];
+                                            if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                             {
-                                                BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                                
-                                                JToken usernameValue2 = authenticationValue2["username"];
-                                                if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                scheduleInstance.Months = new List<int>();
+                                                foreach (JToken monthsValue in ((JArray)monthsArray))
                                                 {
-                                                    string usernameInstance2 = ((string)usernameValue2);
-                                                    basicAuthenticationInstance2.Username = usernameInstance2;
+                                                    scheduleInstance.Months.Add(((int)monthsValue));
                                                 }
-                                                
-                                                JToken passwordValue4 = authenticationValue2["password"];
-                                                if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            }
+                                            
+                                            JToken monthDaysArray = scheduleValue["monthDays"];
+                                            if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                            {
+                                                scheduleInstance.MonthDays = new List<int>();
+                                                foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
                                                 {
-                                                    string passwordInstance4 = ((string)passwordValue4);
-                                                    basicAuthenticationInstance2.Password = passwordInstance4;
+                                                    scheduleInstance.MonthDays.Add(((int)monthDaysValue));
                                                 }
-                                                
-                                                JToken typeValue8 = authenticationValue2["type"];
-                                                if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            }
+                                            
+                                            JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
+                                            if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                            {
+                                                scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                                foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
                                                 {
-                                                    HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                    basicAuthenticationInstance2.Type = typeInstance8;
+                                                    JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                                    scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                                    
+                                                    JToken dayValue = monthlyOccurrencesValue["day"];
+                                                    if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                                    {
+                                                        JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                        jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                    }
+                                                    
+                                                    JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                    if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        int occurrenceInstance = ((int)occurrenceValue);
+                                                        jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                    }
                                                 }
-                                                requestInstance2.Authentication = basicAuthenticationInstance2;
                                             }
                                         }
                                     }
                                     
-                                    JToken queueMessageValue2 = actionValue["queueMessage"];
-                                    if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                    JToken statusValue = jobsValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
-                                        JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                        actionInstance.QueueMessage = queueMessageInstance2;
+                                        JobStatus statusInstance = new JobStatus();
+                                        jobInstance.Status = statusInstance;
                                         
-                                        JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                        if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                        JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                        if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
                                         {
-                                            string storageAccountInstance2 = ((string)storageAccountValue2);
-                                            queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                            DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                            statusInstance.LastExecutionTime = lastExecutionTimeInstance;
                                         }
                                         
-                                        JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                        if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
                                         {
-                                            string queueNameInstance2 = ((string)queueNameValue2);
-                                            queueMessageInstance2.QueueName = queueNameInstance2;
+                                            DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                            statusInstance.NextExecutionTime = nextExecutionTimeInstance;
                                         }
                                         
-                                        JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                        if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                        JToken executionCountValue = statusValue["executionCount"];
+                                        if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
                                         {
-                                            string sasTokenInstance2 = ((string)sasTokenValue2);
-                                            queueMessageInstance2.SasToken = sasTokenInstance2;
+                                            int executionCountInstance = ((int)executionCountValue);
+                                            statusInstance.ExecutionCount = executionCountInstance;
                                         }
                                         
-                                        JToken messageValue2 = queueMessageValue2["message"];
-                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        JToken failureCountValue = statusValue["failureCount"];
+                                        if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
                                         {
-                                            string messageInstance2 = ((string)messageValue2);
-                                            queueMessageInstance2.Message = messageInstance2;
-                                        }
-                                    }
-                                }
-                                
-                                JToken recurrenceValue = jobsValue["recurrence"];
-                                if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
-                                {
-                                    JobRecurrence recurrenceInstance = new JobRecurrence();
-                                    jobInstance.Recurrence = recurrenceInstance;
-                                    
-                                    JToken frequencyValue = recurrenceValue["frequency"];
-                                    if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                                    {
-                                        JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                        recurrenceInstance.Frequency = frequencyInstance;
-                                    }
-                                    
-                                    JToken intervalValue = recurrenceValue["interval"];
-                                    if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                                    {
-                                        int intervalInstance = ((int)intervalValue);
-                                        recurrenceInstance.Interval = intervalInstance;
-                                    }
-                                    
-                                    JToken countValue = recurrenceValue["count"];
-                                    if (countValue != null && countValue.Type != JTokenType.Null)
-                                    {
-                                        int countInstance = ((int)countValue);
-                                        recurrenceInstance.Count = countInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = recurrenceValue["endTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        recurrenceInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken scheduleValue = recurrenceValue["schedule"];
-                                    if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
-                                    {
-                                        JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                        recurrenceInstance.Schedule = scheduleInstance;
-                                        
-                                        JToken minutesArray = scheduleValue["minutes"];
-                                        if (minutesArray != null && minutesArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Minutes = new List<int>();
-                                            foreach (JToken minutesValue in ((JArray)minutesArray))
-                                            {
-                                                scheduleInstance.Minutes.Add(((int)minutesValue));
-                                            }
+                                            int failureCountInstance = ((int)failureCountValue);
+                                            statusInstance.FailureCount = failureCountInstance;
                                         }
                                         
-                                        JToken hoursArray = scheduleValue["hours"];
-                                        if (hoursArray != null && hoursArray.Type != JTokenType.Null)
+                                        JToken faultedCountValue = statusValue["faultedCount"];
+                                        if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
                                         {
-                                            scheduleInstance.Hours = new List<int>();
-                                            foreach (JToken hoursValue in ((JArray)hoursArray))
-                                            {
-                                                scheduleInstance.Hours.Add(((int)hoursValue));
-                                            }
-                                        }
-                                        
-                                        JToken weekDaysArray = scheduleValue["weekDays"];
-                                        if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Days = new List<JobScheduleDay>();
-                                            foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
-                                            {
-                                                scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                            }
-                                        }
-                                        
-                                        JToken monthsArray = scheduleValue["months"];
-                                        if (monthsArray != null && monthsArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Months = new List<int>();
-                                            foreach (JToken monthsValue in ((JArray)monthsArray))
-                                            {
-                                                scheduleInstance.Months.Add(((int)monthsValue));
-                                            }
-                                        }
-                                        
-                                        JToken monthDaysArray = scheduleValue["monthDays"];
-                                        if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.MonthDays = new List<int>();
-                                            foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
-                                            {
-                                                scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                            }
-                                        }
-                                        
-                                        JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
-                                        if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                            foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
-                                            {
-                                                JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                                scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                                
-                                                JToken dayValue = monthlyOccurrencesValue["day"];
-                                                if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                                {
-                                                    JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                                    jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                                }
-                                                
-                                                JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                                if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                                {
-                                                    int occurrenceInstance = ((int)occurrenceValue);
-                                                    jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                                }
-                                            }
+                                            int faultedCountInstance = ((int)faultedCountValue);
+                                            statusInstance.FaultedCount = faultedCountInstance;
                                         }
                                     }
-                                }
-                                
-                                JToken statusValue = jobsValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    JobStatus statusInstance = new JobStatus();
-                                    jobInstance.Status = statusInstance;
                                     
-                                    JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                                    if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                    JToken stateValue = jobsValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                        statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                        JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                        jobInstance.State = stateInstance;
                                     }
-                                    
-                                    JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                                    if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                        statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                                    }
-                                    
-                                    JToken executionCountValue = statusValue["executionCount"];
-                                    if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                                    {
-                                        int executionCountInstance = ((int)executionCountValue);
-                                        statusInstance.ExecutionCount = executionCountInstance;
-                                    }
-                                    
-                                    JToken failureCountValue = statusValue["failureCount"];
-                                    if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                                    {
-                                        int failureCountInstance = ((int)failureCountValue);
-                                        statusInstance.FailureCount = failureCountInstance;
-                                    }
-                                    
-                                    JToken faultedCountValue = statusValue["faultedCount"];
-                                    if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                                    {
-                                        int faultedCountInstance = ((int)faultedCountValue);
-                                        statusInstance.FaultedCount = faultedCountInstance;
-                                    }
-                                }
-                                
-                                JToken stateValue = jobsValue["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                                    jobInstance.State = stateInstance;
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -5365,7 +5547,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -5398,7 +5580,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -5407,18 +5589,31 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateJobCollectionStateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateJobCollectionStateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -5456,7 +5651,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 jobCollectionJobsUpdateStateParametersValue["state"] = SchedulerClient.JobStateToString(parameters.State);
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -5466,13 +5661,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -5481,7 +5676,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -5489,650 +5684,653 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobCollectionJobsUpdateStateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobCollectionJobsUpdateStateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken jobsArray = responseDoc;
-                        if (jobsArray != null && jobsArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobCollectionJobsUpdateStateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken jobsValue in ((JArray)jobsArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken jobsArray = responseDoc;
+                            if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                             {
-                                Job jobInstance = new Job();
-                                result.Jobs.Add(jobInstance);
-                                
-                                JToken idValue = jobsValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken jobsValue in ((JArray)jobsArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    jobInstance.Id = idInstance;
-                                }
-                                
-                                JToken startTimeValue = jobsValue["startTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    jobInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken actionValue = jobsValue["action"];
-                                if (actionValue != null && actionValue.Type != JTokenType.Null)
-                                {
-                                    JobAction actionInstance = new JobAction();
-                                    jobInstance.Action = actionInstance;
+                                    Job jobInstance = new Job();
+                                    result.Jobs.Add(jobInstance);
                                     
-                                    JToken typeValue = actionValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken idValue = jobsValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                        actionInstance.Type = typeInstance;
+                                        string idInstance = ((string)idValue);
+                                        jobInstance.Id = idInstance;
                                     }
                                     
-                                    JToken retryPolicyValue = actionValue["retryPolicy"];
-                                    if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
+                                    JToken startTimeValue = jobsValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
-                                        RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                        actionInstance.RetryPolicy = retryPolicyInstance;
-                                        
-                                        JToken retryTypeValue = retryPolicyValue["retryType"];
-                                        if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                        {
-                                            RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                            retryPolicyInstance.RetryType = retryTypeInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryCountValue = retryPolicyValue["retryCount"];
-                                        if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                        {
-                                            int retryCountInstance = ((int)retryCountValue);
-                                            retryPolicyInstance.RetryCount = retryCountInstance;
-                                        }
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobInstance.StartTime = startTimeInstance;
                                     }
                                     
-                                    JToken errorActionValue = actionValue["errorAction"];
-                                    if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                    JToken actionValue = jobsValue["action"];
+                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
                                     {
-                                        JobErrorAction errorActionInstance = new JobErrorAction();
-                                        actionInstance.ErrorAction = errorActionInstance;
+                                        JobAction actionInstance = new JobAction();
+                                        jobInstance.Action = actionInstance;
                                         
-                                        JToken typeValue2 = errorActionValue["type"];
-                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        JToken typeValue = actionValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
-                                            JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                            errorActionInstance.Type = typeInstance2;
+                                            JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                            actionInstance.Type = typeInstance;
                                         }
                                         
-                                        JToken requestValue = errorActionValue["request"];
-                                        if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                        JToken retryPolicyValue = actionValue["retryPolicy"];
+                                        if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
                                         {
-                                            JobHttpRequest requestInstance = new JobHttpRequest();
-                                            errorActionInstance.Request = requestInstance;
+                                            RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                            actionInstance.RetryPolicy = retryPolicyInstance;
                                             
-                                            JToken uriValue = requestValue["uri"];
-                                            if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                            JToken retryTypeValue = retryPolicyValue["retryType"];
+                                            if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
                                             {
-                                                Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                                requestInstance.Uri = uriInstance;
+                                                RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                                retryPolicyInstance.RetryType = retryTypeInstance;
                                             }
                                             
-                                            JToken methodValue = requestValue["method"];
-                                            if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                            JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                            if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
                                             {
-                                                string methodInstance = ((string)methodValue);
-                                                requestInstance.Method = methodInstance;
+                                                TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                             }
                                             
-                                            JToken headersSequenceElement = ((JToken)requestValue["headers"]);
-                                            if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                            JToken retryCountValue = retryPolicyValue["retryCount"];
+                                            if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property in headersSequenceElement)
+                                                int retryCountInstance = ((int)retryCountValue);
+                                                retryPolicyInstance.RetryCount = retryCountInstance;
+                                            }
+                                        }
+                                        
+                                        JToken errorActionValue = actionValue["errorAction"];
+                                        if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                        {
+                                            JobErrorAction errorActionInstance = new JobErrorAction();
+                                            actionInstance.ErrorAction = errorActionInstance;
+                                            
+                                            JToken typeValue2 = errorActionValue["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                                errorActionInstance.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken requestValue = errorActionValue["request"];
+                                            if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                            {
+                                                JobHttpRequest requestInstance = new JobHttpRequest();
+                                                errorActionInstance.Request = requestInstance;
+                                                
+                                                JToken uriValue = requestValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
                                                 {
-                                                    string headersKey = ((string)property.Name);
-                                                    string headersValue = ((string)property.Value);
-                                                    requestInstance.Headers.Add(headersKey, headersValue);
+                                                    Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                                    requestInstance.Uri = uriInstance;
+                                                }
+                                                
+                                                JToken methodValue = requestValue["method"];
+                                                if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                                {
+                                                    string methodInstance = ((string)methodValue);
+                                                    requestInstance.Method = methodInstance;
+                                                }
+                                                
+                                                JToken headersSequenceElement = ((JToken)requestValue["headers"]);
+                                                if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in headersSequenceElement)
+                                                    {
+                                                        string headersKey = ((string)property.Name);
+                                                        string headersValue = ((string)property.Value);
+                                                        requestInstance.Headers.Add(headersKey, headersValue);
+                                                    }
+                                                }
+                                                
+                                                JToken bodyValue = requestValue["body"];
+                                                if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                                {
+                                                    string bodyInstance = ((string)bodyValue);
+                                                    requestInstance.Body = bodyInstance;
+                                                }
+                                                
+                                                JToken authenticationValue = requestValue["authentication"];
+                                                if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                                {
+                                                    string typeName = ((string)authenticationValue["type"]);
+                                                    if (typeName == "ClientCertificate")
+                                                    {
+                                                        ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                        
+                                                        JToken passwordValue = authenticationValue["password"];
+                                                        if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                        {
+                                                            string passwordInstance = ((string)passwordValue);
+                                                            clientCertAuthenticationInstance.Password = passwordInstance;
+                                                        }
+                                                        
+                                                        JToken pfxValue = authenticationValue["pfx"];
+                                                        if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                        {
+                                                            string pfxInstance = ((string)pfxValue);
+                                                            clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                        }
+                                                        
+                                                        JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                        if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                        {
+                                                            string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                            clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                        }
+                                                        
+                                                        JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                        if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                            clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                        }
+                                                        
+                                                        JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                        if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                            clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                        }
+                                                        
+                                                        JToken typeValue3 = authenticationValue["type"];
+                                                        if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                            clientCertAuthenticationInstance.Type = typeInstance3;
+                                                        }
+                                                        requestInstance.Authentication = clientCertAuthenticationInstance;
+                                                    }
+                                                    if (typeName == "ActiveDirectoryOAuth")
+                                                    {
+                                                        AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                        
+                                                        JToken secretValue = authenticationValue["secret"];
+                                                        if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                        {
+                                                            string secretInstance = ((string)secretValue);
+                                                            aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                        }
+                                                        
+                                                        JToken tenantValue = authenticationValue["tenant"];
+                                                        if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tenantInstance = ((string)tenantValue);
+                                                            aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                        }
+                                                        
+                                                        JToken audienceValue = authenticationValue["audience"];
+                                                        if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string audienceInstance = ((string)audienceValue);
+                                                            aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                        }
+                                                        
+                                                        JToken clientIdValue = authenticationValue["clientId"];
+                                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string clientIdInstance = ((string)clientIdValue);
+                                                            aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                        }
+                                                        
+                                                        JToken typeValue4 = authenticationValue["type"];
+                                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                            aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                        }
+                                                        requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                                    }
+                                                    if (typeName == "Basic")
+                                                    {
+                                                        BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                        
+                                                        JToken usernameValue = authenticationValue["username"];
+                                                        if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string usernameInstance = ((string)usernameValue);
+                                                            basicAuthenticationInstance.Username = usernameInstance;
+                                                        }
+                                                        
+                                                        JToken passwordValue2 = authenticationValue["password"];
+                                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string passwordInstance2 = ((string)passwordValue2);
+                                                            basicAuthenticationInstance.Password = passwordInstance2;
+                                                        }
+                                                        
+                                                        JToken typeValue5 = authenticationValue["type"];
+                                                        if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                        {
+                                                            HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                            basicAuthenticationInstance.Type = typeInstance5;
+                                                        }
+                                                        requestInstance.Authentication = basicAuthenticationInstance;
+                                                    }
                                                 }
                                             }
                                             
-                                            JToken bodyValue = requestValue["body"];
-                                            if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                            JToken queueMessageValue = errorActionValue["queueMessage"];
+                                            if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
                                             {
-                                                string bodyInstance = ((string)bodyValue);
-                                                requestInstance.Body = bodyInstance;
+                                                JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                                errorActionInstance.QueueMessage = queueMessageInstance;
+                                                
+                                                JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                                if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                                {
+                                                    string storageAccountInstance = ((string)storageAccountValue);
+                                                    queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                                }
+                                                
+                                                JToken queueNameValue = queueMessageValue["queueName"];
+                                                if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string queueNameInstance = ((string)queueNameValue);
+                                                    queueMessageInstance.QueueName = queueNameInstance;
+                                                }
+                                                
+                                                JToken sasTokenValue = queueMessageValue["sasToken"];
+                                                if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                                {
+                                                    string sasTokenInstance = ((string)sasTokenValue);
+                                                    queueMessageInstance.SasToken = sasTokenInstance;
+                                                }
+                                                
+                                                JToken messageValue = queueMessageValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    queueMessageInstance.Message = messageInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken requestValue2 = actionValue["request"];
+                                        if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                        {
+                                            JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                            actionInstance.Request = requestInstance2;
+                                            
+                                            JToken uriValue2 = requestValue2["uri"];
+                                            if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                            {
+                                                Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                                requestInstance2.Uri = uriInstance2;
                                             }
                                             
-                                            JToken authenticationValue = requestValue["authentication"];
-                                            if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                            JToken methodValue2 = requestValue2["method"];
+                                            if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
                                             {
-                                                string typeName = ((string)authenticationValue["type"]);
-                                                if (typeName == "ClientCertificate")
-                                                {
-                                                    ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                                    
-                                                    JToken passwordValue = authenticationValue["password"];
-                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance = ((string)passwordValue);
-                                                        clientCertAuthenticationInstance.Password = passwordInstance;
-                                                    }
-                                                    
-                                                    JToken pfxValue = authenticationValue["pfx"];
-                                                    if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                                    {
-                                                        string pfxInstance = ((string)pfxValue);
-                                                        clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                                    }
-                                                    
-                                                    JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
-                                                    if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                                    {
-                                                        string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                        clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                                    }
-                                                    
-                                                    JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
-                                                    if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                        clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                                    }
-                                                    
-                                                    JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
-                                                    if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                        clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                                    }
-                                                    
-                                                    JToken typeValue3 = authenticationValue["type"];
-                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                        clientCertAuthenticationInstance.Type = typeInstance3;
-                                                    }
-                                                    requestInstance.Authentication = clientCertAuthenticationInstance;
-                                                }
-                                                if (typeName == "ActiveDirectoryOAuth")
-                                                {
-                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                                    
-                                                    JToken secretValue = authenticationValue["secret"];
-                                                    if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                                    {
-                                                        string secretInstance = ((string)secretValue);
-                                                        aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                                    }
-                                                    
-                                                    JToken tenantValue = authenticationValue["tenant"];
-                                                    if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                                    {
-                                                        string tenantInstance = ((string)tenantValue);
-                                                        aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                                    }
-                                                    
-                                                    JToken audienceValue = authenticationValue["audience"];
-                                                    if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                                    {
-                                                        string audienceInstance = ((string)audienceValue);
-                                                        aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                                    }
-                                                    
-                                                    JToken clientIdValue = authenticationValue["clientId"];
-                                                    if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string clientIdInstance = ((string)clientIdValue);
-                                                        aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                                    }
-                                                    
-                                                    JToken typeValue4 = authenticationValue["type"];
-                                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                        aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                                    }
-                                                    requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                                }
-                                                if (typeName == "Basic")
-                                                {
-                                                    BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                                    
-                                                    JToken usernameValue = authenticationValue["username"];
-                                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string usernameInstance = ((string)usernameValue);
-                                                        basicAuthenticationInstance.Username = usernameInstance;
-                                                    }
-                                                    
-                                                    JToken passwordValue2 = authenticationValue["password"];
-                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance2 = ((string)passwordValue2);
-                                                        basicAuthenticationInstance.Password = passwordInstance2;
-                                                    }
-                                                    
-                                                    JToken typeValue5 = authenticationValue["type"];
-                                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                                    {
-                                                        HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                        basicAuthenticationInstance.Type = typeInstance5;
-                                                    }
-                                                    requestInstance.Authentication = basicAuthenticationInstance;
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken queueMessageValue = errorActionValue["queueMessage"];
-                                        if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
-                                        {
-                                            JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                            errorActionInstance.QueueMessage = queueMessageInstance;
-                                            
-                                            JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                            if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                            {
-                                                string storageAccountInstance = ((string)storageAccountValue);
-                                                queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                                string methodInstance2 = ((string)methodValue2);
+                                                requestInstance2.Method = methodInstance2;
                                             }
                                             
-                                            JToken queueNameValue = queueMessageValue["queueName"];
-                                            if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                            JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
+                                            if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                             {
-                                                string queueNameInstance = ((string)queueNameValue);
-                                                queueMessageInstance.QueueName = queueNameInstance;
+                                                foreach (JProperty property2 in headersSequenceElement2)
+                                                {
+                                                    string headersKey2 = ((string)property2.Name);
+                                                    string headersValue2 = ((string)property2.Value);
+                                                    requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                                }
                                             }
                                             
-                                            JToken sasTokenValue = queueMessageValue["sasToken"];
-                                            if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                            JToken bodyValue2 = requestValue2["body"];
+                                            if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
                                             {
-                                                string sasTokenInstance = ((string)sasTokenValue);
-                                                queueMessageInstance.SasToken = sasTokenInstance;
+                                                string bodyInstance2 = ((string)bodyValue2);
+                                                requestInstance2.Body = bodyInstance2;
                                             }
                                             
-                                            JToken messageValue = queueMessageValue["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            JToken authenticationValue2 = requestValue2["authentication"];
+                                            if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
                                             {
-                                                string messageInstance = ((string)messageValue);
-                                                queueMessageInstance.Message = messageInstance;
+                                                string typeName2 = ((string)authenticationValue2["type"]);
+                                                if (typeName2 == "ClientCertificate")
+                                                {
+                                                    ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                                    
+                                                    JToken passwordValue3 = authenticationValue2["password"];
+                                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance3 = ((string)passwordValue3);
+                                                        clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                                    }
+                                                    
+                                                    JToken pfxValue2 = authenticationValue2["pfx"];
+                                                    if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string pfxInstance2 = ((string)pfxValue2);
+                                                        clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                    if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                        clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                    if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                        clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                                    }
+                                                    
+                                                    JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                    if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                        clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = authenticationValue2["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                        clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                    }
+                                                    requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                                }
+                                                if (typeName2 == "ActiveDirectoryOAuth")
+                                                {
+                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                                    
+                                                    JToken secretValue2 = authenticationValue2["secret"];
+                                                    if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string secretInstance2 = ((string)secretValue2);
+                                                        aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                    }
+                                                    
+                                                    JToken tenantValue2 = authenticationValue2["tenant"];
+                                                    if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string tenantInstance2 = ((string)tenantValue2);
+                                                        aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                                    }
+                                                    
+                                                    JToken audienceValue2 = authenticationValue2["audience"];
+                                                    if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string audienceInstance2 = ((string)audienceValue2);
+                                                        aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                                    }
+                                                    
+                                                    JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                    if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string clientIdInstance2 = ((string)clientIdValue2);
+                                                        aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue7 = authenticationValue2["type"];
+                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                        aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                    }
+                                                    requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                                }
+                                                if (typeName2 == "Basic")
+                                                {
+                                                    BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                                    
+                                                    JToken usernameValue2 = authenticationValue2["username"];
+                                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string usernameInstance2 = ((string)usernameValue2);
+                                                        basicAuthenticationInstance2.Username = usernameInstance2;
+                                                    }
+                                                    
+                                                    JToken passwordValue4 = authenticationValue2["password"];
+                                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance4 = ((string)passwordValue4);
+                                                        basicAuthenticationInstance2.Password = passwordInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue8 = authenticationValue2["type"];
+                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                        basicAuthenticationInstance2.Type = typeInstance8;
+                                                    }
+                                                    requestInstance2.Authentication = basicAuthenticationInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken queueMessageValue2 = actionValue["queueMessage"];
+                                        if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                            actionInstance.QueueMessage = queueMessageInstance2;
+                                            
+                                            JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                            if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                            {
+                                                string storageAccountInstance2 = ((string)storageAccountValue2);
+                                                queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                            }
+                                            
+                                            JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                            if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance2 = ((string)queueNameValue2);
+                                                queueMessageInstance2.QueueName = queueNameInstance2;
+                                            }
+                                            
+                                            JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                            if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasTokenInstance2 = ((string)sasTokenValue2);
+                                                queueMessageInstance2.SasToken = sasTokenInstance2;
+                                            }
+                                            
+                                            JToken messageValue2 = queueMessageValue2["message"];
+                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance2 = ((string)messageValue2);
+                                                queueMessageInstance2.Message = messageInstance2;
                                             }
                                         }
                                     }
                                     
-                                    JToken requestValue2 = actionValue["request"];
-                                    if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                    JToken recurrenceValue = jobsValue["recurrence"];
+                                    if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
                                     {
-                                        JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                        actionInstance.Request = requestInstance2;
+                                        JobRecurrence recurrenceInstance = new JobRecurrence();
+                                        jobInstance.Recurrence = recurrenceInstance;
                                         
-                                        JToken uriValue2 = requestValue2["uri"];
-                                        if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                        JToken frequencyValue = recurrenceValue["frequency"];
+                                        if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                         {
-                                            Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                            requestInstance2.Uri = uriInstance2;
+                                            JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                            recurrenceInstance.Frequency = frequencyInstance;
                                         }
                                         
-                                        JToken methodValue2 = requestValue2["method"];
-                                        if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                        JToken intervalValue = recurrenceValue["interval"];
+                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
                                         {
-                                            string methodInstance2 = ((string)methodValue2);
-                                            requestInstance2.Method = methodInstance2;
+                                            int intervalInstance = ((int)intervalValue);
+                                            recurrenceInstance.Interval = intervalInstance;
                                         }
                                         
-                                        JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
-                                        if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                        JToken countValue = recurrenceValue["count"];
+                                        if (countValue != null && countValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property2 in headersSequenceElement2)
+                                            int countInstance = ((int)countValue);
+                                            recurrenceInstance.Count = countInstance;
+                                        }
+                                        
+                                        JToken endTimeValue = recurrenceValue["endTime"];
+                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                            recurrenceInstance.EndTime = endTimeInstance;
+                                        }
+                                        
+                                        JToken scheduleValue = recurrenceValue["schedule"];
+                                        if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                        {
+                                            JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                            recurrenceInstance.Schedule = scheduleInstance;
+                                            
+                                            JToken minutesArray = scheduleValue["minutes"];
+                                            if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                             {
-                                                string headersKey2 = ((string)property2.Name);
-                                                string headersValue2 = ((string)property2.Value);
-                                                requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                                scheduleInstance.Minutes = new List<int>();
+                                                foreach (JToken minutesValue in ((JArray)minutesArray))
+                                                {
+                                                    scheduleInstance.Minutes.Add(((int)minutesValue));
+                                                }
                                             }
-                                        }
-                                        
-                                        JToken bodyValue2 = requestValue2["body"];
-                                        if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                        {
-                                            string bodyInstance2 = ((string)bodyValue2);
-                                            requestInstance2.Body = bodyInstance2;
-                                        }
-                                        
-                                        JToken authenticationValue2 = requestValue2["authentication"];
-                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
-                                        {
-                                            string typeName2 = ((string)authenticationValue2["type"]);
-                                            if (typeName2 == "ClientCertificate")
+                                            
+                                            JToken hoursArray = scheduleValue["hours"];
+                                            if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                             {
-                                                ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                                
-                                                JToken passwordValue3 = authenticationValue2["password"];
-                                                if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                                scheduleInstance.Hours = new List<int>();
+                                                foreach (JToken hoursValue in ((JArray)hoursArray))
                                                 {
-                                                    string passwordInstance3 = ((string)passwordValue3);
-                                                    clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                                    scheduleInstance.Hours.Add(((int)hoursValue));
                                                 }
-                                                
-                                                JToken pfxValue2 = authenticationValue2["pfx"];
-                                                if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                                {
-                                                    string pfxInstance2 = ((string)pfxValue2);
-                                                    clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                                }
-                                                
-                                                JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
-                                                if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                                {
-                                                    string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                                    clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                                }
-                                                
-                                                JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
-                                                if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                                {
-                                                    DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                                    clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                                }
-                                                
-                                                JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
-                                                if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                                {
-                                                    string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                                    clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                                }
-                                                
-                                                JToken typeValue6 = authenticationValue2["type"];
-                                                if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                                {
-                                                    HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                    clientCertAuthenticationInstance2.Type = typeInstance6;
-                                                }
-                                                requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                             }
-                                            if (typeName2 == "ActiveDirectoryOAuth")
+                                            
+                                            JToken weekDaysArray = scheduleValue["weekDays"];
+                                            if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                             {
-                                                AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                                
-                                                JToken secretValue2 = authenticationValue2["secret"];
-                                                if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                scheduleInstance.Days = new List<JobScheduleDay>();
+                                                foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
                                                 {
-                                                    string secretInstance2 = ((string)secretValue2);
-                                                    aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                    scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
                                                 }
-                                                
-                                                JToken tenantValue2 = authenticationValue2["tenant"];
-                                                if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                                {
-                                                    string tenantInstance2 = ((string)tenantValue2);
-                                                    aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                                }
-                                                
-                                                JToken audienceValue2 = authenticationValue2["audience"];
-                                                if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                                {
-                                                    string audienceInstance2 = ((string)audienceValue2);
-                                                    aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                                }
-                                                
-                                                JToken clientIdValue2 = authenticationValue2["clientId"];
-                                                if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                                {
-                                                    string clientIdInstance2 = ((string)clientIdValue2);
-                                                    aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                                }
-                                                
-                                                JToken typeValue7 = authenticationValue2["type"];
-                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                                {
-                                                    HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                    aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                                }
-                                                requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                             }
-                                            if (typeName2 == "Basic")
+                                            
+                                            JToken monthsArray = scheduleValue["months"];
+                                            if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                             {
-                                                BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                                
-                                                JToken usernameValue2 = authenticationValue2["username"];
-                                                if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                scheduleInstance.Months = new List<int>();
+                                                foreach (JToken monthsValue in ((JArray)monthsArray))
                                                 {
-                                                    string usernameInstance2 = ((string)usernameValue2);
-                                                    basicAuthenticationInstance2.Username = usernameInstance2;
+                                                    scheduleInstance.Months.Add(((int)monthsValue));
                                                 }
-                                                
-                                                JToken passwordValue4 = authenticationValue2["password"];
-                                                if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            }
+                                            
+                                            JToken monthDaysArray = scheduleValue["monthDays"];
+                                            if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                            {
+                                                scheduleInstance.MonthDays = new List<int>();
+                                                foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
                                                 {
-                                                    string passwordInstance4 = ((string)passwordValue4);
-                                                    basicAuthenticationInstance2.Password = passwordInstance4;
+                                                    scheduleInstance.MonthDays.Add(((int)monthDaysValue));
                                                 }
-                                                
-                                                JToken typeValue8 = authenticationValue2["type"];
-                                                if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            }
+                                            
+                                            JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
+                                            if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                            {
+                                                scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                                foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
                                                 {
-                                                    HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                    basicAuthenticationInstance2.Type = typeInstance8;
+                                                    JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                                    scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                                    
+                                                    JToken dayValue = monthlyOccurrencesValue["day"];
+                                                    if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                                    {
+                                                        JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                        jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                    }
+                                                    
+                                                    JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                    if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        int occurrenceInstance = ((int)occurrenceValue);
+                                                        jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                    }
                                                 }
-                                                requestInstance2.Authentication = basicAuthenticationInstance2;
                                             }
                                         }
                                     }
                                     
-                                    JToken queueMessageValue2 = actionValue["queueMessage"];
-                                    if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                    JToken statusValue = jobsValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
-                                        JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                        actionInstance.QueueMessage = queueMessageInstance2;
+                                        JobStatus statusInstance = new JobStatus();
+                                        jobInstance.Status = statusInstance;
                                         
-                                        JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                        if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                        JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                        if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
                                         {
-                                            string storageAccountInstance2 = ((string)storageAccountValue2);
-                                            queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                            DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                            statusInstance.LastExecutionTime = lastExecutionTimeInstance;
                                         }
                                         
-                                        JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                        if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
                                         {
-                                            string queueNameInstance2 = ((string)queueNameValue2);
-                                            queueMessageInstance2.QueueName = queueNameInstance2;
+                                            DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                            statusInstance.NextExecutionTime = nextExecutionTimeInstance;
                                         }
                                         
-                                        JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                        if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                        JToken executionCountValue = statusValue["executionCount"];
+                                        if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
                                         {
-                                            string sasTokenInstance2 = ((string)sasTokenValue2);
-                                            queueMessageInstance2.SasToken = sasTokenInstance2;
+                                            int executionCountInstance = ((int)executionCountValue);
+                                            statusInstance.ExecutionCount = executionCountInstance;
                                         }
                                         
-                                        JToken messageValue2 = queueMessageValue2["message"];
-                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        JToken failureCountValue = statusValue["failureCount"];
+                                        if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
                                         {
-                                            string messageInstance2 = ((string)messageValue2);
-                                            queueMessageInstance2.Message = messageInstance2;
-                                        }
-                                    }
-                                }
-                                
-                                JToken recurrenceValue = jobsValue["recurrence"];
-                                if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
-                                {
-                                    JobRecurrence recurrenceInstance = new JobRecurrence();
-                                    jobInstance.Recurrence = recurrenceInstance;
-                                    
-                                    JToken frequencyValue = recurrenceValue["frequency"];
-                                    if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                                    {
-                                        JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                        recurrenceInstance.Frequency = frequencyInstance;
-                                    }
-                                    
-                                    JToken intervalValue = recurrenceValue["interval"];
-                                    if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                                    {
-                                        int intervalInstance = ((int)intervalValue);
-                                        recurrenceInstance.Interval = intervalInstance;
-                                    }
-                                    
-                                    JToken countValue = recurrenceValue["count"];
-                                    if (countValue != null && countValue.Type != JTokenType.Null)
-                                    {
-                                        int countInstance = ((int)countValue);
-                                        recurrenceInstance.Count = countInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = recurrenceValue["endTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        recurrenceInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken scheduleValue = recurrenceValue["schedule"];
-                                    if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
-                                    {
-                                        JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                        recurrenceInstance.Schedule = scheduleInstance;
-                                        
-                                        JToken minutesArray = scheduleValue["minutes"];
-                                        if (minutesArray != null && minutesArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Minutes = new List<int>();
-                                            foreach (JToken minutesValue in ((JArray)minutesArray))
-                                            {
-                                                scheduleInstance.Minutes.Add(((int)minutesValue));
-                                            }
+                                            int failureCountInstance = ((int)failureCountValue);
+                                            statusInstance.FailureCount = failureCountInstance;
                                         }
                                         
-                                        JToken hoursArray = scheduleValue["hours"];
-                                        if (hoursArray != null && hoursArray.Type != JTokenType.Null)
+                                        JToken faultedCountValue = statusValue["faultedCount"];
+                                        if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
                                         {
-                                            scheduleInstance.Hours = new List<int>();
-                                            foreach (JToken hoursValue in ((JArray)hoursArray))
-                                            {
-                                                scheduleInstance.Hours.Add(((int)hoursValue));
-                                            }
-                                        }
-                                        
-                                        JToken weekDaysArray = scheduleValue["weekDays"];
-                                        if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Days = new List<JobScheduleDay>();
-                                            foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
-                                            {
-                                                scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                            }
-                                        }
-                                        
-                                        JToken monthsArray = scheduleValue["months"];
-                                        if (monthsArray != null && monthsArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.Months = new List<int>();
-                                            foreach (JToken monthsValue in ((JArray)monthsArray))
-                                            {
-                                                scheduleInstance.Months.Add(((int)monthsValue));
-                                            }
-                                        }
-                                        
-                                        JToken monthDaysArray = scheduleValue["monthDays"];
-                                        if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.MonthDays = new List<int>();
-                                            foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
-                                            {
-                                                scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                            }
-                                        }
-                                        
-                                        JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
-                                        if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
-                                        {
-                                            scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                            foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
-                                            {
-                                                JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                                scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                                
-                                                JToken dayValue = monthlyOccurrencesValue["day"];
-                                                if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                                {
-                                                    JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                                    jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                                }
-                                                
-                                                JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                                if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                                {
-                                                    int occurrenceInstance = ((int)occurrenceValue);
-                                                    jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                                }
-                                            }
+                                            int faultedCountInstance = ((int)faultedCountValue);
+                                            statusInstance.FaultedCount = faultedCountInstance;
                                         }
                                     }
-                                }
-                                
-                                JToken statusValue = jobsValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    JobStatus statusInstance = new JobStatus();
-                                    jobInstance.Status = statusInstance;
                                     
-                                    JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                                    if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                    JToken stateValue = jobsValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                        statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                        JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                        jobInstance.State = stateInstance;
                                     }
-                                    
-                                    JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                                    if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                        statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                                    }
-                                    
-                                    JToken executionCountValue = statusValue["executionCount"];
-                                    if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                                    {
-                                        int executionCountInstance = ((int)executionCountValue);
-                                        statusInstance.ExecutionCount = executionCountInstance;
-                                    }
-                                    
-                                    JToken failureCountValue = statusValue["failureCount"];
-                                    if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                                    {
-                                        int failureCountInstance = ((int)failureCountValue);
-                                        statusInstance.FailureCount = failureCountInstance;
-                                    }
-                                    
-                                    JToken faultedCountValue = statusValue["faultedCount"];
-                                    if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                                    {
-                                        int faultedCountInstance = ((int)faultedCountValue);
-                                        statusInstance.FaultedCount = faultedCountInstance;
-                                    }
-                                }
-                                
-                                JToken stateValue = jobsValue["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                                    jobInstance.State = stateInstance;
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -6141,7 +6339,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -6177,7 +6375,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Job State operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobUpdateStateResponse> UpdateStateAsync(string jobId, JobUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobUpdateStateResponse> UpdateStateAsync(string jobId, JobUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -6190,20 +6388,39 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateStateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateStateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.JobCollectionName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -6246,7 +6463,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     jobUpdateStateParametersValue["stateDetails"] = parameters.UpdateStateReason;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -6256,13 +6473,13 @@ namespace Microsoft.WindowsAzure.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -6271,7 +6488,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -6279,643 +6496,646 @@ namespace Microsoft.WindowsAzure.Scheduler
                     // Create Result
                     JobUpdateStateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobUpdateStateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobUpdateStateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobInstance.Id = idInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                jobInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken actionValue = responseDoc["action"];
+                            if (actionValue != null && actionValue.Type != JTokenType.Null)
+                            {
+                                JobAction actionInstance = new JobAction();
+                                jobInstance.Action = actionInstance;
+                                
+                                JToken typeValue = actionValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
+                                    actionInstance.Type = typeInstance;
+                                }
+                                
+                                JToken retryPolicyValue = actionValue["retryPolicy"];
+                                if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
+                                {
+                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                    actionInstance.RetryPolicy = retryPolicyInstance;
+                                    
+                                    JToken retryTypeValue = retryPolicyValue["retryType"];
+                                    if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
+                                    {
+                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
+                                        retryPolicyInstance.RetryType = retryTypeInstance;
+                                    }
+                                    
+                                    JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = retryPolicyValue["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        retryPolicyInstance.RetryCount = retryCountInstance;
+                                    }
+                                }
+                                
+                                JToken errorActionValue = actionValue["errorAction"];
+                                if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
+                                {
+                                    JobErrorAction errorActionInstance = new JobErrorAction();
+                                    actionInstance.ErrorAction = errorActionInstance;
+                                    
+                                    JToken typeValue2 = errorActionValue["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    {
+                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
+                                        errorActionInstance.Type = typeInstance2;
+                                    }
+                                    
+                                    JToken requestValue = errorActionValue["request"];
+                                    if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                    {
+                                        JobHttpRequest requestInstance = new JobHttpRequest();
+                                        errorActionInstance.Request = requestInstance;
+                                        
+                                        JToken uriValue = requestValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                            requestInstance.Uri = uriInstance;
+                                        }
+                                        
+                                        JToken methodValue = requestValue["method"];
+                                        if (methodValue != null && methodValue.Type != JTokenType.Null)
+                                        {
+                                            string methodInstance = ((string)methodValue);
+                                            requestInstance.Method = methodInstance;
+                                        }
+                                        
+                                        JToken headersSequenceElement = ((JToken)requestValue["headers"]);
+                                        if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in headersSequenceElement)
+                                            {
+                                                string headersKey = ((string)property.Name);
+                                                string headersValue = ((string)property.Value);
+                                                requestInstance.Headers.Add(headersKey, headersValue);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue = requestValue["body"];
+                                        if (bodyValue != null && bodyValue.Type != JTokenType.Null)
+                                        {
+                                            string bodyInstance = ((string)bodyValue);
+                                            requestInstance.Body = bodyInstance;
+                                        }
+                                        
+                                        JToken authenticationValue = requestValue["authentication"];
+                                        if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)authenticationValue["type"]);
+                                            if (typeName == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue = authenticationValue["password"];
+                                                if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance = ((string)passwordValue);
+                                                    clientCertAuthenticationInstance.Password = passwordInstance;
+                                                }
+                                                
+                                                JToken pfxValue = authenticationValue["pfx"];
+                                                if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance = ((string)pfxValue);
+                                                    clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                    clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                }
+                                                
+                                                JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                    clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                    clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                }
+                                                
+                                                JToken typeValue3 = authenticationValue["type"];
+                                                if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                    clientCertAuthenticationInstance.Type = typeInstance3;
+                                                }
+                                                requestInstance.Authentication = clientCertAuthenticationInstance;
+                                            }
+                                            if (typeName == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue = authenticationValue["secret"];
+                                                if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance = ((string)secretValue);
+                                                    aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                }
+                                                
+                                                JToken tenantValue = authenticationValue["tenant"];
+                                                if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance = ((string)tenantValue);
+                                                    aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                }
+                                                
+                                                JToken audienceValue = authenticationValue["audience"];
+                                                if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance = ((string)audienceValue);
+                                                    aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                }
+                                                
+                                                JToken clientIdValue = authenticationValue["clientId"];
+                                                if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance = ((string)clientIdValue);
+                                                    aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                }
+                                                requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                            }
+                                            if (typeName == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                
+                                                JToken usernameValue = authenticationValue["username"];
+                                                if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance = ((string)usernameValue);
+                                                    basicAuthenticationInstance.Username = usernameInstance;
+                                                }
+                                                
+                                                JToken passwordValue2 = authenticationValue["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    basicAuthenticationInstance.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken typeValue5 = authenticationValue["type"];
+                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                    basicAuthenticationInstance.Type = typeInstance5;
+                                                }
+                                                requestInstance.Authentication = basicAuthenticationInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue = errorActionValue["queueMessage"];
+                                    if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
+                                    {
+                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                        errorActionInstance.QueueMessage = queueMessageInstance;
+                                        
+                                        JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                        if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                        {
+                                            string storageAccountInstance = ((string)storageAccountValue);
+                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                        }
+                                        
+                                        JToken queueNameValue = queueMessageValue["queueName"];
+                                        if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance = ((string)queueNameValue);
+                                            queueMessageInstance.QueueName = queueNameInstance;
+                                        }
+                                        
+                                        JToken sasTokenValue = queueMessageValue["sasToken"];
+                                        if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                        {
+                                            string sasTokenInstance = ((string)sasTokenValue);
+                                            queueMessageInstance.SasToken = sasTokenInstance;
+                                        }
+                                        
+                                        JToken messageValue = queueMessageValue["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            queueMessageInstance.Message = messageInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken requestValue2 = actionValue["request"];
+                                if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
+                                {
+                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                    actionInstance.Request = requestInstance2;
+                                    
+                                    JToken uriValue2 = requestValue2["uri"];
+                                    if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                        requestInstance2.Uri = uriInstance2;
+                                    }
+                                    
+                                    JToken methodValue2 = requestValue2["method"];
+                                    if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
+                                    {
+                                        string methodInstance2 = ((string)methodValue2);
+                                        requestInstance2.Method = methodInstance2;
+                                    }
+                                    
+                                    JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
+                                    if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        {
+                                            string headersKey2 = ((string)property2.Name);
+                                            string headersValue2 = ((string)property2.Value);
+                                            requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                        }
+                                    }
+                                    
+                                    JToken bodyValue2 = requestValue2["body"];
+                                    if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
+                                    {
+                                        string bodyInstance2 = ((string)bodyValue2);
+                                        requestInstance2.Body = bodyInstance2;
+                                    }
+                                    
+                                    JToken authenticationValue2 = requestValue2["authentication"];
+                                    if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName2 = ((string)authenticationValue2["type"]);
+                                        if (typeName2 == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue3 = authenticationValue2["password"];
+                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance3 = ((string)passwordValue3);
+                                                clientCertAuthenticationInstance2.Password = passwordInstance3;
+                                            }
+                                            
+                                            JToken pfxValue2 = authenticationValue2["pfx"];
+                                            if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance2 = ((string)pfxValue2);
+                                                clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                            if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                            }
+                                            
+                                            JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                            if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                            if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue2["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                            }
+                                            requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue2 = authenticationValue2["secret"];
+                                            if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance2 = ((string)secretValue2);
+                                                aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                            }
+                                            
+                                            JToken tenantValue2 = authenticationValue2["tenant"];
+                                            if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance2 = ((string)tenantValue2);
+                                                aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                            }
+                                            
+                                            JToken audienceValue2 = authenticationValue2["audience"];
+                                            if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance2 = ((string)audienceValue2);
+                                                aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                            }
+                                            
+                                            JToken clientIdValue2 = authenticationValue2["clientId"];
+                                            if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance2 = ((string)clientIdValue2);
+                                                aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue2["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                            }
+                                            requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                        }
+                                        if (typeName2 == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                            
+                                            JToken usernameValue2 = authenticationValue2["username"];
+                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance2 = ((string)usernameValue2);
+                                                basicAuthenticationInstance2.Username = usernameInstance2;
+                                            }
+                                            
+                                            JToken passwordValue4 = authenticationValue2["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                basicAuthenticationInstance2.Password = passwordInstance4;
+                                            }
+                                            
+                                            JToken typeValue8 = authenticationValue2["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                            }
+                                            requestInstance2.Authentication = basicAuthenticationInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken queueMessageValue2 = actionValue["queueMessage"];
+                                if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
+                                {
+                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                    actionInstance.QueueMessage = queueMessageInstance2;
+                                    
+                                    JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                    if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountInstance2 = ((string)storageAccountValue2);
+                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                    }
+                                    
+                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance2 = ((string)queueNameValue2);
+                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                    }
+                                    
+                                    JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                    if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
+                                    {
+                                        string sasTokenInstance2 = ((string)sasTokenValue2);
+                                        queueMessageInstance2.SasToken = sasTokenInstance2;
+                                    }
+                                    
+                                    JToken messageValue2 = queueMessageValue2["message"];
+                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance2 = ((string)messageValue2);
+                                        queueMessageInstance2.Message = messageInstance2;
+                                    }
+                                }
+                            }
+                            
+                            JToken recurrenceValue = responseDoc["recurrence"];
+                            if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
+                            {
+                                JobRecurrence recurrenceInstance = new JobRecurrence();
+                                jobInstance.Recurrence = recurrenceInstance;
+                                
+                                JToken frequencyValue = recurrenceValue["frequency"];
+                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
+                                    recurrenceInstance.Frequency = frequencyInstance;
+                                }
+                                
+                                JToken intervalValue = recurrenceValue["interval"];
+                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                {
+                                    int intervalInstance = ((int)intervalValue);
+                                    recurrenceInstance.Interval = intervalInstance;
+                                }
+                                
+                                JToken countValue = recurrenceValue["count"];
+                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                {
+                                    int countInstance = ((int)countValue);
+                                    recurrenceInstance.Count = countInstance;
+                                }
+                                
+                                JToken endTimeValue = recurrenceValue["endTime"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                    recurrenceInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken scheduleValue = recurrenceValue["schedule"];
+                                if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                {
+                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                    recurrenceInstance.Schedule = scheduleInstance;
+                                    
+                                    JToken minutesArray = scheduleValue["minutes"];
+                                    if (minutesArray != null && minutesArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Minutes = new List<int>();
+                                        foreach (JToken minutesValue in ((JArray)minutesArray))
+                                        {
+                                            scheduleInstance.Minutes.Add(((int)minutesValue));
+                                        }
+                                    }
+                                    
+                                    JToken hoursArray = scheduleValue["hours"];
+                                    if (hoursArray != null && hoursArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Hours = new List<int>();
+                                        foreach (JToken hoursValue in ((JArray)hoursArray))
+                                        {
+                                            scheduleInstance.Hours.Add(((int)hoursValue));
+                                        }
+                                    }
+                                    
+                                    JToken weekDaysArray = scheduleValue["weekDays"];
+                                    if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Days = new List<JobScheduleDay>();
+                                        foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
+                                        {
+                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
+                                        }
+                                    }
+                                    
+                                    JToken monthsArray = scheduleValue["months"];
+                                    if (monthsArray != null && monthsArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.Months = new List<int>();
+                                        foreach (JToken monthsValue in ((JArray)monthsArray))
+                                        {
+                                            scheduleInstance.Months.Add(((int)monthsValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthDaysArray = scheduleValue["monthDays"];
+                                    if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthDays = new List<int>();
+                                        foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
+                                        {
+                                            scheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
+                                    if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                    {
+                                        scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
+                                        foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
+                                        {
+                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            
+                                            JToken dayValue = monthlyOccurrencesValue["day"];
+                                            if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                            {
+                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
+                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                            }
+                                            
+                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                            if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                            {
+                                                int occurrenceInstance = ((int)occurrenceValue);
+                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                JobStatus statusInstance = new JobStatus();
+                                jobInstance.Status = statusInstance;
+                                
+                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
+                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                }
+                                
+                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
+                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                }
+                                
+                                JToken executionCountValue = statusValue["executionCount"];
+                                if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
+                                {
+                                    int executionCountInstance = ((int)executionCountValue);
+                                    statusInstance.ExecutionCount = executionCountInstance;
+                                }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
+                                {
+                                    int failureCountInstance = ((int)failureCountValue);
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
+                                {
+                                    int faultedCountInstance = ((int)faultedCountValue);
+                                    statusInstance.FaultedCount = faultedCountInstance;
+                                }
+                            }
+                            
+                            JToken stateValue = responseDoc["state"];
+                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                            {
+                                JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
+                                jobInstance.State = stateInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Job jobInstance = new Job();
-                        result.Job = jobInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            jobInstance.Id = idInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                            jobInstance.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken actionValue = responseDoc["action"];
-                        if (actionValue != null && actionValue.Type != JTokenType.Null)
-                        {
-                            JobAction actionInstance = new JobAction();
-                            jobInstance.Action = actionInstance;
-                            
-                            JToken typeValue = actionValue["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                JobActionType typeInstance = SchedulerClient.ParseJobActionType(((string)typeValue));
-                                actionInstance.Type = typeInstance;
-                            }
-                            
-                            JToken retryPolicyValue = actionValue["retryPolicy"];
-                            if (retryPolicyValue != null && retryPolicyValue.Type != JTokenType.Null)
-                            {
-                                RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                actionInstance.RetryPolicy = retryPolicyInstance;
-                                
-                                JToken retryTypeValue = retryPolicyValue["retryType"];
-                                if (retryTypeValue != null && retryTypeValue.Type != JTokenType.Null)
-                                {
-                                    RetryType retryTypeInstance = SchedulerClient.ParseRetryType(((string)retryTypeValue));
-                                    retryPolicyInstance.RetryType = retryTypeInstance;
-                                }
-                                
-                                JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                    retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                }
-                                
-                                JToken retryCountValue = retryPolicyValue["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    retryPolicyInstance.RetryCount = retryCountInstance;
-                                }
-                            }
-                            
-                            JToken errorActionValue = actionValue["errorAction"];
-                            if (errorActionValue != null && errorActionValue.Type != JTokenType.Null)
-                            {
-                                JobErrorAction errorActionInstance = new JobErrorAction();
-                                actionInstance.ErrorAction = errorActionInstance;
-                                
-                                JToken typeValue2 = errorActionValue["type"];
-                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                                {
-                                    JobActionType typeInstance2 = SchedulerClient.ParseJobActionType(((string)typeValue2));
-                                    errorActionInstance.Type = typeInstance2;
-                                }
-                                
-                                JToken requestValue = errorActionValue["request"];
-                                if (requestValue != null && requestValue.Type != JTokenType.Null)
-                                {
-                                    JobHttpRequest requestInstance = new JobHttpRequest();
-                                    errorActionInstance.Request = requestInstance;
-                                    
-                                    JToken uriValue = requestValue["uri"];
-                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                    {
-                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                        requestInstance.Uri = uriInstance;
-                                    }
-                                    
-                                    JToken methodValue = requestValue["method"];
-                                    if (methodValue != null && methodValue.Type != JTokenType.Null)
-                                    {
-                                        string methodInstance = ((string)methodValue);
-                                        requestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken headersSequenceElement = ((JToken)requestValue["headers"]);
-                                    if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in headersSequenceElement)
-                                        {
-                                            string headersKey = ((string)property.Name);
-                                            string headersValue = ((string)property.Value);
-                                            requestInstance.Headers.Add(headersKey, headersValue);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue = requestValue["body"];
-                                    if (bodyValue != null && bodyValue.Type != JTokenType.Null)
-                                    {
-                                        string bodyInstance = ((string)bodyValue);
-                                        requestInstance.Body = bodyInstance;
-                                    }
-                                    
-                                    JToken authenticationValue = requestValue["authentication"];
-                                    if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
-                                    {
-                                        string typeName = ((string)authenticationValue["type"]);
-                                        if (typeName == "ClientCertificate")
-                                        {
-                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
-                                            
-                                            JToken passwordValue = authenticationValue["password"];
-                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance = ((string)passwordValue);
-                                                clientCertAuthenticationInstance.Password = passwordInstance;
-                                            }
-                                            
-                                            JToken pfxValue = authenticationValue["pfx"];
-                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
-                                            {
-                                                string pfxInstance = ((string)pfxValue);
-                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
-                                            }
-                                            
-                                            JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
-                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
-                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
-                                            }
-                                            
-                                            JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
-                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
-                                            {
-                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
-                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
-                                            }
-                                            
-                                            JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
-                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
-                                            {
-                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
-                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
-                                            }
-                                            
-                                            JToken typeValue3 = authenticationValue["type"];
-                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
-                                                clientCertAuthenticationInstance.Type = typeInstance3;
-                                            }
-                                            requestInstance.Authentication = clientCertAuthenticationInstance;
-                                        }
-                                        if (typeName == "ActiveDirectoryOAuth")
-                                        {
-                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
-                                            
-                                            JToken secretValue = authenticationValue["secret"];
-                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
-                                            {
-                                                string secretInstance = ((string)secretValue);
-                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
-                                            }
-                                            
-                                            JToken tenantValue = authenticationValue["tenant"];
-                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantInstance = ((string)tenantValue);
-                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
-                                            }
-                                            
-                                            JToken audienceValue = authenticationValue["audience"];
-                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
-                                            {
-                                                string audienceInstance = ((string)audienceValue);
-                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
-                                            }
-                                            
-                                            JToken clientIdValue = authenticationValue["clientId"];
-                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
-                                            {
-                                                string clientIdInstance = ((string)clientIdValue);
-                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
-                                            }
-                                            
-                                            JToken typeValue4 = authenticationValue["type"];
-                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
-                                            }
-                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
-                                        }
-                                        if (typeName == "Basic")
-                                        {
-                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
-                                            
-                                            JToken usernameValue = authenticationValue["username"];
-                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                            {
-                                                string usernameInstance = ((string)usernameValue);
-                                                basicAuthenticationInstance.Username = usernameInstance;
-                                            }
-                                            
-                                            JToken passwordValue2 = authenticationValue["password"];
-                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                            {
-                                                string passwordInstance2 = ((string)passwordValue2);
-                                                basicAuthenticationInstance.Password = passwordInstance2;
-                                            }
-                                            
-                                            JToken typeValue5 = authenticationValue["type"];
-                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
-                                            {
-                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
-                                                basicAuthenticationInstance.Type = typeInstance5;
-                                            }
-                                            requestInstance.Authentication = basicAuthenticationInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken queueMessageValue = errorActionValue["queueMessage"];
-                                if (queueMessageValue != null && queueMessageValue.Type != JTokenType.Null)
-                                {
-                                    JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                    errorActionInstance.QueueMessage = queueMessageInstance;
-                                    
-                                    JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                    if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                    {
-                                        string storageAccountInstance = ((string)storageAccountValue);
-                                        queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                    }
-                                    
-                                    JToken queueNameValue = queueMessageValue["queueName"];
-                                    if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
-                                    {
-                                        string queueNameInstance = ((string)queueNameValue);
-                                        queueMessageInstance.QueueName = queueNameInstance;
-                                    }
-                                    
-                                    JToken sasTokenValue = queueMessageValue["sasToken"];
-                                    if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
-                                    {
-                                        string sasTokenInstance = ((string)sasTokenValue);
-                                        queueMessageInstance.SasToken = sasTokenInstance;
-                                    }
-                                    
-                                    JToken messageValue = queueMessageValue["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        queueMessageInstance.Message = messageInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken requestValue2 = actionValue["request"];
-                            if (requestValue2 != null && requestValue2.Type != JTokenType.Null)
-                            {
-                                JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                actionInstance.Request = requestInstance2;
-                                
-                                JToken uriValue2 = requestValue2["uri"];
-                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
-                                {
-                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
-                                    requestInstance2.Uri = uriInstance2;
-                                }
-                                
-                                JToken methodValue2 = requestValue2["method"];
-                                if (methodValue2 != null && methodValue2.Type != JTokenType.Null)
-                                {
-                                    string methodInstance2 = ((string)methodValue2);
-                                    requestInstance2.Method = methodInstance2;
-                                }
-                                
-                                JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
-                                if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property2 in headersSequenceElement2)
-                                    {
-                                        string headersKey2 = ((string)property2.Name);
-                                        string headersValue2 = ((string)property2.Value);
-                                        requestInstance2.Headers.Add(headersKey2, headersValue2);
-                                    }
-                                }
-                                
-                                JToken bodyValue2 = requestValue2["body"];
-                                if (bodyValue2 != null && bodyValue2.Type != JTokenType.Null)
-                                {
-                                    string bodyInstance2 = ((string)bodyValue2);
-                                    requestInstance2.Body = bodyInstance2;
-                                }
-                                
-                                JToken authenticationValue2 = requestValue2["authentication"];
-                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
-                                {
-                                    string typeName2 = ((string)authenticationValue2["type"]);
-                                    if (typeName2 == "ClientCertificate")
-                                    {
-                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
-                                        
-                                        JToken passwordValue3 = authenticationValue2["password"];
-                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance3 = ((string)passwordValue3);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
-                                        }
-                                        
-                                        JToken pfxValue2 = authenticationValue2["pfx"];
-                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
-                                        {
-                                            string pfxInstance2 = ((string)pfxValue2);
-                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
-                                        }
-                                        
-                                        JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
-                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
-                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
-                                        }
-                                        
-                                        JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
-                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
-                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
-                                        }
-                                        
-                                        JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
-                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
-                                        {
-                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
-                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
-                                        }
-                                        
-                                        JToken typeValue6 = authenticationValue2["type"];
-                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                            clientCertAuthenticationInstance2.Type = typeInstance6;
-                                        }
-                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "ActiveDirectoryOAuth")
-                                    {
-                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
-                                        
-                                        JToken secretValue2 = authenticationValue2["secret"];
-                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
-                                        {
-                                            string secretInstance2 = ((string)secretValue2);
-                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
-                                        }
-                                        
-                                        JToken tenantValue2 = authenticationValue2["tenant"];
-                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
-                                        {
-                                            string tenantInstance2 = ((string)tenantValue2);
-                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
-                                        }
-                                        
-                                        JToken audienceValue2 = authenticationValue2["audience"];
-                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
-                                        {
-                                            string audienceInstance2 = ((string)audienceValue2);
-                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
-                                        }
-                                        
-                                        JToken clientIdValue2 = authenticationValue2["clientId"];
-                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
-                                        {
-                                            string clientIdInstance2 = ((string)clientIdValue2);
-                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
-                                        }
-                                        
-                                        JToken typeValue7 = authenticationValue2["type"];
-                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
-                                        }
-                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
-                                    }
-                                    if (typeName2 == "Basic")
-                                    {
-                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
-                                        
-                                        JToken usernameValue2 = authenticationValue2["username"];
-                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
-                                        {
-                                            string usernameInstance2 = ((string)usernameValue2);
-                                            basicAuthenticationInstance2.Username = usernameInstance2;
-                                        }
-                                        
-                                        JToken passwordValue4 = authenticationValue2["password"];
-                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance4 = ((string)passwordValue4);
-                                            basicAuthenticationInstance2.Password = passwordInstance4;
-                                        }
-                                        
-                                        JToken typeValue8 = authenticationValue2["type"];
-                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
-                                        {
-                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                            basicAuthenticationInstance2.Type = typeInstance8;
-                                        }
-                                        requestInstance2.Authentication = basicAuthenticationInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken queueMessageValue2 = actionValue["queueMessage"];
-                            if (queueMessageValue2 != null && queueMessageValue2.Type != JTokenType.Null)
-                            {
-                                JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                actionInstance.QueueMessage = queueMessageInstance2;
-                                
-                                JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                if (storageAccountValue2 != null && storageAccountValue2.Type != JTokenType.Null)
-                                {
-                                    string storageAccountInstance2 = ((string)storageAccountValue2);
-                                    queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                }
-                                
-                                JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
-                                {
-                                    string queueNameInstance2 = ((string)queueNameValue2);
-                                    queueMessageInstance2.QueueName = queueNameInstance2;
-                                }
-                                
-                                JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                if (sasTokenValue2 != null && sasTokenValue2.Type != JTokenType.Null)
-                                {
-                                    string sasTokenInstance2 = ((string)sasTokenValue2);
-                                    queueMessageInstance2.SasToken = sasTokenInstance2;
-                                }
-                                
-                                JToken messageValue2 = queueMessageValue2["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
-                                {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    queueMessageInstance2.Message = messageInstance2;
-                                }
-                            }
-                        }
-                        
-                        JToken recurrenceValue = responseDoc["recurrence"];
-                        if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
-                        {
-                            JobRecurrence recurrenceInstance = new JobRecurrence();
-                            jobInstance.Recurrence = recurrenceInstance;
-                            
-                            JToken frequencyValue = recurrenceValue["frequency"];
-                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency(((string)frequencyValue));
-                                recurrenceInstance.Frequency = frequencyInstance;
-                            }
-                            
-                            JToken intervalValue = recurrenceValue["interval"];
-                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                            {
-                                int intervalInstance = ((int)intervalValue);
-                                recurrenceInstance.Interval = intervalInstance;
-                            }
-                            
-                            JToken countValue = recurrenceValue["count"];
-                            if (countValue != null && countValue.Type != JTokenType.Null)
-                            {
-                                int countInstance = ((int)countValue);
-                                recurrenceInstance.Count = countInstance;
-                            }
-                            
-                            JToken endTimeValue = recurrenceValue["endTime"];
-                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                recurrenceInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken scheduleValue = recurrenceValue["schedule"];
-                            if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
-                            {
-                                JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                recurrenceInstance.Schedule = scheduleInstance;
-                                
-                                JToken minutesArray = scheduleValue["minutes"];
-                                if (minutesArray != null && minutesArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Minutes = new List<int>();
-                                    foreach (JToken minutesValue in ((JArray)minutesArray))
-                                    {
-                                        scheduleInstance.Minutes.Add(((int)minutesValue));
-                                    }
-                                }
-                                
-                                JToken hoursArray = scheduleValue["hours"];
-                                if (hoursArray != null && hoursArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Hours = new List<int>();
-                                    foreach (JToken hoursValue in ((JArray)hoursArray))
-                                    {
-                                        scheduleInstance.Hours.Add(((int)hoursValue));
-                                    }
-                                }
-                                
-                                JToken weekDaysArray = scheduleValue["weekDays"];
-                                if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Days = new List<JobScheduleDay>();
-                                    foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
-                                    {
-                                        scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
-                                    }
-                                }
-                                
-                                JToken monthsArray = scheduleValue["months"];
-                                if (monthsArray != null && monthsArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.Months = new List<int>();
-                                    foreach (JToken monthsValue in ((JArray)monthsArray))
-                                    {
-                                        scheduleInstance.Months.Add(((int)monthsValue));
-                                    }
-                                }
-                                
-                                JToken monthDaysArray = scheduleValue["monthDays"];
-                                if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthDays = new List<int>();
-                                    foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
-                                    {
-                                        scheduleInstance.MonthDays.Add(((int)monthDaysValue));
-                                    }
-                                }
-                                
-                                JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
-                                if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
-                                {
-                                    scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-                                    foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
-                                    {
-                                        JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                        scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
-                                        
-                                        JToken dayValue = monthlyOccurrencesValue["day"];
-                                        if (dayValue != null && dayValue.Type != JTokenType.Null)
-                                        {
-                                            JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay(((string)dayValue));
-                                            jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
-                                        }
-                                        
-                                        JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                        if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
-                                        {
-                                            int occurrenceInstance = ((int)occurrenceValue);
-                                            jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        JToken statusValue = responseDoc["status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                        {
-                            JobStatus statusInstance = new JobStatus();
-                            jobInstance.Status = statusInstance;
-                            
-                            JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                            if (lastExecutionTimeValue != null && lastExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime lastExecutionTimeInstance = ((DateTime)lastExecutionTimeValue);
-                                statusInstance.LastExecutionTime = lastExecutionTimeInstance;
-                            }
-                            
-                            JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                            if (nextExecutionTimeValue != null && nextExecutionTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime nextExecutionTimeInstance = ((DateTime)nextExecutionTimeValue);
-                                statusInstance.NextExecutionTime = nextExecutionTimeInstance;
-                            }
-                            
-                            JToken executionCountValue = statusValue["executionCount"];
-                            if (executionCountValue != null && executionCountValue.Type != JTokenType.Null)
-                            {
-                                int executionCountInstance = ((int)executionCountValue);
-                                statusInstance.ExecutionCount = executionCountInstance;
-                            }
-                            
-                            JToken failureCountValue = statusValue["failureCount"];
-                            if (failureCountValue != null && failureCountValue.Type != JTokenType.Null)
-                            {
-                                int failureCountInstance = ((int)failureCountValue);
-                                statusInstance.FailureCount = failureCountInstance;
-                            }
-                            
-                            JToken faultedCountValue = statusValue["faultedCount"];
-                            if (faultedCountValue != null && faultedCountValue.Type != JTokenType.Null)
-                            {
-                                int faultedCountInstance = ((int)faultedCountValue);
-                                statusInstance.FaultedCount = faultedCountInstance;
-                            }
-                        }
-                        
-                        JToken stateValue = responseDoc["state"];
-                        if (stateValue != null && stateValue.Type != JTokenType.Null)
-                        {
-                            JobState stateInstance = SchedulerClient.ParseJobState(((string)stateValue));
-                            jobInstance.State = stateInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -6924,7 +7144,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

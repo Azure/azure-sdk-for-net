@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static ResourceGroupCreateOrUpdateResult CreateOrUpdate(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
+        public static ResourceGroupCreateOrUpdateResult CreateOrUpdate(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
+        public static Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IResourceGroupOperations operations, string resourceGroupName)
+        public static AzureOperationResponse Delete(this IResourceGroupOperations operations, string resourceGroupName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IResourceGroupOperations operations, string resourceGroupName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IResourceGroupOperations operations, string resourceGroupName)
         {
             return operations.DeleteAsync(resourceGroupName, CancellationToken.None);
         }
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static ResourceGroupPatchResult Patch(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
+        public static ResourceGroupPatchResult Patch(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static Task<ResourceGroupPatchResult> PatchAsync(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
+        public static Task<ResourceGroupPatchResult> PatchAsync(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
         {
             return operations.PatchAsync(resourceGroupName, parameters, CancellationToken.None);
         }

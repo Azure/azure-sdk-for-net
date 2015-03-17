@@ -26,11 +26,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
@@ -168,7 +167,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Initializes a new instance of the DataPipelineManagementClient
         /// class.
         /// </summary>
-        private DataPipelineManagementClient()
+        public DataPipelineManagementClient()
             : base()
         {
             this._dataFactories = new DataFactoryOperations(this);
@@ -251,7 +250,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private DataPipelineManagementClient(HttpClient httpClient)
+        public DataPipelineManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._dataFactories = new DataFactoryOperations(this);
@@ -379,18 +378,20 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                Tracing.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = operationStatusLink.Trim();
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -401,7 +402,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -413,13 +414,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
@@ -428,13 +429,14 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -456,7 +458,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

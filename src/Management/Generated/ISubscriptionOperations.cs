@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RegisterResourceAsync(string resourceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RegisterResourceAsync(string resourceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister a resource with your subscription.
@@ -95,6 +95,6 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UnregisterResourceAsync(string resourceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterResourceAsync(string resourceName, CancellationToken cancellationToken);
     }
 }

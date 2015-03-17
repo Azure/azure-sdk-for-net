@@ -29,9 +29,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
@@ -43,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Network
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
-    internal partial class NetworkOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkOperations
+    internal partial class NetworkOperations : IServiceOperations<NetworkManagementClient>, INetworkOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkOperations class.
@@ -84,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -97,18 +96,24 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginSettingConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSettingConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/media";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/media";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -131,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -148,13 +153,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -163,14 +168,15 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -179,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -212,22 +218,28 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The Get Network Configuration operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkGetConfigurationResponse> GetConfigurationAsync(CancellationToken cancellationToken)
+        public async Task<NetworkGetConfigurationResponse> GetConfigurationAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/media";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/media";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -250,7 +262,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -262,13 +274,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -277,7 +289,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -285,11 +297,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                     // Create Result
                     NetworkGetConfigurationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkGetConfigurationResponse();
-                    result.Configuration = responseContent;
-                    
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkGetConfigurationResponse();
+                        result.Configuration = responseContent;
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -298,7 +313,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -331,22 +346,28 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The response structure for the Network Operations List operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<NetworkListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetwork";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -369,7 +390,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -381,13 +402,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -396,7 +417,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -404,225 +425,228 @@ namespace Microsoft.WindowsAzure.Management.Network
                     // Create Result
                     NetworkListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement virtualNetworkSitesSequenceElement = responseDoc.Element(XName.Get("VirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                    if (virtualNetworkSitesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement virtualNetworkSitesElement in virtualNetworkSitesSequenceElement.Elements(XName.Get("VirtualNetworkSite", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement virtualNetworkSitesSequenceElement = responseDoc.Element(XName.Get("VirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
+                        if (virtualNetworkSitesSequenceElement != null)
                         {
-                            NetworkListResponse.VirtualNetworkSite virtualNetworkSiteInstance = new NetworkListResponse.VirtualNetworkSite();
-                            result.VirtualNetworkSites.Add(virtualNetworkSiteInstance);
-                            
-                            XElement nameElement = virtualNetworkSitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement virtualNetworkSitesElement in virtualNetworkSitesSequenceElement.Elements(XName.Get("VirtualNetworkSite", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string nameInstance = nameElement.Value;
-                                virtualNetworkSiteInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = virtualNetworkSitesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                virtualNetworkSiteInstance.Label = labelInstance;
-                            }
-                            
-                            XElement idElement = virtualNetworkSitesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                            if (idElement != null)
-                            {
-                                string idInstance = idElement.Value;
-                                virtualNetworkSiteInstance.Id = idInstance;
-                            }
-                            
-                            XElement affinityGroupElement = virtualNetworkSitesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null)
-                            {
-                                string affinityGroupInstance = affinityGroupElement.Value;
-                                virtualNetworkSiteInstance.AffinityGroup = affinityGroupInstance;
-                            }
-                            
-                            XElement locationElement = virtualNetworkSitesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                virtualNetworkSiteInstance.Location = locationInstance;
-                            }
-                            
-                            XElement stateElement = virtualNetworkSitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                virtualNetworkSiteInstance.State = stateInstance;
-                            }
-                            
-                            XElement addressSpaceElement = virtualNetworkSitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
-                            if (addressSpaceElement != null)
-                            {
-                                NetworkListResponse.AddressSpace addressSpaceInstance = new NetworkListResponse.AddressSpace();
-                                virtualNetworkSiteInstance.AddressSpace = addressSpaceInstance;
+                                NetworkListResponse.VirtualNetworkSite virtualNetworkSiteInstance = new NetworkListResponse.VirtualNetworkSite();
+                                result.VirtualNetworkSites.Add(virtualNetworkSiteInstance);
                                 
-                                XElement addressPrefixesSequenceElement = addressSpaceElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
-                                if (addressPrefixesSequenceElement != null)
+                                XElement nameElement = virtualNetworkSitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
                                 {
-                                    foreach (XElement addressPrefixesElement in addressPrefixesSequenceElement.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
-                                    {
-                                        addressSpaceInstance.AddressPrefixes.Add(addressPrefixesElement.Value);
-                                    }
-                                }
-                            }
-                            
-                            XElement subnetsSequenceElement = virtualNetworkSitesElement.Element(XName.Get("Subnets", "http://schemas.microsoft.com/windowsazure"));
-                            if (subnetsSequenceElement != null)
-                            {
-                                foreach (XElement subnetsElement in subnetsSequenceElement.Elements(XName.Get("Subnet", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    NetworkListResponse.Subnet subnetInstance = new NetworkListResponse.Subnet();
-                                    virtualNetworkSiteInstance.Subnets.Add(subnetInstance);
-                                    
-                                    XElement nameElement2 = subnetsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement2 != null)
-                                    {
-                                        string nameInstance2 = nameElement2.Value;
-                                        subnetInstance.Name = nameInstance2;
-                                    }
-                                    
-                                    XElement addressPrefixElement = subnetsElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                    if (addressPrefixElement != null)
-                                    {
-                                        string addressPrefixInstance = addressPrefixElement.Value;
-                                        subnetInstance.AddressPrefix = addressPrefixInstance;
-                                    }
-                                    
-                                    XElement networkSecurityGroupElement = subnetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                    if (networkSecurityGroupElement != null)
-                                    {
-                                        string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
-                                        subnetInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                    }
-                                }
-                            }
-                            
-                            XElement dnsElement = virtualNetworkSitesElement.Element(XName.Get("Dns", "http://schemas.microsoft.com/windowsazure"));
-                            if (dnsElement != null)
-                            {
-                                XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
-                                if (dnsServersSequenceElement != null)
-                                {
-                                    foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
-                                    {
-                                        NetworkListResponse.DnsServer dnsServerInstance = new NetworkListResponse.DnsServer();
-                                        virtualNetworkSiteInstance.DnsServers.Add(dnsServerInstance);
-                                        
-                                        XElement nameElement3 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        if (nameElement3 != null)
-                                        {
-                                            string nameInstance3 = nameElement3.Value;
-                                            dnsServerInstance.Name = nameInstance3;
-                                        }
-                                        
-                                        XElement addressElement = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
-                                        if (addressElement != null)
-                                        {
-                                            string addressInstance = addressElement.Value;
-                                            dnsServerInstance.Address = addressInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            XElement gatewayElement = virtualNetworkSitesElement.Element(XName.Get("Gateway", "http://schemas.microsoft.com/windowsazure"));
-                            if (gatewayElement != null)
-                            {
-                                NetworkListResponse.Gateway gatewayInstance = new NetworkListResponse.Gateway();
-                                virtualNetworkSiteInstance.Gateway = gatewayInstance;
-                                
-                                XElement profileElement = gatewayElement.Element(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure"));
-                                if (profileElement != null)
-                                {
-                                    GatewayProfile profileInstance = ((GatewayProfile)Enum.Parse(typeof(GatewayProfile), profileElement.Value, true));
-                                    gatewayInstance.Profile = profileInstance;
+                                    string nameInstance = nameElement.Value;
+                                    virtualNetworkSiteInstance.Name = nameInstance;
                                 }
                                 
-                                XElement sitesSequenceElement = gatewayElement.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
-                                if (sitesSequenceElement != null)
+                                XElement labelElement = virtualNetworkSitesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
                                 {
-                                    foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("LocalNetworkSite", "http://schemas.microsoft.com/windowsazure")))
+                                    string labelInstance = labelElement.Value;
+                                    virtualNetworkSiteInstance.Label = labelInstance;
+                                }
+                                
+                                XElement idElement = virtualNetworkSitesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                                if (idElement != null)
+                                {
+                                    string idInstance = idElement.Value;
+                                    virtualNetworkSiteInstance.Id = idInstance;
+                                }
+                                
+                                XElement affinityGroupElement = virtualNetworkSitesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                if (affinityGroupElement != null)
+                                {
+                                    string affinityGroupInstance = affinityGroupElement.Value;
+                                    virtualNetworkSiteInstance.AffinityGroup = affinityGroupInstance;
+                                }
+                                
+                                XElement locationElement = virtualNetworkSitesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    virtualNetworkSiteInstance.Location = locationInstance;
+                                }
+                                
+                                XElement stateElement = virtualNetworkSitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                if (stateElement != null)
+                                {
+                                    string stateInstance = stateElement.Value;
+                                    virtualNetworkSiteInstance.State = stateInstance;
+                                }
+                                
+                                XElement addressSpaceElement = virtualNetworkSitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
+                                if (addressSpaceElement != null)
+                                {
+                                    NetworkListResponse.AddressSpace addressSpaceInstance = new NetworkListResponse.AddressSpace();
+                                    virtualNetworkSiteInstance.AddressSpace = addressSpaceInstance;
+                                    
+                                    XElement addressPrefixesSequenceElement = addressSpaceElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                                    if (addressPrefixesSequenceElement != null)
                                     {
-                                        NetworkListResponse.LocalNetworkSite localNetworkSiteInstance = new NetworkListResponse.LocalNetworkSite();
-                                        gatewayInstance.Sites.Add(localNetworkSiteInstance);
-                                        
-                                        XElement nameElement4 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        if (nameElement4 != null)
+                                        foreach (XElement addressPrefixesElement in addressPrefixesSequenceElement.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                         {
-                                            string nameInstance4 = nameElement4.Value;
-                                            localNetworkSiteInstance.Name = nameInstance4;
+                                            addressSpaceInstance.AddressPrefixes.Add(addressPrefixesElement.Value);
+                                        }
+                                    }
+                                }
+                                
+                                XElement subnetsSequenceElement = virtualNetworkSitesElement.Element(XName.Get("Subnets", "http://schemas.microsoft.com/windowsazure"));
+                                if (subnetsSequenceElement != null)
+                                {
+                                    foreach (XElement subnetsElement in subnetsSequenceElement.Elements(XName.Get("Subnet", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        NetworkListResponse.Subnet subnetInstance = new NetworkListResponse.Subnet();
+                                        virtualNetworkSiteInstance.Subnets.Add(subnetInstance);
+                                        
+                                        XElement nameElement2 = subnetsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            subnetInstance.Name = nameInstance2;
                                         }
                                         
-                                        XElement vpnGatewayAddressElement = sitesElement.Element(XName.Get("VpnGatewayAddress", "http://schemas.microsoft.com/windowsazure"));
-                                        if (vpnGatewayAddressElement != null)
+                                        XElement addressPrefixElement = subnetsElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                        if (addressPrefixElement != null)
                                         {
-                                            string vpnGatewayAddressInstance = vpnGatewayAddressElement.Value;
-                                            localNetworkSiteInstance.VpnGatewayAddress = vpnGatewayAddressInstance;
+                                            string addressPrefixInstance = addressPrefixElement.Value;
+                                            subnetInstance.AddressPrefix = addressPrefixInstance;
                                         }
                                         
-                                        XElement addressSpaceElement2 = sitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
-                                        if (addressSpaceElement2 != null)
+                                        XElement networkSecurityGroupElement = subnetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                        if (networkSecurityGroupElement != null)
                                         {
-                                            NetworkListResponse.AddressSpace addressSpaceInstance2 = new NetworkListResponse.AddressSpace();
-                                            localNetworkSiteInstance.AddressSpace = addressSpaceInstance2;
+                                            string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
+                                            subnetInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
+                                        }
+                                    }
+                                }
+                                
+                                XElement dnsElement = virtualNetworkSitesElement.Element(XName.Get("Dns", "http://schemas.microsoft.com/windowsazure"));
+                                if (dnsElement != null)
+                                {
+                                    XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
+                                    if (dnsServersSequenceElement != null)
+                                    {
+                                        foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            NetworkListResponse.DnsServer dnsServerInstance = new NetworkListResponse.DnsServer();
+                                            virtualNetworkSiteInstance.DnsServers.Add(dnsServerInstance);
                                             
-                                            XElement addressPrefixesSequenceElement2 = addressSpaceElement2.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
-                                            if (addressPrefixesSequenceElement2 != null)
+                                            XElement nameElement3 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                            if (nameElement3 != null)
                                             {
-                                                foreach (XElement addressPrefixesElement2 in addressPrefixesSequenceElement2.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
-                                                {
-                                                    addressSpaceInstance2.AddressPrefixes.Add(addressPrefixesElement2.Value);
-                                                }
+                                                string nameInstance3 = nameElement3.Value;
+                                                dnsServerInstance.Name = nameInstance3;
                                             }
-                                        }
-                                        
-                                        XElement connectionsSequenceElement = sitesElement.Element(XName.Get("Connections", "http://schemas.microsoft.com/windowsazure"));
-                                        if (connectionsSequenceElement != null)
-                                        {
-                                            foreach (XElement connectionsElement in connectionsSequenceElement.Elements(XName.Get("Connection", "http://schemas.microsoft.com/windowsazure")))
+                                            
+                                            XElement addressElement = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
+                                            if (addressElement != null)
                                             {
-                                                NetworkListResponse.Connection connectionInstance = new NetworkListResponse.Connection();
-                                                localNetworkSiteInstance.Connections.Add(connectionInstance);
-                                                
-                                                XElement typeElement = connectionsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                                if (typeElement != null)
-                                                {
-                                                    LocalNetworkConnectionType typeInstance = NetworkManagementClient.ParseLocalNetworkConnectionType(typeElement.Value);
-                                                    connectionInstance.Type = typeInstance;
-                                                }
+                                                string addressInstance = addressElement.Value;
+                                                dnsServerInstance.Address = addressInstance;
                                             }
                                         }
                                     }
                                 }
                                 
-                                XElement vPNClientAddressPoolElement = gatewayElement.Element(XName.Get("VPNClientAddressPool", "http://schemas.microsoft.com/windowsazure"));
-                                if (vPNClientAddressPoolElement != null)
+                                XElement gatewayElement = virtualNetworkSitesElement.Element(XName.Get("Gateway", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayElement != null)
                                 {
-                                    NetworkListResponse.VPNClientAddressPool vPNClientAddressPoolInstance = new NetworkListResponse.VPNClientAddressPool();
-                                    gatewayInstance.VPNClientAddressPool = vPNClientAddressPoolInstance;
+                                    NetworkListResponse.Gateway gatewayInstance = new NetworkListResponse.Gateway();
+                                    virtualNetworkSiteInstance.Gateway = gatewayInstance;
                                     
-                                    XElement addressPrefixesSequenceElement3 = vPNClientAddressPoolElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
-                                    if (addressPrefixesSequenceElement3 != null)
+                                    XElement profileElement = gatewayElement.Element(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure"));
+                                    if (profileElement != null)
                                     {
-                                        foreach (XElement addressPrefixesElement3 in addressPrefixesSequenceElement3.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
+                                        string profileInstance = profileElement.Value;
+                                        gatewayInstance.Profile = profileInstance;
+                                    }
+                                    
+                                    XElement sitesSequenceElement = gatewayElement.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
+                                    if (sitesSequenceElement != null)
+                                    {
+                                        foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("LocalNetworkSite", "http://schemas.microsoft.com/windowsazure")))
                                         {
-                                            vPNClientAddressPoolInstance.AddressPrefixes.Add(addressPrefixesElement3.Value);
+                                            NetworkListResponse.LocalNetworkSite localNetworkSiteInstance = new NetworkListResponse.LocalNetworkSite();
+                                            gatewayInstance.Sites.Add(localNetworkSiteInstance);
+                                            
+                                            XElement nameElement4 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                            if (nameElement4 != null)
+                                            {
+                                                string nameInstance4 = nameElement4.Value;
+                                                localNetworkSiteInstance.Name = nameInstance4;
+                                            }
+                                            
+                                            XElement vpnGatewayAddressElement = sitesElement.Element(XName.Get("VpnGatewayAddress", "http://schemas.microsoft.com/windowsazure"));
+                                            if (vpnGatewayAddressElement != null)
+                                            {
+                                                string vpnGatewayAddressInstance = vpnGatewayAddressElement.Value;
+                                                localNetworkSiteInstance.VpnGatewayAddress = vpnGatewayAddressInstance;
+                                            }
+                                            
+                                            XElement addressSpaceElement2 = sitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
+                                            if (addressSpaceElement2 != null)
+                                            {
+                                                NetworkListResponse.AddressSpace addressSpaceInstance2 = new NetworkListResponse.AddressSpace();
+                                                localNetworkSiteInstance.AddressSpace = addressSpaceInstance2;
+                                                
+                                                XElement addressPrefixesSequenceElement2 = addressSpaceElement2.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                                                if (addressPrefixesSequenceElement2 != null)
+                                                {
+                                                    foreach (XElement addressPrefixesElement2 in addressPrefixesSequenceElement2.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
+                                                    {
+                                                        addressSpaceInstance2.AddressPrefixes.Add(addressPrefixesElement2.Value);
+                                                    }
+                                                }
+                                            }
+                                            
+                                            XElement connectionsSequenceElement = sitesElement.Element(XName.Get("Connections", "http://schemas.microsoft.com/windowsazure"));
+                                            if (connectionsSequenceElement != null)
+                                            {
+                                                foreach (XElement connectionsElement in connectionsSequenceElement.Elements(XName.Get("Connection", "http://schemas.microsoft.com/windowsazure")))
+                                                {
+                                                    NetworkListResponse.Connection connectionInstance = new NetworkListResponse.Connection();
+                                                    localNetworkSiteInstance.Connections.Add(connectionInstance);
+                                                    
+                                                    XElement typeElement = connectionsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (typeElement != null)
+                                                    {
+                                                        string typeInstance = typeElement.Value;
+                                                        connectionInstance.Type = typeInstance;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    XElement vPNClientAddressPoolElement = gatewayElement.Element(XName.Get("VPNClientAddressPool", "http://schemas.microsoft.com/windowsazure"));
+                                    if (vPNClientAddressPoolElement != null)
+                                    {
+                                        NetworkListResponse.VPNClientAddressPool vPNClientAddressPoolInstance = new NetworkListResponse.VPNClientAddressPool();
+                                        gatewayInstance.VPNClientAddressPool = vPNClientAddressPoolInstance;
+                                        
+                                        XElement addressPrefixesSequenceElement3 = vPNClientAddressPoolElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                                        if (addressPrefixesSequenceElement3 != null)
+                                        {
+                                            foreach (XElement addressPrefixesElement3 in addressPrefixesSequenceElement3.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                vPNClientAddressPoolInstance.AddressPrefixes.Add(addressPrefixesElement3.Value);
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -631,7 +655,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -676,85 +700,72 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "SetConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "SetConfigurationAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
     }
 }

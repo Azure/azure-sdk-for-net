@@ -1,4 +1,19 @@
-﻿using System;
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,12 +23,12 @@ namespace Microsoft.Azure.Insights
     /// The stucture of the Filter represents an expression in disjunctive-normal-form
     /// Each filter contain a set of subfilters (the conjunctions) with the total filter being the disjunction of them
     /// </summary>
-    public class MetricFilter
+    internal class MetricFilter
     {
         private TimeSpan? timeGrain;
         private DateTime? startTime;
         private DateTime? endTime;
-        private IEnumerable<string> names;
+        private IEnumerable<MetricDimension> dimensionFilters;
 
         /// <summary>
         /// Gets or sets the TimeGrain of the filter
@@ -109,18 +124,18 @@ namespace Microsoft.Azure.Insights
         }
 
         /// <summary>
-        /// Gets or sets the TimeGrain of the filter
+        /// Gets or sets the DimensionFilters of the filter
         /// </summary>
-        public IEnumerable<string> Names
+        public IEnumerable<MetricDimension> DimensionFilters
         {
             get
             {
-                return this.names;
+                return this.dimensionFilters;
             }
 
             set
             {
-                if (this.names != null)
+                if (this.dimensionFilters != null)
                 {
                     throw new InvalidOperationException("Names is already set");
                 }
@@ -130,7 +145,7 @@ namespace Microsoft.Azure.Insights
                     throw new InvalidOperationException("Names must be null or non-empty");
                 }
 
-                this.names = value;
+                this.dimensionFilters = value;
             }
         }
     }

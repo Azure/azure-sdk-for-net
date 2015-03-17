@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -142,6 +142,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._roleSize; }
             set { this._roleSize = value; }
+        }
+        
+        private VMImageInput _vMImageInput;
+        
+        /// <summary>
+        /// Optional. When a VM Image is used to create a new PersistantVMRole,
+        /// the DiskConfigurations in the VM Image are used to create new
+        /// Disks for the new VM. This parameter can be used to resize the
+        /// newly created Disks to a larger size than the underlying
+        /// DiskConfigurations in the VM Image.This property is only returned
+        /// with a version header of 2014-10-01 or newer.
+        /// </summary>
+        public VMImageInput VMImageInput
+        {
+            get { return this._vMImageInput; }
+            set { this._vMImageInput = value; }
         }
         
         private string _vMImageName;

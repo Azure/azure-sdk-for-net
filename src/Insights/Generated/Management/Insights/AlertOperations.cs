@@ -28,12 +28,12 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Insights
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateOrUpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -91,20 +91,37 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + (parameters.Properties.Name != null ? parameters.Properties.Name.Trim() : "") + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules/";
+            if (parameters.Properties != null && parameters.Properties.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Properties.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -277,7 +294,7 @@ namespace Microsoft.Azure.Management.Insights
                             
                             conditionValue["threshold"] = derived.Threshold;
                             
-                            conditionValue["windowSize"] = TypeConversion.To8601String(derived.WindowSize);
+                            conditionValue["windowSize"] = XmlConvert.ToString(derived.WindowSize);
                             
                             if (derived.TimeAggregation != null)
                             {
@@ -376,7 +393,7 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                             
-                            conditionValue["windowSize"] = TypeConversion.To8601String(derived4.WindowSize);
+                            conditionValue["windowSize"] = XmlConvert.ToString(derived4.WindowSize);
                             
                             conditionValue["failedLocationCount"] = derived4.FailedLocationCount;
                         }
@@ -481,7 +498,7 @@ namespace Microsoft.Azure.Management.Insights
                                 
                                 aggregationValue["threshold"] = derived7.Aggregation.Threshold;
                                 
-                                aggregationValue["windowSize"] = TypeConversion.To8601String(derived7.Aggregation.WindowSize);
+                                aggregationValue["windowSize"] = XmlConvert.ToString(derived7.Aggregation.WindowSize);
                             }
                         }
                     }
@@ -515,7 +532,7 @@ namespace Microsoft.Azure.Management.Insights
                     propertiesValue["lastUpdatedTime"] = parameters.Properties.LastUpdatedTime;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -525,13 +542,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -540,27 +557,30 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -569,7 +589,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -603,7 +623,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -616,20 +636,34 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "DeleteRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules/";
+            url = url + Uri.EscapeDataString(ruleName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -664,13 +698,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
@@ -679,27 +713,30 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -708,7 +745,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -761,21 +798,37 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("incidentName", incidentName);
-                Tracing.Enter(invocationId, this, "GetIncidentAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetIncidentAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "/incidents/" + incidentName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules/";
+            url = url + Uri.EscapeDataString(ruleName);
+            url = url + "/incidents/";
+            url = url + Uri.EscapeDataString(incidentName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -810,13 +863,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -825,7 +878,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -833,56 +886,59 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     IncidentGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new IncidentGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new IncidentGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Incident incidentInstance = new Incident();
+                            result.Incident = incidentInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                incidentInstance.Name = nameInstance;
+                            }
+                            
+                            JToken ruleNameValue = responseDoc["ruleName"];
+                            if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
+                            {
+                                string ruleNameInstance = ((string)ruleNameValue);
+                                incidentInstance.RuleName = ruleNameInstance;
+                            }
+                            
+                            JToken isActiveValue = responseDoc["isActive"];
+                            if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                            {
+                                bool isActiveInstance = ((bool)isActiveValue);
+                                incidentInstance.IsActive = isActiveInstance;
+                            }
+                            
+                            JToken activatedTimeValue = responseDoc["activatedTime"];
+                            if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                                incidentInstance.ActivatedTime = activatedTimeInstance;
+                            }
+                            
+                            JToken resolvedTimeValue = responseDoc["resolvedTime"];
+                            if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                                incidentInstance.ResolvedTime = resolvedTimeInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Incident incidentInstance = new Incident();
-                        result.Incident = incidentInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            incidentInstance.Name = nameInstance;
-                        }
-                        
-                        JToken ruleNameValue = responseDoc["ruleName"];
-                        if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
-                        {
-                            string ruleNameInstance = ((string)ruleNameValue);
-                            incidentInstance.RuleName = ruleNameInstance;
-                        }
-                        
-                        JToken isActiveValue = responseDoc["isActive"];
-                        if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
-                        {
-                            bool isActiveInstance = ((bool)isActiveValue);
-                            incidentInstance.IsActive = isActiveInstance;
-                        }
-                        
-                        JToken activatedTimeValue = responseDoc["activatedTime"];
-                        if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
-                            incidentInstance.ActivatedTime = activatedTimeInstance;
-                        }
-                        
-                        JToken resolvedTimeValue = responseDoc["resolvedTime"];
-                        if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
-                            incidentInstance.ResolvedTime = resolvedTimeInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -891,7 +947,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -937,20 +993,34 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "GetRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules/";
+            url = url + Uri.EscapeDataString(ruleName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -985,13 +1055,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1000,7 +1070,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1008,545 +1078,548 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     RuleGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RuleGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RuleGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                result.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                result.Name = nameInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    result.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                Rule propertiesInstance = new Rule();
+                                result.Properties = propertiesInstance;
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken isEnabledValue = propertiesValue["isEnabled"];
+                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEnabledInstance = ((bool)isEnabledValue);
+                                    propertiesInstance.IsEnabled = isEnabledInstance;
+                                }
+                                
+                                JToken conditionValue = propertiesValue["condition"];
+                                if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)conditionValue["odata.type"]);
+                                    if (typeName == "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition")
+                                    {
+                                        ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
+                                        
+                                        JToken dataSourceValue = conditionValue["dataSource"];
+                                        if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName2 = ((string)dataSourceValue["odata.type"]);
+                                            if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                            {
+                                                RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
+                                                
+                                                JToken resourceUriValue = dataSourceValue["resourceUri"];
+                                                if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                                {
+                                                    string resourceUriInstance = ((string)resourceUriValue);
+                                                    ruleMetricDataSourceInstance.ResourceUri = resourceUriInstance;
+                                                }
+                                                
+                                                JToken metricNamespaceValue = dataSourceValue["metricNamespace"];
+                                                if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
+                                                {
+                                                    string metricNamespaceInstance = ((string)metricNamespaceValue);
+                                                    ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
+                                                }
+                                                
+                                                JToken metricNameValue = dataSourceValue["metricName"];
+                                                if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string metricNameInstance = ((string)metricNameValue);
+                                                    ruleMetricDataSourceInstance.MetricName = metricNameInstance;
+                                                }
+                                                thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
+                                            }
+                                            if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                            {
+                                                RuleManagementEventDataSource ruleManagementEventDataSourceInstance = new RuleManagementEventDataSource();
+                                                
+                                                JToken eventNameValue = dataSourceValue["eventName"];
+                                                if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string eventNameInstance = ((string)eventNameValue);
+                                                    ruleManagementEventDataSourceInstance.EventName = eventNameInstance;
+                                                }
+                                                
+                                                JToken eventSourceValue = dataSourceValue["eventSource"];
+                                                if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
+                                                {
+                                                    string eventSourceInstance = ((string)eventSourceValue);
+                                                    ruleManagementEventDataSourceInstance.EventSource = eventSourceInstance;
+                                                }
+                                                
+                                                JToken levelValue = dataSourceValue["level"];
+                                                if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                                {
+                                                    string levelInstance = ((string)levelValue);
+                                                    ruleManagementEventDataSourceInstance.Level = levelInstance;
+                                                }
+                                                
+                                                JToken operationNameValue = dataSourceValue["operationName"];
+                                                if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string operationNameInstance = ((string)operationNameValue);
+                                                    ruleManagementEventDataSourceInstance.OperationName = operationNameInstance;
+                                                }
+                                                
+                                                JToken resourceGroupNameValue = dataSourceValue["resourceGroupName"];
+                                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                                    ruleManagementEventDataSourceInstance.ResourceGroupName = resourceGroupNameInstance;
+                                                }
+                                                
+                                                JToken resourceProviderNameValue = dataSourceValue["resourceProviderName"];
+                                                if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string resourceProviderNameInstance = ((string)resourceProviderNameValue);
+                                                    ruleManagementEventDataSourceInstance.ResourceProviderName = resourceProviderNameInstance;
+                                                }
+                                                
+                                                JToken resourceUriValue2 = dataSourceValue["resourceUri"];
+                                                if (resourceUriValue2 != null && resourceUriValue2.Type != JTokenType.Null)
+                                                {
+                                                    string resourceUriInstance2 = ((string)resourceUriValue2);
+                                                    ruleManagementEventDataSourceInstance.ResourceUri = resourceUriInstance2;
+                                                }
+                                                
+                                                JToken statusValue = dataSourceValue["status"];
+                                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                                {
+                                                    string statusInstance = ((string)statusValue);
+                                                    ruleManagementEventDataSourceInstance.Status = statusInstance;
+                                                }
+                                                
+                                                JToken subStatusValue = dataSourceValue["subStatus"];
+                                                if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string subStatusInstance = ((string)subStatusValue);
+                                                    ruleManagementEventDataSourceInstance.SubStatus = subStatusInstance;
+                                                }
+                                                
+                                                JToken claimsValue = dataSourceValue["claims"];
+                                                if (claimsValue != null && claimsValue.Type != JTokenType.Null)
+                                                {
+                                                    RuleManagementEventClaimsDataSource claimsInstance = new RuleManagementEventClaimsDataSource();
+                                                    ruleManagementEventDataSourceInstance.Claims = claimsInstance;
+                                                    
+                                                    JToken emailAddressValue = claimsValue["emailAddress"];
+                                                    if (emailAddressValue != null && emailAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        string emailAddressInstance = ((string)emailAddressValue);
+                                                        claimsInstance.EmailAddress = emailAddressInstance;
+                                                    }
+                                                }
+                                                thresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance;
+                                            }
+                                        }
+                                        
+                                        JToken operatorValue = conditionValue["operator"];
+                                        if (operatorValue != null && operatorValue.Type != JTokenType.Null)
+                                        {
+                                            ConditionOperator operatorInstance = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue), true));
+                                            thresholdRuleConditionInstance.Operator = operatorInstance;
+                                        }
+                                        
+                                        JToken thresholdValue = conditionValue["threshold"];
+                                        if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
+                                        {
+                                            double thresholdInstance = ((double)thresholdValue);
+                                            thresholdRuleConditionInstance.Threshold = thresholdInstance;
+                                        }
+                                        
+                                        JToken windowSizeValue = conditionValue["windowSize"];
+                                        if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan windowSizeInstance = XmlConvert.ToTimeSpan(((string)windowSizeValue));
+                                            thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
+                                        }
+                                        
+                                        JToken timeAggregationValue = conditionValue["timeAggregation"];
+                                        if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
+                                        {
+                                            TimeAggregationOperator timeAggregationInstance = ((TimeAggregationOperator)Enum.Parse(typeof(TimeAggregationOperator), ((string)timeAggregationValue), true));
+                                            thresholdRuleConditionInstance.TimeAggregation = timeAggregationInstance;
+                                        }
+                                        propertiesInstance.Condition = thresholdRuleConditionInstance;
+                                    }
+                                    if (typeName == "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition")
+                                    {
+                                        LocationThresholdRuleCondition locationThresholdRuleConditionInstance = new LocationThresholdRuleCondition();
+                                        
+                                        JToken dataSourceValue2 = conditionValue["dataSource"];
+                                        if (dataSourceValue2 != null && dataSourceValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeName3 = ((string)dataSourceValue2["odata.type"]);
+                                            if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                            {
+                                                RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
+                                                
+                                                JToken resourceUriValue3 = dataSourceValue2["resourceUri"];
+                                                if (resourceUriValue3 != null && resourceUriValue3.Type != JTokenType.Null)
+                                                {
+                                                    string resourceUriInstance3 = ((string)resourceUriValue3);
+                                                    ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance3;
+                                                }
+                                                
+                                                JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
+                                                if (metricNamespaceValue2 != null && metricNamespaceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string metricNamespaceInstance2 = ((string)metricNamespaceValue2);
+                                                    ruleMetricDataSourceInstance2.MetricNamespace = metricNamespaceInstance2;
+                                                }
+                                                
+                                                JToken metricNameValue2 = dataSourceValue2["metricName"];
+                                                if (metricNameValue2 != null && metricNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string metricNameInstance2 = ((string)metricNameValue2);
+                                                    ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
+                                                }
+                                                locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
+                                            }
+                                            if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                            {
+                                                RuleManagementEventDataSource ruleManagementEventDataSourceInstance2 = new RuleManagementEventDataSource();
+                                                
+                                                JToken eventNameValue2 = dataSourceValue2["eventName"];
+                                                if (eventNameValue2 != null && eventNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string eventNameInstance2 = ((string)eventNameValue2);
+                                                    ruleManagementEventDataSourceInstance2.EventName = eventNameInstance2;
+                                                }
+                                                
+                                                JToken eventSourceValue2 = dataSourceValue2["eventSource"];
+                                                if (eventSourceValue2 != null && eventSourceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string eventSourceInstance2 = ((string)eventSourceValue2);
+                                                    ruleManagementEventDataSourceInstance2.EventSource = eventSourceInstance2;
+                                                }
+                                                
+                                                JToken levelValue2 = dataSourceValue2["level"];
+                                                if (levelValue2 != null && levelValue2.Type != JTokenType.Null)
+                                                {
+                                                    string levelInstance2 = ((string)levelValue2);
+                                                    ruleManagementEventDataSourceInstance2.Level = levelInstance2;
+                                                }
+                                                
+                                                JToken operationNameValue2 = dataSourceValue2["operationName"];
+                                                if (operationNameValue2 != null && operationNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string operationNameInstance2 = ((string)operationNameValue2);
+                                                    ruleManagementEventDataSourceInstance2.OperationName = operationNameInstance2;
+                                                }
+                                                
+                                                JToken resourceGroupNameValue2 = dataSourceValue2["resourceGroupName"];
+                                                if (resourceGroupNameValue2 != null && resourceGroupNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string resourceGroupNameInstance2 = ((string)resourceGroupNameValue2);
+                                                    ruleManagementEventDataSourceInstance2.ResourceGroupName = resourceGroupNameInstance2;
+                                                }
+                                                
+                                                JToken resourceProviderNameValue2 = dataSourceValue2["resourceProviderName"];
+                                                if (resourceProviderNameValue2 != null && resourceProviderNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string resourceProviderNameInstance2 = ((string)resourceProviderNameValue2);
+                                                    ruleManagementEventDataSourceInstance2.ResourceProviderName = resourceProviderNameInstance2;
+                                                }
+                                                
+                                                JToken resourceUriValue4 = dataSourceValue2["resourceUri"];
+                                                if (resourceUriValue4 != null && resourceUriValue4.Type != JTokenType.Null)
+                                                {
+                                                    string resourceUriInstance4 = ((string)resourceUriValue4);
+                                                    ruleManagementEventDataSourceInstance2.ResourceUri = resourceUriInstance4;
+                                                }
+                                                
+                                                JToken statusValue2 = dataSourceValue2["status"];
+                                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                {
+                                                    string statusInstance2 = ((string)statusValue2);
+                                                    ruleManagementEventDataSourceInstance2.Status = statusInstance2;
+                                                }
+                                                
+                                                JToken subStatusValue2 = dataSourceValue2["subStatus"];
+                                                if (subStatusValue2 != null && subStatusValue2.Type != JTokenType.Null)
+                                                {
+                                                    string subStatusInstance2 = ((string)subStatusValue2);
+                                                    ruleManagementEventDataSourceInstance2.SubStatus = subStatusInstance2;
+                                                }
+                                                
+                                                JToken claimsValue2 = dataSourceValue2["claims"];
+                                                if (claimsValue2 != null && claimsValue2.Type != JTokenType.Null)
+                                                {
+                                                    RuleManagementEventClaimsDataSource claimsInstance2 = new RuleManagementEventClaimsDataSource();
+                                                    ruleManagementEventDataSourceInstance2.Claims = claimsInstance2;
+                                                    
+                                                    JToken emailAddressValue2 = claimsValue2["emailAddress"];
+                                                    if (emailAddressValue2 != null && emailAddressValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string emailAddressInstance2 = ((string)emailAddressValue2);
+                                                        claimsInstance2.EmailAddress = emailAddressInstance2;
+                                                    }
+                                                }
+                                                locationThresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken windowSizeValue2 = conditionValue["windowSize"];
+                                        if (windowSizeValue2 != null && windowSizeValue2.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan windowSizeInstance2 = XmlConvert.ToTimeSpan(((string)windowSizeValue2));
+                                            locationThresholdRuleConditionInstance.WindowSize = windowSizeInstance2;
+                                        }
+                                        
+                                        JToken failedLocationCountValue = conditionValue["failedLocationCount"];
+                                        if (failedLocationCountValue != null && failedLocationCountValue.Type != JTokenType.Null)
+                                        {
+                                            int failedLocationCountInstance = ((int)failedLocationCountValue);
+                                            locationThresholdRuleConditionInstance.FailedLocationCount = failedLocationCountInstance;
+                                        }
+                                        propertiesInstance.Condition = locationThresholdRuleConditionInstance;
+                                    }
+                                    if (typeName == "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")
+                                    {
+                                        ManagementEventRuleCondition managementEventRuleConditionInstance = new ManagementEventRuleCondition();
+                                        
+                                        JToken dataSourceValue3 = conditionValue["dataSource"];
+                                        if (dataSourceValue3 != null && dataSourceValue3.Type != JTokenType.Null)
+                                        {
+                                            string typeName4 = ((string)dataSourceValue3["odata.type"]);
+                                            if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                            {
+                                                RuleMetricDataSource ruleMetricDataSourceInstance3 = new RuleMetricDataSource();
+                                                
+                                                JToken resourceUriValue5 = dataSourceValue3["resourceUri"];
+                                                if (resourceUriValue5 != null && resourceUriValue5.Type != JTokenType.Null)
+                                                {
+                                                    string resourceUriInstance5 = ((string)resourceUriValue5);
+                                                    ruleMetricDataSourceInstance3.ResourceUri = resourceUriInstance5;
+                                                }
+                                                
+                                                JToken metricNamespaceValue3 = dataSourceValue3["metricNamespace"];
+                                                if (metricNamespaceValue3 != null && metricNamespaceValue3.Type != JTokenType.Null)
+                                                {
+                                                    string metricNamespaceInstance3 = ((string)metricNamespaceValue3);
+                                                    ruleMetricDataSourceInstance3.MetricNamespace = metricNamespaceInstance3;
+                                                }
+                                                
+                                                JToken metricNameValue3 = dataSourceValue3["metricName"];
+                                                if (metricNameValue3 != null && metricNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string metricNameInstance3 = ((string)metricNameValue3);
+                                                    ruleMetricDataSourceInstance3.MetricName = metricNameInstance3;
+                                                }
+                                                managementEventRuleConditionInstance.DataSource = ruleMetricDataSourceInstance3;
+                                            }
+                                            if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                            {
+                                                RuleManagementEventDataSource ruleManagementEventDataSourceInstance3 = new RuleManagementEventDataSource();
+                                                
+                                                JToken eventNameValue3 = dataSourceValue3["eventName"];
+                                                if (eventNameValue3 != null && eventNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string eventNameInstance3 = ((string)eventNameValue3);
+                                                    ruleManagementEventDataSourceInstance3.EventName = eventNameInstance3;
+                                                }
+                                                
+                                                JToken eventSourceValue3 = dataSourceValue3["eventSource"];
+                                                if (eventSourceValue3 != null && eventSourceValue3.Type != JTokenType.Null)
+                                                {
+                                                    string eventSourceInstance3 = ((string)eventSourceValue3);
+                                                    ruleManagementEventDataSourceInstance3.EventSource = eventSourceInstance3;
+                                                }
+                                                
+                                                JToken levelValue3 = dataSourceValue3["level"];
+                                                if (levelValue3 != null && levelValue3.Type != JTokenType.Null)
+                                                {
+                                                    string levelInstance3 = ((string)levelValue3);
+                                                    ruleManagementEventDataSourceInstance3.Level = levelInstance3;
+                                                }
+                                                
+                                                JToken operationNameValue3 = dataSourceValue3["operationName"];
+                                                if (operationNameValue3 != null && operationNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string operationNameInstance3 = ((string)operationNameValue3);
+                                                    ruleManagementEventDataSourceInstance3.OperationName = operationNameInstance3;
+                                                }
+                                                
+                                                JToken resourceGroupNameValue3 = dataSourceValue3["resourceGroupName"];
+                                                if (resourceGroupNameValue3 != null && resourceGroupNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string resourceGroupNameInstance3 = ((string)resourceGroupNameValue3);
+                                                    ruleManagementEventDataSourceInstance3.ResourceGroupName = resourceGroupNameInstance3;
+                                                }
+                                                
+                                                JToken resourceProviderNameValue3 = dataSourceValue3["resourceProviderName"];
+                                                if (resourceProviderNameValue3 != null && resourceProviderNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string resourceProviderNameInstance3 = ((string)resourceProviderNameValue3);
+                                                    ruleManagementEventDataSourceInstance3.ResourceProviderName = resourceProviderNameInstance3;
+                                                }
+                                                
+                                                JToken resourceUriValue6 = dataSourceValue3["resourceUri"];
+                                                if (resourceUriValue6 != null && resourceUriValue6.Type != JTokenType.Null)
+                                                {
+                                                    string resourceUriInstance6 = ((string)resourceUriValue6);
+                                                    ruleManagementEventDataSourceInstance3.ResourceUri = resourceUriInstance6;
+                                                }
+                                                
+                                                JToken statusValue3 = dataSourceValue3["status"];
+                                                if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
+                                                {
+                                                    string statusInstance3 = ((string)statusValue3);
+                                                    ruleManagementEventDataSourceInstance3.Status = statusInstance3;
+                                                }
+                                                
+                                                JToken subStatusValue3 = dataSourceValue3["subStatus"];
+                                                if (subStatusValue3 != null && subStatusValue3.Type != JTokenType.Null)
+                                                {
+                                                    string subStatusInstance3 = ((string)subStatusValue3);
+                                                    ruleManagementEventDataSourceInstance3.SubStatus = subStatusInstance3;
+                                                }
+                                                
+                                                JToken claimsValue3 = dataSourceValue3["claims"];
+                                                if (claimsValue3 != null && claimsValue3.Type != JTokenType.Null)
+                                                {
+                                                    RuleManagementEventClaimsDataSource claimsInstance3 = new RuleManagementEventClaimsDataSource();
+                                                    ruleManagementEventDataSourceInstance3.Claims = claimsInstance3;
+                                                    
+                                                    JToken emailAddressValue3 = claimsValue3["emailAddress"];
+                                                    if (emailAddressValue3 != null && emailAddressValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string emailAddressInstance3 = ((string)emailAddressValue3);
+                                                        claimsInstance3.EmailAddress = emailAddressInstance3;
+                                                    }
+                                                }
+                                                managementEventRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance3;
+                                            }
+                                        }
+                                        
+                                        JToken aggregationValue = conditionValue["aggregation"];
+                                        if (aggregationValue != null && aggregationValue.Type != JTokenType.Null)
+                                        {
+                                            ManagementEventAggregationCondition aggregationInstance = new ManagementEventAggregationCondition();
+                                            managementEventRuleConditionInstance.Aggregation = aggregationInstance;
+                                            
+                                            JToken operatorValue2 = aggregationValue["operator"];
+                                            if (operatorValue2 != null && operatorValue2.Type != JTokenType.Null)
+                                            {
+                                                ConditionOperator operatorInstance2 = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue2), true));
+                                                aggregationInstance.Operator = operatorInstance2;
+                                            }
+                                            
+                                            JToken thresholdValue2 = aggregationValue["threshold"];
+                                            if (thresholdValue2 != null && thresholdValue2.Type != JTokenType.Null)
+                                            {
+                                                double thresholdInstance2 = ((double)thresholdValue2);
+                                                aggregationInstance.Threshold = thresholdInstance2;
+                                            }
+                                            
+                                            JToken windowSizeValue3 = aggregationValue["windowSize"];
+                                            if (windowSizeValue3 != null && windowSizeValue3.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan windowSizeInstance3 = XmlConvert.ToTimeSpan(((string)windowSizeValue3));
+                                                aggregationInstance.WindowSize = windowSizeInstance3;
+                                            }
+                                        }
+                                        propertiesInstance.Condition = managementEventRuleConditionInstance;
+                                    }
+                                }
+                                
+                                JToken actionValue = propertiesValue["action"];
+                                if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                {
+                                    string typeName5 = ((string)actionValue["odata.type"]);
+                                    if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
+                                    {
+                                        RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
+                                        
+                                        JToken sendToServiceOwnersValue = actionValue["sendToServiceOwners"];
+                                        if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
+                                        {
+                                            bool sendToServiceOwnersInstance = ((bool)sendToServiceOwnersValue);
+                                            ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
+                                        }
+                                        
+                                        JToken customEmailsArray = actionValue["customEmails"];
+                                        if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
+                                            {
+                                                ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
+                                            }
+                                        }
+                                        propertiesInstance.Action = ruleEmailActionInstance;
+                                    }
+                                }
+                                
+                                JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
+                                if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastUpdatedTimeInstance = ((DateTime)lastUpdatedTimeValue);
+                                    propertiesInstance.LastUpdatedTime = lastUpdatedTimeInstance;
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            result.Id = idInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            result.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            result.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                result.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            Rule propertiesInstance = new Rule();
-                            result.Properties = propertiesInstance;
-                            
-                            JToken nameValue2 = propertiesValue["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                            {
-                                string nameInstance2 = ((string)nameValue2);
-                                propertiesInstance.Name = nameInstance2;
-                            }
-                            
-                            JToken descriptionValue = propertiesValue["description"];
-                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                            {
-                                string descriptionInstance = ((string)descriptionValue);
-                                propertiesInstance.Description = descriptionInstance;
-                            }
-                            
-                            JToken isEnabledValue = propertiesValue["isEnabled"];
-                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isEnabledInstance = ((bool)isEnabledValue);
-                                propertiesInstance.IsEnabled = isEnabledInstance;
-                            }
-                            
-                            JToken conditionValue = propertiesValue["condition"];
-                            if (conditionValue != null && conditionValue.Type != JTokenType.Null)
-                            {
-                                string typeName = ((string)conditionValue["odata.type"]);
-                                if (typeName == "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition")
-                                {
-                                    ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
-                                    
-                                    JToken dataSourceValue = conditionValue["dataSource"];
-                                    if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
-                                    {
-                                        string typeName2 = ((string)dataSourceValue["odata.type"]);
-                                        if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
-                                        {
-                                            RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
-                                            
-                                            JToken resourceUriValue = dataSourceValue["resourceUri"];
-                                            if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
-                                            {
-                                                string resourceUriInstance = ((string)resourceUriValue);
-                                                ruleMetricDataSourceInstance.ResourceUri = resourceUriInstance;
-                                            }
-                                            
-                                            JToken metricNamespaceValue = dataSourceValue["metricNamespace"];
-                                            if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
-                                            {
-                                                string metricNamespaceInstance = ((string)metricNamespaceValue);
-                                                ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
-                                            }
-                                            
-                                            JToken metricNameValue = dataSourceValue["metricName"];
-                                            if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
-                                            {
-                                                string metricNameInstance = ((string)metricNameValue);
-                                                ruleMetricDataSourceInstance.MetricName = metricNameInstance;
-                                            }
-                                            thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
-                                        }
-                                        if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
-                                        {
-                                            RuleManagementEventDataSource ruleManagementEventDataSourceInstance = new RuleManagementEventDataSource();
-                                            
-                                            JToken eventNameValue = dataSourceValue["eventName"];
-                                            if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
-                                            {
-                                                string eventNameInstance = ((string)eventNameValue);
-                                                ruleManagementEventDataSourceInstance.EventName = eventNameInstance;
-                                            }
-                                            
-                                            JToken eventSourceValue = dataSourceValue["eventSource"];
-                                            if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
-                                            {
-                                                string eventSourceInstance = ((string)eventSourceValue);
-                                                ruleManagementEventDataSourceInstance.EventSource = eventSourceInstance;
-                                            }
-                                            
-                                            JToken levelValue = dataSourceValue["level"];
-                                            if (levelValue != null && levelValue.Type != JTokenType.Null)
-                                            {
-                                                string levelInstance = ((string)levelValue);
-                                                ruleManagementEventDataSourceInstance.Level = levelInstance;
-                                            }
-                                            
-                                            JToken operationNameValue = dataSourceValue["operationName"];
-                                            if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
-                                            {
-                                                string operationNameInstance = ((string)operationNameValue);
-                                                ruleManagementEventDataSourceInstance.OperationName = operationNameInstance;
-                                            }
-                                            
-                                            JToken resourceGroupNameValue = dataSourceValue["resourceGroupName"];
-                                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                            {
-                                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                                ruleManagementEventDataSourceInstance.ResourceGroupName = resourceGroupNameInstance;
-                                            }
-                                            
-                                            JToken resourceProviderNameValue = dataSourceValue["resourceProviderName"];
-                                            if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
-                                            {
-                                                string resourceProviderNameInstance = ((string)resourceProviderNameValue);
-                                                ruleManagementEventDataSourceInstance.ResourceProviderName = resourceProviderNameInstance;
-                                            }
-                                            
-                                            JToken resourceUriValue2 = dataSourceValue["resourceUri"];
-                                            if (resourceUriValue2 != null && resourceUriValue2.Type != JTokenType.Null)
-                                            {
-                                                string resourceUriInstance2 = ((string)resourceUriValue2);
-                                                ruleManagementEventDataSourceInstance.ResourceUri = resourceUriInstance2;
-                                            }
-                                            
-                                            JToken statusValue = dataSourceValue["status"];
-                                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                            {
-                                                string statusInstance = ((string)statusValue);
-                                                ruleManagementEventDataSourceInstance.Status = statusInstance;
-                                            }
-                                            
-                                            JToken subStatusValue = dataSourceValue["subStatus"];
-                                            if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
-                                            {
-                                                string subStatusInstance = ((string)subStatusValue);
-                                                ruleManagementEventDataSourceInstance.SubStatus = subStatusInstance;
-                                            }
-                                            
-                                            JToken claimsValue = dataSourceValue["claims"];
-                                            if (claimsValue != null && claimsValue.Type != JTokenType.Null)
-                                            {
-                                                RuleManagementEventClaimsDataSource claimsInstance = new RuleManagementEventClaimsDataSource();
-                                                ruleManagementEventDataSourceInstance.Claims = claimsInstance;
-                                                
-                                                JToken emailAddressValue = claimsValue["emailAddress"];
-                                                if (emailAddressValue != null && emailAddressValue.Type != JTokenType.Null)
-                                                {
-                                                    string emailAddressInstance = ((string)emailAddressValue);
-                                                    claimsInstance.EmailAddress = emailAddressInstance;
-                                                }
-                                            }
-                                            thresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance;
-                                        }
-                                    }
-                                    
-                                    JToken operatorValue = conditionValue["operator"];
-                                    if (operatorValue != null && operatorValue.Type != JTokenType.Null)
-                                    {
-                                        ConditionOperator operatorInstance = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue), true));
-                                        thresholdRuleConditionInstance.Operator = operatorInstance;
-                                    }
-                                    
-                                    JToken thresholdValue = conditionValue["threshold"];
-                                    if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
-                                    {
-                                        double thresholdInstance = ((double)thresholdValue);
-                                        thresholdRuleConditionInstance.Threshold = thresholdInstance;
-                                    }
-                                    
-                                    JToken windowSizeValue = conditionValue["windowSize"];
-                                    if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
-                                    {
-                                        TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan(((string)windowSizeValue));
-                                        thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
-                                    }
-                                    
-                                    JToken timeAggregationValue = conditionValue["timeAggregation"];
-                                    if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
-                                    {
-                                        TimeAggregationOperator timeAggregationInstance = ((TimeAggregationOperator)Enum.Parse(typeof(TimeAggregationOperator), ((string)timeAggregationValue), true));
-                                        thresholdRuleConditionInstance.TimeAggregation = timeAggregationInstance;
-                                    }
-                                    propertiesInstance.Condition = thresholdRuleConditionInstance;
-                                }
-                                if (typeName == "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition")
-                                {
-                                    LocationThresholdRuleCondition locationThresholdRuleConditionInstance = new LocationThresholdRuleCondition();
-                                    
-                                    JToken dataSourceValue2 = conditionValue["dataSource"];
-                                    if (dataSourceValue2 != null && dataSourceValue2.Type != JTokenType.Null)
-                                    {
-                                        string typeName3 = ((string)dataSourceValue2["odata.type"]);
-                                        if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
-                                        {
-                                            RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
-                                            
-                                            JToken resourceUriValue3 = dataSourceValue2["resourceUri"];
-                                            if (resourceUriValue3 != null && resourceUriValue3.Type != JTokenType.Null)
-                                            {
-                                                string resourceUriInstance3 = ((string)resourceUriValue3);
-                                                ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance3;
-                                            }
-                                            
-                                            JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
-                                            if (metricNamespaceValue2 != null && metricNamespaceValue2.Type != JTokenType.Null)
-                                            {
-                                                string metricNamespaceInstance2 = ((string)metricNamespaceValue2);
-                                                ruleMetricDataSourceInstance2.MetricNamespace = metricNamespaceInstance2;
-                                            }
-                                            
-                                            JToken metricNameValue2 = dataSourceValue2["metricName"];
-                                            if (metricNameValue2 != null && metricNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string metricNameInstance2 = ((string)metricNameValue2);
-                                                ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
-                                            }
-                                            locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
-                                        }
-                                        if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
-                                        {
-                                            RuleManagementEventDataSource ruleManagementEventDataSourceInstance2 = new RuleManagementEventDataSource();
-                                            
-                                            JToken eventNameValue2 = dataSourceValue2["eventName"];
-                                            if (eventNameValue2 != null && eventNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string eventNameInstance2 = ((string)eventNameValue2);
-                                                ruleManagementEventDataSourceInstance2.EventName = eventNameInstance2;
-                                            }
-                                            
-                                            JToken eventSourceValue2 = dataSourceValue2["eventSource"];
-                                            if (eventSourceValue2 != null && eventSourceValue2.Type != JTokenType.Null)
-                                            {
-                                                string eventSourceInstance2 = ((string)eventSourceValue2);
-                                                ruleManagementEventDataSourceInstance2.EventSource = eventSourceInstance2;
-                                            }
-                                            
-                                            JToken levelValue2 = dataSourceValue2["level"];
-                                            if (levelValue2 != null && levelValue2.Type != JTokenType.Null)
-                                            {
-                                                string levelInstance2 = ((string)levelValue2);
-                                                ruleManagementEventDataSourceInstance2.Level = levelInstance2;
-                                            }
-                                            
-                                            JToken operationNameValue2 = dataSourceValue2["operationName"];
-                                            if (operationNameValue2 != null && operationNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string operationNameInstance2 = ((string)operationNameValue2);
-                                                ruleManagementEventDataSourceInstance2.OperationName = operationNameInstance2;
-                                            }
-                                            
-                                            JToken resourceGroupNameValue2 = dataSourceValue2["resourceGroupName"];
-                                            if (resourceGroupNameValue2 != null && resourceGroupNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string resourceGroupNameInstance2 = ((string)resourceGroupNameValue2);
-                                                ruleManagementEventDataSourceInstance2.ResourceGroupName = resourceGroupNameInstance2;
-                                            }
-                                            
-                                            JToken resourceProviderNameValue2 = dataSourceValue2["resourceProviderName"];
-                                            if (resourceProviderNameValue2 != null && resourceProviderNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string resourceProviderNameInstance2 = ((string)resourceProviderNameValue2);
-                                                ruleManagementEventDataSourceInstance2.ResourceProviderName = resourceProviderNameInstance2;
-                                            }
-                                            
-                                            JToken resourceUriValue4 = dataSourceValue2["resourceUri"];
-                                            if (resourceUriValue4 != null && resourceUriValue4.Type != JTokenType.Null)
-                                            {
-                                                string resourceUriInstance4 = ((string)resourceUriValue4);
-                                                ruleManagementEventDataSourceInstance2.ResourceUri = resourceUriInstance4;
-                                            }
-                                            
-                                            JToken statusValue2 = dataSourceValue2["status"];
-                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
-                                            {
-                                                string statusInstance2 = ((string)statusValue2);
-                                                ruleManagementEventDataSourceInstance2.Status = statusInstance2;
-                                            }
-                                            
-                                            JToken subStatusValue2 = dataSourceValue2["subStatus"];
-                                            if (subStatusValue2 != null && subStatusValue2.Type != JTokenType.Null)
-                                            {
-                                                string subStatusInstance2 = ((string)subStatusValue2);
-                                                ruleManagementEventDataSourceInstance2.SubStatus = subStatusInstance2;
-                                            }
-                                            
-                                            JToken claimsValue2 = dataSourceValue2["claims"];
-                                            if (claimsValue2 != null && claimsValue2.Type != JTokenType.Null)
-                                            {
-                                                RuleManagementEventClaimsDataSource claimsInstance2 = new RuleManagementEventClaimsDataSource();
-                                                ruleManagementEventDataSourceInstance2.Claims = claimsInstance2;
-                                                
-                                                JToken emailAddressValue2 = claimsValue2["emailAddress"];
-                                                if (emailAddressValue2 != null && emailAddressValue2.Type != JTokenType.Null)
-                                                {
-                                                    string emailAddressInstance2 = ((string)emailAddressValue2);
-                                                    claimsInstance2.EmailAddress = emailAddressInstance2;
-                                                }
-                                            }
-                                            locationThresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance2;
-                                        }
-                                    }
-                                    
-                                    JToken windowSizeValue2 = conditionValue["windowSize"];
-                                    if (windowSizeValue2 != null && windowSizeValue2.Type != JTokenType.Null)
-                                    {
-                                        TimeSpan windowSizeInstance2 = TypeConversion.From8601TimeSpan(((string)windowSizeValue2));
-                                        locationThresholdRuleConditionInstance.WindowSize = windowSizeInstance2;
-                                    }
-                                    
-                                    JToken failedLocationCountValue = conditionValue["failedLocationCount"];
-                                    if (failedLocationCountValue != null && failedLocationCountValue.Type != JTokenType.Null)
-                                    {
-                                        int failedLocationCountInstance = ((int)failedLocationCountValue);
-                                        locationThresholdRuleConditionInstance.FailedLocationCount = failedLocationCountInstance;
-                                    }
-                                    propertiesInstance.Condition = locationThresholdRuleConditionInstance;
-                                }
-                                if (typeName == "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")
-                                {
-                                    ManagementEventRuleCondition managementEventRuleConditionInstance = new ManagementEventRuleCondition();
-                                    
-                                    JToken dataSourceValue3 = conditionValue["dataSource"];
-                                    if (dataSourceValue3 != null && dataSourceValue3.Type != JTokenType.Null)
-                                    {
-                                        string typeName4 = ((string)dataSourceValue3["odata.type"]);
-                                        if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
-                                        {
-                                            RuleMetricDataSource ruleMetricDataSourceInstance3 = new RuleMetricDataSource();
-                                            
-                                            JToken resourceUriValue5 = dataSourceValue3["resourceUri"];
-                                            if (resourceUriValue5 != null && resourceUriValue5.Type != JTokenType.Null)
-                                            {
-                                                string resourceUriInstance5 = ((string)resourceUriValue5);
-                                                ruleMetricDataSourceInstance3.ResourceUri = resourceUriInstance5;
-                                            }
-                                            
-                                            JToken metricNamespaceValue3 = dataSourceValue3["metricNamespace"];
-                                            if (metricNamespaceValue3 != null && metricNamespaceValue3.Type != JTokenType.Null)
-                                            {
-                                                string metricNamespaceInstance3 = ((string)metricNamespaceValue3);
-                                                ruleMetricDataSourceInstance3.MetricNamespace = metricNamespaceInstance3;
-                                            }
-                                            
-                                            JToken metricNameValue3 = dataSourceValue3["metricName"];
-                                            if (metricNameValue3 != null && metricNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string metricNameInstance3 = ((string)metricNameValue3);
-                                                ruleMetricDataSourceInstance3.MetricName = metricNameInstance3;
-                                            }
-                                            managementEventRuleConditionInstance.DataSource = ruleMetricDataSourceInstance3;
-                                        }
-                                        if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
-                                        {
-                                            RuleManagementEventDataSource ruleManagementEventDataSourceInstance3 = new RuleManagementEventDataSource();
-                                            
-                                            JToken eventNameValue3 = dataSourceValue3["eventName"];
-                                            if (eventNameValue3 != null && eventNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string eventNameInstance3 = ((string)eventNameValue3);
-                                                ruleManagementEventDataSourceInstance3.EventName = eventNameInstance3;
-                                            }
-                                            
-                                            JToken eventSourceValue3 = dataSourceValue3["eventSource"];
-                                            if (eventSourceValue3 != null && eventSourceValue3.Type != JTokenType.Null)
-                                            {
-                                                string eventSourceInstance3 = ((string)eventSourceValue3);
-                                                ruleManagementEventDataSourceInstance3.EventSource = eventSourceInstance3;
-                                            }
-                                            
-                                            JToken levelValue3 = dataSourceValue3["level"];
-                                            if (levelValue3 != null && levelValue3.Type != JTokenType.Null)
-                                            {
-                                                string levelInstance3 = ((string)levelValue3);
-                                                ruleManagementEventDataSourceInstance3.Level = levelInstance3;
-                                            }
-                                            
-                                            JToken operationNameValue3 = dataSourceValue3["operationName"];
-                                            if (operationNameValue3 != null && operationNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string operationNameInstance3 = ((string)operationNameValue3);
-                                                ruleManagementEventDataSourceInstance3.OperationName = operationNameInstance3;
-                                            }
-                                            
-                                            JToken resourceGroupNameValue3 = dataSourceValue3["resourceGroupName"];
-                                            if (resourceGroupNameValue3 != null && resourceGroupNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string resourceGroupNameInstance3 = ((string)resourceGroupNameValue3);
-                                                ruleManagementEventDataSourceInstance3.ResourceGroupName = resourceGroupNameInstance3;
-                                            }
-                                            
-                                            JToken resourceProviderNameValue3 = dataSourceValue3["resourceProviderName"];
-                                            if (resourceProviderNameValue3 != null && resourceProviderNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string resourceProviderNameInstance3 = ((string)resourceProviderNameValue3);
-                                                ruleManagementEventDataSourceInstance3.ResourceProviderName = resourceProviderNameInstance3;
-                                            }
-                                            
-                                            JToken resourceUriValue6 = dataSourceValue3["resourceUri"];
-                                            if (resourceUriValue6 != null && resourceUriValue6.Type != JTokenType.Null)
-                                            {
-                                                string resourceUriInstance6 = ((string)resourceUriValue6);
-                                                ruleManagementEventDataSourceInstance3.ResourceUri = resourceUriInstance6;
-                                            }
-                                            
-                                            JToken statusValue3 = dataSourceValue3["status"];
-                                            if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
-                                            {
-                                                string statusInstance3 = ((string)statusValue3);
-                                                ruleManagementEventDataSourceInstance3.Status = statusInstance3;
-                                            }
-                                            
-                                            JToken subStatusValue3 = dataSourceValue3["subStatus"];
-                                            if (subStatusValue3 != null && subStatusValue3.Type != JTokenType.Null)
-                                            {
-                                                string subStatusInstance3 = ((string)subStatusValue3);
-                                                ruleManagementEventDataSourceInstance3.SubStatus = subStatusInstance3;
-                                            }
-                                            
-                                            JToken claimsValue3 = dataSourceValue3["claims"];
-                                            if (claimsValue3 != null && claimsValue3.Type != JTokenType.Null)
-                                            {
-                                                RuleManagementEventClaimsDataSource claimsInstance3 = new RuleManagementEventClaimsDataSource();
-                                                ruleManagementEventDataSourceInstance3.Claims = claimsInstance3;
-                                                
-                                                JToken emailAddressValue3 = claimsValue3["emailAddress"];
-                                                if (emailAddressValue3 != null && emailAddressValue3.Type != JTokenType.Null)
-                                                {
-                                                    string emailAddressInstance3 = ((string)emailAddressValue3);
-                                                    claimsInstance3.EmailAddress = emailAddressInstance3;
-                                                }
-                                            }
-                                            managementEventRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance3;
-                                        }
-                                    }
-                                    
-                                    JToken aggregationValue = conditionValue["aggregation"];
-                                    if (aggregationValue != null && aggregationValue.Type != JTokenType.Null)
-                                    {
-                                        ManagementEventAggregationCondition aggregationInstance = new ManagementEventAggregationCondition();
-                                        managementEventRuleConditionInstance.Aggregation = aggregationInstance;
-                                        
-                                        JToken operatorValue2 = aggregationValue["operator"];
-                                        if (operatorValue2 != null && operatorValue2.Type != JTokenType.Null)
-                                        {
-                                            ConditionOperator operatorInstance2 = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue2), true));
-                                            aggregationInstance.Operator = operatorInstance2;
-                                        }
-                                        
-                                        JToken thresholdValue2 = aggregationValue["threshold"];
-                                        if (thresholdValue2 != null && thresholdValue2.Type != JTokenType.Null)
-                                        {
-                                            double thresholdInstance2 = ((double)thresholdValue2);
-                                            aggregationInstance.Threshold = thresholdInstance2;
-                                        }
-                                        
-                                        JToken windowSizeValue3 = aggregationValue["windowSize"];
-                                        if (windowSizeValue3 != null && windowSizeValue3.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan windowSizeInstance3 = TypeConversion.From8601TimeSpan(((string)windowSizeValue3));
-                                            aggregationInstance.WindowSize = windowSizeInstance3;
-                                        }
-                                    }
-                                    propertiesInstance.Condition = managementEventRuleConditionInstance;
-                                }
-                            }
-                            
-                            JToken actionValue = propertiesValue["action"];
-                            if (actionValue != null && actionValue.Type != JTokenType.Null)
-                            {
-                                string typeName5 = ((string)actionValue["odata.type"]);
-                                if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
-                                {
-                                    RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
-                                    
-                                    JToken sendToServiceOwnersValue = actionValue["sendToServiceOwners"];
-                                    if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
-                                    {
-                                        bool sendToServiceOwnersInstance = ((bool)sendToServiceOwnersValue);
-                                        ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
-                                    }
-                                    
-                                    JToken customEmailsArray = actionValue["customEmails"];
-                                    if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
-                                        {
-                                            ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
-                                        }
-                                    }
-                                    propertiesInstance.Action = ruleEmailActionInstance;
-                                }
-                            }
-                            
-                            JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
-                            if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
-                            {
-                                DateTime lastUpdatedTimeInstance = ((DateTime)lastUpdatedTimeValue);
-                                propertiesInstance.LastUpdatedTime = lastUpdatedTimeInstance;
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1555,7 +1628,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1601,20 +1674,35 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "ListIncidentsForRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListIncidentsForRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "/incidents?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules/";
+            url = url + Uri.EscapeDataString(ruleName);
+            url = url + "/incidents";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1649,13 +1737,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1664,7 +1752,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1672,63 +1760,66 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     IncidentListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new IncidentListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new IncidentListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Incident incidentInstance = new Incident();
-                                result.Value.Add(incidentInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    incidentInstance.Name = nameInstance;
-                                }
-                                
-                                JToken ruleNameValue = valueValue["ruleName"];
-                                if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
-                                {
-                                    string ruleNameInstance = ((string)ruleNameValue);
-                                    incidentInstance.RuleName = ruleNameInstance;
-                                }
-                                
-                                JToken isActiveValue = valueValue["isActive"];
-                                if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
-                                {
-                                    bool isActiveInstance = ((bool)isActiveValue);
-                                    incidentInstance.IsActive = isActiveInstance;
-                                }
-                                
-                                JToken activatedTimeValue = valueValue["activatedTime"];
-                                if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
-                                    incidentInstance.ActivatedTime = activatedTimeInstance;
-                                }
-                                
-                                JToken resolvedTimeValue = valueValue["resolvedTime"];
-                                if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
-                                    incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                    Incident incidentInstance = new Incident();
+                                    result.Value.Add(incidentInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        incidentInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken ruleNameValue = valueValue["ruleName"];
+                                    if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
+                                    {
+                                        string ruleNameInstance = ((string)ruleNameValue);
+                                        incidentInstance.RuleName = ruleNameInstance;
+                                    }
+                                    
+                                    JToken isActiveValue = valueValue["isActive"];
+                                    if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                                    {
+                                        bool isActiveInstance = ((bool)isActiveValue);
+                                        incidentInstance.IsActive = isActiveInstance;
+                                    }
+                                    
+                                    JToken activatedTimeValue = valueValue["activatedTime"];
+                                    if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                                        incidentInstance.ActivatedTime = activatedTimeInstance;
+                                    }
+                                    
+                                    JToken resolvedTimeValue = valueValue["resolvedTime"];
+                                    if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                                        incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1737,7 +1828,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1782,23 +1873,41 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("targetResourceUri", targetResourceUri);
-                Tracing.Enter(invocationId, this, "ListRulesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListRulesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
             if (targetResourceUri != null)
             {
-                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri != null ? targetResourceUri.Trim() : "");
+                odataFilter.Add("targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1834,13 +1943,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1849,7 +1958,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1857,558 +1966,561 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     RuleListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RuleListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        RuleResourceCollection ruleResourceCollectionInstance = new RuleResourceCollection();
-                        result.RuleResourceCollection = ruleResourceCollectionInstance;
-                        
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RuleListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RuleResourceCollection ruleResourceCollectionInstance = new RuleResourceCollection();
+                            result.RuleResourceCollection = ruleResourceCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                RuleResource ruleResourceInstance = new RuleResource();
-                                ruleResourceCollectionInstance.Value.Add(ruleResourceInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    ruleResourceInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    ruleResourceInstance.Name = nameInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    ruleResourceInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        ruleResourceInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    Rule propertiesInstance = new Rule();
-                                    ruleResourceInstance.Properties = propertiesInstance;
+                                    RuleResource ruleResourceInstance = new RuleResource();
+                                    ruleResourceCollectionInstance.Value.Add(ruleResourceInstance);
                                     
-                                    JToken nameValue2 = propertiesValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        propertiesInstance.Name = nameInstance2;
+                                        string idInstance = ((string)idValue);
+                                        ruleResourceInstance.Id = idInstance;
                                     }
                                     
-                                    JToken descriptionValue = propertiesValue["description"];
-                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance = ((string)descriptionValue);
-                                        propertiesInstance.Description = descriptionInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        ruleResourceInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken isEnabledValue = propertiesValue["isEnabled"];
-                                    if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        bool isEnabledInstance = ((bool)isEnabledValue);
-                                        propertiesInstance.IsEnabled = isEnabledInstance;
+                                        string locationInstance = ((string)locationValue);
+                                        ruleResourceInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken conditionValue = propertiesValue["condition"];
-                                    if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)conditionValue["odata.type"]);
-                                        if (typeName == "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition")
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
-                                            
-                                            JToken dataSourceValue = conditionValue["dataSource"];
-                                            if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
-                                            {
-                                                string typeName2 = ((string)dataSourceValue["odata.type"]);
-                                                if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
-                                                {
-                                                    RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
-                                                    
-                                                    JToken resourceUriValue = dataSourceValue["resourceUri"];
-                                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceUriInstance = ((string)resourceUriValue);
-                                                        ruleMetricDataSourceInstance.ResourceUri = resourceUriInstance;
-                                                    }
-                                                    
-                                                    JToken metricNamespaceValue = dataSourceValue["metricNamespace"];
-                                                    if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
-                                                    {
-                                                        string metricNamespaceInstance = ((string)metricNamespaceValue);
-                                                        ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
-                                                    }
-                                                    
-                                                    JToken metricNameValue = dataSourceValue["metricName"];
-                                                    if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string metricNameInstance = ((string)metricNameValue);
-                                                        ruleMetricDataSourceInstance.MetricName = metricNameInstance;
-                                                    }
-                                                    thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
-                                                }
-                                                if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
-                                                {
-                                                    RuleManagementEventDataSource ruleManagementEventDataSourceInstance = new RuleManagementEventDataSource();
-                                                    
-                                                    JToken eventNameValue = dataSourceValue["eventName"];
-                                                    if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string eventNameInstance = ((string)eventNameValue);
-                                                        ruleManagementEventDataSourceInstance.EventName = eventNameInstance;
-                                                    }
-                                                    
-                                                    JToken eventSourceValue = dataSourceValue["eventSource"];
-                                                    if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
-                                                    {
-                                                        string eventSourceInstance = ((string)eventSourceValue);
-                                                        ruleManagementEventDataSourceInstance.EventSource = eventSourceInstance;
-                                                    }
-                                                    
-                                                    JToken levelValue = dataSourceValue["level"];
-                                                    if (levelValue != null && levelValue.Type != JTokenType.Null)
-                                                    {
-                                                        string levelInstance = ((string)levelValue);
-                                                        ruleManagementEventDataSourceInstance.Level = levelInstance;
-                                                    }
-                                                    
-                                                    JToken operationNameValue = dataSourceValue["operationName"];
-                                                    if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string operationNameInstance = ((string)operationNameValue);
-                                                        ruleManagementEventDataSourceInstance.OperationName = operationNameInstance;
-                                                    }
-                                                    
-                                                    JToken resourceGroupNameValue = dataSourceValue["resourceGroupName"];
-                                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                                        ruleManagementEventDataSourceInstance.ResourceGroupName = resourceGroupNameInstance;
-                                                    }
-                                                    
-                                                    JToken resourceProviderNameValue = dataSourceValue["resourceProviderName"];
-                                                    if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceProviderNameInstance = ((string)resourceProviderNameValue);
-                                                        ruleManagementEventDataSourceInstance.ResourceProviderName = resourceProviderNameInstance;
-                                                    }
-                                                    
-                                                    JToken resourceUriValue2 = dataSourceValue["resourceUri"];
-                                                    if (resourceUriValue2 != null && resourceUriValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceUriInstance2 = ((string)resourceUriValue2);
-                                                        ruleManagementEventDataSourceInstance.ResourceUri = resourceUriInstance2;
-                                                    }
-                                                    
-                                                    JToken statusValue = dataSourceValue["status"];
-                                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string statusInstance = ((string)statusValue);
-                                                        ruleManagementEventDataSourceInstance.Status = statusInstance;
-                                                    }
-                                                    
-                                                    JToken subStatusValue = dataSourceValue["subStatus"];
-                                                    if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string subStatusInstance = ((string)subStatusValue);
-                                                        ruleManagementEventDataSourceInstance.SubStatus = subStatusInstance;
-                                                    }
-                                                    
-                                                    JToken claimsValue = dataSourceValue["claims"];
-                                                    if (claimsValue != null && claimsValue.Type != JTokenType.Null)
-                                                    {
-                                                        RuleManagementEventClaimsDataSource claimsInstance = new RuleManagementEventClaimsDataSource();
-                                                        ruleManagementEventDataSourceInstance.Claims = claimsInstance;
-                                                        
-                                                        JToken emailAddressValue = claimsValue["emailAddress"];
-                                                        if (emailAddressValue != null && emailAddressValue.Type != JTokenType.Null)
-                                                        {
-                                                            string emailAddressInstance = ((string)emailAddressValue);
-                                                            claimsInstance.EmailAddress = emailAddressInstance;
-                                                        }
-                                                    }
-                                                    thresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance;
-                                                }
-                                            }
-                                            
-                                            JToken operatorValue = conditionValue["operator"];
-                                            if (operatorValue != null && operatorValue.Type != JTokenType.Null)
-                                            {
-                                                ConditionOperator operatorInstance = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue), true));
-                                                thresholdRuleConditionInstance.Operator = operatorInstance;
-                                            }
-                                            
-                                            JToken thresholdValue = conditionValue["threshold"];
-                                            if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
-                                            {
-                                                double thresholdInstance = ((double)thresholdValue);
-                                                thresholdRuleConditionInstance.Threshold = thresholdInstance;
-                                            }
-                                            
-                                            JToken windowSizeValue = conditionValue["windowSize"];
-                                            if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
-                                            {
-                                                TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan(((string)windowSizeValue));
-                                                thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
-                                            }
-                                            
-                                            JToken timeAggregationValue = conditionValue["timeAggregation"];
-                                            if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
-                                            {
-                                                TimeAggregationOperator timeAggregationInstance = ((TimeAggregationOperator)Enum.Parse(typeof(TimeAggregationOperator), ((string)timeAggregationValue), true));
-                                                thresholdRuleConditionInstance.TimeAggregation = timeAggregationInstance;
-                                            }
-                                            propertiesInstance.Condition = thresholdRuleConditionInstance;
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            ruleResourceInstance.Tags.Add(tagsKey, tagsValue);
                                         }
-                                        if (typeName == "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition")
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        Rule propertiesInstance = new Rule();
+                                        ruleResourceInstance.Properties = propertiesInstance;
+                                        
+                                        JToken nameValue2 = propertiesValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
-                                            LocationThresholdRuleCondition locationThresholdRuleConditionInstance = new LocationThresholdRuleCondition();
-                                            
-                                            JToken dataSourceValue2 = conditionValue["dataSource"];
-                                            if (dataSourceValue2 != null && dataSourceValue2.Type != JTokenType.Null)
-                                            {
-                                                string typeName3 = ((string)dataSourceValue2["odata.type"]);
-                                                if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
-                                                {
-                                                    RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
-                                                    
-                                                    JToken resourceUriValue3 = dataSourceValue2["resourceUri"];
-                                                    if (resourceUriValue3 != null && resourceUriValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceUriInstance3 = ((string)resourceUriValue3);
-                                                        ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance3;
-                                                    }
-                                                    
-                                                    JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
-                                                    if (metricNamespaceValue2 != null && metricNamespaceValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string metricNamespaceInstance2 = ((string)metricNamespaceValue2);
-                                                        ruleMetricDataSourceInstance2.MetricNamespace = metricNamespaceInstance2;
-                                                    }
-                                                    
-                                                    JToken metricNameValue2 = dataSourceValue2["metricName"];
-                                                    if (metricNameValue2 != null && metricNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string metricNameInstance2 = ((string)metricNameValue2);
-                                                        ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
-                                                    }
-                                                    locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
-                                                }
-                                                if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
-                                                {
-                                                    RuleManagementEventDataSource ruleManagementEventDataSourceInstance2 = new RuleManagementEventDataSource();
-                                                    
-                                                    JToken eventNameValue2 = dataSourceValue2["eventName"];
-                                                    if (eventNameValue2 != null && eventNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string eventNameInstance2 = ((string)eventNameValue2);
-                                                        ruleManagementEventDataSourceInstance2.EventName = eventNameInstance2;
-                                                    }
-                                                    
-                                                    JToken eventSourceValue2 = dataSourceValue2["eventSource"];
-                                                    if (eventSourceValue2 != null && eventSourceValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string eventSourceInstance2 = ((string)eventSourceValue2);
-                                                        ruleManagementEventDataSourceInstance2.EventSource = eventSourceInstance2;
-                                                    }
-                                                    
-                                                    JToken levelValue2 = dataSourceValue2["level"];
-                                                    if (levelValue2 != null && levelValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string levelInstance2 = ((string)levelValue2);
-                                                        ruleManagementEventDataSourceInstance2.Level = levelInstance2;
-                                                    }
-                                                    
-                                                    JToken operationNameValue2 = dataSourceValue2["operationName"];
-                                                    if (operationNameValue2 != null && operationNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string operationNameInstance2 = ((string)operationNameValue2);
-                                                        ruleManagementEventDataSourceInstance2.OperationName = operationNameInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceGroupNameValue2 = dataSourceValue2["resourceGroupName"];
-                                                    if (resourceGroupNameValue2 != null && resourceGroupNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceGroupNameInstance2 = ((string)resourceGroupNameValue2);
-                                                        ruleManagementEventDataSourceInstance2.ResourceGroupName = resourceGroupNameInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceProviderNameValue2 = dataSourceValue2["resourceProviderName"];
-                                                    if (resourceProviderNameValue2 != null && resourceProviderNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceProviderNameInstance2 = ((string)resourceProviderNameValue2);
-                                                        ruleManagementEventDataSourceInstance2.ResourceProviderName = resourceProviderNameInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceUriValue4 = dataSourceValue2["resourceUri"];
-                                                    if (resourceUriValue4 != null && resourceUriValue4.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceUriInstance4 = ((string)resourceUriValue4);
-                                                        ruleManagementEventDataSourceInstance2.ResourceUri = resourceUriInstance4;
-                                                    }
-                                                    
-                                                    JToken statusValue2 = dataSourceValue2["status"];
-                                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string statusInstance2 = ((string)statusValue2);
-                                                        ruleManagementEventDataSourceInstance2.Status = statusInstance2;
-                                                    }
-                                                    
-                                                    JToken subStatusValue2 = dataSourceValue2["subStatus"];
-                                                    if (subStatusValue2 != null && subStatusValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string subStatusInstance2 = ((string)subStatusValue2);
-                                                        ruleManagementEventDataSourceInstance2.SubStatus = subStatusInstance2;
-                                                    }
-                                                    
-                                                    JToken claimsValue2 = dataSourceValue2["claims"];
-                                                    if (claimsValue2 != null && claimsValue2.Type != JTokenType.Null)
-                                                    {
-                                                        RuleManagementEventClaimsDataSource claimsInstance2 = new RuleManagementEventClaimsDataSource();
-                                                        ruleManagementEventDataSourceInstance2.Claims = claimsInstance2;
-                                                        
-                                                        JToken emailAddressValue2 = claimsValue2["emailAddress"];
-                                                        if (emailAddressValue2 != null && emailAddressValue2.Type != JTokenType.Null)
-                                                        {
-                                                            string emailAddressInstance2 = ((string)emailAddressValue2);
-                                                            claimsInstance2.EmailAddress = emailAddressInstance2;
-                                                        }
-                                                    }
-                                                    locationThresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance2;
-                                                }
-                                            }
-                                            
-                                            JToken windowSizeValue2 = conditionValue["windowSize"];
-                                            if (windowSizeValue2 != null && windowSizeValue2.Type != JTokenType.Null)
-                                            {
-                                                TimeSpan windowSizeInstance2 = TypeConversion.From8601TimeSpan(((string)windowSizeValue2));
-                                                locationThresholdRuleConditionInstance.WindowSize = windowSizeInstance2;
-                                            }
-                                            
-                                            JToken failedLocationCountValue = conditionValue["failedLocationCount"];
-                                            if (failedLocationCountValue != null && failedLocationCountValue.Type != JTokenType.Null)
-                                            {
-                                                int failedLocationCountInstance = ((int)failedLocationCountValue);
-                                                locationThresholdRuleConditionInstance.FailedLocationCount = failedLocationCountInstance;
-                                            }
-                                            propertiesInstance.Condition = locationThresholdRuleConditionInstance;
+                                            string nameInstance2 = ((string)nameValue2);
+                                            propertiesInstance.Name = nameInstance2;
                                         }
-                                        if (typeName == "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                         {
-                                            ManagementEventRuleCondition managementEventRuleConditionInstance = new ManagementEventRuleCondition();
-                                            
-                                            JToken dataSourceValue3 = conditionValue["dataSource"];
-                                            if (dataSourceValue3 != null && dataSourceValue3.Type != JTokenType.Null)
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken isEnabledValue = propertiesValue["isEnabled"];
+                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                        {
+                                            bool isEnabledInstance = ((bool)isEnabledValue);
+                                            propertiesInstance.IsEnabled = isEnabledInstance;
+                                        }
+                                        
+                                        JToken conditionValue = propertiesValue["condition"];
+                                        if (conditionValue != null && conditionValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)conditionValue["odata.type"]);
+                                            if (typeName == "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition")
                                             {
-                                                string typeName4 = ((string)dataSourceValue3["odata.type"]);
-                                                if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
-                                                {
-                                                    RuleMetricDataSource ruleMetricDataSourceInstance3 = new RuleMetricDataSource();
-                                                    
-                                                    JToken resourceUriValue5 = dataSourceValue3["resourceUri"];
-                                                    if (resourceUriValue5 != null && resourceUriValue5.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceUriInstance5 = ((string)resourceUriValue5);
-                                                        ruleMetricDataSourceInstance3.ResourceUri = resourceUriInstance5;
-                                                    }
-                                                    
-                                                    JToken metricNamespaceValue3 = dataSourceValue3["metricNamespace"];
-                                                    if (metricNamespaceValue3 != null && metricNamespaceValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string metricNamespaceInstance3 = ((string)metricNamespaceValue3);
-                                                        ruleMetricDataSourceInstance3.MetricNamespace = metricNamespaceInstance3;
-                                                    }
-                                                    
-                                                    JToken metricNameValue3 = dataSourceValue3["metricName"];
-                                                    if (metricNameValue3 != null && metricNameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string metricNameInstance3 = ((string)metricNameValue3);
-                                                        ruleMetricDataSourceInstance3.MetricName = metricNameInstance3;
-                                                    }
-                                                    managementEventRuleConditionInstance.DataSource = ruleMetricDataSourceInstance3;
-                                                }
-                                                if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
-                                                {
-                                                    RuleManagementEventDataSource ruleManagementEventDataSourceInstance3 = new RuleManagementEventDataSource();
-                                                    
-                                                    JToken eventNameValue3 = dataSourceValue3["eventName"];
-                                                    if (eventNameValue3 != null && eventNameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string eventNameInstance3 = ((string)eventNameValue3);
-                                                        ruleManagementEventDataSourceInstance3.EventName = eventNameInstance3;
-                                                    }
-                                                    
-                                                    JToken eventSourceValue3 = dataSourceValue3["eventSource"];
-                                                    if (eventSourceValue3 != null && eventSourceValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string eventSourceInstance3 = ((string)eventSourceValue3);
-                                                        ruleManagementEventDataSourceInstance3.EventSource = eventSourceInstance3;
-                                                    }
-                                                    
-                                                    JToken levelValue3 = dataSourceValue3["level"];
-                                                    if (levelValue3 != null && levelValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string levelInstance3 = ((string)levelValue3);
-                                                        ruleManagementEventDataSourceInstance3.Level = levelInstance3;
-                                                    }
-                                                    
-                                                    JToken operationNameValue3 = dataSourceValue3["operationName"];
-                                                    if (operationNameValue3 != null && operationNameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string operationNameInstance3 = ((string)operationNameValue3);
-                                                        ruleManagementEventDataSourceInstance3.OperationName = operationNameInstance3;
-                                                    }
-                                                    
-                                                    JToken resourceGroupNameValue3 = dataSourceValue3["resourceGroupName"];
-                                                    if (resourceGroupNameValue3 != null && resourceGroupNameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceGroupNameInstance3 = ((string)resourceGroupNameValue3);
-                                                        ruleManagementEventDataSourceInstance3.ResourceGroupName = resourceGroupNameInstance3;
-                                                    }
-                                                    
-                                                    JToken resourceProviderNameValue3 = dataSourceValue3["resourceProviderName"];
-                                                    if (resourceProviderNameValue3 != null && resourceProviderNameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceProviderNameInstance3 = ((string)resourceProviderNameValue3);
-                                                        ruleManagementEventDataSourceInstance3.ResourceProviderName = resourceProviderNameInstance3;
-                                                    }
-                                                    
-                                                    JToken resourceUriValue6 = dataSourceValue3["resourceUri"];
-                                                    if (resourceUriValue6 != null && resourceUriValue6.Type != JTokenType.Null)
-                                                    {
-                                                        string resourceUriInstance6 = ((string)resourceUriValue6);
-                                                        ruleManagementEventDataSourceInstance3.ResourceUri = resourceUriInstance6;
-                                                    }
-                                                    
-                                                    JToken statusValue3 = dataSourceValue3["status"];
-                                                    if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string statusInstance3 = ((string)statusValue3);
-                                                        ruleManagementEventDataSourceInstance3.Status = statusInstance3;
-                                                    }
-                                                    
-                                                    JToken subStatusValue3 = dataSourceValue3["subStatus"];
-                                                    if (subStatusValue3 != null && subStatusValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string subStatusInstance3 = ((string)subStatusValue3);
-                                                        ruleManagementEventDataSourceInstance3.SubStatus = subStatusInstance3;
-                                                    }
-                                                    
-                                                    JToken claimsValue3 = dataSourceValue3["claims"];
-                                                    if (claimsValue3 != null && claimsValue3.Type != JTokenType.Null)
-                                                    {
-                                                        RuleManagementEventClaimsDataSource claimsInstance3 = new RuleManagementEventClaimsDataSource();
-                                                        ruleManagementEventDataSourceInstance3.Claims = claimsInstance3;
-                                                        
-                                                        JToken emailAddressValue3 = claimsValue3["emailAddress"];
-                                                        if (emailAddressValue3 != null && emailAddressValue3.Type != JTokenType.Null)
-                                                        {
-                                                            string emailAddressInstance3 = ((string)emailAddressValue3);
-                                                            claimsInstance3.EmailAddress = emailAddressInstance3;
-                                                        }
-                                                    }
-                                                    managementEventRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance3;
-                                                }
-                                            }
-                                            
-                                            JToken aggregationValue = conditionValue["aggregation"];
-                                            if (aggregationValue != null && aggregationValue.Type != JTokenType.Null)
-                                            {
-                                                ManagementEventAggregationCondition aggregationInstance = new ManagementEventAggregationCondition();
-                                                managementEventRuleConditionInstance.Aggregation = aggregationInstance;
+                                                ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
                                                 
-                                                JToken operatorValue2 = aggregationValue["operator"];
-                                                if (operatorValue2 != null && operatorValue2.Type != JTokenType.Null)
+                                                JToken dataSourceValue = conditionValue["dataSource"];
+                                                if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
                                                 {
-                                                    ConditionOperator operatorInstance2 = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue2), true));
-                                                    aggregationInstance.Operator = operatorInstance2;
+                                                    string typeName2 = ((string)dataSourceValue["odata.type"]);
+                                                    if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                                    {
+                                                        RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
+                                                        
+                                                        JToken resourceUriValue = dataSourceValue["resourceUri"];
+                                                        if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceUriInstance = ((string)resourceUriValue);
+                                                            ruleMetricDataSourceInstance.ResourceUri = resourceUriInstance;
+                                                        }
+                                                        
+                                                        JToken metricNamespaceValue = dataSourceValue["metricNamespace"];
+                                                        if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string metricNamespaceInstance = ((string)metricNamespaceValue);
+                                                            ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
+                                                        }
+                                                        
+                                                        JToken metricNameValue = dataSourceValue["metricName"];
+                                                        if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string metricNameInstance = ((string)metricNameValue);
+                                                            ruleMetricDataSourceInstance.MetricName = metricNameInstance;
+                                                        }
+                                                        thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
+                                                    }
+                                                    if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                                    {
+                                                        RuleManagementEventDataSource ruleManagementEventDataSourceInstance = new RuleManagementEventDataSource();
+                                                        
+                                                        JToken eventNameValue = dataSourceValue["eventName"];
+                                                        if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string eventNameInstance = ((string)eventNameValue);
+                                                            ruleManagementEventDataSourceInstance.EventName = eventNameInstance;
+                                                        }
+                                                        
+                                                        JToken eventSourceValue = dataSourceValue["eventSource"];
+                                                        if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string eventSourceInstance = ((string)eventSourceValue);
+                                                            ruleManagementEventDataSourceInstance.EventSource = eventSourceInstance;
+                                                        }
+                                                        
+                                                        JToken levelValue = dataSourceValue["level"];
+                                                        if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                                        {
+                                                            string levelInstance = ((string)levelValue);
+                                                            ruleManagementEventDataSourceInstance.Level = levelInstance;
+                                                        }
+                                                        
+                                                        JToken operationNameValue = dataSourceValue["operationName"];
+                                                        if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string operationNameInstance = ((string)operationNameValue);
+                                                            ruleManagementEventDataSourceInstance.OperationName = operationNameInstance;
+                                                        }
+                                                        
+                                                        JToken resourceGroupNameValue = dataSourceValue["resourceGroupName"];
+                                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                                            ruleManagementEventDataSourceInstance.ResourceGroupName = resourceGroupNameInstance;
+                                                        }
+                                                        
+                                                        JToken resourceProviderNameValue = dataSourceValue["resourceProviderName"];
+                                                        if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceProviderNameInstance = ((string)resourceProviderNameValue);
+                                                            ruleManagementEventDataSourceInstance.ResourceProviderName = resourceProviderNameInstance;
+                                                        }
+                                                        
+                                                        JToken resourceUriValue2 = dataSourceValue["resourceUri"];
+                                                        if (resourceUriValue2 != null && resourceUriValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceUriInstance2 = ((string)resourceUriValue2);
+                                                            ruleManagementEventDataSourceInstance.ResourceUri = resourceUriInstance2;
+                                                        }
+                                                        
+                                                        JToken statusValue = dataSourceValue["status"];
+                                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                                        {
+                                                            string statusInstance = ((string)statusValue);
+                                                            ruleManagementEventDataSourceInstance.Status = statusInstance;
+                                                        }
+                                                        
+                                                        JToken subStatusValue = dataSourceValue["subStatus"];
+                                                        if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
+                                                        {
+                                                            string subStatusInstance = ((string)subStatusValue);
+                                                            ruleManagementEventDataSourceInstance.SubStatus = subStatusInstance;
+                                                        }
+                                                        
+                                                        JToken claimsValue = dataSourceValue["claims"];
+                                                        if (claimsValue != null && claimsValue.Type != JTokenType.Null)
+                                                        {
+                                                            RuleManagementEventClaimsDataSource claimsInstance = new RuleManagementEventClaimsDataSource();
+                                                            ruleManagementEventDataSourceInstance.Claims = claimsInstance;
+                                                            
+                                                            JToken emailAddressValue = claimsValue["emailAddress"];
+                                                            if (emailAddressValue != null && emailAddressValue.Type != JTokenType.Null)
+                                                            {
+                                                                string emailAddressInstance = ((string)emailAddressValue);
+                                                                claimsInstance.EmailAddress = emailAddressInstance;
+                                                            }
+                                                        }
+                                                        thresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance;
+                                                    }
                                                 }
                                                 
-                                                JToken thresholdValue2 = aggregationValue["threshold"];
-                                                if (thresholdValue2 != null && thresholdValue2.Type != JTokenType.Null)
+                                                JToken operatorValue = conditionValue["operator"];
+                                                if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                                 {
-                                                    double thresholdInstance2 = ((double)thresholdValue2);
-                                                    aggregationInstance.Threshold = thresholdInstance2;
+                                                    ConditionOperator operatorInstance = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue), true));
+                                                    thresholdRuleConditionInstance.Operator = operatorInstance;
                                                 }
                                                 
-                                                JToken windowSizeValue3 = aggregationValue["windowSize"];
-                                                if (windowSizeValue3 != null && windowSizeValue3.Type != JTokenType.Null)
+                                                JToken thresholdValue = conditionValue["threshold"];
+                                                if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                                 {
-                                                    TimeSpan windowSizeInstance3 = TypeConversion.From8601TimeSpan(((string)windowSizeValue3));
-                                                    aggregationInstance.WindowSize = windowSizeInstance3;
+                                                    double thresholdInstance = ((double)thresholdValue);
+                                                    thresholdRuleConditionInstance.Threshold = thresholdInstance;
                                                 }
+                                                
+                                                JToken windowSizeValue = conditionValue["windowSize"];
+                                                if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan windowSizeInstance = XmlConvert.ToTimeSpan(((string)windowSizeValue));
+                                                    thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
+                                                }
+                                                
+                                                JToken timeAggregationValue = conditionValue["timeAggregation"];
+                                                if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeAggregationOperator timeAggregationInstance = ((TimeAggregationOperator)Enum.Parse(typeof(TimeAggregationOperator), ((string)timeAggregationValue), true));
+                                                    thresholdRuleConditionInstance.TimeAggregation = timeAggregationInstance;
+                                                }
+                                                propertiesInstance.Condition = thresholdRuleConditionInstance;
                                             }
-                                            propertiesInstance.Condition = managementEventRuleConditionInstance;
+                                            if (typeName == "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition")
+                                            {
+                                                LocationThresholdRuleCondition locationThresholdRuleConditionInstance = new LocationThresholdRuleCondition();
+                                                
+                                                JToken dataSourceValue2 = conditionValue["dataSource"];
+                                                if (dataSourceValue2 != null && dataSourceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeName3 = ((string)dataSourceValue2["odata.type"]);
+                                                    if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                                    {
+                                                        RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
+                                                        
+                                                        JToken resourceUriValue3 = dataSourceValue2["resourceUri"];
+                                                        if (resourceUriValue3 != null && resourceUriValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceUriInstance3 = ((string)resourceUriValue3);
+                                                            ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance3;
+                                                        }
+                                                        
+                                                        JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
+                                                        if (metricNamespaceValue2 != null && metricNamespaceValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string metricNamespaceInstance2 = ((string)metricNamespaceValue2);
+                                                            ruleMetricDataSourceInstance2.MetricNamespace = metricNamespaceInstance2;
+                                                        }
+                                                        
+                                                        JToken metricNameValue2 = dataSourceValue2["metricName"];
+                                                        if (metricNameValue2 != null && metricNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string metricNameInstance2 = ((string)metricNameValue2);
+                                                            ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
+                                                        }
+                                                        locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
+                                                    }
+                                                    if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                                    {
+                                                        RuleManagementEventDataSource ruleManagementEventDataSourceInstance2 = new RuleManagementEventDataSource();
+                                                        
+                                                        JToken eventNameValue2 = dataSourceValue2["eventName"];
+                                                        if (eventNameValue2 != null && eventNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string eventNameInstance2 = ((string)eventNameValue2);
+                                                            ruleManagementEventDataSourceInstance2.EventName = eventNameInstance2;
+                                                        }
+                                                        
+                                                        JToken eventSourceValue2 = dataSourceValue2["eventSource"];
+                                                        if (eventSourceValue2 != null && eventSourceValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string eventSourceInstance2 = ((string)eventSourceValue2);
+                                                            ruleManagementEventDataSourceInstance2.EventSource = eventSourceInstance2;
+                                                        }
+                                                        
+                                                        JToken levelValue2 = dataSourceValue2["level"];
+                                                        if (levelValue2 != null && levelValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string levelInstance2 = ((string)levelValue2);
+                                                            ruleManagementEventDataSourceInstance2.Level = levelInstance2;
+                                                        }
+                                                        
+                                                        JToken operationNameValue2 = dataSourceValue2["operationName"];
+                                                        if (operationNameValue2 != null && operationNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string operationNameInstance2 = ((string)operationNameValue2);
+                                                            ruleManagementEventDataSourceInstance2.OperationName = operationNameInstance2;
+                                                        }
+                                                        
+                                                        JToken resourceGroupNameValue2 = dataSourceValue2["resourceGroupName"];
+                                                        if (resourceGroupNameValue2 != null && resourceGroupNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceGroupNameInstance2 = ((string)resourceGroupNameValue2);
+                                                            ruleManagementEventDataSourceInstance2.ResourceGroupName = resourceGroupNameInstance2;
+                                                        }
+                                                        
+                                                        JToken resourceProviderNameValue2 = dataSourceValue2["resourceProviderName"];
+                                                        if (resourceProviderNameValue2 != null && resourceProviderNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceProviderNameInstance2 = ((string)resourceProviderNameValue2);
+                                                            ruleManagementEventDataSourceInstance2.ResourceProviderName = resourceProviderNameInstance2;
+                                                        }
+                                                        
+                                                        JToken resourceUriValue4 = dataSourceValue2["resourceUri"];
+                                                        if (resourceUriValue4 != null && resourceUriValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceUriInstance4 = ((string)resourceUriValue4);
+                                                            ruleManagementEventDataSourceInstance2.ResourceUri = resourceUriInstance4;
+                                                        }
+                                                        
+                                                        JToken statusValue2 = dataSourceValue2["status"];
+                                                        if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string statusInstance2 = ((string)statusValue2);
+                                                            ruleManagementEventDataSourceInstance2.Status = statusInstance2;
+                                                        }
+                                                        
+                                                        JToken subStatusValue2 = dataSourceValue2["subStatus"];
+                                                        if (subStatusValue2 != null && subStatusValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string subStatusInstance2 = ((string)subStatusValue2);
+                                                            ruleManagementEventDataSourceInstance2.SubStatus = subStatusInstance2;
+                                                        }
+                                                        
+                                                        JToken claimsValue2 = dataSourceValue2["claims"];
+                                                        if (claimsValue2 != null && claimsValue2.Type != JTokenType.Null)
+                                                        {
+                                                            RuleManagementEventClaimsDataSource claimsInstance2 = new RuleManagementEventClaimsDataSource();
+                                                            ruleManagementEventDataSourceInstance2.Claims = claimsInstance2;
+                                                            
+                                                            JToken emailAddressValue2 = claimsValue2["emailAddress"];
+                                                            if (emailAddressValue2 != null && emailAddressValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string emailAddressInstance2 = ((string)emailAddressValue2);
+                                                                claimsInstance2.EmailAddress = emailAddressInstance2;
+                                                            }
+                                                        }
+                                                        locationThresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken windowSizeValue2 = conditionValue["windowSize"];
+                                                if (windowSizeValue2 != null && windowSizeValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan windowSizeInstance2 = XmlConvert.ToTimeSpan(((string)windowSizeValue2));
+                                                    locationThresholdRuleConditionInstance.WindowSize = windowSizeInstance2;
+                                                }
+                                                
+                                                JToken failedLocationCountValue = conditionValue["failedLocationCount"];
+                                                if (failedLocationCountValue != null && failedLocationCountValue.Type != JTokenType.Null)
+                                                {
+                                                    int failedLocationCountInstance = ((int)failedLocationCountValue);
+                                                    locationThresholdRuleConditionInstance.FailedLocationCount = failedLocationCountInstance;
+                                                }
+                                                propertiesInstance.Condition = locationThresholdRuleConditionInstance;
+                                            }
+                                            if (typeName == "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")
+                                            {
+                                                ManagementEventRuleCondition managementEventRuleConditionInstance = new ManagementEventRuleCondition();
+                                                
+                                                JToken dataSourceValue3 = conditionValue["dataSource"];
+                                                if (dataSourceValue3 != null && dataSourceValue3.Type != JTokenType.Null)
+                                                {
+                                                    string typeName4 = ((string)dataSourceValue3["odata.type"]);
+                                                    if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                                    {
+                                                        RuleMetricDataSource ruleMetricDataSourceInstance3 = new RuleMetricDataSource();
+                                                        
+                                                        JToken resourceUriValue5 = dataSourceValue3["resourceUri"];
+                                                        if (resourceUriValue5 != null && resourceUriValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceUriInstance5 = ((string)resourceUriValue5);
+                                                            ruleMetricDataSourceInstance3.ResourceUri = resourceUriInstance5;
+                                                        }
+                                                        
+                                                        JToken metricNamespaceValue3 = dataSourceValue3["metricNamespace"];
+                                                        if (metricNamespaceValue3 != null && metricNamespaceValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string metricNamespaceInstance3 = ((string)metricNamespaceValue3);
+                                                            ruleMetricDataSourceInstance3.MetricNamespace = metricNamespaceInstance3;
+                                                        }
+                                                        
+                                                        JToken metricNameValue3 = dataSourceValue3["metricName"];
+                                                        if (metricNameValue3 != null && metricNameValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string metricNameInstance3 = ((string)metricNameValue3);
+                                                            ruleMetricDataSourceInstance3.MetricName = metricNameInstance3;
+                                                        }
+                                                        managementEventRuleConditionInstance.DataSource = ruleMetricDataSourceInstance3;
+                                                    }
+                                                    if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                                    {
+                                                        RuleManagementEventDataSource ruleManagementEventDataSourceInstance3 = new RuleManagementEventDataSource();
+                                                        
+                                                        JToken eventNameValue3 = dataSourceValue3["eventName"];
+                                                        if (eventNameValue3 != null && eventNameValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string eventNameInstance3 = ((string)eventNameValue3);
+                                                            ruleManagementEventDataSourceInstance3.EventName = eventNameInstance3;
+                                                        }
+                                                        
+                                                        JToken eventSourceValue3 = dataSourceValue3["eventSource"];
+                                                        if (eventSourceValue3 != null && eventSourceValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string eventSourceInstance3 = ((string)eventSourceValue3);
+                                                            ruleManagementEventDataSourceInstance3.EventSource = eventSourceInstance3;
+                                                        }
+                                                        
+                                                        JToken levelValue3 = dataSourceValue3["level"];
+                                                        if (levelValue3 != null && levelValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string levelInstance3 = ((string)levelValue3);
+                                                            ruleManagementEventDataSourceInstance3.Level = levelInstance3;
+                                                        }
+                                                        
+                                                        JToken operationNameValue3 = dataSourceValue3["operationName"];
+                                                        if (operationNameValue3 != null && operationNameValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string operationNameInstance3 = ((string)operationNameValue3);
+                                                            ruleManagementEventDataSourceInstance3.OperationName = operationNameInstance3;
+                                                        }
+                                                        
+                                                        JToken resourceGroupNameValue3 = dataSourceValue3["resourceGroupName"];
+                                                        if (resourceGroupNameValue3 != null && resourceGroupNameValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceGroupNameInstance3 = ((string)resourceGroupNameValue3);
+                                                            ruleManagementEventDataSourceInstance3.ResourceGroupName = resourceGroupNameInstance3;
+                                                        }
+                                                        
+                                                        JToken resourceProviderNameValue3 = dataSourceValue3["resourceProviderName"];
+                                                        if (resourceProviderNameValue3 != null && resourceProviderNameValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceProviderNameInstance3 = ((string)resourceProviderNameValue3);
+                                                            ruleManagementEventDataSourceInstance3.ResourceProviderName = resourceProviderNameInstance3;
+                                                        }
+                                                        
+                                                        JToken resourceUriValue6 = dataSourceValue3["resourceUri"];
+                                                        if (resourceUriValue6 != null && resourceUriValue6.Type != JTokenType.Null)
+                                                        {
+                                                            string resourceUriInstance6 = ((string)resourceUriValue6);
+                                                            ruleManagementEventDataSourceInstance3.ResourceUri = resourceUriInstance6;
+                                                        }
+                                                        
+                                                        JToken statusValue3 = dataSourceValue3["status"];
+                                                        if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string statusInstance3 = ((string)statusValue3);
+                                                            ruleManagementEventDataSourceInstance3.Status = statusInstance3;
+                                                        }
+                                                        
+                                                        JToken subStatusValue3 = dataSourceValue3["subStatus"];
+                                                        if (subStatusValue3 != null && subStatusValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string subStatusInstance3 = ((string)subStatusValue3);
+                                                            ruleManagementEventDataSourceInstance3.SubStatus = subStatusInstance3;
+                                                        }
+                                                        
+                                                        JToken claimsValue3 = dataSourceValue3["claims"];
+                                                        if (claimsValue3 != null && claimsValue3.Type != JTokenType.Null)
+                                                        {
+                                                            RuleManagementEventClaimsDataSource claimsInstance3 = new RuleManagementEventClaimsDataSource();
+                                                            ruleManagementEventDataSourceInstance3.Claims = claimsInstance3;
+                                                            
+                                                            JToken emailAddressValue3 = claimsValue3["emailAddress"];
+                                                            if (emailAddressValue3 != null && emailAddressValue3.Type != JTokenType.Null)
+                                                            {
+                                                                string emailAddressInstance3 = ((string)emailAddressValue3);
+                                                                claimsInstance3.EmailAddress = emailAddressInstance3;
+                                                            }
+                                                        }
+                                                        managementEventRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance3;
+                                                    }
+                                                }
+                                                
+                                                JToken aggregationValue = conditionValue["aggregation"];
+                                                if (aggregationValue != null && aggregationValue.Type != JTokenType.Null)
+                                                {
+                                                    ManagementEventAggregationCondition aggregationInstance = new ManagementEventAggregationCondition();
+                                                    managementEventRuleConditionInstance.Aggregation = aggregationInstance;
+                                                    
+                                                    JToken operatorValue2 = aggregationValue["operator"];
+                                                    if (operatorValue2 != null && operatorValue2.Type != JTokenType.Null)
+                                                    {
+                                                        ConditionOperator operatorInstance2 = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue2), true));
+                                                        aggregationInstance.Operator = operatorInstance2;
+                                                    }
+                                                    
+                                                    JToken thresholdValue2 = aggregationValue["threshold"];
+                                                    if (thresholdValue2 != null && thresholdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        double thresholdInstance2 = ((double)thresholdValue2);
+                                                        aggregationInstance.Threshold = thresholdInstance2;
+                                                    }
+                                                    
+                                                    JToken windowSizeValue3 = aggregationValue["windowSize"];
+                                                    if (windowSizeValue3 != null && windowSizeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan windowSizeInstance3 = XmlConvert.ToTimeSpan(((string)windowSizeValue3));
+                                                        aggregationInstance.WindowSize = windowSizeInstance3;
+                                                    }
+                                                }
+                                                propertiesInstance.Condition = managementEventRuleConditionInstance;
+                                            }
                                         }
-                                    }
-                                    
-                                    JToken actionValue = propertiesValue["action"];
-                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
-                                    {
-                                        string typeName5 = ((string)actionValue["odata.type"]);
-                                        if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
+                                        
+                                        JToken actionValue = propertiesValue["action"];
+                                        if (actionValue != null && actionValue.Type != JTokenType.Null)
                                         {
-                                            RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
-                                            
-                                            JToken sendToServiceOwnersValue = actionValue["sendToServiceOwners"];
-                                            if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
+                                            string typeName5 = ((string)actionValue["odata.type"]);
+                                            if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
                                             {
-                                                bool sendToServiceOwnersInstance = ((bool)sendToServiceOwnersValue);
-                                                ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
-                                            }
-                                            
-                                            JToken customEmailsArray = actionValue["customEmails"];
-                                            if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
+                                                RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
+                                                
+                                                JToken sendToServiceOwnersValue = actionValue["sendToServiceOwners"];
+                                                if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
                                                 {
-                                                    ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
+                                                    bool sendToServiceOwnersInstance = ((bool)sendToServiceOwnersValue);
+                                                    ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                                 }
+                                                
+                                                JToken customEmailsArray = actionValue["customEmails"];
+                                                if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
+                                                    {
+                                                        ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
+                                                    }
+                                                }
+                                                propertiesInstance.Action = ruleEmailActionInstance;
                                             }
-                                            propertiesInstance.Action = ruleEmailActionInstance;
                                         }
-                                    }
-                                    
-                                    JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
-                                    if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime lastUpdatedTimeInstance = ((DateTime)lastUpdatedTimeValue);
-                                        propertiesInstance.LastUpdatedTime = lastUpdatedTimeInstance;
+                                        
+                                        JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
+                                        if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime lastUpdatedTimeInstance = ((DateTime)lastUpdatedTimeValue);
+                                            propertiesInstance.LastUpdatedTime = lastUpdatedTimeInstance;
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2417,7 +2529,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2451,7 +2563,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2464,20 +2576,37 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + (parameters.Properties.Name != null ? parameters.Properties.Name.Trim() : "") + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.insights/alertrules/";
+            if (parameters.Properties != null && parameters.Properties.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Properties.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2650,7 +2779,7 @@ namespace Microsoft.Azure.Management.Insights
                             
                             conditionValue["threshold"] = derived.Threshold;
                             
-                            conditionValue["windowSize"] = TypeConversion.To8601String(derived.WindowSize);
+                            conditionValue["windowSize"] = XmlConvert.ToString(derived.WindowSize);
                             
                             if (derived.TimeAggregation != null)
                             {
@@ -2749,7 +2878,7 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                             
-                            conditionValue["windowSize"] = TypeConversion.To8601String(derived4.WindowSize);
+                            conditionValue["windowSize"] = XmlConvert.ToString(derived4.WindowSize);
                             
                             conditionValue["failedLocationCount"] = derived4.FailedLocationCount;
                         }
@@ -2854,7 +2983,7 @@ namespace Microsoft.Azure.Management.Insights
                                 
                                 aggregationValue["threshold"] = derived7.Aggregation.Threshold;
                                 
-                                aggregationValue["windowSize"] = TypeConversion.To8601String(derived7.Aggregation.WindowSize);
+                                aggregationValue["windowSize"] = XmlConvert.ToString(derived7.Aggregation.WindowSize);
                             }
                         }
                     }
@@ -2888,7 +3017,7 @@ namespace Microsoft.Azure.Management.Insights
                     propertiesValue["lastUpdatedTime"] = parameters.Properties.LastUpdatedTime;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -2898,13 +3027,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -2913,27 +3042,30 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2942,7 +3074,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

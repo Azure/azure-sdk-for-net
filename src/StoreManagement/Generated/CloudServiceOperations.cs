@@ -30,9 +30,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Store;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Store
     /// Provides REST operations for working with cloud services from the
     /// Windows Azure store service.
     /// </summary>
-    internal partial class CloudServiceOperations : IServiceOperations<StoreManagementClient>, Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations
+    internal partial class CloudServiceOperations : IServiceOperations<StoreManagementClient>, ICloudServiceOperations
     {
         /// <summary>
         /// Initializes a new instance of the CloudServiceOperations class.
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginCreatingAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginCreatingAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -113,18 +113,26 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/CloudServices/" + parameters.Name.Trim() + "/";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
+            url = url + Uri.EscapeDataString(parameters.Name);
+            url = url + "/";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -186,13 +194,13 @@ namespace Microsoft.WindowsAzure.Management.Store
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -201,13 +209,14 @@ namespace Microsoft.WindowsAzure.Management.Store
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -217,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -260,89 +269,76 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> CreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             StoreManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.CloudServices.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.CloudServices.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -355,22 +351,28 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// <returns>
         /// The response structure for the Cloud Service List operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/CloudServices/";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -405,13 +407,13 @@ namespace Microsoft.WindowsAzure.Management.Store
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -420,7 +422,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -428,178 +430,181 @@ namespace Microsoft.WindowsAzure.Management.Store
                     // Create Result
                     CloudServiceListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new CloudServiceListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement cloudServicesSequenceElement = responseDoc.Element(XName.Get("CloudServices", "http://schemas.microsoft.com/windowsazure"));
-                    if (cloudServicesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement cloudServicesElement in cloudServicesSequenceElement.Elements(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CloudServiceListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement cloudServicesSequenceElement = responseDoc.Element(XName.Get("CloudServices", "http://schemas.microsoft.com/windowsazure"));
+                        if (cloudServicesSequenceElement != null)
                         {
-                            CloudServiceListResponse.CloudService cloudServiceInstance = new CloudServiceListResponse.CloudService();
-                            result.CloudServices.Add(cloudServiceInstance);
-                            
-                            XElement nameElement = cloudServicesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement cloudServicesElement in cloudServicesSequenceElement.Elements(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string nameInstance = nameElement.Value;
-                                cloudServiceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = cloudServicesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                                cloudServiceInstance.Label = labelInstance;
-                            }
-                            
-                            XElement descriptionElement = cloudServicesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
-                            {
-                                string descriptionInstance = descriptionElement.Value;
-                                cloudServiceInstance.Description = descriptionInstance;
-                            }
-                            
-                            XElement geoRegionElement = cloudServicesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoRegionElement != null)
-                            {
-                                string geoRegionInstance = geoRegionElement.Value;
-                                cloudServiceInstance.GeoRegion = geoRegionInstance;
-                            }
-                            
-                            XElement resourcesSequenceElement = cloudServicesElement.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
-                            if (resourcesSequenceElement != null)
-                            {
-                                foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
+                                CloudServiceListResponse.CloudService cloudServiceInstance = new CloudServiceListResponse.CloudService();
+                                result.CloudServices.Add(cloudServiceInstance);
+                                
+                                XElement nameElement = cloudServicesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
                                 {
-                                    CloudServiceListResponse.CloudService.AddOnResource resourceInstance = new CloudServiceListResponse.CloudService.AddOnResource();
-                                    cloudServiceInstance.Resources.Add(resourceInstance);
-                                    
-                                    XElement resourceProviderNamespaceElement = resourcesElement.Element(XName.Get("ResourceProviderNamespace", "http://schemas.microsoft.com/windowsazure"));
-                                    if (resourceProviderNamespaceElement != null)
+                                    string nameInstance = nameElement.Value;
+                                    cloudServiceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement labelElement = cloudServicesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                    cloudServiceInstance.Label = labelInstance;
+                                }
+                                
+                                XElement descriptionElement = cloudServicesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                if (descriptionElement != null)
+                                {
+                                    string descriptionInstance = descriptionElement.Value;
+                                    cloudServiceInstance.Description = descriptionInstance;
+                                }
+                                
+                                XElement geoRegionElement = cloudServicesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                                if (geoRegionElement != null)
+                                {
+                                    string geoRegionInstance = geoRegionElement.Value;
+                                    cloudServiceInstance.GeoRegion = geoRegionInstance;
+                                }
+                                
+                                XElement resourcesSequenceElement = cloudServicesElement.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourcesSequenceElement != null)
+                                {
+                                    foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        string resourceProviderNamespaceInstance = resourceProviderNamespaceElement.Value;
-                                        resourceInstance.Namespace = resourceProviderNamespaceInstance;
-                                    }
-                                    
-                                    XElement typeElement = resourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    if (typeElement != null)
-                                    {
-                                        string typeInstance = typeElement.Value;
-                                        resourceInstance.Type = typeInstance;
-                                    }
-                                    
-                                    XElement nameElement2 = resourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement2 != null)
-                                    {
-                                        string nameInstance2 = nameElement2.Value;
-                                        resourceInstance.Name = nameInstance2;
-                                    }
-                                    
-                                    XElement planElement = resourcesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                                    if (planElement != null)
-                                    {
-                                        string planInstance = planElement.Value;
-                                        resourceInstance.Plan = planInstance;
-                                    }
-                                    
-                                    XElement schemaVersionElement = resourcesElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
-                                    if (schemaVersionElement != null)
-                                    {
-                                        string schemaVersionInstance = schemaVersionElement.Value;
-                                        resourceInstance.SchemaVersion = schemaVersionInstance;
-                                    }
-                                    
-                                    XElement eTagElement = resourcesElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
-                                    if (eTagElement != null)
-                                    {
-                                        string eTagInstance = eTagElement.Value;
-                                        resourceInstance.ETag = eTagInstance;
-                                    }
-                                    
-                                    XElement stateElement = resourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                    if (stateElement != null)
-                                    {
-                                        string stateInstance = stateElement.Value;
-                                        resourceInstance.State = stateInstance;
-                                    }
-                                    
-                                    XElement usageMetersSequenceElement = resourcesElement.Element(XName.Get("UsageMeters", "http://schemas.microsoft.com/windowsazure"));
-                                    if (usageMetersSequenceElement != null)
-                                    {
-                                        foreach (XElement usageMetersElement in usageMetersSequenceElement.Elements(XName.Get("UsageMeter", "http://schemas.microsoft.com/windowsazure")))
-                                        {
-                                            CloudServiceListResponse.CloudService.AddOnResource.UsageLimit usageMeterInstance = new CloudServiceListResponse.CloudService.AddOnResource.UsageLimit();
-                                            resourceInstance.UsageLimits.Add(usageMeterInstance);
-                                            
-                                            XElement nameElement3 = usageMetersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                            if (nameElement3 != null)
-                                            {
-                                                string nameInstance3 = nameElement3.Value;
-                                                usageMeterInstance.Name = nameInstance3;
-                                            }
-                                            
-                                            XElement unitElement = usageMetersElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
-                                            if (unitElement != null)
-                                            {
-                                                string unitInstance = unitElement.Value;
-                                                usageMeterInstance.Unit = unitInstance;
-                                            }
-                                            
-                                            XElement includedElement = usageMetersElement.Element(XName.Get("Included", "http://schemas.microsoft.com/windowsazure"));
-                                            if (includedElement != null)
-                                            {
-                                                long includedInstance = long.Parse(includedElement.Value, CultureInfo.InvariantCulture);
-                                                usageMeterInstance.AmountIncluded = includedInstance;
-                                            }
-                                            
-                                            XElement usedElement = usageMetersElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
-                                            if (usedElement != null)
-                                            {
-                                                long usedInstance = long.Parse(usedElement.Value, CultureInfo.InvariantCulture);
-                                                usageMeterInstance.AmountUsed = usedInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    XElement outputItemsSequenceElement = resourcesElement.Element(XName.Get("OutputItems", "http://schemas.microsoft.com/windowsazure"));
-                                    if (outputItemsSequenceElement != null)
-                                    {
-                                        foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
-                                        {
-                                            string outputItemsKey = outputItemsElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;
-                                            string outputItemsValue = outputItemsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                            resourceInstance.OutputItems.Add(outputItemsKey, outputItemsValue);
-                                        }
-                                    }
-                                    
-                                    XElement operationStatusElement = resourcesElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                                    if (operationStatusElement != null)
-                                    {
-                                        CloudServiceListResponse.CloudService.AddOnResource.OperationStatus operationStatusInstance = new CloudServiceListResponse.CloudService.AddOnResource.OperationStatus();
-                                        resourceInstance.Status = operationStatusInstance;
+                                        CloudServiceListResponse.CloudService.AddOnResource resourceInstance = new CloudServiceListResponse.CloudService.AddOnResource();
+                                        cloudServiceInstance.Resources.Add(resourceInstance);
                                         
-                                        XElement typeElement2 = operationStatusElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                        if (typeElement2 != null)
+                                        XElement resourceProviderNamespaceElement = resourcesElement.Element(XName.Get("ResourceProviderNamespace", "http://schemas.microsoft.com/windowsazure"));
+                                        if (resourceProviderNamespaceElement != null)
                                         {
-                                            string typeInstance2 = typeElement2.Value;
-                                            operationStatusInstance.Type = typeInstance2;
+                                            string resourceProviderNamespaceInstance = resourceProviderNamespaceElement.Value;
+                                            resourceInstance.Namespace = resourceProviderNamespaceInstance;
                                         }
                                         
-                                        XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                                        if (resultElement != null)
+                                        XElement typeElement = resourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                        if (typeElement != null)
                                         {
-                                            string resultInstance = resultElement.Value;
-                                            operationStatusInstance.Result = resultInstance;
+                                            string typeInstance = typeElement.Value;
+                                            resourceInstance.Type = typeInstance;
+                                        }
+                                        
+                                        XElement nameElement2 = resourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            resourceInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        XElement planElement = resourcesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                                        if (planElement != null)
+                                        {
+                                            string planInstance = planElement.Value;
+                                            resourceInstance.Plan = planInstance;
+                                        }
+                                        
+                                        XElement schemaVersionElement = resourcesElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
+                                        if (schemaVersionElement != null)
+                                        {
+                                            string schemaVersionInstance = schemaVersionElement.Value;
+                                            resourceInstance.SchemaVersion = schemaVersionInstance;
+                                        }
+                                        
+                                        XElement eTagElement = resourcesElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
+                                        if (eTagElement != null)
+                                        {
+                                            string eTagInstance = eTagElement.Value;
+                                            resourceInstance.ETag = eTagInstance;
+                                        }
+                                        
+                                        XElement stateElement = resourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement != null)
+                                        {
+                                            string stateInstance = stateElement.Value;
+                                            resourceInstance.State = stateInstance;
+                                        }
+                                        
+                                        XElement usageMetersSequenceElement = resourcesElement.Element(XName.Get("UsageMeters", "http://schemas.microsoft.com/windowsazure"));
+                                        if (usageMetersSequenceElement != null)
+                                        {
+                                            foreach (XElement usageMetersElement in usageMetersSequenceElement.Elements(XName.Get("UsageMeter", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                CloudServiceListResponse.CloudService.AddOnResource.UsageLimit usageMeterInstance = new CloudServiceListResponse.CloudService.AddOnResource.UsageLimit();
+                                                resourceInstance.UsageLimits.Add(usageMeterInstance);
+                                                
+                                                XElement nameElement3 = usageMetersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                                if (nameElement3 != null)
+                                                {
+                                                    string nameInstance3 = nameElement3.Value;
+                                                    usageMeterInstance.Name = nameInstance3;
+                                                }
+                                                
+                                                XElement unitElement = usageMetersElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
+                                                if (unitElement != null)
+                                                {
+                                                    string unitInstance = unitElement.Value;
+                                                    usageMeterInstance.Unit = unitInstance;
+                                                }
+                                                
+                                                XElement includedElement = usageMetersElement.Element(XName.Get("Included", "http://schemas.microsoft.com/windowsazure"));
+                                                if (includedElement != null)
+                                                {
+                                                    long includedInstance = long.Parse(includedElement.Value, CultureInfo.InvariantCulture);
+                                                    usageMeterInstance.AmountIncluded = includedInstance;
+                                                }
+                                                
+                                                XElement usedElement = usageMetersElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
+                                                if (usedElement != null)
+                                                {
+                                                    long usedInstance = long.Parse(usedElement.Value, CultureInfo.InvariantCulture);
+                                                    usageMeterInstance.AmountUsed = usedInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        XElement outputItemsSequenceElement = resourcesElement.Element(XName.Get("OutputItems", "http://schemas.microsoft.com/windowsazure"));
+                                        if (outputItemsSequenceElement != null)
+                                        {
+                                            foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                string outputItemsKey = outputItemsElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;
+                                                string outputItemsValue = outputItemsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                                resourceInstance.OutputItems.Add(outputItemsKey, outputItemsValue);
+                                            }
+                                        }
+                                        
+                                        XElement operationStatusElement = resourcesElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
+                                        if (operationStatusElement != null)
+                                        {
+                                            CloudServiceListResponse.CloudService.AddOnResource.OperationStatus operationStatusInstance = new CloudServiceListResponse.CloudService.AddOnResource.OperationStatus();
+                                            resourceInstance.Status = operationStatusInstance;
+                                            
+                                            XElement typeElement2 = operationStatusElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                            if (typeElement2 != null)
+                                            {
+                                                string typeInstance2 = typeElement2.Value;
+                                                operationStatusInstance.Type = typeInstance2;
+                                            }
+                                            
+                                            XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
+                                            if (resultElement != null)
+                                            {
+                                                string resultInstance = resultElement.Value;
+                                                operationStatusInstance.Result = resultInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -608,7 +613,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

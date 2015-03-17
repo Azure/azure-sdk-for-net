@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.SiteRecovery
 {
     public static partial class RecoveryPlanOperationsExtensions
     {
@@ -311,7 +311,7 @@ namespace Microsoft.WindowsAzure
         /// Required. RecoveryPlan ID.
         /// </param>
         /// <param name='parameters'>
-        /// Optional.
+        /// Required. RpPlanned Failover Request.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure
         /// Required. RecoveryPlan ID.
         /// </param>
         /// <param name='parameters'>
-        /// Optional.
+        /// Required. RpPlanned Failover Request.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.

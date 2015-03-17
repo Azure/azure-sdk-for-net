@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Subscriptions.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
     /// Tenant Ids information.
     /// </summary>
-    public partial class TenantListResult : OperationResponse
+    public partial class TenantListResult : AzureOperationResponse
     {
         private IList<TenantIdDescription> _tenantIds;
         

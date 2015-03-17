@@ -16,7 +16,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Microsoft.WindowsAzure.Common.OData
+namespace Microsoft.Azure.Common.OData
 {
     /// <summary>
     /// Handles OData filter generation.

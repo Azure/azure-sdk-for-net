@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -37,6 +37,74 @@ namespace Microsoft.Azure.Management.Sql
     /// </summary>
     public static partial class DatabaseOperationsExtensions
     {
+        /// <summary>
+        /// Begins creating a new Azure SQL Database or updating an existing
+        /// Azure SQL Database. To determine the status of the operation call
+        /// GetDatabaseOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be operated on
+        /// (Updated or created).
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for createing or updating a
+        /// database.
+        /// </param>
+        /// <returns>
+        /// Response for long running database operations.
+        /// </returns>
+        public static DatabaseCreateOrUpdateResponse BeginCreateOrUpdate(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins creating a new Azure SQL Database or updating an existing
+        /// Azure SQL Database. To determine the status of the operation call
+        /// GetDatabaseOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be operated on
+        /// (Updated or created).
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for createing or updating a
+        /// database.
+        /// </param>
+        /// <returns>
+        /// Response for long running database operations.
+        /// </returns>
+        public static Task<DatabaseCreateOrUpdateResponse> BeginCreateOrUpdateAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
+        {
+            return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
+        }
+        
         /// <summary>
         /// Creates a new Azure SQL Database or updates an existing Azure SQL
         /// Database.
@@ -61,9 +129,9 @@ namespace Microsoft.Azure.Management.Sql
         /// database.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Response for long running database operations.
         /// </returns>
-        public static DatabaseGetResponse CreateOrUpdate(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
+        public static DatabaseCreateOrUpdateResponse CreateOrUpdate(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -96,9 +164,9 @@ namespace Microsoft.Azure.Management.Sql
         /// database.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Response for long running database operations.
         /// </returns>
-        public static Task<DatabaseGetResponse> CreateOrUpdateAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
+        public static Task<DatabaseCreateOrUpdateResponse> CreateOrUpdateAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
@@ -124,7 +192,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
+        public static AzureOperationResponse Delete(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -154,7 +222,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return operations.DeleteAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
         }
@@ -265,6 +333,44 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<DatabaseListResponse> GetByIdAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseId)
         {
             return operations.GetByIdAsync(resourceGroupName, serverName, databaseId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the status of a database create or update operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running database operations.
+        /// </returns>
+        public static DatabaseCreateOrUpdateResponse GetDatabaseOperationStatus(this IDatabaseOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseOperations)s).GetDatabaseOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of a database create or update operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running database operations.
+        /// </returns>
+        public static Task<DatabaseCreateOrUpdateResponse> GetDatabaseOperationStatusAsync(this IDatabaseOperations operations, string operationStatusLink)
+        {
+            return operations.GetDatabaseOperationStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private CsvSerializationProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the CSV serialization.
+        /// Optional. Gets or sets the properties of the CSV serialization.
         /// </summary>
         public CsvSerializationProperties Properties
         {
@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public CsvSerialization()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CsvSerialization class with
-        /// required arguments.
-        /// </summary>
-        public CsvSerialization(CsvSerializationProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

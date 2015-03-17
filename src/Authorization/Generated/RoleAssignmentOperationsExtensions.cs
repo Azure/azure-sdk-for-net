@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Authorization
 {
@@ -143,10 +143,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Required. Role assignment name.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        public static OperationResponse Delete(this IRoleAssignmentOperations operations, string scope, Guid roleAssignmentName)
+        public static RoleAssignmentDeleteResult Delete(this IRoleAssignmentOperations operations, string scope, Guid roleAssignmentName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -169,10 +168,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Required. Role assignment name.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IRoleAssignmentOperations operations, string scope, Guid roleAssignmentName)
+        public static Task<RoleAssignmentDeleteResult> DeleteAsync(this IRoleAssignmentOperations operations, string scope, Guid roleAssignmentName)
         {
             return operations.DeleteAsync(scope, roleAssignmentName, CancellationToken.None);
         }
@@ -188,10 +186,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Required. Role assignment Id
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        public static OperationResponse DeleteById(this IRoleAssignmentOperations operations, string roleAssignmentId)
+        public static RoleAssignmentDeleteResult DeleteById(this IRoleAssignmentOperations operations, string roleAssignmentId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -211,10 +208,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Required. Role assignment Id
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        public static Task<OperationResponse> DeleteByIdAsync(this IRoleAssignmentOperations operations, string roleAssignmentId)
+        public static Task<RoleAssignmentDeleteResult> DeleteByIdAsync(this IRoleAssignmentOperations operations, string roleAssignmentId)
         {
             return operations.DeleteByIdAsync(roleAssignmentId, CancellationToken.None);
         }

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
@@ -78,6 +78,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         string SiteName
         {
             get; set; 
+        }
+        
+        /// <summary>
+        /// Operations for invoking commands.
+        /// </summary>
+        ICommandsOperations Commands
+        {
+            get; 
         }
         
         /// <summary>

@@ -21,24 +21,24 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The parameters supplied to the update runbook operation.
     /// </summary>
-    public partial class RunbookUpdateParameters
+    public partial class RunbookUpdateParameters : ResourceUpdateParameterBase
     {
-        private Runbook _runbook;
+        private RunbookUpdateProperties _properties;
         
         /// <summary>
-        /// Required. The runbook to be updated.
+        /// Optional. Gets or sets the runbook update properties.
         /// </summary>
-        public Runbook Runbook
+        public RunbookUpdateProperties Properties
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookUpdateParameters()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RunbookUpdateParameters class
-        /// with required arguments.
-        /// </summary>
-        public RunbookUpdateParameters(Runbook runbook)
-            : this()
-        {
-            if (runbook == null)
-            {
-                throw new ArgumentNullException("runbook");
-            }
-            this.Runbook = runbook;
         }
     }
 }

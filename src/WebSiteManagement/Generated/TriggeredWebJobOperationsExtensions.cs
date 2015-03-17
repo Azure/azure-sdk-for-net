@@ -24,11 +24,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this ITriggeredWebJobOperations operations, string jobName)
+        public static AzureOperationResponse Delete(this ITriggeredWebJobOperations operations, string jobName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this ITriggeredWebJobOperations operations, string jobName)
+        public static Task<AzureOperationResponse> DeleteAsync(this ITriggeredWebJobOperations operations, string jobName)
         {
             return operations.DeleteAsync(jobName, CancellationToken.None);
         }
@@ -292,7 +292,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Run(this ITriggeredWebJobOperations operations, string jobName)
+        public static AzureOperationResponse Run(this ITriggeredWebJobOperations operations, string jobName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RunAsync(this ITriggeredWebJobOperations operations, string jobName)
+        public static Task<AzureOperationResponse> RunAsync(this ITriggeredWebJobOperations operations, string jobName)
         {
             return operations.RunAsync(jobName, CancellationToken.None);
         }
@@ -338,7 +338,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse SetSettings(this ITriggeredWebJobOperations operations, string jobName, TriggeredWebJobSettingsUpdateParameters settings)
+        public static AzureOperationResponse SetSettings(this ITriggeredWebJobOperations operations, string jobName, TriggeredWebJobSettingsUpdateParameters settings)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -365,7 +365,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SetSettingsAsync(this ITriggeredWebJobOperations operations, string jobName, TriggeredWebJobSettingsUpdateParameters settings)
+        public static Task<AzureOperationResponse> SetSettingsAsync(this ITriggeredWebJobOperations operations, string jobName, TriggeredWebJobSettingsUpdateParameters settings)
         {
             return operations.SetSettingsAsync(jobName, settings, CancellationToken.None);
         }
@@ -391,7 +391,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UploadFile(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static AzureOperationResponse UploadFile(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -421,7 +421,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UploadFileAsync(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static Task<AzureOperationResponse> UploadFileAsync(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return operations.UploadFileAsync(jobName, fileName, jobContent, CancellationToken.None);
         }
@@ -447,7 +447,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UploadZip(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static AzureOperationResponse UploadZip(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UploadZipAsync(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static Task<AzureOperationResponse> UploadZipAsync(this ITriggeredWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return operations.UploadZipAsync(jobName, fileName, jobContent, CancellationToken.None);
         }

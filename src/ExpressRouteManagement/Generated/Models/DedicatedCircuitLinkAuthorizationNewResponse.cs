@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// Get link authorization operation response.
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationNewResponse : OperationResponse
+    public partial class DedicatedCircuitLinkAuthorizationNewResponse : AzureOperationResponse
     {
         private AzureDedicatedCircuitLinkAuthorization _dedicatedCircuitLinkAuthorization;
         

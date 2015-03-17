@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
     /// Represents the response to a List Firewall Rules request.
     /// </summary>
-    public partial class FirewallRuleGetResponse : OperationResponse
+    public partial class FirewallRuleGetResponse : AzureOperationResponse
     {
         private FirewallRule _firewallRule;
         

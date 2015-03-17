@@ -13,57 +13,12 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
-
-namespace Microsoft.WindowsAzure
-{
-    public static class WebSiteManagementDiscoveryExtensions
-    {
-        public static WebSiteManagementClient CreateWebSiteManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
-        {
-            return new WebSiteManagementClient(credentials);
-        }
-
-        public static WebSiteManagementClient CreateWebSiteManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
-        {
-            return new WebSiteManagementClient(credentials, baseUri);
-        }
-
-        public static WebSiteManagementClient CreateWebSiteManagementClient(this CloudClients clients)
-        {
-            return ConfigurationHelper.CreateFromSettings<WebSiteManagementClient>(WebSiteManagementClient.Create);
-        }
-    }
-}
 
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
     public partial class WebSiteManagementClient
     {
-        public static WebSiteManagementClient Create(IDictionary<string, object> settings)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-
-            SubscriptionCloudCredentials credentials = ConfigurationHelper.GetCredentials<SubscriptionCloudCredentials>(settings);
-
-            Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
-
-            return baseUri != null ?
-                new WebSiteManagementClient(credentials, baseUri) :
-                new WebSiteManagementClient(credentials);
-        }
-
         /// <summary>
         /// Convert an enum of type ManagedPipelineMode to a string.
         /// This is temp workaround for hydra generation issue with nulable enums with custom values
@@ -82,11 +37,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
 
             return ManagedPipelineModeToString(value.GetValueOrDefault());
-        }
-
-        public override WebSiteManagementClient WithHandler(DelegatingHandler handler)
-        {
-            return (WebSiteManagementClient)WithHandler(new WebSiteManagementClient(), handler);
         }
     }
 }

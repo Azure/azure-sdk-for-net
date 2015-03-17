@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.TrafficManager
 {
     /// <summary>
     /// The Windows Azure Traffic Manager management API provides a RESTful set
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Create(this IProfileOperations operations, string name, string domainName)
+        public static AzureOperationResponse Create(this IProfileOperations operations, string name, string domainName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateAsync(this IProfileOperations operations, string name, string domainName)
+        public static Task<AzureOperationResponse> CreateAsync(this IProfileOperations operations, string name, string domainName)
         {
             return operations.CreateAsync(name, domainName, CancellationToken.None);
         }
@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IProfileOperations operations, string profileName)
+        public static AzureOperationResponse Delete(this IProfileOperations operations, string profileName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -184,7 +184,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IProfileOperations operations, string profileName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IProfileOperations operations, string profileName)
         {
             return operations.DeleteAsync(profileName, CancellationToken.None);
         }
@@ -296,7 +296,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IProfileOperations operations, string profileName, ProfileDefinitionStatus profileStatus, int definitionVersionNumber)
+        public static AzureOperationResponse Update(this IProfileOperations operations, string profileName, ProfileDefinitionStatus profileStatus, int definitionVersionNumber)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -328,7 +328,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IProfileOperations operations, string profileName, ProfileDefinitionStatus profileStatus, int definitionVersionNumber)
+        public static Task<AzureOperationResponse> UpdateAsync(this IProfileOperations operations, string profileName, ProfileDefinitionStatus profileStatus, int definitionVersionNumber)
         {
             return operations.UpdateAsync(profileName, profileStatus, definitionVersionNumber, CancellationToken.None);
         }

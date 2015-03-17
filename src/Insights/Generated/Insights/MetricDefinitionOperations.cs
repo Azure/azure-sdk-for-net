@@ -26,11 +26,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Hyak.Common;
 using Microsoft.Azure.Insights;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Insights
@@ -90,23 +89,36 @@ namespace Microsoft.Azure.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
-                Tracing.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/metricDefinitions?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/metricDefinitions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
-                url = url + "&$filter=" + Uri.EscapeDataString(filterString != null ? filterString.Trim() : "");
+                odataFilter.Add(Uri.EscapeDataString(filterString));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -143,13 +155,13 @@ namespace Microsoft.Azure.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -158,7 +170,7 @@ namespace Microsoft.Azure.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -166,174 +178,232 @@ namespace Microsoft.Azure.Insights
                     // Create Result
                     MetricDefinitionListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MetricDefinitionListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
-                        result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
-                        
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricDefinitionListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
+                            result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                MetricDefinition metricDefinitionInstance = new MetricDefinition();
-                                metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    LocalizableString nameInstance = new LocalizableString();
-                                    metricDefinitionInstance.Name = nameInstance;
+                                    MetricDefinition metricDefinitionInstance = new MetricDefinition();
+                                    metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
                                     
-                                    JToken valueValue2 = nameValue["value"];
-                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string valueInstance = ((string)valueValue2);
-                                        nameInstance.Value = valueInstance;
-                                    }
-                                    
-                                    JToken localizedValueValue = nameValue["localizedValue"];
-                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
-                                    {
-                                        string localizedValueInstance = ((string)localizedValueValue);
-                                        nameInstance.LocalizedValue = localizedValueInstance;
-                                    }
-                                }
-                                
-                                JToken unitValue = valueValue["unit"];
-                                if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                {
-                                    Unit unitInstance = ((Unit)Enum.Parse(typeof(Unit), ((string)unitValue), true));
-                                    metricDefinitionInstance.Unit = unitInstance;
-                                }
-                                
-                                JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
-                                if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
-                                {
-                                    AggregationType primaryAggregationTypeInstance = ((AggregationType)Enum.Parse(typeof(AggregationType), ((string)primaryAggregationTypeValue), true));
-                                    metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
-                                }
-                                
-                                JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
-                                {
-                                    string resourceUriInstance = ((string)resourceUriValue);
-                                    metricDefinitionInstance.ResourceUri = resourceUriInstance;
-                                }
-                                
-                                JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
-                                if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
-                                    {
-                                        MetricAvailability metricAvailabilityInstance = new MetricAvailability();
-                                        metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
+                                        LocalizableString nameInstance = new LocalizableString();
+                                        metricDefinitionInstance.Name = nameInstance;
                                         
-                                        JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
-                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                        JToken valueValue2 = nameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                         {
-                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
-                                            metricAvailabilityInstance.TimeGrain = timeGrainInstance;
+                                            string valueInstance = ((string)valueValue2);
+                                            nameInstance.Value = valueInstance;
                                         }
                                         
-                                        JToken retentionValue = metricAvailabilitiesValue["retention"];
-                                        if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                        JToken localizedValueValue = nameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
                                         {
-                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan(((string)retentionValue));
-                                            metricAvailabilityInstance.Retention = retentionInstance;
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            nameInstance.LocalizedValue = localizedValueInstance;
                                         }
-                                        
-                                        JToken locationValue = metricAvailabilitiesValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    }
+                                    
+                                    JToken unitValue = valueValue["unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        Unit unitInstance = ((Unit)Enum.Parse(typeof(Unit), ((string)unitValue), true));
+                                        metricDefinitionInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
+                                    if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        AggregationType primaryAggregationTypeInstance = ((AggregationType)Enum.Parse(typeof(AggregationType), ((string)primaryAggregationTypeValue), true));
+                                        metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
+                                    }
+                                    
+                                    JToken resourceUriValue = valueValue["resourceUri"];
+                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceUriInstance = ((string)resourceUriValue);
+                                        metricDefinitionInstance.ResourceUri = resourceUriInstance;
+                                    }
+                                    
+                                    JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
+                                    if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
                                         {
-                                            MetricLocation locationInstance = new MetricLocation();
-                                            metricAvailabilityInstance.Location = locationInstance;
+                                            MetricAvailability metricAvailabilityInstance = new MetricAvailability();
+                                            metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
                                             
-                                            JToken tableEndpointValue = locationValue["tableEndpoint"];
-                                            if (tableEndpointValue != null && tableEndpointValue.Type != JTokenType.Null)
+                                            JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
+                                            if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                             {
-                                                string tableEndpointInstance = ((string)tableEndpointValue);
-                                                locationInstance.TableEndpoint = tableEndpointInstance;
+                                                TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                                metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                             }
                                             
-                                            JToken tableInfoArray = locationValue["tableInfo"];
-                                            if (tableInfoArray != null && tableInfoArray.Type != JTokenType.Null)
+                                            JToken retentionValue = metricAvailabilitiesValue["retention"];
+                                            if (retentionValue != null && retentionValue.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken tableInfoValue in ((JArray)tableInfoArray))
+                                                TimeSpan retentionInstance = XmlConvert.ToTimeSpan(((string)retentionValue));
+                                                metricAvailabilityInstance.Retention = retentionInstance;
+                                            }
+                                            
+                                            JToken locationValue = metricAvailabilitiesValue["location"];
+                                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                            {
+                                                MetricLocation locationInstance = new MetricLocation();
+                                                metricAvailabilityInstance.Location = locationInstance;
+                                                
+                                                JToken tableEndpointValue = locationValue["tableEndpoint"];
+                                                if (tableEndpointValue != null && tableEndpointValue.Type != JTokenType.Null)
                                                 {
-                                                    MetricTableInfo metricTableInfoInstance = new MetricTableInfo();
-                                                    locationInstance.TableInfo.Add(metricTableInfoInstance);
-                                                    
-                                                    JToken tableNameValue = tableInfoValue["tableName"];
-                                                    if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
+                                                    string tableEndpointInstance = ((string)tableEndpointValue);
+                                                    locationInstance.TableEndpoint = tableEndpointInstance;
+                                                }
+                                                
+                                                JToken tableInfoArray = locationValue["tableInfo"];
+                                                if (tableInfoArray != null && tableInfoArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken tableInfoValue in ((JArray)tableInfoArray))
                                                     {
-                                                        string tableNameInstance = ((string)tableNameValue);
-                                                        metricTableInfoInstance.TableName = tableNameInstance;
+                                                        MetricTableInfo metricTableInfoInstance = new MetricTableInfo();
+                                                        locationInstance.TableInfo.Add(metricTableInfoInstance);
+                                                        
+                                                        JToken tableNameValue = tableInfoValue["tableName"];
+                                                        if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tableNameInstance = ((string)tableNameValue);
+                                                            metricTableInfoInstance.TableName = tableNameInstance;
+                                                        }
+                                                        
+                                                        JToken startTimeValue = tableInfoValue["startTime"];
+                                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                            metricTableInfoInstance.StartTime = startTimeInstance;
+                                                        }
+                                                        
+                                                        JToken endTimeValue = tableInfoValue["endTime"];
+                                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                                            metricTableInfoInstance.EndTime = endTimeInstance;
+                                                        }
+                                                        
+                                                        JToken sasTokenValue = tableInfoValue["sasToken"];
+                                                        if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sasTokenInstance = ((string)sasTokenValue);
+                                                            metricTableInfoInstance.SasToken = sasTokenInstance;
+                                                        }
+                                                        
+                                                        JToken sasTokenExpirationTimeValue = tableInfoValue["sasTokenExpirationTime"];
+                                                        if (sasTokenExpirationTimeValue != null && sasTokenExpirationTimeValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime sasTokenExpirationTimeInstance = ((DateTime)sasTokenExpirationTimeValue);
+                                                            metricTableInfoInstance.SasTokenExpirationTime = sasTokenExpirationTimeInstance;
+                                                        }
                                                     }
-                                                    
-                                                    JToken startTimeValue = tableInfoValue["startTime"];
-                                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                                        metricTableInfoInstance.StartTime = startTimeInstance;
-                                                    }
-                                                    
-                                                    JToken endTimeValue = tableInfoValue["endTime"];
-                                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                                        metricTableInfoInstance.EndTime = endTimeInstance;
-                                                    }
-                                                    
-                                                    JToken sasTokenValue = tableInfoValue["sasToken"];
-                                                    if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
-                                                    {
-                                                        string sasTokenInstance = ((string)sasTokenValue);
-                                                        metricTableInfoInstance.SasToken = sasTokenInstance;
-                                                    }
-                                                    
-                                                    JToken sasTokenExpirationTimeValue = tableInfoValue["sasTokenExpirationTime"];
-                                                    if (sasTokenExpirationTimeValue != null && sasTokenExpirationTimeValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime sasTokenExpirationTimeInstance = ((DateTime)sasTokenExpirationTimeValue);
-                                                        metricTableInfoInstance.SasTokenExpirationTime = sasTokenExpirationTimeInstance;
-                                                    }
+                                                }
+                                                
+                                                JToken partitionKeyValue = locationValue["partitionKey"];
+                                                if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance = ((string)partitionKeyValue);
+                                                    locationInstance.PartitionKey = partitionKeyInstance;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property.Name);
+                                            string propertiesValue = ((string)property.Value);
+                                            metricDefinitionInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                    
+                                    JToken dimensionsArray = valueValue["dimensions"];
+                                    if (dimensionsArray != null && dimensionsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken dimensionsValue in ((JArray)dimensionsArray))
+                                        {
+                                            Dimension dimensionInstance = new Dimension();
+                                            metricDefinitionInstance.Dimensions.Add(dimensionInstance);
+                                            
+                                            JToken nameValue2 = dimensionsValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                LocalizableString nameInstance2 = new LocalizableString();
+                                                dimensionInstance.Name = nameInstance2;
+                                                
+                                                JToken valueValue3 = nameValue2["value"];
+                                                if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                                {
+                                                    string valueInstance2 = ((string)valueValue3);
+                                                    nameInstance2.Value = valueInstance2;
+                                                }
+                                                
+                                                JToken localizedValueValue2 = nameValue2["localizedValue"];
+                                                if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string localizedValueInstance2 = ((string)localizedValueValue2);
+                                                    nameInstance2.LocalizedValue = localizedValueInstance2;
                                                 }
                                             }
                                             
-                                            JToken partitionKeyValue = locationValue["partitionKey"];
-                                            if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                            JToken valuesArray = dimensionsValue["values"];
+                                            if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                                             {
-                                                string partitionKeyInstance = ((string)partitionKeyValue);
-                                                locationInstance.PartitionKey = partitionKeyInstance;
+                                                foreach (JToken valuesValue in ((JArray)valuesArray))
+                                                {
+                                                    LocalizableString localizableStringInstance = new LocalizableString();
+                                                    dimensionInstance.Values.Add(localizableStringInstance);
+                                                    
+                                                    JToken valueValue4 = valuesValue["value"];
+                                                    if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string valueInstance3 = ((string)valueValue4);
+                                                        localizableStringInstance.Value = valueInstance3;
+                                                    }
+                                                    
+                                                    JToken localizedValueValue3 = valuesValue["localizedValue"];
+                                                    if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string localizedValueInstance3 = ((string)localizedValueValue3);
+                                                        localizableStringInstance.LocalizedValue = localizedValueInstance3;
+                                                    }
+                                                }
                                             }
                                         }
-                                    }
-                                }
-                                
-                                JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
-                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in propertiesSequenceElement)
-                                    {
-                                        string propertiesKey = ((string)property.Name);
-                                        string propertiesValue = ((string)property.Value);
-                                        metricDefinitionInstance.Properties.Add(propertiesKey, propertiesValue);
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -342,7 +412,7 @@ namespace Microsoft.Azure.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

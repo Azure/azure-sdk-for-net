@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -300,6 +300,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._publisherName; }
             set { this._publisherName = value; }
+        }
+        
+        private string _regions;
+        
+        /// <summary>
+        /// Optional. String property containing the name of the regions
+        /// required for the slice.
+        /// </summary>
+        public string Regions
+        {
+            get { return this._regions; }
+            set { this._regions = value; }
         }
         
         private bool? _replicationCompleted;

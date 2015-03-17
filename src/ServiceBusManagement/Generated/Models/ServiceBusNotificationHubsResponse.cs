@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class ServiceBusNotificationHubsResponse : OperationResponse, IEnumerable<ServiceBusNotificationHub>
+    public partial class ServiceBusNotificationHubsResponse : AzureOperationResponse, IEnumerable<ServiceBusNotificationHub>
     {
         private IList<ServiceBusNotificationHub> _notificationHubs;
         

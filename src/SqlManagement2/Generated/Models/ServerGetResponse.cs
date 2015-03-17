@@ -21,21 +21,21 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Database request.
+    /// Represents the response to a Get Azure Sql Database Server request.
     /// </summary>
-    public partial class ServerGetResponse : OperationResponse
+    public partial class ServerGetResponse : AzureOperationResponse
     {
         private Server _server;
         
         /// <summary>
         /// Optional. Gets or sets the object representing the Azure Sql
-        /// Database server.
+        /// Database Server.
         /// </summary>
         public Server Server
         {

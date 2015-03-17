@@ -26,14 +26,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -99,13 +98,37 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
             }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException("tableName");
+            }
+            if (tableName != null && tableName.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("tableName");
+            }
+            if (Regex.IsMatch(tableName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("tableName");
             }
             if (dataSliceRangeStartTime == null)
             {
@@ -117,25 +140,42 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("tableName", tableName);
                 tracingParameters.Add("dataSliceRangeStartTime", dataSliceRangeStartTime);
                 tracingParameters.Add("dataSliceRangeEndTime", dataSliceRangeEndTime);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/tables/" + tableName.Trim() + "/slices?";
-            url = url + "start=" + Uri.EscapeDataString(dataSliceRangeStartTime.Trim());
-            url = url + "&end=" + Uri.EscapeDataString(dataSliceRangeEndTime.Trim());
-            url = url + "&api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/tables/";
+            url = url + Uri.EscapeDataString(tableName);
+            url = url + "/slices";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("start=" + Uri.EscapeDataString(dataSliceRangeStartTime));
+            queryParameters.Add("end=" + Uri.EscapeDataString(dataSliceRangeEndTime));
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -170,13 +210,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -185,7 +225,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -193,77 +233,80 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     DataSliceListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DataSliceListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DataSliceListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                DataSlice dataSliceInstance = new DataSlice();
-                                result.DataSlices.Add(dataSliceInstance);
-                                
-                                JToken startValue = valueValue["start"];
-                                if (startValue != null && startValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    DateTime startInstance = ((DateTime)startValue);
-                                    dataSliceInstance.Start = startInstance;
+                                    DataSlice dataSliceInstance = new DataSlice();
+                                    result.DataSlices.Add(dataSliceInstance);
+                                    
+                                    JToken startValue = valueValue["start"];
+                                    if (startValue != null && startValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startInstance = ((DateTime)startValue);
+                                        dataSliceInstance.Start = startInstance;
+                                    }
+                                    
+                                    JToken endValue = valueValue["end"];
+                                    if (endValue != null && endValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endInstance = ((DateTime)endValue);
+                                        dataSliceInstance.End = endInstance;
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        dataSliceInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken latencyStatusValue = valueValue["latencyStatus"];
+                                    if (latencyStatusValue != null && latencyStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string latencyStatusInstance = ((string)latencyStatusValue);
+                                        dataSliceInstance.LatencyStatus = latencyStatusInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = valueValue["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        dataSliceInstance.RetryCount = retryCountInstance;
+                                    }
+                                    
+                                    JToken longRetryCountValue = valueValue["longRetryCount"];
+                                    if (longRetryCountValue != null && longRetryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int longRetryCountInstance = ((int)longRetryCountValue);
+                                        dataSliceInstance.LongRetryCount = longRetryCountInstance;
+                                    }
                                 }
-                                
-                                JToken endValue = valueValue["end"];
-                                if (endValue != null && endValue.Type != JTokenType.Null)
-                                {
-                                    DateTime endInstance = ((DateTime)endValue);
-                                    dataSliceInstance.End = endInstance;
-                                }
-                                
-                                JToken statusValue = valueValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    string statusInstance = ((string)statusValue);
-                                    dataSliceInstance.Status = statusInstance;
-                                }
-                                
-                                JToken latencyStatusValue = valueValue["latencyStatus"];
-                                if (latencyStatusValue != null && latencyStatusValue.Type != JTokenType.Null)
-                                {
-                                    string latencyStatusInstance = ((string)latencyStatusValue);
-                                    dataSliceInstance.LatencyStatus = latencyStatusInstance;
-                                }
-                                
-                                JToken retryCountValue = valueValue["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    dataSliceInstance.RetryCount = retryCountInstance;
-                                }
-                                
-                                JToken longRetryCountValue = valueValue["longRetryCount"];
-                                if (longRetryCountValue != null && longRetryCountValue.Type != JTokenType.Null)
-                                {
-                                    int longRetryCountInstance = ((int)longRetryCountValue);
-                                    dataSliceInstance.LongRetryCount = longRetryCountInstance;
-                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
                             }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -272,7 +315,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -315,18 +358,20 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextLink", nextLink);
-                Tracing.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = nextLink.Trim();
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -349,13 +394,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -364,7 +409,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -372,77 +417,80 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     DataSliceListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DataSliceListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DataSliceListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                DataSlice dataSliceInstance = new DataSlice();
-                                result.DataSlices.Add(dataSliceInstance);
-                                
-                                JToken startValue = valueValue["start"];
-                                if (startValue != null && startValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    DateTime startInstance = ((DateTime)startValue);
-                                    dataSliceInstance.Start = startInstance;
+                                    DataSlice dataSliceInstance = new DataSlice();
+                                    result.DataSlices.Add(dataSliceInstance);
+                                    
+                                    JToken startValue = valueValue["start"];
+                                    if (startValue != null && startValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startInstance = ((DateTime)startValue);
+                                        dataSliceInstance.Start = startInstance;
+                                    }
+                                    
+                                    JToken endValue = valueValue["end"];
+                                    if (endValue != null && endValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endInstance = ((DateTime)endValue);
+                                        dataSliceInstance.End = endInstance;
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        dataSliceInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken latencyStatusValue = valueValue["latencyStatus"];
+                                    if (latencyStatusValue != null && latencyStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string latencyStatusInstance = ((string)latencyStatusValue);
+                                        dataSliceInstance.LatencyStatus = latencyStatusInstance;
+                                    }
+                                    
+                                    JToken retryCountValue = valueValue["retryCount"];
+                                    if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int retryCountInstance = ((int)retryCountValue);
+                                        dataSliceInstance.RetryCount = retryCountInstance;
+                                    }
+                                    
+                                    JToken longRetryCountValue = valueValue["longRetryCount"];
+                                    if (longRetryCountValue != null && longRetryCountValue.Type != JTokenType.Null)
+                                    {
+                                        int longRetryCountInstance = ((int)longRetryCountValue);
+                                        dataSliceInstance.LongRetryCount = longRetryCountInstance;
+                                    }
                                 }
-                                
-                                JToken endValue = valueValue["end"];
-                                if (endValue != null && endValue.Type != JTokenType.Null)
-                                {
-                                    DateTime endInstance = ((DateTime)endValue);
-                                    dataSliceInstance.End = endInstance;
-                                }
-                                
-                                JToken statusValue = valueValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    string statusInstance = ((string)statusValue);
-                                    dataSliceInstance.Status = statusInstance;
-                                }
-                                
-                                JToken latencyStatusValue = valueValue["latencyStatus"];
-                                if (latencyStatusValue != null && latencyStatusValue.Type != JTokenType.Null)
-                                {
-                                    string latencyStatusInstance = ((string)latencyStatusValue);
-                                    dataSliceInstance.LatencyStatus = latencyStatusInstance;
-                                }
-                                
-                                JToken retryCountValue = valueValue["retryCount"];
-                                if (retryCountValue != null && retryCountValue.Type != JTokenType.Null)
-                                {
-                                    int retryCountInstance = ((int)retryCountValue);
-                                    dataSliceInstance.RetryCount = retryCountInstance;
-                                }
-                                
-                                JToken longRetryCountValue = valueValue["longRetryCount"];
-                                if (longRetryCountValue != null && longRetryCountValue.Type != JTokenType.Null)
-                                {
-                                    int longRetryCountInstance = ((int)longRetryCountValue);
-                                    dataSliceInstance.LongRetryCount = longRetryCountInstance;
-                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
                             }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -451,7 +499,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -494,20 +542,44 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
             }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException("tableName");
+            }
+            if (tableName != null && tableName.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("tableName");
+            }
+            if (Regex.IsMatch(tableName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("tableName");
             }
             if (parameters == null)
             {
@@ -515,30 +587,47 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("tableName", tableName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "SetStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "SetStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/tables/" + tableName.Trim() + "/slices/setstatus?";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/tables/";
+            url = url + Uri.EscapeDataString(tableName);
+            url = url + "/slices/setstatus";
+            List<string> queryParameters = new List<string>();
             if (parameters.DataSliceRangeStartTime != null)
             {
-                url = url + "start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime != null ? parameters.DataSliceRangeStartTime.Trim() : "");
+                queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime));
             }
             if (parameters.DataSliceRangeEndTime != null)
             {
-                url = url + "&end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime != null ? parameters.DataSliceRangeEndTime.Trim() : "");
+                queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             }
-            url = url + "&api-version=2014-12-01-preview";
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -584,7 +673,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     dataSliceSetStatusParametersValue["UpdateType"] = parameters.UpdateType;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -594,13 +683,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -609,14 +698,15 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -625,7 +715,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

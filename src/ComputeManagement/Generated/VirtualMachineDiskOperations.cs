@@ -30,9 +30,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157188.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineDiskOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations
+    internal partial class VirtualMachineDiskOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineDiskOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineDiskOperations
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginCreatingDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -140,21 +140,33 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("roleName", roleName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingDataDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingDataDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roles/" + roleName.Trim() + "/DataDisks";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roles/";
+            url = url + Uri.EscapeDataString(roleName);
+            url = url + "/DataDisks";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -240,13 +252,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -255,14 +267,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -271,7 +284,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -321,7 +334,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -338,25 +351,43 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("roleName", roleName);
                 tracingParameters.Add("logicalUnitNumber", logicalUnitNumber);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
-                Tracing.Enter(invocationId, this, "BeginDeletingDataDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingDataDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roles/" + roleName.Trim() + "/DataDisks/" + logicalUnitNumber + "?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roles/";
+            url = url + Uri.EscapeDataString(roleName);
+            url = url + "/DataDisks/";
+            url = url + Uri.EscapeDataString(logicalUnitNumber.ToString());
+            List<string> queryParameters = new List<string>();
             if (deleteFromStorage == true)
             {
-                url = url + "comp=media";
+                queryParameters.Add("comp=media");
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -392,13 +423,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -407,14 +438,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -423,7 +455,202 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> BeginUpdatingDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Label == null)
+            {
+                throw new ArgumentNullException("parameters.Label");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdatingDiskAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks/";
+            url = url + Uri.EscapeDataString(name);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement diskElement = new XElement(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(diskElement);
+                
+                if (parameters.HasOperatingSystem != null)
+                {
+                    XElement hasOperatingSystemElement = new XElement(XName.Get("HasOperatingSystem", "http://schemas.microsoft.com/windowsazure"));
+                    hasOperatingSystemElement.Value = parameters.HasOperatingSystem.ToString().ToLower();
+                    diskElement.Add(hasOperatingSystemElement);
+                }
+                
+                if (parameters.OperatingSystemType != null)
+                {
+                    XElement osElement = new XElement(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                    osElement.Value = parameters.OperatingSystemType;
+                    diskElement.Add(osElement);
+                }
+                
+                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                labelElement.Value = parameters.Label;
+                diskElement.Add(labelElement);
+                
+                if (parameters.MediaLinkUri != null)
+                {
+                    XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                    mediaLinkElement.Value = parameters.MediaLinkUri.AbsoluteUri;
+                    diskElement.Add(mediaLinkElement);
+                }
+                
+                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                nameElement.Value = parameters.Name;
+                diskElement.Add(nameElement);
+                
+                if (parameters.ResizedSizeInGB != null)
+                {
+                    XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                    resizedSizeInGBElement.Value = parameters.ResizedSizeInGB.ToString();
+                    diskElement.Add(resizedSizeInGBElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -493,88 +720,75 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("roleName", roleName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateDataDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateDataDiskAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineDisks.BeginCreatingDataDiskAsync(serviceName, deploymentName, roleName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineDisks.BeginCreatingDataDiskAsync(serviceName, deploymentName, roleName, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -593,7 +807,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskCreateResponse> CreateDiskAsync(VirtualMachineDiskCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<VirtualMachineDiskCreateResponse> CreateDiskAsync(VirtualMachineDiskCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -614,18 +828,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/disks";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -690,13 +910,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -705,7 +925,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -713,113 +933,116 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineDiskCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskCreateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
-                    if (diskElement2 != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement osElement2 = diskElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement2 != null)
-                        {
-                            string osInstance = osElement2.Value;
-                            result.OperatingSystem = osInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineDiskCreateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement labelElement2 = diskElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement2 != null)
+                        XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
+                        if (diskElement2 != null)
                         {
-                            string labelInstance = labelElement2.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement affinityGroupElement = diskElement2.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
-                        {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
-                        }
-                        
-                        XElement locationElement = diskElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
-                        {
-                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement2 = diskElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement2 != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement2 = diskElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement sourceImageNameElement = diskElement2.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceImageNameElement != null)
-                        {
-                            string sourceImageNameInstance = sourceImageNameElement.Value;
-                            result.SourceImageName = sourceImageNameInstance;
-                        }
-                        
-                        XElement attachedToElement = diskElement2.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
-                        if (attachedToElement != null)
-                        {
-                            VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails();
-                            result.UsageDetails = attachedToInstance;
-                            
-                            XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostedServiceNameElement != null)
+                            XElement osElement2 = diskElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement2 != null)
                             {
-                                string hostedServiceNameInstance = hostedServiceNameElement.Value;
-                                attachedToInstance.HostedServiceName = hostedServiceNameInstance;
+                                string osInstance = osElement2.Value;
+                                result.OperatingSystem = osInstance;
                             }
                             
-                            XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                            if (deploymentNameElement != null)
+                            XElement labelElement2 = diskElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement2 != null)
                             {
-                                string deploymentNameInstance = deploymentNameElement.Value;
-                                attachedToInstance.DeploymentName = deploymentNameInstance;
+                                string labelInstance = labelElement2.Value;
+                                result.Label = labelInstance;
                             }
                             
-                            XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                            if (roleNameElement != null)
+                            XElement affinityGroupElement = diskElement2.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (affinityGroupElement != null)
                             {
-                                string roleNameInstance = roleNameElement.Value;
-                                attachedToInstance.RoleName = roleNameInstance;
+                                string affinityGroupInstance = affinityGroupElement.Value;
+                                result.AffinityGroup = affinityGroupInstance;
+                            }
+                            
+                            XElement locationElement = diskElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalDiskSizeInGBElement != null)
+                            {
+                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement2 = diskElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement2 != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement2 = diskElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance = nameElement2.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement sourceImageNameElement = diskElement2.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
+                            if (sourceImageNameElement != null)
+                            {
+                                string sourceImageNameInstance = sourceImageNameElement.Value;
+                                result.SourceImageName = sourceImageNameInstance;
+                            }
+                            
+                            XElement attachedToElement = diskElement2.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
+                            if (attachedToElement != null)
+                            {
+                                VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails();
+                                result.UsageDetails = attachedToInstance;
+                                
+                                XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (hostedServiceNameElement != null)
+                                {
+                                    string hostedServiceNameInstance = hostedServiceNameElement.Value;
+                                    attachedToInstance.HostedServiceName = hostedServiceNameInstance;
+                                }
+                                
+                                XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                                if (deploymentNameElement != null)
+                                {
+                                    string deploymentNameInstance = deploymentNameElement.Value;
+                                    attachedToInstance.DeploymentName = deploymentNameInstance;
+                                }
+                                
+                                XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
+                                if (roleNameElement != null)
+                                {
+                                    string roleNameInstance = roleNameElement.Value;
+                                    attachedToInstance.RoleName = roleNameInstance;
+                                }
+                            }
+                            
+                            XElement isPremiumElement = diskElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement iOTypeElement = diskElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
                             }
                         }
                         
-                        XElement isPremiumElement = diskElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement iOTypeElement = diskElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                        if (iOTypeElement != null)
-                        {
-                            string iOTypeInstance = iOTypeElement.Value;
-                            result.IOType = iOTypeInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -828,7 +1051,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -885,89 +1108,76 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("roleName", roleName);
                 tracingParameters.Add("logicalUnitNumber", logicalUnitNumber);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
-                Tracing.Enter(invocationId, this, "DeleteDataDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteDataDiskAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineDisks.BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineDisks.BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -990,7 +1200,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteDiskAsync(string name, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteDiskAsync(string name, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (name == null)
@@ -999,22 +1209,34 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
-                Tracing.Enter(invocationId, this, "DeleteDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/disks/" + name.Trim() + "?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks/";
+            url = url + Uri.EscapeDataString(name);
+            List<string> queryParameters = new List<string>();
             if (deleteFromStorage == true)
             {
-                url = url + "comp=media";
+                queryParameters.Add("comp=media");
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1050,13 +1272,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1065,14 +1287,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1081,7 +1304,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1126,7 +1349,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Data Disk operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDataDiskGetResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken)
+        public async Task<VirtualMachineDataDiskGetResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1143,21 +1366,34 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("roleName", roleName);
                 tracingParameters.Add("logicalUnitNumber", logicalUnitNumber);
-                Tracing.Enter(invocationId, this, "GetDataDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetDataDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roles/" + roleName.Trim() + "/DataDisks/" + logicalUnitNumber;
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roles/";
+            url = url + Uri.EscapeDataString(roleName);
+            url = url + "/DataDisks/";
+            url = url + Uri.EscapeDataString(logicalUnitNumber.ToString());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1192,13 +1428,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1207,7 +1443,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1215,64 +1451,67 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineDataDiskGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDataDiskGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement dataVirtualHardDiskElement = responseDoc.Element(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
-                    if (dataVirtualHardDiskElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement hostCachingElement = dataVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                        if (hostCachingElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineDataDiskGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement dataVirtualHardDiskElement = responseDoc.Element(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
+                        if (dataVirtualHardDiskElement != null)
                         {
-                            string hostCachingInstance = hostCachingElement.Value;
-                            result.HostCaching = hostCachingInstance;
+                            XElement hostCachingElement = dataVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
+                            if (hostCachingElement != null)
+                            {
+                                string hostCachingInstance = hostCachingElement.Value;
+                                result.HostCaching = hostCachingInstance;
+                            }
+                            
+                            XElement diskLabelElement = dataVirtualHardDiskElement.Element(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
+                            if (diskLabelElement != null)
+                            {
+                                string diskLabelInstance = diskLabelElement.Value;
+                                result.Label = diskLabelInstance;
+                            }
+                            
+                            XElement diskNameElement = dataVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
+                            if (diskNameElement != null)
+                            {
+                                string diskNameInstance = diskNameElement.Value;
+                                result.Name = diskNameInstance;
+                            }
+                            
+                            XElement lunElement = dataVirtualHardDiskElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
+                            if (lunElement != null && !string.IsNullOrEmpty(lunElement.Value))
+                            {
+                                int lunInstance = int.Parse(lunElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalUnitNumber = lunInstance;
+                            }
+                            
+                            XElement logicalDiskSizeInGBElement = dataVirtualHardDiskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalDiskSizeInGBElement != null)
+                            {
+                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement = dataVirtualHardDiskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement iOTypeElement = dataVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
+                            }
                         }
                         
-                        XElement diskLabelElement = dataVirtualHardDiskElement.Element(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                        if (diskLabelElement != null)
-                        {
-                            string diskLabelInstance = diskLabelElement.Value;
-                            result.Label = diskLabelInstance;
-                        }
-                        
-                        XElement diskNameElement = dataVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                        if (diskNameElement != null)
-                        {
-                            string diskNameInstance = diskNameElement.Value;
-                            result.Name = diskNameInstance;
-                        }
-                        
-                        XElement lunElement = dataVirtualHardDiskElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
-                        if (lunElement != null && string.IsNullOrEmpty(lunElement.Value) == false)
-                        {
-                            int lunInstance = int.Parse(lunElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalUnitNumber = lunInstance;
-                        }
-                        
-                        XElement logicalDiskSizeInGBElement = dataVirtualHardDiskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
-                        {
-                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement = dataVirtualHardDiskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement iOTypeElement = dataVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                        if (iOTypeElement != null)
-                        {
-                            string iOTypeInstance = iOTypeElement.Value;
-                            result.IOType = iOTypeInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1281,7 +1520,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1318,7 +1557,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskGetResponse> GetDiskAsync(string name, CancellationToken cancellationToken)
+        public async Task<VirtualMachineDiskGetResponse> GetDiskAsync(string name, CancellationToken cancellationToken)
         {
             // Validate
             if (name == null)
@@ -1327,18 +1566,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
-                Tracing.Enter(invocationId, this, "GetDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/disks/" + name.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks/";
+            url = url + Uri.EscapeDataString(name);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1373,13 +1619,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1388,7 +1634,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1396,120 +1642,123 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineDiskGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement diskElement = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
-                    if (diskElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement affinityGroupElement = diskElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
-                        {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineDiskGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement locationElement = diskElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        XElement diskElement = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
+                        if (diskElement != null)
                         {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement labelElement = diskElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
-                        {
-                            string labelInstance = labelElement.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement logicalDiskSizeInGBElement = diskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
-                        {
-                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement = diskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement = diskElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement osElement = diskElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement != null)
-                        {
-                            string osInstance = osElement.Value;
-                            result.OperatingSystemType = osInstance;
-                        }
-                        
-                        XElement sourceImageNameElement = diskElement.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceImageNameElement != null)
-                        {
-                            string sourceImageNameInstance = sourceImageNameElement.Value;
-                            result.SourceImageName = sourceImageNameInstance;
-                        }
-                        
-                        XElement attachedToElement = diskElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
-                        if (attachedToElement != null)
-                        {
-                            VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails();
-                            result.UsageDetails = attachedToInstance;
-                            
-                            XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostedServiceNameElement != null)
+                            XElement affinityGroupElement = diskElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (affinityGroupElement != null)
                             {
-                                string hostedServiceNameInstance = hostedServiceNameElement.Value;
-                                attachedToInstance.HostedServiceName = hostedServiceNameInstance;
+                                string affinityGroupInstance = affinityGroupElement.Value;
+                                result.AffinityGroup = affinityGroupInstance;
                             }
                             
-                            XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                            if (deploymentNameElement != null)
+                            XElement locationElement = diskElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
                             {
-                                string deploymentNameInstance = deploymentNameElement.Value;
-                                attachedToInstance.DeploymentName = deploymentNameInstance;
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
                             }
                             
-                            XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                            if (roleNameElement != null)
+                            XElement labelElement = diskElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
                             {
-                                string roleNameInstance = roleNameElement.Value;
-                                attachedToInstance.RoleName = roleNameInstance;
+                                string labelInstance = labelElement.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement logicalDiskSizeInGBElement = diskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalDiskSizeInGBElement != null)
+                            {
+                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement = diskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement = diskElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement osElement = diskElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement != null)
+                            {
+                                string osInstance = osElement.Value;
+                                result.OperatingSystemType = osInstance;
+                            }
+                            
+                            XElement sourceImageNameElement = diskElement.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
+                            if (sourceImageNameElement != null)
+                            {
+                                string sourceImageNameInstance = sourceImageNameElement.Value;
+                                result.SourceImageName = sourceImageNameInstance;
+                            }
+                            
+                            XElement attachedToElement = diskElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
+                            if (attachedToElement != null)
+                            {
+                                VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails();
+                                result.UsageDetails = attachedToInstance;
+                                
+                                XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (hostedServiceNameElement != null)
+                                {
+                                    string hostedServiceNameInstance = hostedServiceNameElement.Value;
+                                    attachedToInstance.HostedServiceName = hostedServiceNameInstance;
+                                }
+                                
+                                XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                                if (deploymentNameElement != null)
+                                {
+                                    string deploymentNameInstance = deploymentNameElement.Value;
+                                    attachedToInstance.DeploymentName = deploymentNameInstance;
+                                }
+                                
+                                XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
+                                if (roleNameElement != null)
+                                {
+                                    string roleNameInstance = roleNameElement.Value;
+                                    attachedToInstance.RoleName = roleNameInstance;
+                                }
+                            }
+                            
+                            XElement isCorruptedElement = diskElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
+                            if (isCorruptedElement != null && !string.IsNullOrEmpty(isCorruptedElement.Value))
+                            {
+                                bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
+                                result.IsCorrupted = isCorruptedInstance;
+                            }
+                            
+                            XElement isPremiumElement = diskElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement iOTypeElement = diskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
                             }
                         }
                         
-                        XElement isCorruptedElement = diskElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
-                        if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
-                        {
-                            bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
-                            result.IsCorrupted = isCorruptedInstance;
-                        }
-                        
-                        XElement isPremiumElement = diskElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement iOTypeElement = diskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                        if (iOTypeElement != null)
-                        {
-                            string iOTypeInstance = iOTypeElement.Value;
-                            result.IOType = iOTypeInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1518,7 +1767,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1551,22 +1800,28 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Disks operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskListResponse> ListDisksAsync(CancellationToken cancellationToken)
+        public async Task<VirtualMachineDiskListResponse> ListDisksAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListDisksAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListDisksAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/disks";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1601,13 +1856,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1616,7 +1871,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1624,126 +1879,129 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineDiskListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement disksSequenceElement = responseDoc.Element(XName.Get("Disks", "http://schemas.microsoft.com/windowsazure"));
-                    if (disksSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement disksElement in disksSequenceElement.Elements(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineDiskListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement disksSequenceElement = responseDoc.Element(XName.Get("Disks", "http://schemas.microsoft.com/windowsazure"));
+                        if (disksSequenceElement != null)
                         {
-                            VirtualMachineDiskListResponse.VirtualMachineDisk diskInstance = new VirtualMachineDiskListResponse.VirtualMachineDisk();
-                            result.Disks.Add(diskInstance);
-                            
-                            XElement affinityGroupElement = disksElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null)
+                            foreach (XElement disksElement in disksSequenceElement.Elements(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string affinityGroupInstance = affinityGroupElement.Value;
-                                diskInstance.AffinityGroup = affinityGroupInstance;
-                            }
-                            
-                            XElement locationElement = disksElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                diskInstance.Location = locationInstance;
-                            }
-                            
-                            XElement labelElement = disksElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                diskInstance.Label = labelInstance;
-                            }
-                            
-                            XElement logicalDiskSizeInGBElement = disksElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                            if (logicalDiskSizeInGBElement != null)
-                            {
-                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                                diskInstance.LogicalSizeInGB = logicalDiskSizeInGBInstance;
-                            }
-                            
-                            XElement mediaLinkElement = disksElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (mediaLinkElement != null)
-                            {
-                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                                diskInstance.MediaLinkUri = mediaLinkInstance;
-                            }
-                            
-                            XElement nameElement = disksElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                diskInstance.Name = nameInstance;
-                            }
-                            
-                            XElement osElement = disksElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                            if (osElement != null)
-                            {
-                                string osInstance = osElement.Value;
-                                diskInstance.OperatingSystemType = osInstance;
-                            }
-                            
-                            XElement sourceImageNameElement = disksElement.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
-                            if (sourceImageNameElement != null)
-                            {
-                                string sourceImageNameInstance = sourceImageNameElement.Value;
-                                diskInstance.SourceImageName = sourceImageNameInstance;
-                            }
-                            
-                            XElement attachedToElement = disksElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
-                            if (attachedToElement != null)
-                            {
-                                VirtualMachineDiskListResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskListResponse.VirtualMachineDiskUsageDetails();
-                                diskInstance.UsageDetails = attachedToInstance;
+                                VirtualMachineDiskListResponse.VirtualMachineDisk diskInstance = new VirtualMachineDiskListResponse.VirtualMachineDisk();
+                                result.Disks.Add(diskInstance);
                                 
-                                XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (hostedServiceNameElement != null)
+                                XElement affinityGroupElement = disksElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                if (affinityGroupElement != null)
                                 {
-                                    string hostedServiceNameInstance = hostedServiceNameElement.Value;
-                                    attachedToInstance.HostedServiceName = hostedServiceNameInstance;
+                                    string affinityGroupInstance = affinityGroupElement.Value;
+                                    diskInstance.AffinityGroup = affinityGroupInstance;
                                 }
                                 
-                                XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                                if (deploymentNameElement != null)
+                                XElement locationElement = disksElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
                                 {
-                                    string deploymentNameInstance = deploymentNameElement.Value;
-                                    attachedToInstance.DeploymentName = deploymentNameInstance;
+                                    string locationInstance = locationElement.Value;
+                                    diskInstance.Location = locationInstance;
                                 }
                                 
-                                XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                                if (roleNameElement != null)
+                                XElement labelElement = disksElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
                                 {
-                                    string roleNameInstance = roleNameElement.Value;
-                                    attachedToInstance.RoleName = roleNameInstance;
+                                    string labelInstance = labelElement.Value;
+                                    diskInstance.Label = labelInstance;
                                 }
-                            }
-                            
-                            XElement isCorruptedElement = disksElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
-                            if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
-                            {
-                                bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
-                                diskInstance.IsCorrupted = isCorruptedInstance;
-                            }
-                            
-                            XElement isPremiumElement = disksElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                            if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                            {
-                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                                diskInstance.IsPremium = isPremiumInstance;
-                            }
-                            
-                            XElement iOTypeElement = disksElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                            if (iOTypeElement != null)
-                            {
-                                string iOTypeInstance = iOTypeElement.Value;
-                                diskInstance.IOType = iOTypeInstance;
+                                
+                                XElement logicalDiskSizeInGBElement = disksElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                if (logicalDiskSizeInGBElement != null)
+                                {
+                                    int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                    diskInstance.LogicalSizeInGB = logicalDiskSizeInGBInstance;
+                                }
+                                
+                                XElement mediaLinkElement = disksElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (mediaLinkElement != null)
+                                {
+                                    Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                    diskInstance.MediaLinkUri = mediaLinkInstance;
+                                }
+                                
+                                XElement nameElement = disksElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    diskInstance.Name = nameInstance;
+                                }
+                                
+                                XElement osElement = disksElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                                if (osElement != null)
+                                {
+                                    string osInstance = osElement.Value;
+                                    diskInstance.OperatingSystemType = osInstance;
+                                }
+                                
+                                XElement sourceImageNameElement = disksElement.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
+                                if (sourceImageNameElement != null)
+                                {
+                                    string sourceImageNameInstance = sourceImageNameElement.Value;
+                                    diskInstance.SourceImageName = sourceImageNameInstance;
+                                }
+                                
+                                XElement attachedToElement = disksElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
+                                if (attachedToElement != null)
+                                {
+                                    VirtualMachineDiskListResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskListResponse.VirtualMachineDiskUsageDetails();
+                                    diskInstance.UsageDetails = attachedToInstance;
+                                    
+                                    XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (hostedServiceNameElement != null)
+                                    {
+                                        string hostedServiceNameInstance = hostedServiceNameElement.Value;
+                                        attachedToInstance.HostedServiceName = hostedServiceNameInstance;
+                                    }
+                                    
+                                    XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (deploymentNameElement != null)
+                                    {
+                                        string deploymentNameInstance = deploymentNameElement.Value;
+                                        attachedToInstance.DeploymentName = deploymentNameInstance;
+                                    }
+                                    
+                                    XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (roleNameElement != null)
+                                    {
+                                        string roleNameInstance = roleNameElement.Value;
+                                        attachedToInstance.RoleName = roleNameInstance;
+                                    }
+                                }
+                                
+                                XElement isCorruptedElement = disksElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
+                                if (isCorruptedElement != null && !string.IsNullOrEmpty(isCorruptedElement.Value))
+                                {
+                                    bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
+                                    diskInstance.IsCorrupted = isCorruptedInstance;
+                                }
+                                
+                                XElement isPremiumElement = disksElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                                if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                                {
+                                    bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                    diskInstance.IsPremium = isPremiumInstance;
+                                }
+                                
+                                XElement iOTypeElement = disksElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                if (iOTypeElement != null)
+                                {
+                                    string iOTypeInstance = iOTypeElement.Value;
+                                    diskInstance.IOType = iOTypeInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1752,7 +2010,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1802,7 +2060,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1831,22 +2089,35 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("roleName", roleName);
                 tracingParameters.Add("logicalUnitNumber", logicalUnitNumber);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateDataDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateDataDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roles/" + roleName.Trim() + "/DataDisks/" + logicalUnitNumber;
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roles/";
+            url = url + Uri.EscapeDataString(roleName);
+            url = url + "/DataDisks/";
+            url = url + Uri.EscapeDataString(logicalUnitNumber.ToString());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1925,13 +2196,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1940,14 +2211,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1956,7 +2228,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1996,7 +2268,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskUpdateResponse> UpdateDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<VirtualMachineDiskUpdateResponse> UpdateDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (name == null)
@@ -2017,19 +2289,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateDiskAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/disks/" + name.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks/";
+            url = url + Uri.EscapeDataString(name);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2094,6 +2373,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 nameElement.Value = parameters.Name;
                 diskElement.Add(nameElement);
                 
+                if (parameters.ResizedSizeInGB != null)
+                {
+                    XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                    resizedSizeInGBElement.Value = parameters.ResizedSizeInGB.ToString();
+                    diskElement.Add(resizedSizeInGBElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -2104,13 +2390,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2119,7 +2405,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2127,78 +2413,81 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineDiskUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskUpdateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
-                    if (diskElement2 != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement osElement2 = diskElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement2 != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineDiskUpdateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
+                        if (diskElement2 != null)
                         {
-                            string osInstance = osElement2.Value;
-                            result.OperatingSystem = osInstance;
+                            XElement osElement2 = diskElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement2 != null)
+                            {
+                                string osInstance = osElement2.Value;
+                                result.OperatingSystem = osInstance;
+                            }
+                            
+                            XElement labelElement2 = diskElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement2 != null)
+                            {
+                                string labelInstance = labelElement2.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement affinityGroupElement = diskElement2.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (affinityGroupElement != null)
+                            {
+                                string affinityGroupInstance = affinityGroupElement.Value;
+                                result.AffinityGroup = affinityGroupInstance;
+                            }
+                            
+                            XElement locationElement = diskElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalDiskSizeInGBElement != null)
+                            {
+                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement2 = diskElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement2 != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement2 = diskElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance = nameElement2.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement isPremiumElement = diskElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement iOTypeElement = diskElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
+                            }
                         }
                         
-                        XElement labelElement2 = diskElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement2 != null)
-                        {
-                            string labelInstance = labelElement2.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement affinityGroupElement = diskElement2.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
-                        {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
-                        }
-                        
-                        XElement locationElement = diskElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
-                        {
-                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement2 = diskElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement2 != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement2 = diskElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement isPremiumElement = diskElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement iOTypeElement = diskElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                        if (iOTypeElement != null)
-                        {
-                            string iOTypeInstance = iOTypeElement.Value;
-                            result.IOType = iOTypeInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2207,7 +2496,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2226,6 +2515,102 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> UpdateDiskSizeAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateDiskSizeAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineDisks.BeginUpdatingDiskAsync(name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
     }
 }

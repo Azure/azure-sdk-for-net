@@ -21,20 +21,20 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the get schedule operation.
     /// </summary>
-    public partial class ScheduleGetResponse : OperationResponse
+    public partial class ScheduleGetResponse : AzureOperationResponse
     {
         private Schedule _schedule;
         
         /// <summary>
-        /// Optional. A schedule.
+        /// Optional. Gets or sets a schedule.
         /// </summary>
         public Schedule Schedule
         {

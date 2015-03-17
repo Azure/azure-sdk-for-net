@@ -1,13 +1,27 @@
-﻿using System;
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights
 {
@@ -19,21 +33,97 @@ namespace Microsoft.Azure.Insights
             resourceUri = '/' + resourceUri.TrimStart('/');
 
             // Generate filter strings
-            string metricFilter = RemoveNamesFromFilterString(filterString);
-            string definitionFilter = ShoeboxHelper.GenerateMetricDefinitionFilterString(MetricFilterExpressionParser.Parse(filterString).Names);
+            MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
+            string metricFilterString = GenerateNamelessMetricFilterString(filter);
+            string definitionFilterString = filter.DimensionFilters == null ? null
+                : ShoeboxHelper.GenerateMetricDefinitionFilterString(filter.DimensionFilters.Select(df => df.Name));
 
             // Get definitions for requested metrics
             IList<MetricDefinition> definitions =
                 (await this.Client.MetricDefinitionOperations.GetMetricDefinitionsAsync(
                     resourceUri,
-                    definitionFilter,
+                    definitionFilterString,
                     cancellationToken).ConfigureAwait(false)).MetricDefinitionCollection.Value;
 
+            // Separate passthrough metrics with dimensions specified
+            IEnumerable<MetricDefinition> passthruDefinitions = definitions.Where(d => !IsShoebox(d, filter.TimeGrain));
+            IEnumerable<MetricDefinition> shoeboxDefinitions = definitions.Where(d => IsShoebox(d, filter.TimeGrain));
+
+            // Get Passthru definitions
+            List<Metric> passthruMetrics = new List<Metric>();
+            string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
+            this.LogStartGetMetrics(invocationId, resourceUri, filterString, passthruDefinitions);
+            if (passthruDefinitions.Any())
+            {
+                // Create new filter for passthru metrics
+                List<MetricDimension> passthruDimensionFilters = filter.DimensionFilters == null ? new List<MetricDimension>() :
+                    filter.DimensionFilters.Where(df => passthruDefinitions.Any(d => string.Equals(d.Name.Value, df.Name, StringComparison.OrdinalIgnoreCase))).ToList();
+
+                foreach (MetricDefinition def in passthruDefinitions
+                    .Where(d => !passthruDimensionFilters.Any(pdf => string.Equals(pdf.Name, d.Name.Value, StringComparison.OrdinalIgnoreCase))))
+                {
+                    passthruDimensionFilters.Add(new MetricDimension() { Name = def.Name.Value });
+                }
+
+                MetricFilter passthruFilter = new MetricFilter()
+                {
+                    TimeGrain = filter.TimeGrain,
+                    StartTime = filter.StartTime,
+                    EndTime = filter.EndTime,
+                    DimensionFilters = passthruDimensionFilters
+                };
+
+                // Create passthru filter string
+                string passthruFilterString = ShoeboxHelper.GenerateMetricFilterString(passthruFilter);
+
+                // Get Metrics from passthrough (hydra) client
+                MetricListResponse passthruResponse = await this.GetMetricsInternalAsync(resourceUri, passthruFilterString, cancellationToken).ConfigureAwait(false);
+                passthruMetrics = passthruResponse.MetricCollection.Value.ToList();
+
+                this.LogMetricCountFromResponses(invocationId, passthruMetrics.Count());
+
+                // Fill in values (resourceUri, displayName, unit) from definitions
+                CompleteShoeboxMetrics(passthruMetrics, passthruDefinitions, resourceUri);
+
+                // Add empty objects for metrics that had no values come back, ensuring a metric is returned for each definition
+                IEnumerable<Metric> emptyMetrics = passthruDefinitions
+                    .Where(d => !passthruMetrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase)))
+                    .Select(d => new Metric()
+                    {
+                        Name = d.Name,
+                        Unit = d.Unit,
+                        ResourceId = resourceUri,
+                        StartTime = filter.StartTime,
+                        EndTime = filter.EndTime,
+                        TimeGrain = filter.TimeGrain,
+                        MetricValues = new List<MetricValue>(),
+                        Properties = new Dictionary<string, string>()
+                    });
+
+                passthruMetrics.AddRange(emptyMetrics);
+            }
+
             // Get Metrics by definitions
-            return await this.GetMetricsAsync(resourceUri, metricFilter, definitions, cancellationToken).ConfigureAwait(false);
+            MetricListResponse shoeboxResponse = await this.GetMetricsAsync(resourceUri, metricFilterString, shoeboxDefinitions, cancellationToken).ConfigureAwait(false);
+
+            // Create response (merge and wrap metrics)
+            MetricListResponse result = new MetricListResponse()
+            {
+                RequestId = Guid.NewGuid().ToString("D"),
+                StatusCode = HttpStatusCode.OK,
+                MetricCollection = new MetricCollection()
+                {
+                    Value = passthruMetrics.Union(shoeboxResponse.MetricCollection.Value).ToList()
+                }
+            };
+
+            this.LogEndGetMetrics(invocationId, result);
+
+            return result;
         }
 
         // Alternate method for getting metrics by passing in the definitions
+        // TODO [davmc]: Revisit - this method cannot support dimensions
         public async Task<MetricListResponse> GetMetricsAsync(
             string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions, CancellationToken cancellationToken)
         {
@@ -44,7 +134,7 @@ namespace Microsoft.Azure.Insights
                 throw new ArgumentNullException("definitions");
             }
 
-            string invocationId = Tracing.NextInvocationId.ToString(CultureInfo.InvariantCulture);
+            string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
             this.LogStartGetMetrics(invocationId, resourceUri, filterString, definitions);
 
             // If no definitions provided, return empty collection
@@ -53,7 +143,11 @@ namespace Microsoft.Azure.Insights
                 result = new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
-                    StatusCode =  HttpStatusCode.OK
+                    StatusCode =  HttpStatusCode.OK,
+                    MetricCollection = new MetricCollection()
+                    {
+                        Value = new Metric[0]
+                    }
                 };
 
                 this.LogEndGetMetrics(invocationId, result);
@@ -65,9 +159,9 @@ namespace Microsoft.Azure.Insights
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
 
             // Names not allowed in filter since the names are in the definitions
-            if (filter.Names != null && filter.Names.Any())
+            if (filter.DimensionFilters != null && filter.DimensionFilters.Any())
             {
-                throw new ArgumentException("Cannot specify names when MetricDefinitions are included", "filterString");
+                throw new ArgumentException("Cannot specify names (or dimensions) when MetricDefinitions are included", "filterString");
             }
 
             // Ensure every definition has at least one availability matching the filter timegrain
@@ -84,7 +178,7 @@ namespace Microsoft.Azure.Insights
                         TimeGrain = filter.TimeGrain,
                         StartTime = filter.StartTime,
                         EndTime = filter.EndTime,
-                        Names = g.Select(d => d.Name.Value)
+                        DimensionFilters = g.Select(d => new MetricDimension() { Name = d.Name.Value })
                     });
 
             // Get Metrics from each location (group)
@@ -135,30 +229,30 @@ namespace Microsoft.Azure.Insights
 
         private void LogMetricCountFromResponses(string invocationId, int metricsCount)
         {
-            if (CloudContext.Configuration.Tracing.IsEnabled)
+            if (TracingAdapter.IsEnabled)
             {
-                Tracing.Information("InvocationId: {0}. Total number of metrics in all resposes: {1}", invocationId, metricsCount);
+                TracingAdapter.Information("InvocationId: {0}. Total number of metrics in all resposes: {1}", invocationId, metricsCount);
             }
         }
 
         private void LogEndGetMetrics(string invocationId, MetricListResponse result)
         {
-            if (CloudContext.Configuration.Tracing.IsEnabled)
+            if (TracingAdapter.IsEnabled)
             {
-                Tracing.Exit(invocationId, result);
+                TracingAdapter.Exit(invocationId, result);
             }
         }
 
         private void LogStartGetMetrics(string invocationId, string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions)
         {
-            if (CloudContext.Configuration.Tracing.IsEnabled)
+            if (TracingAdapter.IsEnabled)
             {
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
                 tracingParameters.Add("definitions", string.Concat(definitions.Select(d => d.Name)));
 
-                Tracing.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
             }
         }
 
@@ -169,14 +263,28 @@ namespace Microsoft.Azure.Insights
                 MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
 
                 metric.ResourceId = resourceUri;
-                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) ? definition.Name.LocalizedValue : metric.Name.Value;
+                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) 
+                    ? definition.Name.LocalizedValue 
+                    : metric.Name.Value;
                 metric.Unit = definition == null ? Unit.Count : definition.Unit;
             }
         }
 
-        private static string RemoveNamesFromFilterString(string filterString)
+        private static bool IsShoebox(MetricDefinition definition, TimeSpan timeGrain)
         {
-            MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
+            MetricAvailability availability = definition.MetricAvailabilities.FirstOrDefault(a => a.TimeGrain.Equals(timeGrain));
+
+            if (availability == null)
+            {
+                throw new InvalidOperationException(string.Format(
+                    CultureInfo.InvariantCulture, "MetricDefinition for {0} does not contain an availability with timegrain {1}", definition.Name.Value, timeGrain));
+            }
+
+            return availability.Location != null;
+        }
+
+        private static string GenerateNamelessMetricFilterString(MetricFilter filter)
+        {
             MetricFilter nameless = new MetricFilter()
             {
                 TimeGrain = filter.TimeGrain,

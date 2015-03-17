@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _eventHubName;
         
         /// <summary>
-        /// Required. Gets or sets the EventHub name.
+        /// Optional. Gets or sets the EventHub name.
         /// </summary>
         public string EventHubName
         {
@@ -40,10 +40,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._eventHubName = value; }
         }
         
+        private string _partitionKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the column name to partition by.
+        /// </summary>
+        public string PartitionKey
+        {
+            get { return this._partitionKey; }
+            set { this._partitionKey = value; }
+        }
+        
         private string _serviceBusNamespace;
         
         /// <summary>
-        /// Required. Gets or sets the service bus namespace of the event hub.
+        /// Optional. Gets or sets the service bus namespace of the event hub.
         /// </summary>
         public string ServiceBusNamespace
         {
@@ -54,7 +65,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyKey;
         
         /// <summary>
-        /// Required. Gets or sets the shared access policy key.
+        /// Optional. Gets or sets the shared access policy key.
         /// </summary>
         public string SharedAccessPolicyKey
         {
@@ -65,7 +76,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Required. Gets or sets the shared access policy name.
+        /// Optional. Gets or sets the shared access policy name.
         /// </summary>
         public string SharedAccessPolicyName
         {

@@ -28,9 +28,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
 
@@ -40,7 +38,7 @@ namespace Microsoft.WindowsAzure.Management
     /// The Service Management API includes operations for listing the
     /// available role sizes for VMs in your subscription.
     /// </summary>
-    internal partial class RoleSizeOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.IRoleSizeOperations
+    internal partial class RoleSizeOperations : IServiceOperations<ManagementClient>, IRoleSizeOperations
     {
         /// <summary>
         /// Initializes a new instance of the RoleSizeOperations class.
@@ -74,22 +72,28 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Role Sizes operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.RoleSizeListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<RoleSizeListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/rolesizes";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/rolesizes";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -124,13 +128,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -139,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -147,84 +151,87 @@ namespace Microsoft.WindowsAzure.Management
                     // Create Result
                     RoleSizeListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RoleSizeListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement roleSizesSequenceElement = responseDoc.Element(XName.Get("RoleSizes", "http://schemas.microsoft.com/windowsazure"));
-                    if (roleSizesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement roleSizesElement in roleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleSizeListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement roleSizesSequenceElement = responseDoc.Element(XName.Get("RoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                        if (roleSizesSequenceElement != null)
                         {
-                            RoleSizeListResponse.RoleSize roleSizeInstance = new RoleSizeListResponse.RoleSize();
-                            result.RoleSizes.Add(roleSizeInstance);
-                            
-                            XElement nameElement = roleSizesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement roleSizesElement in roleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string nameInstance = nameElement.Value;
-                                roleSizeInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = roleSizesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                roleSizeInstance.Label = labelInstance;
-                            }
-                            
-                            XElement coresElement = roleSizesElement.Element(XName.Get("Cores", "http://schemas.microsoft.com/windowsazure"));
-                            if (coresElement != null)
-                            {
-                                int coresInstance = int.Parse(coresElement.Value, CultureInfo.InvariantCulture);
-                                roleSizeInstance.Cores = coresInstance;
-                            }
-                            
-                            XElement memoryInMbElement = roleSizesElement.Element(XName.Get("MemoryInMb", "http://schemas.microsoft.com/windowsazure"));
-                            if (memoryInMbElement != null)
-                            {
-                                int memoryInMbInstance = int.Parse(memoryInMbElement.Value, CultureInfo.InvariantCulture);
-                                roleSizeInstance.MemoryInMb = memoryInMbInstance;
-                            }
-                            
-                            XElement supportedByWebWorkerRolesElement = roleSizesElement.Element(XName.Get("SupportedByWebWorkerRoles", "http://schemas.microsoft.com/windowsazure"));
-                            if (supportedByWebWorkerRolesElement != null)
-                            {
-                                bool supportedByWebWorkerRolesInstance = bool.Parse(supportedByWebWorkerRolesElement.Value);
-                                roleSizeInstance.SupportedByWebWorkerRoles = supportedByWebWorkerRolesInstance;
-                            }
-                            
-                            XElement supportedByVirtualMachinesElement = roleSizesElement.Element(XName.Get("SupportedByVirtualMachines", "http://schemas.microsoft.com/windowsazure"));
-                            if (supportedByVirtualMachinesElement != null)
-                            {
-                                bool supportedByVirtualMachinesInstance = bool.Parse(supportedByVirtualMachinesElement.Value);
-                                roleSizeInstance.SupportedByVirtualMachines = supportedByVirtualMachinesInstance;
-                            }
-                            
-                            XElement maxDataDiskCountElement = roleSizesElement.Element(XName.Get("MaxDataDiskCount", "http://schemas.microsoft.com/windowsazure"));
-                            if (maxDataDiskCountElement != null)
-                            {
-                                int maxDataDiskCountInstance = int.Parse(maxDataDiskCountElement.Value, CultureInfo.InvariantCulture);
-                                roleSizeInstance.MaxDataDiskCount = maxDataDiskCountInstance;
-                            }
-                            
-                            XElement webWorkerResourceDiskSizeInMbElement = roleSizesElement.Element(XName.Get("WebWorkerResourceDiskSizeInMb", "http://schemas.microsoft.com/windowsazure"));
-                            if (webWorkerResourceDiskSizeInMbElement != null)
-                            {
-                                int webWorkerResourceDiskSizeInMbInstance = int.Parse(webWorkerResourceDiskSizeInMbElement.Value, CultureInfo.InvariantCulture);
-                                roleSizeInstance.WebWorkerResourceDiskSizeInMb = webWorkerResourceDiskSizeInMbInstance;
-                            }
-                            
-                            XElement virtualMachineResourceDiskSizeInMbElement = roleSizesElement.Element(XName.Get("VirtualMachineResourceDiskSizeInMb", "http://schemas.microsoft.com/windowsazure"));
-                            if (virtualMachineResourceDiskSizeInMbElement != null)
-                            {
-                                int virtualMachineResourceDiskSizeInMbInstance = int.Parse(virtualMachineResourceDiskSizeInMbElement.Value, CultureInfo.InvariantCulture);
-                                roleSizeInstance.VirtualMachineResourceDiskSizeInMb = virtualMachineResourceDiskSizeInMbInstance;
+                                RoleSizeListResponse.RoleSize roleSizeInstance = new RoleSizeListResponse.RoleSize();
+                                result.RoleSizes.Add(roleSizeInstance);
+                                
+                                XElement nameElement = roleSizesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    roleSizeInstance.Name = nameInstance;
+                                }
+                                
+                                XElement labelElement = roleSizesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = labelElement.Value;
+                                    roleSizeInstance.Label = labelInstance;
+                                }
+                                
+                                XElement coresElement = roleSizesElement.Element(XName.Get("Cores", "http://schemas.microsoft.com/windowsazure"));
+                                if (coresElement != null)
+                                {
+                                    int coresInstance = int.Parse(coresElement.Value, CultureInfo.InvariantCulture);
+                                    roleSizeInstance.Cores = coresInstance;
+                                }
+                                
+                                XElement memoryInMbElement = roleSizesElement.Element(XName.Get("MemoryInMb", "http://schemas.microsoft.com/windowsazure"));
+                                if (memoryInMbElement != null)
+                                {
+                                    int memoryInMbInstance = int.Parse(memoryInMbElement.Value, CultureInfo.InvariantCulture);
+                                    roleSizeInstance.MemoryInMb = memoryInMbInstance;
+                                }
+                                
+                                XElement supportedByWebWorkerRolesElement = roleSizesElement.Element(XName.Get("SupportedByWebWorkerRoles", "http://schemas.microsoft.com/windowsazure"));
+                                if (supportedByWebWorkerRolesElement != null)
+                                {
+                                    bool supportedByWebWorkerRolesInstance = bool.Parse(supportedByWebWorkerRolesElement.Value);
+                                    roleSizeInstance.SupportedByWebWorkerRoles = supportedByWebWorkerRolesInstance;
+                                }
+                                
+                                XElement supportedByVirtualMachinesElement = roleSizesElement.Element(XName.Get("SupportedByVirtualMachines", "http://schemas.microsoft.com/windowsazure"));
+                                if (supportedByVirtualMachinesElement != null)
+                                {
+                                    bool supportedByVirtualMachinesInstance = bool.Parse(supportedByVirtualMachinesElement.Value);
+                                    roleSizeInstance.SupportedByVirtualMachines = supportedByVirtualMachinesInstance;
+                                }
+                                
+                                XElement maxDataDiskCountElement = roleSizesElement.Element(XName.Get("MaxDataDiskCount", "http://schemas.microsoft.com/windowsazure"));
+                                if (maxDataDiskCountElement != null)
+                                {
+                                    int maxDataDiskCountInstance = int.Parse(maxDataDiskCountElement.Value, CultureInfo.InvariantCulture);
+                                    roleSizeInstance.MaxDataDiskCount = maxDataDiskCountInstance;
+                                }
+                                
+                                XElement webWorkerResourceDiskSizeInMbElement = roleSizesElement.Element(XName.Get("WebWorkerResourceDiskSizeInMb", "http://schemas.microsoft.com/windowsazure"));
+                                if (webWorkerResourceDiskSizeInMbElement != null)
+                                {
+                                    int webWorkerResourceDiskSizeInMbInstance = int.Parse(webWorkerResourceDiskSizeInMbElement.Value, CultureInfo.InvariantCulture);
+                                    roleSizeInstance.WebWorkerResourceDiskSizeInMb = webWorkerResourceDiskSizeInMbInstance;
+                                }
+                                
+                                XElement virtualMachineResourceDiskSizeInMbElement = roleSizesElement.Element(XName.Get("VirtualMachineResourceDiskSizeInMb", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachineResourceDiskSizeInMbElement != null)
+                                {
+                                    int virtualMachineResourceDiskSizeInMbInstance = int.Parse(virtualMachineResourceDiskSizeInMbElement.Value, CultureInfo.InvariantCulture);
+                                    roleSizeInstance.VirtualMachineResourceDiskSizeInMb = virtualMachineResourceDiskSizeInMbInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -233,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

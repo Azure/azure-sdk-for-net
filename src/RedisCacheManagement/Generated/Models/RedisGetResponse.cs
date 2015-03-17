@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// The response of GET redis operation.
     /// </summary>
-    public partial class RedisGetResponse : OperationResponse
+    public partial class RedisGetResponse : AzureOperationResponse
     {
         private string _id;
         

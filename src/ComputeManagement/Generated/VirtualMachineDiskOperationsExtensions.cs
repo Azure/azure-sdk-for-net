@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreatingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
+        public static AzureOperationResponse BeginCreatingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
             return operations.BeginCreatingDataDiskAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
         }
@@ -169,7 +169,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
+        public static AzureOperationResponse BeginDeletingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -208,9 +208,65 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> BeginDeletingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
         {
             return operations.BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginUpdatingDisk(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineDiskOperations)s).BeginUpdatingDiskAsync(name, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginUpdatingDiskAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return operations.BeginUpdatingDiskAsync(name, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -484,7 +540,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
+        public static AzureOperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -514,7 +570,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteDiskAsync(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> DeleteDiskAsync(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
             return operations.DeleteDiskAsync(name, deleteFromStorage, CancellationToken.None);
         }
@@ -701,7 +757,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
+        public static AzureOperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -740,7 +796,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
             return operations.UpdateDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, parameters, CancellationToken.None);
         }
@@ -797,6 +853,76 @@ namespace Microsoft.WindowsAzure
         public static Task<VirtualMachineDiskUpdateResponse> UpdateDiskAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
         {
             return operations.UpdateDiskAsync(name, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse UpdateDiskSize(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineDiskOperations)s).UpdateDiskSizeAsync(name, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> UpdateDiskSizeAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return operations.UpdateDiskSizeAsync(name, parameters, CancellationToken.None);
         }
     }
 }

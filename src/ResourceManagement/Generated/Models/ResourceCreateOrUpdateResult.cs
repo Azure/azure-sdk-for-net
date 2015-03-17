@@ -21,22 +21,22 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource information.
     /// </summary>
-    public partial class ResourceCreateOrUpdateResult : OperationResponse
+    public partial class ResourceCreateOrUpdateResult : AzureOperationResponse
     {
-        private Resource _resource;
+        private GenericResourceExtended _resource;
         
         /// <summary>
         /// Optional. Gets or sets the resource.
         /// </summary>
-        public Resource Resource
+        public GenericResourceExtended Resource
         {
             get { return this._resource; }
             set { this._resource = value; }

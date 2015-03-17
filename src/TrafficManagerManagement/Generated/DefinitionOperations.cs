@@ -30,9 +30,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
     /// The Traffic Manager API includes operations for managing definitions
     /// for a specified profile.
     /// </summary>
-    internal partial class DefinitionOperations : IServiceOperations<TrafficManagerManagementClient>, Microsoft.WindowsAzure.Management.TrafficManager.IDefinitionOperations
+    internal partial class DefinitionOperations : IServiceOperations<TrafficManagerManagementClient>, IDefinitionOperations
     {
         /// <summary>
         /// Initializes a new instance of the DefinitionOperations class.
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> CreateAsync(string profileName, DefinitionCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateAsync(string profileName, DefinitionCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (profileName == null)
@@ -133,19 +133,27 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WATM/profiles/";
+            url = url + Uri.EscapeDataString(profileName);
+            url = url + "/definitions";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -301,13 +309,13 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -316,14 +324,15 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -332,7 +341,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -367,7 +376,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// <returns>
         /// The Get Definition operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.TrafficManager.Models.DefinitionGetResponse> GetAsync(string profileName, CancellationToken cancellationToken)
+        public async Task<DefinitionGetResponse> GetAsync(string profileName, CancellationToken cancellationToken)
         {
             // Validate
             if (profileName == null)
@@ -376,18 +385,26 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("profileName", profileName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions/1";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WATM/profiles/";
+            url = url + Uri.EscapeDataString(profileName);
+            url = url + "/definitions/1";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -422,13 +439,13 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -437,7 +454,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -445,334 +462,20 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     // Create Result
                     DefinitionGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DefinitionGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement definitionElement = responseDoc.Element(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure"));
-                    if (definitionElement != null)
-                    {
-                        Definition definitionInstance = new Definition();
-                        result.Definition = definitionInstance;
-                        
-                        XElement dnsOptionsElement = definitionElement.Element(XName.Get("DnsOptions", "http://schemas.microsoft.com/windowsazure"));
-                        if (dnsOptionsElement != null)
-                        {
-                            DefinitionDnsOptions dnsOptionsInstance = new DefinitionDnsOptions();
-                            definitionInstance.DnsOptions = dnsOptionsInstance;
-                            
-                            XElement timeToLiveInSecondsElement = dnsOptionsElement.Element(XName.Get("TimeToLiveInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                            if (timeToLiveInSecondsElement != null)
-                            {
-                                int timeToLiveInSecondsInstance = int.Parse(timeToLiveInSecondsElement.Value, CultureInfo.InvariantCulture);
-                                dnsOptionsInstance.TimeToLiveInSeconds = timeToLiveInSecondsInstance;
-                            }
-                        }
-                        
-                        XElement statusElement = definitionElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
-                        {
-                            ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
-                            definitionInstance.Status = statusInstance;
-                        }
-                        
-                        XElement versionElement = definitionElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                        if (versionElement != null)
-                        {
-                            int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
-                            definitionInstance.Version = versionInstance;
-                        }
-                        
-                        XElement monitorsSequenceElement = definitionElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
-                        if (monitorsSequenceElement != null)
-                        {
-                            foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                DefinitionMonitor monitorInstance = new DefinitionMonitor();
-                                definitionInstance.Monitors.Add(monitorInstance);
-                                
-                                XElement intervalInSecondsElement = monitorsElement.Element(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                if (intervalInSecondsElement != null)
-                                {
-                                    int intervalInSecondsInstance = int.Parse(intervalInSecondsElement.Value, CultureInfo.InvariantCulture);
-                                    monitorInstance.IntervalInSeconds = intervalInSecondsInstance;
-                                }
-                                
-                                XElement timeoutInSecondsElement = monitorsElement.Element(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                if (timeoutInSecondsElement != null)
-                                {
-                                    int timeoutInSecondsInstance = int.Parse(timeoutInSecondsElement.Value, CultureInfo.InvariantCulture);
-                                    monitorInstance.TimeoutInSeconds = timeoutInSecondsInstance;
-                                }
-                                
-                                XElement toleratedNumberOfFailuresElement = monitorsElement.Element(XName.Get("ToleratedNumberOfFailures", "http://schemas.microsoft.com/windowsazure"));
-                                if (toleratedNumberOfFailuresElement != null)
-                                {
-                                    int toleratedNumberOfFailuresInstance = int.Parse(toleratedNumberOfFailuresElement.Value, CultureInfo.InvariantCulture);
-                                    monitorInstance.ToleratedNumberOfFailures = toleratedNumberOfFailuresInstance;
-                                }
-                                
-                                XElement protocolElement = monitorsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                if (protocolElement != null)
-                                {
-                                    DefinitionMonitorProtocol protocolInstance = TrafficManagerManagementClient.ParseDefinitionMonitorProtocol(protocolElement.Value);
-                                    monitorInstance.Protocol = protocolInstance;
-                                }
-                                
-                                XElement portElement = monitorsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                if (portElement != null)
-                                {
-                                    int portInstance = int.Parse(portElement.Value, CultureInfo.InvariantCulture);
-                                    monitorInstance.Port = portInstance;
-                                }
-                                
-                                XElement httpOptionsElement = monitorsElement.Element(XName.Get("HttpOptions", "http://schemas.microsoft.com/windowsazure"));
-                                if (httpOptionsElement != null)
-                                {
-                                    DefinitionMonitorHTTPOptions httpOptionsInstance = new DefinitionMonitorHTTPOptions();
-                                    monitorInstance.HttpOptions = httpOptionsInstance;
-                                    
-                                    XElement verbElement = httpOptionsElement.Element(XName.Get("Verb", "http://schemas.microsoft.com/windowsazure"));
-                                    if (verbElement != null)
-                                    {
-                                        string verbInstance = verbElement.Value;
-                                        httpOptionsInstance.Verb = verbInstance;
-                                    }
-                                    
-                                    XElement relativePathElement = httpOptionsElement.Element(XName.Get("RelativePath", "http://schemas.microsoft.com/windowsazure"));
-                                    if (relativePathElement != null)
-                                    {
-                                        string relativePathInstance = relativePathElement.Value;
-                                        httpOptionsInstance.RelativePath = relativePathInstance;
-                                    }
-                                    
-                                    XElement expectedStatusCodeElement = httpOptionsElement.Element(XName.Get("ExpectedStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                                    if (expectedStatusCodeElement != null)
-                                    {
-                                        int expectedStatusCodeInstance = int.Parse(expectedStatusCodeElement.Value, CultureInfo.InvariantCulture);
-                                        httpOptionsInstance.ExpectedStatusCode = expectedStatusCodeInstance;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        XElement policyElement = definitionElement.Element(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
-                        if (policyElement != null)
-                        {
-                            DefinitionPolicyResponse policyInstance = new DefinitionPolicyResponse();
-                            definitionInstance.Policy = policyInstance;
-                            
-                            XElement loadBalancingMethodElement = policyElement.Element(XName.Get("LoadBalancingMethod", "http://schemas.microsoft.com/windowsazure"));
-                            if (loadBalancingMethodElement != null)
-                            {
-                                LoadBalancingMethod loadBalancingMethodInstance = ((LoadBalancingMethod)Enum.Parse(typeof(LoadBalancingMethod), loadBalancingMethodElement.Value, true));
-                                policyInstance.LoadBalancingMethod = loadBalancingMethodInstance;
-                            }
-                            
-                            XElement endpointsSequenceElement = policyElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                            if (endpointsSequenceElement != null)
-                            {
-                                foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    DefinitionEndpointResponse endpointInstance = new DefinitionEndpointResponse();
-                                    policyInstance.Endpoints.Add(endpointInstance);
-                                    
-                                    XElement domainNameElement = endpointsElement.Element(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (domainNameElement != null)
-                                    {
-                                        string domainNameInstance = domainNameElement.Value;
-                                        endpointInstance.DomainName = domainNameInstance;
-                                    }
-                                    
-                                    XElement statusElement2 = endpointsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                                    if (statusElement2 != null)
-                                    {
-                                        EndpointStatus statusInstance2 = ((EndpointStatus)Enum.Parse(typeof(EndpointStatus), statusElement2.Value, true));
-                                        endpointInstance.Status = statusInstance2;
-                                    }
-                                    
-                                    XElement typeElement = endpointsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    if (typeElement != null)
-                                    {
-                                        EndpointType typeInstance = ((EndpointType)Enum.Parse(typeof(EndpointType), typeElement.Value, true));
-                                        endpointInstance.Type = typeInstance;
-                                    }
-                                    
-                                    XElement locationElement = endpointsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                                    if (locationElement != null)
-                                    {
-                                        string locationInstance = locationElement.Value;
-                                        endpointInstance.Location = locationInstance;
-                                    }
-                                    
-                                    XElement monitorStatusElement = endpointsElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
-                                    if (monitorStatusElement != null)
-                                    {
-                                        DefinitionEndpointMonitorStatus monitorStatusInstance = ((DefinitionEndpointMonitorStatus)Enum.Parse(typeof(DefinitionEndpointMonitorStatus), monitorStatusElement.Value, true));
-                                        endpointInstance.MonitorStatus = monitorStatusInstance;
-                                    }
-                                    
-                                    XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                                    if (weightElement != null && string.IsNullOrEmpty(weightElement.Value) == false)
-                                    {
-                                        int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
-                                        endpointInstance.Weight = weightInstance;
-                                    }
-                                    
-                                    XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                    if (minChildEndpointsElement != null && string.IsNullOrEmpty(minChildEndpointsElement.Value) == false)
-                                    {
-                                        int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
-                                        endpointInstance.MinChildEndpoints = minChildEndpointsInstance;
-                                    }
-                                }
-                            }
-                            
-                            XElement monitorStatusElement2 = policyElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
-                            if (monitorStatusElement2 != null)
-                            {
-                                DefinitionPolicyMonitorStatus monitorStatusInstance2 = ((DefinitionPolicyMonitorStatus)Enum.Parse(typeof(DefinitionPolicyMonitorStatus), monitorStatusElement2.Value, true));
-                                policyInstance.MonitorStatus = monitorStatusInstance2;
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Returns all definitions of a profile  (see
-        /// http://msdn.microsoft.com/en-us/library/hh758252.aspx for more
-        /// information)
-        /// </summary>
-        /// <param name='profileName'>
-        /// Required. The name of the profile to return all definitions
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Definitions operation response.
-        /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.TrafficManager.Models.DefinitionsListResponse> ListAsync(string profileName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (profileName == null)
-            {
-                throw new ArgumentNullException("profileName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("profileName", profileName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    DefinitionsListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DefinitionsListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement definitionsSequenceElement = responseDoc.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
-                    if (definitionsSequenceElement != null)
-                    {
-                        foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DefinitionGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement definitionElement = responseDoc.Element(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure"));
+                        if (definitionElement != null)
                         {
                             Definition definitionInstance = new Definition();
-                            result.Definitions.Add(definitionInstance);
+                            result.Definition = definitionInstance;
                             
-                            XElement dnsOptionsElement = definitionsElement.Element(XName.Get("DnsOptions", "http://schemas.microsoft.com/windowsazure"));
+                            XElement dnsOptionsElement = definitionElement.Element(XName.Get("DnsOptions", "http://schemas.microsoft.com/windowsazure"));
                             if (dnsOptionsElement != null)
                             {
                                 DefinitionDnsOptions dnsOptionsInstance = new DefinitionDnsOptions();
@@ -786,21 +489,21 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 }
                             }
                             
-                            XElement statusElement = definitionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            XElement statusElement = definitionElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null)
                             {
                                 ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
                                 definitionInstance.Status = statusInstance;
                             }
                             
-                            XElement versionElement = definitionsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                            XElement versionElement = definitionElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
                             if (versionElement != null)
                             {
                                 int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
                                 definitionInstance.Version = versionInstance;
                             }
                             
-                            XElement monitorsSequenceElement = definitionsElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
+                            XElement monitorsSequenceElement = definitionElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
                             if (monitorsSequenceElement != null)
                             {
                                 foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
@@ -873,7 +576,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 }
                             }
                             
-                            XElement policyElement = definitionsElement.Element(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
+                            XElement policyElement = definitionElement.Element(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
                             if (policyElement != null)
                             {
                                 DefinitionPolicyResponse policyInstance = new DefinitionPolicyResponse();
@@ -930,14 +633,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                         }
                                         
                                         XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                                        if (weightElement != null && string.IsNullOrEmpty(weightElement.Value) == false)
+                                        if (weightElement != null && !string.IsNullOrEmpty(weightElement.Value))
                                         {
                                             int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                             endpointInstance.Weight = weightInstance;
                                         }
                                         
                                         XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                        if (minChildEndpointsElement != null && string.IsNullOrEmpty(minChildEndpointsElement.Value) == false)
+                                        if (minChildEndpointsElement != null && !string.IsNullOrEmpty(minChildEndpointsElement.Value))
                                         {
                                             int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
                                             endpointInstance.MinChildEndpoints = minChildEndpointsInstance;
@@ -953,8 +656,8 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -963,7 +666,335 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns all definitions of a profile  (see
+        /// http://msdn.microsoft.com/en-us/library/hh758252.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='profileName'>
+        /// Required. The name of the profile to return all definitions
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Definitions operation response.
+        /// </returns>
+        public async Task<DefinitionsListResponse> ListAsync(string profileName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (profileName == null)
+            {
+                throw new ArgumentNullException("profileName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("profileName", profileName);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WATM/profiles/";
+            url = url + Uri.EscapeDataString(profileName);
+            url = url + "/definitions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DefinitionsListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DefinitionsListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement definitionsSequenceElement = responseDoc.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
+                        if (definitionsSequenceElement != null)
+                        {
+                            foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                Definition definitionInstance = new Definition();
+                                result.Definitions.Add(definitionInstance);
+                                
+                                XElement dnsOptionsElement = definitionsElement.Element(XName.Get("DnsOptions", "http://schemas.microsoft.com/windowsazure"));
+                                if (dnsOptionsElement != null)
+                                {
+                                    DefinitionDnsOptions dnsOptionsInstance = new DefinitionDnsOptions();
+                                    definitionInstance.DnsOptions = dnsOptionsInstance;
+                                    
+                                    XElement timeToLiveInSecondsElement = dnsOptionsElement.Element(XName.Get("TimeToLiveInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                                    if (timeToLiveInSecondsElement != null)
+                                    {
+                                        int timeToLiveInSecondsInstance = int.Parse(timeToLiveInSecondsElement.Value, CultureInfo.InvariantCulture);
+                                        dnsOptionsInstance.TimeToLiveInSeconds = timeToLiveInSecondsInstance;
+                                    }
+                                }
+                                
+                                XElement statusElement = definitionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                                if (statusElement != null)
+                                {
+                                    ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
+                                    definitionInstance.Status = statusInstance;
+                                }
+                                
+                                XElement versionElement = definitionsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                                if (versionElement != null)
+                                {
+                                    int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
+                                    definitionInstance.Version = versionInstance;
+                                }
+                                
+                                XElement monitorsSequenceElement = definitionsElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
+                                if (monitorsSequenceElement != null)
+                                {
+                                    foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        DefinitionMonitor monitorInstance = new DefinitionMonitor();
+                                        definitionInstance.Monitors.Add(monitorInstance);
+                                        
+                                        XElement intervalInSecondsElement = monitorsElement.Element(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                                        if (intervalInSecondsElement != null)
+                                        {
+                                            int intervalInSecondsInstance = int.Parse(intervalInSecondsElement.Value, CultureInfo.InvariantCulture);
+                                            monitorInstance.IntervalInSeconds = intervalInSecondsInstance;
+                                        }
+                                        
+                                        XElement timeoutInSecondsElement = monitorsElement.Element(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                                        if (timeoutInSecondsElement != null)
+                                        {
+                                            int timeoutInSecondsInstance = int.Parse(timeoutInSecondsElement.Value, CultureInfo.InvariantCulture);
+                                            monitorInstance.TimeoutInSeconds = timeoutInSecondsInstance;
+                                        }
+                                        
+                                        XElement toleratedNumberOfFailuresElement = monitorsElement.Element(XName.Get("ToleratedNumberOfFailures", "http://schemas.microsoft.com/windowsazure"));
+                                        if (toleratedNumberOfFailuresElement != null)
+                                        {
+                                            int toleratedNumberOfFailuresInstance = int.Parse(toleratedNumberOfFailuresElement.Value, CultureInfo.InvariantCulture);
+                                            monitorInstance.ToleratedNumberOfFailures = toleratedNumberOfFailuresInstance;
+                                        }
+                                        
+                                        XElement protocolElement = monitorsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                        if (protocolElement != null)
+                                        {
+                                            DefinitionMonitorProtocol protocolInstance = TrafficManagerManagementClient.ParseDefinitionMonitorProtocol(protocolElement.Value);
+                                            monitorInstance.Protocol = protocolInstance;
+                                        }
+                                        
+                                        XElement portElement = monitorsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                        if (portElement != null)
+                                        {
+                                            int portInstance = int.Parse(portElement.Value, CultureInfo.InvariantCulture);
+                                            monitorInstance.Port = portInstance;
+                                        }
+                                        
+                                        XElement httpOptionsElement = monitorsElement.Element(XName.Get("HttpOptions", "http://schemas.microsoft.com/windowsazure"));
+                                        if (httpOptionsElement != null)
+                                        {
+                                            DefinitionMonitorHTTPOptions httpOptionsInstance = new DefinitionMonitorHTTPOptions();
+                                            monitorInstance.HttpOptions = httpOptionsInstance;
+                                            
+                                            XElement verbElement = httpOptionsElement.Element(XName.Get("Verb", "http://schemas.microsoft.com/windowsazure"));
+                                            if (verbElement != null)
+                                            {
+                                                string verbInstance = verbElement.Value;
+                                                httpOptionsInstance.Verb = verbInstance;
+                                            }
+                                            
+                                            XElement relativePathElement = httpOptionsElement.Element(XName.Get("RelativePath", "http://schemas.microsoft.com/windowsazure"));
+                                            if (relativePathElement != null)
+                                            {
+                                                string relativePathInstance = relativePathElement.Value;
+                                                httpOptionsInstance.RelativePath = relativePathInstance;
+                                            }
+                                            
+                                            XElement expectedStatusCodeElement = httpOptionsElement.Element(XName.Get("ExpectedStatusCode", "http://schemas.microsoft.com/windowsazure"));
+                                            if (expectedStatusCodeElement != null)
+                                            {
+                                                int expectedStatusCodeInstance = int.Parse(expectedStatusCodeElement.Value, CultureInfo.InvariantCulture);
+                                                httpOptionsInstance.ExpectedStatusCode = expectedStatusCodeInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                XElement policyElement = definitionsElement.Element(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
+                                if (policyElement != null)
+                                {
+                                    DefinitionPolicyResponse policyInstance = new DefinitionPolicyResponse();
+                                    definitionInstance.Policy = policyInstance;
+                                    
+                                    XElement loadBalancingMethodElement = policyElement.Element(XName.Get("LoadBalancingMethod", "http://schemas.microsoft.com/windowsazure"));
+                                    if (loadBalancingMethodElement != null)
+                                    {
+                                        LoadBalancingMethod loadBalancingMethodInstance = ((LoadBalancingMethod)Enum.Parse(typeof(LoadBalancingMethod), loadBalancingMethodElement.Value, true));
+                                        policyInstance.LoadBalancingMethod = loadBalancingMethodInstance;
+                                    }
+                                    
+                                    XElement endpointsSequenceElement = policyElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                                    if (endpointsSequenceElement != null)
+                                    {
+                                        foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            DefinitionEndpointResponse endpointInstance = new DefinitionEndpointResponse();
+                                            policyInstance.Endpoints.Add(endpointInstance);
+                                            
+                                            XElement domainNameElement = endpointsElement.Element(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
+                                            if (domainNameElement != null)
+                                            {
+                                                string domainNameInstance = domainNameElement.Value;
+                                                endpointInstance.DomainName = domainNameInstance;
+                                            }
+                                            
+                                            XElement statusElement2 = endpointsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                                            if (statusElement2 != null)
+                                            {
+                                                EndpointStatus statusInstance2 = ((EndpointStatus)Enum.Parse(typeof(EndpointStatus), statusElement2.Value, true));
+                                                endpointInstance.Status = statusInstance2;
+                                            }
+                                            
+                                            XElement typeElement = endpointsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                            if (typeElement != null)
+                                            {
+                                                EndpointType typeInstance = ((EndpointType)Enum.Parse(typeof(EndpointType), typeElement.Value, true));
+                                                endpointInstance.Type = typeInstance;
+                                            }
+                                            
+                                            XElement locationElement = endpointsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                            if (locationElement != null)
+                                            {
+                                                string locationInstance = locationElement.Value;
+                                                endpointInstance.Location = locationInstance;
+                                            }
+                                            
+                                            XElement monitorStatusElement = endpointsElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
+                                            if (monitorStatusElement != null)
+                                            {
+                                                DefinitionEndpointMonitorStatus monitorStatusInstance = ((DefinitionEndpointMonitorStatus)Enum.Parse(typeof(DefinitionEndpointMonitorStatus), monitorStatusElement.Value, true));
+                                                endpointInstance.MonitorStatus = monitorStatusInstance;
+                                            }
+                                            
+                                            XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
+                                            if (weightElement != null && !string.IsNullOrEmpty(weightElement.Value))
+                                            {
+                                                int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
+                                                endpointInstance.Weight = weightInstance;
+                                            }
+                                            
+                                            XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                            if (minChildEndpointsElement != null && !string.IsNullOrEmpty(minChildEndpointsElement.Value))
+                                            {
+                                                int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
+                                                endpointInstance.MinChildEndpoints = minChildEndpointsInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    XElement monitorStatusElement2 = policyElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
+                                    if (monitorStatusElement2 != null)
+                                    {
+                                        DefinitionPolicyMonitorStatus monitorStatusInstance2 = ((DefinitionPolicyMonitorStatus)Enum.Parse(typeof(DefinitionPolicyMonitorStatus), monitorStatusElement2.Value, true));
+                                        policyInstance.MonitorStatus = monitorStatusInstance2;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

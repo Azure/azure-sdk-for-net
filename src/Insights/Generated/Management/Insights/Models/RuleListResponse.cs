@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The List Rules operation response.
     /// </summary>
-    public partial class RuleListResponse : OperationResponse
+    public partial class RuleListResponse : AzureOperationResponse
     {
         private RuleResourceCollection _ruleResourceCollection;
         

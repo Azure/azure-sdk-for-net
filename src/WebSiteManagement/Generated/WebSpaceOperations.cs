@@ -30,9 +30,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
@@ -41,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// <summary>
     /// Operations for managing web spaces beneath your subscription.
     /// </summary>
-    internal partial class WebSpaceOperations : IServiceOperations<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations
+    internal partial class WebSpaceOperations : IServiceOperations<WebSiteManagementClient>, IWebSpaceOperations
     {
         /// <summary>
         /// Initializes a new instance of the WebSpaceOperations class.
@@ -85,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Create Publishing User operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken)
+        public async Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (username == null)
@@ -109,20 +108,32 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("username", username);
                 tracingParameters.Add("password", password);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreatePublishingUserAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreatePublishingUserAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=publishingCredentials";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("properties=publishingCredentials");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -186,13 +197,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -201,7 +212,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -209,36 +220,39 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesCreatePublishingUserResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesCreatePublishingUserResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement userElement2 = responseDoc.Element(XName.Get("User", "http://schemas.microsoft.com/windowsazure"));
-                    if (userElement2 != null)
+                    if (statusCode == HttpStatusCode.Created)
                     {
-                        XElement nameElement2 = userElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesCreatePublishingUserResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement userElement2 = responseDoc.Element(XName.Get("User", "http://schemas.microsoft.com/windowsazure"));
+                        if (userElement2 != null)
                         {
-                            string nameInstance = nameElement2.Value;
-                            result.Name = nameInstance;
+                            XElement nameElement2 = userElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance = nameElement2.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement publishingPasswordElement2 = userElement2.Element(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishingPasswordElement2 != null)
+                            {
+                                string publishingPasswordInstance = publishingPasswordElement2.Value;
+                                result.PublishingPassword = publishingPasswordInstance;
+                            }
+                            
+                            XElement publishingUserNameElement2 = userElement2.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishingUserNameElement2 != null)
+                            {
+                                string publishingUserNameInstance = publishingUserNameElement2.Value;
+                                result.PublishingUserName = publishingUserNameInstance;
+                            }
                         }
                         
-                        XElement publishingPasswordElement2 = userElement2.Element(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingPasswordElement2 != null)
-                        {
-                            string publishingPasswordInstance = publishingPasswordElement2.Value;
-                            result.PublishingPassword = publishingPasswordInstance;
-                        }
-                        
-                        XElement publishingUserNameElement2 = userElement2.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingUserNameElement2 != null)
-                        {
-                            string publishingUserNameInstance = publishingUserNameElement2.Value;
-                            result.PublishingUserName = publishingUserNameInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -247,7 +261,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -283,7 +297,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Space Details operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async Task<WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -292,18 +306,25 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("webSpaceName", webSpaceName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces/";
+            url = url + Uri.EscapeDataString(webSpaceName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -338,13 +359,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -353,7 +374,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -361,103 +382,106 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement webSpaceElement = responseDoc.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
-                    if (webSpaceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement availabilityStateElement = webSpaceElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                        if (availabilityStateElement != null)
-                        {
-                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
-                            result.AvailabilityState = availabilityStateInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement currentNumberOfWorkersElement = webSpaceElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
+                        XElement webSpaceElement = responseDoc.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
+                        if (webSpaceElement != null)
                         {
-                            bool isNil = false;
-                            XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute != null)
+                            XElement availabilityStateElement = webSpaceElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                            if (availabilityStateElement != null)
                             {
-                                isNil = nilAttribute.Value == "true";
+                                WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
+                                result.AvailabilityState = availabilityStateInstance;
                             }
-                            if (isNil == false)
+                            
+                            XElement currentNumberOfWorkersElement = webSpaceElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentNumberOfWorkersElement != null && !string.IsNullOrEmpty(currentNumberOfWorkersElement.Value))
                             {
-                                int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                bool isNil = false;
+                                XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute != null)
+                                {
+                                    isNil = nilAttribute.Value == "true";
+                                }
+                                if (isNil == false)
+                                {
+                                    int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                    result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                }
                             }
-                        }
-                        
-                        XElement currentWorkerSizeElement = webSpaceElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
-                        {
-                            bool isNil2 = false;
-                            XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute2 != null)
+                            
+                            XElement currentWorkerSizeElement = webSpaceElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentWorkerSizeElement != null && !string.IsNullOrEmpty(currentWorkerSizeElement.Value))
                             {
-                                isNil2 = nilAttribute2.Value == "true";
+                                bool isNil2 = false;
+                                XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute2 != null)
+                                {
+                                    isNil2 = nilAttribute2.Value == "true";
+                                }
+                                if (isNil2 == false)
+                                {
+                                    WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
+                                    result.CurrentWorkerSize = currentWorkerSizeInstance;
+                                }
                             }
-                            if (isNil2 == false)
+                            
+                            XElement geoLocationElement = webSpaceElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
+                            if (geoLocationElement != null)
                             {
-                                WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
-                                result.CurrentWorkerSize = currentWorkerSizeInstance;
+                                string geoLocationInstance = geoLocationElement.Value;
+                                result.GeoLocation = geoLocationInstance;
+                            }
+                            
+                            XElement geoRegionElement = webSpaceElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                            if (geoRegionElement != null)
+                            {
+                                string geoRegionInstance = geoRegionElement.Value;
+                                result.GeoRegion = geoRegionInstance;
+                            }
+                            
+                            XElement nameElement = webSpaceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement planElement = webSpaceElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                            if (planElement != null)
+                            {
+                                string planInstance = planElement.Value;
+                                result.Plan = planInstance;
+                            }
+                            
+                            XElement statusElement = webSpaceElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
+                            {
+                                WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
+                            }
+                            
+                            XElement subscriptionElement = webSpaceElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
+                            if (subscriptionElement != null)
+                            {
+                                string subscriptionInstance = subscriptionElement.Value;
+                                result.Subscription = subscriptionInstance;
+                            }
+                            
+                            XElement workerSizeElement = webSpaceElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (workerSizeElement != null && !string.IsNullOrEmpty(workerSizeElement.Value))
+                            {
+                                WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
+                                result.WorkerSize = workerSizeInstance;
                             }
                         }
                         
-                        XElement geoLocationElement = webSpaceElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoLocationElement != null)
-                        {
-                            string geoLocationInstance = geoLocationElement.Value;
-                            result.GeoLocation = geoLocationInstance;
-                        }
-                        
-                        XElement geoRegionElement = webSpaceElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoRegionElement != null)
-                        {
-                            string geoRegionInstance = geoRegionElement.Value;
-                            result.GeoRegion = geoRegionInstance;
-                        }
-                        
-                        XElement nameElement = webSpaceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement planElement = webSpaceElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                        if (planElement != null)
-                        {
-                            string planInstance = planElement.Value;
-                            result.Plan = planInstance;
-                        }
-                        
-                        XElement statusElement = webSpaceElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
-                        {
-                            WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
-                            result.Status = statusInstance;
-                        }
-                        
-                        XElement subscriptionElement = webSpaceElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionElement != null)
-                        {
-                            string subscriptionInstance = subscriptionElement.Value;
-                            result.Subscription = subscriptionInstance;
-                        }
-                        
-                        XElement workerSizeElement = webSpaceElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
-                        {
-                            WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
-                            result.WorkerSize = workerSizeInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -466,7 +490,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -496,22 +520,34 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get DNS Suffix operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken)
+        public async Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "GetDnsSuffixAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetDnsSuffixAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=dnssuffix";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("properties=dnssuffix");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -546,13 +582,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -561,7 +597,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -569,17 +605,20 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesGetDnsSuffixResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesGetDnsSuffixResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (stringElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        result.DnsSuffix = stringElement.Value;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesGetDnsSuffixResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (stringElement != null)
+                        {
+                            result.DnsSuffix = stringElement.Value;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -588,7 +627,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -621,22 +660,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Web Spaces operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<WebSpacesListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -671,13 +716,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -686,7 +731,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -694,109 +739,112 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement webSpacesSequenceElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
-                    if (webSpacesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement webSpacesElement in webSpacesSequenceElement.Elements(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement webSpacesSequenceElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
+                        if (webSpacesSequenceElement != null)
                         {
-                            WebSpacesListResponse.WebSpace webSpaceInstance = new WebSpacesListResponse.WebSpace();
-                            result.WebSpaces.Add(webSpaceInstance);
-                            
-                            XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (availabilityStateElement != null)
+                            foreach (XElement webSpacesElement in webSpacesSequenceElement.Elements(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
-                                webSpaceInstance.AvailabilityState = availabilityStateInstance;
-                            }
-                            
-                            XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
-                            {
-                                bool isNil = false;
-                                XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute != null)
+                                WebSpacesListResponse.WebSpace webSpaceInstance = new WebSpacesListResponse.WebSpace();
+                                result.WebSpaces.Add(webSpaceInstance);
+                                
+                                XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                                if (availabilityStateElement != null)
                                 {
-                                    isNil = nilAttribute.Value == "true";
+                                    WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
+                                    webSpaceInstance.AvailabilityState = availabilityStateInstance;
                                 }
-                                if (isNil == false)
+                                
+                                XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                                if (currentNumberOfWorkersElement != null && !string.IsNullOrEmpty(currentNumberOfWorkersElement.Value))
                                 {
-                                    int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                    webSpaceInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                    bool isNil = false;
+                                    XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                    if (nilAttribute != null)
+                                    {
+                                        isNil = nilAttribute.Value == "true";
+                                    }
+                                    if (isNil == false)
+                                    {
+                                        int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                        webSpaceInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                    }
                                 }
-                            }
-                            
-                            XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
-                            {
-                                bool isNil2 = false;
-                                XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute2 != null)
+                                
+                                XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                                if (currentWorkerSizeElement != null && !string.IsNullOrEmpty(currentWorkerSizeElement.Value))
                                 {
-                                    isNil2 = nilAttribute2.Value == "true";
+                                    bool isNil2 = false;
+                                    XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                    if (nilAttribute2 != null)
+                                    {
+                                        isNil2 = nilAttribute2.Value == "true";
+                                    }
+                                    if (isNil2 == false)
+                                    {
+                                        WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
+                                        webSpaceInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                                    }
                                 }
-                                if (isNil2 == false)
+                                
+                                XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
+                                if (geoLocationElement != null)
                                 {
-                                    WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
-                                    webSpaceInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                                    string geoLocationInstance = geoLocationElement.Value;
+                                    webSpaceInstance.GeoLocation = geoLocationInstance;
                                 }
-                            }
-                            
-                            XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoLocationElement != null)
-                            {
-                                string geoLocationInstance = geoLocationElement.Value;
-                                webSpaceInstance.GeoLocation = geoLocationInstance;
-                            }
-                            
-                            XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoRegionElement != null)
-                            {
-                                string geoRegionInstance = geoRegionElement.Value;
-                                webSpaceInstance.GeoRegion = geoRegionInstance;
-                            }
-                            
-                            XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                webSpaceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement != null)
-                            {
-                                string planInstance = planElement.Value;
-                                webSpaceInstance.Plan = planInstance;
-                            }
-                            
-                            XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null)
-                            {
-                                WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
-                                webSpaceInstance.Status = statusInstance;
-                            }
-                            
-                            XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionElement != null)
-                            {
-                                string subscriptionInstance = subscriptionElement.Value;
-                                webSpaceInstance.Subscription = subscriptionInstance;
-                            }
-                            
-                            XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
-                            {
-                                WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
-                                webSpaceInstance.WorkerSize = workerSizeInstance;
+                                
+                                XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                                if (geoRegionElement != null)
+                                {
+                                    string geoRegionInstance = geoRegionElement.Value;
+                                    webSpaceInstance.GeoRegion = geoRegionInstance;
+                                }
+                                
+                                XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    webSpaceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                                if (planElement != null)
+                                {
+                                    string planInstance = planElement.Value;
+                                    webSpaceInstance.Plan = planInstance;
+                                }
+                                
+                                XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                                if (statusElement != null)
+                                {
+                                    WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
+                                    webSpaceInstance.Status = statusInstance;
+                                }
+                                
+                                XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
+                                if (subscriptionElement != null)
+                                {
+                                    string subscriptionInstance = subscriptionElement.Value;
+                                    webSpaceInstance.Subscription = subscriptionInstance;
+                                }
+                                
+                                XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                                if (workerSizeElement != null && !string.IsNullOrEmpty(workerSizeElement.Value))
+                                {
+                                    WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
+                                    webSpaceInstance.WorkerSize = workerSizeInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -805,7 +853,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -835,22 +883,34 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Geo Regions operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
+        public async Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListGeoRegionsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListGeoRegionsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=georegions";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("properties=georegions");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -885,13 +945,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -900,7 +960,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -908,51 +968,54 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesListGeoRegionsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesListGeoRegionsResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement geoRegionsSequenceElement = responseDoc.Element(XName.Get("GeoRegions", "http://schemas.microsoft.com/windowsazure"));
-                    if (geoRegionsSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement geoRegionsElement in geoRegionsSequenceElement.Elements(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesListGeoRegionsResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement geoRegionsSequenceElement = responseDoc.Element(XName.Get("GeoRegions", "http://schemas.microsoft.com/windowsazure"));
+                        if (geoRegionsSequenceElement != null)
                         {
-                            WebSpacesListGeoRegionsResponse.GeoRegion geoRegionInstance = new WebSpacesListGeoRegionsResponse.GeoRegion();
-                            result.GeoRegions.Add(geoRegionInstance);
-                            
-                            XElement descriptionElement = geoRegionsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
+                            foreach (XElement geoRegionsElement in geoRegionsSequenceElement.Elements(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string descriptionInstance = descriptionElement.Value;
-                                geoRegionInstance.Description = descriptionInstance;
-                            }
-                            
-                            XElement nameElement = geoRegionsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                geoRegionInstance.Name = nameInstance;
-                            }
-                            
-                            XElement sortOrderElement = geoRegionsElement.Element(XName.Get("SortOrder", "http://schemas.microsoft.com/windowsazure"));
-                            if (sortOrderElement != null && string.IsNullOrEmpty(sortOrderElement.Value) == false)
-                            {
-                                bool isNil = false;
-                                XAttribute nilAttribute = sortOrderElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute != null)
+                                WebSpacesListGeoRegionsResponse.GeoRegion geoRegionInstance = new WebSpacesListGeoRegionsResponse.GeoRegion();
+                                result.GeoRegions.Add(geoRegionInstance);
+                                
+                                XElement descriptionElement = geoRegionsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                if (descriptionElement != null)
                                 {
-                                    isNil = nilAttribute.Value == "true";
+                                    string descriptionInstance = descriptionElement.Value;
+                                    geoRegionInstance.Description = descriptionInstance;
                                 }
-                                if (isNil == false)
+                                
+                                XElement nameElement = geoRegionsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
                                 {
-                                    int sortOrderInstance = int.Parse(sortOrderElement.Value, CultureInfo.InvariantCulture);
-                                    geoRegionInstance.SortOrder = sortOrderInstance;
+                                    string nameInstance = nameElement.Value;
+                                    geoRegionInstance.Name = nameInstance;
+                                }
+                                
+                                XElement sortOrderElement = geoRegionsElement.Element(XName.Get("SortOrder", "http://schemas.microsoft.com/windowsazure"));
+                                if (sortOrderElement != null && !string.IsNullOrEmpty(sortOrderElement.Value))
+                                {
+                                    bool isNil = false;
+                                    XAttribute nilAttribute = sortOrderElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                    if (nilAttribute != null)
+                                    {
+                                        isNil = nilAttribute.Value == "true";
+                                    }
+                                    if (isNil == false)
+                                    {
+                                        int sortOrderInstance = int.Parse(sortOrderElement.Value, CultureInfo.InvariantCulture);
+                                        geoRegionInstance.SortOrder = sortOrderInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -961,7 +1024,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -991,22 +1054,34 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Publishing Users operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken)
+        public async Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListPublishingUsersAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListPublishingUsersAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=publishingUsers";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("properties=publishingUsers");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1041,13 +1116,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1056,7 +1131,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1064,24 +1139,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesListPublishingUsersResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesListPublishingUsersResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement arrayOfstringSequenceElement = responseDoc.Element(XName.Get("ArrayOfstring", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
-                    if (arrayOfstringSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement arrayOfstringElement in arrayOfstringSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesListPublishingUsersResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement arrayOfstringSequenceElement = responseDoc.Element(XName.Get("ArrayOfstring", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                        if (arrayOfstringSequenceElement != null)
                         {
-                            WebSpacesListPublishingUsersResponse.User stringInstance = new WebSpacesListPublishingUsersResponse.User();
-                            result.Users.Add(stringInstance);
-                            
-                            string stringInstance2 = arrayOfstringElement.Value;
-                            stringInstance.Name = stringInstance2;
+                            foreach (XElement arrayOfstringElement in arrayOfstringSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                            {
+                                WebSpacesListPublishingUsersResponse.User stringInstance = new WebSpacesListPublishingUsersResponse.User();
+                                result.Users.Add(stringInstance);
+                                
+                                string stringInstance2 = arrayOfstringElement.Value;
+                                stringInstance.Name = stringInstance2;
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1090,7 +1168,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1129,7 +1207,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Web Sites operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken)
+        public async Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -1138,22 +1216,35 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("webSpaceName", webSpaceName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListWebSitesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListWebSitesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces/";
+            url = url + Uri.EscapeDataString(webSpaceName);
+            url = url + "/sites";
+            List<string> queryParameters = new List<string>();
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
-                url = url + "&propertiesToInclude=" + Uri.EscapeDataString(string.Join(",", parameters.PropertiesToInclude));
+                queryParameters.Add("propertiesToInclude=" + Uri.EscapeDataString(string.Join(",", parameters.PropertiesToInclude)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1189,13 +1280,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1204,7 +1295,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1212,226 +1303,229 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesListWebSitesResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSpacesListWebSitesResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement sitesSequenceElement = responseDoc.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
-                    if (sitesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("Site", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSpacesListWebSitesResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement sitesSequenceElement = responseDoc.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
+                        if (sitesSequenceElement != null)
                         {
-                            WebSite siteInstance = new WebSite();
-                            result.WebSites.Add(siteInstance);
-                            
-                            XElement adminEnabledElement = sitesElement.Element(XName.Get("AdminEnabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (adminEnabledElement != null && string.IsNullOrEmpty(adminEnabledElement.Value) == false)
+                            foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("Site", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                bool adminEnabledInstance = bool.Parse(adminEnabledElement.Value);
-                                siteInstance.AdminEnabled = adminEnabledInstance;
-                            }
-                            
-                            XElement availabilityStateElement = sitesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (availabilityStateElement != null && string.IsNullOrEmpty(availabilityStateElement.Value) == false)
-                            {
-                                WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
-                                siteInstance.AvailabilityState = availabilityStateInstance;
-                            }
-                            
-                            XElement skuElement = sitesElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
-                            if (skuElement != null)
-                            {
-                                SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
-                                siteInstance.Sku = skuInstance;
-                            }
-                            
-                            XElement enabledElement = sitesElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (enabledElement != null && string.IsNullOrEmpty(enabledElement.Value) == false)
-                            {
-                                bool enabledInstance = bool.Parse(enabledElement.Value);
-                                siteInstance.Enabled = enabledInstance;
-                            }
-                            
-                            XElement enabledHostNamesSequenceElement = sitesElement.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
-                            if (enabledHostNamesSequenceElement != null)
-                            {
-                                foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                {
-                                    siteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
-                                }
-                            }
-                            
-                            XElement hostNameSslStatesSequenceElement = sitesElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostNameSslStatesSequenceElement != null)
-                            {
-                                foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                    siteInstance.HostNameSslStates.Add(hostNameSslStateInstance);
-                                    
-                                    XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement != null)
-                                    {
-                                        string nameInstance = nameElement.Value;
-                                        hostNameSslStateInstance.Name = nameInstance;
-                                    }
-                                    
-                                    XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
-                                    if (sslStateElement != null && string.IsNullOrEmpty(sslStateElement.Value) == false)
-                                    {
-                                        WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
-                                        hostNameSslStateInstance.SslState = sslStateInstance;
-                                    }
-                                    
-                                    XElement thumbprintElement = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (thumbprintElement != null)
-                                    {
-                                        bool isNil = false;
-                                        XAttribute nilAttribute = thumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute != null)
-                                        {
-                                            isNil = nilAttribute.Value == "true";
-                                        }
-                                        if (isNil == false)
-                                        {
-                                            string thumbprintInstance = thumbprintElement.Value;
-                                            hostNameSslStateInstance.Thumbprint = thumbprintInstance;
-                                        }
-                                    }
-                                    
-                                    XElement virtualIPElement = hostNameSslStatesElement.Element(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure"));
-                                    if (virtualIPElement != null)
-                                    {
-                                        bool isNil2 = false;
-                                        XAttribute nilAttribute2 = virtualIPElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute2 != null)
-                                        {
-                                            isNil2 = nilAttribute2.Value == "true";
-                                        }
-                                        if (isNil2 == false)
-                                        {
-                                            string virtualIPInstance = virtualIPElement.Value;
-                                            hostNameSslStateInstance.VirtualIP = virtualIPInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            XElement hostNamesSequenceElement = sitesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostNamesSequenceElement != null)
-                            {
-                                foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                {
-                                    siteInstance.HostNames.Add(hostNamesElement.Value);
-                                }
-                            }
-                            
-                            XElement lastModifiedTimeUtcElement = sitesElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastModifiedTimeUtcElement != null && string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value) == false)
-                            {
-                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
-                                siteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
-                            }
-                            
-                            XElement nameElement2 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement2 != null)
-                            {
-                                string nameInstance2 = nameElement2.Value;
-                                siteInstance.Name = nameInstance2;
-                            }
-                            
-                            XElement repositorySiteNameElement = sitesElement.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
-                            if (repositorySiteNameElement != null)
-                            {
-                                string repositorySiteNameInstance = repositorySiteNameElement.Value;
-                                siteInstance.RepositorySiteName = repositorySiteNameInstance;
-                            }
-                            
-                            XElement runtimeAvailabilityStateElement = sitesElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (runtimeAvailabilityStateElement != null && string.IsNullOrEmpty(runtimeAvailabilityStateElement.Value) == false)
-                            {
-                                WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
-                                siteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
-                            }
-                            
-                            XElement selfLinkElement = sitesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
-                            {
-                                Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
-                                siteInstance.Uri = selfLinkInstance;
-                            }
-                            
-                            XElement serverFarmElement = sitesElement.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                            if (serverFarmElement != null)
-                            {
-                                string serverFarmInstance = serverFarmElement.Value;
-                                siteInstance.ServerFarm = serverFarmInstance;
-                            }
-                            
-                            XElement sitePropertiesElement = sitesElement.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
-                            if (sitePropertiesElement != null)
-                            {
-                                WebSite.WebSiteProperties sitePropertiesInstance = new WebSite.WebSiteProperties();
-                                siteInstance.SiteProperties = sitePropertiesInstance;
+                                WebSite siteInstance = new WebSite();
+                                result.WebSites.Add(siteInstance);
                                 
-                                XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
-                                if (appSettingsSequenceElement != null)
+                                XElement adminEnabledElement = sitesElement.Element(XName.Get("AdminEnabled", "http://schemas.microsoft.com/windowsazure"));
+                                if (adminEnabledElement != null && !string.IsNullOrEmpty(adminEnabledElement.Value))
                                 {
-                                    foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                    bool adminEnabledInstance = bool.Parse(adminEnabledElement.Value);
+                                    siteInstance.AdminEnabled = adminEnabledInstance;
+                                }
+                                
+                                XElement availabilityStateElement = sitesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                                if (availabilityStateElement != null && !string.IsNullOrEmpty(availabilityStateElement.Value))
+                                {
+                                    WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
+                                    siteInstance.AvailabilityState = availabilityStateInstance;
+                                }
+                                
+                                XElement sKUElement = sitesElement.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                                if (sKUElement != null)
+                                {
+                                    SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
+                                    siteInstance.Sku = sKUInstance;
+                                }
+                                
+                                XElement enabledElement = sitesElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
+                                if (enabledElement != null && !string.IsNullOrEmpty(enabledElement.Value))
+                                {
+                                    bool enabledInstance = bool.Parse(enabledElement.Value);
+                                    siteInstance.Enabled = enabledInstance;
+                                }
+                                
+                                XElement enabledHostNamesSequenceElement = sitesElement.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
+                                if (enabledHostNamesSequenceElement != null)
+                                {
+                                    foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                     {
-                                        string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        string appSettingsValue = appSettingsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        sitePropertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
+                                        siteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
                                     }
                                 }
                                 
-                                XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
-                                if (metadataSequenceElement != null)
+                                XElement hostNameSslStatesSequenceElement = sitesElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
+                                if (hostNameSslStatesSequenceElement != null)
                                 {
-                                    foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                    foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        string metadataValue = metadataElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        sitePropertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                        WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
+                                        siteInstance.HostNameSslStates.Add(hostNameSslStateInstance);
+                                        
+                                        XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement != null)
+                                        {
+                                            string nameInstance = nameElement.Value;
+                                            hostNameSslStateInstance.Name = nameInstance;
+                                        }
+                                        
+                                        XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
+                                        if (sslStateElement != null && !string.IsNullOrEmpty(sslStateElement.Value))
+                                        {
+                                            WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
+                                            hostNameSslStateInstance.SslState = sslStateInstance;
+                                        }
+                                        
+                                        XElement thumbprintElement = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                        if (thumbprintElement != null)
+                                        {
+                                            bool isNil = false;
+                                            XAttribute nilAttribute = thumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute != null)
+                                            {
+                                                isNil = nilAttribute.Value == "true";
+                                            }
+                                            if (isNil == false)
+                                            {
+                                                string thumbprintInstance = thumbprintElement.Value;
+                                                hostNameSslStateInstance.Thumbprint = thumbprintInstance;
+                                            }
+                                        }
+                                        
+                                        XElement virtualIPElement = hostNameSslStatesElement.Element(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure"));
+                                        if (virtualIPElement != null)
+                                        {
+                                            bool isNil2 = false;
+                                            XAttribute nilAttribute2 = virtualIPElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute2 != null)
+                                            {
+                                                isNil2 = nilAttribute2.Value == "true";
+                                            }
+                                            if (isNil2 == false)
+                                            {
+                                                string virtualIPInstance = virtualIPElement.Value;
+                                                hostNameSslStateInstance.VirtualIP = virtualIPInstance;
+                                            }
+                                        }
                                     }
                                 }
                                 
-                                XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
-                                if (propertiesSequenceElement != null)
+                                XElement hostNamesSequenceElement = sitesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
+                                if (hostNamesSequenceElement != null)
                                 {
-                                    foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                    foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                     {
-                                        string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        string propertiesValue = propertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        sitePropertiesInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        siteInstance.HostNames.Add(hostNamesElement.Value);
                                     }
                                 }
-                            }
-                            
-                            XElement stateElement = sitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                siteInstance.State = stateInstance;
-                            }
-                            
-                            XElement usageStateElement = sitesElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
-                            if (usageStateElement != null && string.IsNullOrEmpty(usageStateElement.Value) == false)
-                            {
-                                WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
-                                siteInstance.UsageState = usageStateInstance;
-                            }
-                            
-                            XElement webSpaceElement = sitesElement.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
-                            if (webSpaceElement != null)
-                            {
-                                string webSpaceInstance = webSpaceElement.Value;
-                                siteInstance.WebSpace = webSpaceInstance;
+                                
+                                XElement lastModifiedTimeUtcElement = sitesElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
+                                if (lastModifiedTimeUtcElement != null && !string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value))
+                                {
+                                    DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                    siteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
+                                }
+                                
+                                XElement nameElement2 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
+                                {
+                                    string nameInstance2 = nameElement2.Value;
+                                    siteInstance.Name = nameInstance2;
+                                }
+                                
+                                XElement repositorySiteNameElement = sitesElement.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
+                                if (repositorySiteNameElement != null)
+                                {
+                                    string repositorySiteNameInstance = repositorySiteNameElement.Value;
+                                    siteInstance.RepositorySiteName = repositorySiteNameInstance;
+                                }
+                                
+                                XElement runtimeAvailabilityStateElement = sitesElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                                if (runtimeAvailabilityStateElement != null && !string.IsNullOrEmpty(runtimeAvailabilityStateElement.Value))
+                                {
+                                    WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
+                                    siteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
+                                }
+                                
+                                XElement selfLinkElement = sitesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (selfLinkElement != null)
+                                {
+                                    Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
+                                    siteInstance.Uri = selfLinkInstance;
+                                }
+                                
+                                XElement serverFarmElement = sitesElement.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                                if (serverFarmElement != null)
+                                {
+                                    string serverFarmInstance = serverFarmElement.Value;
+                                    siteInstance.ServerFarm = serverFarmInstance;
+                                }
+                                
+                                XElement sitePropertiesElement = sitesElement.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
+                                if (sitePropertiesElement != null)
+                                {
+                                    WebSite.WebSiteProperties sitePropertiesInstance = new WebSite.WebSiteProperties();
+                                    siteInstance.SiteProperties = sitePropertiesInstance;
+                                    
+                                    XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
+                                    if (appSettingsSequenceElement != null)
+                                    {
+                                        foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                            string appSettingsValue = appSettingsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                            sitePropertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
+                                        }
+                                    }
+                                    
+                                    XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
+                                    if (metadataSequenceElement != null)
+                                    {
+                                        foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                            string metadataValue = metadataElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                            sitePropertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                        }
+                                    }
+                                    
+                                    XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
+                                    if (propertiesSequenceElement != null)
+                                    {
+                                        foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                            string propertiesValue = propertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                            sitePropertiesInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                }
+                                
+                                XElement stateElement = sitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                if (stateElement != null)
+                                {
+                                    string stateInstance = stateElement.Value;
+                                    siteInstance.State = stateInstance;
+                                }
+                                
+                                XElement usageStateElement = sitesElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
+                                if (usageStateElement != null && !string.IsNullOrEmpty(usageStateElement.Value))
+                                {
+                                    WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
+                                    siteInstance.UsageState = usageStateInstance;
+                                }
+                                
+                                XElement webSpaceElement = sitesElement.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
+                                if (webSpaceElement != null)
+                                {
+                                    string webSpaceInstance = webSpaceElement.Value;
+                                    siteInstance.WebSpace = webSpaceInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1440,7 +1534,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

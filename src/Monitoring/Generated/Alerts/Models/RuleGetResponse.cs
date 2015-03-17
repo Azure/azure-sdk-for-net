@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
     /// <summary>
     /// The Get Rule operation response.
     /// </summary>
-    public partial class RuleGetResponse : OperationResponse
+    public partial class RuleGetResponse : AzureOperationResponse
     {
         private Rule _rule;
         

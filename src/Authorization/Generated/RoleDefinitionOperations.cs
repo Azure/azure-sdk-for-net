@@ -26,11 +26,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Authorization
@@ -79,19 +77,31 @@ namespace Microsoft.Azure.Management.Authorization
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("roleDefinitionName", roleDefinitionName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Authorization/roleDefinitions/" + roleDefinitionName + "?";
-            url = url + "api-version=2014-07-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
+            url = url + Uri.EscapeDataString(roleDefinitionName.ToString());
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -114,7 +124,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -126,13 +136,13 @@ namespace Microsoft.Azure.Management.Authorization
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -141,7 +151,7 @@ namespace Microsoft.Azure.Management.Authorization
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -149,105 +159,108 @@ namespace Microsoft.Azure.Management.Authorization
                     // Create Result
                     RoleDefinitionGetResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RoleDefinitionGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        RoleDefinition roleDefinitionInstance = new RoleDefinition();
-                        result.RoleDefinition = roleDefinitionInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleDefinitionGetResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            roleDefinitionInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Guid nameInstance = Guid.Parse(((string)nameValue));
-                            roleDefinitionInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            roleDefinitionInstance.Type = typeInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
-                            roleDefinitionInstance.Properties = propertiesInstance;
+                            RoleDefinition roleDefinitionInstance = new RoleDefinition();
+                            result.RoleDefinition = roleDefinitionInstance;
                             
-                            JToken roleNameValue = propertiesValue["roleName"];
-                            if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string roleNameInstance = ((string)roleNameValue);
-                                propertiesInstance.RoleName = roleNameInstance;
+                                string idInstance = ((string)idValue);
+                                roleDefinitionInstance.Id = idInstance;
                             }
                             
-                            JToken descriptionValue = propertiesValue["description"];
-                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string descriptionInstance = ((string)descriptionValue);
-                                propertiesInstance.Description = descriptionInstance;
+                                Guid nameInstance = Guid.Parse(((string)nameValue));
+                                roleDefinitionInstance.Name = nameInstance;
                             }
                             
-                            JToken scopeValue = propertiesValue["scope"];
-                            if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string scopeInstance = ((string)scopeValue);
-                                propertiesInstance.Scope = scopeInstance;
+                                string typeInstance = ((string)typeValue);
+                                roleDefinitionInstance.Type = typeInstance;
                             }
                             
-                            JToken typeValue2 = propertiesValue["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                propertiesInstance.Type = typeInstance2;
-                            }
-                            
-                            JToken permissionsArray = propertiesValue["permissions"];
-                            if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken permissionsValue in ((JArray)permissionsArray))
+                                RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
+                                roleDefinitionInstance.Properties = propertiesInstance;
+                                
+                                JToken roleNameValue = propertiesValue["roleName"];
+                                if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
                                 {
-                                    Permission permissionInstance = new Permission();
-                                    propertiesInstance.Permissions.Add(permissionInstance);
-                                    
-                                    JToken actionsArray = permissionsValue["actions"];
-                                    if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                    string roleNameInstance = ((string)roleNameValue);
+                                    propertiesInstance.RoleName = roleNameInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
+                                
+                                JToken typeValue2 = propertiesValue["type"];
+                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                {
+                                    string typeInstance2 = ((string)typeValue2);
+                                    propertiesInstance.Type = typeInstance2;
+                                }
+                                
+                                JToken permissionsArray = propertiesValue["permissions"];
+                                if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken permissionsValue in ((JArray)permissionsArray))
                                     {
-                                        foreach (JToken actionsValue in ((JArray)actionsArray))
+                                        Permission permissionInstance = new Permission();
+                                        propertiesInstance.Permissions.Add(permissionInstance);
+                                        
+                                        JToken actionsArray = permissionsValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                         {
-                                            permissionInstance.Actions.Add(((string)actionsValue));
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                permissionInstance.Actions.Add(((string)actionsValue));
+                                            }
                                         }
-                                    }
-                                    
-                                    JToken notActionsArray = permissionsValue["notActions"];
-                                    if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                        
+                                        JToken notActionsArray = permissionsValue["notActions"];
+                                        if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
                                         {
-                                            permissionInstance.NotActions.Add(((string)notActionsValue));
+                                            foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                            {
+                                                permissionInstance.NotActions.Add(((string)notActionsValue));
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -256,7 +269,7 @@ namespace Microsoft.Azure.Management.Authorization
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -298,19 +311,26 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("roleDefinitionId", roleDefinitionId);
-                Tracing.Enter(invocationId, this, "GetByIdAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetByIdAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + roleDefinitionId.Trim() + "?";
-            url = url + "api-version=2014-07-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + roleDefinitionId;
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -333,7 +353,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -345,13 +365,13 @@ namespace Microsoft.Azure.Management.Authorization
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -360,7 +380,7 @@ namespace Microsoft.Azure.Management.Authorization
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -368,105 +388,108 @@ namespace Microsoft.Azure.Management.Authorization
                     // Create Result
                     RoleDefinitionGetResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RoleDefinitionGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        RoleDefinition roleDefinitionInstance = new RoleDefinition();
-                        result.RoleDefinition = roleDefinitionInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleDefinitionGetResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            roleDefinitionInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Guid nameInstance = Guid.Parse(((string)nameValue));
-                            roleDefinitionInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            roleDefinitionInstance.Type = typeInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
-                            roleDefinitionInstance.Properties = propertiesInstance;
+                            RoleDefinition roleDefinitionInstance = new RoleDefinition();
+                            result.RoleDefinition = roleDefinitionInstance;
                             
-                            JToken roleNameValue = propertiesValue["roleName"];
-                            if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string roleNameInstance = ((string)roleNameValue);
-                                propertiesInstance.RoleName = roleNameInstance;
+                                string idInstance = ((string)idValue);
+                                roleDefinitionInstance.Id = idInstance;
                             }
                             
-                            JToken descriptionValue = propertiesValue["description"];
-                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string descriptionInstance = ((string)descriptionValue);
-                                propertiesInstance.Description = descriptionInstance;
+                                Guid nameInstance = Guid.Parse(((string)nameValue));
+                                roleDefinitionInstance.Name = nameInstance;
                             }
                             
-                            JToken scopeValue = propertiesValue["scope"];
-                            if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string scopeInstance = ((string)scopeValue);
-                                propertiesInstance.Scope = scopeInstance;
+                                string typeInstance = ((string)typeValue);
+                                roleDefinitionInstance.Type = typeInstance;
                             }
                             
-                            JToken typeValue2 = propertiesValue["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                propertiesInstance.Type = typeInstance2;
-                            }
-                            
-                            JToken permissionsArray = propertiesValue["permissions"];
-                            if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken permissionsValue in ((JArray)permissionsArray))
+                                RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
+                                roleDefinitionInstance.Properties = propertiesInstance;
+                                
+                                JToken roleNameValue = propertiesValue["roleName"];
+                                if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
                                 {
-                                    Permission permissionInstance = new Permission();
-                                    propertiesInstance.Permissions.Add(permissionInstance);
-                                    
-                                    JToken actionsArray = permissionsValue["actions"];
-                                    if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                    string roleNameInstance = ((string)roleNameValue);
+                                    propertiesInstance.RoleName = roleNameInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
+                                
+                                JToken typeValue2 = propertiesValue["type"];
+                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                {
+                                    string typeInstance2 = ((string)typeValue2);
+                                    propertiesInstance.Type = typeInstance2;
+                                }
+                                
+                                JToken permissionsArray = propertiesValue["permissions"];
+                                if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken permissionsValue in ((JArray)permissionsArray))
                                     {
-                                        foreach (JToken actionsValue in ((JArray)actionsArray))
+                                        Permission permissionInstance = new Permission();
+                                        propertiesInstance.Permissions.Add(permissionInstance);
+                                        
+                                        JToken actionsArray = permissionsValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                         {
-                                            permissionInstance.Actions.Add(((string)actionsValue));
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                permissionInstance.Actions.Add(((string)actionsValue));
+                                            }
                                         }
-                                    }
-                                    
-                                    JToken notActionsArray = permissionsValue["notActions"];
-                                    if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                        
+                                        JToken notActionsArray = permissionsValue["notActions"];
+                                        if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
                                         {
-                                            permissionInstance.NotActions.Add(((string)notActionsValue));
+                                            foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                            {
+                                                permissionInstance.NotActions.Add(((string)notActionsValue));
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -475,7 +498,7 @@ namespace Microsoft.Azure.Management.Authorization
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -510,18 +533,29 @@ namespace Microsoft.Azure.Management.Authorization
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Authorization/roleDefinitions?";
-            url = url + "api-version=2014-07-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Authorization/roleDefinitions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -544,7 +578,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -556,13 +590,13 @@ namespace Microsoft.Azure.Management.Authorization
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -571,7 +605,7 @@ namespace Microsoft.Azure.Management.Authorization
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -579,103 +613,106 @@ namespace Microsoft.Azure.Management.Authorization
                     // Create Result
                     RoleDefinitionListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RoleDefinitionListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleDefinitionListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                RoleDefinition roleDefinitionInstance = new RoleDefinition();
-                                result.RoleDefinitions.Add(roleDefinitionInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    roleDefinitionInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    Guid nameInstance = Guid.Parse(((string)nameValue));
-                                    roleDefinitionInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    roleDefinitionInstance.Type = typeInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
-                                    roleDefinitionInstance.Properties = propertiesInstance;
+                                    RoleDefinition roleDefinitionInstance = new RoleDefinition();
+                                    result.RoleDefinitions.Add(roleDefinitionInstance);
                                     
-                                    JToken roleNameValue = propertiesValue["roleName"];
-                                    if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string roleNameInstance = ((string)roleNameValue);
-                                        propertiesInstance.RoleName = roleNameInstance;
+                                        string idInstance = ((string)idValue);
+                                        roleDefinitionInstance.Id = idInstance;
                                     }
                                     
-                                    JToken descriptionValue = propertiesValue["description"];
-                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance = ((string)descriptionValue);
-                                        propertiesInstance.Description = descriptionInstance;
+                                        Guid nameInstance = Guid.Parse(((string)nameValue));
+                                        roleDefinitionInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken scopeValue = propertiesValue["scope"];
-                                    if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string scopeInstance = ((string)scopeValue);
-                                        propertiesInstance.Scope = scopeInstance;
+                                        string typeInstance = ((string)typeValue);
+                                        roleDefinitionInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        propertiesInstance.Type = typeInstance2;
-                                    }
-                                    
-                                    JToken permissionsArray = propertiesValue["permissions"];
-                                    if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken permissionsValue in ((JArray)permissionsArray))
+                                        RoleDefinitionProperties propertiesInstance = new RoleDefinitionProperties();
+                                        roleDefinitionInstance.Properties = propertiesInstance;
+                                        
+                                        JToken roleNameValue = propertiesValue["roleName"];
+                                        if (roleNameValue != null && roleNameValue.Type != JTokenType.Null)
                                         {
-                                            Permission permissionInstance = new Permission();
-                                            propertiesInstance.Permissions.Add(permissionInstance);
-                                            
-                                            JToken actionsArray = permissionsValue["actions"];
-                                            if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                            string roleNameInstance = ((string)roleNameValue);
+                                            propertiesInstance.RoleName = roleNameInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
+                                        
+                                        JToken typeValue2 = propertiesValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance2 = ((string)typeValue2);
+                                            propertiesInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken permissionsArray = propertiesValue["permissions"];
+                                        if (permissionsArray != null && permissionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken permissionsValue in ((JArray)permissionsArray))
                                             {
-                                                foreach (JToken actionsValue in ((JArray)actionsArray))
+                                                Permission permissionInstance = new Permission();
+                                                propertiesInstance.Permissions.Add(permissionInstance);
+                                                
+                                                JToken actionsArray = permissionsValue["actions"];
+                                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                                 {
-                                                    permissionInstance.Actions.Add(((string)actionsValue));
+                                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                                    {
+                                                        permissionInstance.Actions.Add(((string)actionsValue));
+                                                    }
                                                 }
-                                            }
-                                            
-                                            JToken notActionsArray = permissionsValue["notActions"];
-                                            if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                                
+                                                JToken notActionsArray = permissionsValue["notActions"];
+                                                if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
                                                 {
-                                                    permissionInstance.NotActions.Add(((string)notActionsValue));
+                                                    foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                                    {
+                                                        permissionInstance.NotActions.Add(((string)notActionsValue));
+                                                    }
                                                 }
                                             }
                                         }
@@ -683,8 +720,8 @@ namespace Microsoft.Azure.Management.Authorization
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -693,7 +730,7 @@ namespace Microsoft.Azure.Management.Authorization
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

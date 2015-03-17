@@ -29,12 +29,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Management.StreamAnalytics;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
@@ -107,32 +104,43 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     throw new ArgumentNullException("parameters.Transformation.Name");
                 }
-                if (parameters.Transformation.Properties == null)
-                {
-                    throw new ArgumentNullException("parameters.Transformation.Properties");
-                }
-                if (parameters.Transformation.Properties.Query == null)
-                {
-                    throw new ArgumentNullException("parameters.Transformation.Properties.Query");
-                }
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(parameters.Transformation.Name) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/transformations/";
+            if (parameters.Transformation != null && parameters.Transformation.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Transformation.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -172,23 +180,29 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     transformationCreateOrUpdateParametersValue["name"] = parameters.Transformation.Name;
                     
-                    JObject propertiesValue = new JObject();
-                    transformationCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                    
-                    if (parameters.Transformation.Properties.Etag != null)
+                    if (parameters.Transformation.Properties != null)
                     {
-                        propertiesValue["etag"] = parameters.Transformation.Properties.Etag;
+                        JObject propertiesValue = new JObject();
+                        transformationCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                        
+                        if (parameters.Transformation.Properties.Etag != null)
+                        {
+                            propertiesValue["etag"] = parameters.Transformation.Properties.Etag;
+                        }
+                        
+                        if (parameters.Transformation.Properties.StreamingUnits != null)
+                        {
+                            propertiesValue["streamingUnits"] = parameters.Transformation.Properties.StreamingUnits.Value;
+                        }
+                        
+                        if (parameters.Transformation.Properties.Query != null)
+                        {
+                            propertiesValue["query"] = parameters.Transformation.Properties.Query;
+                        }
                     }
-                    
-                    if (parameters.Transformation.Properties.StreamingUnits != null)
-                    {
-                        propertiesValue["streamingUnits"] = parameters.Transformation.Properties.StreamingUnits.Value;
-                    }
-                    
-                    propertiesValue["query"] = parameters.Transformation.Properties.Query;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -198,13 +212,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -213,7 +227,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -221,60 +235,67 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     // Create Result
                     TransformationCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TransformationCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Transformation transformationInstance = new Transformation();
-                        result.Transformation = transformationInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TransformationCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            transformationInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationInstance.Properties = propertiesInstance;
+                            Transformation transformationInstance = new Transformation();
+                            result.Transformation = transformationInstance;
                             
-                            JToken etagValue = propertiesValue2["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string etagInstance = ((string)etagValue);
-                                propertiesInstance.Etag = etagInstance;
+                                string nameInstance = ((string)nameValue);
+                                transformationInstance.Name = nameInstance;
                             }
                             
-                            JToken streamingUnitsValue = propertiesValue2["streamingUnits"];
-                            if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                int streamingUnitsInstance = ((int)streamingUnitsValue);
-                                propertiesInstance.StreamingUnits = streamingUnitsInstance;
-                            }
-                            
-                            JToken queryValue = propertiesValue2["query"];
-                            if (queryValue != null && queryValue.Type != JTokenType.Null)
-                            {
-                                string queryInstance = ((string)queryValue);
-                                propertiesInstance.Query = queryInstance;
+                                TransformationProperties propertiesInstance = new TransformationProperties();
+                                transformationInstance.Properties = propertiesInstance;
+                                
+                                JToken etagValue = propertiesValue2["etag"];
+                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                {
+                                    string etagInstance = ((string)etagValue);
+                                    propertiesInstance.Etag = etagInstance;
+                                }
+                                
+                                JToken streamingUnitsValue = propertiesValue2["streamingUnits"];
+                                if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                                {
+                                    int streamingUnitsInstance = ((int)streamingUnitsValue);
+                                    propertiesInstance.StreamingUnits = streamingUnitsInstance;
+                                }
+                                
+                                JToken queryValue = propertiesValue2["query"];
+                                if (queryValue != null && queryValue.Type != JTokenType.Null)
+                                {
+                                    string queryInstance = ((string)queryValue);
+                                    propertiesInstance.Query = queryInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Transformation.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -283,7 +304,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -353,22 +374,38 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("transformationName", transformationName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(transformationName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/transformations/";
+            url = url + Uri.EscapeDataString(transformationName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -408,13 +445,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -423,7 +460,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -431,60 +468,67 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     // Create Result
                     TransformationCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TransformationCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Transformation transformationInstance = new Transformation();
-                        result.Transformation = transformationInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TransformationCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            transformationInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationInstance.Properties = propertiesInstance;
+                            Transformation transformationInstance = new Transformation();
+                            result.Transformation = transformationInstance;
                             
-                            JToken etagValue = propertiesValue["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string etagInstance = ((string)etagValue);
-                                propertiesInstance.Etag = etagInstance;
+                                string nameInstance = ((string)nameValue);
+                                transformationInstance.Name = nameInstance;
                             }
                             
-                            JToken streamingUnitsValue = propertiesValue["streamingUnits"];
-                            if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                int streamingUnitsInstance = ((int)streamingUnitsValue);
-                                propertiesInstance.StreamingUnits = streamingUnitsInstance;
-                            }
-                            
-                            JToken queryValue = propertiesValue["query"];
-                            if (queryValue != null && queryValue.Type != JTokenType.Null)
-                            {
-                                string queryInstance = ((string)queryValue);
-                                propertiesInstance.Query = queryInstance;
+                                TransformationProperties propertiesInstance = new TransformationProperties();
+                                transformationInstance.Properties = propertiesInstance;
+                                
+                                JToken etagValue = propertiesValue["etag"];
+                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                {
+                                    string etagInstance = ((string)etagValue);
+                                    propertiesInstance.Etag = etagInstance;
+                                }
+                                
+                                JToken streamingUnitsValue = propertiesValue["streamingUnits"];
+                                if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                                {
+                                    int streamingUnitsInstance = ((int)streamingUnitsValue);
+                                    propertiesInstance.StreamingUnits = streamingUnitsInstance;
+                                }
+                                
+                                JToken queryValue = propertiesValue["query"];
+                                if (queryValue != null && queryValue.Type != JTokenType.Null)
+                                {
+                                    string queryInstance = ((string)queryValue);
+                                    propertiesInstance.Query = queryInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Transformation.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -493,7 +537,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -550,21 +594,37 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("transformationName", transformationName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(transformationName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/transformations/";
+            url = url + Uri.EscapeDataString(transformationName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -599,13 +659,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -614,7 +674,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -622,60 +682,67 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     // Create Result
                     TransformationsGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TransformationsGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Transformation transformationInstance = new Transformation();
-                        result.Transformation = transformationInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TransformationsGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            transformationInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationInstance.Properties = propertiesInstance;
+                            Transformation transformationInstance = new Transformation();
+                            result.Transformation = transformationInstance;
                             
-                            JToken etagValue = propertiesValue["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string etagInstance = ((string)etagValue);
-                                propertiesInstance.Etag = etagInstance;
+                                string nameInstance = ((string)nameValue);
+                                transformationInstance.Name = nameInstance;
                             }
                             
-                            JToken streamingUnitsValue = propertiesValue["streamingUnits"];
-                            if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                int streamingUnitsInstance = ((int)streamingUnitsValue);
-                                propertiesInstance.StreamingUnits = streamingUnitsInstance;
-                            }
-                            
-                            JToken queryValue = propertiesValue["query"];
-                            if (queryValue != null && queryValue.Type != JTokenType.Null)
-                            {
-                                string queryInstance = ((string)queryValue);
-                                propertiesInstance.Query = queryInstance;
+                                TransformationProperties propertiesInstance = new TransformationProperties();
+                                transformationInstance.Properties = propertiesInstance;
+                                
+                                JToken etagValue = propertiesValue["etag"];
+                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                {
+                                    string etagInstance = ((string)etagValue);
+                                    propertiesInstance.Etag = etagInstance;
+                                }
+                                
+                                JToken streamingUnitsValue = propertiesValue["streamingUnits"];
+                                if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                                {
+                                    int streamingUnitsInstance = ((int)streamingUnitsValue);
+                                    propertiesInstance.StreamingUnits = streamingUnitsInstance;
+                                }
+                                
+                                JToken queryValue = propertiesValue["query"];
+                                if (queryValue != null && queryValue.Type != JTokenType.Null)
+                                {
+                                    string queryInstance = ((string)queryValue);
+                                    propertiesInstance.Query = queryInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Transformation.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -684,7 +751,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -728,7 +795,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the transformation patch operation.
         /// </returns>
-        public async Task<TransformationPatchResponse> UpdateAsync(string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters, CancellationToken cancellationToken)
+        public async Task<TransformationPatchResponse> PatchAsync(string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -751,28 +818,40 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 throw new ArgumentNullException("parameters.Properties");
             }
-            if (parameters.Properties.Query == null)
-            {
-                throw new ArgumentNullException("parameters.Properties.Query");
-            }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("transformationName", transformationName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(transformationName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/transformations/";
+            url = url + Uri.EscapeDataString(transformationName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -821,9 +900,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     propertiesValue["streamingUnits"] = parameters.Properties.StreamingUnits.Value;
                 }
                 
-                propertiesValue["query"] = parameters.Properties.Query;
+                if (parameters.Properties.Query != null)
+                {
+                    propertiesValue["query"] = parameters.Properties.Query;
+                }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -833,13 +915,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -848,7 +930,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -856,50 +938,57 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     // Create Result
                     TransformationPatchResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TransformationPatchResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TransformationPatchResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            TransformationProperties propertiesInstance = new TransformationProperties();
-                            result.Properties = propertiesInstance;
-                            
-                            JToken etagValue = propertiesValue2["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                string etagInstance = ((string)etagValue);
-                                propertiesInstance.Etag = etagInstance;
-                            }
-                            
-                            JToken streamingUnitsValue = propertiesValue2["streamingUnits"];
-                            if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
-                            {
-                                int streamingUnitsInstance = ((int)streamingUnitsValue);
-                                propertiesInstance.StreamingUnits = streamingUnitsInstance;
-                            }
-                            
-                            JToken queryValue = propertiesValue2["query"];
-                            if (queryValue != null && queryValue.Type != JTokenType.Null)
-                            {
-                                string queryInstance = ((string)queryValue);
-                                propertiesInstance.Query = queryInstance;
+                                TransformationProperties propertiesInstance = new TransformationProperties();
+                                result.Properties = propertiesInstance;
+                                
+                                JToken etagValue = propertiesValue2["etag"];
+                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                {
+                                    string etagInstance = ((string)etagValue);
+                                    propertiesInstance.Etag = etagInstance;
+                                }
+                                
+                                JToken streamingUnitsValue = propertiesValue2["streamingUnits"];
+                                if (streamingUnitsValue != null && streamingUnitsValue.Type != JTokenType.Null)
+                                {
+                                    int streamingUnitsInstance = ((int)streamingUnitsValue);
+                                    propertiesInstance.StreamingUnits = streamingUnitsInstance;
+                                }
+                                
+                                JToken queryValue = propertiesValue2["query"];
+                                if (queryValue != null && queryValue.Type != JTokenType.Null)
+                                {
+                                    string queryInstance = ((string)queryValue);
+                                    propertiesInstance.Query = queryInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -908,7 +997,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

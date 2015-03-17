@@ -14,18 +14,27 @@
 //
 
 using System.Net;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Common.Test.Fakes;
-using Microsoft.WindowsAzure.Common.TransientFaultHandling;
-using Xunit;
 using System.Net.Http;
+using System.Linq;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Hyak.Common.TransientFaultHandling;
+using Microsoft.Azure.Common.Test.Fakes;
+using Xunit;
+using Hyak.Common.Platform;
 
-namespace Microsoft.WindowsAzure.Common.Test
+namespace Microsoft.Azure.Common.Test
 {
     public class ServiceClientTest
     {
+        [Fact]
+        public void VerifyWebRequestHandlerCreation()
+        {
+            var someProvider = PortablePlatformAbstraction.Get<IHttpTransportHandlerProvider>(true);
+            var webRequestHandler = someProvider.CreateHttpTransportHandler();
+            Assert.IsType<WebRequestHandler>(webRequestHandler);
+        }
+
         [Fact]
         public void ClientAddHandlerToPipelineAddsHandler()
         {

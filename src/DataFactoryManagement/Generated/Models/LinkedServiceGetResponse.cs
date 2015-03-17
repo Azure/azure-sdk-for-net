@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The Get data factory linkedService operation response.
     /// </summary>
-    public partial class LinkedServiceGetResponse : OperationResponse
+    public partial class LinkedServiceGetResponse : AzureOperationResponse
     {
         private LinkedService _linkedService;
         

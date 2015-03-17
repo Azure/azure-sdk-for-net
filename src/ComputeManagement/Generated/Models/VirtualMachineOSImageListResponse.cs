@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List OS Images operation response.
     /// </summary>
-    public partial class VirtualMachineOSImageListResponse : OperationResponse, IEnumerable<VirtualMachineOSImageListResponse.VirtualMachineOSImage>
+    public partial class VirtualMachineOSImageListResponse : AzureOperationResponse, IEnumerable<VirtualMachineOSImageListResponse.VirtualMachineOSImage>
     {
         private IList<VirtualMachineOSImageListResponse.VirtualMachineOSImage> _images;
         
@@ -126,6 +126,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._eula; }
                 set { this._eula = value; }
+            }
+            
+            private string _iconUri;
+            
+            /// <summary>
+            /// Optional. Gets or sets the URI to the icon for this Operating
+            /// System Image.
+            /// </summary>
+            public string IconUri
+            {
+                get { return this._iconUri; }
+                set { this._iconUri = value; }
             }
             
             private string _imageFamily;
@@ -328,7 +340,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._showInGui = value; }
             }
             
-            private Uri _smallIconUri;
+            private string _smallIconUri;
             
             /// <summary>
             /// Optional. Specifies the URI to the small icon that is displayed
@@ -336,7 +348,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// The SmallIconUri element is only available using version
             /// 2013-03-01 or higher.
             /// </summary>
-            public Uri SmallIconUri
+            public string SmallIconUri
             {
                 get { return this._smallIconUri; }
                 set { this._smallIconUri = value; }

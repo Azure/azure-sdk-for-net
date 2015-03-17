@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Models
 {
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._objectIdFilter = value; }
         }
         
-        private Microsoft.WindowsAzure.OperationStatus? _operationStatus;
+        private Microsoft.Azure.OperationStatus? _operationStatus;
         
         /// <summary>
         /// Optional. Returns subscription operations only for the specified
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// subscription operations for an object with a specific result
         /// status. If no result status is specified, a filter is not applied.
         /// </summary>
-        public Microsoft.WindowsAzure.OperationStatus? OperationStatus
+        public Microsoft.Azure.OperationStatus? OperationStatus
         {
             get { return this._operationStatus; }
             set { this._operationStatus = value; }

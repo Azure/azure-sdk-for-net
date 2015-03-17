@@ -26,9 +26,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 using Newtonsoft.Json.Linq;
@@ -38,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
     /// <summary>
     /// Operations for managing the alert incidents.
     /// </summary>
-    internal partial class IncidentOperations : IServiceOperations<AlertsClient>, Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations
+    internal partial class IncidentOperations : IServiceOperations<AlertsClient>, IIncidentOperations
     {
         /// <summary>
         /// Initializes a new instance of the IncidentOperations class.
@@ -71,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The Get Incident operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.IncidentGetResponse> GetAsync(string incidentId, CancellationToken cancellationToken)
+        public async Task<IncidentGetResponse> GetAsync(string incidentId, CancellationToken cancellationToken)
         {
             // Validate
             if (incidentId == null)
@@ -80,18 +78,25 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("incidentId", incidentId);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertincidents/" + incidentId.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/alertincidents/";
+            url = url + Uri.EscapeDataString(incidentId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -127,13 +132,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -142,7 +147,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -150,56 +155,59 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     // Create Result
                     IncidentGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new IncidentGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new IncidentGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Incident incidentInstance = new Incident();
+                            result.Incident = incidentInstance;
+                            
+                            JToken idValue = responseDoc["Id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                incidentInstance.Id = idInstance;
+                            }
+                            
+                            JToken ruleIdValue = responseDoc["RuleId"];
+                            if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
+                            {
+                                string ruleIdInstance = ((string)ruleIdValue);
+                                incidentInstance.RuleId = ruleIdInstance;
+                            }
+                            
+                            JToken isActiveValue = responseDoc["IsActive"];
+                            if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                            {
+                                bool isActiveInstance = ((bool)isActiveValue);
+                                incidentInstance.IsActive = isActiveInstance;
+                            }
+                            
+                            JToken activatedTimeValue = responseDoc["ActivatedTime"];
+                            if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                                incidentInstance.ActivatedTime = activatedTimeInstance;
+                            }
+                            
+                            JToken resolvedTimeValue = responseDoc["ResolvedTime"];
+                            if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                                incidentInstance.ResolvedTime = resolvedTimeInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Incident incidentInstance = new Incident();
-                        result.Incident = incidentInstance;
-                        
-                        JToken idValue = responseDoc["Id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            incidentInstance.Id = idInstance;
-                        }
-                        
-                        JToken ruleIdValue = responseDoc["RuleId"];
-                        if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
-                        {
-                            string ruleIdInstance = ((string)ruleIdValue);
-                            incidentInstance.RuleId = ruleIdInstance;
-                        }
-                        
-                        JToken isActiveValue = responseDoc["IsActive"];
-                        if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
-                        {
-                            bool isActiveInstance = ((bool)isActiveValue);
-                            incidentInstance.IsActive = isActiveInstance;
-                        }
-                        
-                        JToken activatedTimeValue = responseDoc["ActivatedTime"];
-                        if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
-                            incidentInstance.ActivatedTime = activatedTimeInstance;
-                        }
-                        
-                        JToken resolvedTimeValue = responseDoc["ResolvedTime"];
-                        if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
-                            incidentInstance.ResolvedTime = resolvedTimeInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -208,7 +216,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -235,22 +243,39 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The List incidents operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.IncidentListResponse> ListActiveForSubscriptionAsync(CancellationToken cancellationToken)
+        public async Task<IncidentListResponse> ListActiveForSubscriptionAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListActiveForSubscriptionAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListActiveForSubscriptionAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertincidents?$filter=IsActive eq true";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/alertincidents";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add("IsActive eq true");
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -286,13 +311,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -301,7 +326,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -309,63 +334,66 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     // Create Result
                     IncidentListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new IncidentListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new IncidentListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["Value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Incident incidentInstance = new Incident();
-                                result.Value.Add(incidentInstance);
-                                
-                                JToken idValue = valueValue["Id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    incidentInstance.Id = idInstance;
-                                }
-                                
-                                JToken ruleIdValue = valueValue["RuleId"];
-                                if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
-                                {
-                                    string ruleIdInstance = ((string)ruleIdValue);
-                                    incidentInstance.RuleId = ruleIdInstance;
-                                }
-                                
-                                JToken isActiveValue = valueValue["IsActive"];
-                                if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
-                                {
-                                    bool isActiveInstance = ((bool)isActiveValue);
-                                    incidentInstance.IsActive = isActiveInstance;
-                                }
-                                
-                                JToken activatedTimeValue = valueValue["ActivatedTime"];
-                                if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
-                                    incidentInstance.ActivatedTime = activatedTimeInstance;
-                                }
-                                
-                                JToken resolvedTimeValue = valueValue["ResolvedTime"];
-                                if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
-                                    incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                    Incident incidentInstance = new Incident();
+                                    result.Value.Add(incidentInstance);
+                                    
+                                    JToken idValue = valueValue["Id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        incidentInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken ruleIdValue = valueValue["RuleId"];
+                                    if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
+                                    {
+                                        string ruleIdInstance = ((string)ruleIdValue);
+                                        incidentInstance.RuleId = ruleIdInstance;
+                                    }
+                                    
+                                    JToken isActiveValue = valueValue["IsActive"];
+                                    if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                                    {
+                                        bool isActiveInstance = ((bool)isActiveValue);
+                                        incidentInstance.IsActive = isActiveInstance;
+                                    }
+                                    
+                                    JToken activatedTimeValue = valueValue["ActivatedTime"];
+                                    if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                                        incidentInstance.ActivatedTime = activatedTimeInstance;
+                                    }
+                                    
+                                    JToken resolvedTimeValue = valueValue["ResolvedTime"];
+                                    if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                                        incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -374,7 +402,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -407,7 +435,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The List incidents operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.IncidentListResponse> ListForRuleAsync(string ruleId, bool isActive, CancellationToken cancellationToken)
+        public async Task<IncidentListResponse> ListForRuleAsync(string ruleId, bool isActive, CancellationToken cancellationToken)
         {
             // Validate
             if (ruleId == null)
@@ -416,22 +444,38 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("isActive", isActive);
-                Tracing.Enter(invocationId, this, "ListForRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListForRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules/" + ruleId.Trim() + "/alertincidents?";
-            bool appendFilter = true;
-            appendFilter = false;
-            url = url + "$filter=IsActive eq " + Uri.EscapeDataString(isActive.ToString().ToLower());
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/alertrules/";
+            url = url + Uri.EscapeDataString(ruleId);
+            url = url + "/alertincidents";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add("IsActive eq " + Uri.EscapeDataString(isActive.ToString().ToLower()));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -467,13 +511,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -482,7 +526,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -490,63 +534,66 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     // Create Result
                     IncidentListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new IncidentListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new IncidentListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["Value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Incident incidentInstance = new Incident();
-                                result.Value.Add(incidentInstance);
-                                
-                                JToken idValue = valueValue["Id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    incidentInstance.Id = idInstance;
-                                }
-                                
-                                JToken ruleIdValue = valueValue["RuleId"];
-                                if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
-                                {
-                                    string ruleIdInstance = ((string)ruleIdValue);
-                                    incidentInstance.RuleId = ruleIdInstance;
-                                }
-                                
-                                JToken isActiveValue = valueValue["IsActive"];
-                                if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
-                                {
-                                    bool isActiveInstance = ((bool)isActiveValue);
-                                    incidentInstance.IsActive = isActiveInstance;
-                                }
-                                
-                                JToken activatedTimeValue = valueValue["ActivatedTime"];
-                                if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
-                                    incidentInstance.ActivatedTime = activatedTimeInstance;
-                                }
-                                
-                                JToken resolvedTimeValue = valueValue["ResolvedTime"];
-                                if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
-                                    incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                    Incident incidentInstance = new Incident();
+                                    result.Value.Add(incidentInstance);
+                                    
+                                    JToken idValue = valueValue["Id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        incidentInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken ruleIdValue = valueValue["RuleId"];
+                                    if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
+                                    {
+                                        string ruleIdInstance = ((string)ruleIdValue);
+                                        incidentInstance.RuleId = ruleIdInstance;
+                                    }
+                                    
+                                    JToken isActiveValue = valueValue["IsActive"];
+                                    if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                                    {
+                                        bool isActiveInstance = ((bool)isActiveValue);
+                                        incidentInstance.IsActive = isActiveInstance;
+                                    }
+                                    
+                                    JToken activatedTimeValue = valueValue["ActivatedTime"];
+                                    if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                                        incidentInstance.ActivatedTime = activatedTimeInstance;
+                                    }
+                                    
+                                    JToken resolvedTimeValue = valueValue["ResolvedTime"];
+                                    if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                                        incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -555,7 +602,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

@@ -28,17 +28,16 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    internal partial class MetricSettingOperations : IServiceOperations<MetricsClient>, Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations
+    internal partial class MetricSettingOperations : IServiceOperations<MetricsClient>, IMetricSettingOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricSettingOperations class.
@@ -76,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -97,18 +96,24 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/metricsettings";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -216,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -226,13 +231,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -241,27 +246,30 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -270,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -307,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <returns>
         /// The list metric settings operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricSettingListResponse> ListAsync(string resourceId, string metricNamespace, CancellationToken cancellationToken)
+        public async Task<MetricSettingListResponse> ListAsync(string resourceId, string metricNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -320,21 +328,32 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("metricNamespace", metricNamespace);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings?";
-            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
-            url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace.Trim());
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/metricsettings";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("resourceId=" + Uri.EscapeDataString(resourceId));
+            queryParameters.Add("namespace=" + Uri.EscapeDataString(metricNamespace));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -370,13 +389,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -385,7 +404,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -393,118 +412,121 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     // Create Result
                     MetricSettingListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MetricSettingListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        MetricSettingCollection metricSettingCollectionInstance = new MetricSettingCollection();
-                        result.MetricSettingCollection = metricSettingCollectionInstance;
-                        
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricSettingListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            MetricSettingCollection metricSettingCollectionInstance = new MetricSettingCollection();
+                            result.MetricSettingCollection = metricSettingCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["Value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                MetricSetting metricSettingInstance = new MetricSetting();
-                                metricSettingCollectionInstance.Value.Add(metricSettingInstance);
-                                
-                                JToken resourceIdValue = valueValue["ResourceId"];
-                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string resourceIdInstance = ((string)resourceIdValue);
-                                    metricSettingInstance.ResourceId = resourceIdInstance;
-                                }
-                                
-                                JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
-                                {
-                                    string namespaceInstance = ((string)namespaceValue);
-                                    metricSettingInstance.Namespace = namespaceInstance;
-                                }
-                                
-                                JToken valueValue2 = valueValue["Value"];
-                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                {
-                                    string typeName = ((string)valueValue2["odata.type"]);
-                                    if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.AvailabilityMetricSettingValue")
+                                    MetricSetting metricSettingInstance = new MetricSetting();
+                                    metricSettingCollectionInstance.Value.Add(metricSettingInstance);
+                                    
+                                    JToken resourceIdValue = valueValue["ResourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                     {
-                                        AvailabilityMetricSettingValue availabilityMetricSettingValueInstance = new AvailabilityMetricSettingValue();
-                                        
-                                        JToken availableLocationsArray = valueValue2["AvailableLocations"];
-                                        if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        metricSettingInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken namespaceValue = valueValue["Namespace"];
+                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance = ((string)namespaceValue);
+                                        metricSettingInstance.Namespace = namespaceInstance;
+                                    }
+                                    
+                                    JToken valueValue2 = valueValue["Value"];
+                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName = ((string)valueValue2["odata.type"]);
+                                        if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.AvailabilityMetricSettingValue")
                                         {
-                                            foreach (JToken availableLocationsValue in ((JArray)availableLocationsArray))
+                                            AvailabilityMetricSettingValue availabilityMetricSettingValueInstance = new AvailabilityMetricSettingValue();
+                                            
+                                            JToken availableLocationsArray = valueValue2["AvailableLocations"];
+                                            if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
                                             {
-                                                NameConfig nameConfigInstance = new NameConfig();
-                                                availabilityMetricSettingValueInstance.AvailableLocations.Add(nameConfigInstance);
-                                                
-                                                JToken nameValue = availableLocationsValue["Name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                foreach (JToken availableLocationsValue in ((JArray)availableLocationsArray))
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    nameConfigInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken displayNameValue = availableLocationsValue["DisplayName"];
-                                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string displayNameInstance = ((string)displayNameValue);
-                                                    nameConfigInstance.DisplayName = displayNameInstance;
+                                                    NameConfig nameConfigInstance = new NameConfig();
+                                                    availabilityMetricSettingValueInstance.AvailableLocations.Add(nameConfigInstance);
+                                                    
+                                                    JToken nameValue = availableLocationsValue["Name"];
+                                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance = ((string)nameValue);
+                                                        nameConfigInstance.Name = nameInstance;
+                                                    }
+                                                    
+                                                    JToken displayNameValue = availableLocationsValue["DisplayName"];
+                                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string displayNameInstance = ((string)displayNameValue);
+                                                        nameConfigInstance.DisplayName = displayNameInstance;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken endpointsArray = valueValue2["Endpoints"];
-                                        if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken endpointsValue in ((JArray)endpointsArray))
+                                            
+                                            JToken endpointsArray = valueValue2["Endpoints"];
+                                            if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                             {
-                                                EndpointConfig endpointConfigInstance = new EndpointConfig();
-                                                availabilityMetricSettingValueInstance.Endpoints.Add(endpointConfigInstance);
-                                                
-                                                JToken configIdValue = endpointsValue["ConfigId"];
-                                                if (configIdValue != null && configIdValue.Type != JTokenType.Null)
+                                                foreach (JToken endpointsValue in ((JArray)endpointsArray))
                                                 {
-                                                    string configIdInstance = ((string)configIdValue);
-                                                    endpointConfigInstance.ConfigId = configIdInstance;
-                                                }
-                                                
-                                                JToken nameValue2 = endpointsValue["Name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    endpointConfigInstance.Name = nameInstance2;
-                                                }
-                                                
-                                                JToken locationValue = endpointsValue["Location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    endpointConfigInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken urlValue = endpointsValue["Url"];
-                                                if (urlValue != null && urlValue.Type != JTokenType.Null)
-                                                {
-                                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
-                                                    endpointConfigInstance.Url = urlInstance;
+                                                    EndpointConfig endpointConfigInstance = new EndpointConfig();
+                                                    availabilityMetricSettingValueInstance.Endpoints.Add(endpointConfigInstance);
+                                                    
+                                                    JToken configIdValue = endpointsValue["ConfigId"];
+                                                    if (configIdValue != null && configIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string configIdInstance = ((string)configIdValue);
+                                                        endpointConfigInstance.ConfigId = configIdInstance;
+                                                    }
+                                                    
+                                                    JToken nameValue2 = endpointsValue["Name"];
+                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance2 = ((string)nameValue2);
+                                                        endpointConfigInstance.Name = nameInstance2;
+                                                    }
+                                                    
+                                                    JToken locationValue = endpointsValue["Location"];
+                                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance = ((string)locationValue);
+                                                        endpointConfigInstance.Location = locationInstance;
+                                                    }
+                                                    
+                                                    JToken urlValue = endpointsValue["Url"];
+                                                    if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                                    {
+                                                        Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
+                                                        endpointConfigInstance.Url = urlInstance;
+                                                    }
                                                 }
                                             }
+                                            metricSettingInstance.Value = availabilityMetricSettingValueInstance;
                                         }
-                                        metricSettingInstance.Value = availabilityMetricSettingValueInstance;
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -513,7 +535,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

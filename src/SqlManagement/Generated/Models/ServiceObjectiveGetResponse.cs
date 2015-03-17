@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Response containing the service objective for a given Azure SQL
     /// Database Server with matching service objective Id.
     /// </summary>
-    public partial class ServiceObjectiveGetResponse : OperationResponse
+    public partial class ServiceObjectiveGetResponse : AzureOperationResponse
     {
         private ServiceObjective _serviceObjective;
         

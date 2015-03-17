@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the list recoveryplans operation.
     /// </summary>
-    public partial class RecoveryPlanListResponse : OperationResponse, IEnumerable<RecoveryPlan>
+    public partial class RecoveryPlanListResponse : AzureOperationResponse, IEnumerable<RecoveryPlan>
     {
         private IList<RecoveryPlan> _recoveryPlans;
         

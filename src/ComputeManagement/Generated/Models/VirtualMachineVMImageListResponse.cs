@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List VM Images operation response.
     /// </summary>
-    public partial class VirtualMachineVMImageListResponse : OperationResponse, IEnumerable<VirtualMachineVMImageListResponse.VirtualMachineVMImage>
+    public partial class VirtualMachineVMImageListResponse : AzureOperationResponse, IEnumerable<VirtualMachineVMImageListResponse.VirtualMachineVMImage>
     {
         private IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> _vMImages;
         
@@ -345,13 +345,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._eula = value; }
             }
             
-            private Uri _iconUri;
+            private string _iconUri;
             
             /// <summary>
             /// Optional. Provides the URI to the icon for this Operating
             /// System Image.
             /// </summary>
-            public Uri IconUri
+            public string IconUri
             {
                 get { return this._iconUri; }
                 set { this._iconUri = value; }
@@ -536,13 +536,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._showInGui = value; }
             }
             
-            private Uri _smallIconUri;
+            private string _smallIconUri;
             
             /// <summary>
             /// Optional. Specifies the URI to the small icon that is displayed
             /// when the image is presented in the Azure Management Portal.
             /// </summary>
-            public Uri SmallIconUri
+            public string SmallIconUri
             {
                 get { return this._smallIconUri; }
                 set { this._smallIconUri = value; }

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Get Extension operation response.
     /// </summary>
-    public partial class HostedServiceGetExtensionResponse : OperationResponse
+    public partial class HostedServiceGetExtensionResponse : AzureOperationResponse
     {
         private string _id;
         

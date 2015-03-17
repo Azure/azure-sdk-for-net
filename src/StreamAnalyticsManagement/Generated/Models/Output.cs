@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private OutputProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the output.
+        /// Optional. Gets or sets the properties of the output.
         /// </summary>
         public OutputProperties Properties
         {
@@ -63,19 +63,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the Output class with required
         /// arguments.
         /// </summary>
-        public Output(string name, OutputProperties properties)
+        public Output(string name)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
             this.Name = name;
-            this.Properties = properties;
         }
     }
 }

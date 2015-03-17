@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Serialization _serialization;
         
         /// <summary>
-        /// Required. Gets or sets the serialization configuration of the input.
+        /// Optional. Gets or sets the serialization configuration of the input.
         /// </summary>
         public Serialization Serialization
         {
@@ -68,20 +68,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public InputProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the InputProperties class with
-        /// required arguments.
-        /// </summary>
-        public InputProperties(Serialization serialization)
-            : this()
-        {
-            if (serialization == null)
-            {
-                throw new ArgumentNullException("serialization");
-            }
-            this.Serialization = serialization;
         }
     }
 }

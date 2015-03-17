@@ -1,11 +1,23 @@
-﻿//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 
@@ -15,47 +27,307 @@ namespace Microsoft.Azure.Insights
     /// The expression parser creates an Expression that represents an expression in disjunctive-normal-form
     /// Each Expression contains a set of Subexpressions (the conjunctions) with the total expression being the disjunction of them
     /// </summary>
-    public static class MetricFilterExpressionParser
+    internal static class MetricFilterExpressionParser
     {
-        private class MetricFilterExpression
+        private static Dictionary<Type, IEnumerable<PropertyInfo>> ExpressionElementPropertyCache = new Dictionary<Type, IEnumerable<PropertyInfo>>();
+        private static Dictionary<Type, IEnumerable<Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute>>> ExpressionElementCollectionPropertyCache =
+            new Dictionary<Type, IEnumerable<Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute>>>();
+
+        [AttributeUsage(AttributeTargets.Property)]
+        private class ExpressionElementPropertyAttribute : Attribute
+        { 
+        }
+
+        // This attribute marks relevant properties of ExpressionElements that are actually collections of elements
+        [AttributeUsage(AttributeTargets.Property)]
+        private class ExpressionElementCollectionPropertyAttribute : Attribute
         {
-            private List<SubExpression> SubExpressions { get; set; }
+            // The Union and Intersect methods must be static
+            private const BindingFlags Flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
-            private MetricFilterExpression()
+            private MethodInfo unionMethod;
+            private MethodInfo intersectMethod;
+
+            internal Type UnionMethodDeclaringType { get; set; }
+
+            internal Type IntersectMethodDeclaringType { get; set; }
+
+            internal string UnionMethodName { get; set; }
+
+            internal string IntersectMethodName { get; set; }
+
+            // The constructor assumes both methods are declared in the same class, but different classes can be specified
+            internal ExpressionElementCollectionPropertyAttribute(Type unionMethodDeclaringType, string unionMethodName, string intersectMethodName)
             {
-                this.SubExpressions = new List<SubExpression>();
+                this.UnionMethodDeclaringType = unionMethodDeclaringType;
+                this.IntersectMethodDeclaringType = this.UnionMethodDeclaringType;
+                this.UnionMethodName = unionMethodName;
+                this.IntersectMethodName = intersectMethodName;
             }
 
-            // used for creating the most basic filters the expected usage will only have one non-null parameter
-            // The most basic form also cannot have a complex names constraint so the constructor only accepts a singe string (or null) here as well
-            internal MetricFilterExpression(string timeGrain, string startTime, string endTime, string name)
+            // Since the Union method is static, it does not require an instance object
+            internal object InvokeUnionMethod(object[] parameters)
             {
-                this.SubExpressions = new List<SubExpression>()
+                if (this.unionMethod == null)
                 {
-                    new SubExpression()
+                    this.InitializeUnionMethod();
+                }
+
+                return this.unionMethod.Invoke(null, parameters);
+            }
+
+            // Since the Intersect method is static, it does not require an instance object
+            internal object InvokeIntersectMethod(object[] parameters)
+            {
+                if (this.intersectMethod == null)
+                {
+                    this.InitializeIntersectMethod();
+                }
+
+                return this.intersectMethod.Invoke(null, parameters);
+            }
+
+            private void InitializeUnionMethod()
+            {
+                this.unionMethod = this.UnionMethodDeclaringType.GetMethod(this.UnionMethodName, Flags);
+
+                if (this.unionMethod == null)
+                {
+                    throw new InvalidOperationException(string.Format("Could not find Union Method {0} in type {1}", this.UnionMethodName, this.UnionMethodDeclaringType));
+                }
+            }
+
+            private void InitializeIntersectMethod()
+            {
+                this.intersectMethod = this.IntersectMethodDeclaringType.GetMethod(this.IntersectMethodName, Flags);
+
+                if (this.intersectMethod == null)
+                {
+                    throw new InvalidOperationException(
+                        string.Format("Could not find Intersect Method {0} in type {1}", this.IntersectMethodName, this.IntersectMethodDeclaringType));
+                }
+            }
+        }
+
+        private class ExpressionElement<T> where T : ExpressionElement<T>
+        {
+            private const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            private IEnumerable<PropertyInfo> ExpressionElementProperties
+            {
+                get
+                {
+                    if (!ExpressionElementPropertyCache.ContainsKey(typeof(T)))
                     {
-                        TimeGrain = timeGrain,
-                        StartTime = startTime,
-                        EndTime = endTime,
-                        Names = name == null ? null : new HashSet<string>() { name }
+                        this.InitializeProperties();
                     }
-                };
+
+                    return ExpressionElementPropertyCache[typeof(T)];
+                }
             }
 
-            /// <summary>
-            /// Filter AND is a sort of cross-join keeping all the valid subfilter ANDs between one subfilter from each filter
-            /// </summary>
-            /// <param name="other">The MetricFilter to AND with</param>
-            /// <returns>A new MetricFilter that is the AND result</returns>
-            internal MetricFilterExpression And(MetricFilterExpression other)
+            private IEnumerable<Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute>> ExpressionElementCollectionProperties
             {
-                MetricFilterExpression result = new MetricFilterExpression();
-
-                foreach (SubExpression left in this.SubExpressions)
+                get
                 {
-                    foreach (SubExpression right in other.SubExpressions)
+                    if (!ExpressionElementCollectionPropertyCache.ContainsKey(typeof(T)))
                     {
-                        SubExpression and = left.And(right);
+                        this.InitializeProperties();
+                    }
+
+                    return ExpressionElementCollectionPropertyCache[typeof(T)];
+                }
+            }
+
+            internal virtual T And(T other)
+            {
+                // start with a deep copy both elements
+                T result = this.Clone();
+                other = other.Clone();
+
+                // for AND, the non-collection properties cannot conflict
+                foreach (PropertyInfo property in this.ExpressionElementProperties)
+                {
+                    // Get values
+                    var thisVal = property.GetValue(result, null);
+                    var otherVal = property.GetValue(other, null);
+
+                    // if other has a constraint
+                    if (otherVal != null)
+                    {
+                        // AND this has a constraint
+                        if (thisVal != null)
+                        {
+                            // then they must be the same
+                            if (!object.Equals(thisVal, otherVal))
+                            {
+                                return default(T);
+                            }
+                        }
+                        else
+                        {
+                            // other has one, but this doesn't simply add the constraint
+                            property.SetValue(result, otherVal, null);
+                        }
+                    }
+                }
+
+                // for the collection properties, the result will have the intersection
+                foreach (Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute> tuple in this.ExpressionElementCollectionProperties)
+                {
+                    // Get property and attribute
+                    PropertyInfo property = tuple.Item1;
+                    ExpressionElementCollectionPropertyAttribute attribute = tuple.Item2;
+
+                    // Get values
+                    var thisVal = property.GetValue(result, null);
+                    var otherVal = property.GetValue(other, null);
+
+                    // if other has a constraint
+                    if (otherVal != null)
+                    {
+                        // Take other's constraint in the absence of one on this, otherwise take the intersection
+                        if (thisVal == null)
+                        {
+                            property.SetValue(result, otherVal, null);
+                        }
+                        else
+                        {
+                            // Find Intersect function and invoke to get the intersection
+                            object intersect = attribute.InvokeIntersectMethod(new[] { thisVal, otherVal });
+
+                            property.SetValue(result, intersect, null);
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            internal virtual T Or(T other)
+            {
+                if (!this.CanOr(other))
+                {
+                    return default(T);
+                }
+
+                // start with a deep copy of this
+                T result = this.Clone();
+
+                // Or will only affect the collection properties since CanOr requires the non-collection properties to have equivalent values
+                foreach (Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute> tuple in this.ExpressionElementCollectionProperties)
+                {
+                    // Get property and attribute
+                    PropertyInfo property = tuple.Item1;
+                    ExpressionElementCollectionPropertyAttribute attribute = tuple.Item2;
+
+                    // Get the value of the collection
+                    object thisVal = property.GetValue(result, null);
+
+                    // CanOr ensures that the collections are either both null or neither null so only one needs to be tested
+                    if (thisVal != null)
+                    {
+                        object otherVal = property.GetValue(other, null);
+
+                        // Find Union function and invoke to get the union
+                        object union = attribute.InvokeUnionMethod(new[] { thisVal, otherVal });
+
+                        // set the union value on the copy (result)
+                        property.SetValue(result, union, null);
+                    }
+                }
+
+                return result;
+            }
+
+            internal virtual bool CanOr(T other)
+            {
+                foreach (PropertyInfo elementProperty in this.ExpressionElementProperties)
+                {
+                    // Get values
+                    object thisVal = elementProperty.GetValue(this, null);
+                    object otherVal = elementProperty.GetValue(other, null);
+
+                    // Values must be equal (or both null)
+                    if (!((thisVal == null && otherVal == null) || object.Equals(thisVal, otherVal)))
+                    {
+                        return false;
+                    }
+                }
+
+                foreach (PropertyInfo collectionProperty in this.ExpressionElementCollectionProperties.Select(t => t.Item1))
+                {
+                    // Get values
+                    object thisVal = collectionProperty.GetValue(this, null);
+                    object otherVal = collectionProperty.GetValue(other, null);
+
+                    // Values must be both null or neither null
+                    if ((thisVal == null) != (otherVal == null))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            // All subclasses must implement Clone for deep copy
+            internal virtual T Clone()
+            {
+                throw new NotImplementedException();
+            }
+
+            private void InitializeProperties()
+            {
+                PropertyInfo[] properties = typeof(T).GetProperties(Flags);
+                ExpressionElementPropertyCache[typeof(T)] = properties.Where(p => p.GetCustomAttributes(typeof(ExpressionElementPropertyAttribute), true).Any());
+                ExpressionElementCollectionPropertyCache[typeof(T)] = properties
+                    .Select(p => new Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute>(
+                        p,
+                        p.GetCustomAttributes(typeof(ExpressionElementCollectionPropertyAttribute), true).FirstOrDefault() as ExpressionElementCollectionPropertyAttribute))
+                    .Where(t => t.Item2 != null);
+            }
+        }
+
+        private class ExpressionElementSet<TCollection, TElement>
+            where TCollection : ExpressionElementSet<TCollection, TElement>, new()
+            where TElement : ExpressionElement<TElement>
+        {
+            internal IList<TElement> ExpressionElements { get; set; }
+
+            // Empty Constructor, initialize list
+            internal ExpressionElementSet()
+            {
+                this.ExpressionElements = new List<TElement>();
+            }
+
+            // The Or function represents a sort of logical union where the two sets are combined and then "ORable" elemnets are "ORed" together
+            internal TCollection Or(TCollection other)
+            {
+                // First create a deep copy of this
+                TCollection result = this.Clone();
+
+                // Add function will first try to OR-in (reduce) the new elements otherwise just add them to the list
+                foreach (TElement element in other.ExpressionElements)
+                {
+                    result.Add(element);
+                }
+
+                return result;
+            }
+
+            // The And function is a sort of cross-join where all elements are "AND"ed together and all valid combinations are added to the result
+            internal TCollection And(TCollection other)
+            {
+                // Start with a new empty collection
+                TCollection result = new TCollection();
+
+                // AND each element and collect the non-null results
+                foreach (TElement left in this.ExpressionElements)
+                {
+                    foreach (TElement right in other.ExpressionElements)
+                    {
+                        TElement and = left.And(right);
 
                         if (and != null)
                         {
@@ -67,254 +339,66 @@ namespace Microsoft.Azure.Insights
                 return result;
             }
 
-            /// <summary>
-            /// Filter OR adds the two lists of subfilters together and then tries to reduce them by performing subfilter ORs
-            /// </summary>
-            /// <param name="other">The MetricFilter to OR with</param>
-            /// <returns>A new MetricFilter that is the OR result</returns>
-            internal MetricFilterExpression Or(MetricFilterExpression other)
+            // Add function will first try to "OR" the new element with an existing element in the set.
+            // If this is not possible, it will simply add it to the list
+            internal void Add(TElement element)
             {
-                MetricFilterExpression result = this.Clone();
-
-                // First try to OR-in (reduce) the new filters otherwise just add them to the list
-                foreach (SubExpression subExpression in other.SubExpressions)
-                {
-                    result.Add(subExpression);
-                }
-
-                return result;
-            }
-
-            private void Add(SubExpression subExpression)
-            {
-                // Find an existing subfilter to OR with
-                SubExpression candidate = this.SubExpressions.FirstOrDefault((s) => subExpression.CanOr(s));
+                // Find an existing element to OR with
+                TElement candidate = this.ExpressionElements.FirstOrDefault((e) => element.CanOr(e));
 
                 // If can or, replace the existing one with the OR of the two
                 if (candidate != null)
                 {
-                    this.SubExpressions.Remove(candidate);
-                    this.SubExpressions.Add(subExpression.Or(candidate));
+                    this.ExpressionElements.Remove(candidate);
+                    this.ExpressionElements.Add(element.Or(candidate));
                 }
                 else
                 {
                     // Can't OR, add the new one to the list
-                    this.SubExpressions.Add(subExpression);
+                    this.ExpressionElements.Add(element);
                 }
             }
 
-            // SubFilter represents a single conjunctive (no ORs) filter segment
-            private class SubExpression
+            internal TCollection Clone()
             {
-                internal string TimeGrain { get; set; }
+                TCollection result = new TCollection();
 
-                internal string StartTime { get; set; }
-
-                internal string EndTime { get; set; }
-
-                internal HashSet<string> Names { get; set; }
-
-                internal SubExpression()
+                foreach (TElement element in this.ExpressionElements)
                 {
-                    this.TimeGrain = null;
-                    this.StartTime = null;
-                    this.EndTime = null;
-                    this.Names = null;
+                    result.ExpressionElements.Add(element.Clone());
                 }
 
-                // AND is mainly used to combine subfilters with non-overlapping parameters. Overlapping parameters must match
-                internal SubExpression And(SubExpression other)
-                {
-                    SubExpression result = this.Clone();
+                return result;
+            }
+        }
 
-                    // If other has a TimeGrain constraint
-                    if (other.TimeGrain != null)
-                    {
-                        // AND this has a TimeGrain constraint
-                        if (result.TimeGrain != null)
-                        {
-                            // Then they must be the same
-                            if (result.TimeGrain != other.TimeGrain)
-                            {
-                                return null;
-                            }
-                        }
-                        else
-                        {
-                            // Other has one, but this doesn't simply add the constraint
-                            result.TimeGrain = other.TimeGrain;
-                        }
-                    }
-
-                    // If other has a StartTime constraint
-                    if (other.StartTime != null)
-                    {
-                        // AND this has a StartTime constraint
-                        if (result.StartTime != null)
-                        {
-                            // Then they must be the same
-                            if (result.StartTime != other.StartTime)
-                            {
-                                return null;
-                            }
-                        }
-                        else
-                        {
-                            // Other has one, but this doesn't simply add the constraint
-                            result.StartTime = other.StartTime;
-                        }
-                    }
-
-                    // If other has a EndTime constraint
-                    if (other.EndTime != null)
-                    {
-                        // AND this has a EndTime constraint
-                        if (result.EndTime != null)
-                        {
-                            // Then they must be the same
-                            if (result.EndTime != other.EndTime)
-                            {
-                                return null;
-                            }
-                        }
-                        else
-                        {
-                            // Other has one, but this doesn't simply add the constraint
-                            result.EndTime = other.EndTime;
-                        }
-                    }
-
-                    // If other has a Names constraint
-                    if (other.Names != null)
-                    {
-                        // Take other's constraint in the absence of one on this, otherwise take the intersection
-                        if (result.Names == null)
-                        {
-                            result.Names = new HashSet<string>(other.Names);
-                        }
-                        else
-                        {
-                            result.Names.IntersectWith(other.Names);
-                        }
-                    }
-
-                    return result;
-                }
-
-                // Or on subfilters really only exists for the names parameter, which can have multiple values
-                internal SubExpression Or(SubExpression other)
-                {
-                    if (!this.CanOr(other))
-                    {
-                        return null;
-                    }
-
-                    SubExpression result = this.Clone();
-
-                    if (result.Names != null)
-                    {
-                        result.Names.UnionWith(other.Names);
-                    }
-
-                    return result;
-                }
-
-                // Since each subfilter represents a conjunction, ORs are only allowed on subfilters with the same parameters set
-                internal bool CanOr(SubExpression other)
-                {
-                    // All the parameters must be equal in order or OR, except Names, which must either be both null or neither null
-                    return this.TimeGrain == other.TimeGrain &&
-                           this.StartTime == other.StartTime &&
-                           this.EndTime == other.EndTime &&
-                           (this.Names == null) == (other.Names == null);
-                }
-
-                // A subfilter is valid it has a constraint for timegrain, starttime, endtime, and optionally nameo
-                internal bool IsValid()
-                {
-                    // Names == null means that the name is unconstrained (valid)
-                    // Names == empty list means that the names is constrained, but the constraint cannot be satisfied (invalid)
-                    return this.TimeGrain != null && this.StartTime != null && this.EndTime != null &&
-                           (this.Names == null || this.Names.Count > 0);
-                }
-
-                internal SubExpression Clone()
-                {
-                    return new SubExpression()
-                    {
-                        TimeGrain = this.TimeGrain,
-                        StartTime = this.StartTime,
-                        EndTime = this.EndTime,
-                        Names = this.Names == null ? null : new HashSet<string>(this.Names)
-                    };
-                }
-
-                public override string ToString()
-                {
-                    StringBuilder sb = new StringBuilder();
-
-                    if (this.TimeGrain != null)
-                    {
-                        sb.AppendFormat("TimeGrain = {0}", this.TimeGrain);
-                    }
-
-                    if (this.StartTime != null)
-                    {
-                        if (sb.Length > 0)
-                        {
-                            sb.Append(" AND ");
-                        }
-
-                        sb.AppendFormat("StartTime = {0}", this.StartTime);
-                    }
-
-                    if (this.EndTime != null)
-                    {
-                        if (sb.Length > 0)
-                        {
-                            sb.Append(" AND ");
-                        }
-
-                        sb.AppendFormat("EndTime = {0}", this.EndTime);
-                    }
-
-                    if (this.Names != null)
-                    {
-                        if (sb.Length > 0)
-                        {
-                            sb.Append(" AND ");
-                        }
-
-                        StringBuilder nameBuilder = new StringBuilder();
-                        foreach (string name in this.Names)
-                        {
-                            if (nameBuilder.Length > 0)
-                            {
-                                nameBuilder.Append(", ");
-                            }
-
-                            nameBuilder.Append(name);
-                        }
-
-                        sb.AppendFormat("Name IN [{0}]", nameBuilder.ToString());
-                    }
-
-                    return sb.ToString();
-                }
+        private class MetricFilterExpression : ExpressionElementSet<MetricFilterExpression, SubExpression>
+        {
+            public MetricFilterExpression()
+            {
+                this.ExpressionElements = new List<SubExpression>();
             }
 
-            /// <summary>
-            /// A Filter is valid if it has a single constraint (exactly 1 subfilter) on all properties (Names constraint optional)
-            /// </summary>
-            /// <returns>Whether or not the filter is valid</returns>
-            internal bool IsValid()
+            // used for creating the most basic filters the expected usage will only have one non-null parameter
+            // The most basic form also cannot have a complex dimension constraint
+            // so the constructor only accepts a singe string (or null) for metric name, dimension name, or dimension value as well
+            internal MetricFilterExpression(string timeGrain, string startTime, string endTime, string metricName, string dimensionName, string dimensionValue)
             {
-                return this.SubExpressions.Count == 1 && this.SubExpressions[0].IsValid();
+                this.ExpressionElements = new List<SubExpression>()
+                {
+                    new SubExpression()
+                    {
+                        TimeGrain = timeGrain,
+                        StartTime = startTime,
+                        EndTime = endTime,
+                        MetricDimensions = (metricName == null && dimensionName == null && dimensionValue == null) ? null : new MetricDimensionExpressionSet(metricName, dimensionName, dimensionValue)
+                    }
+                };
             }
 
             internal MetricFilter ToMetricFilter()
             {
-                int numSubexpressions = this.SubExpressions.Count;
+                int numSubexpressions = this.ExpressionElements.Count;
 
                 // empty subexression list means the filter is impossible to satisfy
                 if (numSubexpressions < 1)
@@ -331,7 +415,7 @@ namespace Microsoft.Azure.Insights
                 }
 
                 // filter must have exactly one subexpression to be valid
-                SubExpression expression = this.SubExpressions[0];
+                SubExpression expression = this.ExpressionElements[0];
 
                 // Timegrain is required
                 if (expression.TimeGrain == null)
@@ -352,10 +436,48 @@ namespace Microsoft.Azure.Insights
                 }
 
                 // Names is optional (null means no constraint)
-                // Empty means name constraint cannot be satisfied
-                if (!(expression.Names == null || expression.Names.Any()))
+                if (expression.MetricDimensions != null)
                 {
-                    throw new InvalidOperationException("Constraint on Name is impossible to satisfy");
+                    // Empty means name constraint cannot be satisfied
+                    if (!expression.MetricDimensions.ExpressionElements.Any())
+                    {
+                        throw new InvalidOperationException("Constraint on Name is impossible to satisfy");
+                    }
+                    
+                    foreach (MetricDimensionExpression metricDimension in expression.MetricDimensions.ExpressionElements)
+                    {
+                        // Metric Name is required
+                        if (metricDimension.Name == null)
+                        {
+                            throw new InvalidOperationException("Metric Name constraint (name.value) is required for specified dimensions");
+                        }
+
+                        // Dimensions are optional (null means no constraint)
+                        if (metricDimension.Dimensions != null)
+                        {
+                            // Empty means dimension constraint cannot be satisfied
+                            if (!metricDimension.Dimensions.ExpressionElements.Any())
+                            {
+                                throw new InvalidOperationException("Constraint on Dimensions is impossible to satisfy");
+                            }
+
+                            foreach (DimensionExpression dimension in metricDimension.Dimensions.ExpressionElements)
+                            {
+                                // Dimension Name is required (only when the dimension exists)
+                                if (dimension.Name == null)
+                                {
+                                    throw new InvalidOperationException("Dimension Name constraint (dimensionName.value) is required for specified dimensions");
+                                }
+
+                                // Dimension Values are optional (null means no constraint)
+                                // Empty means dimension value constraint cannot be satisfied
+                                if (!(dimension.Values == null || dimension.Values.Any()))
+                                {
+                                    throw new InvalidOperationException("Constraint on dimension values is impossible to satisfy");
+                                }
+                            }
+                        }
+                    }
                 }
 
                 return new MetricFilter()
@@ -363,31 +485,23 @@ namespace Microsoft.Azure.Insights
                     TimeGrain = XmlConvert.ToTimeSpan(expression.TimeGrain),
                     StartTime = DateTime.Parse(expression.StartTime, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal),
                     EndTime = DateTime.Parse(expression.EndTime, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal),
-                    Names = expression.Names
+                    DimensionFilters = expression.MetricDimensions == null ? null : expression.MetricDimensions.ExpressionElements.Select(md => new MetricDimension()
+                    {
+                        Name = md.Name,
+                        Dimensions = md.Dimensions == null ? null : md.Dimensions.ExpressionElements.Select(d => new FilterDimension()
+                        {
+                            Name = d.Name,
+                            Values = d.Values
+                        })
+                    })
                 };
-            }
-
-            /// <summary>
-            /// Creates a deep copy of the MetricFilterExpression
-            /// </summary>
-            /// <returns>A deep copf or the Expression</returns>
-            private MetricFilterExpression Clone()
-            {
-                MetricFilterExpression clone = new MetricFilterExpression();
-
-                foreach (SubExpression s in this.SubExpressions)
-                {
-                    clone.SubExpressions.Add(s.Clone());
-                }
-
-                return clone;
             }
 
             public override string ToString()
             {
                 StringBuilder sb = new StringBuilder();
 
-                foreach (SubExpression s in this.SubExpressions)
+                foreach (SubExpression s in this.ExpressionElements)
                 {
                     if (sb.Length > 0)
                     {
@@ -398,6 +512,262 @@ namespace Microsoft.Azure.Insights
                 }
 
                 return sb.ToString();
+            }
+        }
+
+        // SubFilter represents a single conjunctive (no ORs) filter segment
+        private class SubExpression : ExpressionElement<SubExpression>
+        {
+            [ExpressionElementProperty]
+            internal string TimeGrain { get; set; }
+
+            [ExpressionElementProperty]
+            internal string StartTime { get; set; }
+
+            [ExpressionElementProperty]
+            internal string EndTime { get; set; }
+
+            [ExpressionElementCollectionProperty(typeof(MetricDimensionExpressionSet), "Union", "Intersect")]
+            internal MetricDimensionExpressionSet MetricDimensions { get; set; }
+
+            internal SubExpression()
+            {
+                this.TimeGrain = null;
+                this.StartTime = null;
+                this.EndTime = null;
+                this.MetricDimensions = null;
+            }
+
+            internal override SubExpression Clone()
+            {
+                return new SubExpression()
+                {
+                    TimeGrain = this.TimeGrain,
+                    StartTime = this.StartTime,
+                    EndTime = this.EndTime,
+                    MetricDimensions = this.MetricDimensions == null ? null : this.MetricDimensions.Clone()
+                };
+            }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder();
+
+                if (this.TimeGrain != null)
+                {
+                    sb.AppendFormat("TimeGrain = {0}", this.TimeGrain);
+                }
+
+                if (this.StartTime != null)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" AND ");
+                    }
+
+                    sb.AppendFormat("StartTime = {0}", this.StartTime);
+                }
+
+                if (this.EndTime != null)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" AND ");
+                    }
+
+                    sb.AppendFormat("EndTime = {0}", this.EndTime);
+                }
+
+                if (this.MetricDimensions != null)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" AND ");
+                    }
+
+                    StringBuilder metricDimensionBuilder = new StringBuilder();
+                    foreach (MetricDimensionExpression md in this.MetricDimensions.ExpressionElements)
+                    {
+                        if (metricDimensionBuilder.Length > 0)
+                        {
+                            metricDimensionBuilder.Append(", ");
+                        }
+
+                        metricDimensionBuilder.AppendFormat("{0}{1}{2}", '{', md, '}');
+                    }
+
+                    sb.AppendFormat("MetricDimension IN [{0}]", metricDimensionBuilder.ToString());
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        private class MetricDimensionExpressionSet : ExpressionElementSet<MetricDimensionExpressionSet, MetricDimensionExpression>
+        {
+            public MetricDimensionExpressionSet() : base()
+            {
+            }
+
+            // used for creating the most basic filters the expected usage will only have one non-null parameter
+            internal MetricDimensionExpressionSet(string metricName, string dimensionName, string dimensionValue) : base()
+            {
+                this.ExpressionElements.Add(new MetricDimensionExpression()
+                {
+                    Name = metricName,
+                    Dimensions = (dimensionName == null && dimensionValue == null) ? null : new DimensionExpressionSet(dimensionName, dimensionValue)
+                });
+            }
+
+            internal static MetricDimensionExpressionSet Union(MetricDimensionExpressionSet right, MetricDimensionExpressionSet left)
+            {
+                return right.Or(left);
+            }
+
+            internal static MetricDimensionExpressionSet Intersect(MetricDimensionExpressionSet right, MetricDimensionExpressionSet left)
+            {
+                return right.And(left);
+            }
+        }
+
+        // MetricDimension represents a dimension with a metric name and optional list of Dimensions
+        private class MetricDimensionExpression : ExpressionElement<MetricDimensionExpression>
+        {
+            [ExpressionElementProperty]
+            internal string Name { get; set; }
+
+            [ExpressionElementCollectionProperty(typeof(DimensionExpressionSet), "Union", "Intersect")]
+            internal DimensionExpressionSet Dimensions { get; set; }
+
+            internal override MetricDimensionExpression Clone()
+            {
+                return new MetricDimensionExpression()
+                {
+                    Name = this.Name,
+                    Dimensions = this.Dimensions == null ? null : this.Dimensions.Clone()
+                };
+            }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder();
+
+                if (this.Name != null)
+                {
+                    sb.AppendFormat("Metric Name = \"{0}\"", this.Name);
+                }
+
+                if (this.Dimensions != null)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" AND ");
+                    }
+
+                    StringBuilder dimensionBuilder = new StringBuilder();
+                    foreach (DimensionExpression dimension in this.Dimensions.ExpressionElements)
+                    {
+                        if (dimensionBuilder.Length > 0)
+                        {
+                            dimensionBuilder.Append(", ");
+                        }
+
+                        dimensionBuilder.AppendFormat("{0}{1}{2}", '{', dimension, '}');
+                    }
+
+                    sb.AppendFormat("Dimension IN [{0}]", dimensionBuilder.ToString());
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        private class DimensionExpressionSet : ExpressionElementSet<DimensionExpressionSet, DimensionExpression>
+        {
+            public DimensionExpressionSet() : base()
+            {
+            }
+
+            // used for creating the most basic filters the expected usage will only have one non-null parameter
+            internal DimensionExpressionSet(string dimensionName, string dimensionValue) : base()
+            {
+                this.ExpressionElements.Add(new DimensionExpression()
+                {
+                    Name = dimensionName,
+                    Values = dimensionValue == null ? null : new HashSet<string>() { dimensionValue }
+                });
+            }
+
+            internal static DimensionExpressionSet Union(DimensionExpressionSet right, DimensionExpressionSet left)
+            {
+                return right.Or(left);
+            }
+
+            internal static DimensionExpressionSet Intersect(DimensionExpressionSet right, DimensionExpressionSet left)
+            {
+                return right.And(left);
+            }
+        }
+
+        // A Dimension has a dimension name and an optional list of dimension values
+        private class DimensionExpression : ExpressionElement<DimensionExpression>
+        {
+            [ExpressionElementProperty]
+            internal string Name { get; set; }
+
+            [ExpressionElementCollectionProperty(typeof(DimensionExpression), "Union", "Intersect")]
+            internal HashSet<string> Values { get; set; }
+
+            internal override DimensionExpression Clone()
+            {
+                return new DimensionExpression()
+                {
+                    Name = this.Name,
+                    Values = this.Values == null ? null : new HashSet<string>(this.Values)
+                };
+            }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder();
+
+                if (this.Name != null)
+                {
+                    sb.AppendFormat("Dimension Name = \"{0}\"", this.Name);
+                }
+
+                if (this.Values != null)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" AND ");
+                    }
+
+                    StringBuilder valueBuilder = new StringBuilder();
+                    foreach (string value in this.Values)
+                    {
+                        if (valueBuilder.Length > 0)
+                        {
+                            valueBuilder.Append(", ");
+                        }
+
+                        valueBuilder.AppendFormat("\"{0}\"", value);
+                    }
+
+                    sb.AppendFormat("Value IN [{0}]", valueBuilder.ToString());
+                }
+
+                return sb.ToString();
+            }
+
+            internal static HashSet<string> Union(HashSet<string> right, HashSet<string> left)
+            {
+                return new HashSet<string>(right.Union(left));
+            }
+
+            internal static HashSet<string> Intersect(HashSet<string> right, HashSet<string> left)
+            {
+                return new HashSet<string>(right.Intersect(left));
             }
         }
 
@@ -673,10 +1043,7 @@ namespace Microsoft.Azure.Insights
                     }
 
                     tokenizer.Advance();
-                    MetricFilterExpressionToken.TokenType expectedType =
-                        parameter == FilterParameter.TimeGrain ? MetricFilterExpressionToken.TokenType.DurationValue :
-                        parameter == FilterParameter.Name ? MetricFilterExpressionToken.TokenType.StringValue :
-                        MetricFilterExpressionToken.TokenType.DateTimeOffsetValue;
+                    MetricFilterExpressionToken.TokenType expectedType = GetExpectedTokenTypeForParameter(parameter);
 
                     // Verify, store, and consume value
                     if (tokenizer.IsEmpty || tokenizer.Current.Type != expectedType)
@@ -727,7 +1094,9 @@ namespace Microsoft.Azure.Insights
                     tree.Value.Key == FilterParameter.TimeGrain ? tree.Value.Value : null,
                     tree.Value.Key == FilterParameter.StartTime ? tree.Value.Value : null,
                     tree.Value.Key == FilterParameter.EndTime ? tree.Value.Value : null,
-                    tree.Value.Key == FilterParameter.Name ? tree.Value.Value : null);
+                    tree.Value.Key == FilterParameter.MetricName ? tree.Value.Value : null,
+                    tree.Value.Key == FilterParameter.DimensionName ? tree.Value.Value : null,
+                    tree.Value.Key == FilterParameter.DimensionValue ? tree.Value.Value : null);
 
                 return expression;
             }
@@ -740,21 +1109,40 @@ namespace Microsoft.Azure.Insights
 
             // Tree Node: Combine children
             return tree.IsConjunction
-                ? InterpretFilterExpressionTree(tree.LeftExpression)
-                    .And(InterpretFilterExpressionTree(tree.RightExpression))
-                : InterpretFilterExpressionTree(tree.LeftExpression)
-                    .Or(InterpretFilterExpressionTree(tree.RightExpression));
+                ? InterpretFilterExpressionTree(tree.LeftExpression).And(InterpretFilterExpressionTree(tree.RightExpression)) as MetricFilterExpression
+                : InterpretFilterExpressionTree(tree.LeftExpression).Or(InterpretFilterExpressionTree(tree.RightExpression)) as MetricFilterExpression;
         }
 
         private static FilterParameter ParseParameter(string value)
         {
             switch (value)
             {
-                case "name.value": return FilterParameter.Name;
                 case "timeGrain": return FilterParameter.TimeGrain;
                 case "startTime": return FilterParameter.StartTime;
                 case "endTime": return FilterParameter.EndTime;
+                case "name.value": return FilterParameter.MetricName;
+                case "dimensionName.value": return FilterParameter.DimensionName;
+                case "dimensionValue.value": return FilterParameter.DimensionValue;
                 default: throw new FormatException("Invalid Identifier: " + value);
+            }
+        }
+
+        private static MetricFilterExpressionToken.TokenType GetExpectedTokenTypeForParameter(FilterParameter parameter)
+        {
+            switch (parameter)
+            {
+                // TimeGrain should have Duration value
+                case FilterParameter.TimeGrain:
+                    return MetricFilterExpressionToken.TokenType.DurationValue;
+
+                // StartTime and EndTime should have DateTimeOffset Value
+                case FilterParameter.StartTime:
+                case FilterParameter.EndTime:
+                    return MetricFilterExpressionToken.TokenType.DateTimeOffsetValue;
+
+                // Others (MetricName, DimensionName, DimensionValue) should have String value
+                default:
+                    return MetricFilterExpressionToken.TokenType.StringValue;
             }
         }
 
@@ -807,7 +1195,9 @@ namespace Microsoft.Azure.Insights
             TimeGrain,
             StartTime,
             EndTime,
-            Name
+            MetricName,
+            DimensionName,
+            DimensionValue,
         }
 
         private static FormatException GenerateFilterParseException(MetricFilterExpressionToken encountered, MetricFilterExpressionToken.TokenType expected)

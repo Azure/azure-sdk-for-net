@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// The response of CreateOrUpdate redis operation.
     /// </summary>
-    public partial class RedisCreateOrUpdateResponse : OperationResponse
+    public partial class RedisCreateOrUpdateResponse : AzureOperationResponse
     {
         private string _id;
         

@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.SiteRecovery
 {
     public static partial class VirtualMachineOperationsExtensions
     {
@@ -126,6 +126,64 @@ namespace Microsoft.WindowsAzure
         public static Task<VirtualMachineListResponse> ListAsync(this IVirtualMachineOperations operations, string protectionContainerId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(protectionContainerId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates VM properties.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.SiteRecovery.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='virtualMachineId'>
+        /// Required. VM ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Update VM properties input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse UpdateVmProperties(this IVirtualMachineOperations operations, string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOperations)s).UpdateVmPropertiesAsync(protectionContainerId, virtualMachineId, parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates VM properties.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.SiteRecovery.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='virtualMachineId'>
+        /// Required. VM ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Update VM properties input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> UpdateVmPropertiesAsync(this IVirtualMachineOperations operations, string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UpdateVmPropertiesAsync(protectionContainerId, virtualMachineId, parameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }

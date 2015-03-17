@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
     /// <summary>
     /// The Get Profile Details operation response.
     /// </summary>
-    public partial class ProfileGetResponse : OperationResponse
+    public partial class ProfileGetResponse : AzureOperationResponse
     {
         private Profile _profile;
         

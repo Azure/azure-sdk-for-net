@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// A virtual machine disk associated with your subscription.
     /// </summary>
-    public partial class VirtualMachineDiskUpdateResponse : OperationResponse
+    public partial class VirtualMachineDiskUpdateResponse : AzureOperationResponse
     {
         private string _affinityGroup;
         

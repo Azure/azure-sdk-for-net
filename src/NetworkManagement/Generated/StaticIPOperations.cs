@@ -27,9 +27,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
@@ -39,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Network
     /// The Network Management API includes operations for managing the static
     /// IPs for your subscription.
     /// </summary>
-    internal partial class StaticIPOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IStaticIPOperations
+    internal partial class StaticIPOperations : IServiceOperations<NetworkManagementClient>, IStaticIPOperations
     {
         /// <summary>
         /// Initializes a new instance of the StaticIPOperations class.
@@ -80,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A response that indicates the availability of a static IP address,
         /// and if not, provides a list of suggestions.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkStaticIPAvailabilityResponse> CheckAsync(string networkName, string ipAddress, CancellationToken cancellationToken)
+        public async Task<NetworkStaticIPAvailabilityResponse> CheckAsync(string networkName, string ipAddress, CancellationToken cancellationToken)
         {
             // Validate
             if (networkName == null)
@@ -93,21 +91,33 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("ipAddress", ipAddress);
-                Tracing.Enter(invocationId, this, "CheckAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CheckAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/" + networkName.Trim() + "?";
-            url = url + "op=checkavailability";
-            url = url + "&address=" + Uri.EscapeDataString(ipAddress);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/";
+            url = url + Uri.EscapeDataString(networkName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("op=checkavailability");
+            queryParameters.Add("address=" + Uri.EscapeDataString(ipAddress));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -130,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -142,13 +152,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -157,7 +167,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -165,31 +175,34 @@ namespace Microsoft.WindowsAzure.Management.Network
                     // Create Result
                     NetworkStaticIPAvailabilityResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkStaticIPAvailabilityResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement addressAvailabilityResponseElement = responseDoc.Element(XName.Get("AddressAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (addressAvailabilityResponseElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement isAvailableElement = addressAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null)
-                        {
-                            bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
-                            result.IsAvailable = isAvailableInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkStaticIPAvailabilityResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement availableAddressesSequenceElement = addressAvailabilityResponseElement.Element(XName.Get("AvailableAddresses", "http://schemas.microsoft.com/windowsazure"));
-                        if (availableAddressesSequenceElement != null)
+                        XElement addressAvailabilityResponseElement = responseDoc.Element(XName.Get("AddressAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (addressAvailabilityResponseElement != null)
                         {
-                            foreach (XElement availableAddressesElement in availableAddressesSequenceElement.Elements(XName.Get("AvailableAddress", "http://schemas.microsoft.com/windowsazure")))
+                            XElement isAvailableElement = addressAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
+                            if (isAvailableElement != null)
                             {
-                                result.AvailableAddresses.Add(availableAddressesElement.Value);
+                                bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
+                                result.IsAvailable = isAvailableInstance;
+                            }
+                            
+                            XElement availableAddressesSequenceElement = addressAvailabilityResponseElement.Element(XName.Get("AvailableAddresses", "http://schemas.microsoft.com/windowsazure"));
+                            if (availableAddressesSequenceElement != null)
+                            {
+                                foreach (XElement availableAddressesElement in availableAddressesSequenceElement.Elements(XName.Get("AvailableAddress", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    result.AvailableAddresses.Add(availableAddressesElement.Value);
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -198,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

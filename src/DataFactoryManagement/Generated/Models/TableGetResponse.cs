@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The Get table operation response.
     /// </summary>
-    public partial class TableGetResponse : OperationResponse
+    public partial class TableGetResponse : AzureOperationResponse
     {
         private Table _table;
         

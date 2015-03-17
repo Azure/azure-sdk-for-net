@@ -21,24 +21,35 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The parameters supplied to the update schedule operation.
     /// </summary>
     public partial class ScheduleUpdateParameters
     {
-        private Schedule _schedule;
+        private string _name;
         
         /// <summary>
-        /// Required. The schedule to be updated.
+        /// Required. Gets or sets the name of the schedule.
         /// </summary>
-        public Schedule Schedule
+        public string Name
         {
-            get { return this._schedule; }
-            set { this._schedule = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private ScheduleUpdateProperties _properties;
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of schedule properties.
+        /// </summary>
+        public ScheduleUpdateProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -52,14 +63,14 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the ScheduleUpdateParameters class
         /// with required arguments.
         /// </summary>
-        public ScheduleUpdateParameters(Schedule schedule)
+        public ScheduleUpdateParameters(string name)
             : this()
         {
-            if (schedule == null)
+            if (name == null)
             {
-                throw new ArgumentNullException("schedule");
+                throw new ArgumentNullException("name");
             }
-            this.Schedule = schedule;
+            this.Name = name;
         }
     }
 }

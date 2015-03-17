@@ -30,15 +30,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    internal partial class JobCollectionOperations : IServiceOperations<SchedulerManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations
+    internal partial class JobCollectionOperations : IServiceOperations<SchedulerManagementClient>, IJobCollectionOperations
     {
         /// <summary>
         /// Initializes a new instance of the JobCollectionOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Create Job Collection operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionCreateResponse> BeginCreatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobCollectionCreateResponse> BeginCreatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -103,20 +103,32 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(jobCollectionName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -220,13 +232,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -235,13 +247,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     JobCollectionCreateResponse result = null;
+                    // Deserialize Response
                     result = new JobCollectionCreateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("ETag"))
@@ -255,7 +268,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -292,7 +305,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginDeletingAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -305,19 +318,31 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(jobCollectionName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -352,13 +377,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -367,14 +392,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -383,7 +409,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -424,7 +450,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Update Job Collection operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionUpdateResponse> BeginUpdatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobCollectionUpdateResponse> BeginUpdatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -449,20 +475,32 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginUpdatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(jobCollectionName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -570,13 +608,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -585,13 +623,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     JobCollectionUpdateResponse result = null;
+                    // Deserialize Response
                     result = new JobCollectionUpdateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("ETag"))
@@ -605,7 +644,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -644,7 +683,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Check Name Availability operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionCheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async Task<JobCollectionCheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -661,21 +700,37 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
-                Tracing.Enter(invocationId, this, "CheckNameAvailabilityAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CheckNameAvailabilityAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/?";
-            url = url + "op=checknameavailability";
-            url = url + "&resourceName=" + Uri.EscapeDataString(jobCollectionName.Trim());
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/";
+            url = url + "JobCollections";
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("op=checknameavailability");
+            queryParameters.Add("resourceName=" + Uri.EscapeDataString(jobCollectionName));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -710,13 +765,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -725,7 +780,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -733,22 +788,25 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     // Create Result
                     JobCollectionCheckNameAvailabilityResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobCollectionCheckNameAvailabilityResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement resourceNameAvailabilityResponseElement = responseDoc.Element(XName.Get("ResourceNameAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceNameAvailabilityResponseElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement isAvailableElement = resourceNameAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobCollectionCheckNameAvailabilityResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement resourceNameAvailabilityResponseElement = responseDoc.Element(XName.Get("ResourceNameAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (resourceNameAvailabilityResponseElement != null)
                         {
-                            bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
-                            result.IsAvailable = isAvailableInstance;
+                            XElement isAvailableElement = resourceNameAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
+                            if (isAvailableElement != null)
+                            {
+                                bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
+                                result.IsAvailable = isAvailableInstance;
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -757,7 +815,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -806,88 +864,75 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> CreateAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<SchedulerOperationStatusResponse> CreateAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
         {
             SchedulerManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            JobCollectionCreateResponse response = await client.JobCollections.BeginCreatingAsync(cloudServiceName, jobCollectionName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 15;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                JobCollectionCreateResponse response = await client.JobCollections.BeginCreatingAsync(cloudServiceName, jobCollectionName, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 15;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != SchedulerOperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != SchedulerOperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                result.ETag = response.ETag;
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != SchedulerOperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 10;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != SchedulerOperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            result.ETag = response.ETag;
+            return result;
         }
         
         /// <summary>
@@ -913,86 +958,73 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> DeleteAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async Task<SchedulerOperationStatusResponse> DeleteAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             SchedulerManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.JobCollections.BeginDeletingAsync(cloudServiceName, jobCollectionName, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 15;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.JobCollections.BeginDeletingAsync(cloudServiceName, jobCollectionName, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 15;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != SchedulerOperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != SchedulerOperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != SchedulerOperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 10;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != SchedulerOperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -1010,7 +1042,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Get Job Collection operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionGetResponse> GetAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async Task<JobCollectionGetResponse> GetAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -1023,19 +1055,31 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + jobCollectionName.Trim();
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + "scheduler";
+            url = url + "/~/";
+            url = url + "JobCollections";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(jobCollectionName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1070,13 +1114,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1085,7 +1129,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1093,148 +1137,151 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     // Create Result
                     JobCollectionGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobCollectionGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement resourceElement = responseDoc.Element(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement nameElement = resourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobCollectionGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement eTagElement = resourceElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
-                        if (eTagElement != null)
+                        XElement resourceElement = responseDoc.Element(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
+                        if (resourceElement != null)
                         {
-                            string eTagInstance = eTagElement.Value;
-                            result.ETag = eTagInstance;
-                        }
-                        
-                        XElement stateElement = resourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            JobCollectionState stateInstance = ((JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, true));
-                            result.State = stateInstance;
-                        }
-                        
-                        XElement schemaVersionElement = resourceElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (schemaVersionElement != null)
-                        {
-                            string schemaVersionInstance = schemaVersionElement.Value;
-                            result.SchemaVersion = schemaVersionInstance;
-                        }
-                        
-                        XElement promotionCodeElement = resourceElement.Element(XName.Get("PromotionCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (promotionCodeElement != null)
-                        {
-                            string promotionCodeInstance = promotionCodeElement.Value;
-                            result.PromotionCode = promotionCodeInstance;
-                        }
-                        
-                        XElement intrinsicSettingsElement = resourceElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
-                        if (intrinsicSettingsElement != null)
-                        {
-                            JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
-                            result.IntrinsicSettings = intrinsicSettingsInstance;
-                            
-                            XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement != null)
+                            XElement nameElement = resourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
                             {
-                                JobCollectionPlan planInstance = ((JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true));
-                                intrinsicSettingsInstance.Plan = planInstance;
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
                             }
                             
-                            XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));
-                            if (quotaElement != null)
+                            XElement eTagElement = resourceElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
+                            if (eTagElement != null)
                             {
-                                JobCollectionQuota quotaInstance = new JobCollectionQuota();
-                                intrinsicSettingsInstance.Quota = quotaInstance;
+                                string eTagInstance = eTagElement.Value;
+                                result.ETag = eTagInstance;
+                            }
+                            
+                            XElement stateElement = resourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                JobCollectionState stateInstance = ((JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, true));
+                                result.State = stateInstance;
+                            }
+                            
+                            XElement schemaVersionElement = resourceElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
+                            if (schemaVersionElement != null)
+                            {
+                                string schemaVersionInstance = schemaVersionElement.Value;
+                                result.SchemaVersion = schemaVersionInstance;
+                            }
+                            
+                            XElement promotionCodeElement = resourceElement.Element(XName.Get("PromotionCode", "http://schemas.microsoft.com/windowsazure"));
+                            if (promotionCodeElement != null)
+                            {
+                                string promotionCodeInstance = promotionCodeElement.Value;
+                                result.PromotionCode = promotionCodeInstance;
+                            }
+                            
+                            XElement intrinsicSettingsElement = resourceElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
+                            if (intrinsicSettingsElement != null)
+                            {
+                                JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
+                                result.IntrinsicSettings = intrinsicSettingsInstance;
                                 
-                                XElement maxJobCountElement = quotaElement.Element(XName.Get("MaxJobCount", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxJobCountElement != null && string.IsNullOrEmpty(maxJobCountElement.Value) == false)
+                                XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                                if (planElement != null)
                                 {
-                                    int maxJobCountInstance = int.Parse(maxJobCountElement.Value, CultureInfo.InvariantCulture);
-                                    quotaInstance.MaxJobCount = maxJobCountInstance;
+                                    JobCollectionPlan planInstance = ((JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true));
+                                    intrinsicSettingsInstance.Plan = planInstance;
                                 }
                                 
-                                XElement maxJobOccurrenceElement = quotaElement.Element(XName.Get("MaxJobOccurrence", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxJobOccurrenceElement != null && string.IsNullOrEmpty(maxJobOccurrenceElement.Value) == false)
+                                XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));
+                                if (quotaElement != null)
                                 {
-                                    int maxJobOccurrenceInstance = int.Parse(maxJobOccurrenceElement.Value, CultureInfo.InvariantCulture);
-                                    quotaInstance.MaxJobOccurrence = maxJobOccurrenceInstance;
-                                }
-                                
-                                XElement maxRecurrenceElement = quotaElement.Element(XName.Get("MaxRecurrence", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxRecurrenceElement != null)
-                                {
-                                    JobCollectionMaxRecurrence maxRecurrenceInstance = new JobCollectionMaxRecurrence();
-                                    quotaInstance.MaxRecurrence = maxRecurrenceInstance;
+                                    JobCollectionQuota quotaInstance = new JobCollectionQuota();
+                                    intrinsicSettingsInstance.Quota = quotaInstance;
                                     
-                                    XElement frequencyElement = maxRecurrenceElement.Element(XName.Get("Frequency", "http://schemas.microsoft.com/windowsazure"));
-                                    if (frequencyElement != null)
+                                    XElement maxJobCountElement = quotaElement.Element(XName.Get("MaxJobCount", "http://schemas.microsoft.com/windowsazure"));
+                                    if (maxJobCountElement != null && !string.IsNullOrEmpty(maxJobCountElement.Value))
                                     {
-                                        JobCollectionRecurrenceFrequency frequencyInstance = ((JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, true));
-                                        maxRecurrenceInstance.Frequency = frequencyInstance;
+                                        int maxJobCountInstance = int.Parse(maxJobCountElement.Value, CultureInfo.InvariantCulture);
+                                        quotaInstance.MaxJobCount = maxJobCountInstance;
                                     }
                                     
-                                    XElement intervalElement = maxRecurrenceElement.Element(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
-                                    if (intervalElement != null)
+                                    XElement maxJobOccurrenceElement = quotaElement.Element(XName.Get("MaxJobOccurrence", "http://schemas.microsoft.com/windowsazure"));
+                                    if (maxJobOccurrenceElement != null && !string.IsNullOrEmpty(maxJobOccurrenceElement.Value))
                                     {
-                                        int intervalInstance = int.Parse(intervalElement.Value, CultureInfo.InvariantCulture);
-                                        maxRecurrenceInstance.Interval = intervalInstance;
+                                        int maxJobOccurrenceInstance = int.Parse(maxJobOccurrenceElement.Value, CultureInfo.InvariantCulture);
+                                        quotaInstance.MaxJobOccurrence = maxJobOccurrenceInstance;
+                                    }
+                                    
+                                    XElement maxRecurrenceElement = quotaElement.Element(XName.Get("MaxRecurrence", "http://schemas.microsoft.com/windowsazure"));
+                                    if (maxRecurrenceElement != null)
+                                    {
+                                        JobCollectionMaxRecurrence maxRecurrenceInstance = new JobCollectionMaxRecurrence();
+                                        quotaInstance.MaxRecurrence = maxRecurrenceInstance;
+                                        
+                                        XElement frequencyElement = maxRecurrenceElement.Element(XName.Get("Frequency", "http://schemas.microsoft.com/windowsazure"));
+                                        if (frequencyElement != null)
+                                        {
+                                            JobCollectionRecurrenceFrequency frequencyInstance = ((JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, true));
+                                            maxRecurrenceInstance.Frequency = frequencyInstance;
+                                        }
+                                        
+                                        XElement intervalElement = maxRecurrenceElement.Element(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
+                                        if (intervalElement != null)
+                                        {
+                                            int intervalInstance = int.Parse(intervalElement.Value, CultureInfo.InvariantCulture);
+                                            maxRecurrenceInstance.Interval = intervalInstance;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        
-                        XElement labelElement = resourceElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
-                        {
-                            string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement operationStatusElement = resourceElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                        if (operationStatusElement != null)
-                        {
-                            JobCollectionGetResponse.OperationStatus operationStatusInstance = new JobCollectionGetResponse.OperationStatus();
-                            result.LastOperationStatus = operationStatusInstance;
                             
-                            XElement errorElement = operationStatusElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorElement != null)
+                            XElement labelElement = resourceElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
                             {
-                                JobCollectionGetResponse.OperationStatusResponseDetails errorInstance = new JobCollectionGetResponse.OperationStatusResponseDetails();
-                                operationStatusInstance.ResponseDetails = errorInstance;
-                                
-                                XElement httpCodeElement = errorElement.Element(XName.Get("HttpCode", "http://schemas.microsoft.com/windowsazure"));
-                                if (httpCodeElement != null)
-                                {
-                                    HttpStatusCode httpCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, true));
-                                    errorInstance.StatusCode = httpCodeInstance;
-                                }
-                                
-                                XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                if (messageElement != null)
-                                {
-                                    string messageInstance = messageElement.Value;
-                                    errorInstance.Message = messageInstance;
-                                }
+                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                result.Label = labelInstance;
                             }
                             
-                            XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                            if (resultElement != null)
+                            XElement operationStatusElement = resourceElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
+                            if (operationStatusElement != null)
                             {
-                                SchedulerOperationStatus resultInstance = ((SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, true));
-                                operationStatusInstance.Status = resultInstance;
+                                JobCollectionGetResponse.OperationStatus operationStatusInstance = new JobCollectionGetResponse.OperationStatus();
+                                result.LastOperationStatus = operationStatusInstance;
+                                
+                                XElement errorElement = operationStatusElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
+                                if (errorElement != null)
+                                {
+                                    JobCollectionGetResponse.OperationStatusResponseDetails errorInstance = new JobCollectionGetResponse.OperationStatusResponseDetails();
+                                    operationStatusInstance.ResponseDetails = errorInstance;
+                                    
+                                    XElement httpCodeElement = errorElement.Element(XName.Get("HttpCode", "http://schemas.microsoft.com/windowsazure"));
+                                    if (httpCodeElement != null)
+                                    {
+                                        HttpStatusCode httpCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, true));
+                                        errorInstance.StatusCode = httpCodeInstance;
+                                    }
+                                    
+                                    XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                    if (messageElement != null)
+                                    {
+                                        string messageInstance = messageElement.Value;
+                                        errorInstance.Message = messageInstance;
+                                    }
+                                }
+                                
+                                XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
+                                if (resultElement != null)
+                                {
+                                    SchedulerOperationStatus resultInstance = ((SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, true));
+                                    operationStatusInstance.Status = resultInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1243,7 +1290,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1292,88 +1339,75 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> UpdateAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<SchedulerOperationStatusResponse> UpdateAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
             SchedulerManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cloudServiceName", cloudServiceName);
                 tracingParameters.Add("jobCollectionName", jobCollectionName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            JobCollectionUpdateResponse response = await client.JobCollections.BeginUpdatingAsync(cloudServiceName, jobCollectionName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 15;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                JobCollectionUpdateResponse response = await client.JobCollections.BeginUpdatingAsync(cloudServiceName, jobCollectionName, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 15;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != SchedulerOperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != SchedulerOperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                result.ETag = response.ETag;
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != SchedulerOperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 10;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != SchedulerOperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            result.ETag = response.ETag;
+            return result;
         }
     }
 }

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// The create or update monitoring setting response. It's marked as empty.
     /// We only pass it to ensure json error handling.
     /// </summary>
-    public partial class MonitoringConfigurationCreateOrUpdateResponse : OperationResponse
+    public partial class MonitoringConfigurationCreateOrUpdateResponse : AzureOperationResponse
     {
         /// <summary>
         /// Initializes a new instance of the

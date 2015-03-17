@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Scheduler
 {
     public static partial class JobCollectionOperationsExtensions
     {
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleting(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
+        public static AzureOperationResponse BeginDeleting(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAsync(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
+        public static Task<AzureOperationResponse> BeginDeletingAsync(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
         {
             return operations.BeginDeletingAsync(cloudServiceName, jobCollectionName, CancellationToken.None);
         }

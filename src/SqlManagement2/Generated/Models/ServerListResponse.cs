@@ -22,21 +22,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Database request.
+    /// Represents the response to a Get Azure Sql Database Server request.
     /// </summary>
-    public partial class ServerListResponse : OperationResponse, IEnumerable<Server>
+    public partial class ServerListResponse : AzureOperationResponse, IEnumerable<Server>
     {
         private IList<Server> _servers;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Database servers.
+        /// Optional. Gets or sets the list of Azure Sql Database Servers.
         /// </summary>
         public IList<Server> Servers
         {

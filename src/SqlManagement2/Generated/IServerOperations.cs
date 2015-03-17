@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns information about an Azure SQL Database Server.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerGetResponse> GetAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
         
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
     }

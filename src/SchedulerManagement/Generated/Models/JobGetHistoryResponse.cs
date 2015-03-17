@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// <summary>
     /// The Get Job History operation response.
     /// </summary>
-    public partial class JobGetHistoryResponse : OperationResponse, IEnumerable<JobGetHistoryResponse.JobHistoryEntry>
+    public partial class JobGetHistoryResponse : AzureOperationResponse, IEnumerable<JobGetHistoryResponse.JobHistoryEntry>
     {
         private IList<JobGetHistoryResponse.JobHistoryEntry> _jobHistory;
         

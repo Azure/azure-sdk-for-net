@@ -22,18 +22,29 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// Definition of the runbook parameter type.
     /// </summary>
     public partial class RunbookParameter
     {
+        private string _defaultValue;
+        
+        /// <summary>
+        /// Optional. Gets or sets the default value of parameter.
+        /// </summary>
+        public string DefaultValue
+        {
+            get { return this._defaultValue; }
+            set { this._defaultValue = value; }
+        }
+        
         private bool _isMandatory;
         
         /// <summary>
-        /// Optional. True or false, to indicate whether the parameter is
-        /// madatory or not.
+        /// Optional. Gets or sets a Boolean value to indicate whether the
+        /// parameter is madatory or not.
         /// </summary>
         public bool IsMandatory
         {
@@ -41,21 +52,10 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._isMandatory = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the parameter.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private int _position;
         
         /// <summary>
-        /// Optional. The position of the parameter.
+        /// Optional. Get or sets the position of the parameter.
         /// </summary>
         public int Position
         {
@@ -63,21 +63,10 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._position = value; }
         }
         
-        private string _runbookVersionId;
-        
-        /// <summary>
-        /// Optional. The runbook version ID of the parameter.
-        /// </summary>
-        public string RunbookVersionId
-        {
-            get { return this._runbookVersionId; }
-            set { this._runbookVersionId = value; }
-        }
-        
         private string _type;
         
         /// <summary>
-        /// Optional. The type of the parameter.
+        /// Optional. Gets or sets the type of the parameter.
         /// </summary>
         public string Type
         {

@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource provider information.
     /// </summary>
-    public partial class Provider
+    public partial class Provider : AzureOperationResponse
     {
         private string _id;
         

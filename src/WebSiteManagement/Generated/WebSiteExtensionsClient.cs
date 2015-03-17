@@ -22,9 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
@@ -100,6 +99,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             set { this._siteName = value; }
         }
         
+        private ICommandsOperations _commands;
+        
+        /// <summary>
+        /// Operations for invoking commands.
+        /// </summary>
+        public virtual ICommandsOperations Commands
+        {
+            get { return this._commands; }
+        }
+        
         private IContinuousWebJobOperations _continuousWebJobs;
         
         /// <summary>
@@ -163,9 +172,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Initializes a new instance of the WebSiteExtensionsClient class.
         /// </summary>
-        private WebSiteExtensionsClient()
+        public WebSiteExtensionsClient()
             : base()
         {
+            this._commands = new CommandsOperations(this);
             this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
@@ -235,7 +245,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             this._siteName = siteName;
             this._credentials = credentials;
-            this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
+            this._baseUri = TypeConversion.TryParseUri("https://" + this.SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -246,9 +256,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private WebSiteExtensionsClient(HttpClient httpClient)
+        public WebSiteExtensionsClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._commands = new CommandsOperations(this);
             this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
@@ -324,7 +335,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             this._siteName = siteName;
             this._credentials = credentials;
-            this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
+            this._baseUri = TypeConversion.TryParseUri("https://" + this.SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
         }

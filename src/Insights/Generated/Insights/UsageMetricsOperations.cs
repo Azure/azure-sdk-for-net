@@ -26,11 +26,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Hyak.Common;
 using Microsoft.Azure.Insights;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Insights
@@ -85,23 +84,36 @@ namespace Microsoft.Azure.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/usages?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/usages";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
-                url = url + "&$filter=" + Uri.EscapeDataString(filterString != null ? filterString.Trim() : "");
+                odataFilter.Add(Uri.EscapeDataString(filterString));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -138,13 +150,13 @@ namespace Microsoft.Azure.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -153,7 +165,7 @@ namespace Microsoft.Azure.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -161,87 +173,90 @@ namespace Microsoft.Azure.Insights
                     // Create Result
                     UsageMetricListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new UsageMetricListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
-                        result.UsageMetricCollection = usageMetricCollectionInstance;
-                        
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new UsageMetricListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
+                            result.UsageMetricCollection = usageMetricCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                UsageMetric usageMetricInstance = new UsageMetric();
-                                usageMetricCollectionInstance.Value.Add(usageMetricInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    LocalizableString nameInstance = new LocalizableString();
-                                    usageMetricInstance.Name = nameInstance;
+                                    UsageMetric usageMetricInstance = new UsageMetric();
+                                    usageMetricCollectionInstance.Value.Add(usageMetricInstance);
                                     
-                                    JToken valueValue2 = nameValue["value"];
-                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string valueInstance = ((string)valueValue2);
-                                        nameInstance.Value = valueInstance;
+                                        LocalizableString nameInstance = new LocalizableString();
+                                        usageMetricInstance.Name = nameInstance;
+                                        
+                                        JToken valueValue2 = nameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            nameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = nameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            nameInstance.LocalizedValue = localizedValueInstance;
+                                        }
                                     }
                                     
-                                    JToken localizedValueValue = nameValue["localizedValue"];
-                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                    JToken currentValueValue = valueValue["currentValue"];
+                                    if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance = ((string)localizedValueValue);
-                                        nameInstance.LocalizedValue = localizedValueInstance;
+                                        double currentValueInstance = ((double)currentValueValue);
+                                        usageMetricInstance.CurrentValue = currentValueInstance;
                                     }
-                                }
-                                
-                                JToken currentValueValue = valueValue["currentValue"];
-                                if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
-                                {
-                                    double currentValueInstance = ((double)currentValueValue);
-                                    usageMetricInstance.CurrentValue = currentValueInstance;
-                                }
-                                
-                                JToken limitValue = valueValue["limit"];
-                                if (limitValue != null && limitValue.Type != JTokenType.Null)
-                                {
-                                    double limitInstance = ((double)limitValue);
-                                    usageMetricInstance.Limit = limitInstance;
-                                }
-                                
-                                JToken unitValue = valueValue["unit"];
-                                if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                {
-                                    string unitInstance = ((string)unitValue);
-                                    usageMetricInstance.Unit = unitInstance;
-                                }
-                                
-                                JToken nextResetTimeValue = valueValue["nextResetTime"];
-                                if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
-                                {
-                                    string nextResetTimeInstance = ((string)nextResetTimeValue);
-                                    usageMetricInstance.NextResetTime = nextResetTimeInstance;
-                                }
-                                
-                                JToken quotaPeriodValue = valueValue["quotaPeriod"];
-                                if (quotaPeriodValue != null && quotaPeriodValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue));
-                                    usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
+                                    
+                                    JToken limitValue = valueValue["limit"];
+                                    if (limitValue != null && limitValue.Type != JTokenType.Null)
+                                    {
+                                        double limitInstance = ((double)limitValue);
+                                        usageMetricInstance.Limit = limitInstance;
+                                    }
+                                    
+                                    JToken unitValue = valueValue["unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        string unitInstance = ((string)unitValue);
+                                        usageMetricInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken nextResetTimeValue = valueValue["nextResetTime"];
+                                    if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
+                                    {
+                                        string nextResetTimeInstance = ((string)nextResetTimeValue);
+                                        usageMetricInstance.NextResetTime = nextResetTimeInstance;
+                                    }
+                                    
+                                    JToken quotaPeriodValue = valueValue["quotaPeriod"];
+                                    if (quotaPeriodValue != null && quotaPeriodValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan quotaPeriodInstance = XmlConvert.ToTimeSpan(((string)quotaPeriodValue));
+                                        usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -250,7 +265,285 @@ namespace Microsoft.Azure.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// Required. The resource identifier of the target resource to get
+        /// usages for.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required. metric names to return.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Deprecated. The List Usage Metric operation response.
+        /// </returns>
+        public async Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (metricNames == null)
+            {
+                throw new ArgumentNullException("metricNames");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("metricNames", metricNames);
+                TracingAdapter.Enter(invocationId, this, "ListDeprecatedAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/usages";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (metricNames.Count > 0)
+            {
+                queryParameters.Add("names=" + Uri.EscapeDataString(string.Join(",", metricNames)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    UsageMetricListResponseDeprecated result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new UsageMetricListResponseDeprecated();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            UsageMetricCollectionDeprecated usageMetricCollectionInstance = new UsageMetricCollectionDeprecated();
+                            result.UsageMetricCollection = usageMetricCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    UsageMetricDeprecated usageMetricDeprecatedInstance = new UsageMetricDeprecated();
+                                    usageMetricCollectionInstance.Value.Add(usageMetricDeprecatedInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        usageMetricDeprecatedInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken displayNameValue = valueValue["displayName"];
+                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                    {
+                                        string displayNameInstance = ((string)displayNameValue);
+                                        usageMetricDeprecatedInstance.DisplayName = displayNameInstance;
+                                    }
+                                    
+                                    JToken currentValueValue = valueValue["currentValue"];
+                                    if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
+                                    {
+                                        double currentValueInstance = ((double)currentValueValue);
+                                        usageMetricDeprecatedInstance.CurrentValue = currentValueInstance;
+                                    }
+                                    
+                                    JToken limitValue = valueValue["limit"];
+                                    if (limitValue != null && limitValue.Type != JTokenType.Null)
+                                    {
+                                        double limitInstance = ((double)limitValue);
+                                        usageMetricDeprecatedInstance.Limit = limitInstance;
+                                    }
+                                    
+                                    JToken unitValue = valueValue["unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        string unitInstance = ((string)unitValue);
+                                        usageMetricDeprecatedInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken nextResetTimeValue = valueValue["nextResetTime"];
+                                    if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
+                                    {
+                                        string nextResetTimeInstance = ((string)nextResetTimeValue);
+                                        usageMetricDeprecatedInstance.NextResetTime = nextResetTimeInstance;
+                                    }
+                                    
+                                    JToken quotaPeriodValue = valueValue["quotaPeriod"];
+                                    if (quotaPeriodValue != null && quotaPeriodValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan quotaPeriodInstance = XmlConvert.ToTimeSpan(((string)quotaPeriodValue));
+                                        usageMetricDeprecatedInstance.QuotaPeriod = quotaPeriodInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken propertiesArray = responseDoc["properties"];
+                            if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken propertiesValue in ((JArray)propertiesArray))
+                                {
+                                    UsageMetricDeprecated usageMetricDeprecatedInstance2 = new UsageMetricDeprecated();
+                                    usageMetricCollectionInstance.Properties.Add(usageMetricDeprecatedInstance2);
+                                    
+                                    JToken nameValue2 = propertiesValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        usageMetricDeprecatedInstance2.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken displayNameValue2 = propertiesValue["displayName"];
+                                    if (displayNameValue2 != null && displayNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string displayNameInstance2 = ((string)displayNameValue2);
+                                        usageMetricDeprecatedInstance2.DisplayName = displayNameInstance2;
+                                    }
+                                    
+                                    JToken currentValueValue2 = propertiesValue["currentValue"];
+                                    if (currentValueValue2 != null && currentValueValue2.Type != JTokenType.Null)
+                                    {
+                                        double currentValueInstance2 = ((double)currentValueValue2);
+                                        usageMetricDeprecatedInstance2.CurrentValue = currentValueInstance2;
+                                    }
+                                    
+                                    JToken limitValue2 = propertiesValue["limit"];
+                                    if (limitValue2 != null && limitValue2.Type != JTokenType.Null)
+                                    {
+                                        double limitInstance2 = ((double)limitValue2);
+                                        usageMetricDeprecatedInstance2.Limit = limitInstance2;
+                                    }
+                                    
+                                    JToken unitValue2 = propertiesValue["unit"];
+                                    if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                    {
+                                        string unitInstance2 = ((string)unitValue2);
+                                        usageMetricDeprecatedInstance2.Unit = unitInstance2;
+                                    }
+                                    
+                                    JToken nextResetTimeValue2 = propertiesValue["nextResetTime"];
+                                    if (nextResetTimeValue2 != null && nextResetTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        string nextResetTimeInstance2 = ((string)nextResetTimeValue2);
+                                        usageMetricDeprecatedInstance2.NextResetTime = nextResetTimeInstance2;
+                                    }
+                                    
+                                    JToken quotaPeriodValue2 = propertiesValue["quotaPeriod"];
+                                    if (quotaPeriodValue2 != null && quotaPeriodValue2.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan quotaPeriodInstance2 = XmlConvert.ToTimeSpan(((string)quotaPeriodValue2));
+                                        usageMetricDeprecatedInstance2.QuotaPeriod = quotaPeriodInstance2;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

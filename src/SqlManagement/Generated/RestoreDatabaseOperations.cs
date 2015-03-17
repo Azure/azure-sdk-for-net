@@ -30,9 +30,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
@@ -42,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// Contains the operation to create restore requests for Azure SQL
     /// Databases.
     /// </summary>
-    internal partial class RestoreDatabaseOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IRestoreDatabaseOperations
+    internal partial class RestoreDatabaseOperations : IServiceOperations<SqlManagementClient>, IRestoreDatabaseOperations
     {
         /// <summary>
         /// Initializes a new instance of the RestoreDatabaseOperations class.
@@ -84,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Contains the response to the Create Restore Database Operation
         /// request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RestoreDatabaseOperationCreateResponse> CreateAsync(string sourceServerName, RestoreDatabaseOperationCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<RestoreDatabaseOperationCreateResponse> CreateAsync(string sourceServerName, RestoreDatabaseOperationCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (sourceServerName == null)
@@ -105,19 +103,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("sourceServerName", sourceServerName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(sourceServerName) + "/restoredatabaseoperations";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(sourceServerName);
+            url = url + "/restoredatabaseoperations";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -192,13 +198,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -207,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -215,60 +221,63 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     // Create Result
                     RestoreDatabaseOperationCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RestoreDatabaseOperationCreateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null)
+                    if (statusCode == HttpStatusCode.Created)
                     {
-                        RestoreDatabaseOperation serviceResourceInstance = new RestoreDatabaseOperation();
-                        result.Operation = serviceResourceInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RestoreDatabaseOperationCreateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement requestIDElement = serviceResourceElement2.Element(XName.Get("RequestID", "http://schemas.microsoft.com/windowsazure"));
-                        if (requestIDElement != null)
+                        XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourceElement2 != null)
                         {
-                            string requestIDInstance = requestIDElement.Value;
-                            serviceResourceInstance.Id = requestIDInstance;
+                            RestoreDatabaseOperation serviceResourceInstance = new RestoreDatabaseOperation();
+                            result.Operation = serviceResourceInstance;
+                            
+                            XElement requestIDElement = serviceResourceElement2.Element(XName.Get("RequestID", "http://schemas.microsoft.com/windowsazure"));
+                            if (requestIDElement != null)
+                            {
+                                string requestIDInstance = requestIDElement.Value;
+                                serviceResourceInstance.Id = requestIDInstance;
+                            }
+                            
+                            XElement sourceDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("SourceDatabaseName", "http://schemas.microsoft.com/windowsazure"));
+                            if (sourceDatabaseNameElement2 != null)
+                            {
+                                string sourceDatabaseNameInstance = sourceDatabaseNameElement2.Value;
+                                serviceResourceInstance.SourceDatabaseName = sourceDatabaseNameInstance;
+                            }
+                            
+                            XElement sourceDatabaseDeletionDateElement2 = serviceResourceElement2.Element(XName.Get("SourceDatabaseDeletionDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (sourceDatabaseDeletionDateElement2 != null && !string.IsNullOrEmpty(sourceDatabaseDeletionDateElement2.Value))
+                            {
+                                DateTime sourceDatabaseDeletionDateInstance = DateTime.Parse(sourceDatabaseDeletionDateElement2.Value, CultureInfo.InvariantCulture);
+                                serviceResourceInstance.SourceDatabaseDeletionDate = sourceDatabaseDeletionDateInstance;
+                            }
+                            
+                            XElement targetServerNameElement2 = serviceResourceElement2.Element(XName.Get("TargetServerName", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetServerNameElement2 != null)
+                            {
+                                string targetServerNameInstance = targetServerNameElement2.Value;
+                                serviceResourceInstance.TargetServerName = targetServerNameInstance;
+                            }
+                            
+                            XElement targetDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("TargetDatabaseName", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetDatabaseNameElement2 != null)
+                            {
+                                string targetDatabaseNameInstance = targetDatabaseNameElement2.Value;
+                                serviceResourceInstance.TargetDatabaseName = targetDatabaseNameInstance;
+                            }
+                            
+                            XElement targetUtcPointInTimeElement2 = serviceResourceElement2.Element(XName.Get("TargetUtcPointInTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetUtcPointInTimeElement2 != null)
+                            {
+                                DateTime targetUtcPointInTimeInstance = DateTime.Parse(targetUtcPointInTimeElement2.Value, CultureInfo.InvariantCulture);
+                                serviceResourceInstance.PointInTime = targetUtcPointInTimeInstance;
+                            }
                         }
                         
-                        XElement sourceDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("SourceDatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceDatabaseNameElement2 != null)
-                        {
-                            string sourceDatabaseNameInstance = sourceDatabaseNameElement2.Value;
-                            serviceResourceInstance.SourceDatabaseName = sourceDatabaseNameInstance;
-                        }
-                        
-                        XElement sourceDatabaseDeletionDateElement2 = serviceResourceElement2.Element(XName.Get("SourceDatabaseDeletionDate", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceDatabaseDeletionDateElement2 != null && string.IsNullOrEmpty(sourceDatabaseDeletionDateElement2.Value) == false)
-                        {
-                            DateTime sourceDatabaseDeletionDateInstance = DateTime.Parse(sourceDatabaseDeletionDateElement2.Value, CultureInfo.InvariantCulture);
-                            serviceResourceInstance.SourceDatabaseDeletionDate = sourceDatabaseDeletionDateInstance;
-                        }
-                        
-                        XElement targetServerNameElement2 = serviceResourceElement2.Element(XName.Get("TargetServerName", "http://schemas.microsoft.com/windowsazure"));
-                        if (targetServerNameElement2 != null)
-                        {
-                            string targetServerNameInstance = targetServerNameElement2.Value;
-                            serviceResourceInstance.TargetServerName = targetServerNameInstance;
-                        }
-                        
-                        XElement targetDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("TargetDatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                        if (targetDatabaseNameElement2 != null)
-                        {
-                            string targetDatabaseNameInstance = targetDatabaseNameElement2.Value;
-                            serviceResourceInstance.TargetDatabaseName = targetDatabaseNameInstance;
-                        }
-                        
-                        XElement targetUtcPointInTimeElement2 = serviceResourceElement2.Element(XName.Get("TargetUtcPointInTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (targetUtcPointInTimeElement2 != null)
-                        {
-                            DateTime targetUtcPointInTimeInstance = DateTime.Parse(targetUtcPointInTimeElement2.Value, CultureInfo.InvariantCulture);
-                            serviceResourceInstance.PointInTime = targetUtcPointInTimeInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -277,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

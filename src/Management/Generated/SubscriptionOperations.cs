@@ -28,9 +28,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
 
@@ -41,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715315.aspx for
     /// more information)
     /// </summary>
-    internal partial class SubscriptionOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.ISubscriptionOperations
+    internal partial class SubscriptionOperations : IServiceOperations<ManagementClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.
@@ -77,22 +76,27 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The Get Subscription operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.SubscriptionGetResponse> GetAsync(CancellationToken cancellationToken)
+        public async Task<SubscriptionGetResponse> GetAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "");
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -127,13 +131,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -142,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -150,134 +154,137 @@ namespace Microsoft.WindowsAzure.Management
                     // Create Result
                     SubscriptionGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new SubscriptionGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement subscriptionElement = responseDoc.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
-                    if (subscriptionElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement subscriptionIDElement = subscriptionElement.Element(XName.Get("SubscriptionID", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionIDElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SubscriptionGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement subscriptionElement = responseDoc.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
+                        if (subscriptionElement != null)
                         {
-                            string subscriptionIDInstance = subscriptionIDElement.Value;
-                            result.SubscriptionID = subscriptionIDInstance;
+                            XElement subscriptionIDElement = subscriptionElement.Element(XName.Get("SubscriptionID", "http://schemas.microsoft.com/windowsazure"));
+                            if (subscriptionIDElement != null)
+                            {
+                                string subscriptionIDInstance = subscriptionIDElement.Value;
+                                result.SubscriptionID = subscriptionIDInstance;
+                            }
+                            
+                            XElement subscriptionNameElement = subscriptionElement.Element(XName.Get("SubscriptionName", "http://schemas.microsoft.com/windowsazure"));
+                            if (subscriptionNameElement != null)
+                            {
+                                string subscriptionNameInstance = subscriptionNameElement.Value;
+                                result.SubscriptionName = subscriptionNameInstance;
+                            }
+                            
+                            XElement subscriptionStatusElement = subscriptionElement.Element(XName.Get("SubscriptionStatus", "http://schemas.microsoft.com/windowsazure"));
+                            if (subscriptionStatusElement != null)
+                            {
+                                SubscriptionStatus subscriptionStatusInstance = ((SubscriptionStatus)Enum.Parse(typeof(SubscriptionStatus), subscriptionStatusElement.Value, true));
+                                result.SubscriptionStatus = subscriptionStatusInstance;
+                            }
+                            
+                            XElement accountAdminLiveEmailIdElement = subscriptionElement.Element(XName.Get("AccountAdminLiveEmailId", "http://schemas.microsoft.com/windowsazure"));
+                            if (accountAdminLiveEmailIdElement != null)
+                            {
+                                string accountAdminLiveEmailIdInstance = accountAdminLiveEmailIdElement.Value;
+                                result.AccountAdminLiveEmailId = accountAdminLiveEmailIdInstance;
+                            }
+                            
+                            XElement serviceAdminLiveEmailIdElement = subscriptionElement.Element(XName.Get("ServiceAdminLiveEmailId", "http://schemas.microsoft.com/windowsazure"));
+                            if (serviceAdminLiveEmailIdElement != null)
+                            {
+                                string serviceAdminLiveEmailIdInstance = serviceAdminLiveEmailIdElement.Value;
+                                result.ServiceAdminLiveEmailId = serviceAdminLiveEmailIdInstance;
+                            }
+                            
+                            XElement maxCoreCountElement = subscriptionElement.Element(XName.Get("MaxCoreCount", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxCoreCountElement != null)
+                            {
+                                int maxCoreCountInstance = int.Parse(maxCoreCountElement.Value, CultureInfo.InvariantCulture);
+                                result.MaximumCoreCount = maxCoreCountInstance;
+                            }
+                            
+                            XElement maxStorageAccountsElement = subscriptionElement.Element(XName.Get("MaxStorageAccounts", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxStorageAccountsElement != null)
+                            {
+                                int maxStorageAccountsInstance = int.Parse(maxStorageAccountsElement.Value, CultureInfo.InvariantCulture);
+                                result.MaximumStorageAccounts = maxStorageAccountsInstance;
+                            }
+                            
+                            XElement maxHostedServicesElement = subscriptionElement.Element(XName.Get("MaxHostedServices", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxHostedServicesElement != null)
+                            {
+                                int maxHostedServicesInstance = int.Parse(maxHostedServicesElement.Value, CultureInfo.InvariantCulture);
+                                result.MaximumHostedServices = maxHostedServicesInstance;
+                            }
+                            
+                            XElement currentCoreCountElement = subscriptionElement.Element(XName.Get("CurrentCoreCount", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentCoreCountElement != null)
+                            {
+                                int currentCoreCountInstance = int.Parse(currentCoreCountElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentCoreCount = currentCoreCountInstance;
+                            }
+                            
+                            XElement currentStorageAccountsElement = subscriptionElement.Element(XName.Get("CurrentStorageAccounts", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentStorageAccountsElement != null)
+                            {
+                                int currentStorageAccountsInstance = int.Parse(currentStorageAccountsElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentStorageAccounts = currentStorageAccountsInstance;
+                            }
+                            
+                            XElement currentHostedServicesElement = subscriptionElement.Element(XName.Get("CurrentHostedServices", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentHostedServicesElement != null)
+                            {
+                                int currentHostedServicesInstance = int.Parse(currentHostedServicesElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentHostedServices = currentHostedServicesInstance;
+                            }
+                            
+                            XElement maxVirtualNetworkSitesElement = subscriptionElement.Element(XName.Get("MaxVirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxVirtualNetworkSitesElement != null)
+                            {
+                                int maxVirtualNetworkSitesInstance = int.Parse(maxVirtualNetworkSitesElement.Value, CultureInfo.InvariantCulture);
+                                result.MaximumVirtualNetworkSites = maxVirtualNetworkSitesInstance;
+                            }
+                            
+                            XElement currentVirtualNetworkSitesElement = subscriptionElement.Element(XName.Get("CurrentVirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentVirtualNetworkSitesElement != null)
+                            {
+                                int currentVirtualNetworkSitesInstance = int.Parse(currentVirtualNetworkSitesElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentVirtualNetworkSites = currentVirtualNetworkSitesInstance;
+                            }
+                            
+                            XElement maxLocalNetworkSitesElement = subscriptionElement.Element(XName.Get("MaxLocalNetworkSites", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxLocalNetworkSitesElement != null)
+                            {
+                                int maxLocalNetworkSitesInstance = int.Parse(maxLocalNetworkSitesElement.Value, CultureInfo.InvariantCulture);
+                                result.MaximumLocalNetworkSites = maxLocalNetworkSitesInstance;
+                            }
+                            
+                            XElement maxDnsServersElement = subscriptionElement.Element(XName.Get("MaxDnsServers", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxDnsServersElement != null)
+                            {
+                                int maxDnsServersInstance = int.Parse(maxDnsServersElement.Value, CultureInfo.InvariantCulture);
+                                result.MaximumDnsServers = maxDnsServersInstance;
+                            }
+                            
+                            XElement currentLocalNetworkSitesElement = subscriptionElement.Element(XName.Get("CurrentLocalNetworkSites", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentLocalNetworkSitesElement != null)
+                            {
+                                int currentLocalNetworkSitesInstance = int.Parse(currentLocalNetworkSitesElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentLocalNetworkSites = currentLocalNetworkSitesInstance;
+                            }
+                            
+                            XElement currentDnsServersElement = subscriptionElement.Element(XName.Get("CurrentDnsServers", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentDnsServersElement != null)
+                            {
+                                int currentDnsServersInstance = int.Parse(currentDnsServersElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentDnsServers = currentDnsServersInstance;
+                            }
                         }
                         
-                        XElement subscriptionNameElement = subscriptionElement.Element(XName.Get("SubscriptionName", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionNameElement != null)
-                        {
-                            string subscriptionNameInstance = subscriptionNameElement.Value;
-                            result.SubscriptionName = subscriptionNameInstance;
-                        }
-                        
-                        XElement subscriptionStatusElement = subscriptionElement.Element(XName.Get("SubscriptionStatus", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionStatusElement != null)
-                        {
-                            SubscriptionStatus subscriptionStatusInstance = ((SubscriptionStatus)Enum.Parse(typeof(SubscriptionStatus), subscriptionStatusElement.Value, true));
-                            result.SubscriptionStatus = subscriptionStatusInstance;
-                        }
-                        
-                        XElement accountAdminLiveEmailIdElement = subscriptionElement.Element(XName.Get("AccountAdminLiveEmailId", "http://schemas.microsoft.com/windowsazure"));
-                        if (accountAdminLiveEmailIdElement != null)
-                        {
-                            string accountAdminLiveEmailIdInstance = accountAdminLiveEmailIdElement.Value;
-                            result.AccountAdminLiveEmailId = accountAdminLiveEmailIdInstance;
-                        }
-                        
-                        XElement serviceAdminLiveEmailIdElement = subscriptionElement.Element(XName.Get("ServiceAdminLiveEmailId", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceAdminLiveEmailIdElement != null)
-                        {
-                            string serviceAdminLiveEmailIdInstance = serviceAdminLiveEmailIdElement.Value;
-                            result.ServiceAdminLiveEmailId = serviceAdminLiveEmailIdInstance;
-                        }
-                        
-                        XElement maxCoreCountElement = subscriptionElement.Element(XName.Get("MaxCoreCount", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxCoreCountElement != null)
-                        {
-                            int maxCoreCountInstance = int.Parse(maxCoreCountElement.Value, CultureInfo.InvariantCulture);
-                            result.MaximumCoreCount = maxCoreCountInstance;
-                        }
-                        
-                        XElement maxStorageAccountsElement = subscriptionElement.Element(XName.Get("MaxStorageAccounts", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxStorageAccountsElement != null)
-                        {
-                            int maxStorageAccountsInstance = int.Parse(maxStorageAccountsElement.Value, CultureInfo.InvariantCulture);
-                            result.MaximumStorageAccounts = maxStorageAccountsInstance;
-                        }
-                        
-                        XElement maxHostedServicesElement = subscriptionElement.Element(XName.Get("MaxHostedServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxHostedServicesElement != null)
-                        {
-                            int maxHostedServicesInstance = int.Parse(maxHostedServicesElement.Value, CultureInfo.InvariantCulture);
-                            result.MaximumHostedServices = maxHostedServicesInstance;
-                        }
-                        
-                        XElement currentCoreCountElement = subscriptionElement.Element(XName.Get("CurrentCoreCount", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentCoreCountElement != null)
-                        {
-                            int currentCoreCountInstance = int.Parse(currentCoreCountElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentCoreCount = currentCoreCountInstance;
-                        }
-                        
-                        XElement currentStorageAccountsElement = subscriptionElement.Element(XName.Get("CurrentStorageAccounts", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentStorageAccountsElement != null)
-                        {
-                            int currentStorageAccountsInstance = int.Parse(currentStorageAccountsElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentStorageAccounts = currentStorageAccountsInstance;
-                        }
-                        
-                        XElement currentHostedServicesElement = subscriptionElement.Element(XName.Get("CurrentHostedServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentHostedServicesElement != null)
-                        {
-                            int currentHostedServicesInstance = int.Parse(currentHostedServicesElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentHostedServices = currentHostedServicesInstance;
-                        }
-                        
-                        XElement maxVirtualNetworkSitesElement = subscriptionElement.Element(XName.Get("MaxVirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxVirtualNetworkSitesElement != null)
-                        {
-                            int maxVirtualNetworkSitesInstance = int.Parse(maxVirtualNetworkSitesElement.Value, CultureInfo.InvariantCulture);
-                            result.MaximumVirtualNetworkSites = maxVirtualNetworkSitesInstance;
-                        }
-                        
-                        XElement currentVirtualNetworkSitesElement = subscriptionElement.Element(XName.Get("CurrentVirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentVirtualNetworkSitesElement != null)
-                        {
-                            int currentVirtualNetworkSitesInstance = int.Parse(currentVirtualNetworkSitesElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentVirtualNetworkSites = currentVirtualNetworkSitesInstance;
-                        }
-                        
-                        XElement maxLocalNetworkSitesElement = subscriptionElement.Element(XName.Get("MaxLocalNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxLocalNetworkSitesElement != null)
-                        {
-                            int maxLocalNetworkSitesInstance = int.Parse(maxLocalNetworkSitesElement.Value, CultureInfo.InvariantCulture);
-                            result.MaximumLocalNetworkSites = maxLocalNetworkSitesInstance;
-                        }
-                        
-                        XElement maxDnsServersElement = subscriptionElement.Element(XName.Get("MaxDnsServers", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxDnsServersElement != null)
-                        {
-                            int maxDnsServersInstance = int.Parse(maxDnsServersElement.Value, CultureInfo.InvariantCulture);
-                            result.MaximumDnsServers = maxDnsServersInstance;
-                        }
-                        
-                        XElement currentLocalNetworkSitesElement = subscriptionElement.Element(XName.Get("CurrentLocalNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentLocalNetworkSitesElement != null)
-                        {
-                            int currentLocalNetworkSitesInstance = int.Parse(currentLocalNetworkSitesElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentLocalNetworkSites = currentLocalNetworkSitesInstance;
-                        }
-                        
-                        XElement currentDnsServersElement = subscriptionElement.Element(XName.Get("CurrentDnsServers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentDnsServersElement != null)
-                        {
-                            int currentDnsServersInstance = int.Parse(currentDnsServersElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentDnsServers = currentDnsServersInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -286,7 +293,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -324,7 +331,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Subscription Operations operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.SubscriptionListOperationsResponse> ListOperationsAsync(SubscriptionListOperationsParameters parameters, CancellationToken cancellationToken)
+        public async Task<SubscriptionListOperationsResponse> ListOperationsAsync(SubscriptionListOperationsParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -333,31 +340,42 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListOperationsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListOperationsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/operations?";
-            url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/operations";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())));
+            queryParameters.Add("EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime())));
             if (parameters.ObjectIdFilter != null)
             {
-                url = url + "&ObjectIdFilter=" + Uri.EscapeDataString(parameters.ObjectIdFilter != null ? parameters.ObjectIdFilter.Trim() : "");
+                queryParameters.Add("ObjectIdFilter=" + Uri.EscapeDataString(parameters.ObjectIdFilter));
             }
             if (parameters.OperationStatus != null)
             {
-                url = url + "&OperationResultFilter=" + Uri.EscapeDataString(parameters.OperationStatus.Value.ToString());
+                queryParameters.Add("OperationResultFilter=" + Uri.EscapeDataString(parameters.OperationStatus.Value.ToString()));
             }
             if (parameters.ContinuationToken != null)
             {
-                url = url + "&ContinuationToken=" + Uri.EscapeDataString(parameters.ContinuationToken != null ? parameters.ContinuationToken.Trim() : "");
+                queryParameters.Add("ContinuationToken=" + Uri.EscapeDataString(parameters.ContinuationToken));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -393,13 +411,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -408,7 +426,7 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -416,120 +434,123 @@ namespace Microsoft.WindowsAzure.Management
                     // Create Result
                     SubscriptionListOperationsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new SubscriptionListOperationsResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement subscriptionOperationCollectionElement = responseDoc.Element(XName.Get("SubscriptionOperationCollection", "http://schemas.microsoft.com/windowsazure"));
-                    if (subscriptionOperationCollectionElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement continuationTokenElement = subscriptionOperationCollectionElement.Element(XName.Get("ContinuationToken", "http://schemas.microsoft.com/windowsazure"));
-                        if (continuationTokenElement != null)
-                        {
-                            string continuationTokenInstance = continuationTokenElement.Value;
-                            result.ContinuationToken = continuationTokenInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SubscriptionListOperationsResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement subscriptionOperationsSequenceElement = subscriptionOperationCollectionElement.Element(XName.Get("SubscriptionOperations", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionOperationsSequenceElement != null)
+                        XElement subscriptionOperationCollectionElement = responseDoc.Element(XName.Get("SubscriptionOperationCollection", "http://schemas.microsoft.com/windowsazure"));
+                        if (subscriptionOperationCollectionElement != null)
                         {
-                            foreach (XElement subscriptionOperationsElement in subscriptionOperationsSequenceElement.Elements(XName.Get("SubscriptionOperation", "http://schemas.microsoft.com/windowsazure")))
+                            XElement continuationTokenElement = subscriptionOperationCollectionElement.Element(XName.Get("ContinuationToken", "http://schemas.microsoft.com/windowsazure"));
+                            if (continuationTokenElement != null)
                             {
-                                SubscriptionListOperationsResponse.SubscriptionOperation subscriptionOperationInstance = new SubscriptionListOperationsResponse.SubscriptionOperation();
-                                result.SubscriptionOperations.Add(subscriptionOperationInstance);
-                                
-                                XElement operationIdElement = subscriptionOperationsElement.Element(XName.Get("OperationId", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationIdElement != null)
+                                string continuationTokenInstance = continuationTokenElement.Value;
+                                result.ContinuationToken = continuationTokenInstance;
+                            }
+                            
+                            XElement subscriptionOperationsSequenceElement = subscriptionOperationCollectionElement.Element(XName.Get("SubscriptionOperations", "http://schemas.microsoft.com/windowsazure"));
+                            if (subscriptionOperationsSequenceElement != null)
+                            {
+                                foreach (XElement subscriptionOperationsElement in subscriptionOperationsSequenceElement.Elements(XName.Get("SubscriptionOperation", "http://schemas.microsoft.com/windowsazure")))
                                 {
-                                    string operationIdInstance = operationIdElement.Value;
-                                    subscriptionOperationInstance.OperationId = operationIdInstance;
-                                }
-                                
-                                XElement operationObjectIdElement = subscriptionOperationsElement.Element(XName.Get("OperationObjectId", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationObjectIdElement != null)
-                                {
-                                    string operationObjectIdInstance = operationObjectIdElement.Value;
-                                    subscriptionOperationInstance.OperationObjectId = operationObjectIdInstance;
-                                }
-                                
-                                XElement operationNameElement = subscriptionOperationsElement.Element(XName.Get("OperationName", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationNameElement != null)
-                                {
-                                    string operationNameInstance = operationNameElement.Value;
-                                    subscriptionOperationInstance.OperationName = operationNameInstance;
-                                }
-                                
-                                XElement operationParametersSequenceElement = subscriptionOperationsElement.Element(XName.Get("OperationParameters", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationParametersSequenceElement != null)
-                                {
-                                    foreach (XElement operationParametersElement in operationParametersSequenceElement.Elements(XName.Get("OperationParameter", "http://schemas.microsoft.com/windowsazure")))
-                                    {
-                                        string operationParametersKey = operationParametersElement.Element(XName.Get("Name", "http://schemas.datacontract.org/2004/07/Microsoft.WindowsAzure.ServiceManagement")).Value;
-                                        string operationParametersValue = operationParametersElement.Element(XName.Get("Value", "http://schemas.datacontract.org/2004/07/Microsoft.WindowsAzure.ServiceManagement")).Value;
-                                        subscriptionOperationInstance.OperationParameters.Add(operationParametersKey, operationParametersValue);
-                                    }
-                                }
-                                
-                                XElement operationCallerElement = subscriptionOperationsElement.Element(XName.Get("OperationCaller", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationCallerElement != null)
-                                {
-                                    SubscriptionListOperationsResponse.OperationCallerDetails operationCallerInstance = new SubscriptionListOperationsResponse.OperationCallerDetails();
-                                    subscriptionOperationInstance.OperationCaller = operationCallerInstance;
+                                    SubscriptionListOperationsResponse.SubscriptionOperation subscriptionOperationInstance = new SubscriptionListOperationsResponse.SubscriptionOperation();
+                                    result.SubscriptionOperations.Add(subscriptionOperationInstance);
                                     
-                                    XElement usedServiceManagementApiElement = operationCallerElement.Element(XName.Get("UsedServiceManagementApi", "http://schemas.microsoft.com/windowsazure"));
-                                    if (usedServiceManagementApiElement != null)
+                                    XElement operationIdElement = subscriptionOperationsElement.Element(XName.Get("OperationId", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationIdElement != null)
                                     {
-                                        bool usedServiceManagementApiInstance = bool.Parse(usedServiceManagementApiElement.Value);
-                                        operationCallerInstance.UsedServiceManagementApi = usedServiceManagementApiInstance;
+                                        string operationIdInstance = operationIdElement.Value;
+                                        subscriptionOperationInstance.OperationId = operationIdInstance;
                                     }
                                     
-                                    XElement userEmailAddressElement = operationCallerElement.Element(XName.Get("UserEmailAddress", "http://schemas.microsoft.com/windowsazure"));
-                                    if (userEmailAddressElement != null)
+                                    XElement operationObjectIdElement = subscriptionOperationsElement.Element(XName.Get("OperationObjectId", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationObjectIdElement != null)
                                     {
-                                        string userEmailAddressInstance = userEmailAddressElement.Value;
-                                        operationCallerInstance.UserEmailAddress = userEmailAddressInstance;
+                                        string operationObjectIdInstance = operationObjectIdElement.Value;
+                                        subscriptionOperationInstance.OperationObjectId = operationObjectIdInstance;
                                     }
                                     
-                                    XElement subscriptionCertificateThumbprintElement = operationCallerElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (subscriptionCertificateThumbprintElement != null)
+                                    XElement operationNameElement = subscriptionOperationsElement.Element(XName.Get("OperationName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationNameElement != null)
                                     {
-                                        string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
-                                        operationCallerInstance.SubscriptionCertificateThumbprint = subscriptionCertificateThumbprintInstance;
+                                        string operationNameInstance = operationNameElement.Value;
+                                        subscriptionOperationInstance.OperationName = operationNameInstance;
                                     }
                                     
-                                    XElement clientIPElement = operationCallerElement.Element(XName.Get("ClientIP", "http://schemas.microsoft.com/windowsazure"));
-                                    if (clientIPElement != null)
+                                    XElement operationParametersSequenceElement = subscriptionOperationsElement.Element(XName.Get("OperationParameters", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationParametersSequenceElement != null)
                                     {
-                                        string clientIPInstance = clientIPElement.Value;
-                                        operationCallerInstance.ClientIPAddress = clientIPInstance;
+                                        foreach (XElement operationParametersElement in operationParametersSequenceElement.Elements(XName.Get("OperationParameter", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            string operationParametersKey = operationParametersElement.Element(XName.Get("Name", "http://schemas.datacontract.org/2004/07/Microsoft.WindowsAzure.ServiceManagement")).Value;
+                                            string operationParametersValue = operationParametersElement.Element(XName.Get("Value", "http://schemas.datacontract.org/2004/07/Microsoft.WindowsAzure.ServiceManagement")).Value;
+                                            subscriptionOperationInstance.OperationParameters.Add(operationParametersKey, operationParametersValue);
+                                        }
                                     }
-                                }
-                                
-                                XElement operationStatusElement = subscriptionOperationsElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationStatusElement != null)
-                                {
-                                    string operationStatusInstance = operationStatusElement.Value;
-                                    subscriptionOperationInstance.OperationStatus = operationStatusInstance;
-                                }
-                                
-                                XElement operationStartedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationStartedTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationStartedTimeElement != null)
-                                {
-                                    DateTime operationStartedTimeInstance = DateTime.Parse(operationStartedTimeElement.Value, CultureInfo.InvariantCulture);
-                                    subscriptionOperationInstance.OperationStartedTime = operationStartedTimeInstance;
-                                }
-                                
-                                XElement operationCompletedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationCompletedTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationCompletedTimeElement != null)
-                                {
-                                    DateTime operationCompletedTimeInstance = DateTime.Parse(operationCompletedTimeElement.Value, CultureInfo.InvariantCulture);
-                                    subscriptionOperationInstance.OperationCompletedTime = operationCompletedTimeInstance;
+                                    
+                                    XElement operationCallerElement = subscriptionOperationsElement.Element(XName.Get("OperationCaller", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationCallerElement != null)
+                                    {
+                                        SubscriptionListOperationsResponse.OperationCallerDetails operationCallerInstance = new SubscriptionListOperationsResponse.OperationCallerDetails();
+                                        subscriptionOperationInstance.OperationCaller = operationCallerInstance;
+                                        
+                                        XElement usedServiceManagementApiElement = operationCallerElement.Element(XName.Get("UsedServiceManagementApi", "http://schemas.microsoft.com/windowsazure"));
+                                        if (usedServiceManagementApiElement != null)
+                                        {
+                                            bool usedServiceManagementApiInstance = bool.Parse(usedServiceManagementApiElement.Value);
+                                            operationCallerInstance.UsedServiceManagementApi = usedServiceManagementApiInstance;
+                                        }
+                                        
+                                        XElement userEmailAddressElement = operationCallerElement.Element(XName.Get("UserEmailAddress", "http://schemas.microsoft.com/windowsazure"));
+                                        if (userEmailAddressElement != null)
+                                        {
+                                            string userEmailAddressInstance = userEmailAddressElement.Value;
+                                            operationCallerInstance.UserEmailAddress = userEmailAddressInstance;
+                                        }
+                                        
+                                        XElement subscriptionCertificateThumbprintElement = operationCallerElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                        if (subscriptionCertificateThumbprintElement != null)
+                                        {
+                                            string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
+                                            operationCallerInstance.SubscriptionCertificateThumbprint = subscriptionCertificateThumbprintInstance;
+                                        }
+                                        
+                                        XElement clientIPElement = operationCallerElement.Element(XName.Get("ClientIP", "http://schemas.microsoft.com/windowsazure"));
+                                        if (clientIPElement != null)
+                                        {
+                                            string clientIPInstance = clientIPElement.Value;
+                                            operationCallerInstance.ClientIPAddress = clientIPInstance;
+                                        }
+                                    }
+                                    
+                                    XElement operationStatusElement = subscriptionOperationsElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationStatusElement != null)
+                                    {
+                                        string operationStatusInstance = operationStatusElement.Value;
+                                        subscriptionOperationInstance.OperationStatus = operationStatusInstance;
+                                    }
+                                    
+                                    XElement operationStartedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationStartedTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationStartedTimeElement != null)
+                                    {
+                                        DateTime operationStartedTimeInstance = DateTime.Parse(operationStartedTimeElement.Value, CultureInfo.InvariantCulture);
+                                        subscriptionOperationInstance.OperationStartedTime = operationStartedTimeInstance;
+                                    }
+                                    
+                                    XElement operationCompletedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationCompletedTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (operationCompletedTimeElement != null)
+                                    {
+                                        DateTime operationCompletedTimeInstance = DateTime.Parse(operationCompletedTimeElement.Value, CultureInfo.InvariantCulture);
+                                        subscriptionOperationInstance.OperationCompletedTime = operationCompletedTimeInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -538,7 +559,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -572,7 +593,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> RegisterResourceAsync(string resourceName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> RegisterResourceAsync(string resourceName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceName == null)
@@ -581,20 +602,31 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceName", resourceName);
-                Tracing.Enter(invocationId, this, "RegisterResourceAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RegisterResourceAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services?";
-            url = url + "service=" + Uri.EscapeDataString(resourceName.Trim());
-            url = url + "&action=register";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("service=" + Uri.EscapeDataString(resourceName));
+            queryParameters.Add("action=register");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -629,13 +661,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -644,14 +676,15 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -660,7 +693,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -694,7 +727,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UnregisterResourceAsync(string resourceName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UnregisterResourceAsync(string resourceName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceName == null)
@@ -703,20 +736,31 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceName", resourceName);
-                Tracing.Enter(invocationId, this, "UnregisterResourceAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UnregisterResourceAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services?";
-            url = url + "service=" + Uri.EscapeDataString(resourceName.Trim());
-            url = url + "&action=unregister";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("service=" + Uri.EscapeDataString(resourceName));
+            queryParameters.Add("action=unregister");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -751,13 +795,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -766,14 +810,15 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -782,7 +827,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

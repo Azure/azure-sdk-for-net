@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// Role assignment get operation result.
     /// </summary>
-    public partial class RoleAssignmentGetResult : OperationResponse
+    public partial class RoleAssignmentGetResult : AzureOperationResponse
     {
         private RoleAssignment _roleAssignment;
         

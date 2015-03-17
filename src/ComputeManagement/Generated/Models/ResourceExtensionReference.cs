@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -33,6 +33,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class ResourceExtensionReference
     {
+        private bool? _forceUpdate;
+        
+        /// <summary>
+        /// Optional. Optional.  Set to “true” if you want to reapply a
+        /// configuration toan extension when the configuration has not been
+        /// updated.Possible values are: true | false
+        /// </summary>
+        public bool? ForceUpdate
+        {
+            get { return this._forceUpdate; }
+            set { this._forceUpdate = value; }
+        }
+        
         private string _name;
         
         /// <summary>

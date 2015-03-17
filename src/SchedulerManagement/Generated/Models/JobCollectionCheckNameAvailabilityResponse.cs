@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
 {
     /// <summary>
     /// The Check Name Availability operation response.
     /// </summary>
-    public partial class JobCollectionCheckNameAvailabilityResponse : OperationResponse
+    public partial class JobCollectionCheckNameAvailabilityResponse : AzureOperationResponse
     {
         private bool _isAvailable;
         

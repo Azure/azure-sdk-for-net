@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 using System.Net;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// failed, the response body includes the HTTP status code for the failed
     /// request, and also includes error information regarding the failure.
     /// </summary>
-    public partial class GatewayGetOperationStatusResponse : OperationResponse
+    public partial class GatewayGetOperationStatusResponse : AzureOperationResponse
     {
         private GatewayGetOperationStatusResponse.ErrorDetails _error;
         

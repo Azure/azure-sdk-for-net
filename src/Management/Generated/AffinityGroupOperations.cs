@@ -30,9 +30,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
 
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460798.aspx for
     /// more information)
     /// </summary>
-    internal partial class AffinityGroupOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.IAffinityGroupOperations
+    internal partial class AffinityGroupOperations : IServiceOperations<ManagementClient>, IAffinityGroupOperations
     {
         /// <summary>
         /// Initializes a new instance of the AffinityGroupOperations class.
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -113,18 +113,24 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/affinitygroups";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/affinitygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -189,13 +195,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Created)
@@ -204,14 +210,15 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -220,7 +227,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -257,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (affinityGroupName == null)
@@ -266,18 +273,25 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("affinityGroupName", affinityGroupName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/affinitygroups/" + affinityGroupName.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/affinitygroups/";
+            url = url + Uri.EscapeDataString(affinityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -312,13 +326,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -327,14 +341,15 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -343,7 +358,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -380,7 +395,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The Get Affinity Group operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.AffinityGroupGetResponse> GetAsync(string affinityGroupName, CancellationToken cancellationToken)
+        public async Task<AffinityGroupGetResponse> GetAsync(string affinityGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (affinityGroupName == null)
@@ -389,18 +404,25 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("affinityGroupName", affinityGroupName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/affinitygroups/" + affinityGroupName.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/affinitygroups/";
+            url = url + Uri.EscapeDataString(affinityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -435,13 +457,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -450,7 +472,7 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -458,132 +480,135 @@ namespace Microsoft.WindowsAzure.Management
                     // Create Result
                     AffinityGroupGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new AffinityGroupGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement affinityGroupElement = responseDoc.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    if (affinityGroupElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement nameElement = affinityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AffinityGroupGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement labelElement = affinityGroupElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
+                        XElement affinityGroupElement = responseDoc.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        if (affinityGroupElement != null)
                         {
-                            string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement descriptionElement = affinityGroupElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement != null)
-                        {
-                            string descriptionInstance = descriptionElement.Value;
-                            result.Description = descriptionInstance;
-                        }
-                        
-                        XElement locationElement = affinityGroupElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement hostedServicesSequenceElement = affinityGroupElement.Element(XName.Get("HostedServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (hostedServicesSequenceElement != null)
-                        {
-                            foreach (XElement hostedServicesElement in hostedServicesSequenceElement.Elements(XName.Get("HostedService", "http://schemas.microsoft.com/windowsazure")))
+                            XElement nameElement = affinityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
                             {
-                                AffinityGroupGetResponse.HostedServiceReference hostedServiceInstance = new AffinityGroupGetResponse.HostedServiceReference();
-                                result.HostedServices.Add(hostedServiceInstance);
-                                
-                                XElement urlElement = hostedServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                                if (urlElement != null)
-                                {
-                                    Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
-                                    hostedServiceInstance.Uri = urlInstance;
-                                }
-                                
-                                XElement serviceNameElement = hostedServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (serviceNameElement != null)
-                                {
-                                    string serviceNameInstance = serviceNameElement.Value;
-                                    hostedServiceInstance.ServiceName = serviceNameInstance;
-                                }
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
                             }
-                        }
-                        
-                        XElement storageServicesSequenceElement = affinityGroupElement.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (storageServicesSequenceElement != null)
-                        {
-                            foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                AffinityGroupGetResponse.StorageServiceReference storageServiceInstance = new AffinityGroupGetResponse.StorageServiceReference();
-                                result.StorageServices.Add(storageServiceInstance);
-                                
-                                XElement urlElement2 = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                                if (urlElement2 != null)
-                                {
-                                    Uri urlInstance2 = TypeConversion.TryParseUri(urlElement2.Value);
-                                    storageServiceInstance.Uri = urlInstance2;
-                                }
-                                
-                                XElement serviceNameElement2 = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (serviceNameElement2 != null)
-                                {
-                                    string serviceNameInstance2 = serviceNameElement2.Value;
-                                    storageServiceInstance.ServiceName = serviceNameInstance2;
-                                }
-                            }
-                        }
-                        
-                        XElement capabilitiesSequenceElement = affinityGroupElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
-                        if (capabilitiesSequenceElement != null)
-                        {
-                            foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                result.Capabilities.Add(capabilitiesElement.Value);
-                            }
-                        }
-                        
-                        XElement createdTimeElement = affinityGroupElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (createdTimeElement != null && string.IsNullOrEmpty(createdTimeElement.Value) == false)
-                        {
-                            DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.CreatedTime = createdTimeInstance;
-                        }
-                        
-                        XElement computeCapabilitiesElement = affinityGroupElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
-                        if (computeCapabilitiesElement != null)
-                        {
-                            ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
-                            result.ComputeCapabilities = computeCapabilitiesInstance;
                             
-                            XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
-                            if (virtualMachinesRoleSizesSequenceElement != null)
+                            XElement labelElement = affinityGroupElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
                             {
-                                foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement descriptionElement = affinityGroupElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                result.Description = descriptionInstance;
+                            }
+                            
+                            XElement locationElement = affinityGroupElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement hostedServicesSequenceElement = affinityGroupElement.Element(XName.Get("HostedServices", "http://schemas.microsoft.com/windowsazure"));
+                            if (hostedServicesSequenceElement != null)
+                            {
+                                foreach (XElement hostedServicesElement in hostedServicesSequenceElement.Elements(XName.Get("HostedService", "http://schemas.microsoft.com/windowsazure")))
                                 {
-                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                    AffinityGroupGetResponse.HostedServiceReference hostedServiceInstance = new AffinityGroupGetResponse.HostedServiceReference();
+                                    result.HostedServices.Add(hostedServiceInstance);
+                                    
+                                    XElement urlElement = hostedServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
+                                    if (urlElement != null)
+                                    {
+                                        Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
+                                        hostedServiceInstance.Uri = urlInstance;
+                                    }
+                                    
+                                    XElement serviceNameElement = hostedServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (serviceNameElement != null)
+                                    {
+                                        string serviceNameInstance = serviceNameElement.Value;
+                                        hostedServiceInstance.ServiceName = serviceNameInstance;
+                                    }
                                 }
                             }
                             
-                            XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
-                            if (webWorkerRoleSizesSequenceElement != null)
+                            XElement storageServicesSequenceElement = affinityGroupElement.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
+                            if (storageServicesSequenceElement != null)
                             {
-                                foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
                                 {
-                                    computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                    AffinityGroupGetResponse.StorageServiceReference storageServiceInstance = new AffinityGroupGetResponse.StorageServiceReference();
+                                    result.StorageServices.Add(storageServiceInstance);
+                                    
+                                    XElement urlElement2 = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
+                                    if (urlElement2 != null)
+                                    {
+                                        Uri urlInstance2 = TypeConversion.TryParseUri(urlElement2.Value);
+                                        storageServiceInstance.Uri = urlInstance2;
+                                    }
+                                    
+                                    XElement serviceNameElement2 = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (serviceNameElement2 != null)
+                                    {
+                                        string serviceNameInstance2 = serviceNameElement2.Value;
+                                        storageServiceInstance.ServiceName = serviceNameInstance2;
+                                    }
+                                }
+                            }
+                            
+                            XElement capabilitiesSequenceElement = affinityGroupElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (capabilitiesSequenceElement != null)
+                            {
+                                foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    result.Capabilities.Add(capabilitiesElement.Value);
+                                }
+                            }
+                            
+                            XElement createdTimeElement = affinityGroupElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
+                            {
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                result.CreatedTime = createdTimeInstance;
+                            }
+                            
+                            XElement computeCapabilitiesElement = affinityGroupElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeCapabilitiesElement != null)
+                            {
+                                ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                                result.ComputeCapabilities = computeCapabilitiesInstance;
+                                
+                                XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachinesRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                    }
+                                }
+                                
+                                XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (webWorkerRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -592,7 +617,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -625,22 +650,28 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Affinity Groups operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/affinitygroups";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/affinitygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -675,13 +706,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -690,7 +721,7 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -698,90 +729,93 @@ namespace Microsoft.WindowsAzure.Management
                     // Create Result
                     AffinityGroupListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new AffinityGroupListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement affinityGroupsSequenceElement = responseDoc.Element(XName.Get("AffinityGroups", "http://schemas.microsoft.com/windowsazure"));
-                    if (affinityGroupsSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement affinityGroupsElement in affinityGroupsSequenceElement.Elements(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AffinityGroupListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement affinityGroupsSequenceElement = responseDoc.Element(XName.Get("AffinityGroups", "http://schemas.microsoft.com/windowsazure"));
+                        if (affinityGroupsSequenceElement != null)
                         {
-                            AffinityGroupListResponse.AffinityGroup affinityGroupInstance = new AffinityGroupListResponse.AffinityGroup();
-                            result.AffinityGroups.Add(affinityGroupInstance);
-                            
-                            XElement nameElement = affinityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement affinityGroupsElement in affinityGroupsSequenceElement.Elements(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string nameInstance = nameElement.Value;
-                                affinityGroupInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = affinityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                                affinityGroupInstance.Label = labelInstance;
-                            }
-                            
-                            XElement descriptionElement = affinityGroupsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
-                            {
-                                string descriptionInstance = descriptionElement.Value;
-                                affinityGroupInstance.Description = descriptionInstance;
-                            }
-                            
-                            XElement locationElement = affinityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                affinityGroupInstance.Location = locationInstance;
-                            }
-                            
-                            XElement capabilitiesSequenceElement = affinityGroupsElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
-                            if (capabilitiesSequenceElement != null)
-                            {
-                                foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    affinityGroupInstance.Capabilities.Add(capabilitiesElement.Value);
-                                }
-                            }
-                            
-                            XElement createdTimeElement = affinityGroupsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (createdTimeElement != null && string.IsNullOrEmpty(createdTimeElement.Value) == false)
-                            {
-                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
-                                affinityGroupInstance.CreatedTime = createdTimeInstance;
-                            }
-                            
-                            XElement computeCapabilitiesElement = affinityGroupsElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
-                            if (computeCapabilitiesElement != null)
-                            {
-                                ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
-                                affinityGroupInstance.ComputeCapabilities = computeCapabilitiesInstance;
+                                AffinityGroupListResponse.AffinityGroup affinityGroupInstance = new AffinityGroupListResponse.AffinityGroup();
+                                result.AffinityGroups.Add(affinityGroupInstance);
                                 
-                                XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
-                                if (virtualMachinesRoleSizesSequenceElement != null)
+                                XElement nameElement = affinityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
                                 {
-                                    foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    string nameInstance = nameElement.Value;
+                                    affinityGroupInstance.Name = nameInstance;
+                                }
+                                
+                                XElement labelElement = affinityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                    affinityGroupInstance.Label = labelInstance;
+                                }
+                                
+                                XElement descriptionElement = affinityGroupsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                if (descriptionElement != null)
+                                {
+                                    string descriptionInstance = descriptionElement.Value;
+                                    affinityGroupInstance.Description = descriptionInstance;
+                                }
+                                
+                                XElement locationElement = affinityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    affinityGroupInstance.Location = locationInstance;
+                                }
+                                
+                                XElement capabilitiesSequenceElement = affinityGroupsElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
+                                if (capabilitiesSequenceElement != null)
+                                {
+                                    foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                        affinityGroupInstance.Capabilities.Add(capabilitiesElement.Value);
                                     }
                                 }
                                 
-                                XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
-                                if (webWorkerRoleSizesSequenceElement != null)
+                                XElement createdTimeElement = affinityGroupsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
                                 {
-                                    foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                    affinityGroupInstance.CreatedTime = createdTimeInstance;
+                                }
+                                
+                                XElement computeCapabilitiesElement = affinityGroupsElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                                if (computeCapabilitiesElement != null)
+                                {
+                                    ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                                    affinityGroupInstance.ComputeCapabilities = computeCapabilitiesInstance;
+                                    
+                                    XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                    if (virtualMachinesRoleSizesSequenceElement != null)
                                     {
-                                        computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                        foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                        }
+                                    }
+                                    
+                                    XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                    if (webWorkerRoleSizesSequenceElement != null)
+                                    {
+                                        foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -790,7 +824,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -832,7 +866,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (affinityGroupName == null)
@@ -857,19 +891,26 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("affinityGroupName", affinityGroupName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/affinitygroups/" + affinityGroupName.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/affinitygroups/";
+            url = url + Uri.EscapeDataString(affinityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -926,13 +967,13 @@ namespace Microsoft.WindowsAzure.Management
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -941,14 +982,15 @@ namespace Microsoft.WindowsAzure.Management
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -957,7 +999,7 @@ namespace Microsoft.WindowsAzure.Management
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

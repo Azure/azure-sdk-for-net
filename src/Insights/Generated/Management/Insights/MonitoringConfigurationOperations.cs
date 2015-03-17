@@ -28,12 +28,12 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Insights
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
@@ -93,20 +93,28 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/agent?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/diagnosticSettings/agent";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -186,7 +194,7 @@ namespace Microsoft.Azure.Management.Insights
                                         diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.Value.ToString();
                                     }
                                     
-                                    diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
+                                    diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.Metrics != null)
@@ -209,7 +217,7 @@ namespace Microsoft.Azure.Management.Insights
                                                 JObject metricsValue2 = new JObject();
                                                 aggregationsArray.Add(metricsValue2);
                                                 
-                                                metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                                metricsValue2["scheduledTransferPeriod"] = XmlConvert.ToString(aggregationsItem.ScheduledTransferPeriod);
                                             }
                                             metricsValue["aggregations"] = aggregationsArray;
                                         }
@@ -283,7 +291,7 @@ namespace Microsoft.Azure.Management.Insights
                                         directoriesValue["failedRequestLogs"] = derived.DiagnosticMonitorConfiguration.Directories.FailedRequestLogs;
                                     }
                                     
-                                    directoriesValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.Directories.ScheduledTransferPeriod);
+                                    directoriesValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.Directories.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.PerformanceCounters != null)
@@ -330,7 +338,7 @@ namespace Microsoft.Azure.Management.Insights
                                                     performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
                                                 }
                                                 
-                                                performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
+                                                performanceCounterConfigurationValue["sampleRate"] = XmlConvert.ToString(countersItem.SampleRate);
                                                 
                                                 performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
                                             }
@@ -338,7 +346,7 @@ namespace Microsoft.Azure.Management.Insights
                                         }
                                     }
                                     
-                                    performanceCountersValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
+                                    performanceCountersValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.WindowsEventLog != null)
@@ -359,7 +367,7 @@ namespace Microsoft.Azure.Management.Insights
                                         }
                                     }
                                     
-                                    windowsEventLogValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
+                                    windowsEventLogValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.EtwProviders != null)
@@ -377,7 +385,7 @@ namespace Microsoft.Azure.Management.Insights
                                                 JObject etwProviderValue = new JObject();
                                                 eventSourceProvidersArray.Add(etwProviderValue);
                                                 
-                                                etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
+                                                etwProviderValue["scheduledTransferPeriod"] = XmlConvert.ToString(eventSourceProvidersItem.ScheduledTransferPeriod);
                                                 
                                                 if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
@@ -434,7 +442,7 @@ namespace Microsoft.Azure.Management.Insights
                                                 JObject etwProviderValue2 = new JObject();
                                                 manifestProvidersArray.Add(etwProviderValue2);
                                                 
-                                                etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
+                                                etwProviderValue2["scheduledTransferPeriod"] = XmlConvert.ToString(manifestProvidersItem.ScheduledTransferPeriod);
                                                 
                                                 if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
@@ -538,7 +546,7 @@ namespace Microsoft.Azure.Management.Insights
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -548,13 +556,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
@@ -563,27 +571,30 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -592,7 +603,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -639,20 +650,28 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateStorageConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateStorageConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/diagnosticSettings/storage";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -704,7 +723,7 @@ namespace Microsoft.Azure.Management.Insights
                         
                         loggingValue["write"] = parameters.Properties.LoggingConfiguration.Write;
                         
-                        loggingValue["retention"] = TypeConversion.To8601String(parameters.Properties.LoggingConfiguration.Retention);
+                        loggingValue["retention"] = XmlConvert.ToString(parameters.Properties.LoggingConfiguration.Retention);
                     }
                     
                     if (parameters.Properties.MetricConfiguration != null)
@@ -722,9 +741,9 @@ namespace Microsoft.Azure.Management.Insights
                                     JObject storageMetricAggregationValue = new JObject();
                                     aggregationsArray.Add(storageMetricAggregationValue);
                                     
-                                    storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                    storageMetricAggregationValue["scheduledTransferPeriod"] = XmlConvert.ToString(aggregationsItem.ScheduledTransferPeriod);
                                     
-                                    storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                    storageMetricAggregationValue["retention"] = XmlConvert.ToString(aggregationsItem.Retention);
                                     
                                     storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
                                 }
@@ -734,7 +753,7 @@ namespace Microsoft.Azure.Management.Insights
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -744,13 +763,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
@@ -759,7 +778,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -767,19 +786,22 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     MonitoringConfigurationCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MonitoringConfigurationCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MonitoringConfigurationCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -788,7 +810,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -828,19 +850,27 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
-                Tracing.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/agent?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/diagnosticSettings/agent";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -875,13 +905,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -890,7 +920,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -898,521 +928,524 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     MonitoringConfigurationGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MonitoringConfigurationGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MonitoringConfigurationGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            result.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string locationInstance = ((string)locationValue);
-                            result.Location = locationInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            DiagnosticSettings propertiesInstance = new DiagnosticSettings();
-                            result.Properties = propertiesInstance;
-                            
-                            JToken nameValue2 = propertiesValue["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                propertiesInstance.Name = nameInstance2;
+                                string nameInstance = ((string)nameValue);
+                                result.Name = nameInstance;
                             }
                             
-                            JToken descriptionValue = propertiesValue["description"];
-                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string descriptionInstance = ((string)descriptionValue);
-                                propertiesInstance.Description = descriptionInstance;
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
                             }
                             
-                            JToken publicConfigurationValue = propertiesValue["publicConfiguration"];
-                            if (publicConfigurationValue != null && publicConfigurationValue.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)publicConfigurationValue["odata.type"]);
-                                if (typeName == "Microsoft.Azure.Management.Insights.Models.PublicMonitoringConfiguration")
+                                DiagnosticSettings propertiesInstance = new DiagnosticSettings();
+                                result.Properties = propertiesInstance;
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
-                                    PublicMonitoringConfiguration publicMonitoringConfigurationInstance = new PublicMonitoringConfiguration();
-                                    
-                                    JToken diagnosticMonitorConfigurationValue = publicConfigurationValue["diagnosticMonitorConfiguration"];
-                                    if (diagnosticMonitorConfigurationValue != null && diagnosticMonitorConfigurationValue.Type != JTokenType.Null)
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken publicConfigurationValue = propertiesValue["publicConfiguration"];
+                                if (publicConfigurationValue != null && publicConfigurationValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)publicConfigurationValue["odata.type"]);
+                                    if (typeName == "Microsoft.Azure.Management.Insights.Models.PublicMonitoringConfiguration")
                                     {
-                                        DiagnosticMonitorConfiguration diagnosticMonitorConfigurationInstance = new DiagnosticMonitorConfiguration();
-                                        publicMonitoringConfigurationInstance.DiagnosticMonitorConfiguration = diagnosticMonitorConfigurationInstance;
+                                        PublicMonitoringConfiguration publicMonitoringConfigurationInstance = new PublicMonitoringConfiguration();
                                         
-                                        JToken overallQuotaInMBValue = diagnosticMonitorConfigurationValue["overallQuotaInMB"];
-                                        if (overallQuotaInMBValue != null && overallQuotaInMBValue.Type != JTokenType.Null)
+                                        JToken diagnosticMonitorConfigurationValue = publicConfigurationValue["diagnosticMonitorConfiguration"];
+                                        if (diagnosticMonitorConfigurationValue != null && diagnosticMonitorConfigurationValue.Type != JTokenType.Null)
                                         {
-                                            int overallQuotaInMBInstance = ((int)overallQuotaInMBValue);
-                                            diagnosticMonitorConfigurationInstance.OverallQuotaInMB = overallQuotaInMBInstance;
-                                        }
-                                        
-                                        JToken diagnosticInfrastructureLogsValue = diagnosticMonitorConfigurationValue["diagnosticInfrastructureLogs"];
-                                        if (diagnosticInfrastructureLogsValue != null && diagnosticInfrastructureLogsValue.Type != JTokenType.Null)
-                                        {
-                                            DiagnosticInfrastructureLogs diagnosticInfrastructureLogsInstance = new DiagnosticInfrastructureLogs();
-                                            diagnosticMonitorConfigurationInstance.DiagnosticInfrastructureLogs = diagnosticInfrastructureLogsInstance;
+                                            DiagnosticMonitorConfiguration diagnosticMonitorConfigurationInstance = new DiagnosticMonitorConfiguration();
+                                            publicMonitoringConfigurationInstance.DiagnosticMonitorConfiguration = diagnosticMonitorConfigurationInstance;
                                             
-                                            JToken scheduledTransferLogLevelFilterValue = diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"];
-                                            if (scheduledTransferLogLevelFilterValue != null && scheduledTransferLogLevelFilterValue.Type != JTokenType.Null)
+                                            JToken overallQuotaInMBValue = diagnosticMonitorConfigurationValue["overallQuotaInMB"];
+                                            if (overallQuotaInMBValue != null && overallQuotaInMBValue.Type != JTokenType.Null)
                                             {
-                                                LogLevel scheduledTransferLogLevelFilterInstance = ((LogLevel)Enum.Parse(typeof(LogLevel), ((string)scheduledTransferLogLevelFilterValue), true));
-                                                diagnosticInfrastructureLogsInstance.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance;
+                                                int overallQuotaInMBInstance = ((int)overallQuotaInMBValue);
+                                                diagnosticMonitorConfigurationInstance.OverallQuotaInMB = overallQuotaInMBInstance;
                                             }
                                             
-                                            JToken scheduledTransferPeriodValue = diagnosticInfrastructureLogsValue["scheduledTransferPeriod"];
-                                            if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                            JToken diagnosticInfrastructureLogsValue = diagnosticMonitorConfigurationValue["diagnosticInfrastructureLogs"];
+                                            if (diagnosticInfrastructureLogsValue != null && diagnosticInfrastructureLogsValue.Type != JTokenType.Null)
                                             {
-                                                TimeSpan scheduledTransferPeriodInstance = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue));
-                                                diagnosticInfrastructureLogsInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
-                                            }
-                                        }
-                                        
-                                        JToken metricsValue = diagnosticMonitorConfigurationValue["metrics"];
-                                        if (metricsValue != null && metricsValue.Type != JTokenType.Null)
-                                        {
-                                            Metrics metricsInstance = new Metrics();
-                                            diagnosticMonitorConfigurationInstance.Metrics = metricsInstance;
-                                            
-                                            JToken resourceIdValue = metricsValue["resourceId"];
-                                            if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
-                                            {
-                                                string resourceIdInstance = ((string)resourceIdValue);
-                                                metricsInstance.ResourceId = resourceIdInstance;
-                                            }
-                                            
-                                            JToken aggregationsArray = metricsValue["aggregations"];
-                                            if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
+                                                DiagnosticInfrastructureLogs diagnosticInfrastructureLogsInstance = new DiagnosticInfrastructureLogs();
+                                                diagnosticMonitorConfigurationInstance.DiagnosticInfrastructureLogs = diagnosticInfrastructureLogsInstance;
+                                                
+                                                JToken scheduledTransferLogLevelFilterValue = diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"];
+                                                if (scheduledTransferLogLevelFilterValue != null && scheduledTransferLogLevelFilterValue.Type != JTokenType.Null)
                                                 {
-                                                    MetricAggregation metricsInstance2 = new MetricAggregation();
-                                                    metricsInstance.MetricAggregations.Add(metricsInstance2);
-                                                    
-                                                    JToken scheduledTransferPeriodValue2 = aggregationsValue["scheduledTransferPeriod"];
-                                                    if (scheduledTransferPeriodValue2 != null && scheduledTransferPeriodValue2.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan scheduledTransferPeriodInstance2 = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue2));
-                                                        metricsInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance2;
-                                                    }
+                                                    LogLevel scheduledTransferLogLevelFilterInstance = ((LogLevel)Enum.Parse(typeof(LogLevel), ((string)scheduledTransferLogLevelFilterValue), true));
+                                                    diagnosticInfrastructureLogsInstance.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance;
+                                                }
+                                                
+                                                JToken scheduledTransferPeriodValue = diagnosticInfrastructureLogsValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan scheduledTransferPeriodInstance = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue));
+                                                    diagnosticInfrastructureLogsInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken directoriesValue = diagnosticMonitorConfigurationValue["directories"];
-                                        if (directoriesValue != null && directoriesValue.Type != JTokenType.Null)
-                                        {
-                                            Directories directoriesInstance = new Directories();
-                                            diagnosticMonitorConfigurationInstance.Directories = directoriesInstance;
                                             
-                                            JToken dataSourcesArray = directoriesValue["dataSources"];
-                                            if (dataSourcesArray != null && dataSourcesArray.Type != JTokenType.Null)
+                                            JToken metricsValue = diagnosticMonitorConfigurationValue["metrics"];
+                                            if (metricsValue != null && metricsValue.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken dataSourcesValue in ((JArray)dataSourcesArray))
+                                                Metrics metricsInstance = new Metrics();
+                                                diagnosticMonitorConfigurationInstance.Metrics = metricsInstance;
+                                                
+                                                JToken resourceIdValue = metricsValue["resourceId"];
+                                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                                 {
-                                                    DirectoryConfiguration directoryConfigurationInstance = new DirectoryConfiguration();
-                                                    directoriesInstance.DataSources.Add(directoryConfigurationInstance);
-                                                    
-                                                    JToken containerNameValue = dataSourcesValue["containerName"];
-                                                    if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
+                                                    string resourceIdInstance = ((string)resourceIdValue);
+                                                    metricsInstance.ResourceId = resourceIdInstance;
+                                                }
+                                                
+                                                JToken aggregationsArray = metricsValue["aggregations"];
+                                                if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
                                                     {
-                                                        string containerNameInstance = ((string)containerNameValue);
-                                                        directoryConfigurationInstance.ContainerName = containerNameInstance;
-                                                    }
-                                                    
-                                                    JToken pathValue = dataSourcesValue["path"];
-                                                    if (pathValue != null && pathValue.Type != JTokenType.Null)
-                                                    {
-                                                        string typeName2 = ((string)pathValue["odata.type"]);
-                                                        if (typeName2 == "Microsoft.Azure.Management.Insights.Models.DirectoryAbsolute")
+                                                        MetricAggregation metricsInstance2 = new MetricAggregation();
+                                                        metricsInstance.MetricAggregations.Add(metricsInstance2);
+                                                        
+                                                        JToken scheduledTransferPeriodValue2 = aggregationsValue["scheduledTransferPeriod"];
+                                                        if (scheduledTransferPeriodValue2 != null && scheduledTransferPeriodValue2.Type != JTokenType.Null)
                                                         {
-                                                            DirectoryAbsolute directoryAbsoluteInstance = new DirectoryAbsolute();
-                                                            
-                                                            JToken expandEnvironmentValue = pathValue["expandEnvironment"];
-                                                            if (expandEnvironmentValue != null && expandEnvironmentValue.Type != JTokenType.Null)
-                                                            {
-                                                                bool expandEnvironmentInstance = ((bool)expandEnvironmentValue);
-                                                                directoryAbsoluteInstance.ExpandEnvironment = expandEnvironmentInstance;
-                                                            }
-                                                            
-                                                            JToken pathValue2 = pathValue["path"];
-                                                            if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string pathInstance = ((string)pathValue2);
-                                                                directoryAbsoluteInstance.Path = pathInstance;
-                                                            }
-                                                            directoryConfigurationInstance.Path = directoryAbsoluteInstance;
-                                                        }
-                                                        if (typeName2 == "Microsoft.Azure.Management.Insights.Models.DirectoryLocal")
-                                                        {
-                                                            DirectoryLocal directoryLocalInstance = new DirectoryLocal();
-                                                            
-                                                            JToken relativePathValue = pathValue["relativePath"];
-                                                            if (relativePathValue != null && relativePathValue.Type != JTokenType.Null)
-                                                            {
-                                                                string relativePathInstance = ((string)relativePathValue);
-                                                                directoryLocalInstance.RelativePath = relativePathInstance;
-                                                            }
-                                                            
-                                                            JToken nameValue3 = pathValue["name"];
-                                                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string nameInstance3 = ((string)nameValue3);
-                                                                directoryLocalInstance.Name = nameInstance3;
-                                                            }
-                                                            directoryConfigurationInstance.Path = directoryLocalInstance;
+                                                            TimeSpan scheduledTransferPeriodInstance2 = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue2));
+                                                            metricsInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance2;
                                                         }
                                                     }
                                                 }
                                             }
                                             
-                                            JToken iisLogsValue = directoriesValue["iisLogs"];
-                                            if (iisLogsValue != null && iisLogsValue.Type != JTokenType.Null)
+                                            JToken directoriesValue = diagnosticMonitorConfigurationValue["directories"];
+                                            if (directoriesValue != null && directoriesValue.Type != JTokenType.Null)
                                             {
-                                                string iisLogsInstance = ((string)iisLogsValue);
-                                                directoriesInstance.IISLogs = iisLogsInstance;
-                                            }
-                                            
-                                            JToken failedRequestLogsValue = directoriesValue["failedRequestLogs"];
-                                            if (failedRequestLogsValue != null && failedRequestLogsValue.Type != JTokenType.Null)
-                                            {
-                                                string failedRequestLogsInstance = ((string)failedRequestLogsValue);
-                                                directoriesInstance.FailedRequestLogs = failedRequestLogsInstance;
-                                            }
-                                            
-                                            JToken scheduledTransferPeriodValue3 = directoriesValue["scheduledTransferPeriod"];
-                                            if (scheduledTransferPeriodValue3 != null && scheduledTransferPeriodValue3.Type != JTokenType.Null)
-                                            {
-                                                TimeSpan scheduledTransferPeriodInstance3 = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue3));
-                                                directoriesInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance3;
-                                            }
-                                        }
-                                        
-                                        JToken performanceCountersValue = diagnosticMonitorConfigurationValue["performanceCounters"];
-                                        if (performanceCountersValue != null && performanceCountersValue.Type != JTokenType.Null)
-                                        {
-                                            PerformanceCounters performanceCountersInstance = new PerformanceCounters();
-                                            diagnosticMonitorConfigurationInstance.PerformanceCounters = performanceCountersInstance;
-                                            
-                                            JToken countersArray = performanceCountersValue["counters"];
-                                            if (countersArray != null && countersArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken countersValue in ((JArray)countersArray))
+                                                Directories directoriesInstance = new Directories();
+                                                diagnosticMonitorConfigurationInstance.Directories = directoriesInstance;
+                                                
+                                                JToken dataSourcesArray = directoriesValue["dataSources"];
+                                                if (dataSourcesArray != null && dataSourcesArray.Type != JTokenType.Null)
                                                 {
-                                                    PerformanceCounterConfiguration performanceCounterConfigurationInstance = new PerformanceCounterConfiguration();
-                                                    performanceCountersInstance.Counters.Add(performanceCounterConfigurationInstance);
-                                                    
-                                                    JToken annotationsArray = countersValue["annotations"];
-                                                    if (annotationsArray != null && annotationsArray.Type != JTokenType.Null)
+                                                    foreach (JToken dataSourcesValue in ((JArray)dataSourcesArray))
                                                     {
-                                                        foreach (JToken annotationsValue in ((JArray)annotationsArray))
+                                                        DirectoryConfiguration directoryConfigurationInstance = new DirectoryConfiguration();
+                                                        directoriesInstance.DataSources.Add(directoryConfigurationInstance);
+                                                        
+                                                        JToken containerNameValue = dataSourcesValue["containerName"];
+                                                        if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                                                         {
-                                                            LocalizedString localizedStringInstance = new LocalizedString();
-                                                            performanceCounterConfigurationInstance.Annotations.Add(localizedStringInstance);
-                                                            
-                                                            JToken valueValue = annotationsValue["value"];
-                                                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                                            string containerNameInstance = ((string)containerNameValue);
+                                                            directoryConfigurationInstance.ContainerName = containerNameInstance;
+                                                        }
+                                                        
+                                                        JToken pathValue = dataSourcesValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
+                                                        {
+                                                            string typeName2 = ((string)pathValue["odata.type"]);
+                                                            if (typeName2 == "Microsoft.Azure.Management.Insights.Models.DirectoryAbsolute")
                                                             {
-                                                                string valueInstance = ((string)valueValue);
-                                                                localizedStringInstance.Value = valueInstance;
+                                                                DirectoryAbsolute directoryAbsoluteInstance = new DirectoryAbsolute();
+                                                                
+                                                                JToken expandEnvironmentValue = pathValue["expandEnvironment"];
+                                                                if (expandEnvironmentValue != null && expandEnvironmentValue.Type != JTokenType.Null)
+                                                                {
+                                                                    bool expandEnvironmentInstance = ((bool)expandEnvironmentValue);
+                                                                    directoryAbsoluteInstance.ExpandEnvironment = expandEnvironmentInstance;
+                                                                }
+                                                                
+                                                                JToken pathValue2 = pathValue["path"];
+                                                                if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string pathInstance = ((string)pathValue2);
+                                                                    directoryAbsoluteInstance.Path = pathInstance;
+                                                                }
+                                                                directoryConfigurationInstance.Path = directoryAbsoluteInstance;
                                                             }
-                                                            
-                                                            JToken localeValue = annotationsValue["locale"];
-                                                            if (localeValue != null && localeValue.Type != JTokenType.Null)
+                                                            if (typeName2 == "Microsoft.Azure.Management.Insights.Models.DirectoryLocal")
                                                             {
-                                                                string localeInstance = ((string)localeValue);
-                                                                localizedStringInstance.Locale = localeInstance;
+                                                                DirectoryLocal directoryLocalInstance = new DirectoryLocal();
+                                                                
+                                                                JToken relativePathValue = pathValue["relativePath"];
+                                                                if (relativePathValue != null && relativePathValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string relativePathInstance = ((string)relativePathValue);
+                                                                    directoryLocalInstance.RelativePath = relativePathInstance;
+                                                                }
+                                                                
+                                                                JToken nameValue3 = pathValue["name"];
+                                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance3 = ((string)nameValue3);
+                                                                    directoryLocalInstance.Name = nameInstance3;
+                                                                }
+                                                                directoryConfigurationInstance.Path = directoryLocalInstance;
                                                             }
                                                         }
                                                     }
-                                                    
-                                                    JToken counterSpecifierValue = countersValue["counterSpecifier"];
-                                                    if (counterSpecifierValue != null && counterSpecifierValue.Type != JTokenType.Null)
-                                                    {
-                                                        string counterSpecifierInstance = ((string)counterSpecifierValue);
-                                                        performanceCounterConfigurationInstance.CounterSpecifier = counterSpecifierInstance;
-                                                    }
-                                                    
-                                                    JToken sampleRateValue = countersValue["sampleRate"];
-                                                    if (sampleRateValue != null && sampleRateValue.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan sampleRateInstance = TypeConversion.From8601TimeSpan(((string)sampleRateValue));
-                                                        performanceCounterConfigurationInstance.SampleRate = sampleRateInstance;
-                                                    }
-                                                    
-                                                    JToken unitValue = countersValue["unit"];
-                                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                                    {
-                                                        Units unitInstance = ((Units)Enum.Parse(typeof(Units), ((string)unitValue), true));
-                                                        performanceCounterConfigurationInstance.Unit = unitInstance;
-                                                    }
+                                                }
+                                                
+                                                JToken iisLogsValue = directoriesValue["iisLogs"];
+                                                if (iisLogsValue != null && iisLogsValue.Type != JTokenType.Null)
+                                                {
+                                                    string iisLogsInstance = ((string)iisLogsValue);
+                                                    directoriesInstance.IISLogs = iisLogsInstance;
+                                                }
+                                                
+                                                JToken failedRequestLogsValue = directoriesValue["failedRequestLogs"];
+                                                if (failedRequestLogsValue != null && failedRequestLogsValue.Type != JTokenType.Null)
+                                                {
+                                                    string failedRequestLogsInstance = ((string)failedRequestLogsValue);
+                                                    directoriesInstance.FailedRequestLogs = failedRequestLogsInstance;
+                                                }
+                                                
+                                                JToken scheduledTransferPeriodValue3 = directoriesValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue3 != null && scheduledTransferPeriodValue3.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan scheduledTransferPeriodInstance3 = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue3));
+                                                    directoriesInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance3;
                                                 }
                                             }
                                             
-                                            JToken scheduledTransferPeriodValue4 = performanceCountersValue["scheduledTransferPeriod"];
-                                            if (scheduledTransferPeriodValue4 != null && scheduledTransferPeriodValue4.Type != JTokenType.Null)
+                                            JToken performanceCountersValue = diagnosticMonitorConfigurationValue["performanceCounters"];
+                                            if (performanceCountersValue != null && performanceCountersValue.Type != JTokenType.Null)
                                             {
-                                                TimeSpan scheduledTransferPeriodInstance4 = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue4));
-                                                performanceCountersInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance4;
-                                            }
-                                        }
-                                        
-                                        JToken windowsEventLogValue = diagnosticMonitorConfigurationValue["windowsEventLog"];
-                                        if (windowsEventLogValue != null && windowsEventLogValue.Type != JTokenType.Null)
-                                        {
-                                            WindowsEventLog windowsEventLogInstance = new WindowsEventLog();
-                                            diagnosticMonitorConfigurationInstance.WindowsEventLog = windowsEventLogInstance;
-                                            
-                                            JToken dataSourcesArray2 = windowsEventLogValue["dataSources"];
-                                            if (dataSourcesArray2 != null && dataSourcesArray2.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken dataSourcesValue2 in ((JArray)dataSourcesArray2))
+                                                PerformanceCounters performanceCountersInstance = new PerformanceCounters();
+                                                diagnosticMonitorConfigurationInstance.PerformanceCounters = performanceCountersInstance;
+                                                
+                                                JToken countersArray = performanceCountersValue["counters"];
+                                                if (countersArray != null && countersArray.Type != JTokenType.Null)
                                                 {
-                                                    windowsEventLogInstance.DataSources.Add(((string)dataSourcesValue2));
-                                                }
-                                            }
-                                            
-                                            JToken scheduledTransferPeriodValue5 = windowsEventLogValue["scheduledTransferPeriod"];
-                                            if (scheduledTransferPeriodValue5 != null && scheduledTransferPeriodValue5.Type != JTokenType.Null)
-                                            {
-                                                TimeSpan scheduledTransferPeriodInstance5 = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue5));
-                                                windowsEventLogInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance5;
-                                            }
-                                        }
-                                        
-                                        JToken etwProvidersValue = diagnosticMonitorConfigurationValue["etwProviders"];
-                                        if (etwProvidersValue != null && etwProvidersValue.Type != JTokenType.Null)
-                                        {
-                                            EtwProviders etwProvidersInstance = new EtwProviders();
-                                            diagnosticMonitorConfigurationInstance.EtwProviders = etwProvidersInstance;
-                                            
-                                            JToken eventSourceProvidersArray = etwProvidersValue["eventSourceProviders"];
-                                            if (eventSourceProvidersArray != null && eventSourceProvidersArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken eventSourceProvidersValue in ((JArray)eventSourceProvidersArray))
-                                                {
-                                                    EtwProvider etwProviderInstance = new EtwProvider();
-                                                    etwProvidersInstance.EventSourceProviders.Add(etwProviderInstance);
-                                                    
-                                                    JToken scheduledTransferPeriodValue6 = eventSourceProvidersValue["scheduledTransferPeriod"];
-                                                    if (scheduledTransferPeriodValue6 != null && scheduledTransferPeriodValue6.Type != JTokenType.Null)
+                                                    foreach (JToken countersValue in ((JArray)countersArray))
                                                     {
-                                                        TimeSpan scheduledTransferPeriodInstance6 = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue6));
-                                                        etwProviderInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance6;
-                                                    }
-                                                    
-                                                    JToken scheduledTransferLogLevelFilterValue2 = eventSourceProvidersValue["scheduledTransferLogLevelFilter"];
-                                                    if (scheduledTransferLogLevelFilterValue2 != null && scheduledTransferLogLevelFilterValue2.Type != JTokenType.Null)
-                                                    {
-                                                        LogLevel scheduledTransferLogLevelFilterInstance2 = ((LogLevel)Enum.Parse(typeof(LogLevel), ((string)scheduledTransferLogLevelFilterValue2), true));
-                                                        etwProviderInstance.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance2;
-                                                    }
-                                                    
-                                                    JToken providerValue = eventSourceProvidersValue["provider"];
-                                                    if (providerValue != null && providerValue.Type != JTokenType.Null)
-                                                    {
-                                                        string providerInstance = ((string)providerValue);
-                                                        etwProviderInstance.Provider = providerInstance;
-                                                    }
-                                                    
-                                                    JToken scheduledTransferKeywordFilterValue = eventSourceProvidersValue["scheduledTransferKeywordFilter"];
-                                                    if (scheduledTransferKeywordFilterValue != null && scheduledTransferKeywordFilterValue.Type != JTokenType.Null)
-                                                    {
-                                                        ulong scheduledTransferKeywordFilterInstance = ((ulong)scheduledTransferKeywordFilterValue);
-                                                        etwProviderInstance.ScheduledTransferKeywordFilter = scheduledTransferKeywordFilterInstance;
-                                                    }
-                                                    
-                                                    JToken eventsArray = eventSourceProvidersValue["events"];
-                                                    if (eventsArray != null && eventsArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken eventsValue in ((JArray)eventsArray))
+                                                        PerformanceCounterConfiguration performanceCounterConfigurationInstance = new PerformanceCounterConfiguration();
+                                                        performanceCountersInstance.Counters.Add(performanceCounterConfigurationInstance);
+                                                        
+                                                        JToken annotationsArray = countersValue["annotations"];
+                                                        if (annotationsArray != null && annotationsArray.Type != JTokenType.Null)
                                                         {
-                                                            EtwEventConfiguration etwEventConfigurationInstance = new EtwEventConfiguration();
-                                                            etwProviderInstance.Events.Add(etwEventConfigurationInstance);
-                                                            
-                                                            JToken eventIdValue = eventsValue["eventId"];
-                                                            if (eventIdValue != null && eventIdValue.Type != JTokenType.Null)
+                                                            foreach (JToken annotationsValue in ((JArray)annotationsArray))
                                                             {
-                                                                int eventIdInstance = ((int)eventIdValue);
-                                                                etwEventConfigurationInstance.EventId = eventIdInstance;
-                                                            }
-                                                            
-                                                            JToken destinationValue = eventsValue["destination"];
-                                                            if (destinationValue != null && destinationValue.Type != JTokenType.Null)
-                                                            {
-                                                                string destinationInstance = ((string)destinationValue);
-                                                                etwEventConfigurationInstance.Destination = destinationInstance;
+                                                                LocalizedString localizedStringInstance = new LocalizedString();
+                                                                performanceCounterConfigurationInstance.Annotations.Add(localizedStringInstance);
+                                                                
+                                                                JToken valueValue = annotationsValue["value"];
+                                                                if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string valueInstance = ((string)valueValue);
+                                                                    localizedStringInstance.Value = valueInstance;
+                                                                }
+                                                                
+                                                                JToken localeValue = annotationsValue["locale"];
+                                                                if (localeValue != null && localeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string localeInstance = ((string)localeValue);
+                                                                    localizedStringInstance.Locale = localeInstance;
+                                                                }
                                                             }
                                                         }
+                                                        
+                                                        JToken counterSpecifierValue = countersValue["counterSpecifier"];
+                                                        if (counterSpecifierValue != null && counterSpecifierValue.Type != JTokenType.Null)
+                                                        {
+                                                            string counterSpecifierInstance = ((string)counterSpecifierValue);
+                                                            performanceCounterConfigurationInstance.CounterSpecifier = counterSpecifierInstance;
+                                                        }
+                                                        
+                                                        JToken sampleRateValue = countersValue["sampleRate"];
+                                                        if (sampleRateValue != null && sampleRateValue.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sampleRateInstance = XmlConvert.ToTimeSpan(((string)sampleRateValue));
+                                                            performanceCounterConfigurationInstance.SampleRate = sampleRateInstance;
+                                                        }
+                                                        
+                                                        JToken unitValue = countersValue["unit"];
+                                                        if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                        {
+                                                            Units unitInstance = ((Units)Enum.Parse(typeof(Units), ((string)unitValue), true));
+                                                            performanceCounterConfigurationInstance.Unit = unitInstance;
+                                                        }
                                                     }
-                                                    
-                                                    JToken defaultDestinationValue = eventSourceProvidersValue["defaultDestination"];
-                                                    if (defaultDestinationValue != null && defaultDestinationValue.Type != JTokenType.Null)
+                                                }
+                                                
+                                                JToken scheduledTransferPeriodValue4 = performanceCountersValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue4 != null && scheduledTransferPeriodValue4.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan scheduledTransferPeriodInstance4 = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue4));
+                                                    performanceCountersInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance4;
+                                                }
+                                            }
+                                            
+                                            JToken windowsEventLogValue = diagnosticMonitorConfigurationValue["windowsEventLog"];
+                                            if (windowsEventLogValue != null && windowsEventLogValue.Type != JTokenType.Null)
+                                            {
+                                                WindowsEventLog windowsEventLogInstance = new WindowsEventLog();
+                                                diagnosticMonitorConfigurationInstance.WindowsEventLog = windowsEventLogInstance;
+                                                
+                                                JToken dataSourcesArray2 = windowsEventLogValue["dataSources"];
+                                                if (dataSourcesArray2 != null && dataSourcesArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken dataSourcesValue2 in ((JArray)dataSourcesArray2))
                                                     {
-                                                        string defaultDestinationInstance = ((string)defaultDestinationValue);
-                                                        etwProviderInstance.DefaultDestination = defaultDestinationInstance;
+                                                        windowsEventLogInstance.DataSources.Add(((string)dataSourcesValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken scheduledTransferPeriodValue5 = windowsEventLogValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue5 != null && scheduledTransferPeriodValue5.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan scheduledTransferPeriodInstance5 = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue5));
+                                                    windowsEventLogInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance5;
+                                                }
+                                            }
+                                            
+                                            JToken etwProvidersValue = diagnosticMonitorConfigurationValue["etwProviders"];
+                                            if (etwProvidersValue != null && etwProvidersValue.Type != JTokenType.Null)
+                                            {
+                                                EtwProviders etwProvidersInstance = new EtwProviders();
+                                                diagnosticMonitorConfigurationInstance.EtwProviders = etwProvidersInstance;
+                                                
+                                                JToken eventSourceProvidersArray = etwProvidersValue["eventSourceProviders"];
+                                                if (eventSourceProvidersArray != null && eventSourceProvidersArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken eventSourceProvidersValue in ((JArray)eventSourceProvidersArray))
+                                                    {
+                                                        EtwProvider etwProviderInstance = new EtwProvider();
+                                                        etwProvidersInstance.EventSourceProviders.Add(etwProviderInstance);
+                                                        
+                                                        JToken scheduledTransferPeriodValue6 = eventSourceProvidersValue["scheduledTransferPeriod"];
+                                                        if (scheduledTransferPeriodValue6 != null && scheduledTransferPeriodValue6.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan scheduledTransferPeriodInstance6 = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue6));
+                                                            etwProviderInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance6;
+                                                        }
+                                                        
+                                                        JToken scheduledTransferLogLevelFilterValue2 = eventSourceProvidersValue["scheduledTransferLogLevelFilter"];
+                                                        if (scheduledTransferLogLevelFilterValue2 != null && scheduledTransferLogLevelFilterValue2.Type != JTokenType.Null)
+                                                        {
+                                                            LogLevel scheduledTransferLogLevelFilterInstance2 = ((LogLevel)Enum.Parse(typeof(LogLevel), ((string)scheduledTransferLogLevelFilterValue2), true));
+                                                            etwProviderInstance.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance2;
+                                                        }
+                                                        
+                                                        JToken providerValue = eventSourceProvidersValue["provider"];
+                                                        if (providerValue != null && providerValue.Type != JTokenType.Null)
+                                                        {
+                                                            string providerInstance = ((string)providerValue);
+                                                            etwProviderInstance.Provider = providerInstance;
+                                                        }
+                                                        
+                                                        JToken scheduledTransferKeywordFilterValue = eventSourceProvidersValue["scheduledTransferKeywordFilter"];
+                                                        if (scheduledTransferKeywordFilterValue != null && scheduledTransferKeywordFilterValue.Type != JTokenType.Null)
+                                                        {
+                                                            ulong scheduledTransferKeywordFilterInstance = ((ulong)scheduledTransferKeywordFilterValue);
+                                                            etwProviderInstance.ScheduledTransferKeywordFilter = scheduledTransferKeywordFilterInstance;
+                                                        }
+                                                        
+                                                        JToken eventsArray = eventSourceProvidersValue["events"];
+                                                        if (eventsArray != null && eventsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken eventsValue in ((JArray)eventsArray))
+                                                            {
+                                                                EtwEventConfiguration etwEventConfigurationInstance = new EtwEventConfiguration();
+                                                                etwProviderInstance.Events.Add(etwEventConfigurationInstance);
+                                                                
+                                                                JToken eventIdValue = eventsValue["eventId"];
+                                                                if (eventIdValue != null && eventIdValue.Type != JTokenType.Null)
+                                                                {
+                                                                    int eventIdInstance = ((int)eventIdValue);
+                                                                    etwEventConfigurationInstance.EventId = eventIdInstance;
+                                                                }
+                                                                
+                                                                JToken destinationValue = eventsValue["destination"];
+                                                                if (destinationValue != null && destinationValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string destinationInstance = ((string)destinationValue);
+                                                                    etwEventConfigurationInstance.Destination = destinationInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken defaultDestinationValue = eventSourceProvidersValue["defaultDestination"];
+                                                        if (defaultDestinationValue != null && defaultDestinationValue.Type != JTokenType.Null)
+                                                        {
+                                                            string defaultDestinationInstance = ((string)defaultDestinationValue);
+                                                            etwProviderInstance.DefaultDestination = defaultDestinationInstance;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken manifestProvidersArray = etwProvidersValue["manifestProviders"];
+                                                if (manifestProvidersArray != null && manifestProvidersArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken manifestProvidersValue in ((JArray)manifestProvidersArray))
+                                                    {
+                                                        EtwProvider etwProviderInstance2 = new EtwProvider();
+                                                        etwProvidersInstance.ManifestProviders.Add(etwProviderInstance2);
+                                                        
+                                                        JToken scheduledTransferPeriodValue7 = manifestProvidersValue["scheduledTransferPeriod"];
+                                                        if (scheduledTransferPeriodValue7 != null && scheduledTransferPeriodValue7.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan scheduledTransferPeriodInstance7 = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue7));
+                                                            etwProviderInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance7;
+                                                        }
+                                                        
+                                                        JToken scheduledTransferLogLevelFilterValue3 = manifestProvidersValue["scheduledTransferLogLevelFilter"];
+                                                        if (scheduledTransferLogLevelFilterValue3 != null && scheduledTransferLogLevelFilterValue3.Type != JTokenType.Null)
+                                                        {
+                                                            LogLevel scheduledTransferLogLevelFilterInstance3 = ((LogLevel)Enum.Parse(typeof(LogLevel), ((string)scheduledTransferLogLevelFilterValue3), true));
+                                                            etwProviderInstance2.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance3;
+                                                        }
+                                                        
+                                                        JToken providerValue2 = manifestProvidersValue["provider"];
+                                                        if (providerValue2 != null && providerValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string providerInstance2 = ((string)providerValue2);
+                                                            etwProviderInstance2.Provider = providerInstance2;
+                                                        }
+                                                        
+                                                        JToken scheduledTransferKeywordFilterValue2 = manifestProvidersValue["scheduledTransferKeywordFilter"];
+                                                        if (scheduledTransferKeywordFilterValue2 != null && scheduledTransferKeywordFilterValue2.Type != JTokenType.Null)
+                                                        {
+                                                            ulong scheduledTransferKeywordFilterInstance2 = ((ulong)scheduledTransferKeywordFilterValue2);
+                                                            etwProviderInstance2.ScheduledTransferKeywordFilter = scheduledTransferKeywordFilterInstance2;
+                                                        }
+                                                        
+                                                        JToken eventsArray2 = manifestProvidersValue["events"];
+                                                        if (eventsArray2 != null && eventsArray2.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken eventsValue2 in ((JArray)eventsArray2))
+                                                            {
+                                                                EtwEventConfiguration etwEventConfigurationInstance2 = new EtwEventConfiguration();
+                                                                etwProviderInstance2.Events.Add(etwEventConfigurationInstance2);
+                                                                
+                                                                JToken eventIdValue2 = eventsValue2["eventId"];
+                                                                if (eventIdValue2 != null && eventIdValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    int eventIdInstance2 = ((int)eventIdValue2);
+                                                                    etwEventConfigurationInstance2.EventId = eventIdInstance2;
+                                                                }
+                                                                
+                                                                JToken destinationValue2 = eventsValue2["destination"];
+                                                                if (destinationValue2 != null && destinationValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string destinationInstance2 = ((string)destinationValue2);
+                                                                    etwEventConfigurationInstance2.Destination = destinationInstance2;
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken defaultDestinationValue2 = manifestProvidersValue["defaultDestination"];
+                                                        if (defaultDestinationValue2 != null && defaultDestinationValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string defaultDestinationInstance2 = ((string)defaultDestinationValue2);
+                                                            etwProviderInstance2.DefaultDestination = defaultDestinationInstance2;
+                                                        }
                                                     }
                                                 }
                                             }
                                             
-                                            JToken manifestProvidersArray = etwProvidersValue["manifestProviders"];
-                                            if (manifestProvidersArray != null && manifestProvidersArray.Type != JTokenType.Null)
+                                            JToken crashDumpsValue = diagnosticMonitorConfigurationValue["crashDumps"];
+                                            if (crashDumpsValue != null && crashDumpsValue.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken manifestProvidersValue in ((JArray)manifestProvidersArray))
+                                                CrashDumps crashDumpsInstance = new CrashDumps();
+                                                diagnosticMonitorConfigurationInstance.CrashDumps = crashDumpsInstance;
+                                                
+                                                JToken directoryQuotaPercentageValue = crashDumpsValue["directoryQuotaPercentage"];
+                                                if (directoryQuotaPercentageValue != null && directoryQuotaPercentageValue.Type != JTokenType.Null)
                                                 {
-                                                    EtwProvider etwProviderInstance2 = new EtwProvider();
-                                                    etwProvidersInstance.ManifestProviders.Add(etwProviderInstance2);
-                                                    
-                                                    JToken scheduledTransferPeriodValue7 = manifestProvidersValue["scheduledTransferPeriod"];
-                                                    if (scheduledTransferPeriodValue7 != null && scheduledTransferPeriodValue7.Type != JTokenType.Null)
+                                                    int directoryQuotaPercentageInstance = ((int)directoryQuotaPercentageValue);
+                                                    crashDumpsInstance.DirectoryQuotaPercentage = directoryQuotaPercentageInstance;
+                                                }
+                                                
+                                                JToken dumpTypeValue = crashDumpsValue["dumpType"];
+                                                if (dumpTypeValue != null && dumpTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    CrashDumpType dumpTypeInstance = ((CrashDumpType)Enum.Parse(typeof(CrashDumpType), ((string)dumpTypeValue), true));
+                                                    crashDumpsInstance.DumpType = dumpTypeInstance;
+                                                }
+                                                
+                                                JToken containerNameValue2 = crashDumpsValue["containerName"];
+                                                if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string containerNameInstance2 = ((string)containerNameValue2);
+                                                    crashDumpsInstance.ContainerName = containerNameInstance2;
+                                                }
+                                                
+                                                JToken processesArray = crashDumpsValue["processes"];
+                                                if (processesArray != null && processesArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken processesValue in ((JArray)processesArray))
                                                     {
-                                                        TimeSpan scheduledTransferPeriodInstance7 = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue7));
-                                                        etwProviderInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance7;
-                                                    }
-                                                    
-                                                    JToken scheduledTransferLogLevelFilterValue3 = manifestProvidersValue["scheduledTransferLogLevelFilter"];
-                                                    if (scheduledTransferLogLevelFilterValue3 != null && scheduledTransferLogLevelFilterValue3.Type != JTokenType.Null)
-                                                    {
-                                                        LogLevel scheduledTransferLogLevelFilterInstance3 = ((LogLevel)Enum.Parse(typeof(LogLevel), ((string)scheduledTransferLogLevelFilterValue3), true));
-                                                        etwProviderInstance2.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance3;
-                                                    }
-                                                    
-                                                    JToken providerValue2 = manifestProvidersValue["provider"];
-                                                    if (providerValue2 != null && providerValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string providerInstance2 = ((string)providerValue2);
-                                                        etwProviderInstance2.Provider = providerInstance2;
-                                                    }
-                                                    
-                                                    JToken scheduledTransferKeywordFilterValue2 = manifestProvidersValue["scheduledTransferKeywordFilter"];
-                                                    if (scheduledTransferKeywordFilterValue2 != null && scheduledTransferKeywordFilterValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ulong scheduledTransferKeywordFilterInstance2 = ((ulong)scheduledTransferKeywordFilterValue2);
-                                                        etwProviderInstance2.ScheduledTransferKeywordFilter = scheduledTransferKeywordFilterInstance2;
-                                                    }
-                                                    
-                                                    JToken eventsArray2 = manifestProvidersValue["events"];
-                                                    if (eventsArray2 != null && eventsArray2.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken eventsValue2 in ((JArray)eventsArray2))
-                                                        {
-                                                            EtwEventConfiguration etwEventConfigurationInstance2 = new EtwEventConfiguration();
-                                                            etwProviderInstance2.Events.Add(etwEventConfigurationInstance2);
-                                                            
-                                                            JToken eventIdValue2 = eventsValue2["eventId"];
-                                                            if (eventIdValue2 != null && eventIdValue2.Type != JTokenType.Null)
-                                                            {
-                                                                int eventIdInstance2 = ((int)eventIdValue2);
-                                                                etwEventConfigurationInstance2.EventId = eventIdInstance2;
-                                                            }
-                                                            
-                                                            JToken destinationValue2 = eventsValue2["destination"];
-                                                            if (destinationValue2 != null && destinationValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string destinationInstance2 = ((string)destinationValue2);
-                                                                etwEventConfigurationInstance2.Destination = destinationInstance2;
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken defaultDestinationValue2 = manifestProvidersValue["defaultDestination"];
-                                                    if (defaultDestinationValue2 != null && defaultDestinationValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string defaultDestinationInstance2 = ((string)defaultDestinationValue2);
-                                                        etwProviderInstance2.DefaultDestination = defaultDestinationInstance2;
+                                                        crashDumpsInstance.Processes.Add(((string)processesValue));
                                                     }
                                                 }
                                             }
                                         }
                                         
-                                        JToken crashDumpsValue = diagnosticMonitorConfigurationValue["crashDumps"];
-                                        if (crashDumpsValue != null && crashDumpsValue.Type != JTokenType.Null)
+                                        JToken localResourceDirectoryValue = publicConfigurationValue["localResourceDirectory"];
+                                        if (localResourceDirectoryValue != null && localResourceDirectoryValue.Type != JTokenType.Null)
                                         {
-                                            CrashDumps crashDumpsInstance = new CrashDumps();
-                                            diagnosticMonitorConfigurationInstance.CrashDumps = crashDumpsInstance;
+                                            DirectoryAbsolute localResourceDirectoryInstance = new DirectoryAbsolute();
+                                            publicMonitoringConfigurationInstance.LocalResourceDirectory = localResourceDirectoryInstance;
                                             
-                                            JToken directoryQuotaPercentageValue = crashDumpsValue["directoryQuotaPercentage"];
-                                            if (directoryQuotaPercentageValue != null && directoryQuotaPercentageValue.Type != JTokenType.Null)
+                                            JToken expandEnvironmentValue2 = localResourceDirectoryValue["expandEnvironment"];
+                                            if (expandEnvironmentValue2 != null && expandEnvironmentValue2.Type != JTokenType.Null)
                                             {
-                                                int directoryQuotaPercentageInstance = ((int)directoryQuotaPercentageValue);
-                                                crashDumpsInstance.DirectoryQuotaPercentage = directoryQuotaPercentageInstance;
+                                                bool expandEnvironmentInstance2 = ((bool)expandEnvironmentValue2);
+                                                localResourceDirectoryInstance.ExpandEnvironment = expandEnvironmentInstance2;
                                             }
                                             
-                                            JToken dumpTypeValue = crashDumpsValue["dumpType"];
-                                            if (dumpTypeValue != null && dumpTypeValue.Type != JTokenType.Null)
+                                            JToken pathValue3 = localResourceDirectoryValue["path"];
+                                            if (pathValue3 != null && pathValue3.Type != JTokenType.Null)
                                             {
-                                                CrashDumpType dumpTypeInstance = ((CrashDumpType)Enum.Parse(typeof(CrashDumpType), ((string)dumpTypeValue), true));
-                                                crashDumpsInstance.DumpType = dumpTypeInstance;
-                                            }
-                                            
-                                            JToken containerNameValue2 = crashDumpsValue["containerName"];
-                                            if (containerNameValue2 != null && containerNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string containerNameInstance2 = ((string)containerNameValue2);
-                                                crashDumpsInstance.ContainerName = containerNameInstance2;
-                                            }
-                                            
-                                            JToken processesArray = crashDumpsValue["processes"];
-                                            if (processesArray != null && processesArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken processesValue in ((JArray)processesArray))
-                                                {
-                                                    crashDumpsInstance.Processes.Add(((string)processesValue));
-                                                }
+                                                string pathInstance2 = ((string)pathValue3);
+                                                localResourceDirectoryInstance.Path = pathInstance2;
                                             }
                                         }
+                                        
+                                        JToken storageAccountValue = publicConfigurationValue["storageAccount"];
+                                        if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
+                                        {
+                                            string storageAccountInstance = ((string)storageAccountValue);
+                                            publicMonitoringConfigurationInstance.StorageAccount = storageAccountInstance;
+                                        }
+                                        propertiesInstance.PublicConfiguration = publicMonitoringConfigurationInstance;
                                     }
-                                    
-                                    JToken localResourceDirectoryValue = publicConfigurationValue["localResourceDirectory"];
-                                    if (localResourceDirectoryValue != null && localResourceDirectoryValue.Type != JTokenType.Null)
-                                    {
-                                        DirectoryAbsolute localResourceDirectoryInstance = new DirectoryAbsolute();
-                                        publicMonitoringConfigurationInstance.LocalResourceDirectory = localResourceDirectoryInstance;
-                                        
-                                        JToken expandEnvironmentValue2 = localResourceDirectoryValue["expandEnvironment"];
-                                        if (expandEnvironmentValue2 != null && expandEnvironmentValue2.Type != JTokenType.Null)
-                                        {
-                                            bool expandEnvironmentInstance2 = ((bool)expandEnvironmentValue2);
-                                            localResourceDirectoryInstance.ExpandEnvironment = expandEnvironmentInstance2;
-                                        }
-                                        
-                                        JToken pathValue3 = localResourceDirectoryValue["path"];
-                                        if (pathValue3 != null && pathValue3.Type != JTokenType.Null)
-                                        {
-                                            string pathInstance2 = ((string)pathValue3);
-                                            localResourceDirectoryInstance.Path = pathInstance2;
-                                        }
-                                    }
-                                    
-                                    JToken storageAccountValue = publicConfigurationValue["storageAccount"];
-                                    if (storageAccountValue != null && storageAccountValue.Type != JTokenType.Null)
-                                    {
-                                        string storageAccountInstance = ((string)storageAccountValue);
-                                        publicMonitoringConfigurationInstance.StorageAccount = storageAccountInstance;
-                                    }
-                                    propertiesInstance.PublicConfiguration = publicMonitoringConfigurationInstance;
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1421,7 +1454,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1461,19 +1494,27 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
-                Tracing.Enter(invocationId, this, "GetStorageConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetStorageConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/diagnosticSettings/storage";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1508,13 +1549,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1523,7 +1564,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1531,112 +1572,115 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     StorageConfigurationGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new StorageConfigurationGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new StorageConfigurationGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            result.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string locationInstance = ((string)locationValue);
-                            result.Location = locationInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            StorageConfiguration propertiesInstance = new StorageConfiguration();
-                            result.Properties = propertiesInstance;
-                            
-                            JToken loggingValue = propertiesValue["logging"];
-                            if (loggingValue != null && loggingValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                StorageLoggingConfiguration loggingInstance = new StorageLoggingConfiguration();
-                                propertiesInstance.LoggingConfiguration = loggingInstance;
-                                
-                                JToken deleteValue = loggingValue["delete"];
-                                if (deleteValue != null && deleteValue.Type != JTokenType.Null)
-                                {
-                                    bool deleteInstance = ((bool)deleteValue);
-                                    loggingInstance.Delete = deleteInstance;
-                                }
-                                
-                                JToken readValue = loggingValue["read"];
-                                if (readValue != null && readValue.Type != JTokenType.Null)
-                                {
-                                    bool readInstance = ((bool)readValue);
-                                    loggingInstance.Read = readInstance;
-                                }
-                                
-                                JToken writeValue = loggingValue["write"];
-                                if (writeValue != null && writeValue.Type != JTokenType.Null)
-                                {
-                                    bool writeInstance = ((bool)writeValue);
-                                    loggingInstance.Write = writeInstance;
-                                }
-                                
-                                JToken retentionValue = loggingValue["retention"];
-                                if (retentionValue != null && retentionValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan retentionInstance = TypeConversion.From8601TimeSpan(((string)retentionValue));
-                                    loggingInstance.Retention = retentionInstance;
-                                }
+                                string nameInstance = ((string)nameValue);
+                                result.Name = nameInstance;
                             }
                             
-                            JToken metricsValue = propertiesValue["metrics"];
-                            if (metricsValue != null && metricsValue.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                StorageMetricConfiguration metricsInstance = new StorageMetricConfiguration();
-                                propertiesInstance.MetricConfiguration = metricsInstance;
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                StorageConfiguration propertiesInstance = new StorageConfiguration();
+                                result.Properties = propertiesInstance;
                                 
-                                JToken aggregationsArray = metricsValue["aggregations"];
-                                if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
+                                JToken loggingValue = propertiesValue["logging"];
+                                if (loggingValue != null && loggingValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
+                                    StorageLoggingConfiguration loggingInstance = new StorageLoggingConfiguration();
+                                    propertiesInstance.LoggingConfiguration = loggingInstance;
+                                    
+                                    JToken deleteValue = loggingValue["delete"];
+                                    if (deleteValue != null && deleteValue.Type != JTokenType.Null)
                                     {
-                                        StorageMetricAggregation storageMetricAggregationInstance = new StorageMetricAggregation();
-                                        metricsInstance.MetricAggregations.Add(storageMetricAggregationInstance);
-                                        
-                                        JToken scheduledTransferPeriodValue = aggregationsValue["scheduledTransferPeriod"];
-                                        if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                        bool deleteInstance = ((bool)deleteValue);
+                                        loggingInstance.Delete = deleteInstance;
+                                    }
+                                    
+                                    JToken readValue = loggingValue["read"];
+                                    if (readValue != null && readValue.Type != JTokenType.Null)
+                                    {
+                                        bool readInstance = ((bool)readValue);
+                                        loggingInstance.Read = readInstance;
+                                    }
+                                    
+                                    JToken writeValue = loggingValue["write"];
+                                    if (writeValue != null && writeValue.Type != JTokenType.Null)
+                                    {
+                                        bool writeInstance = ((bool)writeValue);
+                                        loggingInstance.Write = writeInstance;
+                                    }
+                                    
+                                    JToken retentionValue = loggingValue["retention"];
+                                    if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan retentionInstance = XmlConvert.ToTimeSpan(((string)retentionValue));
+                                        loggingInstance.Retention = retentionInstance;
+                                    }
+                                }
+                                
+                                JToken metricsValue = propertiesValue["metrics"];
+                                if (metricsValue != null && metricsValue.Type != JTokenType.Null)
+                                {
+                                    StorageMetricConfiguration metricsInstance = new StorageMetricConfiguration();
+                                    propertiesInstance.MetricConfiguration = metricsInstance;
+                                    
+                                    JToken aggregationsArray = metricsValue["aggregations"];
+                                    if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
                                         {
-                                            TimeSpan scheduledTransferPeriodInstance = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue));
-                                            storageMetricAggregationInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
-                                        }
-                                        
-                                        JToken retentionValue2 = aggregationsValue["retention"];
-                                        if (retentionValue2 != null && retentionValue2.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retentionInstance2 = TypeConversion.From8601TimeSpan(((string)retentionValue2));
-                                            storageMetricAggregationInstance.Retention = retentionInstance2;
-                                        }
-                                        
-                                        JToken levelValue = aggregationsValue["level"];
-                                        if (levelValue != null && levelValue.Type != JTokenType.Null)
-                                        {
-                                            StorageMetricLevel levelInstance = ((StorageMetricLevel)Enum.Parse(typeof(StorageMetricLevel), ((string)levelValue), true));
-                                            storageMetricAggregationInstance.Level = levelInstance;
+                                            StorageMetricAggregation storageMetricAggregationInstance = new StorageMetricAggregation();
+                                            metricsInstance.MetricAggregations.Add(storageMetricAggregationInstance);
+                                            
+                                            JToken scheduledTransferPeriodValue = aggregationsValue["scheduledTransferPeriod"];
+                                            if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan scheduledTransferPeriodInstance = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue));
+                                                storageMetricAggregationInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
+                                            }
+                                            
+                                            JToken retentionValue2 = aggregationsValue["retention"];
+                                            if (retentionValue2 != null && retentionValue2.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan retentionInstance2 = XmlConvert.ToTimeSpan(((string)retentionValue2));
+                                                storageMetricAggregationInstance.Retention = retentionInstance2;
+                                            }
+                                            
+                                            JToken levelValue = aggregationsValue["level"];
+                                            if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                            {
+                                                StorageMetricLevel levelInstance = ((StorageMetricLevel)Enum.Parse(typeof(StorageMetricLevel), ((string)levelValue), true));
+                                                storageMetricAggregationInstance.Level = levelInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1645,7 +1689,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1679,7 +1723,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
@@ -1692,20 +1736,28 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/agent?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/diagnosticSettings/agent";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1785,7 +1837,7 @@ namespace Microsoft.Azure.Management.Insights
                                         diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.Value.ToString();
                                     }
                                     
-                                    diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
+                                    diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.Metrics != null)
@@ -1808,7 +1860,7 @@ namespace Microsoft.Azure.Management.Insights
                                                 JObject metricsValue2 = new JObject();
                                                 aggregationsArray.Add(metricsValue2);
                                                 
-                                                metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                                metricsValue2["scheduledTransferPeriod"] = XmlConvert.ToString(aggregationsItem.ScheduledTransferPeriod);
                                             }
                                             metricsValue["aggregations"] = aggregationsArray;
                                         }
@@ -1882,7 +1934,7 @@ namespace Microsoft.Azure.Management.Insights
                                         directoriesValue["failedRequestLogs"] = derived.DiagnosticMonitorConfiguration.Directories.FailedRequestLogs;
                                     }
                                     
-                                    directoriesValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.Directories.ScheduledTransferPeriod);
+                                    directoriesValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.Directories.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.PerformanceCounters != null)
@@ -1929,7 +1981,7 @@ namespace Microsoft.Azure.Management.Insights
                                                     performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
                                                 }
                                                 
-                                                performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
+                                                performanceCounterConfigurationValue["sampleRate"] = XmlConvert.ToString(countersItem.SampleRate);
                                                 
                                                 performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
                                             }
@@ -1937,7 +1989,7 @@ namespace Microsoft.Azure.Management.Insights
                                         }
                                     }
                                     
-                                    performanceCountersValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
+                                    performanceCountersValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.WindowsEventLog != null)
@@ -1958,7 +2010,7 @@ namespace Microsoft.Azure.Management.Insights
                                         }
                                     }
                                     
-                                    windowsEventLogValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
+                                    windowsEventLogValue["scheduledTransferPeriod"] = XmlConvert.ToString(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.EtwProviders != null)
@@ -1976,7 +2028,7 @@ namespace Microsoft.Azure.Management.Insights
                                                 JObject etwProviderValue = new JObject();
                                                 eventSourceProvidersArray.Add(etwProviderValue);
                                                 
-                                                etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
+                                                etwProviderValue["scheduledTransferPeriod"] = XmlConvert.ToString(eventSourceProvidersItem.ScheduledTransferPeriod);
                                                 
                                                 if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
@@ -2033,7 +2085,7 @@ namespace Microsoft.Azure.Management.Insights
                                                 JObject etwProviderValue2 = new JObject();
                                                 manifestProvidersArray.Add(etwProviderValue2);
                                                 
-                                                etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
+                                                etwProviderValue2["scheduledTransferPeriod"] = XmlConvert.ToString(manifestProvidersItem.ScheduledTransferPeriod);
                                                 
                                                 if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
@@ -2137,7 +2189,7 @@ namespace Microsoft.Azure.Management.Insights
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -2147,13 +2199,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -2162,27 +2214,30 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2191,7 +2246,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2225,7 +2280,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
@@ -2238,20 +2293,28 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateStorageConfigurationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateStorageConfigurationAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/diagnosticSettings/storage";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2303,7 +2366,7 @@ namespace Microsoft.Azure.Management.Insights
                         
                         loggingValue["write"] = parameters.Properties.LoggingConfiguration.Write;
                         
-                        loggingValue["retention"] = TypeConversion.To8601String(parameters.Properties.LoggingConfiguration.Retention);
+                        loggingValue["retention"] = XmlConvert.ToString(parameters.Properties.LoggingConfiguration.Retention);
                     }
                     
                     if (parameters.Properties.MetricConfiguration != null)
@@ -2321,9 +2384,9 @@ namespace Microsoft.Azure.Management.Insights
                                     JObject storageMetricAggregationValue = new JObject();
                                     aggregationsArray.Add(storageMetricAggregationValue);
                                     
-                                    storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                    storageMetricAggregationValue["scheduledTransferPeriod"] = XmlConvert.ToString(aggregationsItem.ScheduledTransferPeriod);
                                     
-                                    storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                    storageMetricAggregationValue["retention"] = XmlConvert.ToString(aggregationsItem.Retention);
                                     
                                     storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
                                 }
@@ -2333,7 +2396,7 @@ namespace Microsoft.Azure.Management.Insights
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -2343,13 +2406,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
@@ -2358,27 +2421,30 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AzureOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2387,7 +2453,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

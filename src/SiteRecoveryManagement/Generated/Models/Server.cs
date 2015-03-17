@@ -41,6 +41,28 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._connected = value; }
         }
         
+        private string _fabricObjectID;
+        
+        /// <summary>
+        /// Required. Server fabric object id.
+        /// </summary>
+        public string FabricObjectID
+        {
+            get { return this._fabricObjectID; }
+            set { this._fabricObjectID = value; }
+        }
+        
+        private string _fabricType;
+        
+        /// <summary>
+        /// Required. Server fabric type.
+        /// </summary>
+        public string FabricType
+        {
+            get { return this._fabricType; }
+            set { this._fabricType = value; }
+        }
+        
         private DateTime _lastHeartbeat;
         
         /// <summary>
@@ -72,6 +94,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         {
             get { return this._serverVersion; }
             set { this._serverVersion = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Required. Server type.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>

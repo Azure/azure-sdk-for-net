@@ -40,6 +40,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._endTime = value; }
         }
         
+        private string _objectId;
+        
+        /// <summary>
+        /// Optional. Id of afftected object.
+        /// </summary>
+        public string ObjectId
+        {
+            get { return this._objectId; }
+            set { this._objectId = value; }
+        }
+        
         private string _startTime;
         
         /// <summary>

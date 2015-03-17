@@ -22,15 +22,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
     /// The web site instance ids response.
     /// </summary>
-    public partial class WebSiteInstanceIdsResponse : OperationResponse, IEnumerable<string>
+    public partial class WebSiteInstanceIdsResponse : AzureOperationResponse, IEnumerable<string>
     {
         private IList<string> _instanceIds;
         

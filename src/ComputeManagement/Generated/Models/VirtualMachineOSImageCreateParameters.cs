@@ -54,13 +54,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._eula = value; }
         }
         
-        private Uri _iconUri;
+        private string _iconUri;
         
         /// <summary>
         /// Optional. Specifies the URI to the icon that is displayed for the
         /// image in the Management Portal.
         /// </summary>
-        public Uri IconUri
+        public string IconUri
         {
             get { return this._iconUri; }
             set { this._iconUri = value; }
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._showInGui = value; }
         }
         
-        private Uri _smallIconUri;
+        private string _smallIconUri;
         
         /// <summary>
         /// Optional. Specifies the URI to the small icon that is displayed
@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// SmallIconUri element is only available using version 2013-03-01 or
         /// higher.
         /// </summary>
-        public Uri SmallIconUri
+        public string SmallIconUri
         {
             get { return this._smallIconUri; }
             set { this._smallIconUri = value; }

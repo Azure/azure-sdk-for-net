@@ -19,9 +19,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common.Internals;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     /// <summary>
     /// Class for token based credentials associated with a particular subscription.
@@ -55,21 +55,13 @@ namespace Microsoft.WindowsAzure
         /// <param name="token">Valid JSON Web Token (JWT).</param>
         public TokenCloudCredentials(string subscriptionId, string token)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
                 throw new ArgumentNullException("subscriptionId");
             }
-            else if (subscriptionId.Length == 0)
-            {
-                throw CloudExtensions.CreateArgumentEmptyException("subscriptionId");
-            }
-            else if (token == null)
+            else if (string.IsNullOrEmpty(token))
             {
                 throw new ArgumentNullException("token");
-            }
-            else if (token.Length == 0)
-            {
-                throw CloudExtensions.CreateArgumentEmptyException("token");
             }
 
             _subscriptionId = subscriptionId;
@@ -83,13 +75,9 @@ namespace Microsoft.WindowsAzure
         /// <param name="token">Valid JSON Web Token (JWT).</param>
         public TokenCloudCredentials(string token)
         {
-            if (token == null)
+            if (string.IsNullOrEmpty(token))
             {
                 throw new ArgumentNullException("token");
-            }
-            else if (token.Length == 0)
-            {
-                throw CloudExtensions.CreateArgumentEmptyException("token");
             }
 
             Token = token;
@@ -103,26 +91,27 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// TokenCloudCredentials is created, null otherwise.
         /// </returns>
+        [Obsolete("Deprecated method. Use public constructor instead.")]
         public static TokenCloudCredentials Create(IDictionary<string, object> settings)
         {
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
             }
-
-            string subscriptionId = ConfigurationHelper.GetString(settings, "SubscriptionId", false);
-            string token = ConfigurationHelper.GetString(settings, "Token", false);
-
-            if (subscriptionId != null && token != null)
+            
+            if (!settings.ContainsKey("token"))
             {
-                return new TokenCloudCredentials(subscriptionId, token);
-            }
-            else if (token != null)
-            {
-                return new TokenCloudCredentials(token);
+                return null;
             }
 
-            return null;
+            if (settings.ContainsKey("SubscriptionId"))
+            {
+                return new TokenCloudCredentials(settings["SubscriptionId"].ToString(), settings["token"].ToString());
+            }
+            else
+            {
+                return new TokenCloudCredentials(settings["token"].ToString());
+            }
         }
 
         /// <summary>

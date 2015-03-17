@@ -28,9 +28,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
@@ -44,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
     /// more information)
     /// </summary>
-    public partial class WebSiteManagementClient : ServiceClient<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSiteManagementClient
+    public partial class WebSiteManagementClient : ServiceClient<WebSiteManagementClient>, IWebSiteManagementClient
     {
         private string _apiVersion;
         
@@ -135,7 +134,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <summary>
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
-        private WebSiteManagementClient()
+        public WebSiteManagementClient()
             : base()
         {
             this._webHostingPlans = new WebHostingPlanOperations(this);
@@ -203,7 +202,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private WebSiteManagementClient(HttpClient httpClient)
+        public WebSiteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._webHostingPlans = new WebHostingPlanOperations(this);
@@ -431,7 +430,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> GetOperationStatusAsync(string webSpaceName, string siteName, string operationId, CancellationToken cancellationToken)
+        public async Task<WebSiteOperationStatusResponse> GetOperationStatusAsync(string webSpaceName, string siteName, string operationId, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -448,20 +447,31 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("webSpaceName", webSpaceName);
                 tracingParameters.Add("siteName", siteName);
                 tracingParameters.Add("operationId", operationId);
-                Tracing.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services/WebSpaces/";
+            url = url + Uri.EscapeDataString(webSpaceName);
+            url = url + "/sites/";
+            url = url + Uri.EscapeDataString(siteName);
+            url = url + "/operations/";
+            url = url + Uri.EscapeDataString(operationId);
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -496,13 +506,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -511,7 +521,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -519,216 +529,219 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSiteOperationStatusResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSiteOperationStatusResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement createdTimeElement = operationElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (createdTimeElement != null)
-                        {
-                            DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.CreatedTime = createdTimeInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebSiteOperationStatusResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement errorsSequenceElement = operationElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorsSequenceElement != null)
+                        XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
+                        if (operationElement != null)
                         {
-                            bool isNil = false;
-                            XAttribute nilAttribute = errorsSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute != null)
+                            XElement createdTimeElement = operationElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (createdTimeElement != null)
                             {
-                                isNil = nilAttribute.Value == "true";
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                result.CreatedTime = createdTimeInstance;
                             }
-                            if (isNil == false)
+                            
+                            XElement errorsSequenceElement = operationElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
+                            if (errorsSequenceElement != null)
                             {
-                                foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("Error", "http://schemas.microsoft.com/windowsazure")))
+                                bool isNil = false;
+                                XAttribute nilAttribute = errorsSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute != null)
                                 {
-                                    WebSiteOperationStatusResponse.Error errorInstance = new WebSiteOperationStatusResponse.Error();
-                                    result.Errors.Add(errorInstance);
-                                    
-                                    XElement codeElement = errorsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                                    if (codeElement != null)
+                                    isNil = nilAttribute.Value == "true";
+                                }
+                                if (isNil == false)
+                                {
+                                    foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("Error", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        bool isNil2 = false;
-                                        XAttribute nilAttribute2 = codeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute2 != null)
+                                        WebSiteOperationStatusResponse.Error errorInstance = new WebSiteOperationStatusResponse.Error();
+                                        result.Errors.Add(errorInstance);
+                                        
+                                        XElement codeElement = errorsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
+                                        if (codeElement != null)
                                         {
-                                            isNil2 = nilAttribute2.Value == "true";
-                                        }
-                                        if (isNil2 == false)
-                                        {
-                                            string codeInstance = codeElement.Value;
-                                            errorInstance.Code = codeInstance;
-                                        }
-                                    }
-                                    
-                                    XElement messageElement = errorsElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                    if (messageElement != null)
-                                    {
-                                        bool isNil3 = false;
-                                        XAttribute nilAttribute3 = messageElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute3 != null)
-                                        {
-                                            isNil3 = nilAttribute3.Value == "true";
-                                        }
-                                        if (isNil3 == false)
-                                        {
-                                            string messageInstance = messageElement.Value;
-                                            errorInstance.Message = messageInstance;
-                                        }
-                                    }
-                                    
-                                    XElement extendedCodeElement = errorsElement.Element(XName.Get("ExtendedCode", "http://schemas.microsoft.com/windowsazure"));
-                                    if (extendedCodeElement != null)
-                                    {
-                                        bool isNil4 = false;
-                                        XAttribute nilAttribute4 = extendedCodeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute4 != null)
-                                        {
-                                            isNil4 = nilAttribute4.Value == "true";
-                                        }
-                                        if (isNil4 == false)
-                                        {
-                                            string extendedCodeInstance = extendedCodeElement.Value;
-                                            errorInstance.ExtendedCode = extendedCodeInstance;
-                                        }
-                                    }
-                                    
-                                    XElement messageTemplateElement = errorsElement.Element(XName.Get("MessageTemplate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (messageTemplateElement != null)
-                                    {
-                                        bool isNil5 = false;
-                                        XAttribute nilAttribute5 = messageTemplateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute5 != null)
-                                        {
-                                            isNil5 = nilAttribute5.Value == "true";
-                                        }
-                                        if (isNil5 == false)
-                                        {
-                                            string messageTemplateInstance = messageTemplateElement.Value;
-                                            errorInstance.MessageTemplate = messageTemplateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement parametersSequenceElement = errorsElement.Element(XName.Get("Parameters", "http://schemas.microsoft.com/windowsazure"));
-                                    if (parametersSequenceElement != null)
-                                    {
-                                        bool isNil6 = false;
-                                        XAttribute nilAttribute6 = parametersSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute6 != null)
-                                        {
-                                            isNil6 = nilAttribute6.Value == "true";
-                                        }
-                                        if (isNil6 == false)
-                                        {
-                                            foreach (XElement parametersElement in parametersSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                            bool isNil2 = false;
+                                            XAttribute nilAttribute2 = codeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute2 != null)
                                             {
-                                                errorInstance.Parameters.Add(parametersElement.Value);
+                                                isNil2 = nilAttribute2.Value == "true";
+                                            }
+                                            if (isNil2 == false)
+                                            {
+                                                string codeInstance = codeElement.Value;
+                                                errorInstance.Code = codeInstance;
                                             }
                                         }
-                                        else
+                                        
+                                        XElement messageElement = errorsElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                        if (messageElement != null)
                                         {
-                                            errorInstance.Parameters = null;
+                                            bool isNil3 = false;
+                                            XAttribute nilAttribute3 = messageElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute3 != null)
+                                            {
+                                                isNil3 = nilAttribute3.Value == "true";
+                                            }
+                                            if (isNil3 == false)
+                                            {
+                                                string messageInstance = messageElement.Value;
+                                                errorInstance.Message = messageInstance;
+                                            }
                                         }
-                                    }
-                                    
-                                    XElement innerErrorsElement = errorsElement.Element(XName.Get("InnerErrors", "http://schemas.microsoft.com/windowsazure"));
-                                    if (innerErrorsElement != null)
-                                    {
-                                        bool isNil7 = false;
-                                        XAttribute nilAttribute7 = innerErrorsElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute7 != null)
+                                        
+                                        XElement extendedCodeElement = errorsElement.Element(XName.Get("ExtendedCode", "http://schemas.microsoft.com/windowsazure"));
+                                        if (extendedCodeElement != null)
                                         {
-                                            isNil7 = nilAttribute7.Value == "true";
+                                            bool isNil4 = false;
+                                            XAttribute nilAttribute4 = extendedCodeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute4 != null)
+                                            {
+                                                isNil4 = nilAttribute4.Value == "true";
+                                            }
+                                            if (isNil4 == false)
+                                            {
+                                                string extendedCodeInstance = extendedCodeElement.Value;
+                                                errorInstance.ExtendedCode = extendedCodeInstance;
+                                            }
                                         }
-                                        if (isNil7 == false)
+                                        
+                                        XElement messageTemplateElement = errorsElement.Element(XName.Get("MessageTemplate", "http://schemas.microsoft.com/windowsazure"));
+                                        if (messageTemplateElement != null)
                                         {
-                                            string innerErrorsInstance = innerErrorsElement.Value;
-                                            errorInstance.InnerErrors = innerErrorsInstance;
+                                            bool isNil5 = false;
+                                            XAttribute nilAttribute5 = messageTemplateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute5 != null)
+                                            {
+                                                isNil5 = nilAttribute5.Value == "true";
+                                            }
+                                            if (isNil5 == false)
+                                            {
+                                                string messageTemplateInstance = messageTemplateElement.Value;
+                                                errorInstance.MessageTemplate = messageTemplateInstance;
+                                            }
+                                        }
+                                        
+                                        XElement parametersSequenceElement = errorsElement.Element(XName.Get("Parameters", "http://schemas.microsoft.com/windowsazure"));
+                                        if (parametersSequenceElement != null)
+                                        {
+                                            bool isNil6 = false;
+                                            XAttribute nilAttribute6 = parametersSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute6 != null)
+                                            {
+                                                isNil6 = nilAttribute6.Value == "true";
+                                            }
+                                            if (isNil6 == false)
+                                            {
+                                                foreach (XElement parametersElement in parametersSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                                {
+                                                    errorInstance.Parameters.Add(parametersElement.Value);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                errorInstance.Parameters = null;
+                                            }
+                                        }
+                                        
+                                        XElement innerErrorsElement = errorsElement.Element(XName.Get("InnerErrors", "http://schemas.microsoft.com/windowsazure"));
+                                        if (innerErrorsElement != null)
+                                        {
+                                            bool isNil7 = false;
+                                            XAttribute nilAttribute7 = innerErrorsElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute7 != null)
+                                            {
+                                                isNil7 = nilAttribute7.Value == "true";
+                                            }
+                                            if (isNil7 == false)
+                                            {
+                                                string innerErrorsInstance = innerErrorsElement.Value;
+                                                errorInstance.InnerErrors = innerErrorsInstance;
+                                            }
                                         }
                                     }
                                 }
+                                else
+                                {
+                                    result.Errors = null;
+                                }
                             }
-                            else
+                            
+                            XElement expirationTimeElement = operationElement.Element(XName.Get("ExpirationTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (expirationTimeElement != null)
                             {
-                                result.Errors = null;
+                                DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture);
+                                result.ExpirationTime = expirationTimeInstance;
+                            }
+                            
+                            XElement geoMasterOperationIdElement = operationElement.Element(XName.Get("GeoMasterOperationId", "http://schemas.microsoft.com/windowsazure"));
+                            if (geoMasterOperationIdElement != null)
+                            {
+                                bool isNil8 = false;
+                                XAttribute nilAttribute8 = geoMasterOperationIdElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute8 != null)
+                                {
+                                    isNil8 = nilAttribute8.Value == "true";
+                                }
+                                if (isNil8 == false)
+                                {
+                                    string geoMasterOperationIdInstance = geoMasterOperationIdElement.Value;
+                                    result.GeoMasterOperationId = geoMasterOperationIdInstance;
+                                }
+                            }
+                            
+                            XElement idElement = operationElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                bool isNil9 = false;
+                                XAttribute nilAttribute9 = idElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute9 != null)
+                                {
+                                    isNil9 = nilAttribute9.Value == "true";
+                                }
+                                if (isNil9 == false)
+                                {
+                                    string idInstance = idElement.Value;
+                                    result.OperationId = idInstance;
+                                }
+                            }
+                            
+                            XElement modifiedTimeElement = operationElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (modifiedTimeElement != null)
+                            {
+                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                result.ModifiedTime = modifiedTimeInstance;
+                            }
+                            
+                            XElement nameElement = operationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                bool isNil10 = false;
+                                XAttribute nilAttribute10 = nameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute10 != null)
+                                {
+                                    isNil10 = nilAttribute10.Value == "true";
+                                }
+                                if (isNil10 == false)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    result.Name = nameInstance;
+                                }
+                            }
+                            
+                            XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
+                            {
+                                WebSiteOperationStatus statusInstance = ((WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
                             }
                         }
                         
-                        XElement expirationTimeElement = operationElement.Element(XName.Get("ExpirationTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (expirationTimeElement != null)
-                        {
-                            DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.ExpirationTime = expirationTimeInstance;
-                        }
-                        
-                        XElement geoMasterOperationIdElement = operationElement.Element(XName.Get("GeoMasterOperationId", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoMasterOperationIdElement != null)
-                        {
-                            bool isNil8 = false;
-                            XAttribute nilAttribute8 = geoMasterOperationIdElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute8 != null)
-                            {
-                                isNil8 = nilAttribute8.Value == "true";
-                            }
-                            if (isNil8 == false)
-                            {
-                                string geoMasterOperationIdInstance = geoMasterOperationIdElement.Value;
-                                result.GeoMasterOperationId = geoMasterOperationIdInstance;
-                            }
-                        }
-                        
-                        XElement idElement = operationElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            bool isNil9 = false;
-                            XAttribute nilAttribute9 = idElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute9 != null)
-                            {
-                                isNil9 = nilAttribute9.Value == "true";
-                            }
-                            if (isNil9 == false)
-                            {
-                                string idInstance = idElement.Value;
-                                result.OperationId = idInstance;
-                            }
-                        }
-                        
-                        XElement modifiedTimeElement = operationElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (modifiedTimeElement != null)
-                        {
-                            DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.ModifiedTime = modifiedTimeInstance;
-                        }
-                        
-                        XElement nameElement = operationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            bool isNil10 = false;
-                            XAttribute nilAttribute10 = nameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute10 != null)
-                            {
-                                isNil10 = nilAttribute10.Value == "true";
-                            }
-                            if (isNil10 == false)
-                            {
-                                string nameInstance = nameElement.Value;
-                                result.Name = nameInstance;
-                            }
-                        }
-                        
-                        XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
-                        {
-                            WebSiteOperationStatus statusInstance = ((WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true));
-                            result.Status = statusInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -737,7 +750,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -768,24 +781,35 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> RegisterSubscriptionAsync(CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> RegisterSubscriptionAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "RegisterSubscriptionAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RegisterSubscriptionAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
-            url = url + "service=website";
-            url = url + "&action=register";
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("service=website");
+            queryParameters.Add("action=register");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -820,13 +844,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -835,14 +859,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -851,7 +876,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -882,24 +907,35 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UnregisterSubscriptionAsync(CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UnregisterSubscriptionAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "UnregisterSubscriptionAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UnregisterSubscriptionAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
-            url = url + "service=website";
-            url = url + "&action=unregister";
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("service=website");
+            queryParameters.Add("action=unregister");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -934,13 +970,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -949,14 +985,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -965,7 +1002,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

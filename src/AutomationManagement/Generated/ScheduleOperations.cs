@@ -29,20 +29,18 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
+using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     /// <summary>
     /// Service operation for automation schedules.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-    /// more information)
+    /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+    /// information)
     /// </summary>
     internal partial class ScheduleOperations : IServiceOperations<AutomationManagementClient>, IScheduleOperations
     {
@@ -61,7 +59,7 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.Automation.AutomationManagementClient.
+        /// Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient.
         /// </summary>
         public AutomationManagementClient Client
         {
@@ -70,8 +68,8 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Create a schedule.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -96,1210 +94,53 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Schedule == null)
+            if (parameters.Name == null)
             {
-                throw new ArgumentNullException("parameters.Schedule");
+                throw new ArgumentNullException("parameters.Name");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            if (parameters.Properties.Frequency == null)
+            {
+                throw new ArgumentNullException("parameters.Properties.Frequency");
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Schedules?";
-            url = url + "api-version=2014-03-13_Preview";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
             {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            if (url[0] == '/')
+            url = url + "/cloudservices/OaaSCS/resources/";
+            if (this.Client.ResourceNamespace != null)
             {
-                url = url.Substring(1);
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
+            url = url + "/~/automationAccounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/schedules/";
+            url = url + Uri.EscapeDataString(parameters.Name);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-08");
+            if (queryParameters.Count > 0)
             {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("MaxDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("MinDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject scheduleCreateParametersValue = new JObject();
-                requestDoc = scheduleCreateParametersValue;
-                
-                if (parameters.Schedule.Id != null)
-                {
-                    scheduleCreateParametersValue["ScheduleID"] = parameters.Schedule.Id;
-                }
-                
-                if (parameters.Schedule.AccountId != null)
-                {
-                    scheduleCreateParametersValue["AccountID"] = parameters.Schedule.AccountId;
-                }
-                
-                if (parameters.Schedule.Name != null)
-                {
-                    scheduleCreateParametersValue["Name"] = parameters.Schedule.Name;
-                }
-                
-                if (parameters.Schedule.Description != null)
-                {
-                    scheduleCreateParametersValue["Description"] = parameters.Schedule.Description;
-                }
-                
-                scheduleCreateParametersValue["StartTime"] = parameters.Schedule.StartTime;
-                
-                scheduleCreateParametersValue["ExpiryTime"] = parameters.Schedule.ExpiryTime;
-                
-                scheduleCreateParametersValue["CreationTime"] = parameters.Schedule.CreationTime;
-                
-                scheduleCreateParametersValue["LastModifiedTime"] = parameters.Schedule.LastModifiedTime;
-                
-                scheduleCreateParametersValue["IsEnabled"] = parameters.Schedule.IsEnabled;
-                
-                if (parameters.Schedule.NextRun != null)
-                {
-                    scheduleCreateParametersValue["NextRun"] = parameters.Schedule.NextRun.Value;
-                }
-                
-                if (parameters.Schedule.DayInterval != null)
-                {
-                    scheduleCreateParametersValue["DayInterval"] = parameters.Schedule.DayInterval.Value;
-                }
-                
-                if (parameters.Schedule.HourInterval != null)
-                {
-                    scheduleCreateParametersValue["HourInterval"] = parameters.Schedule.HourInterval.Value;
-                }
-                
-                scheduleCreateParametersValue["odata.type"] = parameters.Schedule.ScheduleType.ToString();
-                
-                requestContent = requestDoc.ToString(Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ScheduleCreateResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ScheduleCreateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Schedule scheduleInstance = new Schedule();
-                        result.Schedule = scheduleInstance;
-                        
-                        JToken scheduleIDValue = responseDoc["ScheduleID"];
-                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
-                        {
-                            string scheduleIDInstance = ((string)scheduleIDValue);
-                            scheduleInstance.Id = scheduleIDInstance;
-                        }
-                        
-                        JToken accountIDValue = responseDoc["AccountID"];
-                        if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
-                        {
-                            string accountIDInstance = ((string)accountIDValue);
-                            scheduleInstance.AccountId = accountIDInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["Name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            scheduleInstance.Name = nameInstance;
-                        }
-                        
-                        JToken descriptionValue = responseDoc["Description"];
-                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                        {
-                            string descriptionInstance = ((string)descriptionValue);
-                            scheduleInstance.Description = descriptionInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["StartTime"];
-                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                            scheduleInstance.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken expiryTimeValue = responseDoc["ExpiryTime"];
-                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                        }
-                        
-                        JToken creationTimeValue = responseDoc["CreationTime"];
-                        if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                            scheduleInstance.CreationTime = creationTimeInstance;
-                        }
-                        
-                        JToken lastModifiedTimeValue = responseDoc["LastModifiedTime"];
-                        if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance;
-                        }
-                        
-                        JToken isEnabledValue = responseDoc["IsEnabled"];
-                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool isEnabledInstance = ((bool)isEnabledValue);
-                            scheduleInstance.IsEnabled = isEnabledInstance;
-                        }
-                        
-                        JToken nextRunValue = responseDoc["NextRun"];
-                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                        {
-                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                            scheduleInstance.NextRun = nextRunInstance;
-                        }
-                        
-                        JToken dayIntervalValue = responseDoc["DayInterval"];
-                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                        {
-                            int dayIntervalInstance = ((int)dayIntervalValue);
-                            scheduleInstance.DayInterval = dayIntervalInstance;
-                        }
-                        
-                        JToken hourIntervalValue = responseDoc["HourInterval"];
-                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
-                        {
-                            int hourIntervalInstance = ((int)hourIntervalValue);
-                            scheduleInstance.HourInterval = hourIntervalInstance;
-                        }
-                        
-                        JToken odatatypeValue = responseDoc["odata.type"];
-                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                        {
-                            string odatatypeInstance = ((string)odatatypeValue);
-                            scheduleInstance.ScheduleType = odatatypeInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
+                url = url + "?" + string.Join("&", queryParameters);
             }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Delete the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleId'>
-        /// Required. The schedule id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string automationAccount, string scheduleId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            if (scheduleId == null)
-            {
-                throw new ArgumentNullException("scheduleId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("scheduleId", scheduleId);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Schedules(guid'" + scheduleId.Trim() + "')?";
-            url = url + "api-version=2014-03-13_Preview";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("MaxDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("MinDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Retrieve the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleId'>
-        /// Required. The schedule id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the get schedule operation.
-        /// </returns>
-        public async Task<ScheduleGetResponse> GetAsync(string automationAccount, string scheduleId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            if (scheduleId == null)
-            {
-                throw new ArgumentNullException("scheduleId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("scheduleId", scheduleId);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Schedules(guid'" + scheduleId.Trim() + "')?";
-            url = url + "api-version=2014-03-13_Preview";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("MaxDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("MinDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ScheduleGetResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ScheduleGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Schedule scheduleInstance = new Schedule();
-                        result.Schedule = scheduleInstance;
-                        
-                        JToken scheduleIDValue = responseDoc["ScheduleID"];
-                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
-                        {
-                            string scheduleIDInstance = ((string)scheduleIDValue);
-                            scheduleInstance.Id = scheduleIDInstance;
-                        }
-                        
-                        JToken accountIDValue = responseDoc["AccountID"];
-                        if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
-                        {
-                            string accountIDInstance = ((string)accountIDValue);
-                            scheduleInstance.AccountId = accountIDInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["Name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            scheduleInstance.Name = nameInstance;
-                        }
-                        
-                        JToken descriptionValue = responseDoc["Description"];
-                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                        {
-                            string descriptionInstance = ((string)descriptionValue);
-                            scheduleInstance.Description = descriptionInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["StartTime"];
-                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                            scheduleInstance.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken expiryTimeValue = responseDoc["ExpiryTime"];
-                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                        }
-                        
-                        JToken creationTimeValue = responseDoc["CreationTime"];
-                        if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                            scheduleInstance.CreationTime = creationTimeInstance;
-                        }
-                        
-                        JToken lastModifiedTimeValue = responseDoc["LastModifiedTime"];
-                        if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance;
-                        }
-                        
-                        JToken isEnabledValue = responseDoc["IsEnabled"];
-                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool isEnabledInstance = ((bool)isEnabledValue);
-                            scheduleInstance.IsEnabled = isEnabledInstance;
-                        }
-                        
-                        JToken nextRunValue = responseDoc["NextRun"];
-                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                        {
-                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                            scheduleInstance.NextRun = nextRunInstance;
-                        }
-                        
-                        JToken dayIntervalValue = responseDoc["DayInterval"];
-                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                        {
-                            int dayIntervalInstance = ((int)dayIntervalValue);
-                            scheduleInstance.DayInterval = dayIntervalInstance;
-                        }
-                        
-                        JToken hourIntervalValue = responseDoc["HourInterval"];
-                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
-                        {
-                            int hourIntervalInstance = ((int)hourIntervalValue);
-                            scheduleInstance.HourInterval = hourIntervalInstance;
-                        }
-                        
-                        JToken odatatypeValue = responseDoc["odata.type"];
-                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                        {
-                            string odatatypeInstance = ((string)odatatypeValue);
-                            scheduleInstance.ScheduleType = odatatypeInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Retrieve a list of schedules for the given automation account.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='skipToken'>
-        /// Optional. The skip token.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list schedule operation.
-        /// </returns>
-        public async Task<ScheduleListResponse> ListAsync(string automationAccount, string skipToken, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("skipToken", skipToken);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Schedules?";
-            if (skipToken != null)
-            {
-                url = url + "$skiptoken=" + Uri.EscapeDataString(skipToken != null ? skipToken.Trim() : "");
-            }
-            url = url + "&api-version=2014-03-13_Preview";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("MaxDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("MinDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ScheduleListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ScheduleListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken valueValue in ((JArray)valueArray))
-                            {
-                                Schedule scheduleInstance = new Schedule();
-                                result.Schedules.Add(scheduleInstance);
-                                
-                                JToken scheduleIDValue = valueValue["ScheduleID"];
-                                if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
-                                {
-                                    string scheduleIDInstance = ((string)scheduleIDValue);
-                                    scheduleInstance.Id = scheduleIDInstance;
-                                }
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
-                                {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    scheduleInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    scheduleInstance.Name = nameInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    scheduleInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken startTimeValue = valueValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    scheduleInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken expiryTimeValue = valueValue["ExpiryTime"];
-                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                    scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    scheduleInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    scheduleInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken isEnabledValue = valueValue["IsEnabled"];
-                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                {
-                                    bool isEnabledInstance = ((bool)isEnabledValue);
-                                    scheduleInstance.IsEnabled = isEnabledInstance;
-                                }
-                                
-                                JToken nextRunValue = valueValue["NextRun"];
-                                if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                {
-                                    DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                    scheduleInstance.NextRun = nextRunInstance;
-                                }
-                                
-                                JToken dayIntervalValue = valueValue["DayInterval"];
-                                if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                {
-                                    int dayIntervalInstance = ((int)dayIntervalValue);
-                                    scheduleInstance.DayInterval = dayIntervalInstance;
-                                }
-                                
-                                JToken hourIntervalValue = valueValue["HourInterval"];
-                                if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
-                                {
-                                    int hourIntervalInstance = ((int)hourIntervalValue);
-                                    scheduleInstance.HourInterval = hourIntervalInstance;
-                                }
-                                
-                                JToken odatatypeValue = valueValue["odata.type"];
-                                if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                {
-                                    string odatatypeInstance = ((string)odatatypeValue);
-                                    scheduleInstance.ScheduleType = odatatypeInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Retrieve a list of one schedule identified by scheduleName.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleName'>
-        /// Required. The schedule name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list schedule operation.
-        /// </returns>
-        public async Task<ScheduleListResponse> ListByNameAsync(string automationAccount, string scheduleName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException("scheduleName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("scheduleName", scheduleName);
-                Tracing.Enter(invocationId, this, "ListByNameAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Schedules?";
-            bool appendFilter = true;
-            appendFilter = false;
-            url = url + "$filter=" + "Name eq '" + Uri.EscapeDataString(scheduleName.Trim()) + "'";
-            url = url + "&api-version=2014-03-13_Preview";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("MaxDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("MinDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ScheduleListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ScheduleListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken valueValue in ((JArray)valueArray))
-                            {
-                                Schedule scheduleInstance = new Schedule();
-                                result.Schedules.Add(scheduleInstance);
-                                
-                                JToken scheduleIDValue = valueValue["ScheduleID"];
-                                if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
-                                {
-                                    string scheduleIDInstance = ((string)scheduleIDValue);
-                                    scheduleInstance.Id = scheduleIDInstance;
-                                }
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
-                                {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    scheduleInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    scheduleInstance.Name = nameInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    scheduleInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken startTimeValue = valueValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    scheduleInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken expiryTimeValue = valueValue["ExpiryTime"];
-                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                    scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    scheduleInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    scheduleInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken isEnabledValue = valueValue["IsEnabled"];
-                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                {
-                                    bool isEnabledInstance = ((bool)isEnabledValue);
-                                    scheduleInstance.IsEnabled = isEnabledInstance;
-                                }
-                                
-                                JToken nextRunValue = valueValue["NextRun"];
-                                if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                {
-                                    DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                    scheduleInstance.NextRun = nextRunInstance;
-                                }
-                                
-                                JToken dayIntervalValue = valueValue["DayInterval"];
-                                if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                {
-                                    int dayIntervalInstance = ((int)dayIntervalValue);
-                                    scheduleInstance.DayInterval = dayIntervalInstance;
-                                }
-                                
-                                JToken hourIntervalValue = valueValue["HourInterval"];
-                                if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
-                                {
-                                    int hourIntervalInstance = ((int)hourIntervalValue);
-                                    scheduleInstance.HourInterval = hourIntervalInstance;
-                                }
-                                
-                                JToken odatatypeValue = valueValue["odata.type"];
-                                if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                {
-                                    string odatatypeInstance = ((string)odatatypeValue);
-                                    scheduleInstance.ScheduleType = odatatypeInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Update the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the update schedule operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string automationAccount, ScheduleUpdateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Schedule == null)
-            {
-                throw new ArgumentNullException("parameters.Schedule");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Schedules(guid'" + parameters.Schedule.Id.Trim() + "')?";
-            url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1323,8 +164,1175 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("MaxDataServiceVersion", "3.0");
-                httpRequest.Headers.Add("MinDataServiceVersion", "3.0");
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject scheduleCreateParametersValue = new JObject();
+                requestDoc = scheduleCreateParametersValue;
+                
+                scheduleCreateParametersValue["name"] = parameters.Name;
+                
+                JObject propertiesValue = new JObject();
+                scheduleCreateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.Description != null)
+                {
+                    propertiesValue["description"] = parameters.Properties.Description;
+                }
+                
+                propertiesValue["startTime"] = parameters.Properties.StartTime;
+                
+                if (parameters.Properties.ExpiryTime != null)
+                {
+                    propertiesValue["expiryTime"] = parameters.Properties.ExpiryTime.Value;
+                }
+                
+                if (parameters.Properties.Interval != null)
+                {
+                    propertiesValue["interval"] = parameters.Properties.Interval.Value;
+                }
+                
+                propertiesValue["frequency"] = parameters.Properties.Frequency;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ScheduleCreateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ScheduleCreateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Schedule scheduleInstance = new Schedule();
+                            result.Schedule = scheduleInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                scheduleInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                ScheduleProperties propertiesInstance = new ScheduleProperties();
+                                scheduleInstance.Properties = propertiesInstance;
+                                
+                                JToken descriptionValue = propertiesValue2["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken startTimeValue = propertiesValue2["startTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset startTimeInstance = ((DateTimeOffset)startTimeValue);
+                                    propertiesInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken expiryTimeValue = propertiesValue2["expiryTime"];
+                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
+                                    propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken isEnabledValue = propertiesValue2["isEnabled"];
+                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEnabledInstance = ((bool)isEnabledValue);
+                                    propertiesInstance.IsEnabled = isEnabledInstance;
+                                }
+                                
+                                JToken nextRunValue = propertiesValue2["nextRun"];
+                                if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
+                                    propertiesInstance.NextRun = nextRunInstance;
+                                }
+                                
+                                JToken intervalValue = propertiesValue2["interval"];
+                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                {
+                                    byte intervalInstance = ((byte)intervalValue);
+                                    propertiesInstance.Interval = intervalInstance;
+                                }
+                                
+                                JToken frequencyValue = propertiesValue2["frequency"];
+                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                {
+                                    string frequencyInstance = ((string)frequencyValue);
+                                    propertiesInstance.Frequency = frequencyInstance;
+                                }
+                                
+                                JToken creationTimeValue = propertiesValue2["creationTime"];
+                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                    propertiesInstance.CreationTime = creationTimeInstance;
+                                }
+                                
+                                JToken lastModifiedTimeValue = propertiesValue2["lastModifiedTime"];
+                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                    propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Delete the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='scheduleName'>
+        /// Required. The schedule name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> DeleteAsync(string automationAccount, string scheduleName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (automationAccount == null)
+            {
+                throw new ArgumentNullException("automationAccount");
+            }
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException("scheduleName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("automationAccount", automationAccount);
+                tracingParameters.Add("scheduleName", scheduleName);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
+            url = url + "/~/automationAccounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/schedules/";
+            url = url + Uri.EscapeDataString(scheduleName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-08");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieve the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='scheduleName'>
+        /// Required. The schedule name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get schedule operation.
+        /// </returns>
+        public async Task<ScheduleGetResponse> GetAsync(string automationAccount, string scheduleName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (automationAccount == null)
+            {
+                throw new ArgumentNullException("automationAccount");
+            }
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException("scheduleName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("automationAccount", automationAccount);
+                tracingParameters.Add("scheduleName", scheduleName);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
+            url = url + "/~/automationAccounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/schedules/";
+            url = url + Uri.EscapeDataString(scheduleName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-08");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ScheduleGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ScheduleGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Schedule scheduleInstance = new Schedule();
+                            result.Schedule = scheduleInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                scheduleInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ScheduleProperties propertiesInstance = new ScheduleProperties();
+                                scheduleInstance.Properties = propertiesInstance;
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken startTimeValue = propertiesValue["startTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset startTimeInstance = ((DateTimeOffset)startTimeValue);
+                                    propertiesInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken expiryTimeValue = propertiesValue["expiryTime"];
+                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
+                                    propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken isEnabledValue = propertiesValue["isEnabled"];
+                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEnabledInstance = ((bool)isEnabledValue);
+                                    propertiesInstance.IsEnabled = isEnabledInstance;
+                                }
+                                
+                                JToken nextRunValue = propertiesValue["nextRun"];
+                                if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
+                                    propertiesInstance.NextRun = nextRunInstance;
+                                }
+                                
+                                JToken intervalValue = propertiesValue["interval"];
+                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                {
+                                    byte intervalInstance = ((byte)intervalValue);
+                                    propertiesInstance.Interval = intervalInstance;
+                                }
+                                
+                                JToken frequencyValue = propertiesValue["frequency"];
+                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                {
+                                    string frequencyInstance = ((string)frequencyValue);
+                                    propertiesInstance.Frequency = frequencyInstance;
+                                }
+                                
+                                JToken creationTimeValue = propertiesValue["creationTime"];
+                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                    propertiesInstance.CreationTime = creationTimeInstance;
+                                }
+                                
+                                JToken lastModifiedTimeValue = propertiesValue["lastModifiedTime"];
+                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                    propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieve a list of schedules.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list schedule operation.
+        /// </returns>
+        public async Task<ScheduleListResponse> ListAsync(string automationAccount, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (automationAccount == null)
+            {
+                throw new ArgumentNullException("automationAccount");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("automationAccount", automationAccount);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
+            url = url + "/~/automationAccounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/schedules";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-08");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("ocp-referer", url);
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ScheduleListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ScheduleListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Schedule scheduleInstance = new Schedule();
+                                    result.Schedules.Add(scheduleInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        scheduleInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        ScheduleProperties propertiesInstance = new ScheduleProperties();
+                                        scheduleInstance.Properties = propertiesInstance;
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken startTimeValue = propertiesValue["startTime"];
+                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset startTimeInstance = ((DateTimeOffset)startTimeValue);
+                                            propertiesInstance.StartTime = startTimeInstance;
+                                        }
+                                        
+                                        JToken expiryTimeValue = propertiesValue["expiryTime"];
+                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
+                                            propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                        }
+                                        
+                                        JToken isEnabledValue = propertiesValue["isEnabled"];
+                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                        {
+                                            bool isEnabledInstance = ((bool)isEnabledValue);
+                                            propertiesInstance.IsEnabled = isEnabledInstance;
+                                        }
+                                        
+                                        JToken nextRunValue = propertiesValue["nextRun"];
+                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
+                                            propertiesInstance.NextRun = nextRunInstance;
+                                        }
+                                        
+                                        JToken intervalValue = propertiesValue["interval"];
+                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                        {
+                                            byte intervalInstance = ((byte)intervalValue);
+                                            propertiesInstance.Interval = intervalInstance;
+                                        }
+                                        
+                                        JToken frequencyValue = propertiesValue["frequency"];
+                                        if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                        {
+                                            string frequencyInstance = ((string)frequencyValue);
+                                            propertiesInstance.Frequency = frequencyInstance;
+                                        }
+                                        
+                                        JToken creationTimeValue = propertiesValue["creationTime"];
+                                        if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                            propertiesInstance.CreationTime = creationTimeInstance;
+                                        }
+                                        
+                                        JToken lastModifiedTimeValue = propertiesValue["lastModifiedTime"];
+                                        if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                            propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieve next list of schedules.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list schedule operation.
+        /// </returns>
+        public async Task<ScheduleListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + Uri.EscapeDataString(nextLink);
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("ocp-referer", url);
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ScheduleListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ScheduleListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Schedule scheduleInstance = new Schedule();
+                                    result.Schedules.Add(scheduleInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        scheduleInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        ScheduleProperties propertiesInstance = new ScheduleProperties();
+                                        scheduleInstance.Properties = propertiesInstance;
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken startTimeValue = propertiesValue["startTime"];
+                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset startTimeInstance = ((DateTimeOffset)startTimeValue);
+                                            propertiesInstance.StartTime = startTimeInstance;
+                                        }
+                                        
+                                        JToken expiryTimeValue = propertiesValue["expiryTime"];
+                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
+                                            propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                        }
+                                        
+                                        JToken isEnabledValue = propertiesValue["isEnabled"];
+                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                        {
+                                            bool isEnabledInstance = ((bool)isEnabledValue);
+                                            propertiesInstance.IsEnabled = isEnabledInstance;
+                                        }
+                                        
+                                        JToken nextRunValue = propertiesValue["nextRun"];
+                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
+                                            propertiesInstance.NextRun = nextRunInstance;
+                                        }
+                                        
+                                        JToken intervalValue = propertiesValue["interval"];
+                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                        {
+                                            byte intervalInstance = ((byte)intervalValue);
+                                            propertiesInstance.Interval = intervalInstance;
+                                        }
+                                        
+                                        JToken frequencyValue = propertiesValue["frequency"];
+                                        if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                        {
+                                            string frequencyInstance = ((string)frequencyValue);
+                                            propertiesInstance.Frequency = frequencyInstance;
+                                        }
+                                        
+                                        JToken creationTimeValue = propertiesValue["creationTime"];
+                                        if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                            propertiesInstance.CreationTime = creationTimeInstance;
+                                        }
+                                        
+                                        JToken lastModifiedTimeValue = propertiesValue["lastModifiedTime"];
+                                        if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                            propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters supplied to the update schedule operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> UpdateAsync(string automationAccount, ScheduleUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (automationAccount == null)
+            {
+                throw new ArgumentNullException("automationAccount");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("automationAccount", automationAccount);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
+            url = url + "/~/automationAccounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/schedules/";
+            url = url + Uri.EscapeDataString(parameters.Name);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-08");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("x-ms-version", "2013-06-01");
                 
                 // Set Credentials
@@ -1338,54 +1346,25 @@ namespace Microsoft.Azure.Management.Automation
                 JObject scheduleUpdateParametersValue = new JObject();
                 requestDoc = scheduleUpdateParametersValue;
                 
-                if (parameters.Schedule.Id != null)
+                scheduleUpdateParametersValue["name"] = parameters.Name;
+                
+                if (parameters.Properties != null)
                 {
-                    scheduleUpdateParametersValue["ScheduleID"] = parameters.Schedule.Id;
+                    JObject propertiesValue = new JObject();
+                    scheduleUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.Description != null)
+                    {
+                        propertiesValue["description"] = parameters.Properties.Description;
+                    }
+                    
+                    if (parameters.Properties.IsEnabled != null)
+                    {
+                        propertiesValue["isEnabled"] = parameters.Properties.IsEnabled.Value;
+                    }
                 }
                 
-                if (parameters.Schedule.AccountId != null)
-                {
-                    scheduleUpdateParametersValue["AccountID"] = parameters.Schedule.AccountId;
-                }
-                
-                if (parameters.Schedule.Name != null)
-                {
-                    scheduleUpdateParametersValue["Name"] = parameters.Schedule.Name;
-                }
-                
-                if (parameters.Schedule.Description != null)
-                {
-                    scheduleUpdateParametersValue["Description"] = parameters.Schedule.Description;
-                }
-                
-                scheduleUpdateParametersValue["StartTime"] = parameters.Schedule.StartTime;
-                
-                scheduleUpdateParametersValue["ExpiryTime"] = parameters.Schedule.ExpiryTime;
-                
-                scheduleUpdateParametersValue["CreationTime"] = parameters.Schedule.CreationTime;
-                
-                scheduleUpdateParametersValue["LastModifiedTime"] = parameters.Schedule.LastModifiedTime;
-                
-                scheduleUpdateParametersValue["IsEnabled"] = parameters.Schedule.IsEnabled;
-                
-                if (parameters.Schedule.NextRun != null)
-                {
-                    scheduleUpdateParametersValue["NextRun"] = parameters.Schedule.NextRun.Value;
-                }
-                
-                if (parameters.Schedule.DayInterval != null)
-                {
-                    scheduleUpdateParametersValue["DayInterval"] = parameters.Schedule.DayInterval.Value;
-                }
-                
-                if (parameters.Schedule.HourInterval != null)
-                {
-                    scheduleUpdateParametersValue["HourInterval"] = parameters.Schedule.HourInterval.Value;
-                }
-                
-                scheduleUpdateParametersValue["odata.type"] = parameters.Schedule.ScheduleType.ToString();
-                
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -1395,29 +1374,30 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1426,7 +1406,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

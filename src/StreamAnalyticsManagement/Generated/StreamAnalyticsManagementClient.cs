@@ -26,11 +26,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.StreamAnalytics;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
@@ -120,7 +119,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Initializes a new instance of the StreamAnalyticsManagementClient
         /// class.
         /// </summary>
-        private StreamAnalyticsManagementClient()
+        public StreamAnalyticsManagementClient()
             : base()
         {
             this._inputs = new InputOperations(this);
@@ -186,7 +185,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -198,7 +197,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private StreamAnalyticsManagementClient(HttpClient httpClient)
+        public StreamAnalyticsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._inputs = new InputOperations(this);
@@ -270,7 +269,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -321,18 +320,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                Tracing.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = operationStatusLink;
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -343,7 +344,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -355,13 +356,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent && statusCode != HttpStatusCode.NotFound && statusCode != HttpStatusCode.Conflict && statusCode != HttpStatusCode.PreconditionFailed)
@@ -370,13 +371,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -406,7 +408,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -445,18 +447,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                Tracing.Enter(invocationId, this, "GetTestConnectionStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetTestConnectionStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = operationStatusLink;
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -468,7 +472,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -480,13 +484,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent && statusCode != HttpStatusCode.BadRequest)
@@ -495,7 +499,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -503,67 +507,70 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     // Create Result
                     DataSourceTestConnectionResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DataSourceTestConnectionResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent || statusCode == HttpStatusCode.BadRequest)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken statusValue = responseDoc["status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DataSourceTestConnectionResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string statusInstance = ((string)statusValue);
-                            result.DataSourceTestStatus = statusInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken errorValue = responseDoc["error"];
-                        if (errorValue != null && errorValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ErrorResponse errorInstance = new ErrorResponse();
-                            result.Error = errorInstance;
-                            
-                            JToken codeValue = errorValue["code"];
-                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string codeInstance = ((string)codeValue);
-                                errorInstance.Code = codeInstance;
+                                string statusInstance = ((string)statusValue);
+                                result.DataSourceTestStatus = statusInstance;
                             }
                             
-                            JToken messageValue = errorValue["message"];
-                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
                             {
-                                string messageInstance = ((string)messageValue);
-                                errorInstance.Message = messageInstance;
-                            }
-                            
-                            JToken detailsValue = errorValue["details"];
-                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
-                            {
-                                ErrorDetailsResponse detailsInstance = new ErrorDetailsResponse();
-                                errorInstance.Details = detailsInstance;
+                                ErrorResponse errorInstance = new ErrorResponse();
+                                result.Error = errorInstance;
                                 
-                                JToken codeValue2 = detailsValue["code"];
-                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
                                 {
-                                    string codeInstance2 = ((string)codeValue2);
-                                    detailsInstance.Code = codeInstance2;
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
                                 }
                                 
-                                JToken messageValue2 = detailsValue["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
                                 {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    detailsInstance.Message = messageInstance2;
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
+                                }
+                                
+                                JToken detailsValue = errorValue["details"];
+                                if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                {
+                                    ErrorDetailsResponse detailsInstance = new ErrorDetailsResponse();
+                                    errorInstance.Details = detailsInstance;
+                                    
+                                    JToken codeValue2 = detailsValue["code"];
+                                    if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                    {
+                                        string codeInstance2 = ((string)codeValue2);
+                                        detailsInstance.Code = codeInstance2;
+                                    }
+                                    
+                                    JToken messageValue2 = detailsValue["message"];
+                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance2 = ((string)messageValue2);
+                                        detailsInstance.Message = messageInstance2;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -588,7 +595,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

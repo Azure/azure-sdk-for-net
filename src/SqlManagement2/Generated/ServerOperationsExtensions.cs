@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql
         /// database.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static ServerGetResponse CreateOrUpdate(this IServerOperations operations, string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters)
         {
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Sql
         /// database.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static Task<ServerGetResponse> CreateOrUpdateAsync(this IServerOperations operations, string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters)
         {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IServerOperations operations, string resourceGroupName, string serverName)
+        public static AzureOperationResponse Delete(this IServerOperations operations, string resourceGroupName, string serverName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IServerOperations operations, string resourceGroupName, string serverName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IServerOperations operations, string resourceGroupName, string serverName)
         {
             return operations.DeleteAsync(resourceGroupName, serverName, CancellationToken.None);
         }
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the server to retrieve.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static ServerGetResponse Get(this IServerOperations operations, string resourceGroupName, string serverName)
         {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the server to retrieve.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static Task<ServerGetResponse> GetAsync(this IServerOperations operations, string resourceGroupName, string serverName)
         {
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Sql
         /// belongs.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static ServerListResponse List(this IServerOperations operations, string resourceGroupName)
         {
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Sql
         /// belongs.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static Task<ServerListResponse> ListAsync(this IServerOperations operations, string resourceGroupName)
         {

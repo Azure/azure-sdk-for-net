@@ -27,16 +27,15 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using System.Xml;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    internal partial class MetricValueOperations : IServiceOperations<MetricsClient>, Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations
+    internal partial class MetricValueOperations : IServiceOperations<MetricsClient>, IMetricValueOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricValueOperations class.
@@ -88,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <returns>
         /// The List Metric values operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricValueListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, TimeSpan timeGrain, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        public async Task<MetricValueListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, TimeSpan timeGrain, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -105,11 +104,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("metricNames", metricNames);
@@ -117,20 +116,34 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("startTime", startTime);
                 tracingParameters.Add("endTime", endTime);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricvalues/query?";
-            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/metricvalues/query";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("resourceId=" + Uri.EscapeDataString(resourceId));
             if (metricNamespace != null)
             {
-                url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace != null ? metricNamespace.Trim() : "");
+                queryParameters.Add("namespace=" + Uri.EscapeDataString(metricNamespace));
             }
-            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
-            url = url + "&timeGrain=" + Uri.EscapeDataString(TypeConversion.To8601String(timeGrain));
-            url = url + "&startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
-            url = url + "&endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            if (metricNames.Count > 0)
+            {
+                queryParameters.Add("names=" + Uri.EscapeDataString(string.Join(",", metricNames)));
+            }
+            queryParameters.Add("timeGrain=" + Uri.EscapeDataString(XmlConvert.ToString(timeGrain)));
+            queryParameters.Add("startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime())));
+            queryParameters.Add("endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime())));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -166,13 +179,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -181,7 +194,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -189,146 +202,149 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     // Create Result
                     MetricValueListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new MetricValueListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
-                        result.MetricValueSetCollection = metricValueSetCollectionInstance;
-                        
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricValueListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
+                            result.MetricValueSetCollection = metricValueSetCollectionInstance;
+                            
+                            JToken valueArray = responseDoc["Value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                MetricValueSet metricValueSetInstance = new MetricValueSet();
-                                metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
-                                
-                                JToken nameValue = valueValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    metricValueSetInstance.Name = nameInstance;
-                                }
-                                
-                                JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
-                                {
-                                    string namespaceInstance = ((string)namespaceValue);
-                                    metricValueSetInstance.Namespace = namespaceInstance;
-                                }
-                                
-                                JToken displayNameValue = valueValue["DisplayName"];
-                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                {
-                                    string displayNameInstance = ((string)displayNameValue);
-                                    metricValueSetInstance.DisplayName = displayNameInstance;
-                                }
-                                
-                                JToken unitValue = valueValue["Unit"];
-                                if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                {
-                                    string unitInstance = ((string)unitValue);
-                                    metricValueSetInstance.Unit = unitInstance;
-                                }
-                                
-                                JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
-                                if (primaryAggregationValue != null && primaryAggregationValue.Type != JTokenType.Null)
-                                {
-                                    string primaryAggregationInstance = ((string)primaryAggregationValue);
-                                    metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
-                                }
-                                
-                                JToken timeGrainValue = valueValue["TimeGrain"];
-                                if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
-                                    metricValueSetInstance.TimeGrain = timeGrainInstance;
-                                }
-                                
-                                JToken startTimeValue = valueValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    metricValueSetInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken endTimeValue = valueValue["EndTime"];
-                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                    metricValueSetInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken metricValuesArray = valueValue["MetricValues"];
-                                if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
+                                    MetricValueSet metricValueSetInstance = new MetricValueSet();
+                                    metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
+                                    
+                                    JToken nameValue = valueValue["Name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        MetricValue metricValueInstance = new MetricValue();
-                                        metricValueSetInstance.MetricValues.Add(metricValueInstance);
-                                        
-                                        JToken timestampValue = metricValuesValue["Timestamp"];
-                                        if (timestampValue != null && timestampValue.Type != JTokenType.Null)
+                                        string nameInstance = ((string)nameValue);
+                                        metricValueSetInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken namespaceValue = valueValue["Namespace"];
+                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance = ((string)namespaceValue);
+                                        metricValueSetInstance.Namespace = namespaceInstance;
+                                    }
+                                    
+                                    JToken displayNameValue = valueValue["DisplayName"];
+                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                    {
+                                        string displayNameInstance = ((string)displayNameValue);
+                                        metricValueSetInstance.DisplayName = displayNameInstance;
+                                    }
+                                    
+                                    JToken unitValue = valueValue["Unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        string unitInstance = ((string)unitValue);
+                                        metricValueSetInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
+                                    if (primaryAggregationValue != null && primaryAggregationValue.Type != JTokenType.Null)
+                                    {
+                                        string primaryAggregationInstance = ((string)primaryAggregationValue);
+                                        metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
+                                    }
+                                    
+                                    JToken timeGrainValue = valueValue["TimeGrain"];
+                                    if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                        metricValueSetInstance.TimeGrain = timeGrainInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = valueValue["StartTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        metricValueSetInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = valueValue["EndTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        metricValueSetInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken metricValuesArray = valueValue["MetricValues"];
+                                    if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
                                         {
-                                            DateTime timestampInstance = ((DateTime)timestampValue);
-                                            metricValueInstance.Timestamp = timestampInstance;
-                                        }
-                                        
-                                        JToken averageValue = metricValuesValue["Average"];
-                                        if (averageValue != null && averageValue.Type != JTokenType.Null)
-                                        {
-                                            double averageInstance = ((double)averageValue);
-                                            metricValueInstance.Average = averageInstance;
-                                        }
-                                        
-                                        JToken minimumValue = metricValuesValue["Minimum"];
-                                        if (minimumValue != null && minimumValue.Type != JTokenType.Null)
-                                        {
-                                            double minimumInstance = ((double)minimumValue);
-                                            metricValueInstance.Minimum = minimumInstance;
-                                        }
-                                        
-                                        JToken maximumValue = metricValuesValue["Maximum"];
-                                        if (maximumValue != null && maximumValue.Type != JTokenType.Null)
-                                        {
-                                            double maximumInstance = ((double)maximumValue);
-                                            metricValueInstance.Maximum = maximumInstance;
-                                        }
-                                        
-                                        JToken totalValue = metricValuesValue["Total"];
-                                        if (totalValue != null && totalValue.Type != JTokenType.Null)
-                                        {
-                                            double totalInstance = ((double)totalValue);
-                                            metricValueInstance.Total = totalInstance;
-                                        }
-                                        
-                                        JToken annotationValue = metricValuesValue["Annotation"];
-                                        if (annotationValue != null && annotationValue.Type != JTokenType.Null)
-                                        {
-                                            string annotationInstance = ((string)annotationValue);
-                                            metricValueInstance.Annotation = annotationInstance;
-                                        }
-                                        
-                                        JToken countValue = metricValuesValue["Count"];
-                                        if (countValue != null && countValue.Type != JTokenType.Null)
-                                        {
-                                            int countInstance = ((int)countValue);
-                                            metricValueInstance.Count = countInstance;
+                                            MetricValue metricValueInstance = new MetricValue();
+                                            metricValueSetInstance.MetricValues.Add(metricValueInstance);
+                                            
+                                            JToken timestampValue = metricValuesValue["Timestamp"];
+                                            if (timestampValue != null && timestampValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timestampInstance = ((DateTime)timestampValue);
+                                                metricValueInstance.Timestamp = timestampInstance;
+                                            }
+                                            
+                                            JToken averageValue = metricValuesValue["Average"];
+                                            if (averageValue != null && averageValue.Type != JTokenType.Null)
+                                            {
+                                                double averageInstance = ((double)averageValue);
+                                                metricValueInstance.Average = averageInstance;
+                                            }
+                                            
+                                            JToken minimumValue = metricValuesValue["Minimum"];
+                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumInstance = ((double)minimumValue);
+                                                metricValueInstance.Minimum = minimumInstance;
+                                            }
+                                            
+                                            JToken maximumValue = metricValuesValue["Maximum"];
+                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
+                                            {
+                                                double maximumInstance = ((double)maximumValue);
+                                                metricValueInstance.Maximum = maximumInstance;
+                                            }
+                                            
+                                            JToken totalValue = metricValuesValue["Total"];
+                                            if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                            {
+                                                double totalInstance = ((double)totalValue);
+                                                metricValueInstance.Total = totalInstance;
+                                            }
+                                            
+                                            JToken annotationValue = metricValuesValue["Annotation"];
+                                            if (annotationValue != null && annotationValue.Type != JTokenType.Null)
+                                            {
+                                                string annotationInstance = ((string)annotationValue);
+                                                metricValueInstance.Annotation = annotationInstance;
+                                            }
+                                            
+                                            JToken countValue = metricValuesValue["Count"];
+                                            if (countValue != null && countValue.Type != JTokenType.Null)
+                                            {
+                                                int countInstance = ((int)countValue);
+                                                metricValueInstance.Count = countInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -337,7 +353,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

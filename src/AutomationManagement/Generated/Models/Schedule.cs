@@ -21,121 +21,19 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of the schedule type.
+    /// Definition of the schedule.
     /// </summary>
     public partial class Schedule
     {
-        private string _accountId;
-        
-        /// <summary>
-        /// Optional. The account ID of the schedule.
-        /// </summary>
-        public string AccountId
-        {
-            get { return this._accountId; }
-            set { this._accountId = value; }
-        }
-        
-        private DateTime _creationTime;
-        
-        /// <summary>
-        /// Optional. The creation time of the schedule.
-        /// </summary>
-        public DateTime CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private int? _dayInterval;
-        
-        /// <summary>
-        /// Optional. How often the schedule will fire, in days. The day
-        /// interval should only be set if the schedule type is daily schedule.
-        /// </summary>
-        public int? DayInterval
-        {
-            get { return this._dayInterval; }
-            set { this._dayInterval = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. The description of the schedule.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private DateTime _expiryTime;
-        
-        /// <summary>
-        /// Optional. The expiry time of the schedule.
-        /// </summary>
-        public DateTime ExpiryTime
-        {
-            get { return this._expiryTime; }
-            set { this._expiryTime = value; }
-        }
-        
-        private int? _hourInterval;
-        
-        /// <summary>
-        /// Optional. How often the schedule will fire, in hours. The hour
-        /// interval should only be set if the schedule type is hourly
-        /// schedule.
-        /// </summary>
-        public int? HourInterval
-        {
-            get { return this._hourInterval; }
-            set { this._hourInterval = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. The schedule ID.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private bool _isEnabled;
-        
-        /// <summary>
-        /// Optional. True or false, to indicate whether the schedule is
-        /// enabled or not.
-        /// </summary>
-        public bool IsEnabled
-        {
-            get { return this._isEnabled; }
-            set { this._isEnabled = value; }
-        }
-        
-        private DateTime _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. The last modified time of the schedule.
-        /// </summary>
-        public DateTime LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the schedule.
+        /// Optional. Gets or sets the name of the schedule.
         /// </summary>
         public string Name
         {
@@ -143,37 +41,15 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private System.DateTime? _nextRun;
+        private ScheduleProperties _properties;
         
         /// <summary>
-        /// Optional. The next run time of the schedule.
+        /// Optional. Gets or sets the properties of the schedule.
         /// </summary>
-        public System.DateTime? NextRun
+        public ScheduleProperties Properties
         {
-            get { return this._nextRun; }
-            set { this._nextRun = value; }
-        }
-        
-        private string _scheduleType;
-        
-        /// <summary>
-        /// Optional. The data type of the schedule.
-        /// </summary>
-        public string ScheduleType
-        {
-            get { return this._scheduleType; }
-            set { this._scheduleType = value; }
-        }
-        
-        private DateTime _startTime;
-        
-        /// <summary>
-        /// Optional. The start time of the schedule.
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
