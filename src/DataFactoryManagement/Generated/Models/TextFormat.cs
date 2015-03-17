@@ -41,6 +41,21 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._columnDelimiter = value; }
         }
         
+        private string _encodingName;
+        
+        /// <summary>
+        /// Optional. The code page name of the preferred encoding. If miss,
+        /// the default value is “utf-8”, unless BOM denotes another Unicode
+        /// encoding. Refer to the “Name” column of the table in the following
+        /// link to set supported values:
+        /// https://msdn.microsoft.com/library/system.text.encoding.aspx.
+        /// </summary>
+        public string EncodingName
+        {
+            get { return this._encodingName; }
+            set { this._encodingName = value; }
+        }
+        
         private string _escapeChar;
         
         /// <summary>
