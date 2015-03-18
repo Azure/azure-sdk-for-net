@@ -583,10 +583,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived7.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesSqlLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesOracleLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesSqlLinkedService";
-                            OnPremisesSqlLinkedService derived8 = ((OnPremisesSqlLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesOracleLinkedService";
+                            OnPremisesOracleLinkedService derived8 = ((OnPremisesOracleLinkedService)parameters.LinkedService.Properties);
                             
                             propertiesValue["connectionString"] = derived8.ConnectionString;
                             
@@ -620,6 +620,45 @@ namespace Microsoft.Azure.Management.DataFactories
                             if (derived8.ErrorMessage != null)
                             {
                                 propertiesValue["errorMessage"] = derived8.ErrorMessage;
+                            }
+                        }
+                        if (parameters.LinkedService.Properties is OnPremisesSqlLinkedService)
+                        {
+                            propertiesValue["type"] = "OnPremisesSqlLinkedService";
+                            OnPremisesSqlLinkedService derived9 = ((OnPremisesSqlLinkedService)parameters.LinkedService.Properties);
+                            
+                            propertiesValue["connectionString"] = derived9.ConnectionString;
+                            
+                            propertiesValue["gatewayName"] = derived9.GatewayName;
+                            
+                            if (derived9.UserName != null)
+                            {
+                                propertiesValue["userName"] = derived9.UserName;
+                            }
+                            
+                            if (derived9.Password != null)
+                            {
+                                propertiesValue["password"] = derived9.Password;
+                            }
+                            
+                            if (derived9.Description != null)
+                            {
+                                propertiesValue["description"] = derived9.Description;
+                            }
+                            
+                            if (derived9.ProvisioningState != null)
+                            {
+                                propertiesValue["provisioningState"] = derived9.ProvisioningState;
+                            }
+                            
+                            if (derived9.HubName != null)
+                            {
+                                propertiesValue["hubName"] = derived9.HubName;
+                            }
+                            
+                            if (derived9.ErrorMessage != null)
+                            {
+                                propertiesValue["errorMessage"] = derived9.ErrorMessage;
                             }
                         }
                     }
@@ -1150,64 +1189,125 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
                                 }
-                                if (typeName == "OnPremisesSqlLinkedService")
+                                if (typeName == "OnPremisesOracleLinkedService")
                                 {
-                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
                                     
                                     JToken connectionStringValue3 = propertiesValue2["connectionString"];
                                     if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
                                     {
                                         string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
                                     }
                                     
                                     JToken gatewayNameValue2 = propertiesValue2["gatewayName"];
                                     if (gatewayNameValue2 != null && gatewayNameValue2.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance2 = ((string)gatewayNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance2;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue2["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
                                     JToken passwordValue3 = propertiesValue2["password"];
                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
                                         string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance3;
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken descriptionValue8 = propertiesValue2["description"];
                                     if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
                                         string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance8;
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
                                     JToken provisioningStateValue8 = propertiesValue2["provisioningState"];
                                     if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
                                         string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
                                     JToken hubNameValue8 = propertiesValue2["hubName"];
                                     if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
                                         string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance8;
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
                                     JToken errorMessageValue8 = propertiesValue2["errorMessage"];
                                     if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
                                         string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesSqlLinkedService")
+                                {
+                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue2["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue2["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue4 = propertiesValue2["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue2["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue2["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -1903,64 +2003,125 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
                                 }
-                                if (typeName == "OnPremisesSqlLinkedService")
+                                if (typeName == "OnPremisesOracleLinkedService")
                                 {
-                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
                                     
                                     JToken connectionStringValue3 = propertiesValue["connectionString"];
                                     if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
                                     {
                                         string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
                                     }
                                     
                                     JToken gatewayNameValue2 = propertiesValue["gatewayName"];
                                     if (gatewayNameValue2 != null && gatewayNameValue2.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance2 = ((string)gatewayNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance2;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
                                     JToken passwordValue3 = propertiesValue["password"];
                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
                                         string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance3;
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken descriptionValue8 = propertiesValue["description"];
                                     if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
                                         string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance8;
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
                                     JToken provisioningStateValue8 = propertiesValue["provisioningState"];
                                     if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
                                         string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
                                     JToken hubNameValue8 = propertiesValue["hubName"];
                                     if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
                                         string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance8;
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
                                     JToken errorMessageValue8 = propertiesValue["errorMessage"];
                                     if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
                                         string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesSqlLinkedService")
+                                {
+                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue4 = propertiesValue["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -2163,11 +2324,11 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -3026,64 +3187,125 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
                                 }
-                                if (typeName == "OnPremisesSqlLinkedService")
+                                if (typeName == "OnPremisesOracleLinkedService")
                                 {
-                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
                                     
                                     JToken connectionStringValue3 = propertiesValue["connectionString"];
                                     if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
                                     {
                                         string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
                                     }
                                     
                                     JToken gatewayNameValue2 = propertiesValue["gatewayName"];
                                     if (gatewayNameValue2 != null && gatewayNameValue2.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance2 = ((string)gatewayNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance2;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
                                     JToken passwordValue3 = propertiesValue["password"];
                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
                                         string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance3;
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken descriptionValue8 = propertiesValue["description"];
                                     if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
                                         string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance8;
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
                                     JToken provisioningStateValue8 = propertiesValue["provisioningState"];
                                     if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
                                         string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
                                     JToken hubNameValue8 = propertiesValue["hubName"];
                                     if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
                                         string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance8;
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
                                     JToken errorMessageValue8 = propertiesValue["errorMessage"];
                                     if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
                                         string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesSqlLinkedService")
+                                {
+                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue4 = propertiesValue["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -3690,64 +3912,125 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
                                 }
-                                if (typeName == "OnPremisesSqlLinkedService")
+                                if (typeName == "OnPremisesOracleLinkedService")
                                 {
-                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
                                     
                                     JToken connectionStringValue3 = propertiesValue["connectionString"];
                                     if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
                                     {
                                         string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
                                     }
                                     
                                     JToken gatewayNameValue2 = propertiesValue["gatewayName"];
                                     if (gatewayNameValue2 != null && gatewayNameValue2.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance2 = ((string)gatewayNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance2;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
                                     JToken passwordValue3 = propertiesValue["password"];
                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
                                         string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance3;
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken descriptionValue8 = propertiesValue["description"];
                                     if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
                                         string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance8;
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
                                     JToken provisioningStateValue8 = propertiesValue["provisioningState"];
                                     if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
                                         string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
                                     JToken hubNameValue8 = propertiesValue["hubName"];
                                     if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
                                         string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance8;
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
                                     JToken errorMessageValue8 = propertiesValue["errorMessage"];
                                     if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
                                         string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesSqlLinkedService")
+                                {
+                                    OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue4 = propertiesValue["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -4421,64 +4704,125 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                             linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
                                         }
-                                        if (typeName == "OnPremisesSqlLinkedService")
+                                        if (typeName == "OnPremisesOracleLinkedService")
                                         {
-                                            OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                            OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
                                             
                                             JToken connectionStringValue3 = propertiesValue["connectionString"];
                                             if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
                                             {
                                                 string connectionStringInstance3 = ((string)connectionStringValue3);
-                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                                onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
                                             }
                                             
                                             JToken gatewayNameValue2 = propertiesValue["gatewayName"];
                                             if (gatewayNameValue2 != null && gatewayNameValue2.Type != JTokenType.Null)
                                             {
                                                 string gatewayNameInstance2 = ((string)gatewayNameValue2);
-                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance2;
+                                                onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance2;
                                             }
                                             
                                             JToken userNameValue2 = propertiesValue["userName"];
                                             if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                             {
                                                 string userNameInstance2 = ((string)userNameValue2);
-                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance2;
+                                                onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
                                             }
                                             
                                             JToken passwordValue3 = propertiesValue["password"];
                                             if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance3 = ((string)passwordValue3);
-                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance3;
+                                                onPremisesOracleLinkedServiceInstance.Password = passwordInstance3;
                                             }
                                             
                                             JToken descriptionValue8 = propertiesValue["description"];
                                             if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                             {
                                                 string descriptionInstance8 = ((string)descriptionValue8);
-                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance8;
+                                                onPremisesOracleLinkedServiceInstance.Description = descriptionInstance8;
                                             }
                                             
                                             JToken provisioningStateValue8 = propertiesValue["provisioningState"];
                                             if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                                onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                             }
                                             
                                             JToken hubNameValue8 = propertiesValue["hubName"];
                                             if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                             {
                                                 string hubNameInstance8 = ((string)hubNameValue8);
-                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance8;
+                                                onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance8;
                                             }
                                             
                                             JToken errorMessageValue8 = propertiesValue["errorMessage"];
                                             if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                             {
                                                 string errorMessageInstance8 = ((string)errorMessageValue8);
-                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                                onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesSqlLinkedService")
+                                        {
+                                            OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                            
+                                            JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                            if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance4 = ((string)connectionStringValue4);
+                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                            }
+                                            
+                                            JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                            }
+                                            
+                                            JToken userNameValue3 = propertiesValue["userName"];
+                                            if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string userNameInstance3 = ((string)userNameValue3);
+                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                            }
+                                            
+                                            JToken passwordValue4 = propertiesValue["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance4;
+                                            }
+                                            
+                                            JToken descriptionValue9 = propertiesValue["description"];
+                                            if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance9 = ((string)descriptionValue9);
+                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance9;
+                                            }
+                                            
+                                            JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                            }
+                                            
+                                            JToken hubNameValue9 = propertiesValue["hubName"];
+                                            if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance9 = ((string)hubNameValue9);
+                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance9;
+                                            }
+                                            
+                                            JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance9 = ((string)errorMessageValue9);
+                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
                                             }
                                             linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                         }
@@ -5102,64 +5446,125 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                             linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
                                         }
-                                        if (typeName == "OnPremisesSqlLinkedService")
+                                        if (typeName == "OnPremisesOracleLinkedService")
                                         {
-                                            OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                            OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
                                             
                                             JToken connectionStringValue3 = propertiesValue["connectionString"];
                                             if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
                                             {
                                                 string connectionStringInstance3 = ((string)connectionStringValue3);
-                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                                onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
                                             }
                                             
                                             JToken gatewayNameValue2 = propertiesValue["gatewayName"];
                                             if (gatewayNameValue2 != null && gatewayNameValue2.Type != JTokenType.Null)
                                             {
                                                 string gatewayNameInstance2 = ((string)gatewayNameValue2);
-                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance2;
+                                                onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance2;
                                             }
                                             
                                             JToken userNameValue2 = propertiesValue["userName"];
                                             if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                             {
                                                 string userNameInstance2 = ((string)userNameValue2);
-                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance2;
+                                                onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
                                             }
                                             
                                             JToken passwordValue3 = propertiesValue["password"];
                                             if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance3 = ((string)passwordValue3);
-                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance3;
+                                                onPremisesOracleLinkedServiceInstance.Password = passwordInstance3;
                                             }
                                             
                                             JToken descriptionValue8 = propertiesValue["description"];
                                             if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                             {
                                                 string descriptionInstance8 = ((string)descriptionValue8);
-                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance8;
+                                                onPremisesOracleLinkedServiceInstance.Description = descriptionInstance8;
                                             }
                                             
                                             JToken provisioningStateValue8 = propertiesValue["provisioningState"];
                                             if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                                onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                             }
                                             
                                             JToken hubNameValue8 = propertiesValue["hubName"];
                                             if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                             {
                                                 string hubNameInstance8 = ((string)hubNameValue8);
-                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance8;
+                                                onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance8;
                                             }
                                             
                                             JToken errorMessageValue8 = propertiesValue["errorMessage"];
                                             if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                             {
                                                 string errorMessageInstance8 = ((string)errorMessageValue8);
-                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                                onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesSqlLinkedService")
+                                        {
+                                            OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
+                                            
+                                            JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                            if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance4 = ((string)connectionStringValue4);
+                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                            }
+                                            
+                                            JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                            }
+                                            
+                                            JToken userNameValue3 = propertiesValue["userName"];
+                                            if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string userNameInstance3 = ((string)userNameValue3);
+                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                            }
+                                            
+                                            JToken passwordValue4 = propertiesValue["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance4;
+                                            }
+                                            
+                                            JToken descriptionValue9 = propertiesValue["description"];
+                                            if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance9 = ((string)descriptionValue9);
+                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance9;
+                                            }
+                                            
+                                            JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                            }
+                                            
+                                            JToken hubNameValue9 = propertiesValue["hubName"];
+                                            if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance9 = ((string)hubNameValue9);
+                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance9;
+                                            }
+                                            
+                                            JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance9 = ((string)errorMessageValue9);
+                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
                                             }
                                             linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                         }

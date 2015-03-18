@@ -112,13 +112,13 @@ namespace Microsoft.Azure.Management.RemoteApp
                     }
                 }
             }
-            if (collectionDetails.BillingPlanName == null)
-            {
-                throw new ArgumentNullException("collectionDetails.BillingPlanName");
-            }
             if (collectionDetails.Name == null)
             {
                 throw new ArgumentNullException("collectionDetails.Name");
+            }
+            if (collectionDetails.PlanName == null)
+            {
+                throw new ArgumentNullException("collectionDetails.PlanName");
             }
             if (collectionDetails.PublishedApplications != null)
             {
@@ -211,9 +211,9 @@ namespace Microsoft.Azure.Management.RemoteApp
                     collectionCreationDetailsValue["TemplateImageName"] = collectionDetails.TemplateImageName;
                 }
                 
-                if (collectionDetails.VnetName != null)
+                if (collectionDetails.VNetName != null)
                 {
-                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VnetName;
+                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VNetName;
                 }
                 
                 if (collectionDetails.AdInfo != null)
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                     adInfoValue["ServiceAccountPassword"] = collectionDetails.AdInfo.Password;
                 }
                 
-                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.BillingPlanName;
+                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.PlanName;
                 
                 if (collectionDetails.CustomRdpProperty != null)
                 {
@@ -903,7 +903,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                             if (vnetNameValue != null && vnetNameValue.Type != JTokenType.Null)
                             {
                                 string vnetNameInstance = ((string)vnetNameValue);
-                                collectionInstance.VnetName = vnetNameInstance;
+                                collectionInstance.VNetName = vnetNameInstance;
                             }
                             
                             JToken adInfoValue = responseDoc["AdInfo"];
@@ -945,7 +945,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                             if (billingPlanNameValue != null && billingPlanNameValue.Type != JTokenType.Null)
                             {
                                 string billingPlanNameInstance = ((string)billingPlanNameValue);
-                                collectionInstance.BillingPlanName = billingPlanNameInstance;
+                                collectionInstance.PlanName = billingPlanNameInstance;
                             }
                             
                             JToken customRdpPropertyValue = responseDoc["CustomRdpProperty"];
@@ -1830,7 +1830,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                                     if (vnetNameValue != null && vnetNameValue.Type != JTokenType.Null)
                                     {
                                         string vnetNameInstance = ((string)vnetNameValue);
-                                        collectionInstance.VnetName = vnetNameInstance;
+                                        collectionInstance.VNetName = vnetNameInstance;
                                     }
                                     
                                     JToken adInfoValue = collectionsValue["AdInfo"];
@@ -1872,7 +1872,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                                     if (billingPlanNameValue != null && billingPlanNameValue.Type != JTokenType.Null)
                                     {
                                         string billingPlanNameInstance = ((string)billingPlanNameValue);
-                                        collectionInstance.BillingPlanName = billingPlanNameInstance;
+                                        collectionInstance.PlanName = billingPlanNameInstance;
                                     }
                                     
                                     JToken customRdpPropertyValue = collectionsValue["CustomRdpProperty"];
@@ -2748,13 +2748,13 @@ namespace Microsoft.Azure.Management.RemoteApp
                     }
                 }
             }
-            if (collectionDetails.BillingPlanName == null)
-            {
-                throw new ArgumentNullException("collectionDetails.BillingPlanName");
-            }
             if (collectionDetails.Name == null)
             {
                 throw new ArgumentNullException("collectionDetails.Name");
+            }
+            if (collectionDetails.PlanName == null)
+            {
+                throw new ArgumentNullException("collectionDetails.PlanName");
             }
             if (collectionDetails.PublishedApplications != null)
             {
@@ -2850,9 +2850,9 @@ namespace Microsoft.Azure.Management.RemoteApp
                     collectionCreationDetailsValue["TemplateImageName"] = collectionDetails.TemplateImageName;
                 }
                 
-                if (collectionDetails.VnetName != null)
+                if (collectionDetails.VNetName != null)
                 {
-                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VnetName;
+                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VNetName;
                 }
                 
                 if (collectionDetails.AdInfo != null)
@@ -2872,7 +2872,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                     adInfoValue["ServiceAccountPassword"] = collectionDetails.AdInfo.Password;
                 }
                 
-                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.BillingPlanName;
+                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.PlanName;
                 
                 if (collectionDetails.CustomRdpProperty != null)
                 {

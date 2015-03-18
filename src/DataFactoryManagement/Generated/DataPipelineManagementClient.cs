@@ -93,16 +93,6 @@ namespace Microsoft.Azure.Management.DataFactories
             get { return this._dataSliceRuns; }
         }
         
-        private IEncryptionCertificateOperations _encryptionCertificate;
-        
-        /// <summary>
-        /// Operations for getting the encryption certificate.
-        /// </summary>
-        public virtual IEncryptionCertificateOperations EncryptionCertificate
-        {
-            get { return this._encryptionCertificate; }
-        }
-        
         private IGatewayOperations _gateways;
         
         /// <summary>
@@ -173,7 +163,6 @@ namespace Microsoft.Azure.Management.DataFactories
             this._dataFactories = new DataFactoryOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
-            this._encryptionCertificate = new EncryptionCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
@@ -256,7 +245,6 @@ namespace Microsoft.Azure.Management.DataFactories
             this._dataFactories = new DataFactoryOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
-            this._encryptionCertificate = new EncryptionCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);

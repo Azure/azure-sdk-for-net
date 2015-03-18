@@ -56,17 +56,6 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._allowedPrincipals = value; }
         }
         
-        private string _billingPlanName;
-        
-        /// <summary>
-        /// Required. The RemoteApp billing plan to use.
-        /// </summary>
-        public string BillingPlanName
-        {
-            get { return this._billingPlanName; }
-            set { this._billingPlanName = value; }
-        }
-        
         private string _customRdpProperty;
         
         /// <summary>
@@ -121,6 +110,17 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private string _planName;
+        
+        /// <summary>
+        /// Required. The RemoteApp plan to use.
+        /// </summary>
+        public string PlanName
+        {
+            get { return this._planName; }
+            set { this._planName = value; }
         }
         
         private IList<PublishedApplicationDetails> _publishedApplications;
@@ -182,15 +182,15 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._templateImageName = value; }
         }
         
-        private string _vnetName;
+        private string _vNetName;
         
         /// <summary>
-        /// Optional. The Vnet name associated with this collection.
+        /// Optional. The VNet name associated with this collection.
         /// </summary>
-        public string VnetName
+        public string VNetName
         {
-            get { return this._vnetName; }
-            set { this._vnetName = value; }
+            get { return this._vNetName; }
+            set { this._vNetName = value; }
         }
         
         private int _waitBeforeShutdownInMinutes;
@@ -223,19 +223,19 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// Initializes a new instance of the CollectionCreationDetails class
         /// with required arguments.
         /// </summary>
-        public CollectionCreationDetails(string name, string billingPlanName)
+        public CollectionCreationDetails(string name, string planName)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (billingPlanName == null)
+            if (planName == null)
             {
-                throw new ArgumentNullException("billingPlanName");
+                throw new ArgumentNullException("planName");
             }
             this.Name = name;
-            this.BillingPlanName = billingPlanName;
+            this.PlanName = planName;
         }
     }
 }

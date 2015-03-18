@@ -51,6 +51,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._minimumSizeMB = value; }
         }
         
+        private string _validationPriorityOrder;
+        
+        /// <summary>
+        /// Optional. Validation priority order.  Choose from OldestFirst or
+        /// NewestFirst.
+        /// </summary>
+        public string ValidationPriorityOrder
+        {
+            get { return this._validationPriorityOrder; }
+            set { this._validationPriorityOrder = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ValidationPolicy class.
         /// </summary>
