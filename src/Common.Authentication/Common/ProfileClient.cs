@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Common.Authentication
 
             if (subscription == null)
             {
-                throw new ArgumentException(string.Format(Resources.InvalidSubscriptionName, name), "name");
+                throw new ArgumentException(string.Format(Resources.SubscriptionNameNotFoundMessage, name), "name");
             }
 
             return SetSubscriptionAsDefault(subscription.Id, accountName);
