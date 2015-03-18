@@ -632,6 +632,11 @@ namespace Microsoft.Azure.Common.Authentication
         
         public AzureSubscription SetSubscriptionAsDefault(string name, string accountName)
         {
+            if (name == null)
+            {
+                throw new ArgumentException(string.Format(Resources.InvalidSubscriptionName, name), "name");
+            }
+
             var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Name == name);
 
             if (subscription == null)
