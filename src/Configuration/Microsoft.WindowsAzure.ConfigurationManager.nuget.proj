@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.ConfigurationManager
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.ConfigurationManager">
-      <PackageVersion>2.0.3</PackageVersion>
+      <PackageVersion>2.0.4</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
