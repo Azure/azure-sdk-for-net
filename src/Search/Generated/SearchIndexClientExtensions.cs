@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Client that can be used to query an Azure Search index and upload,
     /// merge, or delete documents.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
     /// information)
     /// </summary>
     public static partial class SearchIndexClientExtensions

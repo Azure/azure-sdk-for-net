@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Client that can be used to manage and query indexes and documents on an
     /// Azure Search service.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
     /// information)
     /// </summary>
     public static partial class SearchServiceClientExtensions

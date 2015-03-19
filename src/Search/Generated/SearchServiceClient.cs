@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Client that can be used to manage and query indexes and documents on an
     /// Azure Search service.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
     /// information)
     /// </summary>
     public partial class SearchServiceClient : ServiceClient<SearchServiceClient>, ISearchServiceClient
@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Gets or sets the credentials used to authenticate to an Azure
         /// Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </summary>
         public SearchCredentials Credentials
         {
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Search
         
         /// <summary>
         /// Operations for managing indexes.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798918.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798918.aspx for more
+        /// information)
         /// </summary>
         public virtual IIndexOperations Indexes
         {
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
-        private SearchServiceClient()
+        public SearchServiceClient()
             : base()
         {
             this._indexes = new IndexOperations(this);
@@ -138,8 +138,8 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>
         /// Required. Gets or sets the credentials used to authenticate to an
         /// Azure Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </param>
         /// <param name='baseUri'>
         /// Optional. Gets the URI used as the base for all cloud service
@@ -176,8 +176,8 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>
         /// Required. Gets or sets the credentials used to authenticate to an
         /// Azure Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </param>
         public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
             : this()
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Search
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SearchServiceClient(HttpClient httpClient)
+        public SearchServiceClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._indexes = new IndexOperations(this);
@@ -222,8 +222,8 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>
         /// Required. Gets or sets the credentials used to authenticate to an
         /// Azure Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </param>
         /// <param name='baseUri'>
         /// Optional. Gets the URI used as the base for all cloud service
@@ -263,8 +263,8 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>
         /// Required. Gets or sets the credentials used to authenticate to an
         /// Azure Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </param>
         /// <param name='httpClient'>
         /// The Http client

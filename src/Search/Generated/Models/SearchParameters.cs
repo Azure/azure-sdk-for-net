@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Search.Models
         /// Optional. Gets or sets the list of facet expressions to apply to
         /// the search query. Each facet expression contains a field name,
         /// optionally followed by a comma-separated list of name:value pairs.
-        /// (see https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx
-        /// for more information)
+        /// (see https://msdn.microsoft.com/library/azure/dn798927.aspx for
+        /// more information)
         /// </summary>
         public IList<string> Facets
         {
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Optional. Gets or sets the OData $filter expression to apply to the
         /// search query.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798921.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798921.aspx for more
+        /// information)
         /// </summary>
         public string Filter
         {

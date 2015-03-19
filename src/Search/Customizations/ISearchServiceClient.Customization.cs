@@ -14,28 +14,15 @@
 // 
 
 using System;
-using System.Net.Http.Headers;
 
 namespace Microsoft.Azure.Search
 {
-    public static partial class SearchIndexClientExtensions
+    public partial interface ISearchServiceClient
     {
-        private const string ClientRequestIdHeaderName = "client-request-id";
-
         /// <summary>
         /// Adds the given tracking ID to the HTTP request headers.
         /// </summary>
         /// <param name="guid">Tracking ID to add to the request.</param>
-        public static void SetClientRequestId(this SearchIndexClient client, Guid guid)
-        {
-            HttpRequestHeaders headers = client.HttpClient.DefaultRequestHeaders;
-
-            if (headers.Contains(ClientRequestIdHeaderName))
-            {
-                headers.Remove(ClientRequestIdHeaderName);
-            }
-
-            headers.Add(ClientRequestIdHeaderName, guid.ToString());
-        }
+        void SetClientRequestId(Guid guid);
     }
 }

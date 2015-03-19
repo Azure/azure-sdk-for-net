@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Abstract base class for functions that can modify document scores
     /// during ranking.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798928.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798928.aspx for more
     /// information)
     /// </summary>
     public abstract partial class ScoringFunction

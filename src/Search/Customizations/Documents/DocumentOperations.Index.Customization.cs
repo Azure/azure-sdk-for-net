@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Search
 {
     internal partial class DocumentOperations
     {
-        /// <inheritdoc />
         public async Task<DocumentIndexResponse> IndexAsync(IndexBatch batch, CancellationToken cancellationToken)
         {
             if (batch == null)
@@ -42,7 +41,6 @@ namespace Microsoft.Azure.Search
             return await DoIndexAsync(payload, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
         public async Task<DocumentIndexResponse> IndexAsync<T>(
             IndexBatch<T> batch, 
             CancellationToken cancellationToken) where T : class
