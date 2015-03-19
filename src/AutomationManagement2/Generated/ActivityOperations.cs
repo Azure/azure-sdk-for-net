@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/activities/";
             url = url + Uri.EscapeDataString(activityName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -348,13 +348,6 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
-                                JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -477,7 +470,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(moduleName);
             url = url + "/activities";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -687,13 +680,6 @@ namespace Microsoft.Azure.Management.Automation
                                                     activityOutputTypeInstance.Type = typeInstance2;
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -995,13 +981,6 @@ namespace Microsoft.Azure.Management.Automation
                                                     activityOutputTypeInstance.Type = typeInstance2;
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];

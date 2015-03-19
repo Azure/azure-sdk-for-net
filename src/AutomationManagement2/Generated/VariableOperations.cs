@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -277,13 +277,6 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.IsEncrypted = isEncryptedInstance;
                                 }
                                 
-                                JToken lastModifiedByValue = propertiesValue2["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -406,7 +399,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(variableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -567,7 +560,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(variableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -671,13 +664,6 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     bool isEncryptedInstance = ((bool)isEncryptedValue);
                                     propertiesInstance.IsEncrypted = isEncryptedInstance;
-                                }
-                                
-                                JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue["creationTime"];
@@ -792,7 +778,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/variables";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -902,13 +888,6 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             bool isEncryptedInstance = ((bool)isEncryptedValue);
                                             propertiesInstance.IsEncrypted = isEncryptedInstance;
-                                        }
-                                        
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1112,13 +1091,6 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.IsEncrypted = isEncryptedInstance;
                                         }
                                         
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                        }
-                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1261,7 +1233,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

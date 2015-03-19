@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class AutomationAccountProperties : ResourceCommonPropertiesBase
     {
+        private string _lastModifiedBy;
+        
+        /// <summary>
+        /// Optional. Gets or sets the last modified by.
+        /// </summary>
+        public string LastModifiedBy
+        {
+            get { return this._lastModifiedBy; }
+            set { this._lastModifiedBy = value; }
+        }
+        
         private Sku _sku;
         
         /// <summary>

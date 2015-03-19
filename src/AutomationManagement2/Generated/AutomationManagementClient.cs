@@ -569,15 +569,15 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.Status = OperationStatus.Failed;
                     }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
                     if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
                     if (statusCode == HttpStatusCode.NoContent)
-                    {
-                        result.Status = OperationStatus.Succeeded;
-                    }
-                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

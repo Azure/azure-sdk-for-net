@@ -28,6 +28,17 @@ namespace Microsoft.Azure.Management.Automation.Models
 {
     public partial class ResourceBase
     {
+        private string _etag;
+        
+        /// <summary>
+        /// Optional. Gets or sets the etag of the resource.
+        /// </summary>
+        public string Etag
+        {
+            get { return this._etag; }
+            set { this._etag = value; }
+        }
+        
         private string _id;
         
         /// <summary>

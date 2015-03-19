@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/streams/";
             url = url + Uri.EscapeDataString(jobStreamId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -849,7 +849,7 @@ namespace Microsoft.Azure.Management.Automation
             List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.Time != null)
             {
-                odataFilter.Add("properties/time ge '" + Uri.EscapeDataString(parameters.Time) + "'");
+                odataFilter.Add("properties/time ge " + Uri.EscapeDataString(parameters.Time));
             }
             if (parameters != null && parameters.StreamType != null)
             {
@@ -859,7 +859,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

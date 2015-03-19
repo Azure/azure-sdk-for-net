@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/jobs/";
             url = url + Guid.NewGuid().ToString();
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -373,6 +373,13 @@ namespace Microsoft.Azure.Management.Automation
                                         runbookInstance.Name = nameInstance;
                                     }
                                 }
+                                
+                                JToken startedByValue = propertiesValue2["startedBy"];
+                                if (startedByValue != null && startedByValue.Type != JTokenType.Null)
+                                {
+                                    string startedByInstance = ((string)startedByValue);
+                                    propertiesInstance.StartedBy = startedByInstance;
+                                }
                             }
                         }
                         
@@ -470,7 +477,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -642,6 +649,13 @@ namespace Microsoft.Azure.Management.Automation
                                         runbookInstance.Name = nameInstance;
                                     }
                                 }
+                                
+                                JToken startedByValue = propertiesValue["startedBy"];
+                                if (startedByValue != null && startedByValue.Type != JTokenType.Null)
+                                {
+                                    string startedByInstance = ((string)startedByValue);
+                                    propertiesInstance.StartedBy = startedByInstance;
+                                }
                             }
                         }
                         
@@ -740,7 +754,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/output";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -808,17 +822,7 @@ namespace Microsoft.Azure.Management.Automation
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new JobGetOutputResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            string outputInstance = ((string)responseDoc);
-                            result.Output = outputInstance;
-                        }
+                        result.Output = responseContent;
                         
                     }
                     result.StatusCode = statusCode;
@@ -915,7 +919,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/runbook";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1109,7 +1113,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1286,6 +1290,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 string nameInstance = ((string)nameValue);
                                                 runbookInstance.Name = nameInstance;
                                             }
+                                        }
+                                        
+                                        JToken startedByValue = propertiesValue["startedBy"];
+                                        if (startedByValue != null && startedByValue.Type != JTokenType.Null)
+                                        {
+                                            string startedByInstance = ((string)startedByValue);
+                                            propertiesInstance.StartedBy = startedByInstance;
                                         }
                                     }
                                 }
@@ -1534,6 +1545,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 runbookInstance.Name = nameInstance;
                                             }
                                         }
+                                        
+                                        JToken startedByValue = propertiesValue["startedBy"];
+                                        if (startedByValue != null && startedByValue.Type != JTokenType.Null)
+                                        {
+                                            string startedByInstance = ((string)startedByValue);
+                                            propertiesInstance.StartedBy = startedByInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1649,7 +1667,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1808,7 +1826,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/stop";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1967,7 +1985,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/suspend";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

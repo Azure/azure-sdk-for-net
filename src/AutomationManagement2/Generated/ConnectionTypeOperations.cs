@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -321,13 +321,6 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
-                                JToken lastModifiedByValue = propertiesValue2["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -450,7 +443,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(connectionTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -611,7 +604,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(connectionTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -743,13 +736,6 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
-                                JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -862,7 +848,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/connectionTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -998,13 +984,6 @@ namespace Microsoft.Azure.Management.Automation
                                                     fieldDefinitionInstance.Type = typeInstance;
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1232,13 +1211,6 @@ namespace Microsoft.Azure.Management.Automation
                                                     fieldDefinitionInstance.Type = typeInstance;
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];

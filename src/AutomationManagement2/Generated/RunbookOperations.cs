@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/content";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -590,7 +590,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -864,7 +864,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/runbooks/";
             url = url + Uri.EscapeDataString(runbookName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1025,7 +1025,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/runbooks/";
             url = url + Uri.EscapeDataString(runbookName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1411,6 +1411,13 @@ namespace Microsoft.Azure.Management.Automation
                                 string typeInstance3 = ((string)typeValue3);
                                 runbookInstance.Type = typeInstance3;
                             }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                runbookInstance.Etag = etagInstance;
+                            }
                         }
                         
                     }
@@ -1502,7 +1509,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/runbooks";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1893,6 +1900,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string typeInstance3 = ((string)typeValue3);
                                         runbookInstance.Type = typeInstance3;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        runbookInstance.Etag = etagInstance;
                                     }
                                 }
                             }
@@ -2354,6 +2368,13 @@ namespace Microsoft.Azure.Management.Automation
                                         string typeInstance3 = ((string)typeValue3);
                                         runbookInstance.Type = typeInstance3;
                                     }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        runbookInstance.Etag = etagInstance;
+                                    }
                                 }
                             }
                             
@@ -2473,7 +2494,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2906,6 +2927,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string typeInstance3 = ((string)typeValue3);
                                 runbookInstance.Type = typeInstance3;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                runbookInstance.Etag = etagInstance;
                             }
                         }
                         

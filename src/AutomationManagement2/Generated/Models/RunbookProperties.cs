@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._jobCount = value; }
         }
         
+        private string _lastModifiedBy;
+        
+        /// <summary>
+        /// Optional. Gets or sets the last modified by.
+        /// </summary>
+        public string LastModifiedBy
+        {
+            get { return this._lastModifiedBy; }
+            set { this._lastModifiedBy = value; }
+        }
+        
         private bool _logProgress;
         
         /// <summary>

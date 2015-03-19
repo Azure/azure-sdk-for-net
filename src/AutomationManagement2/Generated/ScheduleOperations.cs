@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -316,13 +316,6 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.Frequency = frequencyInstance;
                                 }
                                 
-                                JToken lastModifiedByValue = propertiesValue2["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -445,7 +438,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(scheduleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -606,7 +599,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(scheduleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -740,13 +733,6 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.Frequency = frequencyInstance;
                                 }
                                 
-                                JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -859,7 +845,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/schedules";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -997,13 +983,6 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string frequencyInstance = ((string)frequencyValue);
                                             propertiesInstance.Frequency = frequencyInstance;
-                                        }
-                                        
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1235,13 +1214,6 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.Frequency = frequencyInstance;
                                         }
                                         
-                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
-                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                        {
-                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
-                                        }
-                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1384,7 +1356,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

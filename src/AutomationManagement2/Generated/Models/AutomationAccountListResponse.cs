@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class AutomationAccountListResponse : OperationResponseWithSkipToken
     {
-        private IList<AutomationAccount> _automationAccount;
+        private IList<AutomationAccount> _automationAccounts;
         
         /// <summary>
         /// Optional. Gets or sets list of accounts.
         /// </summary>
-        public IList<AutomationAccount> AutomationAccount
+        public IList<AutomationAccount> AutomationAccounts
         {
-            get { return this._automationAccount; }
-            set { this._automationAccount = value; }
+            get { return this._automationAccounts; }
+            set { this._automationAccounts = value; }
         }
         
         /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public AutomationAccountListResponse()
         {
-            this.AutomationAccount = new LazyList<AutomationAccount>();
+            this.AutomationAccounts = new LazyList<AutomationAccount>();
         }
     }
 }

@@ -120,6 +120,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._runbook = value; }
         }
         
+        private string _startedBy;
+        
+        /// <summary>
+        /// Optional. Gets or sets the job started by.
+        /// </summary>
+        public string StartedBy
+        {
+            get { return this._startedBy; }
+            set { this._startedBy = value; }
+        }
+        
         private DateTimeOffset _startTime;
         
         /// <summary>

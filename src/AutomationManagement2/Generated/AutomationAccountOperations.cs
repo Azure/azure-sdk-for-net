@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -364,6 +364,13 @@ namespace Microsoft.Azure.Management.Automation
                                 string typeInstance = ((string)typeValue);
                                 automationAccountInstance.Type = typeInstance;
                             }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                automationAccountInstance.Etag = etagInstance;
+                            }
                         }
                         
                     }
@@ -455,7 +462,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -605,7 +612,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -785,6 +792,13 @@ namespace Microsoft.Azure.Management.Automation
                                 string typeInstance = ((string)typeValue);
                                 automationAccountInstance.Type = typeInstance;
                             }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                automationAccountInstance.Etag = etagInstance;
+                            }
                         }
                         
                     }
@@ -866,7 +880,7 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -949,7 +963,7 @@ namespace Microsoft.Azure.Management.Automation
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     AutomationAccount automationAccountInstance = new AutomationAccount();
-                                    result.AutomationAccount.Add(automationAccountInstance);
+                                    result.AutomationAccounts.Add(automationAccountInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -1051,6 +1065,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string typeInstance = ((string)typeValue);
                                         automationAccountInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        automationAccountInstance.Etag = etagInstance;
                                     }
                                 }
                             }
@@ -1203,7 +1224,7 @@ namespace Microsoft.Azure.Management.Automation
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     AutomationAccount automationAccountInstance = new AutomationAccount();
-                                    result.AutomationAccount.Add(automationAccountInstance);
+                                    result.AutomationAccounts.Add(automationAccountInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -1305,6 +1326,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string typeInstance = ((string)typeValue);
                                         automationAccountInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        automationAccountInstance.Etag = etagInstance;
                                     }
                                 }
                             }
@@ -1419,7 +1447,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1651,6 +1679,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string typeInstance = ((string)typeValue);
                                 automationAccountInstance.Type = typeInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                automationAccountInstance.Etag = etagInstance;
                             }
                         }
                         

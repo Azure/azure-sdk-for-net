@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(parameters.RunbookName);
             url = url + "/draft/testJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -658,7 +658,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob/resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -821,7 +821,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob/stop";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -984,7 +984,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob/suspend";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
