@@ -198,6 +198,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._serverFarmId = value; }
         }
         
+        private WebSiteConfiguration _siteConfig;
+        
+        /// <summary>
+        /// Optional. Contains site configuration
+        /// </summary>
+        public WebSiteConfiguration SiteConfig
+        {
+            get { return this._siteConfig; }
+            set { this._siteConfig = value; }
+        }
+        
         private SkuOptions _sku;
         
         /// <summary>

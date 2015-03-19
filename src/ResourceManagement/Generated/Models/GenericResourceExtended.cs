@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
@@ -30,30 +28,8 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Resource information.
     /// </summary>
-    public partial class BasicResource
+    public partial class GenericResourceExtended : ResourceBaseExtended
     {
-        private string _location;
-        
-        /// <summary>
-        /// Required. Gets or sets the location of the resource.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private Plan _plan;
-        
-        /// <summary>
-        /// Optional. Gets or sets the plan of the resource.
-        /// </summary>
-        public Plan Plan
-        {
-            get { return this._plan; }
-            set { this._plan = value; }
-        }
-        
         private string _properties;
         
         /// <summary>
@@ -76,30 +52,18 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._provisioningState = value; }
         }
         
-        private IDictionary<string, string> _tags;
-        
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Initializes a new instance of the GenericResourceExtended class.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public GenericResourceExtended()
         {
-            get { return this._tags; }
-            set { this._tags = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BasicResource class.
+        /// Initializes a new instance of the GenericResourceExtended class
+        /// with required arguments.
         /// </summary>
-        public BasicResource()
-        {
-            this.Tags = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BasicResource class with required
-        /// arguments.
-        /// </summary>
-        public BasicResource(string location)
+        public GenericResourceExtended(string location)
             : this()
         {
             if (location == null)

@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteConfigurationEnvelope : ResourceBase
     {
-        private WebSiteGetConfigurationResponse _properties;
+        private WebSiteConfiguration _properties;
         
         /// <summary>
         /// Optional. Configuration for a web site.
         /// </summary>
-        public WebSiteGetConfigurationResponse Properties
+        public WebSiteConfiguration Properties
         {
             get { return this._properties; }
             set { this._properties = value; }

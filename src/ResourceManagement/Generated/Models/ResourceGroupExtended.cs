@@ -21,19 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Management.Resources.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database security Policy
+    /// Resource group information.
     /// </summary>
-    public partial class DatabaseSecurityPolicy : ResourceBase
+    public partial class ResourceGroupExtended : ResourceGroup
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the ID of the resource group.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Optional. Gets or sets the Name of the resource group.
         /// </summary>
         public string Name
         {
@@ -41,22 +52,25 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._name = value; }
         }
         
-        private DatabaseSecurityPolicyProperties _properties;
-        
         /// <summary>
-        /// Optional. Gets or sets the properties of the resource.
+        /// Initializes a new instance of the ResourceGroupExtended class.
         /// </summary>
-        public DatabaseSecurityPolicyProperties Properties
+        public ResourceGroupExtended()
         {
-            get { return this._properties; }
-            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DatabaseSecurityPolicy class.
+        /// Initializes a new instance of the ResourceGroupExtended class with
+        /// required arguments.
         /// </summary>
-        public DatabaseSecurityPolicy()
+        public ResourceGroupExtended(string location)
+            : this()
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

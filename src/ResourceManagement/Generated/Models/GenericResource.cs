@@ -21,47 +21,56 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Management.Resources.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Update Azure SQL Database security policy parameters.
+    /// Resource information.
     /// </summary>
-    public partial class DatabaseSecurityPolicyUpdateParameters
+    public partial class GenericResource : ResourceBase
     {
-        private DatabaseSecurityPolicyProperties _properties;
+        private string _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the request.
+        /// Optional. Gets or sets the resource properties.
         /// </summary>
-        public DatabaseSecurityPolicyProperties Properties
+        public string Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
+        private string _provisioningState;
+        
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseSecurityPolicyUpdateParameters class.
+        /// Optional. Gets or sets resource provisioning state.
         /// </summary>
-        public DatabaseSecurityPolicyUpdateParameters()
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GenericResource class.
+        /// </summary>
+        public GenericResource()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseSecurityPolicyUpdateParameters class with required
-        /// arguments.
+        /// Initializes a new instance of the GenericResource class with
+        /// required arguments.
         /// </summary>
-        public DatabaseSecurityPolicyUpdateParameters(DatabaseSecurityPolicyProperties properties)
+        public GenericResource(string location)
             : this()
         {
-            if (properties == null)
+            if (location == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException("location");
             }
-            this.Properties = properties;
+            this.Location = location;
         }
     }
 }

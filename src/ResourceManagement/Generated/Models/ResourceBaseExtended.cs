@@ -26,9 +26,9 @@ using Microsoft.Azure.Management.Resources.Models;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// Resource information with extended details.
     /// </summary>
-    public partial class Resource : BasicResource
+    public partial class ResourceBaseExtended : ResourceBase
     {
         private string _id;
         
@@ -64,17 +64,17 @@ namespace Microsoft.Azure.Management.Resources.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ResourceBaseExtended class.
         /// </summary>
-        public Resource()
+        public ResourceBaseExtended()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Resource class with required
-        /// arguments.
+        /// Initializes a new instance of the ResourceBaseExtended class with
+        /// required arguments.
         /// </summary>
-        public Resource(string location)
+        public ResourceBaseExtended(string location)
             : this()
         {
             if (location == null)

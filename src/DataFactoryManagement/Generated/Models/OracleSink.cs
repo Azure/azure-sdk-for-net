@@ -21,53 +21,53 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Validation policy.
+    /// A copy activity Oracle sink.
     /// </summary>
-    public partial class ValidationPolicy
+    public partial class OracleSink : CopySink
     {
-        private long? _minimumRows;
+        private string _oracleWriterStoredProcedureName;
         
         /// <summary>
-        /// Optional. Minimum rows.
+        /// Optional. Oracle writer stored procedure name.
         /// </summary>
-        public long? MinimumRows
+        public string OracleWriterStoredProcedureName
         {
-            get { return this._minimumRows; }
-            set { this._minimumRows = value; }
+            get { return this._oracleWriterStoredProcedureName; }
+            set { this._oracleWriterStoredProcedureName = value; }
         }
         
-        private double? _minimumSizeMB;
+        private string _oracleWriterTableType;
         
         /// <summary>
-        /// Optional. Minimum size in MB.
+        /// Optional. Oracle writer table type.
         /// </summary>
-        public double? MinimumSizeMB
+        public string OracleWriterTableType
         {
-            get { return this._minimumSizeMB; }
-            set { this._minimumSizeMB = value; }
-        }
-        
-        private string _validationPriorityOrder;
-        
-        /// <summary>
-        /// Optional. Validation priority order.  Choose from OldestFirst or
-        /// NewestFirst.
-        /// </summary>
-        public string ValidationPriorityOrder
-        {
-            get { return this._validationPriorityOrder; }
-            set { this._validationPriorityOrder = value; }
+            get { return this._oracleWriterTableType; }
+            set { this._oracleWriterTableType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ValidationPolicy class.
+        /// Initializes a new instance of the OracleSink class.
         /// </summary>
-        public ValidationPolicy()
+        public OracleSink()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the OracleSink class with required
+        /// arguments.
+        /// </summary>
+        public OracleSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : this()
+        {
+            this.WriteBatchSize = writeBatchSize;
+            this.WriteBatchTimeout = writeBatchTimeout;
         }
     }
 }

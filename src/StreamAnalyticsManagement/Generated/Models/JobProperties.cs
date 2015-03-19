@@ -43,6 +43,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._createdDate = value; }
         }
         
+        private string _dataLocale;
+        
+        /// <summary>
+        /// Optional. Gets or sets the data locale of the stream analytics job.
+        /// Value should be the name of a supported .NET Culture from the set
+        /// https://msdn.microsoft.com/en-us/library/system.globalization.culturetypes(v=vs.110).aspx.
+        /// Defaults to "en-US" if none specified.
+        /// </summary>
+        public string DataLocale
+        {
+            get { return this._dataLocale; }
+            set { this._dataLocale = value; }
+        }
+        
         private string _etag;
         
         /// <summary>
@@ -54,11 +68,26 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._etag = value; }
         }
         
+        private int? _eventsLateArrivalMaxDelayInSeconds;
+        
+        /// <summary>
+        /// Optional. Gets or sets the maximum tolerable delay in seconds where
+        /// events arriving late could be included.  Supported range is -1 to
+        /// 1814399 (20.23:59:59 days) and -1 is used to specify wait
+        /// indefinitely. If the property is absent, it is interpreted to have
+        /// a value of -1.
+        /// </summary>
+        public int? EventsLateArrivalMaxDelayInSeconds
+        {
+            get { return this._eventsLateArrivalMaxDelayInSeconds; }
+            set { this._eventsLateArrivalMaxDelayInSeconds = value; }
+        }
+        
         private int? _eventsOutOfOrderMaxDelayInSeconds;
         
         /// <summary>
-        /// Optional. Gets or sets the max delay time of the out of order
-        /// policy of the stream analytics job. It is in Milliseconds
+        /// Optional. Gets or sets the maximum tolerable delay in seconds where
+        /// out-of-order events can be adjusted to be back in order.
         /// </summary>
         public int? EventsOutOfOrderMaxDelayInSeconds
         {

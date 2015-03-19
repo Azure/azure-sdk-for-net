@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, BasicResourceGroup parameters, CancellationToken cancellationToken);
+        Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete resource group and all of its resources.
@@ -161,6 +161,6 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        Task<ResourceGroupPatchResult> PatchAsync(string resourceGroupName, BasicResourceGroup parameters, CancellationToken cancellationToken);
+        Task<ResourceGroupPatchResult> PatchAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken);
     }
 }
