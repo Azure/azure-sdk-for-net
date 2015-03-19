@@ -29,7 +29,6 @@ namespace Microsoft.Azure.Search
 {
     internal partial class DocumentOperations
     {
-        /// <inheritdoc />
         public Task<DocumentSuggestResponse> SuggestAsync(
             string searchText,
             string suggesterName,
@@ -44,7 +43,6 @@ namespace Microsoft.Azure.Search
                 DeserializeForSuggest);
         }
 
-        /// <inheritdoc />
         public Task<DocumentSuggestResponse<T>> SuggestAsync<T>(
             string searchText,
             string suggesterName,

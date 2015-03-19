@@ -18,17 +18,14 @@ using System.Net.Http.Headers;
 
 namespace Microsoft.Azure.Search
 {
-    public static partial class SearchServiceClientExtensions
+    public partial class SearchServiceClient
     {
         private const string ClientRequestIdHeaderName = "client-request-id";
 
-        /// <summary>
-        /// Adds the given tracking ID to the HTTP request headers.
-        /// </summary>
-        /// <param name="guid">Tracking ID to add to the request.</param>
-        public static void SetClientRequestId(this SearchServiceClient client, Guid guid)
+        /// <inheritdoc />
+        public void SetClientRequestId(Guid guid)
         {
-            HttpRequestHeaders headers = client.HttpClient.DefaultRequestHeaders;
+            HttpRequestHeaders headers = HttpClient.DefaultRequestHeaders;
 
             if (headers.Contains(ClientRequestIdHeaderName))
             {

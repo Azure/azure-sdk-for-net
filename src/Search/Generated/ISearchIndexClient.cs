@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Client that can be used to query an Azure Search index and upload,
     /// merge, or delete documents.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
     /// information)
     /// </summary>
     public partial interface ISearchIndexClient : IDisposable
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Gets or sets the credentials used to authenticate to an Azure
         /// Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </summary>
         SearchCredentials Credentials
         {
@@ -95,8 +95,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Operations for querying an index and uploading, merging, and
         /// deleting documents.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn800962.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn800962.aspx for more
+        /// information)
         /// </summary>
         IDocumentOperations Documents
         {

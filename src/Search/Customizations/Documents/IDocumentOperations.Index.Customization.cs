@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx"/> for more information)
         /// </summary>
         /// <param name="batch">
         /// The batch of index actions.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.

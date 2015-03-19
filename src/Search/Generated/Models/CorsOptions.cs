@@ -28,9 +28,8 @@ namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
     /// Defines options to control Cross-Origin Resource Sharing (CORS) for an
-    /// index.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798941.aspx for more
-    /// information)
+    /// index.  (see https://msdn.microsoft.com/library/azure/dn798941.aspx
+    /// for more information)
     /// </summary>
     public partial class CorsOptions
     {

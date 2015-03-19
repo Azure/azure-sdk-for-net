@@ -29,7 +29,6 @@ namespace Microsoft.Azure.Search
 {
     internal partial class DocumentOperations
     {
-        /// <inheritdoc />
         public Task<DocumentSearchResponse> SearchAsync(
             string searchText,
             SearchParameters searchParameters,
@@ -42,7 +41,6 @@ namespace Microsoft.Azure.Search
                 DeserializeForSearch);
         }
 
-        /// <inheritdoc />
         public Task<DocumentSearchResponse<T>> SearchAsync<T>(
             string searchText,
             SearchParameters searchParameters,

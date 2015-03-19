@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public partial class FreshnessScoringParameters
     {
-        private string _boostingDuration;
+        private TimeSpan _boostingDuration;
         
         /// <summary>
         /// Required. Gets or sets the expiration period after which boosting
         /// will stop for a particular document.
         /// </summary>
-        public string BoostingDuration
+        public TimeSpan BoostingDuration
         {
             get { return this._boostingDuration; }
             set { this._boostingDuration = value; }
@@ -52,13 +52,9 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the FreshnessScoringParameters class
         /// with required arguments.
         /// </summary>
-        public FreshnessScoringParameters(string boostingDuration)
+        public FreshnessScoringParameters(TimeSpan boostingDuration)
             : this()
         {
-            if (boostingDuration == null)
-            {
-                throw new ArgumentNullException("boostingDuration");
-            }
             this.BoostingDuration = boostingDuration;
         }
     }

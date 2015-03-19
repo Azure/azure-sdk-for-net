@@ -14,20 +14,15 @@
 // 
 
 using System;
-using System.Xml;
 
-namespace Microsoft.Azure.Search.Models
+namespace Microsoft.Azure.Search
 {
-    public partial class FreshnessScoringParameters
+    public partial interface ISearchIndexClient
     {
         /// <summary>
-        /// Initializes a new instance of the FreshnessScoringParameters class with the given boosting duration value.
+        /// Adds the given tracking ID to the HTTP request headers.
         /// </summary>
-        /// <param name="boostingDuration">
-        /// The expiration period after which boosting will stop for a particular document.
-        /// </param>
-        public FreshnessScoringParameters(TimeSpan boostingDuration) : this(XmlConvert.ToString(boostingDuration))
-        {
-        }
+        /// <param name="guid">Tracking ID to add to the request.</param>
+        void SetClientRequestId(Guid guid);
     }
 }

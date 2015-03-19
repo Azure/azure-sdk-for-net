@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines parameters for an Azure Search index that influence scoring in
     /// search queries.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798928.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798928.aspx for more
     /// information)
     /// </summary>
     public partial class ScoringProfile
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Search.Models
         
         /// <summary>
         /// Required. Gets or sets the name of the scoring profile.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn857353.aspx for more
+        /// information)
         /// </summary>
         public string Name
         {
