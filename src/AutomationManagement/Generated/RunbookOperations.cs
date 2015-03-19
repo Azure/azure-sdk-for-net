@@ -388,6 +388,11 @@ namespace Microsoft.WindowsAzure.Management.Automation
                     propertiesValue["description"] = parameters.Properties.Description;
                 }
                 
+                if (parameters.Properties.ServiceManagementTags != null)
+                {
+                    propertiesValue["serviceManagementTags"] = parameters.Properties.ServiceManagementTags;
+                }
+                
                 if (parameters.Name != null)
                 {
                     runbookCreateParametersValue["name"] = parameters.Name;
@@ -678,6 +683,11 @@ namespace Microsoft.WindowsAzure.Management.Automation
                 if (parameters.Properties.Description != null)
                 {
                     propertiesValue["description"] = parameters.Properties.Description;
+                }
+                
+                if (parameters.Properties.ServiceManagementTags != null)
+                {
+                    propertiesValue["serviceManagementTags"] = parameters.Properties.ServiceManagementTags;
                 }
                 
                 if (parameters.Name != null)
@@ -1314,6 +1324,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                     RunbookProvisioningState provisioningStateInstance = ((RunbookProvisioningState)Enum.Parse(typeof(RunbookProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
+                                
+                                JToken serviceManagementTagsValue = propertiesValue["serviceManagementTags"];
+                                if (serviceManagementTagsValue != null && serviceManagementTagsValue.Type != JTokenType.Null)
+                                {
+                                    string serviceManagementTagsInstance = ((string)serviceManagementTagsValue);
+                                    propertiesInstance.ServiceManagementTags = serviceManagementTagsInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -1780,6 +1797,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                             RunbookProvisioningState provisioningStateInstance = ((RunbookProvisioningState)Enum.Parse(typeof(RunbookProvisioningState), ((string)provisioningStateValue), true));
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
+                                        
+                                        JToken serviceManagementTagsValue = propertiesValue["serviceManagementTags"];
+                                        if (serviceManagementTagsValue != null && serviceManagementTagsValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceManagementTagsInstance = ((string)serviceManagementTagsValue);
+                                            propertiesInstance.ServiceManagementTags = serviceManagementTagsInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -2233,6 +2257,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                             RunbookProvisioningState provisioningStateInstance = ((RunbookProvisioningState)Enum.Parse(typeof(RunbookProvisioningState), ((string)provisioningStateValue), true));
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
+                                        
+                                        JToken serviceManagementTagsValue = propertiesValue["serviceManagementTags"];
+                                        if (serviceManagementTagsValue != null && serviceManagementTagsValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceManagementTagsInstance = ((string)serviceManagementTagsValue);
+                                            propertiesInstance.ServiceManagementTags = serviceManagementTagsInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -2436,6 +2467,11 @@ namespace Microsoft.WindowsAzure.Management.Automation
                     propertiesValue["logVerbose"] = parameters.Properties.LogVerbose;
                     
                     propertiesValue["logProgress"] = parameters.Properties.LogProgress;
+                    
+                    if (parameters.Properties.ServiceManagementTags != null)
+                    {
+                        propertiesValue["serviceManagementTags"] = parameters.Properties.ServiceManagementTags;
+                    }
                 }
                 
                 if (parameters.Name != null)
@@ -2768,6 +2804,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                 {
                                     RunbookProvisioningState provisioningStateInstance = ((RunbookProvisioningState)Enum.Parse(typeof(RunbookProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken serviceManagementTagsValue = propertiesValue2["serviceManagementTags"];
+                                if (serviceManagementTagsValue != null && serviceManagementTagsValue.Type != JTokenType.Null)
+                                {
+                                    string serviceManagementTagsInstance = ((string)serviceManagementTagsValue);
+                                    propertiesInstance.ServiceManagementTags = serviceManagementTagsInstance;
                                 }
                             }
                             

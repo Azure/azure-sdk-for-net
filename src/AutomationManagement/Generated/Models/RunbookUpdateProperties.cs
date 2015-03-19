@@ -62,6 +62,17 @@ namespace Microsoft.WindowsAzure.Management.Automation.Models
             set { this._logVerbose = value; }
         }
         
+        private string _serviceManagementTags;
+        
+        /// <summary>
+        /// Optional. Gets or sets the service management tags of the runbook.
+        /// </summary>
+        public string ServiceManagementTags
+        {
+            get { return this._serviceManagementTags; }
+            set { this._serviceManagementTags = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RunbookUpdateProperties class.
         /// </summary>

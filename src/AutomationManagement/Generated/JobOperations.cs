@@ -778,17 +778,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new JobGetOutputResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            string outputInstance = ((string)responseDoc);
-                            result.Output = outputInstance;
-                        }
+                        result.Output = responseContent;
                         
                     }
                     result.StatusCode = statusCode;
