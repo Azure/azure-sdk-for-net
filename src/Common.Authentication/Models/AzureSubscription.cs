@@ -17,6 +17,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
+    [Serializable]
     public partial class AzureSubscription
     {
         public Guid Id { get; set; }
