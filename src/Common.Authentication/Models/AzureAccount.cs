@@ -12,10 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
+    [Serializable]
     public partial class AzureAccount
     {
         public string Id { get; set; }
