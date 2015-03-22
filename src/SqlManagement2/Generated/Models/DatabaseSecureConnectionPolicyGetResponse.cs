@@ -21,41 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database Server Firewall Rule.
+    /// Represents the response to a Get database secure connection request.
     /// </summary>
-    public partial class SecureConnectionPolicy : ResourceBase
+    public partial class DatabaseSecureConnectionPolicyGetResponse : AzureOperationResponse
     {
-        private string _name;
+        private DatabaseSecureConnectionPolicy _secureConnectionPolicy;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Optional. Gets or sets the Azure Sql Database secure connection
+        /// policy.
         /// </summary>
-        public string Name
+        public DatabaseSecureConnectionPolicy SecureConnectionPolicy
         {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private SecureConnectionPolicyProperties _properties;
-        
-        /// <summary>
-        /// Optional. Represents the properties of the resource.
-        /// </summary>
-        public SecureConnectionPolicyProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._secureConnectionPolicy; }
+            set { this._secureConnectionPolicy = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SecureConnectionPolicy class.
+        /// Initializes a new instance of the
+        /// DatabaseSecureConnectionPolicyGetResponse class.
         /// </summary>
-        public SecureConnectionPolicy()
+        public DatabaseSecureConnectionPolicyGetResponse()
         {
         }
     }
