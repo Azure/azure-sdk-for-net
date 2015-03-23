@@ -21,33 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get secure connection request.
+    /// Represents an Azure SQL Database secure connection policy.
     /// </summary>
-    public partial class SecureConnectionPolicyGetResponse : AzureOperationResponse
+    public partial class DatabaseSecureConnectionPolicy : ResourceBase
     {
-        private SecureConnectionPolicy _secureConnectionPolicy;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Database secure connection
-        /// policy.
+        /// Optional. Gets or sets the name of the resource.
         /// </summary>
-        public SecureConnectionPolicy SecureConnectionPolicy
+        public string Name
         {
-            get { return this._secureConnectionPolicy; }
-            set { this._secureConnectionPolicy = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private DatabaseSecureConnectionPolicyProperties _properties;
+        
+        /// <summary>
+        /// Optional. Represents the properties of the resource.
+        /// </summary>
+        public DatabaseSecureConnectionPolicyProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SecureConnectionPolicyGetResponse
+        /// Initializes a new instance of the DatabaseSecureConnectionPolicy
         /// class.
         /// </summary>
-        public SecureConnectionPolicyGetResponse()
+        public DatabaseSecureConnectionPolicy()
         {
         }
     }

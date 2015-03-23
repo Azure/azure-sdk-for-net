@@ -26,16 +26,16 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update secure connection policy parameters.
+    /// Create or update database secure connection policy parameters.
     /// </summary>
-    public partial class SecureConnectionPolicyCreateOrUpdateParameters
+    public partial class DatabaseSecureConnectionPolicyCreateOrUpdateParameters
     {
-        private SecureConnectionPolicyCreateOrUpdateProperties _properties;
+        private DatabaseSecureConnectionPolicyCreateOrUpdateProperties _properties;
         
         /// <summary>
         /// Required. Gets or sets the properties of the request.
         /// </summary>
-        public SecureConnectionPolicyCreateOrUpdateProperties Properties
+        public DatabaseSecureConnectionPolicyCreateOrUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -43,18 +43,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// SecureConnectionPolicyCreateOrUpdateParameters class.
+        /// DatabaseSecureConnectionPolicyCreateOrUpdateParameters class.
         /// </summary>
-        public SecureConnectionPolicyCreateOrUpdateParameters()
+        public DatabaseSecureConnectionPolicyCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// SecureConnectionPolicyCreateOrUpdateParameters class with required
-        /// arguments.
+        /// DatabaseSecureConnectionPolicyCreateOrUpdateParameters class with
+        /// required arguments.
         /// </summary>
-        public SecureConnectionPolicyCreateOrUpdateParameters(SecureConnectionPolicyCreateOrUpdateProperties properties)
+        public DatabaseSecureConnectionPolicyCreateOrUpdateParameters(DatabaseSecureConnectionPolicyCreateOrUpdateProperties properties)
             : this()
         {
             if (properties == null)

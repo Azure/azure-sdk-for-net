@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// Represents the properties of an Azure SQL Database secure connection
     /// policy.
     /// </summary>
-    public partial class SecureConnectionPolicyProperties
+    public partial class DatabaseSecureConnectionPolicyProperties
     {
         private string _proxyDnsName;
         
@@ -64,10 +64,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the SecureConnectionPolicyProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// DatabaseSecureConnectionPolicyProperties class.
         /// </summary>
-        public SecureConnectionPolicyProperties()
+        public DatabaseSecureConnectionPolicyProperties()
         {
         }
     }

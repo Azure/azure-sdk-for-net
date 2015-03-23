@@ -25,9 +25,10 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update secure connection policy parameters properties.
+    /// Create or update database secure connection policy parameters
+    /// properties.
     /// </summary>
-    public partial class SecureConnectionPolicyCreateOrUpdateProperties
+    public partial class DatabaseSecureConnectionPolicyCreateOrUpdateProperties
     {
         private string _securityEnabledAccess;
         
@@ -42,9 +43,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// SecureConnectionPolicyCreateOrUpdateProperties class.
+        /// DatabaseSecureConnectionPolicyCreateOrUpdateProperties class.
         /// </summary>
-        public SecureConnectionPolicyCreateOrUpdateProperties()
+        public DatabaseSecureConnectionPolicyCreateOrUpdateProperties()
         {
         }
     }
