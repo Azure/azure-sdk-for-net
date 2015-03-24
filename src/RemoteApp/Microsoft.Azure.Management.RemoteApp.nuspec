@@ -8,7 +8,7 @@
     <owners>azure-sdk, Microsoft</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Spec DLL for Microsoft Azure RemoteApp Management</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>Changed the Collection Set API to take a new type CollectionUpdateDetails type</releaseNotes>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
