@@ -21,24 +21,45 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// This is the Job Response for all Device Job Related Calls
     /// </summary>
-    public enum CloudType
+    public partial class JobResponse : AzureOperationResponse
     {
-        None = 0,
+        private string _jobId;
         
-        Azure = 2,
+        /// <summary>
+        /// Required. The Job Id of the Device Job Submitted
+        /// </summary>
+        public string JobId
+        {
+            get { return this._jobId; }
+            set { this._jobId = value; }
+        }
         
-        S3 = 3,
+        /// <summary>
+        /// Initializes a new instance of the JobResponse class.
+        /// </summary>
+        public JobResponse()
+        {
+        }
         
-        S3RRS = 11,
-        
-        OpenStack = 13,
-        
-        HP = 14,
+        /// <summary>
+        /// Initializes a new instance of the JobResponse class with required
+        /// arguments.
+        /// </summary>
+        public JobResponse(string jobId)
+            : this()
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException("jobId");
+            }
+            this.JobId = jobId;
+        }
     }
 }

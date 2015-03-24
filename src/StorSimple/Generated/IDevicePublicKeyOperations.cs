@@ -21,35 +21,29 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.WindowsAzure.Management.StorSimple.Models
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// Device Details
+    /// All Operations related to Device Public keys
     /// </summary>
-    public partial class DeviceDetails : DeviceDetailsBase
+    public partial interface IDevicePublicKeyOperations
     {
-        /// <summary>
-        /// Initializes a new instance of the DeviceDetails class.
-        /// </summary>
-        public DeviceDetails()
-        {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DeviceDetails class with required
-        /// arguments.
-        /// </summary>
-        public DeviceDetails(string name, DeviceType type)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
-            this.Type = type;
-        }
+        /// <param name='deviceId'>
+        /// The Device Id for which we need to Fetch the Device Public Key
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// The Custom Request Headers which client must use.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for Device PublicKey.
+        /// </returns>
+        Task<GetDevicePublicKeyResponse> GetAsync(string deviceId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

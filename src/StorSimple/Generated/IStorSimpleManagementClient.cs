@@ -50,11 +50,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             get; 
         }
         
-        string CisStampId
-        {
-            get; set; 
-        }
-        
         string CloudServiceName
         {
             get; set; 
@@ -118,6 +113,16 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
+        /// All Operations related to CloneVolume  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
+        /// for more information)
+        /// </summary>
+        ICloneVolumeOperations CloneVolume
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// All Operations related to Volume Containers
         /// </summary>
         IDataContainerOperations DataContainer
@@ -134,9 +139,33 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
+        /// All Operations related to Device Failover
+        /// </summary>
+        IDeviceFailoverOperations DeviceFailover
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// All Operations related to Device Jobs
+        /// </summary>
+        IDeviceJobOperations DeviceJob
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// All Operations related to Devices
         /// </summary>
         IDeviceOperations Devices
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// All Operations related to Device Public keys
+        /// </summary>
+        IDevicePublicKeyOperations DevicePublicKey
         {
             get; 
         }
@@ -161,6 +190,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// All Operations related to Service configurations
         /// </summary>
         IServiceConfigurationOperations ServiceConfig
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// All Operations related to Virtual Device
+        /// </summary>
+        IVirtualDeviceOperations VirtualDevice
         {
             get; 
         }

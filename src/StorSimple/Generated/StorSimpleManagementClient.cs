@@ -59,14 +59,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             get { return this._baseUri; }
         }
         
-        private string _cisStampId;
-        
-        public string CisStampId
-        {
-            get { return this._cisStampId; }
-            set { this._cisStampId = value; }
-        }
-        
         private string _cloudServiceName;
         
         public string CloudServiceName
@@ -153,6 +145,18 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             get { return this._backupPolicy; }
         }
         
+        private ICloneVolumeOperations _cloneVolume;
+        
+        /// <summary>
+        /// All Operations related to CloneVolume  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
+        /// for more information)
+        /// </summary>
+        public virtual ICloneVolumeOperations CloneVolume
+        {
+            get { return this._cloneVolume; }
+        }
+        
         private IDataContainerOperations _dataContainer;
         
         /// <summary>
@@ -173,6 +177,26 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             get { return this._deviceDetails; }
         }
         
+        private IDeviceFailoverOperations _deviceFailover;
+        
+        /// <summary>
+        /// All Operations related to Device Failover
+        /// </summary>
+        public virtual IDeviceFailoverOperations DeviceFailover
+        {
+            get { return this._deviceFailover; }
+        }
+        
+        private IDeviceJobOperations _deviceJob;
+        
+        /// <summary>
+        /// All Operations related to Device Jobs
+        /// </summary>
+        public virtual IDeviceJobOperations DeviceJob
+        {
+            get { return this._deviceJob; }
+        }
+        
         private IDeviceOperations _devices;
         
         /// <summary>
@@ -181,6 +205,16 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         public virtual IDeviceOperations Devices
         {
             get { return this._devices; }
+        }
+        
+        private IDevicePublicKeyOperations _devicePublicKey;
+        
+        /// <summary>
+        /// All Operations related to Device Public keys
+        /// </summary>
+        public virtual IDevicePublicKeyOperations DevicePublicKey
+        {
+            get { return this._devicePublicKey; }
         }
         
         private IIscsiConnectionDetailsOperations _iscsiConnection;
@@ -213,6 +247,16 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             get { return this._serviceConfig; }
         }
         
+        private IVirtualDeviceOperations _virtualDevice;
+        
+        /// <summary>
+        /// All Operations related to Virtual Device
+        /// </summary>
+        public virtual IVirtualDeviceOperations VirtualDevice
+        {
+            get { return this._virtualDevice; }
+        }
+        
         private IVirtualDiskOperations _virtualDisk;
         
         /// <summary>
@@ -231,12 +275,17 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         {
             this._backup = new BackupOperations(this);
             this._backupPolicy = new BackupPolicyOperations(this);
+            this._cloneVolume = new CloneVolumeOperations(this);
             this._dataContainer = new DataContainerOperations(this);
             this._deviceDetails = new DeviceDetailsOperations(this);
+            this._deviceFailover = new DeviceFailoverOperations(this);
+            this._deviceJob = new DeviceJobOperations(this);
             this._devices = new DeviceOperations(this);
+            this._devicePublicKey = new DevicePublicKeyOperations(this);
             this._iscsiConnection = new IscsiConnectionDetailsOperations(this);
             this._resourceEncryptionKeys = new ResourceEncryptionKeyOperations(this);
             this._serviceConfig = new ServiceConfigurationOperations(this);
+            this._virtualDevice = new VirtualDeviceOperations(this);
             this._virtualDisk = new VirtualDiskOperations(this);
             this._apiVersion = "2014-01-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -259,9 +308,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
-        /// <param name='cisStampId'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -271,7 +317,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, string cisStampId, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (cloudServiceName == null)
@@ -290,10 +336,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
-            if (cisStampId == null)
-            {
-                throw new ArgumentNullException("cisStampId");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -306,7 +348,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             this._resourceName = resourceName;
             this._resourceId = resourceId;
             this._resourceNamespace = resourceNamespace;
-            this._cisStampId = cisStampId;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -328,15 +369,12 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
-        /// <param name='cisStampId'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, string cisStampId, SubscriptionCloudCredentials credentials)
+        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, SubscriptionCloudCredentials credentials)
             : this()
         {
             if (cloudServiceName == null)
@@ -355,10 +393,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
-            if (cisStampId == null)
-            {
-                throw new ArgumentNullException("cisStampId");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -367,7 +401,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             this._resourceName = resourceName;
             this._resourceId = resourceId;
             this._resourceNamespace = resourceNamespace;
-            this._cisStampId = cisStampId;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -385,12 +418,17 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         {
             this._backup = new BackupOperations(this);
             this._backupPolicy = new BackupPolicyOperations(this);
+            this._cloneVolume = new CloneVolumeOperations(this);
             this._dataContainer = new DataContainerOperations(this);
             this._deviceDetails = new DeviceDetailsOperations(this);
+            this._deviceFailover = new DeviceFailoverOperations(this);
+            this._deviceJob = new DeviceJobOperations(this);
             this._devices = new DeviceOperations(this);
+            this._devicePublicKey = new DevicePublicKeyOperations(this);
             this._iscsiConnection = new IscsiConnectionDetailsOperations(this);
             this._resourceEncryptionKeys = new ResourceEncryptionKeyOperations(this);
             this._serviceConfig = new ServiceConfigurationOperations(this);
+            this._virtualDevice = new VirtualDeviceOperations(this);
             this._virtualDisk = new VirtualDiskOperations(this);
             this._apiVersion = "2014-01-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -413,9 +451,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
-        /// <param name='cisStampId'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -428,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, string cisStampId, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
             if (cloudServiceName == null)
@@ -447,10 +482,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
-            if (cisStampId == null)
-            {
-                throw new ArgumentNullException("cisStampId");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -463,7 +494,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             this._resourceName = resourceName;
             this._resourceId = resourceId;
             this._resourceNamespace = resourceNamespace;
-            this._cisStampId = cisStampId;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -485,9 +515,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
-        /// <param name='cisStampId'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -496,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, string cisStampId, SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public StorSimpleManagementClient(string cloudServiceName, string resourceName, string resourceId, string resourceNamespace, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
             if (cloudServiceName == null)
@@ -515,10 +542,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
-            if (cisStampId == null)
-            {
-                throw new ArgumentNullException("cisStampId");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -527,7 +550,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             this._resourceName = resourceName;
             this._resourceId = resourceId;
             this._resourceNamespace = resourceNamespace;
-            this._cisStampId = cisStampId;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -553,7 +575,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 clonedClient._resourceName = this._resourceName;
                 clonedClient._resourceId = this._resourceId;
                 clonedClient._resourceNamespace = this._resourceNamespace;
-                clonedClient._cisStampId = this._cisStampId;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;
@@ -610,7 +631,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.ResourceName);
             url = url + "/api/jobs/";
