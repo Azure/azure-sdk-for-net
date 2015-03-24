@@ -26,30 +26,36 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// Device Details
+    /// Request object for Updating DeviceJob
     /// </summary>
-    public partial class DeviceDetails : DeviceDetailsBase
+    public partial class UpdateDeviceJobRequest
     {
+        private DeviceJobAction _deviceJobAction;
+        
         /// <summary>
-        /// Initializes a new instance of the DeviceDetails class.
+        /// Required. Action to update Device Job with
         /// </summary>
-        public DeviceDetails()
+        public DeviceJobAction DeviceJobAction
+        {
+            get { return this._deviceJobAction; }
+            set { this._deviceJobAction = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UpdateDeviceJobRequest class.
+        /// </summary>
+        public UpdateDeviceJobRequest()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeviceDetails class with required
-        /// arguments.
+        /// Initializes a new instance of the UpdateDeviceJobRequest class with
+        /// required arguments.
         /// </summary>
-        public DeviceDetails(string name, DeviceType type)
+        public UpdateDeviceJobRequest(DeviceJobAction deviceJobAction)
             : this()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
-            this.Type = type;
+            this.DeviceJobAction = deviceJobAction;
         }
     }
 }

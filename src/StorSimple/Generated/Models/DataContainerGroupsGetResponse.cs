@@ -21,24 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// Represents the response model for DataContainerGroups Get call
     /// </summary>
-    public enum CloudType
+    public partial class DataContainerGroupsGetResponse : AzureOperationResponse
     {
-        None = 0,
+        private DataContainerGroupResponse _dataContainerGroupResponse;
         
-        Azure = 2,
+        /// <summary>
+        /// Optional. The object returned by DataContainerGroups Get call
+        /// </summary>
+        public DataContainerGroupResponse DataContainerGroupResponse
+        {
+            get { return this._dataContainerGroupResponse; }
+            set { this._dataContainerGroupResponse = value; }
+        }
         
-        S3 = 3,
-        
-        S3RRS = 11,
-        
-        OpenStack = 13,
-        
-        HP = 14,
+        /// <summary>
+        /// Initializes a new instance of the DataContainerGroupsGetResponse
+        /// class.
+        /// </summary>
+        public DataContainerGroupsGetResponse()
+        {
+        }
     }
 }

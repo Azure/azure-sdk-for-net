@@ -21,35 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// Device Details
+    /// Time statistics for a DeviceJob
     /// </summary>
-    public partial class DeviceDetails : DeviceDetailsBase
+    public partial class TimeStatistics
     {
+        private string _duration;
+        
         /// <summary>
-        /// Initializes a new instance of the DeviceDetails class.
+        /// Optional. Time elapsed for job
         /// </summary>
-        public DeviceDetails()
+        public string Duration
         {
+            get { return this._duration; }
+            set { this._duration = value; }
+        }
+        
+        private DateTime _endTimestamp;
+        
+        /// <summary>
+        /// Optional. Job stopped date/time (in UTC timezone)
+        /// </summary>
+        public DateTime EndTimestamp
+        {
+            get { return this._endTimestamp; }
+            set { this._endTimestamp = value; }
+        }
+        
+        private DateTime _startTimestamp;
+        
+        /// <summary>
+        /// Optional. Job start date/time (in UTC timezone)
+        /// </summary>
+        public DateTime StartTimestamp
+        {
+            get { return this._startTimestamp; }
+            set { this._startTimestamp = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeviceDetails class with required
-        /// arguments.
+        /// Initializes a new instance of the TimeStatistics class.
         /// </summary>
-        public DeviceDetails(string name, DeviceType type)
-            : this()
+        public TimeStatistics()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
-            this.Type = type;
         }
     }
 }

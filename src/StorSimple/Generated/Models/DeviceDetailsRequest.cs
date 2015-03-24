@@ -21,24 +21,35 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// Device Details Request object
     /// </summary>
-    public enum CloudType
+    public partial class DeviceDetailsRequest : DeviceDetailsBase
     {
-        None = 0,
+        /// <summary>
+        /// Initializes a new instance of the DeviceDetailsRequest class.
+        /// </summary>
+        public DeviceDetailsRequest()
+        {
+        }
         
-        Azure = 2,
-        
-        S3 = 3,
-        
-        S3RRS = 11,
-        
-        OpenStack = 13,
-        
-        HP = 14,
+        /// <summary>
+        /// Initializes a new instance of the DeviceDetailsRequest class with
+        /// required arguments.
+        /// </summary>
+        public DeviceDetailsRequest(string name, DeviceType type)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
+            this.Type = type;
+        }
     }
 }

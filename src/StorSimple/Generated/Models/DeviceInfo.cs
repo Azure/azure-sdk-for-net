@@ -42,12 +42,12 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
             set { this._aCRCount = value; }
         }
         
-        private DateTime _activationTime;
+        private string _activationTime;
         
         /// <summary>
         /// Required. The Activation Time
         /// </summary>
-        public DateTime ActivationTime
+        public string ActivationTime
         {
             get { return this._activationTime; }
             set { this._activationTime = value; }

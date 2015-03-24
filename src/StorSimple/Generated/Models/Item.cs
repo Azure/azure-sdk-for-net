@@ -21,35 +21,60 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// Device Details
+    /// An item with key and value
     /// </summary>
-    public partial class DeviceDetails : DeviceDetailsBase
+    public partial class Item
     {
+        private string _key;
+        
         /// <summary>
-        /// Initializes a new instance of the DeviceDetails class.
+        /// Required. The key of the item.
         /// </summary>
-        public DeviceDetails()
+        public string Key
+        {
+            get { return this._key; }
+            set { this._key = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// Required. The value of the item.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Item class.
+        /// </summary>
+        public Item()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeviceDetails class with required
+        /// Initializes a new instance of the Item class with required
         /// arguments.
         /// </summary>
-        public DeviceDetails(string name, DeviceType type)
+        public Item(string key, string value)
             : this()
         {
-            if (name == null)
+            if (key == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("key");
             }
-            this.Name = name;
-            this.Type = type;
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+            this.Key = key;
+            this.Value = value;
         }
     }
 }

@@ -21,24 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// The response model for Device PublicKey.
     /// </summary>
-    public enum CloudType
+    public partial class GetDevicePublicKeyResponse : AzureOperationResponse
     {
-        None = 0,
+        private string _devicePublicKey;
         
-        Azure = 2,
+        /// <summary>
+        /// Optional. The device public key
+        /// </summary>
+        public string DevicePublicKey
+        {
+            get { return this._devicePublicKey; }
+            set { this._devicePublicKey = value; }
+        }
         
-        S3 = 3,
-        
-        S3RRS = 11,
-        
-        OpenStack = 13,
-        
-        HP = 14,
+        /// <summary>
+        /// Initializes a new instance of the GetDevicePublicKeyResponse class.
+        /// </summary>
+        public GetDevicePublicKeyResponse()
+        {
+        }
     }
 }

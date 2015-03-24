@@ -24,21 +24,14 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
-    /// <summary>
-    /// The cloud type.
-    /// </summary>
-    public enum CloudType
+    public enum DeviceJobAction
     {
-        None = 0,
+        Invalid = 0,
         
-        Azure = 2,
+        Cancel = 1,
         
-        S3 = 3,
+        Pause = 2,
         
-        S3RRS = 11,
-        
-        OpenStack = 13,
-        
-        HP = 14,
+        Resume = 3,
     }
 }
