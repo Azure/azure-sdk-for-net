@@ -1,7 +1,5 @@
 // 
-
 // Copyright (c) Microsoft and contributors.  All rights reserved.
-
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -126,16 +124,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Update secure connection policy .
         /// </summary>
         ISecureConnectionPolicyOperations SecureConnection
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Represents all the operations for operating on Azure SQL Database
-        /// security policy.  Contains operations to: Retrieve and Update
-        /// security policy
-        /// </summary>
-        ISecurityOperations DatabaseSecurity
         {
             get; 
         }

@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Search
 {
     internal partial class IndexOperations
     {
-        /// <inheritdoc />
         public SearchIndexClient GetClient(string indexName)
         {
             // Argument checking is done by the SearchCredentials and SearchIndexClient constructors.
@@ -38,7 +37,6 @@ namespace Microsoft.Azure.Search
             return new SearchIndexClient(_client.SearchServiceName, indexName, credentials);
         }
 
-        /// <inheritdoc />
         public async Task<bool> ExistsAsync(string indexName, CancellationToken cancellationToken)
         {
             try
@@ -58,7 +56,6 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        /// <inheritdoc />
         public async Task<IndexListNamesResponse> ListNamesAsync(CancellationToken cancellationToken)
         {
             // Validate

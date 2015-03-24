@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, SecureConnectionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecureConnectionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns an Azure SQL Database secure connection policy.
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get secure connection request.
+        /// Represents the response to a Get database secure connection request.
         /// </returns>
-        Task<SecureConnectionPolicyGetResponse> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        Task<DatabaseSecureConnectionPolicyGetResponse> GetDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
     }
 }

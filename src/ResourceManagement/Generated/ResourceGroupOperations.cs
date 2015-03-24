@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public async Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken)
+        public async Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, BasicResourceGroup parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -468,14 +468,14 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject resourceGroupValue = new JObject();
-                requestDoc = resourceGroupValue;
+                JObject basicResourceGroupValue = new JObject();
+                requestDoc = basicResourceGroupValue;
                 
-                resourceGroupValue["location"] = parameters.Location;
+                basicResourceGroupValue["location"] = parameters.Location;
                 
                 if (parameters.Properties != null)
                 {
-                    resourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
+                    basicResourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
                 if (parameters.Tags != null)
@@ -489,13 +489,13 @@ namespace Microsoft.Azure.Management.Resources
                             string tagsValue = pair.Value;
                             tagsDictionary[tagsKey] = tagsValue;
                         }
-                        resourceGroupValue["tags"] = tagsDictionary;
+                        basicResourceGroupValue["tags"] = tagsDictionary;
                     }
                 }
                 
                 if (parameters.ProvisioningState != null)
                 {
-                    resourceGroupValue["provisioningState"] = parameters.ProvisioningState;
+                    basicResourceGroupValue["provisioningState"] = parameters.ProvisioningState;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -544,7 +544,7 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ResourceGroupExtended resourceGroupInstance = new ResourceGroupExtended();
+                            ResourceGroup resourceGroupInstance = new ResourceGroup();
                             result.ResourceGroup = resourceGroupInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -824,7 +824,7 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ResourceGroupExtended resourceGroupInstance = new ResourceGroupExtended();
+                            ResourceGroup resourceGroupInstance = new ResourceGroup();
                             result.ResourceGroup = resourceGroupInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -1048,7 +1048,7 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    ResourceGroupExtended resourceGroupJsonFormatInstance = new ResourceGroupExtended();
+                                    ResourceGroup resourceGroupJsonFormatInstance = new ResourceGroup();
                                     result.ResourceGroups.Add(resourceGroupJsonFormatInstance);
                                     
                                     JToken idValue = valueValue["id"];
@@ -1246,7 +1246,7 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    ResourceGroupExtended resourceGroupJsonFormatInstance = new ResourceGroupExtended();
+                                    ResourceGroup resourceGroupJsonFormatInstance = new ResourceGroup();
                                     result.ResourceGroups.Add(resourceGroupJsonFormatInstance);
                                     
                                     JToken idValue = valueValue["id"];
@@ -1366,7 +1366,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public async Task<ResourceGroupPatchResult> PatchAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken)
+        public async Task<ResourceGroupPatchResult> PatchAsync(string resourceGroupName, BasicResourceGroup parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1448,14 +1448,14 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject resourceGroupValue = new JObject();
-                requestDoc = resourceGroupValue;
+                JObject basicResourceGroupValue = new JObject();
+                requestDoc = basicResourceGroupValue;
                 
-                resourceGroupValue["location"] = parameters.Location;
+                basicResourceGroupValue["location"] = parameters.Location;
                 
                 if (parameters.Properties != null)
                 {
-                    resourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
+                    basicResourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
                 if (parameters.Tags != null)
@@ -1469,13 +1469,13 @@ namespace Microsoft.Azure.Management.Resources
                             string tagsValue = pair.Value;
                             tagsDictionary[tagsKey] = tagsValue;
                         }
-                        resourceGroupValue["tags"] = tagsDictionary;
+                        basicResourceGroupValue["tags"] = tagsDictionary;
                     }
                 }
                 
                 if (parameters.ProvisioningState != null)
                 {
-                    resourceGroupValue["provisioningState"] = parameters.ProvisioningState;
+                    basicResourceGroupValue["provisioningState"] = parameters.ProvisioningState;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1524,7 +1524,7 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ResourceGroupExtended resourceGroupInstance = new ResourceGroupExtended();
+                            ResourceGroup resourceGroupInstance = new ResourceGroup();
                             result.ResourceGroup = resourceGroupInstance;
                             
                             JToken idValue = responseDoc["id"];

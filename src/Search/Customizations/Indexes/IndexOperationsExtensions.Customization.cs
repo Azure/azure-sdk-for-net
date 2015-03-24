@@ -24,6 +24,9 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Determines whether or not the given index exists in the Azure Search service.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IIndexOperations.
+        /// </param>
         /// <param name="indexName">
         /// The name of the index.
         /// </param>
@@ -42,6 +45,9 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Determines whether or not the given index exists in the Azure Search service.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IIndexOperations.
+        /// </param>
         /// <param name="indexName">
         /// The name of the index.
         /// </param>
@@ -58,7 +64,7 @@ namespace Microsoft.Azure.Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798923.aspx for
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx"/> for
         /// more information)
         /// </summary>
         /// <param name='operations'>
@@ -82,7 +88,7 @@ namespace Microsoft.Azure.Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798923.aspx for
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx"/> for
         /// more information)
         /// </summary>
         /// <param name='operations'>

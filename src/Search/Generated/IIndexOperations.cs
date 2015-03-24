@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Search
 {
     /// <summary>
     /// Operations for managing indexes.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798918.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798918.aspx for more
     /// information)
     /// </summary>
     public partial interface IIndexOperations
     {
         /// <summary>
         /// Creates a new Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798941.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798941.aspx for more
+        /// information)
         /// </summary>
         /// <param name='index'>
         /// The definition of the index to create.
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new Azure Search index or updates an index if it already
         /// exists.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn800964.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn800964.aspx for more
+        /// information)
         /// </summary>
         /// <param name='index'>
         /// The definition of the index to create or update.
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Search
         
         /// <summary>
         /// Deletes an Azure Search index and all the documents it contains.
-        /// (see https://msdn.microsoft.com/en-us/library/azure/dn798926.aspx
-        /// for more information)
+        /// (see https://msdn.microsoft.com/library/azure/dn798926.aspx for
+        /// more information)
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index to delete.
@@ -91,8 +91,8 @@ namespace Microsoft.Azure.Search
         
         /// <summary>
         /// Retrieves an index definition from Azure Search.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798939.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798939.aspx for more
+        /// information)
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index to retrieve.
@@ -110,8 +110,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Returns statistics for the given index, including a document count
         /// and storage usage.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798942.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798942.aspx for more
+        /// information)
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index for which to retrieve statistics.
@@ -127,8 +127,8 @@ namespace Microsoft.Azure.Search
         
         /// <summary>
         /// Lists all indexes available for an Azure Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798923.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798923.aspx for more
+        /// information)
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

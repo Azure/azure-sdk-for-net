@@ -78,14 +78,6 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Operations for getting the encryption certificate.
-        /// </summary>
-        IEncryptionCertificateOperations EncryptionCertificate
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Operations for managing data factory gateways.
         /// </summary>
         IGatewayOperations Gateways

@@ -753,7 +753,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                     SubscriptionIntrinsicSettings intrinsicSettingsInstance = new SubscriptionIntrinsicSettings();
                                     resourceInstance.IntrinsicSettings = intrinsicSettingsInstance;
                                     
-                                    XElement subscriptionPlanElement = intrinsicSettingsElement.Element(XName.Get("SubscriptionPlan", "http://schemas.microsoft.com/windowsazure"));
+                                    XElement subscriptionPlanElement = intrinsicSettingsElement.Element(XName.Get("SubscriptionPlan", ""));
                                     if (subscriptionPlanElement != null)
                                     {
                                         string subscriptionPlanInstance = subscriptionPlanElement.Value;
@@ -997,7 +997,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                             SubscriptionIntrinsicSettings intrinsicSettingsInstance = new SubscriptionIntrinsicSettings();
                                             resourceInstance.IntrinsicSettings = intrinsicSettingsInstance;
                                             
-                                            XElement subscriptionPlanElement = intrinsicSettingsElement.Element(XName.Get("SubscriptionPlan", "http://schemas.microsoft.com/windowsazure"));
+                                            XElement subscriptionPlanElement = intrinsicSettingsElement.Element(XName.Get("SubscriptionPlan", ""));
                                             if (subscriptionPlanElement != null)
                                             {
                                                 string subscriptionPlanInstance = subscriptionPlanElement.Value;

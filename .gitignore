@@ -127,3 +127,6 @@ src/*/readme.txt
 
 build.out
 .nuget/
+
+# Azure Project
+csx/

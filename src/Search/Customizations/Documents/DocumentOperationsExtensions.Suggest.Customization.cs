@@ -23,8 +23,11 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -50,8 +53,11 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -85,8 +91,11 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -112,8 +121,11 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -143,12 +155,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -175,12 +190,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -215,12 +233,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>
@@ -246,12 +267,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798936.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="searchText">
         /// The search text on which to base suggestions.
         /// </param>

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines a function that boosts scores based on the magnitude of a
     /// numeric field.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798928.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798928.aspx for more
     /// information)
     /// </summary>
     public partial class MagnitudeScoringFunction : ScoringFunction

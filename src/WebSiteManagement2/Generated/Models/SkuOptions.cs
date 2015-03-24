@@ -36,5 +36,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         Basic = 2,
         
         Standard = 3,
+        
+        Premium = 4,
     }
 }

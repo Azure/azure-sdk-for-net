@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Search
     {
         internal static readonly string[] SelectAll = new[] { "*" };
 
-        /// <inheritdoc />
         public Task<DocumentGetResponse> GetAsync(
             string key,
             IEnumerable<string> selectedFields, 
@@ -43,7 +42,6 @@ namespace Microsoft.Azure.Search
                 s => JsonConvert.DeserializeObject<Document>(s, JsonUtility.DocumentDeserializerSettings));
         }
 
-        /// <inheritdoc />
         public Task<DocumentGetResponse<T>> GetAsync<T>(
             string key,
             IEnumerable<string> selectedFields,

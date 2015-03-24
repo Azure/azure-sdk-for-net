@@ -268,7 +268,161 @@ namespace Microsoft.WindowsAzure.Management.Automation
                     // Create Result
                     ModuleCreateResponse result = null;
                     // Deserialize Response
-                    result = new ModuleCreateResponse();
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ModuleCreateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Module moduleInstance = new Module();
+                            result.Module = moduleInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                ModuleProperties propertiesInstance = new ModuleProperties();
+                                moduleInstance.Properties = propertiesInstance;
+                                
+                                JToken isGlobalValue = propertiesValue2["isGlobal"];
+                                if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                                {
+                                    bool isGlobalInstance = ((bool)isGlobalValue);
+                                    propertiesInstance.IsGlobal = isGlobalInstance;
+                                }
+                                
+                                JToken versionValue = propertiesValue2["version"];
+                                if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                {
+                                    string versionInstance = ((string)versionValue);
+                                    propertiesInstance.Version = versionInstance;
+                                }
+                                
+                                JToken sizeInBytesValue = propertiesValue2["sizeInBytes"];
+                                if (sizeInBytesValue != null && sizeInBytesValue.Type != JTokenType.Null)
+                                {
+                                    long sizeInBytesInstance = ((long)sizeInBytesValue);
+                                    propertiesInstance.SizeInBytes = sizeInBytesInstance;
+                                }
+                                
+                                JToken activityCountValue = propertiesValue2["activityCount"];
+                                if (activityCountValue != null && activityCountValue.Type != JTokenType.Null)
+                                {
+                                    int activityCountInstance = ((int)activityCountValue);
+                                    propertiesInstance.ActivityCount = activityCountInstance;
+                                }
+                                
+                                JToken creationTimeValue = propertiesValue2["creationTime"];
+                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                    propertiesInstance.CreationTime = creationTimeInstance;
+                                }
+                                
+                                JToken lastModifiedTimeValue = propertiesValue2["lastModifiedTime"];
+                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                    propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    ModuleProvisioningState provisioningStateInstance = ((ModuleProvisioningState)Enum.Parse(typeof(ModuleProvisioningState), ((string)provisioningStateValue), true));
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken contentLinkValue2 = propertiesValue2["contentLink"];
+                                if (contentLinkValue2 != null && contentLinkValue2.Type != JTokenType.Null)
+                                {
+                                    ContentLink contentLinkInstance = new ContentLink();
+                                    propertiesInstance.ContentLink = contentLinkInstance;
+                                    
+                                    JToken uriValue = contentLinkValue2["uri"];
+                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                        contentLinkInstance.Uri = uriInstance;
+                                    }
+                                    
+                                    JToken contentHashValue2 = contentLinkValue2["contentHash"];
+                                    if (contentHashValue2 != null && contentHashValue2.Type != JTokenType.Null)
+                                    {
+                                        ContentHash contentHashInstance = new ContentHash();
+                                        contentLinkInstance.ContentHash = contentHashInstance;
+                                        
+                                        JToken algorithmValue = contentHashValue2["algorithm"];
+                                        if (algorithmValue != null && algorithmValue.Type != JTokenType.Null)
+                                        {
+                                            string algorithmInstance = ((string)algorithmValue);
+                                            contentHashInstance.Algorithm = algorithmInstance;
+                                        }
+                                        
+                                        JToken valueValue = contentHashValue2["value"];
+                                        if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue);
+                                            contentHashInstance.Value = valueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken versionValue2 = contentLinkValue2["version"];
+                                    if (versionValue2 != null && versionValue2.Type != JTokenType.Null)
+                                    {
+                                        string versionInstance2 = ((string)versionValue2);
+                                        contentLinkInstance.Version = versionInstance2;
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                moduleInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                moduleInstance.Name = nameInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                moduleInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    moduleInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                moduleInstance.Type = typeInstance;
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

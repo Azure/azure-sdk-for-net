@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource information.
         /// </returns>
-        Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, GenericResource parameters, CancellationToken cancellationToken);
+        Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, BasicResource parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete resource and all of its resources.

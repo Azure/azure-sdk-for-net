@@ -3532,6 +3532,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -3653,6 +3661,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();

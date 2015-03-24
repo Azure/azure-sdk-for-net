@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource information.
         /// </returns>
-        public async Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, GenericResource parameters, CancellationToken cancellationToken)
+        public async Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, BasicResource parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -382,37 +382,35 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject genericResourceValue = new JObject();
-                requestDoc = genericResourceValue;
+                JObject basicResourceValue = new JObject();
+                requestDoc = basicResourceValue;
+                
+                basicResourceValue["location"] = parameters.Location;
                 
                 if (parameters.Properties != null)
                 {
-                    genericResourceValue["properties"] = JObject.Parse(parameters.Properties);
+                    basicResourceValue["properties"] = JObject.Parse(parameters.Properties);
                 }
-                
-                if (parameters.ProvisioningState != null)
-                {
-                    genericResourceValue["provisioningState"] = parameters.ProvisioningState;
-                }
-                
-                genericResourceValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
                 {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        basicResourceValue["tags"] = tagsDictionary;
                     }
-                    genericResourceValue["tags"] = tagsDictionary;
                 }
                 
                 if (parameters.Plan != null)
                 {
                     JObject planValue = new JObject();
-                    genericResourceValue["plan"] = planValue;
+                    basicResourceValue["plan"] = planValue;
                     
                     if (parameters.Plan.Name != null)
                     {
@@ -433,6 +431,11 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         planValue["promotionCode"] = parameters.Plan.PromotionCode;
                     }
+                }
+                
+                if (parameters.ProvisioningState != null)
+                {
+                    basicResourceValue["provisioningState"] = parameters.ProvisioningState;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -481,33 +484,8 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            GenericResourceExtended resourceInstance = new GenericResourceExtended();
+                            Resource resourceInstance = new Resource();
                             result.Resource = resourceInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance = ((string)provisioningStateValue);
-                                    resourceInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                            }
-                            
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                            {
-                                string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
-                                resourceInstance.Properties = propertiesInstance;
-                            }
-                            
-                            JToken provisioningStateValue2 = responseDoc["provisioningState"];
-                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                            {
-                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                resourceInstance.ProvisioningState = provisioningStateInstance2;
-                            }
                             
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
@@ -530,11 +508,29 @@ namespace Microsoft.Azure.Management.Resources
                                 resourceInstance.Type = typeInstance;
                             }
                             
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    resourceInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                            }
+                            
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
                                 resourceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                resourceInstance.Properties = propertiesInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -581,6 +577,13 @@ namespace Microsoft.Azure.Management.Resources
                                     string promotionCodeInstance = ((string)promotionCodeValue);
                                     planInstance.PromotionCode = promotionCodeInstance;
                                 }
+                            }
+                            
+                            JToken provisioningStateValue2 = responseDoc["provisioningState"];
+                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                resourceInstance.ProvisioningState = provisioningStateInstance2;
                             }
                         }
                         
@@ -950,33 +953,8 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            GenericResourceExtended resourceInstance = new GenericResourceExtended();
+                            Resource resourceInstance = new Resource();
                             result.Resource = resourceInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance = ((string)provisioningStateValue);
-                                    resourceInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                            }
-                            
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                            {
-                                string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
-                                resourceInstance.Properties = propertiesInstance;
-                            }
-                            
-                            JToken provisioningStateValue2 = responseDoc["provisioningState"];
-                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                            {
-                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                resourceInstance.ProvisioningState = provisioningStateInstance2;
-                            }
                             
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
@@ -999,11 +977,29 @@ namespace Microsoft.Azure.Management.Resources
                                 resourceInstance.Type = typeInstance;
                             }
                             
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    resourceInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                            }
+                            
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
                                 resourceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                resourceInstance.Properties = propertiesInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -1050,6 +1046,13 @@ namespace Microsoft.Azure.Management.Resources
                                     string promotionCodeInstance = ((string)promotionCodeValue);
                                     planInstance.PromotionCode = promotionCodeInstance;
                                 }
+                            }
+                            
+                            JToken provisioningStateValue2 = responseDoc["provisioningState"];
+                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                resourceInstance.ProvisioningState = provisioningStateInstance2;
                             }
                         }
                         
@@ -1225,33 +1228,8 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    GenericResourceExtended resourceJsonFormatInstance = new GenericResourceExtended();
+                                    Resource resourceJsonFormatInstance = new Resource();
                                     result.Resources.Add(resourceJsonFormatInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                        {
-                                            string provisioningStateInstance = ((string)provisioningStateValue);
-                                            resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
-                                        }
-                                    }
-                                    
-                                    JToken propertiesValue2 = valueValue["properties"];
-                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                    {
-                                        string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        resourceJsonFormatInstance.Properties = propertiesInstance;
-                                    }
-                                    
-                                    JToken provisioningStateValue2 = valueValue["provisioningState"];
-                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
-                                    }
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
@@ -1274,11 +1252,29 @@ namespace Microsoft.Azure.Management.Resources
                                         resourceJsonFormatInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                    }
+                                    
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
                                         resourceJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken propertiesValue2 = valueValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        resourceJsonFormatInstance.Properties = propertiesInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1325,6 +1321,13 @@ namespace Microsoft.Azure.Management.Resources
                                             string promotionCodeInstance = ((string)promotionCodeValue);
                                             planInstance.PromotionCode = promotionCodeInstance;
                                         }
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = valueValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                     }
                                 }
                             }
@@ -1465,33 +1468,8 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    GenericResourceExtended resourceJsonFormatInstance = new GenericResourceExtended();
+                                    Resource resourceJsonFormatInstance = new Resource();
                                     result.Resources.Add(resourceJsonFormatInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                        {
-                                            string provisioningStateInstance = ((string)provisioningStateValue);
-                                            resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
-                                        }
-                                    }
-                                    
-                                    JToken propertiesValue2 = valueValue["properties"];
-                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                    {
-                                        string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        resourceJsonFormatInstance.Properties = propertiesInstance;
-                                    }
-                                    
-                                    JToken provisioningStateValue2 = valueValue["provisioningState"];
-                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
-                                    }
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
@@ -1514,11 +1492,29 @@ namespace Microsoft.Azure.Management.Resources
                                         resourceJsonFormatInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                    }
+                                    
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
                                         resourceJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken propertiesValue2 = valueValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        resourceJsonFormatInstance.Properties = propertiesInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1565,6 +1561,13 @@ namespace Microsoft.Azure.Management.Resources
                                             string promotionCodeInstance = ((string)promotionCodeValue);
                                             planInstance.PromotionCode = promotionCodeInstance;
                                         }
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = valueValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                     }
                                 }
                             }
