@@ -20,33 +20,47 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// List of management locks.
     /// </summary>
-    public partial class ResourceGroupGetResult : AzureOperationResponse
+    public partial class ManagementLockListResult : AzureOperationResponse
     {
-        private ResourceGroup _resourceGroup;
+        private IList<ManagementLockObject> _lock;
         
         /// <summary>
-        /// Optional. Gets or sets the resource group.
+        /// Optional. Gets or sets the list of locks.
         /// </summary>
-        public ResourceGroup ResourceGroup
+        public IList<ManagementLockObject> Lock
         {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._lock; }
+            set { this._lock = value; }
+        }
+        
+        private string _nextLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the URL to get the next set of results.
+        /// </summary>
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceGroupGetResult class.
+        /// Initializes a new instance of the ManagementLockListResult class.
         /// </summary>
-        public ResourceGroupGetResult()
+        public ManagementLockListResult()
         {
+            this.Lock = new LazyList<ManagementLockObject>();
         }
     }
 }

@@ -21,32 +21,10 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.Resources
 {
-    /// <summary>
-    /// Resource group information.
-    /// </summary>
-    public partial class ResourceGroupGetResult : AzureOperationResponse
+    public static partial class AuthorizationClientExtensions
     {
-        private ResourceGroup _resourceGroup;
-        
-        /// <summary>
-        /// Optional. Gets or sets the resource group.
-        /// </summary>
-        public ResourceGroup ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceGroupGetResult class.
-        /// </summary>
-        public ResourceGroupGetResult()
-        {
-        }
     }
 }

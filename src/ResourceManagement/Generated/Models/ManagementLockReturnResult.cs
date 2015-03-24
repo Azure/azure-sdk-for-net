@@ -27,25 +27,25 @@ using Microsoft.Azure.Management.Resources.Models;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// Management lock information.
     /// </summary>
-    public partial class ResourceGroupGetResult : AzureOperationResponse
+    public partial class ManagementLockReturnResult : AzureOperationResponse
     {
-        private ResourceGroup _resourceGroup;
+        private ManagementLockObject _managementLock;
         
         /// <summary>
-        /// Optional. Gets or sets the resource group.
+        /// Optional. Gets or sets the management lock.
         /// </summary>
-        public ResourceGroup ResourceGroup
+        public ManagementLockObject ManagementLock
         {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._managementLock; }
+            set { this._managementLock = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceGroupGetResult class.
+        /// Initializes a new instance of the ManagementLockReturnResult class.
         /// </summary>
-        public ResourceGroupGetResult()
+        public ManagementLockReturnResult()
         {
         }
     }
