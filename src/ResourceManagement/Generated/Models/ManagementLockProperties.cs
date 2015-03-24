@@ -21,56 +21,41 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// The management lock properties.
     /// </summary>
-    public partial class GenericResource : ResourceBase
+    public partial class ManagementLockProperties
     {
-        private string _properties;
+        private string _level;
         
         /// <summary>
-        /// Optional. Gets or sets the resource properties.
+        /// Optional. Gets or sets the lock level of the management lock.
         /// </summary>
-        public string Properties
+        public string Level
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._level; }
+            set { this._level = value; }
         }
         
-        private string _provisioningState;
+        private string _notes;
         
         /// <summary>
-        /// Optional. Gets or sets resource provisioning state.
+        /// Optional. Gets or sets the notes of the management lock.
         /// </summary>
-        public string ProvisioningState
+        public string Notes
         {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the GenericResource class.
-        /// </summary>
-        public GenericResource()
-        {
+            get { return this._notes; }
+            set { this._notes = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GenericResource class with
-        /// required arguments.
+        /// Initializes a new instance of the ManagementLockProperties class.
         /// </summary>
-        public GenericResource(string location)
-            : this()
+        public ManagementLockProperties()
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

@@ -21,32 +21,27 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// Lock level states.
     /// </summary>
-    public partial class ResourceGroupGetResult : AzureOperationResponse
+    public static partial class LockLevel
     {
-        private ResourceGroup _resourceGroup;
+        /// <summary>
+        /// The lock level is not specified.
+        /// </summary>
+        public const string NotSpecified = "NotSpecified";
         
         /// <summary>
-        /// Optional. Gets or sets the resource group.
+        /// The lock blocks delete.
         /// </summary>
-        public ResourceGroup ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
-        }
+        public const string CanNotDelete = "CanNotDelete";
         
         /// <summary>
-        /// Initializes a new instance of the ResourceGroupGetResult class.
+        /// The lock blocks all updates and delete.
         /// </summary>
-        public ResourceGroupGetResult()
-        {
-        }
+        public const string ReadOnly = "ReadOnly";
     }
 }

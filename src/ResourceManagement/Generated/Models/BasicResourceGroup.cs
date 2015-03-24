@@ -23,19 +23,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// Resource group information.
     /// </summary>
-    public partial class ResourceBase
+    public partial class BasicResourceGroup
     {
         private string _location;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Required. Gets or sets the location of the resource group. It
+        /// cannot be changed after the resource group has been created. Has
+        /// to be one of the supported Azure Locations, such as West US, East
+        /// US, West Europe, East Asia, etc.
         /// </summary>
         public string Location
         {
@@ -43,21 +45,32 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._location = value; }
         }
         
-        private Plan _plan;
+        private string _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the plan of the resource.
+        /// Optional. Gets or sets the resource group properties.
         /// </summary>
-        public Plan Plan
+        public string Properties
         {
-            get { return this._plan; }
-            set { this._plan = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource group provisioning state.
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
         }
         
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Optional. Gets or sets the tags attached to the resource group.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -66,18 +79,18 @@ namespace Microsoft.Azure.Management.Resources.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
+        /// Initializes a new instance of the BasicResourceGroup class.
         /// </summary>
-        public ResourceBase()
+        public BasicResourceGroup()
         {
             this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class with required
-        /// arguments.
+        /// Initializes a new instance of the BasicResourceGroup class with
+        /// required arguments.
         /// </summary>
-        public ResourceBase(string location)
+        public BasicResourceGroup(string location)
             : this()
         {
             if (location == null)

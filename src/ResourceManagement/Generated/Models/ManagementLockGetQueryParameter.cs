@@ -21,31 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// Management lock get operation scope filter parameters.
     /// </summary>
-    public partial class ResourceGroupGetResult : AzureOperationResponse
+    public partial class ManagementLockGetQueryParameter
     {
-        private ResourceGroup _resourceGroup;
+        private string _atScope;
         
         /// <summary>
-        /// Optional. Gets or sets the resource group.
+        /// Optional. Get or sets the atScope parameter. If empty is passed
+        /// returns all locks at, above or below the scope. Otherwise, returns
+        /// locks at or above the scope.
         /// </summary>
-        public ResourceGroup ResourceGroup
+        public string AtScope
         {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._atScope; }
+            set { this._atScope = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceGroupGetResult class.
+        /// Initializes a new instance of the ManagementLockGetQueryParameter
+        /// class.
         /// </summary>
-        public ResourceGroupGetResult()
+        public ManagementLockGetQueryParameter()
         {
         }
     }
