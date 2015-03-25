@@ -26,36 +26,14 @@ using Microsoft.Azure.Management.Resources.Models;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Deployment information.
+    /// Deployment operation parameters.
     /// </summary>
     public partial class Deployment
     {
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the ID of the deployment.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Required. Gets or sets the name of the deployment.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private DeploymentProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets deployment properties.
+        /// Optional. Gets or sets the deployment properties.
         /// </summary>
         public DeploymentProperties Properties
         {
@@ -68,20 +46,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public Deployment()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Deployment class with required
-        /// arguments.
-        /// </summary>
-        public Deployment(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

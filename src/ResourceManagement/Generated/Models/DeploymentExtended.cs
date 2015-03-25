@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Resources.Models;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// Deployment information.
     /// </summary>
-    public partial class Resource : BasicResource
+    public partial class DeploymentExtended
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the ID of the resource.
+        /// Optional. Gets or sets the ID of the deployment.
         /// </summary>
         public string Id
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Required. Gets or sets the name of the deployment.
         /// </summary>
         public string Name
         {
@@ -52,36 +52,36 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._name = value; }
         }
         
-        private string _type;
+        private DeploymentPropertiesExtended _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the type of the resource.
+        /// Optional. Gets or sets deployment properties.
         /// </summary>
-        public string Type
+        public DeploymentPropertiesExtended Properties
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the DeploymentExtended class.
         /// </summary>
-        public Resource()
+        public DeploymentExtended()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Resource class with required
-        /// arguments.
+        /// Initializes a new instance of the DeploymentExtended class with
+        /// required arguments.
         /// </summary>
-        public Resource(string location)
+        public DeploymentExtended(string name)
             : this()
         {
-            if (location == null)
+            if (name == null)
             {
-                throw new ArgumentNullException("location");
+                throw new ArgumentNullException("name");
             }
-            this.Location = location;
+            this.Name = name;
         }
     }
 }

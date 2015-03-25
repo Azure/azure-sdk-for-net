@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Resources.Models;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Management lock information.
+    /// Resource group information.
     /// </summary>
-    public partial class ManagementLockObject
+    public partial class ResourceGroupExtended : ResourceGroup
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the lock.
+        /// Optional. Gets or sets the ID of the resource group.
         /// </summary>
         public string Id
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the lock.
+        /// Optional. Gets or sets the Name of the resource group.
         /// </summary>
         public string Name
         {
@@ -52,33 +52,25 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._name = value; }
         }
         
-        private ManagementLockProperties _properties;
-        
         /// <summary>
-        /// Optional. Gets or sets the properties of the lock.
+        /// Initializes a new instance of the ResourceGroupExtended class.
         /// </summary>
-        public ManagementLockProperties Properties
+        public ResourceGroupExtended()
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of the lock.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ManagementLockObject class.
+        /// Initializes a new instance of the ResourceGroupExtended class with
+        /// required arguments.
         /// </summary>
-        public ManagementLockObject()
+        public ResourceGroupExtended(string location)
+            : this()
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }
