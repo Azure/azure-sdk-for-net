@@ -648,7 +648,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement publishedDateElement2 = oSImageElement2.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                             if (publishedDateElement2 != null && !string.IsNullOrEmpty(publishedDateElement2.Value))
                             {
-                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture);
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.PublishedDate = publishedDateInstance;
                             }
                             
@@ -1088,7 +1088,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement publishedDateElement = oSImageElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                             if (publishedDateElement != null)
                             {
-                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.PublishedDate = publishedDateInstance;
                             }
                             
@@ -1407,7 +1407,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement publishedDateElement = oSImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                             if (publishedDateElement != null)
                             {
-                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.PublishedDate = publishedDateInstance;
                             }
                             
@@ -1691,7 +1691,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publishedDateElement = imagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                                 if (publishedDateElement != null)
                                 {
-                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     oSImageInstance.PublishedDate = publishedDateInstance;
                                 }
                                 
@@ -2448,7 +2448,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement publishedDateElement2 = oSImageElement2.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                             if (publishedDateElement2 != null && !string.IsNullOrEmpty(publishedDateElement2.Value))
                             {
-                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture);
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.PublishedDate = publishedDateInstance;
                             }
                             

@@ -1269,14 +1269,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement createdTimeElement = vMImageDetailsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
                             {
-                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.CreatedTime = createdTimeInstance;
                             }
                             
                             XElement modifiedTimeElement = vMImageDetailsElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (modifiedTimeElement != null && !string.IsNullOrEmpty(modifiedTimeElement.Value))
                             {
-                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.ModifiedTime = modifiedTimeInstance;
                             }
                             
@@ -1346,7 +1346,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement publishedDateElement = vMImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                             if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                             {
-                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.PublishedDate = publishedDateInstance;
                             }
                             
@@ -1718,14 +1718,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement createdTimeElement = vMImagesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                                 if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
                                 {
-                                    DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     vMImageInstance.CreatedTime = createdTimeInstance;
                                 }
                                 
                                 XElement modifiedTimeElement = vMImagesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
                                 if (modifiedTimeElement != null && !string.IsNullOrEmpty(modifiedTimeElement.Value))
                                 {
-                                    DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     vMImageInstance.ModifiedTime = modifiedTimeInstance;
                                 }
                                 
@@ -1795,7 +1795,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publishedDateElement = vMImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                                 if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                                 {
-                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     vMImageInstance.PublishedDate = publishedDateInstance;
                                 }
                                 
