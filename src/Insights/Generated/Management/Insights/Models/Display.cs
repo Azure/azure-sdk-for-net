@@ -21,52 +21,29 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents a sku.
+    /// Represents how the sku is displayed.
     /// </summary>
-    public partial class AvailableSku
+    public partial class Display
     {
-        private Capacity _capacity;
-
+        private string _title;
+        
         /// <summary>
-        /// Optional. The capacity of the sku.
+        /// Optional. The display title.
         /// </summary>
-        public Capacity Capacity
+        public string Title
         {
-            get { return this._capacity; }
-            set { this._capacity = value; }
+            get { return this._title; }
+            set { this._title = value; }
         }
-
-        private string _name;
-
+        
         /// <summary>
-        /// Optional. The name of the sku.
+        /// Initializes a new instance of the Display class.
         /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-
-        private string _tier;
-
-        /// <summary>
-        /// Optional. The tier of the sku.
-        /// </summary>
-        public string Tier
-        {
-            get { return this._tier; }
-            set { this._tier = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AvailableSku class.
-        /// </summary>
-        public AvailableSku()
+        public Display()
         {
         }
     }

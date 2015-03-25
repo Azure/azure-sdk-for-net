@@ -32,35 +32,35 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse, IEnumerable<AvailableSkuResource>
+    public partial class SkuListResponse : AzureOperationResponse, IEnumerable<SkuDefinition>
     {
-        private IList<AvailableSkuResource> _value;
-        
+        private IList<SkuDefinition> _value;
+
         /// <summary>
-        /// Optional. The values for the sku.
+        /// Optional. The values for the sku definition.
         /// </summary>
-        public IList<AvailableSkuResource> Value
+        public IList<SkuDefinition> Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the SkuListResponse class.
         /// </summary>
         public SkuListResponse()
         {
-            this.Value = new LazyList<AvailableSkuResource>();
+            this.Value = new LazyList<SkuDefinition>();
         }
-        
+
         /// <summary>
         /// Gets the sequence of Value.
         /// </summary>
-        public IEnumerator<AvailableSkuResource> GetEnumerator()
+        public IEnumerator<SkuDefinition> GetEnumerator()
         {
             return this.Value.GetEnumerator();
         }
-        
+
         /// <summary>
         /// Gets the sequence of Value.
         /// </summary>

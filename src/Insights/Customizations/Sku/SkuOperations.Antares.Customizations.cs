@@ -48,121 +48,124 @@ namespace Microsoft.Azure.Management.Insights
             return new SkuListResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                Value = new List<AvailableSkuResource>
+                Value = new List<SkuDefinition>
                 {
-                    new AvailableSkuResource 
+                    new SkuDefinition 
                     {
-                        Properties =  new AvailableSku
+                        Sku =  new Sku
                         {
                             Name = "S1",
-                            Tier = "Standard",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 10,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Automatic
-                            }
-                        
+                            Tier = "Standard"
                         },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 10,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Automatic
+                        }
                     },
-                    new AvailableSkuResource 
+                    new SkuDefinition 
                     {
-                        Properties = new AvailableSku
+                        Sku = new Sku
                         {
                             Name = "S2",
                             Tier = "Standard",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 10,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Automatic
-                            }
                         },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 10,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Automatic
+                        }
                     },
-                    new AvailableSkuResource 
+                    new SkuDefinition 
                     {
-                        Properties = new AvailableSku
+                        Sku = new Sku
                         {
                             Name = "S3",
                             Tier = "Standard",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 10,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Automatic
-                            }
+                            
                         },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 10,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Automatic
+                        }
                     },
-                    new AvailableSkuResource 
+                    new SkuDefinition 
                     {
-                        Properties = new AvailableSku
+                        Sku = new Sku
                         {
                             Name = "B1",
                             Tier = "Basic",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 3,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Manual
-                            }
+                            
                         },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 3,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Manual
+                        }
                     },
-                    new AvailableSkuResource 
+                    new SkuDefinition 
                     {
-                        Properties = new AvailableSku
+                        Sku = new Sku
                         {
                             Name = "B2",
                             Tier = "Basic",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 3,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Manual
-                            }
                         },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 3,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Manual
+                        }
                     },
-                    new AvailableSkuResource
+                    new SkuDefinition
                     {
-                        Properties = new AvailableSku
+                        Sku = new Sku
                         {
                             Name = "B3",
                             Tier = "Basic",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 3,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Manual
-                            }
+                            
                         },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 3,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Manual
+                        }
                     },
-                    new AvailableSkuResource 
+                    new SkuDefinition 
                     {
-                        Properties = new AvailableSku
+                        Sku = new Sku
                         {
                             Name = "D1",
                             Tier = "Shared",
-                            Capacity = new Capacity()
-                            {
-                                ScaleType = SupportedScaleType.None
-                            }
                         },
+                        Capacity = new Capacity
+                        {
+                            ScaleType = SupportedScaleType.None
+                        }
                     },
-                    new AvailableSkuResource {
-                        Properties = new AvailableSku
+                    new SkuDefinition 
+                    {
+                        Sku = new Sku
                         {
                             Name = "F1",
                             Tier = "Free",
-                            Capacity = new Capacity()
-                            {
-                                ScaleType = SupportedScaleType.None
-                            }
                         },
+                        Capacity = new Capacity
+                        {
+                            ScaleType = SupportedScaleType.None
+                        }
                     }
                 }
             };
@@ -176,7 +179,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 Properties = new SkuGetProperties
                 {
-                    Sku = new Sku
+                    Sku = new CurrentSku
                     {
                         Name = AntaresSkuOperations.GetAnatresSkuName(response.Properties.CurrentWorkerSize, response.Properties.Sku),
                         Tier = response.Properties.Sku,
@@ -187,10 +190,10 @@ namespace Microsoft.Azure.Management.Insights
         }
 
         internal static Task<SkuUpdateResponse> UpdateAntaresCurrentSkuAsync(
-            SkuOperations skuOperations, 
-            string resourceId, 
+            SkuOperations skuOperations,
+            string resourceId,
             SkuUpdateParameters parameters,
-            string apiVersion, 
+            string apiVersion,
             CancellationToken cancellationToken)
         {
             AntaresSkuUpdateRequest antaresUpdateParameters = new AntaresSkuUpdateRequest

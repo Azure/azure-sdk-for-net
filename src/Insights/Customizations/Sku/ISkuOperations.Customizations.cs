@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
+        Task<SkuListResponse> ListSkuDefinitionsAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
 
         /// <param name='resourceId'>
         /// The resource id.

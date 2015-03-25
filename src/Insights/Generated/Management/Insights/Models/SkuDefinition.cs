@@ -25,23 +25,48 @@ using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
-    public partial class SkuGetProperties
+    /// <summary>
+    /// Represents a sku definition.
+    /// </summary>
+    public partial class SkuDefinition
     {
-        private CurrentSku _sku;
+        private Capacity _capacity;
 
         /// <summary>
-        /// Optional. The resource sku.
+        /// Optional. The capacity of the sku.
         /// </summary>
-        public CurrentSku Sku
+        public Capacity Capacity
+        {
+            get { return this._capacity; }
+            set { this._capacity = value; }
+        }
+
+        private Display _display;
+
+        /// <summary>
+        /// Optional. The capacity of the sku.
+        /// </summary>
+        public Display Display
+        {
+            get { return this._display; }
+            set { this._display = value; }
+        }
+
+        private Sku _sku;
+
+        /// <summary>
+        /// Optional. The sku.
+        /// </summary>
+        public Sku Sku
         {
             get { return this._sku; }
             set { this._sku = value; }
         }
 
         /// <summary>
-        /// Initializes a new instance of the SkuGetProperties class.
+        /// Initializes a new instance of the SkuDefinition class.
         /// </summary>
-        public SkuGetProperties()
+        public SkuDefinition()
         {
         }
     }

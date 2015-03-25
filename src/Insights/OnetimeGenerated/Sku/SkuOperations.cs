@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.Insights
                                 JToken skuValue = propertiesValue["sku"];
                                 if (skuValue != null && skuValue.Type != JTokenType.Null)
                                 {
-                                    Sku skuInstance = new Sku();
+                                    CurrentSku skuInstance = new CurrentSku();
                                     propertiesInstance.Sku = skuInstance;
 
                                     JToken nameValue = skuValue["name"];
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<SkuListResponse> ListAvailableSkusInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
+        public async Task<SkuListResponse> ListSkuDefinitionsInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -441,11 +441,11 @@ namespace Microsoft.Azure.Management.Insights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("apiVersion", apiVersion);
-                TracingAdapter.Enter(invocationId, this, "ListAvailableSkusInternalAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListSkuDefinitionsInternalAsync", tracingParameters);
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "/skus?";
+            string url = "/" + Uri.EscapeDataString(resourceId) + "/skuDefinitions?";
             url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -522,62 +522,76 @@ namespace Microsoft.Azure.Management.Insights
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    AvailableSkuResource availableSkuResourceInstance = new AvailableSkuResource();
-                                    result.Value.Add(availableSkuResourceInstance);
+                                    SkuDefinition skuDefinitionInstance = new SkuDefinition();
+                                    result.Value.Add(skuDefinitionInstance);
 
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    JToken skuValue = valueValue["sku"];
+                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
                                     {
-                                        AvailableSku propertiesInstance = new AvailableSku();
-                                        availableSkuResourceInstance.Properties = propertiesInstance;
+                                        Sku skuInstance = new Sku();
+                                        skuDefinitionInstance.Sku = skuInstance;
 
-                                        JToken nameValue = propertiesValue["name"];
+                                        JToken nameValue = skuValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
+                                            skuInstance.Name = nameInstance;
                                         }
 
-                                        JToken tierValue = propertiesValue["tier"];
+                                        JToken tierValue = skuValue["tier"];
                                         if (tierValue != null && tierValue.Type != JTokenType.Null)
                                         {
                                             string tierInstance = ((string)tierValue);
-                                            propertiesInstance.Tier = tierInstance;
+                                            skuInstance.Tier = tierInstance;
+                                        }
+                                    }
+
+                                    JToken capacityValue = valueValue["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        Capacity capacityInstance = new Capacity();
+                                        skuDefinitionInstance.Capacity = capacityInstance;
+
+                                        JToken minimumValue = capacityValue["minimum"];
+                                        if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                        {
+                                            int minimumInstance = ((int)minimumValue);
+                                            capacityInstance.Minimum = minimumInstance;
                                         }
 
-                                        JToken capacityValue = propertiesValue["capacity"];
-                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                        JToken maximumValue = capacityValue["maximum"];
+                                        if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                         {
-                                            Capacity capacityInstance = new Capacity();
-                                            propertiesInstance.Capacity = capacityInstance;
+                                            int maximumInstance = ((int)maximumValue);
+                                            capacityInstance.Maximum = maximumInstance;
+                                        }
 
-                                            JToken minimumValue = capacityValue["minimum"];
-                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
-                                            {
-                                                int minimumInstance = ((int)minimumValue);
-                                                capacityInstance.Minimum = minimumInstance;
-                                            }
+                                        JToken defaultValue = capacityValue["default"];
+                                        if (defaultValue != null && defaultValue.Type != JTokenType.Null)
+                                        {
+                                            int defaultInstance = ((int)defaultValue);
+                                            capacityInstance.Default = defaultInstance;
+                                        }
 
-                                            JToken maximumValue = capacityValue["maximum"];
-                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
-                                            {
-                                                int maximumInstance = ((int)maximumValue);
-                                                capacityInstance.Maximum = maximumInstance;
-                                            }
+                                        JToken scaleTypeValue = capacityValue["scaleType"];
+                                        if (scaleTypeValue != null && scaleTypeValue.Type != JTokenType.Null)
+                                        {
+                                            SupportedScaleType scaleTypeInstance = ((SupportedScaleType)Enum.Parse(typeof(SupportedScaleType), ((string)scaleTypeValue), true));
+                                            capacityInstance.ScaleType = scaleTypeInstance;
+                                        }
+                                    }
 
-                                            JToken defaultValue = capacityValue["default"];
-                                            if (defaultValue != null && defaultValue.Type != JTokenType.Null)
-                                            {
-                                                int defaultInstance = ((int)defaultValue);
-                                                capacityInstance.Default = defaultInstance;
-                                            }
+                                    JToken displayValue = valueValue["display"];
+                                    if (displayValue != null && displayValue.Type != JTokenType.Null)
+                                    {
+                                        Display displayInstance = new Display();
+                                        skuDefinitionInstance.Display = displayInstance;
 
-                                            JToken scaleTypeValue = capacityValue["scaleType"];
-                                            if (scaleTypeValue != null && scaleTypeValue.Type != JTokenType.Null)
-                                            {
-                                                SupportedScaleType scaleTypeInstance = ((SupportedScaleType)Enum.Parse(typeof(SupportedScaleType), ((string)scaleTypeValue), true));
-                                                capacityInstance.ScaleType = scaleTypeInstance;
-                                            }
+                                        JToken titleValue = displayValue["title"];
+                                        if (titleValue != null && titleValue.Type != JTokenType.Null)
+                                        {
+                                            string titleInstance = ((string)titleValue);
+                                            displayInstance.Title = titleInstance;
                                         }
                                     }
                                 }

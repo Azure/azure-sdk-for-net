@@ -83,11 +83,11 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static SkuListResponse ListAvailableSkus(this ISkuOperations operations, string resourceId, string apiVersion)
+        public static SkuListResponse ListSkuDefinitions(this ISkuOperations operations, string resourceId, string apiVersion)
         {
             return Task.Factory.StartNew((object s) =>
             {
-                return ((ISkuOperations)s).ListAvailableSkusAsync(resourceId, apiVersion);
+                return ((ISkuOperations)s).ListSkuDefinitionsAsync(resourceId, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<SkuListResponse> ListAvailableSkusAsync(this ISkuOperations operations, string resourceId, string apiVersion)
+        public static Task<SkuListResponse> ListSkuDefinitionsAsync(this ISkuOperations operations, string resourceId, string apiVersion)
         {
-            return operations.ListAvailableSkusAsync(resourceId, apiVersion, CancellationToken.None);
+            return operations.ListSkuDefinitionsAsync(resourceId, apiVersion, CancellationToken.None);
         }
 
         /// <param name='operations'>

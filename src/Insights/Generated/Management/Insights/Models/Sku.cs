@@ -24,19 +24,11 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
+    /// <summary>
+    /// Represents a sku.
+    /// </summary>
     public partial class Sku
     {
-        private int _capacity;
-
-        /// <summary>
-        /// Optional. The current capacity.
-        /// </summary>
-        public int Capacity
-        {
-            get { return this._capacity; }
-            set { this._capacity = value; }
-        }
-
         private string _name;
 
         /// <summary>

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
+        public async Task<SkuListResponse> ListSkuDefinitionsAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights
             }
             else
             {
-                return await this.ListAvailableSkusInternalAsync(resourceId, apiVersion, cancellationToken);
+                return await this.ListSkuDefinitionsInternalAsync(resourceId, apiVersion, cancellationToken);
             }
         }
 
