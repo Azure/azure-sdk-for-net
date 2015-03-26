@@ -103,25 +103,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules/";
-            if (parameters.Properties != null && parameters.Properties.Name != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.Properties.Name);
-            }
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules/" + (parameters.Properties.Name == null ? "" : Uri.EscapeDataString(parameters.Properties.Name)) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -648,22 +631,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules/";
-            url = url + Uri.EscapeDataString(ruleName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules/" + Uri.EscapeDataString(ruleName) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -811,24 +780,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules/";
-            url = url + Uri.EscapeDataString(ruleName);
-            url = url + "/incidents/";
-            url = url + Uri.EscapeDataString(incidentName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules/" + Uri.EscapeDataString(ruleName) + "/incidents/" + Uri.EscapeDataString(incidentName) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1005,22 +958,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules/";
-            url = url + Uri.EscapeDataString(ruleName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules/" + Uri.EscapeDataString(ruleName) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1686,23 +1625,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules/";
-            url = url + Uri.EscapeDataString(ruleName);
-            url = url + "/incidents";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules/" + Uri.EscapeDataString(ruleName) + "/incidents?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1885,29 +1809,11 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            List<string> odataFilter = new List<string>();
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules?";
+            url = url + "api-version=2014-04-01";
             if (targetResourceUri != null)
             {
-                odataFilter.Add("targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri));
-            }
-            if (odataFilter.Count > 0)
-            {
-                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
+                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2588,25 +2494,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/microsoft.insights/alertrules/";
-            if (parameters.Properties != null && parameters.Properties.Name != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.Properties.Name);
-            }
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.insights/alertrules/" + (parameters.Properties.Name == null ? "" : Uri.EscapeDataString(parameters.Properties.Name)) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
