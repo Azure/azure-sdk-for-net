@@ -1149,8 +1149,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update credential
-        /// operation.
+        /// Required. The parameters supplied to the patch credential operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1159,7 +1158,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string automationAccount, CredentialUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> PatchAsync(string resourceGroupName, string automationAccount, CredentialPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1189,7 +1188,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1249,15 +1248,15 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject credentialUpdateParametersValue = new JObject();
-                requestDoc = credentialUpdateParametersValue;
+                JObject credentialPatchParametersValue = new JObject();
+                requestDoc = credentialPatchParametersValue;
                 
-                credentialUpdateParametersValue["name"] = parameters.Name;
+                credentialPatchParametersValue["name"] = parameters.Name;
                 
                 if (parameters.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
-                    credentialUpdateParametersValue["properties"] = propertiesValue;
+                    credentialPatchParametersValue["properties"] = propertiesValue;
                     
                     if (parameters.Properties.UserName != null)
                     {

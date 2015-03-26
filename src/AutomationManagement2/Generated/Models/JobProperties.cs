@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._creationTime = value; }
         }
         
-        private DateTimeOffset _endTime;
+        private System.DateTimeOffset? _endTime;
         
         /// <summary>
         /// Optional. Gets or sets the end time of the job.
         /// </summary>
-        public DateTimeOffset EndTime
+        public System.DateTimeOffset? EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
@@ -131,12 +131,12 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._startedBy = value; }
         }
         
-        private DateTimeOffset _startTime;
+        private System.DateTimeOffset? _startTime;
         
         /// <summary>
         /// Optional. Gets or sets the start time of the job.
         /// </summary>
-        public DateTimeOffset StartTime
+        public System.DateTimeOffset? StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }

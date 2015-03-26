@@ -281,6 +281,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._variables; }
         }
         
+        private IWebhookOperations _webhooks;
+        
+        /// <summary>
+        /// Service operation for automation webhook.  (see
+        /// http://aka.ms/azureautomationsdk/webhookoperations for more
+        /// information)
+        /// </summary>
+        public virtual IWebhookOperations Webhooks
+        {
+            get { return this._webhooks; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AutomationManagementClient class.
         /// </summary>
@@ -302,6 +314,7 @@ namespace Microsoft.Azure.Management.Automation
             this._schedules = new ScheduleOperations(this);
             this._testJobs = new TestJobOperations(this);
             this._variables = new VariableOperations(this);
+            this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
             this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -383,6 +396,7 @@ namespace Microsoft.Azure.Management.Automation
             this._schedules = new ScheduleOperations(this);
             this._testJobs = new TestJobOperations(this);
             this._variables = new VariableOperations(this);
+            this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
             this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -573,11 +587,11 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

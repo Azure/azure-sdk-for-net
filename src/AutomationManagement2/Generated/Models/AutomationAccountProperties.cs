@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._sku = value; }
         }
         
+        private string _state;
+        
+        /// <summary>
+        /// Optional. Gets or sets the status of account.
+        /// </summary>
+        public string State
+        {
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AutomationAccountProperties class.
         /// </summary>

@@ -286,16 +286,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
+        /// Required. Parameters supplied to the patch automation account.
         /// </param>
         /// <returns>
         /// The response model for the create account operation.
         /// </returns>
-        public static AutomationAccountUpdateResponse Update(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountUpdateParameters parameters)
+        public static AutomationAccountPatchResponse Patch(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountPatchParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAutomationAccountOperations)s).UpdateAsync(resourceGroupName, parameters);
+                return ((IAutomationAccountOperations)s).PatchAsync(resourceGroupName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -313,14 +313,14 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
+        /// Required. Parameters supplied to the patch automation account.
         /// </param>
         /// <returns>
         /// The response model for the create account operation.
         /// </returns>
-        public static Task<AutomationAccountUpdateResponse> UpdateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountUpdateParameters parameters)
+        public static Task<AutomationAccountPatchResponse> PatchAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountPatchParameters parameters)
         {
-            return operations.UpdateAsync(resourceGroupName, parameters, CancellationToken.None);
+            return operations.PatchAsync(resourceGroupName, parameters, CancellationToken.None);
         }
     }
 }

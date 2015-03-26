@@ -143,6 +143,62 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Updates the runbook draft with runbookStream as its content.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IRunbookDraftOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The runbook draft update parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResultResponse BeginUpdateGraph(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRunbookDraftOperations)s).BeginUpdateGraphAsync(resourceGroupName, automationAccount, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates the runbook draft with runbookStream as its content.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IRunbookDraftOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The runbook draft update parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResultResponse> BeginUpdateGraphAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters)
+        {
+            return operations.BeginUpdateGraphAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve the content of runbook draft identified by runbook name.
         /// (see http://aka.ms/azureautomationsdk/runbookdraftoperations for
         /// more information)
@@ -420,6 +476,62 @@ namespace Microsoft.Azure.Management.Automation
         public static Task<LongRunningOperationResultResponse> UpdateAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters)
         {
             return operations.UpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates the runbook draft with runbookStream as its content.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IRunbookDraftOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The runbook draft update parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResultResponse UpdateGraph(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRunbookDraftOperations)s).UpdateGraphAsync(resourceGroupName, automationAccount, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates the runbook draft with runbookStream as its content.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IRunbookDraftOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The runbook draft update parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResultResponse> UpdateGraphAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters)
+        {
+            return operations.UpdateGraphAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
     }
 }

@@ -423,16 +423,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The update parameters for runbook.
+        /// Required. The patch parameters for runbook.
         /// </param>
         /// <returns>
         /// The response model for the get runbook operation.
         /// </returns>
-        public static RunbookGetResponse Update(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookUpdateParameters parameters)
+        public static RunbookGetResponse Patch(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookPatchParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRunbookOperations)s).UpdateAsync(resourceGroupName, automationAccount, parameters);
+                return ((IRunbookOperations)s).PatchAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -453,14 +453,14 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The update parameters for runbook.
+        /// Required. The patch parameters for runbook.
         /// </param>
         /// <returns>
         /// The response model for the get runbook operation.
         /// </returns>
-        public static Task<RunbookGetResponse> UpdateAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookUpdateParameters parameters)
+        public static Task<RunbookGetResponse> PatchAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookPatchParameters parameters)
         {
-            return operations.UpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.PatchAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
     }
 }

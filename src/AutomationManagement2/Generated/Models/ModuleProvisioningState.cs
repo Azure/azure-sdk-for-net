@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public enum ModuleProvisioningState
     {
-        Creating = 0,
+        Created = 0,
         
-        Created = 1,
+        Creating = 1,
         
         StartingImportModuleRunbook = 2,
         

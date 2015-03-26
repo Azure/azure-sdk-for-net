@@ -313,17 +313,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update variable operation.
+        /// Required. The parameters supplied to the patch variable operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Update(this IVariableOperations operations, string resourceGroupName, string automationAccount, VariableUpdateParameters parameters)
+        public static AzureOperationResponse Patch(this IVariableOperations operations, string resourceGroupName, string automationAccount, VariablePatchParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVariableOperations)s).UpdateAsync(resourceGroupName, automationAccount, parameters);
+                return ((IVariableOperations)s).PatchAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -344,15 +344,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update variable operation.
+        /// Required. The parameters supplied to the patch variable operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> UpdateAsync(this IVariableOperations operations, string resourceGroupName, string automationAccount, VariableUpdateParameters parameters)
+        public static Task<AzureOperationResponse> PatchAsync(this IVariableOperations operations, string resourceGroupName, string automationAccount, VariablePatchParameters parameters)
         {
-            return operations.UpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.PatchAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
     }
 }

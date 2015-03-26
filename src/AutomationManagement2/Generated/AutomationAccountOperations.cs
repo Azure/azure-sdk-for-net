@@ -304,6 +304,13 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                 }
                                 
+                                JToken stateValue = propertiesValue2["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -732,6 +739,13 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                 }
                                 
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -1006,6 +1020,13 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
+                                        JToken stateValue = propertiesValue["state"];
+                                        if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                        {
+                                            string stateInstance = ((string)stateValue);
+                                            propertiesInstance.State = stateInstance;
+                                        }
+                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1267,6 +1288,13 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
+                                        JToken stateValue = propertiesValue["state"];
+                                        if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                        {
+                                            string stateInstance = ((string)stateValue);
+                                            propertiesInstance.State = stateInstance;
+                                        }
+                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1391,7 +1419,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
+        /// Required. Parameters supplied to the patch automation account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1399,7 +1427,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the create account operation.
         /// </returns>
-        public async Task<AutomationAccountUpdateResponse> UpdateAsync(string resourceGroupName, AutomationAccountUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AutomationAccountPatchResponse> PatchAsync(string resourceGroupName, AutomationAccountPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1424,7 +1452,7 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1484,11 +1512,11 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject automationAccountUpdateParametersValue = new JObject();
-                requestDoc = automationAccountUpdateParametersValue;
+                JObject automationAccountPatchParametersValue = new JObject();
+                requestDoc = automationAccountPatchParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                automationAccountUpdateParametersValue["properties"] = propertiesValue;
+                automationAccountPatchParametersValue["properties"] = propertiesValue;
                 
                 if (parameters.Properties.Sku != null)
                 {
@@ -1510,12 +1538,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Name != null)
                 {
-                    automationAccountUpdateParametersValue["name"] = parameters.Name;
+                    automationAccountPatchParametersValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Location != null)
                 {
-                    automationAccountUpdateParametersValue["location"] = parameters.Location;
+                    automationAccountPatchParametersValue["location"] = parameters.Location;
                 }
                 
                 if (parameters.Tags != null)
@@ -1527,7 +1555,7 @@ namespace Microsoft.Azure.Management.Automation
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    automationAccountUpdateParametersValue["tags"] = tagsDictionary;
+                    automationAccountPatchParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1561,13 +1589,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    AutomationAccountUpdateResponse result = null;
+                    AutomationAccountPatchResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AutomationAccountUpdateResponse();
+                        result = new AutomationAccountPatchResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1618,6 +1646,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string lastModifiedByInstance = ((string)lastModifiedByValue);
                                     propertiesInstance.LastModifiedBy = lastModifiedByInstance;
+                                }
+                                
+                                JToken stateValue = propertiesValue2["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue2["creationTime"];

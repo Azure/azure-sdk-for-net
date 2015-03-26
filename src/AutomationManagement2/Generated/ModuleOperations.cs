@@ -1624,7 +1624,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The update parameters for module.
+        /// Required. The patch parameters for module.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1632,7 +1632,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get module operation.
         /// </returns>
-        public async Task<ModuleGetResponse> UpdateAsync(string resourceGroupName, string automationAccount, ModuleUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ModuleGetResponse> PatchAsync(string resourceGroupName, string automationAccount, ModulePatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1676,7 +1676,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1739,11 +1739,11 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject moduleUpdateParametersValue = new JObject();
-                requestDoc = moduleUpdateParametersValue;
+                JObject modulePatchParametersValue = new JObject();
+                requestDoc = modulePatchParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                moduleUpdateParametersValue["properties"] = propertiesValue;
+                modulePatchParametersValue["properties"] = propertiesValue;
                 
                 if (parameters.Properties.ContentLink != null)
                 {
@@ -1773,12 +1773,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Name != null)
                 {
-                    moduleUpdateParametersValue["name"] = parameters.Name;
+                    modulePatchParametersValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Location != null)
                 {
-                    moduleUpdateParametersValue["location"] = parameters.Location;
+                    modulePatchParametersValue["location"] = parameters.Location;
                 }
                 
                 if (parameters.Tags != null)
@@ -1790,7 +1790,7 @@ namespace Microsoft.Azure.Management.Automation
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    moduleUpdateParametersValue["tags"] = tagsDictionary;
+                    modulePatchParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

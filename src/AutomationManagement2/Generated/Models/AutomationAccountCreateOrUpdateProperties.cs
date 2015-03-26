@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update account properties.
+    /// The parameters supplied to the create or update account properties.
     /// </summary>
     public partial class AutomationAccountCreateOrUpdateProperties
     {

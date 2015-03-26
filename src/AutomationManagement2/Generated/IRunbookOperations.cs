@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The update parameters for runbook.
+        /// The patch parameters for runbook.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -201,6 +201,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get runbook operation.
         /// </returns>
-        Task<RunbookGetResponse> UpdateAsync(string resourceGroupName, string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<RunbookGetResponse> PatchAsync(string resourceGroupName, string automationAccount, RunbookPatchParameters parameters, CancellationToken cancellationToken);
     }
 }

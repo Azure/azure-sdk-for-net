@@ -1172,7 +1172,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update variable operation.
+        /// Required. The parameters supplied to the patch variable operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1181,7 +1181,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string automationAccount, VariableUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> PatchAsync(string resourceGroupName, string automationAccount, VariablePatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1211,7 +1211,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1271,15 +1271,15 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject variableUpdateParametersValue = new JObject();
-                requestDoc = variableUpdateParametersValue;
+                JObject variablePatchParametersValue = new JObject();
+                requestDoc = variablePatchParametersValue;
                 
-                variableUpdateParametersValue["name"] = parameters.Name;
+                variablePatchParametersValue["name"] = parameters.Name;
                 
                 if (parameters.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
-                    variableUpdateParametersValue["properties"] = propertiesValue;
+                    variablePatchParametersValue["properties"] = propertiesValue;
                     
                     if (parameters.Properties.Value != null)
                     {

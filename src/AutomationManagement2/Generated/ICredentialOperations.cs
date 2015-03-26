@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the update credential operation.
+        /// The parameters supplied to the patch credential operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -159,6 +159,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string automationAccount, CredentialUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> PatchAsync(string resourceGroupName, string automationAccount, CredentialPatchParameters parameters, CancellationToken cancellationToken);
     }
 }

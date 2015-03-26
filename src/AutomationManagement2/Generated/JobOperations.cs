@@ -917,7 +917,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/runbook";
+            url = url + "/runbookContent";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
@@ -987,17 +987,7 @@ namespace Microsoft.Azure.Management.Automation
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new JobGetRunbookContentResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            string contentInstance = ((string)responseDoc);
-                            result.Content = contentInstance;
-                        }
+                        result.Content = responseContent;
                         
                     }
                     result.StatusCode = statusCode;

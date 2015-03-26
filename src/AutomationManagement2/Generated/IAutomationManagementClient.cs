@@ -232,6 +232,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation webhook.  (see
+        /// http://aka.ms/azureautomationsdk/webhookoperations for more
+        /// information)
+        /// </summary>
+        IWebhookOperations Webhooks
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call Get Operation Status to determine whether the operation

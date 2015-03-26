@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the update schedule operation.
+        /// The parameters supplied to the patch schedule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -158,6 +158,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string automationAccount, ScheduleUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> PatchAsync(string resourceGroupName, string automationAccount, SchedulePatchParameters parameters, CancellationToken cancellationToken);
     }
 }

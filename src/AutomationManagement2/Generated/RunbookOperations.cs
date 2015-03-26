@@ -2435,7 +2435,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The update parameters for runbook.
+        /// Required. The patch parameters for runbook.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2443,7 +2443,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get runbook operation.
         /// </returns>
-        public async Task<RunbookGetResponse> UpdateAsync(string resourceGroupName, string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<RunbookGetResponse> PatchAsync(string resourceGroupName, string automationAccount, RunbookPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2469,7 +2469,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -2532,13 +2532,13 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject runbookUpdateParametersValue = new JObject();
-                requestDoc = runbookUpdateParametersValue;
+                JObject runbookPatchParametersValue = new JObject();
+                requestDoc = runbookPatchParametersValue;
                 
                 if (parameters.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
-                    runbookUpdateParametersValue["properties"] = propertiesValue;
+                    runbookPatchParametersValue["properties"] = propertiesValue;
                     
                     if (parameters.Properties.Description != null)
                     {
@@ -2552,12 +2552,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Name != null)
                 {
-                    runbookUpdateParametersValue["name"] = parameters.Name;
+                    runbookPatchParametersValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Location != null)
                 {
-                    runbookUpdateParametersValue["location"] = parameters.Location;
+                    runbookPatchParametersValue["location"] = parameters.Location;
                 }
                 
                 if (parameters.Tags != null)
@@ -2569,7 +2569,7 @@ namespace Microsoft.Azure.Management.Automation
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    runbookUpdateParametersValue["tags"] = tagsDictionary;
+                    runbookPatchParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

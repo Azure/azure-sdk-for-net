@@ -1237,7 +1237,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update a connection
+        /// Required. The parameters supplied to the patch a connection
         /// operation.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1247,7 +1247,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string automationAccount, ConnectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> PatchAsync(string resourceGroupName, string automationAccount, ConnectionPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1277,7 +1277,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1340,16 +1340,16 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject connectionUpdateParametersValue = new JObject();
-                requestDoc = connectionUpdateParametersValue;
+                JObject connectionPatchParametersValue = new JObject();
+                requestDoc = connectionPatchParametersValue;
                 
                 if (parameters.Name != null)
                 {
-                    connectionUpdateParametersValue["name"] = parameters.Name;
+                    connectionPatchParametersValue["name"] = parameters.Name;
                 }
                 
                 JObject propertiesValue = new JObject();
-                connectionUpdateParametersValue["properties"] = propertiesValue;
+                connectionPatchParametersValue["properties"] = propertiesValue;
                 
                 if (parameters.Properties.Description != null)
                 {

@@ -1206,7 +1206,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update certificate
+        /// Required. The parameters supplied to the patch certificate
         /// operation.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1216,7 +1216,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string automationAccount, CertificateUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> PatchAsync(string resourceGroupName, string automationAccount, CertificatePatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1246,7 +1246,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1306,15 +1306,15 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject certificateUpdateParametersValue = new JObject();
-                requestDoc = certificateUpdateParametersValue;
+                JObject certificatePatchParametersValue = new JObject();
+                requestDoc = certificatePatchParametersValue;
                 
-                certificateUpdateParametersValue["name"] = parameters.Name;
+                certificatePatchParametersValue["name"] = parameters.Name;
                 
                 if (parameters.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
-                    certificateUpdateParametersValue["properties"] = propertiesValue;
+                    certificatePatchParametersValue["properties"] = propertiesValue;
                     
                     if (parameters.Properties.Description != null)
                     {

@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The update parameters for module.
+        /// The patch parameters for module.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -156,6 +156,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get module operation.
         /// </returns>
-        Task<ModuleGetResponse> UpdateAsync(string resourceGroupName, string automationAccount, ModuleUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<ModuleGetResponse> PatchAsync(string resourceGroupName, string automationAccount, ModulePatchParameters parameters, CancellationToken cancellationToken);
     }
 }

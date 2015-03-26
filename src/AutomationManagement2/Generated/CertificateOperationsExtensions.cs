@@ -313,18 +313,18 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update certificate
+        /// Required. The parameters supplied to the patch certificate
         /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Update(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificateUpdateParameters parameters)
+        public static AzureOperationResponse Patch(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificatePatchParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ICertificateOperations)s).UpdateAsync(resourceGroupName, automationAccount, parameters);
+                return ((ICertificateOperations)s).PatchAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -345,16 +345,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the update certificate
+        /// Required. The parameters supplied to the patch certificate
         /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> UpdateAsync(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificateUpdateParameters parameters)
+        public static Task<AzureOperationResponse> PatchAsync(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificatePatchParameters parameters)
         {
-            return operations.UpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.PatchAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
     }
 }

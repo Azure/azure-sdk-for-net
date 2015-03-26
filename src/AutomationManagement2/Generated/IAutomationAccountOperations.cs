@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create automation account.
+        /// Parameters supplied to the patch automation account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -142,6 +142,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the create account operation.
         /// </returns>
-        Task<AutomationAccountUpdateResponse> UpdateAsync(string resourceGroupName, AutomationAccountUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AutomationAccountPatchResponse> PatchAsync(string resourceGroupName, AutomationAccountPatchParameters parameters, CancellationToken cancellationToken);
     }
 }

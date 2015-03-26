@@ -79,6 +79,28 @@ namespace Microsoft.Azure.Management.Automation
         Task<LongRunningOperationResultResponse> BeginUpdateAsync(string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Updates the runbook draft with runbookStream as its content.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The runbook draft update parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResultResponse> BeginUpdateGraphAsync(string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Retrieve the content of runbook draft identified by runbook name.
         /// (see http://aka.ms/azureautomationsdk/runbookdraftoperations for
         /// more information)
@@ -187,5 +209,27 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response for long running operations.
         /// </returns>
         Task<LongRunningOperationResultResponse> UpdateAsync(string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates the runbook draft with runbookStream as its content.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The runbook draft update parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResultResponse> UpdateGraphAsync(string resourceGroupName, string automationAccount, RunbookDraftUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }
