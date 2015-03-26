@@ -819,7 +819,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
             List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.Time != null)
             {
-                odataFilter.Add("properties/time ge '" + Uri.EscapeDataString(parameters.Time) + "'");
+                odataFilter.Add("properties/time ge " + Uri.EscapeDataString(parameters.Time));
             }
             if (parameters != null && parameters.StreamType != null)
             {

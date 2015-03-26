@@ -355,6 +355,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                     formatValue["nullValue"] = derived3.NullValue;
                                 }
                                 
+                                if (derived3.EncodingName != null)
+                                {
+                                    formatValue["encodingName"] = derived3.EncodingName;
+                                }
+                                
                                 if (derived3.Serializer != null)
                                 {
                                     formatValue["serializer"] = derived3.Serializer;
@@ -420,17 +425,152 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         locationValue["linkedServiceName"] = derived7.LinkedServiceName;
                     }
+                    if (parameters.Table.Properties.Location is OnPremisesFileSystemLocation)
+                    {
+                        locationValue["type"] = "OnPremisesFileSystemLocation";
+                        OnPremisesFileSystemLocation derived8 = ((OnPremisesFileSystemLocation)parameters.Table.Properties.Location);
+                        
+                        if (derived8.FolderPath != null)
+                        {
+                            locationValue["folderPath"] = derived8.FolderPath;
+                        }
+                        
+                        if (derived8.FileName != null)
+                        {
+                            locationValue["fileName"] = derived8.FileName;
+                        }
+                        
+                        if (derived8.PartitionedBy != null)
+                        {
+                            if (derived8.PartitionedBy is ILazyCollection == false || ((ILazyCollection)derived8.PartitionedBy).IsInitialized)
+                            {
+                                JArray partitionedByArray2 = new JArray();
+                                foreach (Partition partitionedByItem2 in derived8.PartitionedBy)
+                                {
+                                    JObject partitionValue2 = new JObject();
+                                    partitionedByArray2.Add(partitionValue2);
+                                    
+                                    if (partitionedByItem2.Name != null)
+                                    {
+                                        partitionValue2["name"] = partitionedByItem2.Name;
+                                    }
+                                    
+                                    if (partitionedByItem2.Value != null)
+                                    {
+                                        JObject valueValue2 = new JObject();
+                                        partitionValue2["value"] = valueValue2;
+                                        if (partitionedByItem2.Value is DateTimePartitionValue)
+                                        {
+                                            valueValue2["type"] = "DateTime";
+                                            DateTimePartitionValue derived9 = ((DateTimePartitionValue)partitionedByItem2.Value);
+                                            
+                                            if (derived9.Date != null)
+                                            {
+                                                valueValue2["date"] = derived9.Date;
+                                            }
+                                            
+                                            if (derived9.Format != null)
+                                            {
+                                                valueValue2["format"] = derived9.Format;
+                                            }
+                                        }
+                                    }
+                                }
+                                locationValue["partitionedBy"] = partitionedByArray2;
+                            }
+                        }
+                        
+                        if (derived8.Format != null)
+                        {
+                            JObject formatValue2 = new JObject();
+                            locationValue["format"] = formatValue2;
+                            if (derived8.Format is TextFormat)
+                            {
+                                formatValue2["type"] = "TextFormat";
+                                TextFormat derived10 = ((TextFormat)derived8.Format);
+                                
+                                if (derived10.ColumnDelimiter != null)
+                                {
+                                    formatValue2["columnDelimiter"] = derived10.ColumnDelimiter;
+                                }
+                                
+                                if (derived10.RowDelimiter != null)
+                                {
+                                    formatValue2["rowDelimiter"] = derived10.RowDelimiter;
+                                }
+                                
+                                if (derived10.EscapeChar != null)
+                                {
+                                    formatValue2["escapeChar"] = derived10.EscapeChar;
+                                }
+                                
+                                if (derived10.NullValue != null)
+                                {
+                                    formatValue2["nullValue"] = derived10.NullValue;
+                                }
+                                
+                                if (derived10.EncodingName != null)
+                                {
+                                    formatValue2["encodingName"] = derived10.EncodingName;
+                                }
+                                
+                                if (derived10.Serializer != null)
+                                {
+                                    formatValue2["serializer"] = derived10.Serializer;
+                                }
+                                
+                                if (derived10.Deserializer != null)
+                                {
+                                    formatValue2["deserializer"] = derived10.Deserializer;
+                                }
+                            }
+                            if (derived8.Format is AvroFormat)
+                            {
+                                formatValue2["type"] = "AvroFormat";
+                                AvroFormat derived11 = ((AvroFormat)derived8.Format);
+                                
+                                if (derived11.Serializer != null)
+                                {
+                                    formatValue2["serializer"] = derived11.Serializer;
+                                }
+                                
+                                if (derived11.Deserializer != null)
+                                {
+                                    formatValue2["deserializer"] = derived11.Deserializer;
+                                }
+                            }
+                        }
+                        
+                        if (derived8.FileFilter != null)
+                        {
+                            locationValue["fileFilter"] = derived8.FileFilter;
+                        }
+                        
+                        locationValue["linkedServiceName"] = derived8.LinkedServiceName;
+                    }
+                    if (parameters.Table.Properties.Location is OnPremisesOracleTableLocation)
+                    {
+                        locationValue["type"] = "OnPremisesOracleTableLocation";
+                        OnPremisesOracleTableLocation derived12 = ((OnPremisesOracleTableLocation)parameters.Table.Properties.Location);
+                        
+                        if (derived12.TableName != null)
+                        {
+                            locationValue["tableName"] = derived12.TableName;
+                        }
+                        
+                        locationValue["linkedServiceName"] = derived12.LinkedServiceName;
+                    }
                     if (parameters.Table.Properties.Location is CustomLocation)
                     {
                         locationValue["type"] = "CustomLocation";
-                        CustomLocation derived8 = ((CustomLocation)parameters.Table.Properties.Location);
+                        CustomLocation derived13 = ((CustomLocation)parameters.Table.Properties.Location);
                         
-                        if (derived8.ExtendedProperties != null)
+                        if (derived13.ExtendedProperties != null)
                         {
-                            if (derived8.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived8.ExtendedProperties).IsInitialized)
+                            if (derived13.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived13.ExtendedProperties).IsInitialized)
                             {
                                 JObject extendedPropertiesDictionary = new JObject();
-                                foreach (KeyValuePair<string, string> pair in derived8.ExtendedProperties)
+                                foreach (KeyValuePair<string, string> pair in derived13.ExtendedProperties)
                                 {
                                     string extendedPropertiesKey = pair.Key;
                                     string extendedPropertiesValue = pair.Value;
@@ -440,7 +580,7 @@ namespace Microsoft.Azure.Management.DataFactories
                             }
                         }
                         
-                        locationValue["linkedServiceName"] = derived8.LinkedServiceName;
+                        locationValue["linkedServiceName"] = derived13.LinkedServiceName;
                     }
                     
                     JObject availabilityValue = new JObject();
@@ -509,6 +649,11 @@ namespace Microsoft.Azure.Management.DataFactories
                             if (parameters.Table.Properties.Policy.Validation.MinimumSizeMB != null)
                             {
                                 validationValue["minimumSizeMB"] = parameters.Table.Properties.Policy.Validation.MinimumSizeMB.Value;
+                            }
+                            
+                            if (parameters.Table.Properties.Policy.Validation.ValidationPriorityOrder != null)
+                            {
+                                validationValue["validationPriorityOrder"] = parameters.Table.Properties.Policy.Validation.ValidationPriorityOrder;
                             }
                         }
                         
@@ -681,10 +826,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                             azureBlobLocationInstance.FileName = fileNameInstance;
                                         }
                                         
-                                        JToken partitionedByArray2 = locationValue2["partitionedBy"];
-                                        if (partitionedByArray2 != null && partitionedByArray2.Type != JTokenType.Null)
+                                        JToken partitionedByArray3 = locationValue2["partitionedBy"];
+                                        if (partitionedByArray3 != null && partitionedByArray3.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken partitionedByValue in ((JArray)partitionedByArray2))
+                                            foreach (JToken partitionedByValue in ((JArray)partitionedByArray3))
                                             {
                                                 Partition partitionInstance = new Partition();
                                                 azureBlobLocationInstance.PartitionedBy.Add(partitionInstance);
@@ -696,25 +841,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     partitionInstance.Name = nameInstance3;
                                                 }
                                                 
-                                                JToken valueValue2 = partitionedByValue["value"];
-                                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                                JToken valueValue3 = partitionedByValue["value"];
+                                                if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                                 {
-                                                    string typeName2 = ((string)valueValue2["type"]);
+                                                    string typeName2 = ((string)valueValue3["type"]);
                                                     if (typeName2 == "DateTime")
                                                     {
                                                         DateTimePartitionValue dateTimePartitionValueInstance = new DateTimePartitionValue();
                                                         
-                                                        JToken dateValue = valueValue2["date"];
+                                                        JToken dateValue = valueValue3["date"];
                                                         if (dateValue != null && dateValue.Type != JTokenType.Null)
                                                         {
                                                             string dateInstance = ((string)dateValue);
                                                             dateTimePartitionValueInstance.Date = dateInstance;
                                                         }
                                                         
-                                                        JToken formatValue2 = valueValue2["format"];
-                                                        if (formatValue2 != null && formatValue2.Type != JTokenType.Null)
+                                                        JToken formatValue3 = valueValue3["format"];
+                                                        if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
                                                         {
-                                                            string formatInstance = ((string)formatValue2);
+                                                            string formatInstance = ((string)formatValue3);
                                                             dateTimePartitionValueInstance.Format = formatInstance;
                                                         }
                                                         partitionInstance.Value = dateTimePartitionValueInstance;
@@ -723,50 +868,57 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken formatValue3 = locationValue2["format"];
-                                        if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
+                                        JToken formatValue4 = locationValue2["format"];
+                                        if (formatValue4 != null && formatValue4.Type != JTokenType.Null)
                                         {
-                                            string typeName3 = ((string)formatValue3["type"]);
+                                            string typeName3 = ((string)formatValue4["type"]);
                                             if (typeName3 == "TextFormat")
                                             {
                                                 TextFormat textFormatInstance = new TextFormat();
                                                 
-                                                JToken columnDelimiterValue = formatValue3["columnDelimiter"];
+                                                JToken columnDelimiterValue = formatValue4["columnDelimiter"];
                                                 if (columnDelimiterValue != null && columnDelimiterValue.Type != JTokenType.Null)
                                                 {
                                                     string columnDelimiterInstance = ((string)columnDelimiterValue);
                                                     textFormatInstance.ColumnDelimiter = columnDelimiterInstance;
                                                 }
                                                 
-                                                JToken rowDelimiterValue = formatValue3["rowDelimiter"];
+                                                JToken rowDelimiterValue = formatValue4["rowDelimiter"];
                                                 if (rowDelimiterValue != null && rowDelimiterValue.Type != JTokenType.Null)
                                                 {
                                                     string rowDelimiterInstance = ((string)rowDelimiterValue);
                                                     textFormatInstance.RowDelimiter = rowDelimiterInstance;
                                                 }
                                                 
-                                                JToken escapeCharValue = formatValue3["escapeChar"];
+                                                JToken escapeCharValue = formatValue4["escapeChar"];
                                                 if (escapeCharValue != null && escapeCharValue.Type != JTokenType.Null)
                                                 {
                                                     string escapeCharInstance = ((string)escapeCharValue);
                                                     textFormatInstance.EscapeChar = escapeCharInstance;
                                                 }
                                                 
-                                                JToken nullValueValue = formatValue3["nullValue"];
+                                                JToken nullValueValue = formatValue4["nullValue"];
                                                 if (nullValueValue != null && nullValueValue.Type != JTokenType.Null)
                                                 {
                                                     string nullValueInstance = ((string)nullValueValue);
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
-                                                JToken serializerValue = formatValue3["serializer"];
+                                                JToken encodingNameValue = formatValue4["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
+                                                JToken serializerValue = formatValue4["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
                                                     string serializerInstance = ((string)serializerValue);
                                                     textFormatInstance.Serializer = serializerInstance;
                                                 }
                                                 
-                                                JToken deserializerValue = formatValue3["deserializer"];
+                                                JToken deserializerValue = formatValue4["deserializer"];
                                                 if (deserializerValue != null && deserializerValue.Type != JTokenType.Null)
                                                 {
                                                     string deserializerInstance = ((string)deserializerValue);
@@ -778,14 +930,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                             {
                                                 AvroFormat avroFormatInstance = new AvroFormat();
                                                 
-                                                JToken serializerValue2 = formatValue3["serializer"];
+                                                JToken serializerValue2 = formatValue4["serializer"];
                                                 if (serializerValue2 != null && serializerValue2.Type != JTokenType.Null)
                                                 {
                                                     string serializerInstance2 = ((string)serializerValue2);
                                                     avroFormatInstance.Serializer = serializerInstance2;
                                                 }
                                                 
-                                                JToken deserializerValue2 = formatValue3["deserializer"];
+                                                JToken deserializerValue2 = formatValue4["deserializer"];
                                                 if (deserializerValue2 != null && deserializerValue2.Type != JTokenType.Null)
                                                 {
                                                     string deserializerInstance2 = ((string)deserializerValue2);
@@ -860,6 +1012,179 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesSqlServerTableLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesFileSystemLocation")
+                                    {
+                                        OnPremisesFileSystemLocation onPremisesFileSystemLocationInstance = new OnPremisesFileSystemLocation();
+                                        
+                                        JToken folderPathValue2 = locationValue2["folderPath"];
+                                        if (folderPathValue2 != null && folderPathValue2.Type != JTokenType.Null)
+                                        {
+                                            string folderPathInstance2 = ((string)folderPathValue2);
+                                            onPremisesFileSystemLocationInstance.FolderPath = folderPathInstance2;
+                                        }
+                                        
+                                        JToken fileNameValue2 = locationValue2["fileName"];
+                                        if (fileNameValue2 != null && fileNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string fileNameInstance2 = ((string)fileNameValue2);
+                                            onPremisesFileSystemLocationInstance.FileName = fileNameInstance2;
+                                        }
+                                        
+                                        JToken partitionedByArray4 = locationValue2["partitionedBy"];
+                                        if (partitionedByArray4 != null && partitionedByArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken partitionedByValue2 in ((JArray)partitionedByArray4))
+                                            {
+                                                Partition partitionInstance2 = new Partition();
+                                                onPremisesFileSystemLocationInstance.PartitionedBy.Add(partitionInstance2);
+                                                
+                                                JToken nameValue4 = partitionedByValue2["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    partitionInstance2.Name = nameInstance4;
+                                                }
+                                                
+                                                JToken valueValue4 = partitionedByValue2["value"];
+                                                if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                                {
+                                                    string typeName4 = ((string)valueValue4["type"]);
+                                                    if (typeName4 == "DateTime")
+                                                    {
+                                                        DateTimePartitionValue dateTimePartitionValueInstance2 = new DateTimePartitionValue();
+                                                        
+                                                        JToken dateValue2 = valueValue4["date"];
+                                                        if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string dateInstance2 = ((string)dateValue2);
+                                                            dateTimePartitionValueInstance2.Date = dateInstance2;
+                                                        }
+                                                        
+                                                        JToken formatValue5 = valueValue4["format"];
+                                                        if (formatValue5 != null && formatValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string formatInstance2 = ((string)formatValue5);
+                                                            dateTimePartitionValueInstance2.Format = formatInstance2;
+                                                        }
+                                                        partitionInstance2.Value = dateTimePartitionValueInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken formatValue6 = locationValue2["format"];
+                                        if (formatValue6 != null && formatValue6.Type != JTokenType.Null)
+                                        {
+                                            string typeName5 = ((string)formatValue6["type"]);
+                                            if (typeName5 == "TextFormat")
+                                            {
+                                                TextFormat textFormatInstance2 = new TextFormat();
+                                                
+                                                JToken columnDelimiterValue2 = formatValue6["columnDelimiter"];
+                                                if (columnDelimiterValue2 != null && columnDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string columnDelimiterInstance2 = ((string)columnDelimiterValue2);
+                                                    textFormatInstance2.ColumnDelimiter = columnDelimiterInstance2;
+                                                }
+                                                
+                                                JToken rowDelimiterValue2 = formatValue6["rowDelimiter"];
+                                                if (rowDelimiterValue2 != null && rowDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string rowDelimiterInstance2 = ((string)rowDelimiterValue2);
+                                                    textFormatInstance2.RowDelimiter = rowDelimiterInstance2;
+                                                }
+                                                
+                                                JToken escapeCharValue2 = formatValue6["escapeChar"];
+                                                if (escapeCharValue2 != null && escapeCharValue2.Type != JTokenType.Null)
+                                                {
+                                                    string escapeCharInstance2 = ((string)escapeCharValue2);
+                                                    textFormatInstance2.EscapeChar = escapeCharInstance2;
+                                                }
+                                                
+                                                JToken nullValueValue2 = formatValue6["nullValue"];
+                                                if (nullValueValue2 != null && nullValueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nullValueInstance2 = ((string)nullValueValue2);
+                                                    textFormatInstance2.NullValue = nullValueInstance2;
+                                                }
+                                                
+                                                JToken encodingNameValue2 = formatValue6["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
+                                                JToken serializerValue3 = formatValue6["serializer"];
+                                                if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance3 = ((string)serializerValue3);
+                                                    textFormatInstance2.Serializer = serializerInstance3;
+                                                }
+                                                
+                                                JToken deserializerValue3 = formatValue6["deserializer"];
+                                                if (deserializerValue3 != null && deserializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance3 = ((string)deserializerValue3);
+                                                    textFormatInstance2.Deserializer = deserializerInstance3;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = textFormatInstance2;
+                                            }
+                                            if (typeName5 == "AvroFormat")
+                                            {
+                                                AvroFormat avroFormatInstance2 = new AvroFormat();
+                                                
+                                                JToken serializerValue4 = formatValue6["serializer"];
+                                                if (serializerValue4 != null && serializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance4 = ((string)serializerValue4);
+                                                    avroFormatInstance2.Serializer = serializerInstance4;
+                                                }
+                                                
+                                                JToken deserializerValue4 = formatValue6["deserializer"];
+                                                if (deserializerValue4 != null && deserializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance4 = ((string)deserializerValue4);
+                                                    avroFormatInstance2.Deserializer = deserializerInstance4;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = avroFormatInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken fileFilterValue = locationValue2["fileFilter"];
+                                        if (fileFilterValue != null && fileFilterValue.Type != JTokenType.Null)
+                                        {
+                                            string fileFilterInstance = ((string)fileFilterValue);
+                                            onPremisesFileSystemLocationInstance.FileFilter = fileFilterInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue5 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
+                                            onPremisesFileSystemLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                        }
+                                        propertiesInstance.Location = onPremisesFileSystemLocationInstance;
+                                    }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue2["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -875,11 +1200,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue5 = locationValue2["linkedServiceName"];
-                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -986,6 +1311,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue2["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -1411,6 +1743,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue2["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue2["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -1512,6 +1851,179 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesSqlServerTableLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesFileSystemLocation")
+                                    {
+                                        OnPremisesFileSystemLocation onPremisesFileSystemLocationInstance = new OnPremisesFileSystemLocation();
+                                        
+                                        JToken folderPathValue2 = locationValue["folderPath"];
+                                        if (folderPathValue2 != null && folderPathValue2.Type != JTokenType.Null)
+                                        {
+                                            string folderPathInstance2 = ((string)folderPathValue2);
+                                            onPremisesFileSystemLocationInstance.FolderPath = folderPathInstance2;
+                                        }
+                                        
+                                        JToken fileNameValue2 = locationValue["fileName"];
+                                        if (fileNameValue2 != null && fileNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string fileNameInstance2 = ((string)fileNameValue2);
+                                            onPremisesFileSystemLocationInstance.FileName = fileNameInstance2;
+                                        }
+                                        
+                                        JToken partitionedByArray2 = locationValue["partitionedBy"];
+                                        if (partitionedByArray2 != null && partitionedByArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken partitionedByValue2 in ((JArray)partitionedByArray2))
+                                            {
+                                                Partition partitionInstance2 = new Partition();
+                                                onPremisesFileSystemLocationInstance.PartitionedBy.Add(partitionInstance2);
+                                                
+                                                JToken nameValue4 = partitionedByValue2["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    partitionInstance2.Name = nameInstance4;
+                                                }
+                                                
+                                                JToken valueValue2 = partitionedByValue2["value"];
+                                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeName4 = ((string)valueValue2["type"]);
+                                                    if (typeName4 == "DateTime")
+                                                    {
+                                                        DateTimePartitionValue dateTimePartitionValueInstance2 = new DateTimePartitionValue();
+                                                        
+                                                        JToken dateValue2 = valueValue2["date"];
+                                                        if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string dateInstance2 = ((string)dateValue2);
+                                                            dateTimePartitionValueInstance2.Date = dateInstance2;
+                                                        }
+                                                        
+                                                        JToken formatValue3 = valueValue2["format"];
+                                                        if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string formatInstance2 = ((string)formatValue3);
+                                                            dateTimePartitionValueInstance2.Format = formatInstance2;
+                                                        }
+                                                        partitionInstance2.Value = dateTimePartitionValueInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken formatValue4 = locationValue["format"];
+                                        if (formatValue4 != null && formatValue4.Type != JTokenType.Null)
+                                        {
+                                            string typeName5 = ((string)formatValue4["type"]);
+                                            if (typeName5 == "TextFormat")
+                                            {
+                                                TextFormat textFormatInstance2 = new TextFormat();
+                                                
+                                                JToken columnDelimiterValue2 = formatValue4["columnDelimiter"];
+                                                if (columnDelimiterValue2 != null && columnDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string columnDelimiterInstance2 = ((string)columnDelimiterValue2);
+                                                    textFormatInstance2.ColumnDelimiter = columnDelimiterInstance2;
+                                                }
+                                                
+                                                JToken rowDelimiterValue2 = formatValue4["rowDelimiter"];
+                                                if (rowDelimiterValue2 != null && rowDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string rowDelimiterInstance2 = ((string)rowDelimiterValue2);
+                                                    textFormatInstance2.RowDelimiter = rowDelimiterInstance2;
+                                                }
+                                                
+                                                JToken escapeCharValue2 = formatValue4["escapeChar"];
+                                                if (escapeCharValue2 != null && escapeCharValue2.Type != JTokenType.Null)
+                                                {
+                                                    string escapeCharInstance2 = ((string)escapeCharValue2);
+                                                    textFormatInstance2.EscapeChar = escapeCharInstance2;
+                                                }
+                                                
+                                                JToken nullValueValue2 = formatValue4["nullValue"];
+                                                if (nullValueValue2 != null && nullValueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nullValueInstance2 = ((string)nullValueValue2);
+                                                    textFormatInstance2.NullValue = nullValueInstance2;
+                                                }
+                                                
+                                                JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
+                                                JToken serializerValue3 = formatValue4["serializer"];
+                                                if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance3 = ((string)serializerValue3);
+                                                    textFormatInstance2.Serializer = serializerInstance3;
+                                                }
+                                                
+                                                JToken deserializerValue3 = formatValue4["deserializer"];
+                                                if (deserializerValue3 != null && deserializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance3 = ((string)deserializerValue3);
+                                                    textFormatInstance2.Deserializer = deserializerInstance3;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = textFormatInstance2;
+                                            }
+                                            if (typeName5 == "AvroFormat")
+                                            {
+                                                AvroFormat avroFormatInstance2 = new AvroFormat();
+                                                
+                                                JToken serializerValue4 = formatValue4["serializer"];
+                                                if (serializerValue4 != null && serializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance4 = ((string)serializerValue4);
+                                                    avroFormatInstance2.Serializer = serializerInstance4;
+                                                }
+                                                
+                                                JToken deserializerValue4 = formatValue4["deserializer"];
+                                                if (deserializerValue4 != null && deserializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance4 = ((string)deserializerValue4);
+                                                    avroFormatInstance2.Deserializer = deserializerInstance4;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = avroFormatInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken fileFilterValue = locationValue["fileFilter"];
+                                        if (fileFilterValue != null && fileFilterValue.Type != JTokenType.Null)
+                                        {
+                                            string fileFilterInstance = ((string)fileFilterValue);
+                                            onPremisesFileSystemLocationInstance.FileFilter = fileFilterInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
+                                            onPremisesFileSystemLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                        }
+                                        propertiesInstance.Location = onPremisesFileSystemLocationInstance;
+                                    }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -1527,11 +2039,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
-                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -1638,6 +2150,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -2432,6 +2951,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue2["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue2["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -2533,6 +3059,179 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesSqlServerTableLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesFileSystemLocation")
+                                    {
+                                        OnPremisesFileSystemLocation onPremisesFileSystemLocationInstance = new OnPremisesFileSystemLocation();
+                                        
+                                        JToken folderPathValue2 = locationValue["folderPath"];
+                                        if (folderPathValue2 != null && folderPathValue2.Type != JTokenType.Null)
+                                        {
+                                            string folderPathInstance2 = ((string)folderPathValue2);
+                                            onPremisesFileSystemLocationInstance.FolderPath = folderPathInstance2;
+                                        }
+                                        
+                                        JToken fileNameValue2 = locationValue["fileName"];
+                                        if (fileNameValue2 != null && fileNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string fileNameInstance2 = ((string)fileNameValue2);
+                                            onPremisesFileSystemLocationInstance.FileName = fileNameInstance2;
+                                        }
+                                        
+                                        JToken partitionedByArray2 = locationValue["partitionedBy"];
+                                        if (partitionedByArray2 != null && partitionedByArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken partitionedByValue2 in ((JArray)partitionedByArray2))
+                                            {
+                                                Partition partitionInstance2 = new Partition();
+                                                onPremisesFileSystemLocationInstance.PartitionedBy.Add(partitionInstance2);
+                                                
+                                                JToken nameValue4 = partitionedByValue2["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    partitionInstance2.Name = nameInstance4;
+                                                }
+                                                
+                                                JToken valueValue2 = partitionedByValue2["value"];
+                                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeName4 = ((string)valueValue2["type"]);
+                                                    if (typeName4 == "DateTime")
+                                                    {
+                                                        DateTimePartitionValue dateTimePartitionValueInstance2 = new DateTimePartitionValue();
+                                                        
+                                                        JToken dateValue2 = valueValue2["date"];
+                                                        if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string dateInstance2 = ((string)dateValue2);
+                                                            dateTimePartitionValueInstance2.Date = dateInstance2;
+                                                        }
+                                                        
+                                                        JToken formatValue3 = valueValue2["format"];
+                                                        if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string formatInstance2 = ((string)formatValue3);
+                                                            dateTimePartitionValueInstance2.Format = formatInstance2;
+                                                        }
+                                                        partitionInstance2.Value = dateTimePartitionValueInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken formatValue4 = locationValue["format"];
+                                        if (formatValue4 != null && formatValue4.Type != JTokenType.Null)
+                                        {
+                                            string typeName5 = ((string)formatValue4["type"]);
+                                            if (typeName5 == "TextFormat")
+                                            {
+                                                TextFormat textFormatInstance2 = new TextFormat();
+                                                
+                                                JToken columnDelimiterValue2 = formatValue4["columnDelimiter"];
+                                                if (columnDelimiterValue2 != null && columnDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string columnDelimiterInstance2 = ((string)columnDelimiterValue2);
+                                                    textFormatInstance2.ColumnDelimiter = columnDelimiterInstance2;
+                                                }
+                                                
+                                                JToken rowDelimiterValue2 = formatValue4["rowDelimiter"];
+                                                if (rowDelimiterValue2 != null && rowDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string rowDelimiterInstance2 = ((string)rowDelimiterValue2);
+                                                    textFormatInstance2.RowDelimiter = rowDelimiterInstance2;
+                                                }
+                                                
+                                                JToken escapeCharValue2 = formatValue4["escapeChar"];
+                                                if (escapeCharValue2 != null && escapeCharValue2.Type != JTokenType.Null)
+                                                {
+                                                    string escapeCharInstance2 = ((string)escapeCharValue2);
+                                                    textFormatInstance2.EscapeChar = escapeCharInstance2;
+                                                }
+                                                
+                                                JToken nullValueValue2 = formatValue4["nullValue"];
+                                                if (nullValueValue2 != null && nullValueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nullValueInstance2 = ((string)nullValueValue2);
+                                                    textFormatInstance2.NullValue = nullValueInstance2;
+                                                }
+                                                
+                                                JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
+                                                JToken serializerValue3 = formatValue4["serializer"];
+                                                if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance3 = ((string)serializerValue3);
+                                                    textFormatInstance2.Serializer = serializerInstance3;
+                                                }
+                                                
+                                                JToken deserializerValue3 = formatValue4["deserializer"];
+                                                if (deserializerValue3 != null && deserializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance3 = ((string)deserializerValue3);
+                                                    textFormatInstance2.Deserializer = deserializerInstance3;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = textFormatInstance2;
+                                            }
+                                            if (typeName5 == "AvroFormat")
+                                            {
+                                                AvroFormat avroFormatInstance2 = new AvroFormat();
+                                                
+                                                JToken serializerValue4 = formatValue4["serializer"];
+                                                if (serializerValue4 != null && serializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance4 = ((string)serializerValue4);
+                                                    avroFormatInstance2.Serializer = serializerInstance4;
+                                                }
+                                                
+                                                JToken deserializerValue4 = formatValue4["deserializer"];
+                                                if (deserializerValue4 != null && deserializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance4 = ((string)deserializerValue4);
+                                                    avroFormatInstance2.Deserializer = deserializerInstance4;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = avroFormatInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken fileFilterValue = locationValue["fileFilter"];
+                                        if (fileFilterValue != null && fileFilterValue.Type != JTokenType.Null)
+                                        {
+                                            string fileFilterInstance = ((string)fileFilterValue);
+                                            onPremisesFileSystemLocationInstance.FileFilter = fileFilterInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
+                                            onPremisesFileSystemLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                        }
+                                        propertiesInstance.Location = onPremisesFileSystemLocationInstance;
+                                    }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -2548,11 +3247,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
-                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -2659,6 +3358,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -2996,6 +3702,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue2["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue2["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -3097,6 +3810,179 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesSqlServerTableLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesFileSystemLocation")
+                                    {
+                                        OnPremisesFileSystemLocation onPremisesFileSystemLocationInstance = new OnPremisesFileSystemLocation();
+                                        
+                                        JToken folderPathValue2 = locationValue["folderPath"];
+                                        if (folderPathValue2 != null && folderPathValue2.Type != JTokenType.Null)
+                                        {
+                                            string folderPathInstance2 = ((string)folderPathValue2);
+                                            onPremisesFileSystemLocationInstance.FolderPath = folderPathInstance2;
+                                        }
+                                        
+                                        JToken fileNameValue2 = locationValue["fileName"];
+                                        if (fileNameValue2 != null && fileNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string fileNameInstance2 = ((string)fileNameValue2);
+                                            onPremisesFileSystemLocationInstance.FileName = fileNameInstance2;
+                                        }
+                                        
+                                        JToken partitionedByArray2 = locationValue["partitionedBy"];
+                                        if (partitionedByArray2 != null && partitionedByArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken partitionedByValue2 in ((JArray)partitionedByArray2))
+                                            {
+                                                Partition partitionInstance2 = new Partition();
+                                                onPremisesFileSystemLocationInstance.PartitionedBy.Add(partitionInstance2);
+                                                
+                                                JToken nameValue4 = partitionedByValue2["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    partitionInstance2.Name = nameInstance4;
+                                                }
+                                                
+                                                JToken valueValue2 = partitionedByValue2["value"];
+                                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeName4 = ((string)valueValue2["type"]);
+                                                    if (typeName4 == "DateTime")
+                                                    {
+                                                        DateTimePartitionValue dateTimePartitionValueInstance2 = new DateTimePartitionValue();
+                                                        
+                                                        JToken dateValue2 = valueValue2["date"];
+                                                        if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string dateInstance2 = ((string)dateValue2);
+                                                            dateTimePartitionValueInstance2.Date = dateInstance2;
+                                                        }
+                                                        
+                                                        JToken formatValue3 = valueValue2["format"];
+                                                        if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string formatInstance2 = ((string)formatValue3);
+                                                            dateTimePartitionValueInstance2.Format = formatInstance2;
+                                                        }
+                                                        partitionInstance2.Value = dateTimePartitionValueInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken formatValue4 = locationValue["format"];
+                                        if (formatValue4 != null && formatValue4.Type != JTokenType.Null)
+                                        {
+                                            string typeName5 = ((string)formatValue4["type"]);
+                                            if (typeName5 == "TextFormat")
+                                            {
+                                                TextFormat textFormatInstance2 = new TextFormat();
+                                                
+                                                JToken columnDelimiterValue2 = formatValue4["columnDelimiter"];
+                                                if (columnDelimiterValue2 != null && columnDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string columnDelimiterInstance2 = ((string)columnDelimiterValue2);
+                                                    textFormatInstance2.ColumnDelimiter = columnDelimiterInstance2;
+                                                }
+                                                
+                                                JToken rowDelimiterValue2 = formatValue4["rowDelimiter"];
+                                                if (rowDelimiterValue2 != null && rowDelimiterValue2.Type != JTokenType.Null)
+                                                {
+                                                    string rowDelimiterInstance2 = ((string)rowDelimiterValue2);
+                                                    textFormatInstance2.RowDelimiter = rowDelimiterInstance2;
+                                                }
+                                                
+                                                JToken escapeCharValue2 = formatValue4["escapeChar"];
+                                                if (escapeCharValue2 != null && escapeCharValue2.Type != JTokenType.Null)
+                                                {
+                                                    string escapeCharInstance2 = ((string)escapeCharValue2);
+                                                    textFormatInstance2.EscapeChar = escapeCharInstance2;
+                                                }
+                                                
+                                                JToken nullValueValue2 = formatValue4["nullValue"];
+                                                if (nullValueValue2 != null && nullValueValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nullValueInstance2 = ((string)nullValueValue2);
+                                                    textFormatInstance2.NullValue = nullValueInstance2;
+                                                }
+                                                
+                                                JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
+                                                JToken serializerValue3 = formatValue4["serializer"];
+                                                if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance3 = ((string)serializerValue3);
+                                                    textFormatInstance2.Serializer = serializerInstance3;
+                                                }
+                                                
+                                                JToken deserializerValue3 = formatValue4["deserializer"];
+                                                if (deserializerValue3 != null && deserializerValue3.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance3 = ((string)deserializerValue3);
+                                                    textFormatInstance2.Deserializer = deserializerInstance3;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = textFormatInstance2;
+                                            }
+                                            if (typeName5 == "AvroFormat")
+                                            {
+                                                AvroFormat avroFormatInstance2 = new AvroFormat();
+                                                
+                                                JToken serializerValue4 = formatValue4["serializer"];
+                                                if (serializerValue4 != null && serializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string serializerInstance4 = ((string)serializerValue4);
+                                                    avroFormatInstance2.Serializer = serializerInstance4;
+                                                }
+                                                
+                                                JToken deserializerValue4 = formatValue4["deserializer"];
+                                                if (deserializerValue4 != null && deserializerValue4.Type != JTokenType.Null)
+                                                {
+                                                    string deserializerInstance4 = ((string)deserializerValue4);
+                                                    avroFormatInstance2.Deserializer = deserializerInstance4;
+                                                }
+                                                onPremisesFileSystemLocationInstance.Format = avroFormatInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken fileFilterValue = locationValue["fileFilter"];
+                                        if (fileFilterValue != null && fileFilterValue.Type != JTokenType.Null)
+                                        {
+                                            string fileFilterInstance = ((string)fileFilterValue);
+                                            onPremisesFileSystemLocationInstance.FileFilter = fileFilterInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
+                                            onPremisesFileSystemLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                        }
+                                        propertiesInstance.Location = onPremisesFileSystemLocationInstance;
+                                    }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -3112,11 +3998,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
-                                        if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -3223,6 +4109,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -3627,6 +4520,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             textFormatInstance.NullValue = nullValueInstance;
                                                         }
                                                         
+                                                        JToken encodingNameValue = formatValue2["encodingName"];
+                                                        if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance = ((string)encodingNameValue);
+                                                            textFormatInstance.EncodingName = encodingNameInstance;
+                                                        }
+                                                        
                                                         JToken serializerValue = formatValue2["serializer"];
                                                         if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                         {
@@ -3728,6 +4628,179 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 propertiesInstance.Location = onPremisesSqlServerTableLocationInstance;
                                             }
+                                            if (typeName == "OnPremisesFileSystemLocation")
+                                            {
+                                                OnPremisesFileSystemLocation onPremisesFileSystemLocationInstance = new OnPremisesFileSystemLocation();
+                                                
+                                                JToken folderPathValue2 = locationValue["folderPath"];
+                                                if (folderPathValue2 != null && folderPathValue2.Type != JTokenType.Null)
+                                                {
+                                                    string folderPathInstance2 = ((string)folderPathValue2);
+                                                    onPremisesFileSystemLocationInstance.FolderPath = folderPathInstance2;
+                                                }
+                                                
+                                                JToken fileNameValue2 = locationValue["fileName"];
+                                                if (fileNameValue2 != null && fileNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string fileNameInstance2 = ((string)fileNameValue2);
+                                                    onPremisesFileSystemLocationInstance.FileName = fileNameInstance2;
+                                                }
+                                                
+                                                JToken partitionedByArray2 = locationValue["partitionedBy"];
+                                                if (partitionedByArray2 != null && partitionedByArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken partitionedByValue2 in ((JArray)partitionedByArray2))
+                                                    {
+                                                        Partition partitionInstance2 = new Partition();
+                                                        onPremisesFileSystemLocationInstance.PartitionedBy.Add(partitionInstance2);
+                                                        
+                                                        JToken nameValue4 = partitionedByValue2["name"];
+                                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance4 = ((string)nameValue4);
+                                                            partitionInstance2.Name = nameInstance4;
+                                                        }
+                                                        
+                                                        JToken valueValue3 = partitionedByValue2["value"];
+                                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string typeName4 = ((string)valueValue3["type"]);
+                                                            if (typeName4 == "DateTime")
+                                                            {
+                                                                DateTimePartitionValue dateTimePartitionValueInstance2 = new DateTimePartitionValue();
+                                                                
+                                                                JToken dateValue2 = valueValue3["date"];
+                                                                if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string dateInstance2 = ((string)dateValue2);
+                                                                    dateTimePartitionValueInstance2.Date = dateInstance2;
+                                                                }
+                                                                
+                                                                JToken formatValue3 = valueValue3["format"];
+                                                                if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
+                                                                {
+                                                                    string formatInstance2 = ((string)formatValue3);
+                                                                    dateTimePartitionValueInstance2.Format = formatInstance2;
+                                                                }
+                                                                partitionInstance2.Value = dateTimePartitionValueInstance2;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken formatValue4 = locationValue["format"];
+                                                if (formatValue4 != null && formatValue4.Type != JTokenType.Null)
+                                                {
+                                                    string typeName5 = ((string)formatValue4["type"]);
+                                                    if (typeName5 == "TextFormat")
+                                                    {
+                                                        TextFormat textFormatInstance2 = new TextFormat();
+                                                        
+                                                        JToken columnDelimiterValue2 = formatValue4["columnDelimiter"];
+                                                        if (columnDelimiterValue2 != null && columnDelimiterValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string columnDelimiterInstance2 = ((string)columnDelimiterValue2);
+                                                            textFormatInstance2.ColumnDelimiter = columnDelimiterInstance2;
+                                                        }
+                                                        
+                                                        JToken rowDelimiterValue2 = formatValue4["rowDelimiter"];
+                                                        if (rowDelimiterValue2 != null && rowDelimiterValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string rowDelimiterInstance2 = ((string)rowDelimiterValue2);
+                                                            textFormatInstance2.RowDelimiter = rowDelimiterInstance2;
+                                                        }
+                                                        
+                                                        JToken escapeCharValue2 = formatValue4["escapeChar"];
+                                                        if (escapeCharValue2 != null && escapeCharValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string escapeCharInstance2 = ((string)escapeCharValue2);
+                                                            textFormatInstance2.EscapeChar = escapeCharInstance2;
+                                                        }
+                                                        
+                                                        JToken nullValueValue2 = formatValue4["nullValue"];
+                                                        if (nullValueValue2 != null && nullValueValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nullValueInstance2 = ((string)nullValueValue2);
+                                                            textFormatInstance2.NullValue = nullValueInstance2;
+                                                        }
+                                                        
+                                                        JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                        if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                            textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                        }
+                                                        
+                                                        JToken serializerValue3 = formatValue4["serializer"];
+                                                        if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string serializerInstance3 = ((string)serializerValue3);
+                                                            textFormatInstance2.Serializer = serializerInstance3;
+                                                        }
+                                                        
+                                                        JToken deserializerValue3 = formatValue4["deserializer"];
+                                                        if (deserializerValue3 != null && deserializerValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string deserializerInstance3 = ((string)deserializerValue3);
+                                                            textFormatInstance2.Deserializer = deserializerInstance3;
+                                                        }
+                                                        onPremisesFileSystemLocationInstance.Format = textFormatInstance2;
+                                                    }
+                                                    if (typeName5 == "AvroFormat")
+                                                    {
+                                                        AvroFormat avroFormatInstance2 = new AvroFormat();
+                                                        
+                                                        JToken serializerValue4 = formatValue4["serializer"];
+                                                        if (serializerValue4 != null && serializerValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string serializerInstance4 = ((string)serializerValue4);
+                                                            avroFormatInstance2.Serializer = serializerInstance4;
+                                                        }
+                                                        
+                                                        JToken deserializerValue4 = formatValue4["deserializer"];
+                                                        if (deserializerValue4 != null && deserializerValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string deserializerInstance4 = ((string)deserializerValue4);
+                                                            avroFormatInstance2.Deserializer = deserializerInstance4;
+                                                        }
+                                                        onPremisesFileSystemLocationInstance.Format = avroFormatInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken fileFilterValue = locationValue["fileFilter"];
+                                                if (fileFilterValue != null && fileFilterValue.Type != JTokenType.Null)
+                                                {
+                                                    string fileFilterInstance = ((string)fileFilterValue);
+                                                    onPremisesFileSystemLocationInstance.FileFilter = fileFilterInstance;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
+                                                    onPremisesFileSystemLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                                }
+                                                propertiesInstance.Location = onPremisesFileSystemLocationInstance;
+                                            }
+                                            if (typeName == "OnPremisesOracleTableLocation")
+                                            {
+                                                OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                                
+                                                JToken tableNameValue4 = locationValue["tableName"];
+                                                if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string tableNameInstance4 = ((string)tableNameValue4);
+                                                    onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                                    onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                                }
+                                                propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                            }
                                             if (typeName == "CustomLocation")
                                             {
                                                 CustomLocation customLocationInstance = new CustomLocation();
@@ -3743,11 +4816,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
-                                                if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                                JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                                 {
-                                                    string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
-                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                                    string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                                 }
                                                 propertiesInstance.Location = customLocationInstance;
                                             }
@@ -3854,6 +4927,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                                     validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                }
+                                                
+                                                JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                {
+                                                    string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                    validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                                 }
                                             }
                                             
@@ -4208,6 +5288,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             textFormatInstance.NullValue = nullValueInstance;
                                                         }
                                                         
+                                                        JToken encodingNameValue = formatValue2["encodingName"];
+                                                        if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance = ((string)encodingNameValue);
+                                                            textFormatInstance.EncodingName = encodingNameInstance;
+                                                        }
+                                                        
                                                         JToken serializerValue = formatValue2["serializer"];
                                                         if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                         {
@@ -4309,6 +5396,179 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 propertiesInstance.Location = onPremisesSqlServerTableLocationInstance;
                                             }
+                                            if (typeName == "OnPremisesFileSystemLocation")
+                                            {
+                                                OnPremisesFileSystemLocation onPremisesFileSystemLocationInstance = new OnPremisesFileSystemLocation();
+                                                
+                                                JToken folderPathValue2 = locationValue["folderPath"];
+                                                if (folderPathValue2 != null && folderPathValue2.Type != JTokenType.Null)
+                                                {
+                                                    string folderPathInstance2 = ((string)folderPathValue2);
+                                                    onPremisesFileSystemLocationInstance.FolderPath = folderPathInstance2;
+                                                }
+                                                
+                                                JToken fileNameValue2 = locationValue["fileName"];
+                                                if (fileNameValue2 != null && fileNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string fileNameInstance2 = ((string)fileNameValue2);
+                                                    onPremisesFileSystemLocationInstance.FileName = fileNameInstance2;
+                                                }
+                                                
+                                                JToken partitionedByArray2 = locationValue["partitionedBy"];
+                                                if (partitionedByArray2 != null && partitionedByArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken partitionedByValue2 in ((JArray)partitionedByArray2))
+                                                    {
+                                                        Partition partitionInstance2 = new Partition();
+                                                        onPremisesFileSystemLocationInstance.PartitionedBy.Add(partitionInstance2);
+                                                        
+                                                        JToken nameValue4 = partitionedByValue2["name"];
+                                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance4 = ((string)nameValue4);
+                                                            partitionInstance2.Name = nameInstance4;
+                                                        }
+                                                        
+                                                        JToken valueValue3 = partitionedByValue2["value"];
+                                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string typeName4 = ((string)valueValue3["type"]);
+                                                            if (typeName4 == "DateTime")
+                                                            {
+                                                                DateTimePartitionValue dateTimePartitionValueInstance2 = new DateTimePartitionValue();
+                                                                
+                                                                JToken dateValue2 = valueValue3["date"];
+                                                                if (dateValue2 != null && dateValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string dateInstance2 = ((string)dateValue2);
+                                                                    dateTimePartitionValueInstance2.Date = dateInstance2;
+                                                                }
+                                                                
+                                                                JToken formatValue3 = valueValue3["format"];
+                                                                if (formatValue3 != null && formatValue3.Type != JTokenType.Null)
+                                                                {
+                                                                    string formatInstance2 = ((string)formatValue3);
+                                                                    dateTimePartitionValueInstance2.Format = formatInstance2;
+                                                                }
+                                                                partitionInstance2.Value = dateTimePartitionValueInstance2;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken formatValue4 = locationValue["format"];
+                                                if (formatValue4 != null && formatValue4.Type != JTokenType.Null)
+                                                {
+                                                    string typeName5 = ((string)formatValue4["type"]);
+                                                    if (typeName5 == "TextFormat")
+                                                    {
+                                                        TextFormat textFormatInstance2 = new TextFormat();
+                                                        
+                                                        JToken columnDelimiterValue2 = formatValue4["columnDelimiter"];
+                                                        if (columnDelimiterValue2 != null && columnDelimiterValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string columnDelimiterInstance2 = ((string)columnDelimiterValue2);
+                                                            textFormatInstance2.ColumnDelimiter = columnDelimiterInstance2;
+                                                        }
+                                                        
+                                                        JToken rowDelimiterValue2 = formatValue4["rowDelimiter"];
+                                                        if (rowDelimiterValue2 != null && rowDelimiterValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string rowDelimiterInstance2 = ((string)rowDelimiterValue2);
+                                                            textFormatInstance2.RowDelimiter = rowDelimiterInstance2;
+                                                        }
+                                                        
+                                                        JToken escapeCharValue2 = formatValue4["escapeChar"];
+                                                        if (escapeCharValue2 != null && escapeCharValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string escapeCharInstance2 = ((string)escapeCharValue2);
+                                                            textFormatInstance2.EscapeChar = escapeCharInstance2;
+                                                        }
+                                                        
+                                                        JToken nullValueValue2 = formatValue4["nullValue"];
+                                                        if (nullValueValue2 != null && nullValueValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nullValueInstance2 = ((string)nullValueValue2);
+                                                            textFormatInstance2.NullValue = nullValueInstance2;
+                                                        }
+                                                        
+                                                        JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                        if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                            textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                        }
+                                                        
+                                                        JToken serializerValue3 = formatValue4["serializer"];
+                                                        if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string serializerInstance3 = ((string)serializerValue3);
+                                                            textFormatInstance2.Serializer = serializerInstance3;
+                                                        }
+                                                        
+                                                        JToken deserializerValue3 = formatValue4["deserializer"];
+                                                        if (deserializerValue3 != null && deserializerValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string deserializerInstance3 = ((string)deserializerValue3);
+                                                            textFormatInstance2.Deserializer = deserializerInstance3;
+                                                        }
+                                                        onPremisesFileSystemLocationInstance.Format = textFormatInstance2;
+                                                    }
+                                                    if (typeName5 == "AvroFormat")
+                                                    {
+                                                        AvroFormat avroFormatInstance2 = new AvroFormat();
+                                                        
+                                                        JToken serializerValue4 = formatValue4["serializer"];
+                                                        if (serializerValue4 != null && serializerValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string serializerInstance4 = ((string)serializerValue4);
+                                                            avroFormatInstance2.Serializer = serializerInstance4;
+                                                        }
+                                                        
+                                                        JToken deserializerValue4 = formatValue4["deserializer"];
+                                                        if (deserializerValue4 != null && deserializerValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string deserializerInstance4 = ((string)deserializerValue4);
+                                                            avroFormatInstance2.Deserializer = deserializerInstance4;
+                                                        }
+                                                        onPremisesFileSystemLocationInstance.Format = avroFormatInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken fileFilterValue = locationValue["fileFilter"];
+                                                if (fileFilterValue != null && fileFilterValue.Type != JTokenType.Null)
+                                                {
+                                                    string fileFilterInstance = ((string)fileFilterValue);
+                                                    onPremisesFileSystemLocationInstance.FileFilter = fileFilterInstance;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
+                                                    onPremisesFileSystemLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                                }
+                                                propertiesInstance.Location = onPremisesFileSystemLocationInstance;
+                                            }
+                                            if (typeName == "OnPremisesOracleTableLocation")
+                                            {
+                                                OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                                
+                                                JToken tableNameValue4 = locationValue["tableName"];
+                                                if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string tableNameInstance4 = ((string)tableNameValue4);
+                                                    onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                                    onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                                }
+                                                propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                            }
                                             if (typeName == "CustomLocation")
                                             {
                                                 CustomLocation customLocationInstance = new CustomLocation();
@@ -4324,11 +5584,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken linkedServiceNameValue5 = locationValue["linkedServiceName"];
-                                                if (linkedServiceNameValue5 != null && linkedServiceNameValue5.Type != JTokenType.Null)
+                                                JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                                 {
-                                                    string linkedServiceNameInstance5 = ((string)linkedServiceNameValue5);
-                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance5;
+                                                    string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                                 }
                                                 propertiesInstance.Location = customLocationInstance;
                                             }
@@ -4435,6 +5695,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                                     validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                }
+                                                
+                                                JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                {
+                                                    string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                    validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                                 }
                                             }
                                             

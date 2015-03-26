@@ -1526,14 +1526,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement dateCreatedElement = hostedServicePropertiesElement.Element(XName.Get("DateCreated", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateCreatedElement != null)
                                 {
-                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateCreated = dateCreatedInstance;
                                 }
                                 
                                 XElement dateLastModifiedElement = hostedServicePropertiesElement.Element(XName.Get("DateLastModified", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateLastModifiedElement != null)
                                 {
-                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateLastModified = dateLastModifiedInstance;
                                 }
                                 
@@ -1928,7 +1928,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement timestampElement = guestAgentStatusElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
                                                 if (timestampElement != null && !string.IsNullOrEmpty(timestampElement.Value))
                                                 {
-                                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture);
+                                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                     guestAgentStatusInstance.Timestamp = timestampInstance;
                                                 }
                                                 
@@ -2087,14 +2087,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         XElement timestampElement2 = extensionSettingStatusElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
                                                         if (timestampElement2 != null && !string.IsNullOrEmpty(timestampElement2.Value))
                                                         {
-                                                            DateTime timestampInstance2 = DateTime.Parse(timestampElement2.Value, CultureInfo.InvariantCulture);
+                                                            DateTime timestampInstance2 = DateTime.Parse(timestampElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                             extensionSettingStatusInstance.Timestamp = timestampInstance2;
                                                         }
                                                         
                                                         XElement configurationAppliedTimeElement = extensionSettingStatusElement.Element(XName.Get("ConfigurationAppliedTime", "http://schemas.microsoft.com/windowsazure"));
                                                         if (configurationAppliedTimeElement != null && !string.IsNullOrEmpty(configurationAppliedTimeElement.Value))
                                                         {
-                                                            DateTime configurationAppliedTimeInstance = DateTime.Parse(configurationAppliedTimeElement.Value, CultureInfo.InvariantCulture);
+                                                            DateTime configurationAppliedTimeInstance = DateTime.Parse(configurationAppliedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                             extensionSettingStatusInstance.ConfigurationAppliedTime = configurationAppliedTimeInstance;
                                                         }
                                                         
@@ -3166,11 +3166,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     oSVirtualHardDiskInstance.OperatingSystem = osInstance;
                                                 }
                                                 
+                                                XElement remoteSourceImageLinkElement = oSVirtualHardDiskElement.Element(XName.Get("RemoteSourceImageLink", "http://schemas.microsoft.com/windowsazure"));
+                                                if (remoteSourceImageLinkElement != null)
+                                                {
+                                                    Uri remoteSourceImageLinkInstance = TypeConversion.TryParseUri(remoteSourceImageLinkElement.Value);
+                                                    oSVirtualHardDiskInstance.RemoteSourceImageLink = remoteSourceImageLinkInstance;
+                                                }
+                                                
                                                 XElement iOTypeElement2 = oSVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
                                                 if (iOTypeElement2 != null)
                                                 {
                                                     string iOTypeInstance2 = iOTypeElement2.Value;
                                                     oSVirtualHardDiskInstance.IOType = iOTypeInstance2;
+                                                }
+                                                
+                                                XElement resizedSizeInGBElement = oSVirtualHardDiskElement.Element(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                                if (resizedSizeInGBElement != null && !string.IsNullOrEmpty(resizedSizeInGBElement.Value))
+                                                {
+                                                    int resizedSizeInGBInstance = int.Parse(resizedSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                                    oSVirtualHardDiskInstance.ResizedSizeInGB = resizedSizeInGBInstance;
                                                 }
                                             }
                                             
@@ -3193,6 +3207,51 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             {
                                                 bool provisionGuestAgentInstance = bool.Parse(provisionGuestAgentElement.Value);
                                                 roleInstance.ProvisionGuestAgent = provisionGuestAgentInstance;
+                                            }
+                                            
+                                            XElement vMImageInputElement = roleListElement.Element(XName.Get("VMImageInput", "http://schemas.microsoft.com/windowsazure"));
+                                            if (vMImageInputElement != null)
+                                            {
+                                                VMImageInput vMImageInputInstance = new VMImageInput();
+                                                roleInstance.VMImageInput = vMImageInputInstance;
+                                                
+                                                XElement oSDiskConfigurationElement = vMImageInputElement.Element(XName.Get("OSDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                                if (oSDiskConfigurationElement != null)
+                                                {
+                                                    OSDiskConfiguration oSDiskConfigurationInstance = new OSDiskConfiguration();
+                                                    vMImageInputInstance.OSDiskConfiguration = oSDiskConfigurationInstance;
+                                                    
+                                                    XElement resizedSizeInGBElement2 = oSDiskConfigurationElement.Element(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (resizedSizeInGBElement2 != null && !string.IsNullOrEmpty(resizedSizeInGBElement2.Value))
+                                                    {
+                                                        int resizedSizeInGBInstance2 = int.Parse(resizedSizeInGBElement2.Value, CultureInfo.InvariantCulture);
+                                                        oSDiskConfigurationInstance.ResizedSizeInGB = resizedSizeInGBInstance2;
+                                                    }
+                                                }
+                                                
+                                                XElement dataDiskConfigurationsSequenceElement = vMImageInputElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                                if (dataDiskConfigurationsSequenceElement != null)
+                                                {
+                                                    foreach (XElement dataDiskConfigurationsElement in dataDiskConfigurationsSequenceElement.Elements(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure")))
+                                                    {
+                                                        DataDiskConfiguration dataDiskConfigurationInstance = new DataDiskConfiguration();
+                                                        vMImageInputInstance.DataDiskConfigurations.Add(dataDiskConfigurationInstance);
+                                                        
+                                                        XElement nameElement11 = dataDiskConfigurationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (nameElement11 != null)
+                                                        {
+                                                            string nameInstance11 = nameElement11.Value;
+                                                            dataDiskConfigurationInstance.DiskName = nameInstance11;
+                                                        }
+                                                        
+                                                        XElement resizedSizeInGBElement3 = dataDiskConfigurationsElement.Element(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (resizedSizeInGBElement3 != null && !string.IsNullOrEmpty(resizedSizeInGBElement3.Value))
+                                                        {
+                                                            int resizedSizeInGBInstance3 = int.Parse(resizedSizeInGBElement3.Value, CultureInfo.InvariantCulture);
+                                                            dataDiskConfigurationInstance.ResizedSizeInGB = resizedSizeInGBInstance3;
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -3221,7 +3280,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement createdTimeElement = deploymentsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (createdTimeElement != null)
                                     {
-                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         deploymentInstance.CreatedTime = createdTimeInstance;
                                     }
                                     
@@ -3259,14 +3318,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement startTimeElement = persistentVMDowntimeElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (startTimeElement != null)
                                         {
-                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             persistentVMDowntimeInstance.StartTime = startTimeInstance;
                                         }
                                         
                                         XElement endTimeElement = persistentVMDowntimeElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (endTimeElement != null)
                                         {
-                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             persistentVMDowntimeInstance.EndTime = endTimeInstance;
                                         }
                                         
@@ -3293,11 +3352,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 virtualIPInstance.Address = addressInstance3;
                                             }
                                             
-                                            XElement nameElement11 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                            if (nameElement11 != null)
+                                            XElement nameElement12 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                            if (nameElement12 != null)
                                             {
-                                                string nameInstance11 = nameElement11.Value;
-                                                virtualIPInstance.Name = nameInstance11;
+                                                string nameInstance12 = nameElement12.Value;
+                                                virtualIPInstance.Name = nameInstance12;
                                             }
                                             
                                             XElement isDnsProgrammedElement = virtualIPsElement.Element(XName.Get("IsDnsProgrammed", "http://schemas.microsoft.com/windowsazure"));
@@ -3323,11 +3382,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 DnsServer dnsServerInstance = new DnsServer();
                                                 dnsInstance.DnsServers.Add(dnsServerInstance);
                                                 
-                                                XElement nameElement12 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                                if (nameElement12 != null)
+                                                XElement nameElement13 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                                if (nameElement13 != null)
                                                 {
-                                                    string nameInstance12 = nameElement12.Value;
-                                                    dnsServerInstance.Name = nameInstance12;
+                                                    string nameInstance13 = nameElement13.Value;
+                                                    dnsServerInstance.Name = nameInstance13;
                                                 }
                                                 
                                                 XElement addressElement4 = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
@@ -3400,14 +3459,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement dateCreatedElement = hostedServicePropertiesElement.Element(XName.Get("DateCreated", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateCreatedElement != null)
                                 {
-                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateCreated = dateCreatedInstance;
                                 }
                                 
                                 XElement dateLastModifiedElement = hostedServicePropertiesElement.Element(XName.Get("DateLastModified", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateLastModifiedElement != null)
                                 {
-                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateLastModified = dateLastModifiedInstance;
                                 }
                                 
@@ -3852,14 +3911,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement dateCreatedElement = hostedServicePropertiesElement.Element(XName.Get("DateCreated", "http://schemas.microsoft.com/windowsazure"));
                                     if (dateCreatedElement != null)
                                     {
-                                        DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         hostedServicePropertiesInstance.DateCreated = dateCreatedInstance;
                                     }
                                     
                                     XElement dateLastModifiedElement = hostedServicePropertiesElement.Element(XName.Get("DateLastModified", "http://schemas.microsoft.com/windowsazure"));
                                     if (dateLastModifiedElement != null)
                                     {
-                                        DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         hostedServicePropertiesInstance.DateLastModified = dateLastModifiedInstance;
                                     }
                                     
@@ -4232,7 +4291,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publishedDateElement = extensionImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                                 if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                                 {
-                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     extensionImageInstance.PublishedDate = publishedDateInstance;
                                 }
                                 
@@ -4886,7 +4945,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publishedDateElement = extensionImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                                 if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                                 {
-                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     extensionImageInstance.PublishedDate = publishedDateInstance;
                                 }
                                 

@@ -40,5 +40,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// after a custom time.
         /// </summary>
         public const string CustomTime = "CustomTime";
+        
+        /// <summary>
+        /// LastOutputEventTime. The job will start processing the data which
+        /// arrives after the last output event time.
+        /// </summary>
+        public const string LastOutputEventTime = "LastOutputEventTime";
     }
 }

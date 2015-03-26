@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.4.1.0")]
+[assembly: AssemblyFileVersion("0.5.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

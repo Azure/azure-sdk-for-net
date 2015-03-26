@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices";
@@ -186,67 +186,25 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                 DeviceInfo deviceInfoInstance = new DeviceInfo();
                                 result.Devices.Add(deviceInfoInstance);
                                 
-                                XElement friendlyNameElement = arrayOfDeviceInfoElement.Element(XName.Get("FriendlyName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (friendlyNameElement != null)
+                                XElement aCRCountElement = arrayOfDeviceInfoElement.Element(XName.Get("ACRCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (aCRCountElement != null)
                                 {
-                                    string friendlyNameInstance = friendlyNameElement.Value;
-                                    deviceInfoInstance.FriendlyName = friendlyNameInstance;
+                                    int aCRCountInstance = int.Parse(aCRCountElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.ACRCount = aCRCountInstance;
                                 }
                                 
-                                XElement statusElement = arrayOfDeviceInfoElement.Element(XName.Get("Status", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (statusElement != null)
+                                XElement activationTimeElement = arrayOfDeviceInfoElement.Element(XName.Get("ActivationTime", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (activationTimeElement != null)
                                 {
-                                    DeviceStatus statusInstance = ((DeviceStatus)Enum.Parse(typeof(DeviceStatus), statusElement.Value, true));
-                                    deviceInfoInstance.Status = statusInstance;
+                                    string activationTimeInstance = activationTimeElement.Value;
+                                    deviceInfoInstance.ActivationTime = activationTimeInstance;
                                 }
                                 
-                                XElement deviceIdElement = arrayOfDeviceInfoElement.Element(XName.Get("DeviceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (deviceIdElement != null)
+                                XElement activeControllerElement = arrayOfDeviceInfoElement.Element(XName.Get("ActiveController", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (activeControllerElement != null)
                                 {
-                                    string deviceIdInstance = deviceIdElement.Value;
-                                    deviceInfoInstance.DeviceId = deviceIdInstance;
-                                }
-                                
-                                XElement serialNumberElement = arrayOfDeviceInfoElement.Element(XName.Get("SerialNumber", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (serialNumberElement != null)
-                                {
-                                    string serialNumberInstance = serialNumberElement.Value;
-                                    deviceInfoInstance.SerialNumber = serialNumberInstance;
-                                }
-                                
-                                XElement cultureElement = arrayOfDeviceInfoElement.Element(XName.Get("Culture", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (cultureElement != null)
-                                {
-                                    string cultureInstance = cultureElement.Value;
-                                    deviceInfoInstance.Culture = cultureInstance;
-                                }
-                                
-                                XElement timeZoneElement = arrayOfDeviceInfoElement.Element(XName.Get("TimeZone", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (timeZoneElement != null)
-                                {
-                                    string timeZoneInstance = timeZoneElement.Value;
-                                    deviceInfoInstance.TimeZone = timeZoneInstance;
-                                }
-                                
-                                XElement descriptionElement = arrayOfDeviceInfoElement.Element(XName.Get("Description", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (descriptionElement != null)
-                                {
-                                    string descriptionInstance = descriptionElement.Value;
-                                    deviceInfoInstance.Description = descriptionInstance;
-                                }
-                                
-                                XElement modelDescriptionElement = arrayOfDeviceInfoElement.Element(XName.Get("ModelDescription", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (modelDescriptionElement != null)
-                                {
-                                    string modelDescriptionInstance = modelDescriptionElement.Value;
-                                    deviceInfoInstance.ModelDescription = modelDescriptionInstance;
-                                }
-                                
-                                XElement totalStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("TotalStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (totalStorageInBytesElement != null)
-                                {
-                                    long totalStorageInBytesInstance = long.Parse(totalStorageInBytesElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.TotalStorageInBytes = totalStorageInBytesInstance;
+                                    ControllerId activeControllerInstance = ((ControllerId)Enum.Parse(typeof(ControllerId), activeControllerElement.Value, true));
+                                    deviceInfoInstance.ActiveController = activeControllerInstance;
                                 }
                                 
                                 XElement availableStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("AvailableStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
@@ -256,55 +214,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     deviceInfoInstance.AvailableStorageInBytes = availableStorageInBytesInstance;
                                 }
                                 
-                                XElement provisionedStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("ProvisionedStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (provisionedStorageInBytesElement != null)
-                                {
-                                    long provisionedStorageInBytesInstance = long.Parse(provisionedStorageInBytesElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.ProvisionedStorageInBytes = provisionedStorageInBytesInstance;
-                                }
-                                
-                                XElement usingStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("UsingStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (usingStorageInBytesElement != null)
-                                {
-                                    long usingStorageInBytesInstance = long.Parse(usingStorageInBytesElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.UsingStorageInBytes = usingStorageInBytesInstance;
-                                }
-                                
-                                XElement isConfigUpdatedElement = arrayOfDeviceInfoElement.Element(XName.Get("IsConfigUpdated", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (isConfigUpdatedElement != null)
-                                {
-                                    bool isConfigUpdatedInstance = bool.Parse(isConfigUpdatedElement.Value);
-                                    deviceInfoInstance.IsConfigUpdated = isConfigUpdatedInstance;
-                                }
-                                
-                                XElement nNicCardsElement = arrayOfDeviceInfoElement.Element(XName.Get("NNicCards", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (nNicCardsElement != null)
-                                {
-                                    int nNicCardsInstance = int.Parse(nNicCardsElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.NNicCards = nNicCardsInstance;
-                                }
-                                
-                                XElement dataContainerCountElement = arrayOfDeviceInfoElement.Element(XName.Get("DataContainerCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (dataContainerCountElement != null)
-                                {
-                                    int dataContainerCountInstance = int.Parse(dataContainerCountElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.DataContainerCount = dataContainerCountInstance;
-                                }
-                                
-                                XElement volumeCountElement = arrayOfDeviceInfoElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (volumeCountElement != null)
-                                {
-                                    int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.VolumeCount = volumeCountInstance;
-                                }
-                                
-                                XElement aCRCountElement = arrayOfDeviceInfoElement.Element(XName.Get("ACRCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (aCRCountElement != null)
-                                {
-                                    int aCRCountInstance = int.Parse(aCRCountElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.ACRCount = aCRCountInstance;
-                                }
-                                
                                 XElement cloudCredCountElement = arrayOfDeviceInfoElement.Element(XName.Get("CloudCredCount", "http://windowscloudbackup.com/CiS/V2013_03"));
                                 if (cloudCredCountElement != null)
                                 {
@@ -312,32 +221,11 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     deviceInfoInstance.CloudCredCount = cloudCredCountInstance;
                                 }
                                 
-                                XElement targetIQNElement = arrayOfDeviceInfoElement.Element(XName.Get("TargetIQN", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (targetIQNElement != null)
+                                XElement cultureElement = arrayOfDeviceInfoElement.Element(XName.Get("Culture", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (cultureElement != null)
                                 {
-                                    string targetIQNInstance = targetIQNElement.Value;
-                                    deviceInfoInstance.TargetIQN = targetIQNInstance;
-                                }
-                                
-                                XElement deviceSoftwareVersionElement = arrayOfDeviceInfoElement.Element(XName.Get("DeviceSoftwareVersion", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (deviceSoftwareVersionElement != null)
-                                {
-                                    string deviceSoftwareVersionInstance = deviceSoftwareVersionElement.Value;
-                                    deviceInfoInstance.DeviceSoftwareVersion = deviceSoftwareVersionInstance;
-                                }
-                                
-                                XElement activationTimeElement = arrayOfDeviceInfoElement.Element(XName.Get("ActivationTime", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (activationTimeElement != null)
-                                {
-                                    DateTime activationTimeInstance = DateTime.Parse(activationTimeElement.Value, CultureInfo.InvariantCulture);
-                                    deviceInfoInstance.ActivationTime = activationTimeInstance;
-                                }
-                                
-                                XElement typeElement = arrayOfDeviceInfoElement.Element(XName.Get("Type", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (typeElement != null)
-                                {
-                                    DeviceType typeInstance = ((DeviceType)Enum.Parse(typeof(DeviceType), typeElement.Value, true));
-                                    deviceInfoInstance.Type = typeInstance;
+                                    string cultureInstance = cultureElement.Value;
+                                    deviceInfoInstance.Culture = cultureInstance;
                                 }
                                 
                                 XElement currentControllerElement = arrayOfDeviceInfoElement.Element(XName.Get("CurrentController", "http://windowscloudbackup.com/CiS/V2013_03"));
@@ -347,11 +235,46 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     deviceInfoInstance.CurrentController = currentControllerInstance;
                                 }
                                 
-                                XElement activeControllerElement = arrayOfDeviceInfoElement.Element(XName.Get("ActiveController", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (activeControllerElement != null)
+                                XElement dataContainerCountElement = arrayOfDeviceInfoElement.Element(XName.Get("DataContainerCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (dataContainerCountElement != null)
                                 {
-                                    ControllerId activeControllerInstance = ((ControllerId)Enum.Parse(typeof(ControllerId), activeControllerElement.Value, true));
-                                    deviceInfoInstance.ActiveController = activeControllerInstance;
+                                    int dataContainerCountInstance = int.Parse(dataContainerCountElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.DataContainerCount = dataContainerCountInstance;
+                                }
+                                
+                                XElement descriptionElement = arrayOfDeviceInfoElement.Element(XName.Get("Description", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (descriptionElement != null)
+                                {
+                                    string descriptionInstance = descriptionElement.Value;
+                                    deviceInfoInstance.Description = descriptionInstance;
+                                }
+                                
+                                XElement deviceIdElement = arrayOfDeviceInfoElement.Element(XName.Get("DeviceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (deviceIdElement != null)
+                                {
+                                    string deviceIdInstance = deviceIdElement.Value;
+                                    deviceInfoInstance.DeviceId = deviceIdInstance;
+                                }
+                                
+                                XElement deviceSoftwareVersionElement = arrayOfDeviceInfoElement.Element(XName.Get("DeviceSoftwareVersion", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (deviceSoftwareVersionElement != null)
+                                {
+                                    string deviceSoftwareVersionInstance = deviceSoftwareVersionElement.Value;
+                                    deviceInfoInstance.DeviceSoftwareVersion = deviceSoftwareVersionInstance;
+                                }
+                                
+                                XElement friendlyNameElement = arrayOfDeviceInfoElement.Element(XName.Get("FriendlyName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (friendlyNameElement != null)
+                                {
+                                    string friendlyNameInstance = friendlyNameElement.Value;
+                                    deviceInfoInstance.FriendlyName = friendlyNameInstance;
+                                }
+                                
+                                XElement isConfigUpdatedElement = arrayOfDeviceInfoElement.Element(XName.Get("IsConfigUpdated", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (isConfigUpdatedElement != null)
+                                {
+                                    bool isConfigUpdatedInstance = bool.Parse(isConfigUpdatedElement.Value);
+                                    deviceInfoInstance.IsConfigUpdated = isConfigUpdatedInstance;
                                 }
                                 
                                 XElement isVirtualApplianceInterimEntryElement = arrayOfDeviceInfoElement.Element(XName.Get("IsVirtualApplianceInterimEntry", "http://windowscloudbackup.com/CiS/V2013_03"));
@@ -366,6 +289,83 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                 {
                                     string locationInstance = locationElement.Value;
                                     deviceInfoInstance.Location = locationInstance;
+                                }
+                                
+                                XElement modelDescriptionElement = arrayOfDeviceInfoElement.Element(XName.Get("ModelDescription", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (modelDescriptionElement != null)
+                                {
+                                    string modelDescriptionInstance = modelDescriptionElement.Value;
+                                    deviceInfoInstance.ModelDescription = modelDescriptionInstance;
+                                }
+                                
+                                XElement nNicCardsElement = arrayOfDeviceInfoElement.Element(XName.Get("NNicCards", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (nNicCardsElement != null)
+                                {
+                                    int nNicCardsInstance = int.Parse(nNicCardsElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.NNicCards = nNicCardsInstance;
+                                }
+                                
+                                XElement provisionedStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("ProvisionedStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (provisionedStorageInBytesElement != null)
+                                {
+                                    long provisionedStorageInBytesInstance = long.Parse(provisionedStorageInBytesElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.ProvisionedStorageInBytes = provisionedStorageInBytesInstance;
+                                }
+                                
+                                XElement serialNumberElement = arrayOfDeviceInfoElement.Element(XName.Get("SerialNumber", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (serialNumberElement != null)
+                                {
+                                    string serialNumberInstance = serialNumberElement.Value;
+                                    deviceInfoInstance.SerialNumber = serialNumberInstance;
+                                }
+                                
+                                XElement statusElement = arrayOfDeviceInfoElement.Element(XName.Get("Status", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (statusElement != null)
+                                {
+                                    DeviceStatus statusInstance = ((DeviceStatus)Enum.Parse(typeof(DeviceStatus), statusElement.Value, true));
+                                    deviceInfoInstance.Status = statusInstance;
+                                }
+                                
+                                XElement targetIQNElement = arrayOfDeviceInfoElement.Element(XName.Get("TargetIQN", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (targetIQNElement != null)
+                                {
+                                    string targetIQNInstance = targetIQNElement.Value;
+                                    deviceInfoInstance.TargetIQN = targetIQNInstance;
+                                }
+                                
+                                XElement timeZoneElement = arrayOfDeviceInfoElement.Element(XName.Get("TimeZone", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (timeZoneElement != null)
+                                {
+                                    string timeZoneInstance = timeZoneElement.Value;
+                                    deviceInfoInstance.TimeZone = timeZoneInstance;
+                                }
+                                
+                                XElement totalStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("TotalStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (totalStorageInBytesElement != null)
+                                {
+                                    long totalStorageInBytesInstance = long.Parse(totalStorageInBytesElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.TotalStorageInBytes = totalStorageInBytesInstance;
+                                }
+                                
+                                XElement typeElement = arrayOfDeviceInfoElement.Element(XName.Get("Type", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (typeElement != null)
+                                {
+                                    DeviceType typeInstance = ((DeviceType)Enum.Parse(typeof(DeviceType), typeElement.Value, true));
+                                    deviceInfoInstance.Type = typeInstance;
+                                }
+                                
+                                XElement usingStorageInBytesElement = arrayOfDeviceInfoElement.Element(XName.Get("UsingStorageInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (usingStorageInBytesElement != null)
+                                {
+                                    long usingStorageInBytesInstance = long.Parse(usingStorageInBytesElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.UsingStorageInBytes = usingStorageInBytesInstance;
+                                }
+                                
+                                XElement volumeCountElement = arrayOfDeviceInfoElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (volumeCountElement != null)
+                                {
+                                    int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
+                                    deviceInfoInstance.VolumeCount = volumeCountInstance;
                                 }
                             }
                         }

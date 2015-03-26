@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe.Models
+namespace Microsoft.Azure.Management.Rdfe.Models
 {
     /// <summary>
     /// Parameters supplied to the List Subscription Operations operation.

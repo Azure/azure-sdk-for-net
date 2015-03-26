@@ -20,7 +20,7 @@
 // code is regenerated.
 
 
-namespace Microsoft.Azure.Internal.Management.Csm.Models
+namespace Microsoft.Azure.Management.Csm.Models
 {
     /// <summary>
     /// Common registration states.

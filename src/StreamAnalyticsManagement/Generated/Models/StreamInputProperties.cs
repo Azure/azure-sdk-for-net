@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private StreamInputDataSource _dataSource;
         
         /// <summary>
-        /// Required. Gets or sets the data source configuration of the input.
+        /// Optional. Gets or sets the data source configuration of the input.
         /// </summary>
         public StreamInputDataSource DataSource
         {
@@ -46,25 +46,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public StreamInputProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the StreamInputProperties class with
-        /// required arguments.
-        /// </summary>
-        public StreamInputProperties(StreamInputDataSource dataSource, Serialization serialization)
-            : this()
-        {
-            if (dataSource == null)
-            {
-                throw new ArgumentNullException("dataSource");
-            }
-            if (serialization == null)
-            {
-                throw new ArgumentNullException("serialization");
-            }
-            this.DataSource = dataSource;
-            this.Serialization = serialization;
         }
     }
 }

@@ -16,12 +16,14 @@ using Hyak.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
     /// <summary>
     /// Represents Azure profile structure with multiple environments, subscriptions, and accounts.
     /// </summary>
+    [Serializable]
     public sealed class AzureProfile
     {
         /// <summary>
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Gets current Azure context 
         /// </summary>
+        [JsonIgnore]
         public AzureContext Context 
         { 
             get

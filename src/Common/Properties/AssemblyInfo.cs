@@ -14,18 +14,9 @@
 //
 
 using System.Reflection;
-using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure Common Library")]
-[assembly: AssemblyDescription("Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Microsoft Azure libraries.")]
-
+//This file is shared with Common.NetFramework to provide consistent file version.
+//Do not put in extra assembly metadatas here; rather put them in AssemblyAdditionalInfo.cs.
+//Also merge AssemblyAdditionalInfo.cs into the file once we delete the Common.NetFramework.
+[assembly: AssemblyFileVersion("2.0.4.0")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.1.0")]
-
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Azure .NET SDK")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("en")]

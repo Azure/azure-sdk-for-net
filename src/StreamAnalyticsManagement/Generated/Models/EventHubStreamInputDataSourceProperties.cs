@@ -29,10 +29,24 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class EventHubStreamInputDataSourceProperties
     {
+        private string _consumerGroupName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of an Event Hub Consumer Group by
+        /// which to identify this input. Specifying distinct consumer group
+        /// names for multiple inputs allows each of those inputs to receive
+        /// the same events from the Event Hub.
+        /// </summary>
+        public string ConsumerGroupName
+        {
+            get { return this._consumerGroupName; }
+            set { this._consumerGroupName = value; }
+        }
+        
         private string _eventHubName;
         
         /// <summary>
-        /// Required. Gets or sets the EventHub name.
+        /// Optional. Gets or sets the EventHub name.
         /// </summary>
         public string EventHubName
         {
@@ -43,7 +57,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _serviceBusNamespace;
         
         /// <summary>
-        /// Required. Gets or sets the service bus namespace of the event hub.
+        /// Optional. Gets or sets the service bus namespace of the event hub.
         /// </summary>
         public string ServiceBusNamespace
         {
@@ -54,7 +68,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyKey;
         
         /// <summary>
-        /// Required. Gets or sets the shared access policy key.
+        /// Optional. Gets or sets the shared access policy key.
         /// </summary>
         public string SharedAccessPolicyKey
         {
@@ -65,7 +79,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Required. Gets or sets the shared access policy name.
+        /// Optional. Gets or sets the shared access policy name.
         /// </summary>
         public string SharedAccessPolicyName
         {

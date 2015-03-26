@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -472,7 +472,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

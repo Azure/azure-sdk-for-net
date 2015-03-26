@@ -1052,6 +1052,539 @@ namespace Microsoft.Azure.Management.WebSites
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            WebSite webSiteInstance = new WebSite();
+                            result.WebSite = webSiteInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                WebSiteProperties propertiesInstance = new WebSiteProperties();
+                                webSiteInstance.Properties = propertiesInstance;
+                                
+                                JToken adminEnabledValue = propertiesValue2["adminEnabled"];
+                                if (adminEnabledValue != null && adminEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool adminEnabledInstance = ((bool)adminEnabledValue);
+                                    propertiesInstance.AdminEnabled = adminEnabledInstance;
+                                }
+                                
+                                JToken availabilityStateValue = propertiesValue2["availabilityState"];
+                                if (availabilityStateValue != null && availabilityStateValue.Type != JTokenType.Null)
+                                {
+                                    WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), ((string)availabilityStateValue), true));
+                                    propertiesInstance.AvailabilityState = availabilityStateInstance;
+                                }
+                                
+                                JToken enabledValue = propertiesValue2["enabled"];
+                                if (enabledValue != null && enabledValue.Type != JTokenType.Null)
+                                {
+                                    bool enabledInstance = ((bool)enabledValue);
+                                    propertiesInstance.Enabled = enabledInstance;
+                                }
+                                
+                                JToken enabledHostNamesArray = propertiesValue2["enabledHostNames"];
+                                if (enabledHostNamesArray != null && enabledHostNamesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken enabledHostNamesValue in ((JArray)enabledHostNamesArray))
+                                    {
+                                        propertiesInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
+                                    }
+                                }
+                                
+                                JToken hostNameSslStatesArray = propertiesValue2["hostNameSslStates"];
+                                if (hostNameSslStatesArray != null && hostNameSslStatesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken hostNameSslStatesValue in ((JArray)hostNameSslStatesArray))
+                                    {
+                                        WebSiteProperties.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSiteProperties.WebSiteHostNameSslState();
+                                        propertiesInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                        
+                                        JToken nameValue = hostNameSslStatesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            webSiteHostNameSslStateInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken sslStateValue = hostNameSslStatesValue["sslState"];
+                                        if (sslStateValue != null && sslStateValue.Type != JTokenType.Null)
+                                        {
+                                            WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), ((string)sslStateValue), true));
+                                            webSiteHostNameSslStateInstance.SslState = sslStateInstance;
+                                        }
+                                        
+                                        JToken thumbprintValue = hostNameSslStatesValue["thumbprint"];
+                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance = ((string)thumbprintValue);
+                                            webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
+                                        }
+                                        
+                                        JToken virtualIPValue = hostNameSslStatesValue["virtualIP"];
+                                        if (virtualIPValue != null && virtualIPValue.Type != JTokenType.Null)
+                                        {
+                                            string virtualIPInstance = ((string)virtualIPValue);
+                                            webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
+                                        }
+                                        
+                                        JToken ipBasedSslResultValue = hostNameSslStatesValue["ipBasedSslResult"];
+                                        if (ipBasedSslResultValue != null && ipBasedSslResultValue.Type != JTokenType.Null)
+                                        {
+                                            string ipBasedSslResultInstance = ((string)ipBasedSslResultValue);
+                                            webSiteHostNameSslStateInstance.IpBasedSslResult = ipBasedSslResultInstance;
+                                        }
+                                        
+                                        JToken toUpdateValue = hostNameSslStatesValue["toUpdate"];
+                                        if (toUpdateValue != null && toUpdateValue.Type != JTokenType.Null)
+                                        {
+                                            bool toUpdateInstance = ((bool)toUpdateValue);
+                                            webSiteHostNameSslStateInstance.ToUpdate = toUpdateInstance;
+                                        }
+                                        
+                                        JToken toUpdateIpBasedSslValue = hostNameSslStatesValue["toUpdateIpBasedSsl"];
+                                        if (toUpdateIpBasedSslValue != null && toUpdateIpBasedSslValue.Type != JTokenType.Null)
+                                        {
+                                            bool toUpdateIpBasedSslInstance = ((bool)toUpdateIpBasedSslValue);
+                                            webSiteHostNameSslStateInstance.ToUpdateIpBasedSsl = toUpdateIpBasedSslInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken hostNamesArray = propertiesValue2["hostNames"];
+                                if (hostNamesArray != null && hostNamesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken hostNamesValue in ((JArray)hostNamesArray))
+                                    {
+                                        propertiesInstance.HostNames.Add(((string)hostNamesValue));
+                                    }
+                                }
+                                
+                                JToken lastModifiedTimeUtcValue = propertiesValue2["lastModifiedTimeUtc"];
+                                if (lastModifiedTimeUtcValue != null && lastModifiedTimeUtcValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastModifiedTimeUtcInstance = ((DateTime)lastModifiedTimeUtcValue);
+                                    propertiesInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
+                                }
+                                
+                                JToken repositorySiteNameValue = propertiesValue2["repositorySiteName"];
+                                if (repositorySiteNameValue != null && repositorySiteNameValue.Type != JTokenType.Null)
+                                {
+                                    string repositorySiteNameInstance = ((string)repositorySiteNameValue);
+                                    propertiesInstance.RepositorySiteName = repositorySiteNameInstance;
+                                }
+                                
+                                JToken runtimeAvailabilityStateValue = propertiesValue2["runtimeAvailabilityState"];
+                                if (runtimeAvailabilityStateValue != null && runtimeAvailabilityStateValue.Type != JTokenType.Null)
+                                {
+                                    WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), ((string)runtimeAvailabilityStateValue), true));
+                                    propertiesInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
+                                }
+                                
+                                JToken trafficManagerHostNamesArray = propertiesValue2["trafficManagerHostNames"];
+                                if (trafficManagerHostNamesArray != null && trafficManagerHostNamesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken trafficManagerHostNamesValue in ((JArray)trafficManagerHostNamesArray))
+                                    {
+                                        propertiesInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
+                                    }
+                                }
+                                
+                                JToken selfLinkValue = propertiesValue2["selfLink"];
+                                if (selfLinkValue != null && selfLinkValue.Type != JTokenType.Null)
+                                {
+                                    Uri selfLinkInstance = TypeConversion.TryParseUri(((string)selfLinkValue));
+                                    propertiesInstance.Uri = selfLinkInstance;
+                                }
+                                
+                                JToken serverFarmValue = propertiesValue2["serverFarm"];
+                                if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
+                                {
+                                    string serverFarmInstance = ((string)serverFarmValue);
+                                    propertiesInstance.ServerFarm = serverFarmInstance;
+                                }
+                                
+                                JToken serverFarmIdValue = propertiesValue2["serverFarmId"];
+                                if (serverFarmIdValue != null && serverFarmIdValue.Type != JTokenType.Null)
+                                {
+                                    string serverFarmIdInstance = ((string)serverFarmIdValue);
+                                    propertiesInstance.ServerFarmId = serverFarmIdInstance;
+                                }
+                                
+                                JToken skuValue = propertiesValue2["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                {
+                                    SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
+                                    propertiesInstance.Sku = skuInstance;
+                                }
+                                
+                                JToken sitePropertiesValue = propertiesValue2["siteProperties"];
+                                if (sitePropertiesValue != null && sitePropertiesValue.Type != JTokenType.Null)
+                                {
+                                    WebSiteProperties.SiteProperties sitePropertiesInstance = new WebSiteProperties.SiteProperties();
+                                    propertiesInstance.Properties = sitePropertiesInstance;
+                                    
+                                    JToken appSettingsSequenceElement = ((JToken)sitePropertiesValue["appSettings"]);
+                                    if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in appSettingsSequenceElement)
+                                        {
+                                            string appSettingsKey = ((string)property.Name);
+                                            string appSettingsValue = ((string)property.Value);
+                                            sitePropertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
+                                        }
+                                    }
+                                    
+                                    JToken metadataSequenceElement = ((JToken)sitePropertiesValue["metadata"]);
+                                    if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in metadataSequenceElement)
+                                        {
+                                            string metadataKey = ((string)property2.Name);
+                                            string metadataValue = ((string)property2.Value);
+                                            sitePropertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)sitePropertiesValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property3 in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property3.Name);
+                                            string propertiesValue3 = ((string)property3.Value);
+                                            sitePropertiesInstance.Properties.Add(propertiesKey, propertiesValue3);
+                                        }
+                                    }
+                                }
+                                
+                                JToken siteConfigValue = propertiesValue2["siteConfig"];
+                                if (siteConfigValue != null && siteConfigValue.Type != JTokenType.Null)
+                                {
+                                    WebSiteConfiguration siteConfigInstance = new WebSiteConfiguration();
+                                    propertiesInstance.SiteConfig = siteConfigInstance;
+                                    
+                                    JToken appSettingsSequenceElement2 = ((JToken)siteConfigValue["appSettings"]);
+                                    if (appSettingsSequenceElement2 != null && appSettingsSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property4 in appSettingsSequenceElement2)
+                                        {
+                                            string appSettingsKey2 = ((string)property4.Name);
+                                            string appSettingsValue2 = ((string)property4.Value);
+                                            siteConfigInstance.AppSettings.Add(appSettingsKey2, appSettingsValue2);
+                                        }
+                                    }
+                                    
+                                    JToken connectionStringsArray = siteConfigValue["connectionStrings"];
+                                    if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
+                                        {
+                                            ConnectionStringInfo connStringInfoInstance = new ConnectionStringInfo();
+                                            siteConfigInstance.ConnectionStrings.Add(connStringInfoInstance);
+                                            
+                                            JToken connectionStringValue = connectionStringsValue["connectionString"];
+                                            if (connectionStringValue != null && connectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance = ((string)connectionStringValue);
+                                                connStringInfoInstance.ConnectionString = connectionStringInstance;
+                                            }
+                                            
+                                            JToken nameValue2 = connectionStringsValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                connStringInfoInstance.Name = nameInstance2;
+                                            }
+                                            
+                                            JToken typeValue = connectionStringsValue["type"];
+                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                            {
+                                                DatabaseServerType typeInstance = ((DatabaseServerType)Enum.Parse(typeof(DatabaseServerType), ((string)typeValue), true));
+                                                connStringInfoInstance.Type = typeInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken defaultDocumentsArray = siteConfigValue["defaultDocuments"];
+                                    if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
+                                        {
+                                            siteConfigInstance.DefaultDocuments.Add(((string)defaultDocumentsValue));
+                                        }
+                                    }
+                                    
+                                    JToken detailedErrorLoggingEnabledValue = siteConfigValue["detailedErrorLoggingEnabled"];
+                                    if (detailedErrorLoggingEnabledValue != null && detailedErrorLoggingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool detailedErrorLoggingEnabledInstance = ((bool)detailedErrorLoggingEnabledValue);
+                                        siteConfigInstance.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
+                                    }
+                                    
+                                    JToken documentRootValue = siteConfigValue["documentRoot"];
+                                    if (documentRootValue != null && documentRootValue.Type != JTokenType.Null)
+                                    {
+                                        string documentRootInstance = ((string)documentRootValue);
+                                        siteConfigInstance.DocumentRoot = documentRootInstance;
+                                    }
+                                    
+                                    JToken handlerMappingsArray = siteConfigValue["handlerMappings"];
+                                    if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
+                                        {
+                                            WebSiteConfiguration.HandlerMapping handlerMappingInstance = new WebSiteConfiguration.HandlerMapping();
+                                            siteConfigInstance.HandlerMappings.Add(handlerMappingInstance);
+                                            
+                                            JToken argumentsValue = handlerMappingsValue["arguments"];
+                                            if (argumentsValue != null && argumentsValue.Type != JTokenType.Null)
+                                            {
+                                                string argumentsInstance = ((string)argumentsValue);
+                                                handlerMappingInstance.Arguments = argumentsInstance;
+                                            }
+                                            
+                                            JToken extensionValue = handlerMappingsValue["extension"];
+                                            if (extensionValue != null && extensionValue.Type != JTokenType.Null)
+                                            {
+                                                string extensionInstance = ((string)extensionValue);
+                                                handlerMappingInstance.Extension = extensionInstance;
+                                            }
+                                            
+                                            JToken scriptProcessorValue = handlerMappingsValue["scriptProcessor"];
+                                            if (scriptProcessorValue != null && scriptProcessorValue.Type != JTokenType.Null)
+                                            {
+                                                string scriptProcessorInstance = ((string)scriptProcessorValue);
+                                                handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken httpLoggingEnabledValue = siteConfigValue["httpLoggingEnabled"];
+                                    if (httpLoggingEnabledValue != null && httpLoggingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool httpLoggingEnabledInstance = ((bool)httpLoggingEnabledValue);
+                                        siteConfigInstance.HttpLoggingEnabled = httpLoggingEnabledInstance;
+                                    }
+                                    
+                                    JToken logsDirectorySizeLimitValue = siteConfigValue["logsDirectorySizeLimit"];
+                                    if (logsDirectorySizeLimitValue != null && logsDirectorySizeLimitValue.Type != JTokenType.Null)
+                                    {
+                                        int logsDirectorySizeLimitInstance = ((int)logsDirectorySizeLimitValue);
+                                        siteConfigInstance.LogsDirectorySizeLimit = logsDirectorySizeLimitInstance;
+                                    }
+                                    
+                                    JToken managedPipelineModeValue = siteConfigValue["managedPipelineMode"];
+                                    if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
+                                    {
+                                        ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
+                                        siteConfigInstance.ManagedPipelineMode = managedPipelineModeInstance;
+                                    }
+                                    
+                                    JToken metadataSequenceElement2 = ((JToken)siteConfigValue["metadata"]);
+                                    if (metadataSequenceElement2 != null && metadataSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property5 in metadataSequenceElement2)
+                                        {
+                                            string metadataKey2 = ((string)property5.Name);
+                                            string metadataValue2 = ((string)property5.Value);
+                                            siteConfigInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                        }
+                                    }
+                                    
+                                    JToken netFrameworkVersionValue = siteConfigValue["netFrameworkVersion"];
+                                    if (netFrameworkVersionValue != null && netFrameworkVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string netFrameworkVersionInstance = ((string)netFrameworkVersionValue);
+                                        siteConfigInstance.NetFrameworkVersion = netFrameworkVersionInstance;
+                                    }
+                                    
+                                    JToken numberOfWorkersValue = siteConfigValue["numberOfWorkers"];
+                                    if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                        siteConfigInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                    }
+                                    
+                                    JToken phpVersionValue = siteConfigValue["phpVersion"];
+                                    if (phpVersionValue != null && phpVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string phpVersionInstance = ((string)phpVersionValue);
+                                        siteConfigInstance.PhpVersion = phpVersionInstance;
+                                    }
+                                    
+                                    JToken pythonVersionValue = siteConfigValue["pythonVersion"];
+                                    if (pythonVersionValue != null && pythonVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string pythonVersionInstance = ((string)pythonVersionValue);
+                                        siteConfigInstance.PythonVersion = pythonVersionInstance;
+                                    }
+                                    
+                                    JToken publishingPasswordValue = siteConfigValue["publishingPassword"];
+                                    if (publishingPasswordValue != null && publishingPasswordValue.Type != JTokenType.Null)
+                                    {
+                                        string publishingPasswordInstance = ((string)publishingPasswordValue);
+                                        siteConfigInstance.PublishingPassword = publishingPasswordInstance;
+                                    }
+                                    
+                                    JToken publishingUsernameValue = siteConfigValue["publishingUsername"];
+                                    if (publishingUsernameValue != null && publishingUsernameValue.Type != JTokenType.Null)
+                                    {
+                                        string publishingUsernameInstance = ((string)publishingUsernameValue);
+                                        siteConfigInstance.PublishingUserName = publishingUsernameInstance;
+                                    }
+                                    
+                                    JToken remoteDebuggingEnabledValue = siteConfigValue["RemoteDebuggingEnabled"];
+                                    if (remoteDebuggingEnabledValue != null && remoteDebuggingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool remoteDebuggingEnabledInstance = ((bool)remoteDebuggingEnabledValue);
+                                        siteConfigInstance.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
+                                    }
+                                    
+                                    JToken remoteDebuggingVersionValue = siteConfigValue["remoteDebuggingVersion"];
+                                    if (remoteDebuggingVersionValue != null && remoteDebuggingVersionValue.Type != JTokenType.Null)
+                                    {
+                                        RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), ((string)remoteDebuggingVersionValue), true));
+                                        siteConfigInstance.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                                    }
+                                    
+                                    JToken requestTracingEnabledValue = siteConfigValue["requestTracingEnabled"];
+                                    if (requestTracingEnabledValue != null && requestTracingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool requestTracingEnabledInstance = ((bool)requestTracingEnabledValue);
+                                        siteConfigInstance.RequestTracingEnabled = requestTracingEnabledInstance;
+                                    }
+                                    
+                                    JToken requestTracingExpirationTimeValue = siteConfigValue["requestTracingExpirationTime"];
+                                    if (requestTracingExpirationTimeValue != null && requestTracingExpirationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime requestTracingExpirationTimeInstance = ((DateTime)requestTracingExpirationTimeValue);
+                                        siteConfigInstance.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                                    }
+                                    
+                                    JToken scmTypeValue = siteConfigValue["scmType"];
+                                    if (scmTypeValue != null && scmTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string scmTypeInstance = ((string)scmTypeValue);
+                                        siteConfigInstance.ScmType = scmTypeInstance;
+                                    }
+                                    
+                                    JToken autoSwapSlotNameValue = siteConfigValue["autoSwapSlotName"];
+                                    if (autoSwapSlotNameValue != null && autoSwapSlotNameValue.Type != JTokenType.Null)
+                                    {
+                                        string autoSwapSlotNameInstance = ((string)autoSwapSlotNameValue);
+                                        siteConfigInstance.AutoSwapSlotName = autoSwapSlotNameInstance;
+                                    }
+                                    
+                                    JToken use32BitWorkerProcessValue = siteConfigValue["use32BitWorkerProcess"];
+                                    if (use32BitWorkerProcessValue != null && use32BitWorkerProcessValue.Type != JTokenType.Null)
+                                    {
+                                        bool use32BitWorkerProcessInstance = ((bool)use32BitWorkerProcessValue);
+                                        siteConfigInstance.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
+                                    }
+                                    
+                                    JToken webSocketsEnabledValue = siteConfigValue["webSocketsEnabled"];
+                                    if (webSocketsEnabledValue != null && webSocketsEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
+                                        siteConfigInstance.WebSocketsEnabled = webSocketsEnabledInstance;
+                                    }
+                                    
+                                    JToken limitsValue = siteConfigValue["limits"];
+                                    if (limitsValue != null && limitsValue.Type != JTokenType.Null)
+                                    {
+                                        SiteLimits limitsInstance = new SiteLimits();
+                                        siteConfigInstance.Limits = limitsInstance;
+                                        
+                                        JToken maxPercentageCpuValue = limitsValue["maxPercentageCpu"];
+                                        if (maxPercentageCpuValue != null && maxPercentageCpuValue.Type != JTokenType.Null)
+                                        {
+                                            double maxPercentageCpuInstance = ((double)maxPercentageCpuValue);
+                                            limitsInstance.MaxPercentageCpu = maxPercentageCpuInstance;
+                                        }
+                                        
+                                        JToken maxMemoryInMbValue = limitsValue["maxMemoryInMb"];
+                                        if (maxMemoryInMbValue != null && maxMemoryInMbValue.Type != JTokenType.Null)
+                                        {
+                                            long maxMemoryInMbInstance = ((long)maxMemoryInMbValue);
+                                            limitsInstance.MaxMemoryInMb = maxMemoryInMbInstance;
+                                        }
+                                        
+                                        JToken maxDiskSizeInMbValue = limitsValue["maxDiskSizeInMb"];
+                                        if (maxDiskSizeInMbValue != null && maxDiskSizeInMbValue.Type != JTokenType.Null)
+                                        {
+                                            long maxDiskSizeInMbInstance = ((long)maxDiskSizeInMbValue);
+                                            limitsInstance.MaxDiskSizeInMb = maxDiskSizeInMbInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken stateValue = propertiesValue2["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    WebSiteState stateInstance = ((WebSiteState)Enum.Parse(typeof(WebSiteState), ((string)stateValue), true));
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken usageStateValue = propertiesValue2["usageState"];
+                                if (usageStateValue != null && usageStateValue.Type != JTokenType.Null)
+                                {
+                                    WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), ((string)usageStateValue), true));
+                                    propertiesInstance.UsageState = usageStateInstance;
+                                }
+                                
+                                JToken webSpaceValue = propertiesValue2["webSpace"];
+                                if (webSpaceValue != null && webSpaceValue.Type != JTokenType.Null)
+                                {
+                                    string webSpaceInstance = ((string)webSpaceValue);
+                                    propertiesInstance.WebSpace = webSpaceInstance;
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                webSiteInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            {
+                                string nameInstance3 = ((string)nameValue3);
+                                webSiteInstance.Name = nameInstance3;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                webSiteInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property6 in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property6.Name);
+                                    string tagsValue2 = ((string)property6.Value);
+                                    webSiteInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            {
+                                string typeInstance2 = ((string)typeValue2);
+                                webSiteInstance.Type = typeInstance2;
+                            }
                         }
                         
                     }
@@ -2628,6 +3161,13 @@ namespace Microsoft.Azure.Management.WebSites
                                     propertiesInstance.ServerFarm = serverFarmInstance;
                                 }
                                 
+                                JToken serverFarmIdValue = propertiesValue["serverFarmId"];
+                                if (serverFarmIdValue != null && serverFarmIdValue.Type != JTokenType.Null)
+                                {
+                                    string serverFarmIdInstance = ((string)serverFarmIdValue);
+                                    propertiesInstance.ServerFarmId = serverFarmIdInstance;
+                                }
+                                
                                 JToken skuValue = propertiesValue["sku"];
                                 if (skuValue != null && skuValue.Type != JTokenType.Null)
                                 {
@@ -2675,6 +3215,267 @@ namespace Microsoft.Azure.Management.WebSites
                                     }
                                 }
                                 
+                                JToken siteConfigValue = propertiesValue["siteConfig"];
+                                if (siteConfigValue != null && siteConfigValue.Type != JTokenType.Null)
+                                {
+                                    WebSiteConfiguration siteConfigInstance = new WebSiteConfiguration();
+                                    propertiesInstance.SiteConfig = siteConfigInstance;
+                                    
+                                    JToken appSettingsSequenceElement2 = ((JToken)siteConfigValue["appSettings"]);
+                                    if (appSettingsSequenceElement2 != null && appSettingsSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property4 in appSettingsSequenceElement2)
+                                        {
+                                            string appSettingsKey2 = ((string)property4.Name);
+                                            string appSettingsValue2 = ((string)property4.Value);
+                                            siteConfigInstance.AppSettings.Add(appSettingsKey2, appSettingsValue2);
+                                        }
+                                    }
+                                    
+                                    JToken connectionStringsArray = siteConfigValue["connectionStrings"];
+                                    if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
+                                        {
+                                            ConnectionStringInfo connStringInfoInstance = new ConnectionStringInfo();
+                                            siteConfigInstance.ConnectionStrings.Add(connStringInfoInstance);
+                                            
+                                            JToken connectionStringValue = connectionStringsValue["connectionString"];
+                                            if (connectionStringValue != null && connectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance = ((string)connectionStringValue);
+                                                connStringInfoInstance.ConnectionString = connectionStringInstance;
+                                            }
+                                            
+                                            JToken nameValue2 = connectionStringsValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                connStringInfoInstance.Name = nameInstance2;
+                                            }
+                                            
+                                            JToken typeValue = connectionStringsValue["type"];
+                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                            {
+                                                DatabaseServerType typeInstance = ((DatabaseServerType)Enum.Parse(typeof(DatabaseServerType), ((string)typeValue), true));
+                                                connStringInfoInstance.Type = typeInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken defaultDocumentsArray = siteConfigValue["defaultDocuments"];
+                                    if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
+                                        {
+                                            siteConfigInstance.DefaultDocuments.Add(((string)defaultDocumentsValue));
+                                        }
+                                    }
+                                    
+                                    JToken detailedErrorLoggingEnabledValue = siteConfigValue["detailedErrorLoggingEnabled"];
+                                    if (detailedErrorLoggingEnabledValue != null && detailedErrorLoggingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool detailedErrorLoggingEnabledInstance = ((bool)detailedErrorLoggingEnabledValue);
+                                        siteConfigInstance.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
+                                    }
+                                    
+                                    JToken documentRootValue = siteConfigValue["documentRoot"];
+                                    if (documentRootValue != null && documentRootValue.Type != JTokenType.Null)
+                                    {
+                                        string documentRootInstance = ((string)documentRootValue);
+                                        siteConfigInstance.DocumentRoot = documentRootInstance;
+                                    }
+                                    
+                                    JToken handlerMappingsArray = siteConfigValue["handlerMappings"];
+                                    if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
+                                        {
+                                            WebSiteConfiguration.HandlerMapping handlerMappingInstance = new WebSiteConfiguration.HandlerMapping();
+                                            siteConfigInstance.HandlerMappings.Add(handlerMappingInstance);
+                                            
+                                            JToken argumentsValue = handlerMappingsValue["arguments"];
+                                            if (argumentsValue != null && argumentsValue.Type != JTokenType.Null)
+                                            {
+                                                string argumentsInstance = ((string)argumentsValue);
+                                                handlerMappingInstance.Arguments = argumentsInstance;
+                                            }
+                                            
+                                            JToken extensionValue = handlerMappingsValue["extension"];
+                                            if (extensionValue != null && extensionValue.Type != JTokenType.Null)
+                                            {
+                                                string extensionInstance = ((string)extensionValue);
+                                                handlerMappingInstance.Extension = extensionInstance;
+                                            }
+                                            
+                                            JToken scriptProcessorValue = handlerMappingsValue["scriptProcessor"];
+                                            if (scriptProcessorValue != null && scriptProcessorValue.Type != JTokenType.Null)
+                                            {
+                                                string scriptProcessorInstance = ((string)scriptProcessorValue);
+                                                handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken httpLoggingEnabledValue = siteConfigValue["httpLoggingEnabled"];
+                                    if (httpLoggingEnabledValue != null && httpLoggingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool httpLoggingEnabledInstance = ((bool)httpLoggingEnabledValue);
+                                        siteConfigInstance.HttpLoggingEnabled = httpLoggingEnabledInstance;
+                                    }
+                                    
+                                    JToken logsDirectorySizeLimitValue = siteConfigValue["logsDirectorySizeLimit"];
+                                    if (logsDirectorySizeLimitValue != null && logsDirectorySizeLimitValue.Type != JTokenType.Null)
+                                    {
+                                        int logsDirectorySizeLimitInstance = ((int)logsDirectorySizeLimitValue);
+                                        siteConfigInstance.LogsDirectorySizeLimit = logsDirectorySizeLimitInstance;
+                                    }
+                                    
+                                    JToken managedPipelineModeValue = siteConfigValue["managedPipelineMode"];
+                                    if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
+                                    {
+                                        ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
+                                        siteConfigInstance.ManagedPipelineMode = managedPipelineModeInstance;
+                                    }
+                                    
+                                    JToken metadataSequenceElement2 = ((JToken)siteConfigValue["metadata"]);
+                                    if (metadataSequenceElement2 != null && metadataSequenceElement2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property5 in metadataSequenceElement2)
+                                        {
+                                            string metadataKey2 = ((string)property5.Name);
+                                            string metadataValue2 = ((string)property5.Value);
+                                            siteConfigInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                        }
+                                    }
+                                    
+                                    JToken netFrameworkVersionValue = siteConfigValue["netFrameworkVersion"];
+                                    if (netFrameworkVersionValue != null && netFrameworkVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string netFrameworkVersionInstance = ((string)netFrameworkVersionValue);
+                                        siteConfigInstance.NetFrameworkVersion = netFrameworkVersionInstance;
+                                    }
+                                    
+                                    JToken numberOfWorkersValue = siteConfigValue["numberOfWorkers"];
+                                    if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                        siteConfigInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                    }
+                                    
+                                    JToken phpVersionValue = siteConfigValue["phpVersion"];
+                                    if (phpVersionValue != null && phpVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string phpVersionInstance = ((string)phpVersionValue);
+                                        siteConfigInstance.PhpVersion = phpVersionInstance;
+                                    }
+                                    
+                                    JToken pythonVersionValue = siteConfigValue["pythonVersion"];
+                                    if (pythonVersionValue != null && pythonVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string pythonVersionInstance = ((string)pythonVersionValue);
+                                        siteConfigInstance.PythonVersion = pythonVersionInstance;
+                                    }
+                                    
+                                    JToken publishingPasswordValue = siteConfigValue["publishingPassword"];
+                                    if (publishingPasswordValue != null && publishingPasswordValue.Type != JTokenType.Null)
+                                    {
+                                        string publishingPasswordInstance = ((string)publishingPasswordValue);
+                                        siteConfigInstance.PublishingPassword = publishingPasswordInstance;
+                                    }
+                                    
+                                    JToken publishingUsernameValue = siteConfigValue["publishingUsername"];
+                                    if (publishingUsernameValue != null && publishingUsernameValue.Type != JTokenType.Null)
+                                    {
+                                        string publishingUsernameInstance = ((string)publishingUsernameValue);
+                                        siteConfigInstance.PublishingUserName = publishingUsernameInstance;
+                                    }
+                                    
+                                    JToken remoteDebuggingEnabledValue = siteConfigValue["RemoteDebuggingEnabled"];
+                                    if (remoteDebuggingEnabledValue != null && remoteDebuggingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool remoteDebuggingEnabledInstance = ((bool)remoteDebuggingEnabledValue);
+                                        siteConfigInstance.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
+                                    }
+                                    
+                                    JToken remoteDebuggingVersionValue = siteConfigValue["remoteDebuggingVersion"];
+                                    if (remoteDebuggingVersionValue != null && remoteDebuggingVersionValue.Type != JTokenType.Null)
+                                    {
+                                        RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), ((string)remoteDebuggingVersionValue), true));
+                                        siteConfigInstance.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                                    }
+                                    
+                                    JToken requestTracingEnabledValue = siteConfigValue["requestTracingEnabled"];
+                                    if (requestTracingEnabledValue != null && requestTracingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool requestTracingEnabledInstance = ((bool)requestTracingEnabledValue);
+                                        siteConfigInstance.RequestTracingEnabled = requestTracingEnabledInstance;
+                                    }
+                                    
+                                    JToken requestTracingExpirationTimeValue = siteConfigValue["requestTracingExpirationTime"];
+                                    if (requestTracingExpirationTimeValue != null && requestTracingExpirationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime requestTracingExpirationTimeInstance = ((DateTime)requestTracingExpirationTimeValue);
+                                        siteConfigInstance.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                                    }
+                                    
+                                    JToken scmTypeValue = siteConfigValue["scmType"];
+                                    if (scmTypeValue != null && scmTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string scmTypeInstance = ((string)scmTypeValue);
+                                        siteConfigInstance.ScmType = scmTypeInstance;
+                                    }
+                                    
+                                    JToken autoSwapSlotNameValue = siteConfigValue["autoSwapSlotName"];
+                                    if (autoSwapSlotNameValue != null && autoSwapSlotNameValue.Type != JTokenType.Null)
+                                    {
+                                        string autoSwapSlotNameInstance = ((string)autoSwapSlotNameValue);
+                                        siteConfigInstance.AutoSwapSlotName = autoSwapSlotNameInstance;
+                                    }
+                                    
+                                    JToken use32BitWorkerProcessValue = siteConfigValue["use32BitWorkerProcess"];
+                                    if (use32BitWorkerProcessValue != null && use32BitWorkerProcessValue.Type != JTokenType.Null)
+                                    {
+                                        bool use32BitWorkerProcessInstance = ((bool)use32BitWorkerProcessValue);
+                                        siteConfigInstance.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
+                                    }
+                                    
+                                    JToken webSocketsEnabledValue = siteConfigValue["webSocketsEnabled"];
+                                    if (webSocketsEnabledValue != null && webSocketsEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
+                                        siteConfigInstance.WebSocketsEnabled = webSocketsEnabledInstance;
+                                    }
+                                    
+                                    JToken limitsValue = siteConfigValue["limits"];
+                                    if (limitsValue != null && limitsValue.Type != JTokenType.Null)
+                                    {
+                                        SiteLimits limitsInstance = new SiteLimits();
+                                        siteConfigInstance.Limits = limitsInstance;
+                                        
+                                        JToken maxPercentageCpuValue = limitsValue["maxPercentageCpu"];
+                                        if (maxPercentageCpuValue != null && maxPercentageCpuValue.Type != JTokenType.Null)
+                                        {
+                                            double maxPercentageCpuInstance = ((double)maxPercentageCpuValue);
+                                            limitsInstance.MaxPercentageCpu = maxPercentageCpuInstance;
+                                        }
+                                        
+                                        JToken maxMemoryInMbValue = limitsValue["maxMemoryInMb"];
+                                        if (maxMemoryInMbValue != null && maxMemoryInMbValue.Type != JTokenType.Null)
+                                        {
+                                            long maxMemoryInMbInstance = ((long)maxMemoryInMbValue);
+                                            limitsInstance.MaxMemoryInMb = maxMemoryInMbInstance;
+                                        }
+                                        
+                                        JToken maxDiskSizeInMbValue = limitsValue["maxDiskSizeInMb"];
+                                        if (maxDiskSizeInMbValue != null && maxDiskSizeInMbValue.Type != JTokenType.Null)
+                                        {
+                                            long maxDiskSizeInMbInstance = ((long)maxDiskSizeInMbValue);
+                                            limitsInstance.MaxDiskSizeInMb = maxDiskSizeInMbInstance;
+                                        }
+                                    }
+                                }
+                                
                                 JToken stateValue = propertiesValue["state"];
                                 if (stateValue != null && stateValue.Type != JTokenType.Null)
                                 {
@@ -2711,11 +3512,11 @@ namespace Microsoft.Azure.Management.WebSites
                                 webSiteInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                webSiteInstance.Name = nameInstance2;
+                                string nameInstance3 = ((string)nameValue3);
+                                webSiteInstance.Name = nameInstance3;
                             }
                             
                             JToken locationValue = responseDoc["location"];
@@ -2728,19 +3529,19 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property4 in tagsSequenceElement)
+                                foreach (JProperty property6 in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property4.Name);
-                                    string tagsValue = ((string)property4.Value);
+                                    string tagsKey = ((string)property6.Name);
+                                    string tagsValue = ((string)property6.Value);
                                     webSiteInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                             
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
-                                string typeInstance = ((string)typeValue);
-                                webSiteInstance.Type = typeInstance;
+                                string typeInstance2 = ((string)typeValue2);
+                                webSiteInstance.Type = typeInstance2;
                             }
                         }
                         
@@ -3492,7 +4293,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                WebSiteGetConfigurationResponse propertiesInstance = new WebSiteGetConfigurationResponse();
+                                WebSiteConfiguration propertiesInstance = new WebSiteConfiguration();
                                 resourceInstance.Properties = propertiesInstance;
                                 
                                 JToken appSettingsSequenceElement = ((JToken)propertiesValue["appSettings"]);
@@ -3565,7 +4366,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 {
                                     foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
                                     {
-                                        WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
+                                        WebSiteConfiguration.HandlerMapping handlerMappingInstance = new WebSiteConfiguration.HandlerMapping();
                                         propertiesInstance.HandlerMappings.Add(handlerMappingInstance);
                                         
                                         JToken argumentsValue = handlerMappingsValue["arguments"];
@@ -5577,7 +6378,7 @@ namespace Microsoft.Azure.Management.WebSites
             url = url + "sites";
             url = url + "/";
             url = url + Uri.EscapeDataString(webSiteName);
-            url = url + "/slotConfigNames";
+            url = url + "/config/slotConfigNames";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-06-01");
             if (queryParameters.Count > 0)
@@ -6280,6 +7081,13 @@ namespace Microsoft.Azure.Management.WebSites
                                             propertiesInstance.ServerFarm = serverFarmInstance;
                                         }
                                         
+                                        JToken serverFarmIdValue = propertiesValue["serverFarmId"];
+                                        if (serverFarmIdValue != null && serverFarmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string serverFarmIdInstance = ((string)serverFarmIdValue);
+                                            propertiesInstance.ServerFarmId = serverFarmIdInstance;
+                                        }
+                                        
                                         JToken skuValue = propertiesValue["sku"];
                                         if (skuValue != null && skuValue.Type != JTokenType.Null)
                                         {
@@ -6327,6 +7135,267 @@ namespace Microsoft.Azure.Management.WebSites
                                             }
                                         }
                                         
+                                        JToken siteConfigValue = propertiesValue["siteConfig"];
+                                        if (siteConfigValue != null && siteConfigValue.Type != JTokenType.Null)
+                                        {
+                                            WebSiteConfiguration siteConfigInstance = new WebSiteConfiguration();
+                                            propertiesInstance.SiteConfig = siteConfigInstance;
+                                            
+                                            JToken appSettingsSequenceElement2 = ((JToken)siteConfigValue["appSettings"]);
+                                            if (appSettingsSequenceElement2 != null && appSettingsSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property4 in appSettingsSequenceElement2)
+                                                {
+                                                    string appSettingsKey2 = ((string)property4.Name);
+                                                    string appSettingsValue2 = ((string)property4.Value);
+                                                    siteConfigInstance.AppSettings.Add(appSettingsKey2, appSettingsValue2);
+                                                }
+                                            }
+                                            
+                                            JToken connectionStringsArray = siteConfigValue["connectionStrings"];
+                                            if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
+                                                {
+                                                    ConnectionStringInfo connStringInfoInstance = new ConnectionStringInfo();
+                                                    siteConfigInstance.ConnectionStrings.Add(connStringInfoInstance);
+                                                    
+                                                    JToken connectionStringValue = connectionStringsValue["connectionString"];
+                                                    if (connectionStringValue != null && connectionStringValue.Type != JTokenType.Null)
+                                                    {
+                                                        string connectionStringInstance = ((string)connectionStringValue);
+                                                        connStringInfoInstance.ConnectionString = connectionStringInstance;
+                                                    }
+                                                    
+                                                    JToken nameValue2 = connectionStringsValue["name"];
+                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance2 = ((string)nameValue2);
+                                                        connStringInfoInstance.Name = nameInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue = connectionStringsValue["type"];
+                                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DatabaseServerType typeInstance = ((DatabaseServerType)Enum.Parse(typeof(DatabaseServerType), ((string)typeValue), true));
+                                                        connStringInfoInstance.Type = typeInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken defaultDocumentsArray = siteConfigValue["defaultDocuments"];
+                                            if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
+                                                {
+                                                    siteConfigInstance.DefaultDocuments.Add(((string)defaultDocumentsValue));
+                                                }
+                                            }
+                                            
+                                            JToken detailedErrorLoggingEnabledValue = siteConfigValue["detailedErrorLoggingEnabled"];
+                                            if (detailedErrorLoggingEnabledValue != null && detailedErrorLoggingEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool detailedErrorLoggingEnabledInstance = ((bool)detailedErrorLoggingEnabledValue);
+                                                siteConfigInstance.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
+                                            }
+                                            
+                                            JToken documentRootValue = siteConfigValue["documentRoot"];
+                                            if (documentRootValue != null && documentRootValue.Type != JTokenType.Null)
+                                            {
+                                                string documentRootInstance = ((string)documentRootValue);
+                                                siteConfigInstance.DocumentRoot = documentRootInstance;
+                                            }
+                                            
+                                            JToken handlerMappingsArray = siteConfigValue["handlerMappings"];
+                                            if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
+                                                {
+                                                    WebSiteConfiguration.HandlerMapping handlerMappingInstance = new WebSiteConfiguration.HandlerMapping();
+                                                    siteConfigInstance.HandlerMappings.Add(handlerMappingInstance);
+                                                    
+                                                    JToken argumentsValue = handlerMappingsValue["arguments"];
+                                                    if (argumentsValue != null && argumentsValue.Type != JTokenType.Null)
+                                                    {
+                                                        string argumentsInstance = ((string)argumentsValue);
+                                                        handlerMappingInstance.Arguments = argumentsInstance;
+                                                    }
+                                                    
+                                                    JToken extensionValue = handlerMappingsValue["extension"];
+                                                    if (extensionValue != null && extensionValue.Type != JTokenType.Null)
+                                                    {
+                                                        string extensionInstance = ((string)extensionValue);
+                                                        handlerMappingInstance.Extension = extensionInstance;
+                                                    }
+                                                    
+                                                    JToken scriptProcessorValue = handlerMappingsValue["scriptProcessor"];
+                                                    if (scriptProcessorValue != null && scriptProcessorValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptProcessorInstance = ((string)scriptProcessorValue);
+                                                        handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken httpLoggingEnabledValue = siteConfigValue["httpLoggingEnabled"];
+                                            if (httpLoggingEnabledValue != null && httpLoggingEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool httpLoggingEnabledInstance = ((bool)httpLoggingEnabledValue);
+                                                siteConfigInstance.HttpLoggingEnabled = httpLoggingEnabledInstance;
+                                            }
+                                            
+                                            JToken logsDirectorySizeLimitValue = siteConfigValue["logsDirectorySizeLimit"];
+                                            if (logsDirectorySizeLimitValue != null && logsDirectorySizeLimitValue.Type != JTokenType.Null)
+                                            {
+                                                int logsDirectorySizeLimitInstance = ((int)logsDirectorySizeLimitValue);
+                                                siteConfigInstance.LogsDirectorySizeLimit = logsDirectorySizeLimitInstance;
+                                            }
+                                            
+                                            JToken managedPipelineModeValue = siteConfigValue["managedPipelineMode"];
+                                            if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
+                                            {
+                                                ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
+                                                siteConfigInstance.ManagedPipelineMode = managedPipelineModeInstance;
+                                            }
+                                            
+                                            JToken metadataSequenceElement2 = ((JToken)siteConfigValue["metadata"]);
+                                            if (metadataSequenceElement2 != null && metadataSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property5 in metadataSequenceElement2)
+                                                {
+                                                    string metadataKey2 = ((string)property5.Name);
+                                                    string metadataValue2 = ((string)property5.Value);
+                                                    siteConfigInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                                }
+                                            }
+                                            
+                                            JToken netFrameworkVersionValue = siteConfigValue["netFrameworkVersion"];
+                                            if (netFrameworkVersionValue != null && netFrameworkVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string netFrameworkVersionInstance = ((string)netFrameworkVersionValue);
+                                                siteConfigInstance.NetFrameworkVersion = netFrameworkVersionInstance;
+                                            }
+                                            
+                                            JToken numberOfWorkersValue = siteConfigValue["numberOfWorkers"];
+                                            if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                            {
+                                                int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                                siteConfigInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                            }
+                                            
+                                            JToken phpVersionValue = siteConfigValue["phpVersion"];
+                                            if (phpVersionValue != null && phpVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string phpVersionInstance = ((string)phpVersionValue);
+                                                siteConfigInstance.PhpVersion = phpVersionInstance;
+                                            }
+                                            
+                                            JToken pythonVersionValue = siteConfigValue["pythonVersion"];
+                                            if (pythonVersionValue != null && pythonVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string pythonVersionInstance = ((string)pythonVersionValue);
+                                                siteConfigInstance.PythonVersion = pythonVersionInstance;
+                                            }
+                                            
+                                            JToken publishingPasswordValue = siteConfigValue["publishingPassword"];
+                                            if (publishingPasswordValue != null && publishingPasswordValue.Type != JTokenType.Null)
+                                            {
+                                                string publishingPasswordInstance = ((string)publishingPasswordValue);
+                                                siteConfigInstance.PublishingPassword = publishingPasswordInstance;
+                                            }
+                                            
+                                            JToken publishingUsernameValue = siteConfigValue["publishingUsername"];
+                                            if (publishingUsernameValue != null && publishingUsernameValue.Type != JTokenType.Null)
+                                            {
+                                                string publishingUsernameInstance = ((string)publishingUsernameValue);
+                                                siteConfigInstance.PublishingUserName = publishingUsernameInstance;
+                                            }
+                                            
+                                            JToken remoteDebuggingEnabledValue = siteConfigValue["RemoteDebuggingEnabled"];
+                                            if (remoteDebuggingEnabledValue != null && remoteDebuggingEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool remoteDebuggingEnabledInstance = ((bool)remoteDebuggingEnabledValue);
+                                                siteConfigInstance.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
+                                            }
+                                            
+                                            JToken remoteDebuggingVersionValue = siteConfigValue["remoteDebuggingVersion"];
+                                            if (remoteDebuggingVersionValue != null && remoteDebuggingVersionValue.Type != JTokenType.Null)
+                                            {
+                                                RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), ((string)remoteDebuggingVersionValue), true));
+                                                siteConfigInstance.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                                            }
+                                            
+                                            JToken requestTracingEnabledValue = siteConfigValue["requestTracingEnabled"];
+                                            if (requestTracingEnabledValue != null && requestTracingEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool requestTracingEnabledInstance = ((bool)requestTracingEnabledValue);
+                                                siteConfigInstance.RequestTracingEnabled = requestTracingEnabledInstance;
+                                            }
+                                            
+                                            JToken requestTracingExpirationTimeValue = siteConfigValue["requestTracingExpirationTime"];
+                                            if (requestTracingExpirationTimeValue != null && requestTracingExpirationTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime requestTracingExpirationTimeInstance = ((DateTime)requestTracingExpirationTimeValue);
+                                                siteConfigInstance.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                                            }
+                                            
+                                            JToken scmTypeValue = siteConfigValue["scmType"];
+                                            if (scmTypeValue != null && scmTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string scmTypeInstance = ((string)scmTypeValue);
+                                                siteConfigInstance.ScmType = scmTypeInstance;
+                                            }
+                                            
+                                            JToken autoSwapSlotNameValue = siteConfigValue["autoSwapSlotName"];
+                                            if (autoSwapSlotNameValue != null && autoSwapSlotNameValue.Type != JTokenType.Null)
+                                            {
+                                                string autoSwapSlotNameInstance = ((string)autoSwapSlotNameValue);
+                                                siteConfigInstance.AutoSwapSlotName = autoSwapSlotNameInstance;
+                                            }
+                                            
+                                            JToken use32BitWorkerProcessValue = siteConfigValue["use32BitWorkerProcess"];
+                                            if (use32BitWorkerProcessValue != null && use32BitWorkerProcessValue.Type != JTokenType.Null)
+                                            {
+                                                bool use32BitWorkerProcessInstance = ((bool)use32BitWorkerProcessValue);
+                                                siteConfigInstance.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
+                                            }
+                                            
+                                            JToken webSocketsEnabledValue = siteConfigValue["webSocketsEnabled"];
+                                            if (webSocketsEnabledValue != null && webSocketsEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
+                                                siteConfigInstance.WebSocketsEnabled = webSocketsEnabledInstance;
+                                            }
+                                            
+                                            JToken limitsValue = siteConfigValue["limits"];
+                                            if (limitsValue != null && limitsValue.Type != JTokenType.Null)
+                                            {
+                                                SiteLimits limitsInstance = new SiteLimits();
+                                                siteConfigInstance.Limits = limitsInstance;
+                                                
+                                                JToken maxPercentageCpuValue = limitsValue["maxPercentageCpu"];
+                                                if (maxPercentageCpuValue != null && maxPercentageCpuValue.Type != JTokenType.Null)
+                                                {
+                                                    double maxPercentageCpuInstance = ((double)maxPercentageCpuValue);
+                                                    limitsInstance.MaxPercentageCpu = maxPercentageCpuInstance;
+                                                }
+                                                
+                                                JToken maxMemoryInMbValue = limitsValue["maxMemoryInMb"];
+                                                if (maxMemoryInMbValue != null && maxMemoryInMbValue.Type != JTokenType.Null)
+                                                {
+                                                    long maxMemoryInMbInstance = ((long)maxMemoryInMbValue);
+                                                    limitsInstance.MaxMemoryInMb = maxMemoryInMbInstance;
+                                                }
+                                                
+                                                JToken maxDiskSizeInMbValue = limitsValue["maxDiskSizeInMb"];
+                                                if (maxDiskSizeInMbValue != null && maxDiskSizeInMbValue.Type != JTokenType.Null)
+                                                {
+                                                    long maxDiskSizeInMbInstance = ((long)maxDiskSizeInMbValue);
+                                                    limitsInstance.MaxDiskSizeInMb = maxDiskSizeInMbInstance;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken stateValue = propertiesValue["state"];
                                         if (stateValue != null && stateValue.Type != JTokenType.Null)
                                         {
@@ -6363,11 +7432,11 @@ namespace Microsoft.Azure.Management.WebSites
                                         webSiteInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue3 = valueValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        webSiteInstance.Name = nameInstance2;
+                                        string nameInstance3 = ((string)nameValue3);
+                                        webSiteInstance.Name = nameInstance3;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
@@ -6380,19 +7449,19 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                     if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property4 in tagsSequenceElement)
+                                        foreach (JProperty property6 in tagsSequenceElement)
                                         {
-                                            string tagsKey = ((string)property4.Name);
-                                            string tagsValue = ((string)property4.Value);
+                                            string tagsKey = ((string)property6.Name);
+                                            string tagsValue = ((string)property6.Value);
                                             webSiteInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                     
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken typeValue2 = valueValue["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                     {
-                                        string typeInstance = ((string)typeValue);
-                                        webSiteInstance.Type = typeInstance;
+                                        string typeInstance2 = ((string)typeValue2);
+                                        webSiteInstance.Type = typeInstance2;
                                     }
                                 }
                             }
@@ -9568,7 +10637,7 @@ namespace Microsoft.Azure.Management.WebSites
             url = url + "sites";
             url = url + "/";
             url = url + Uri.EscapeDataString(webSiteName);
-            url = url + "/slotConfigNames";
+            url = url + "/config/slotConfigNames";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-06-01");
             if (queryParameters.Count > 0)

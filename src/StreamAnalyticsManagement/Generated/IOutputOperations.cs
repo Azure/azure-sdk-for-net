@@ -156,26 +156,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<OutputListResponse> ListOutputInJobAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Test an output for a stream analytics job.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the stream analytics job.
-        /// </param>
-        /// <param name='outputName'>
-        /// The output Name of the stream analytics job.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The test result of the input or output data source.
-        /// </returns>
-        Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Update an output for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -197,6 +177,26 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the output patch operation.
         /// </returns>
-        Task<OutputPatchResponse> UpdateAsync(string resourceGroupName, string jobName, string outputName, OutputPatchParameters parameters, CancellationToken cancellationToken);
+        Task<OutputPatchResponse> PatchAsync(string resourceGroupName, string jobName, string outputName, OutputPatchParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Test an output for a stream analytics job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the stream analytics job.
+        /// </param>
+        /// <param name='outputName'>
+        /// The output Name of the stream analytics job.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The test result of the input or output data source.
+        /// </returns>
+        Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
     }
 }

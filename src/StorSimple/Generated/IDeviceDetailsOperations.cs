@@ -32,6 +32,25 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
     /// </summary>
     public partial interface IDeviceDetailsOperations
     {
+        /// <summary>
+        /// Begin task for updating device details as specified by
+        /// deviceDetails. The task can then be tracked for completion using
+        /// returned task information
+        /// </summary>
+        /// <param name='deviceDetails'>
+        /// Updated DeviceDetails. Contains the corresponding DeviceId
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// The Custom Request Headers which client must use.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// This is the Task Response for all Async Calls
+        /// </returns>
+        Task<GuidTaskResponse> BeginUpdateDeviceDetailsAsync(DeviceDetailsRequest deviceDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
         /// <param name='deviceId'>
         /// The device id for which the call will be made.
         /// </param>
@@ -45,5 +64,22 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// The response model for device details.
         /// </returns>
         Task<DeviceDetailsResponse> GetAsync(string deviceId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update device details as specified by deviceDetails
+        /// </summary>
+        /// <param name='deviceDetails'>
+        /// Updated DeviceDetails. Contains the corresponding DeviceId
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// The Custom Request Headers which client must use.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Info about the async task
+        /// </returns>
+        Task<TaskStatusInfo> UpdateDeviceDetailsAsync(DeviceDetailsRequest deviceDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

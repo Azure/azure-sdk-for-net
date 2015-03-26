@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -30,15 +32,15 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ProtectionContainer : ServiceResourceBase
     {
-        private string _configurationStatus;
+        private IList<ProtectionProfile> _availableProtectionProfiles;
         
         /// <summary>
-        /// Required. Configuration status of protection container.
+        /// Required. AvailableProtectionProfiles of protection container.
         /// </summary>
-        public string ConfigurationStatus
+        public IList<ProtectionProfile> AvailableProtectionProfiles
         {
-            get { return this._configurationStatus; }
-            set { this._configurationStatus = value; }
+            get { return this._availableProtectionProfiles; }
+            set { this._availableProtectionProfiles = value; }
         }
         
         private string _fabricObjectId;
@@ -52,16 +54,15 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._fabricObjectId = value; }
         }
         
-        private string _pairedTo;
+        private string _fabricType;
         
         /// <summary>
-        /// Required. ID of the protection container current protection
-        /// container is PairedTo.
+        /// Required. FabricType of protection container.
         /// </summary>
-        public string PairedTo
+        public string FabricType
         {
-            get { return this._pairedTo; }
-            set { this._pairedTo = value; }
+            get { return this._fabricType; }
+            set { this._fabricType = value; }
         }
         
         private string _role;
@@ -86,11 +87,23 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._serverId = value; }
         }
         
+        private string _type;
+        
+        /// <summary>
+        /// Required. Type of protection container.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ProtectionContainer class.
         /// </summary>
         public ProtectionContainer()
         {
+            this.AvailableProtectionProfiles = new LazyList<ProtectionProfile>();
         }
     }
 }

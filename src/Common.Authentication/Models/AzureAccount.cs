@@ -12,10 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
+    [Serializable]
     public partial class AzureAccount
     {
         public string Id { get; set; }
@@ -42,7 +44,12 @@ namespace Microsoft.Azure.Common.Authentication.Models
             /// <summary>
             /// Comma separated list of tenants on this account.
             /// </summary>
-            Tenants
+            Tenants,
+
+            /// <summary>
+            /// Access token.
+            /// </summary>
+            AccessToken
         }
     }
 }

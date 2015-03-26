@@ -578,7 +578,7 @@ namespace Microsoft.WindowsAzure.Management
                             XElement createdTimeElement = affinityGroupElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
                             {
-                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.CreatedTime = createdTimeInstance;
                             }
                             
@@ -784,7 +784,7 @@ namespace Microsoft.WindowsAzure.Management
                                 XElement createdTimeElement = affinityGroupsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                                 if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
                                 {
-                                    DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     affinityGroupInstance.CreatedTime = createdTimeInstance;
                                 }
                                 

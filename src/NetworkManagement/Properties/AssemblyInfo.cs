@@ -20,7 +20,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Network.")]
 
 [assembly: AssemblyVersion("6.0.0.0")]
-[assembly: AssemblyFileVersion("6.1.0.0")]
+[assembly: AssemblyFileVersion("6.1.2.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
