@@ -20,62 +20,36 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource group information.
     /// </summary>
-    public partial class ResourceGroup
+    public partial class ResourceGroup : BasicResourceGroup
     {
-        private string _location;
+        private string _id;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource group. It
-        /// cannot be changed after the resource group has been created. Has
-        /// to be one of the supported Azure Locations, such as West US, East
-        /// US, West Europe, East Asia, etc.
+        /// Optional. Gets or sets the ID of the resource group.
         /// </summary>
-        public string Location
+        public string Id
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private string _properties;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the resource group properties.
+        /// Optional. Gets or sets the Name of the resource group.
         /// </summary>
-        public string Properties
+        public string Name
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _provisioningState;
-        
-        /// <summary>
-        /// Optional. Gets or sets resource group provisioning state.
-        /// </summary>
-        public string ProvisioningState
-        {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource group.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
@@ -83,7 +57,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceGroup()
         {
-            this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>

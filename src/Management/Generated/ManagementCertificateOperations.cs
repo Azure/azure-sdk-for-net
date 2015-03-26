@@ -507,7 +507,7 @@ namespace Microsoft.WindowsAzure.Management
                             XElement createdElement = subscriptionCertificateElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
                             if (createdElement != null)
                             {
-                                DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
+                                DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.Created = createdInstance;
                             }
                         }
@@ -676,7 +676,7 @@ namespace Microsoft.WindowsAzure.Management
                                 XElement createdElement = subscriptionCertificatesElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
                                 if (createdElement != null)
                                 {
-                                    DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     subscriptionCertificateInstance.Created = createdInstance;
                                 }
                             }

@@ -24,11 +24,15 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See 
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <param name="selectedFields">
         /// List of field names to retrieve for the document; Any field not retrieved will be missing from the
@@ -57,11 +61,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See 
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <param name="selectedFields">
         /// List of field names to retrieve for the document; Any field not retrieved will be missing from the
@@ -86,11 +94,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <returns>
         /// Response containing the document.
@@ -112,11 +124,15 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <returns>
         /// Response containing the document.
@@ -134,15 +150,19 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <param name="selectedFields">
         /// List of field names to retrieve for the document; Any field not retrieved will have null or default as its
@@ -172,15 +192,19 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <param name="selectedFields">
         /// List of field names to retrieve for the document; Any field not retrieved will have null or default as its
@@ -205,15 +229,19 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <returns>
         /// Response containing the document.
@@ -236,15 +264,19 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798929.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
+        /// </param>
         /// <param name="key">
-        /// The key of the document to retrieve; See https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// the rules for constructing valid document keys.
+        /// The key of the document to retrieve; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx"/> for the rules for constructing valid
+        /// document keys.
         /// </param>
         /// <returns>
         /// Response containing the document.

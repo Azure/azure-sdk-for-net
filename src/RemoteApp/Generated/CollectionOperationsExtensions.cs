@@ -588,12 +588,12 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// collection details(true for populate only).
         /// </param>
         /// <param name='collectionDetails'>
-        /// Required. Details for the collection to be created.
+        /// Required. Details for the collection to be updated.
         /// </param>
         /// <returns>
         /// The response containing the operation tracking id.
         /// </returns>
-        public static OperationResultWithTrackingId Set(this ICollectionOperations operations, string collectionName, bool forceRedeploy, bool populateOnly, CollectionCreationDetails collectionDetails)
+        public static OperationResultWithTrackingId Set(this ICollectionOperations operations, string collectionName, bool forceRedeploy, bool populateOnly, CollectionUpdateDetails collectionDetails)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -621,12 +621,12 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// collection details(true for populate only).
         /// </param>
         /// <param name='collectionDetails'>
-        /// Required. Details for the collection to be created.
+        /// Required. Details for the collection to be updated.
         /// </param>
         /// <returns>
         /// The response containing the operation tracking id.
         /// </returns>
-        public static Task<OperationResultWithTrackingId> SetAsync(this ICollectionOperations operations, string collectionName, bool forceRedeploy, bool populateOnly, CollectionCreationDetails collectionDetails)
+        public static Task<OperationResultWithTrackingId> SetAsync(this ICollectionOperations operations, string collectionName, bool forceRedeploy, bool populateOnly, CollectionUpdateDetails collectionDetails)
         {
             return operations.SetAsync(collectionName, forceRedeploy, populateOnly, collectionDetails, CancellationToken.None);
         }

@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
 
 namespace Common.Authentication.Test
@@ -36,21 +37,21 @@ namespace Common.Authentication.Test
             var environment = new AzureEnvironment
             {
                 Name = "testCloud",
-                Endpoints = { {AzureEnvironment.Endpoint.ActiveDirectory, "http://contoso.com" } }
+                Endpoints = { { AzureEnvironment.Endpoint.ActiveDirectory, "http://contoso.com" } }
             };
             var account = new AzureAccount
             {
                 Id = "me@contoso.com",
                 Type = AzureAccount.AccountType.User,
-                Properties = {{AzureAccount.Property.Tenants, tenant}}
+                Properties = { { AzureAccount.Property.Tenants, tenant } }
             };
             var sub = new AzureSubscription
             {
                 Account = account.Id,
                 Environment = environment.Name,
                 Id = new Guid(),
-                Name ="Contoso Test Subscription",
-                Properties = {{AzureSubscription.Property.Tenants, tenant}}
+                Name = "Contoso Test Subscription",
+                Properties = { { AzureSubscription.Property.Tenants, tenant } }
             };
 
             client.AddOrSetEnvironment(environment);
@@ -73,6 +74,58 @@ namespace Common.Authentication.Test
             Assert.True(parsedProfile.Accounts.ContainsKey(account.Id));
             Assert.NotNull(parsedProfile.Subscriptions);
             Assert.True(parsedProfile.Subscriptions.ContainsKey(sub.Id));
+        }
+
+        [Fact]
+        public void ProfileSerializeDeserializeWorks()
+        {
+            var dataStore = new MockDataStore();
+            var currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            AzureSession.DataStore = dataStore;
+            var client = new ProfileClient(currentProfile);
+            var tenant = Guid.NewGuid().ToString();
+            var environment = new AzureEnvironment
+            {
+                Name = "testCloud",
+                Endpoints = { { AzureEnvironment.Endpoint.ActiveDirectory, "http://contoso.com" } }
+            };
+            var account = new AzureAccount
+            {
+                Id = "me@contoso.com",
+                Type = AzureAccount.AccountType.User,
+                Properties = { { AzureAccount.Property.Tenants, tenant } }
+            };
+            var sub = new AzureSubscription
+            {
+                Account = account.Id,
+                Environment = environment.Name,
+                Id = new Guid(),
+                Name = "Contoso Test Subscription",
+                Properties = { { AzureSubscription.Property.Tenants, tenant } }
+            };
+
+            client.AddOrSetEnvironment(environment);
+            client.AddOrSetAccount(account);
+            client.AddOrSetSubscription(sub);
+
+            AzureProfile deserializedProfile;
+            // Round-trip the exception: Serialize and de-serialize with a BinaryFormatter
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // "Save" object state
+                bf.Serialize(ms, currentProfile);
+
+                // Re-use the same stream for de-serialization
+                ms.Seek(0, 0);
+
+                // Replace the original exception with de-serialized one
+                deserializedProfile = (AzureProfile)bf.Deserialize(ms);
+            }
+            Assert.NotNull(deserializedProfile);
+            var jCurrentProfile = JsonConvert.SerializeObject(currentProfile);
+            var jDeserializedProfile = JsonConvert.SerializeObject(deserializedProfile);
+            Assert.Equal(jCurrentProfile, jDeserializedProfile);
         }
     }
 }

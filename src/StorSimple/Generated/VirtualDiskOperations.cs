@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -266,6 +266,25 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     nameElement2.Value = acrListItem.Name;
                     accessControlRecordElement.Add(nameElement2);
                     
+                    if (acrListItem.GlobalId != null)
+                    {
+                        XElement globalIdElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                        globalIdElement.Value = acrListItem.GlobalId;
+                        accessControlRecordElement.Add(globalIdElement);
+                    }
+                    else
+                    {
+                        XElement emptyElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                        XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                        nilAttribute.Value = "true";
+                        emptyElement.Add(nilAttribute);
+                        accessControlRecordElement.Add(emptyElement);
+                    }
+                    
+                    XElement operationInProgressElement2 = new XElement(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    operationInProgressElement2.Value = acrListItem.OperationInProgress.ToString();
+                    accessControlRecordElement.Add(operationInProgressElement2);
+                    
                     XElement initiatorNameElement = new XElement(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
                     initiatorNameElement.Value = acrListItem.InitiatorName;
                     accessControlRecordElement.Add(initiatorNameElement);
@@ -273,17 +292,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     XElement volumeCountElement = new XElement(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
                     volumeCountElement.Value = acrListItem.VolumeCount.ToString();
                     accessControlRecordElement.Add(volumeCountElement);
-                    
-                    if (acrListItem.GlobalId != null)
-                    {
-                        XElement globalIdElement = new XElement(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        globalIdElement.Value = acrListItem.GlobalId;
-                        accessControlRecordElement.Add(globalIdElement);
-                    }
-                    
-                    XElement operationInProgressElement2 = new XElement(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    operationInProgressElement2.Value = acrListItem.OperationInProgress.ToString();
-                    accessControlRecordElement.Add(operationInProgressElement2);
                 }
                 virtualDiskElement.Add(acrListSequenceElement);
                 
@@ -396,11 +404,11 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 }
                 else
                 {
-                    XElement emptyElement = new XElement(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                    nilAttribute.Value = "true";
-                    emptyElement.Add(nilAttribute);
-                    primaryStorageAccountCredentialElement.Add(emptyElement);
+                    XElement emptyElement2 = new XElement(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute2 = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute2.Value = "true";
+                    emptyElement2.Add(nilAttribute2);
+                    primaryStorageAccountCredentialElement.Add(emptyElement2);
                 }
                 
                 if (diskDetails.DataContainer.SecretsEncryptionThumbprint != null)
@@ -591,7 +599,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -821,7 +829,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -920,6 +928,25 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     nameElement2.Value = acrListItem.Name;
                     accessControlRecordElement.Add(nameElement2);
                     
+                    if (acrListItem.GlobalId != null)
+                    {
+                        XElement globalIdElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                        globalIdElement.Value = acrListItem.GlobalId;
+                        accessControlRecordElement.Add(globalIdElement);
+                    }
+                    else
+                    {
+                        XElement emptyElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                        XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                        nilAttribute.Value = "true";
+                        emptyElement.Add(nilAttribute);
+                        accessControlRecordElement.Add(emptyElement);
+                    }
+                    
+                    XElement operationInProgressElement2 = new XElement(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    operationInProgressElement2.Value = acrListItem.OperationInProgress.ToString();
+                    accessControlRecordElement.Add(operationInProgressElement2);
+                    
                     XElement initiatorNameElement = new XElement(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
                     initiatorNameElement.Value = acrListItem.InitiatorName;
                     accessControlRecordElement.Add(initiatorNameElement);
@@ -927,17 +954,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     XElement volumeCountElement = new XElement(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
                     volumeCountElement.Value = acrListItem.VolumeCount.ToString();
                     accessControlRecordElement.Add(volumeCountElement);
-                    
-                    if (acrListItem.GlobalId != null)
-                    {
-                        XElement globalIdElement = new XElement(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        globalIdElement.Value = acrListItem.GlobalId;
-                        accessControlRecordElement.Add(globalIdElement);
-                    }
-                    
-                    XElement operationInProgressElement2 = new XElement(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    operationInProgressElement2.Value = acrListItem.OperationInProgress.ToString();
-                    accessControlRecordElement.Add(operationInProgressElement2);
                 }
                 virtualDiskElement.Add(acrListSequenceElement);
                 
@@ -1050,11 +1066,11 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 }
                 else
                 {
-                    XElement emptyElement = new XElement(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                    nilAttribute.Value = "true";
-                    emptyElement.Add(nilAttribute);
-                    primaryStorageAccountCredentialElement.Add(emptyElement);
+                    XElement emptyElement2 = new XElement(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute2 = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute2.Value = "true";
+                    emptyElement2.Add(nilAttribute2);
+                    primaryStorageAccountCredentialElement.Add(emptyElement2);
                 }
                 
                 if (diskDetails.DataContainer.SecretsEncryptionThumbprint != null)
@@ -1400,7 +1416,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -1542,6 +1558,29 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                         accessControlRecordInstance.Name = nameInstance2;
                                     }
                                     
+                                    XElement globalIdElement = acrListElement.Element(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                                    if (globalIdElement != null)
+                                    {
+                                        bool isNil = false;
+                                        XAttribute nilAttribute = globalIdElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                        if (nilAttribute != null)
+                                        {
+                                            isNil = nilAttribute.Value == "true";
+                                        }
+                                        if (isNil == false)
+                                        {
+                                            string globalIdInstance = globalIdElement.Value;
+                                            accessControlRecordInstance.GlobalId = globalIdInstance;
+                                        }
+                                    }
+                                    
+                                    XElement operationInProgressElement2 = acrListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (operationInProgressElement2 != null)
+                                    {
+                                        OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
+                                        accessControlRecordInstance.OperationInProgress = operationInProgressInstance2;
+                                    }
+                                    
                                     XElement initiatorNameElement = acrListElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
                                     if (initiatorNameElement != null)
                                     {
@@ -1554,20 +1593,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     {
                                         int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
                                         accessControlRecordInstance.VolumeCount = volumeCountInstance;
-                                    }
-                                    
-                                    XElement globalIdElement = acrListElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (globalIdElement != null)
-                                    {
-                                        string globalIdInstance = globalIdElement.Value;
-                                        accessControlRecordInstance.GlobalId = globalIdInstance;
-                                    }
-                                    
-                                    XElement operationInProgressElement2 = acrListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (operationInProgressElement2 != null)
-                                    {
-                                        OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
-                                        accessControlRecordInstance.OperationInProgress = operationInProgressInstance2;
                                     }
                                 }
                             }
@@ -1727,13 +1752,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     XElement passwordEncryptionCertThumbprintElement = primaryStorageAccountCredentialElement.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
                                     if (passwordEncryptionCertThumbprintElement != null)
                                     {
-                                        bool isNil = false;
-                                        XAttribute nilAttribute = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute != null)
+                                        bool isNil2 = false;
+                                        XAttribute nilAttribute2 = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                        if (nilAttribute2 != null)
                                         {
-                                            isNil = nilAttribute.Value == "true";
+                                            isNil2 = nilAttribute2.Value == "true";
                                         }
-                                        if (isNil == false)
+                                        if (isNil2 == false)
                                         {
                                             string passwordEncryptionCertThumbprintInstance = passwordEncryptionCertThumbprintElement.Value;
                                             primaryStorageAccountCredentialInstance.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance;
@@ -1888,7 +1913,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -2032,6 +2057,29 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                             accessControlRecordInstance.Name = nameInstance2;
                                         }
                                         
+                                        XElement globalIdElement = acrListElement.Element(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                                        if (globalIdElement != null)
+                                        {
+                                            bool isNil = false;
+                                            XAttribute nilAttribute = globalIdElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute != null)
+                                            {
+                                                isNil = nilAttribute.Value == "true";
+                                            }
+                                            if (isNil == false)
+                                            {
+                                                string globalIdInstance = globalIdElement.Value;
+                                                accessControlRecordInstance.GlobalId = globalIdInstance;
+                                            }
+                                        }
+                                        
+                                        XElement operationInProgressElement2 = acrListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement2 != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
+                                            accessControlRecordInstance.OperationInProgress = operationInProgressInstance2;
+                                        }
+                                        
                                         XElement initiatorNameElement = acrListElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
                                         if (initiatorNameElement != null)
                                         {
@@ -2044,20 +2092,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                         {
                                             int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
                                             accessControlRecordInstance.VolumeCount = volumeCountInstance;
-                                        }
-                                        
-                                        XElement globalIdElement = acrListElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (globalIdElement != null)
-                                        {
-                                            string globalIdInstance = globalIdElement.Value;
-                                            accessControlRecordInstance.GlobalId = globalIdInstance;
-                                        }
-                                        
-                                        XElement operationInProgressElement2 = acrListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (operationInProgressElement2 != null)
-                                        {
-                                            OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
-                                            accessControlRecordInstance.OperationInProgress = operationInProgressInstance2;
                                         }
                                     }
                                 }
@@ -2217,13 +2251,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                         XElement passwordEncryptionCertThumbprintElement = primaryStorageAccountCredentialElement.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
                                         if (passwordEncryptionCertThumbprintElement != null)
                                         {
-                                            bool isNil = false;
-                                            XAttribute nilAttribute = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                            if (nilAttribute != null)
+                                            bool isNil2 = false;
+                                            XAttribute nilAttribute2 = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute2 != null)
                                             {
-                                                isNil = nilAttribute.Value == "true";
+                                                isNil2 = nilAttribute2.Value == "true";
                                             }
-                                            if (isNil == false)
+                                            if (isNil2 == false)
                                             {
                                                 string passwordEncryptionCertThumbprintInstance = passwordEncryptionCertThumbprintElement.Value;
                                                 primaryStorageAccountCredentialInstance.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance;

@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";

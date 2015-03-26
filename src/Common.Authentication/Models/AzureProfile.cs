@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// <summary>
     /// Represents Azure profile structure with multiple environments, subscriptions, and accounts.
     /// </summary>
+    [Serializable]
     public sealed class AzureProfile
     {
         /// <summary>

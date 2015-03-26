@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Represents a field in an index definition in Azure Search, which
     /// describes the name, data type, and search behavior of a field.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798941.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798941.aspx for more
     /// information)
     /// </summary>
     public partial class Field
@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Search.Models
         
         /// <summary>
         /// Optional. Name of the text analyzer to use.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn879793.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn879793.aspx for more
+        /// information)
         /// </summary>
         public string Analyzer
         {
@@ -125,8 +125,8 @@ namespace Microsoft.Azure.Search.Models
         
         /// <summary>
         /// Required. Gets or sets the name of the field.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn857353.aspx for more
+        /// information)
         /// </summary>
         public string Name
         {

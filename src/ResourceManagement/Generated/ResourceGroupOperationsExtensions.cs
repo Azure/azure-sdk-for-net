@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static ResourceGroupCreateOrUpdateResult CreateOrUpdate(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
+        public static ResourceGroupCreateOrUpdateResult CreateOrUpdate(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
+        public static Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static ResourceGroupPatchResult Patch(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
+        public static ResourceGroupPatchResult Patch(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource group information.
         /// </returns>
-        public static Task<ResourceGroupPatchResult> PatchAsync(this IResourceGroupOperations operations, string resourceGroupName, ResourceGroup parameters)
+        public static Task<ResourceGroupPatchResult> PatchAsync(this IResourceGroupOperations operations, string resourceGroupName, BasicResourceGroup parameters)
         {
             return operations.PatchAsync(resourceGroupName, parameters, CancellationToken.None);
         }

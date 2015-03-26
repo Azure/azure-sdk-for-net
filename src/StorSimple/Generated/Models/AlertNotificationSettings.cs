@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
@@ -51,11 +52,36 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
             set { this._alertNotifcationEnabled = value; }
         }
         
+        private IList<string> _alertNotificationEmailList;
+        
+        /// <summary>
+        /// Optional. Gets or Sets non-admin recipients for email alerts. This
+        /// can also include distribution groups apart from regular email ids
+        /// </summary>
+        public IList<string> AlertNotificationEmailList
+        {
+            get { return this._alertNotificationEmailList; }
+            set { this._alertNotificationEmailList = value; }
+        }
+        
+        private bool _alertNotificationEnabledForAdminCoAdmins;
+        
+        /// <summary>
+        /// Optional. Gets or sets flag enabling/disabling alert emails for
+        /// admins and coadmins
+        /// </summary>
+        public bool AlertNotificationEnabledForAdminCoAdmins
+        {
+            get { return this._alertNotificationEnabledForAdminCoAdmins; }
+            set { this._alertNotificationEnabledForAdminCoAdmins = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AlertNotificationSettings class.
         /// </summary>
         public AlertNotificationSettings()
         {
+            this.AlertNotificationEmailList = new List<string>();
         }
         
         /// <summary>
