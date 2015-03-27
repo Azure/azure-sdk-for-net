@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Resources
         /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='identity'>
         /// Resource identity.

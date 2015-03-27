@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource information.
         /// </returns>
-        public static ResourceCreateOrUpdateResult CreateOrUpdate(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity, BasicResource parameters)
+        public static ResourceCreateOrUpdateResult CreateOrUpdate(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity, GenericResource parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource information.
         /// </returns>
-        public static Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity, BasicResource parameters)
+        public static Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity, GenericResource parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, identity, parameters, CancellationToken.None);
         }

@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Template deployment operation create result.
         /// </returns>
-        Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, BasicDeployment parameters, CancellationToken cancellationToken);
+        Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a deployment.
@@ -138,6 +138,6 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Information from validate template deployment response.
         /// </returns>
-        Task<DeploymentValidateResponse> ValidateAsync(string resourceGroupName, string deploymentName, BasicDeployment parameters, CancellationToken cancellationToken);
+        Task<DeploymentValidateResponse> ValidateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken);
     }
 }
