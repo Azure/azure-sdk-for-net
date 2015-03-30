@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation
     public static partial class WebhookOperationsExtensions
     {
         /// <summary>
-        /// Create the runbook identified by webhook name.  (see
+        /// Create the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Create the runbook identified by webhook name.  (see
+        /// Create the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Patch the runbook identified by webhook name.  (see
+        /// Patch the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Patch the runbook identified by webhook name.  (see
+        /// Patch the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>

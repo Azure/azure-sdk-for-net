@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private bool _isEnabled;
         
         /// <summary>
-        /// Optional. Gets or sets the value of the enabled flag of webhook.
+        /// Optional. Gets or sets the value of the enabled flag of the webhook.
         /// </summary>
         public bool IsEnabled
         {
@@ -68,7 +68,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IDictionary<string, string> _parameters;
         
         /// <summary>
-        /// Optional. Gets or sets the parameters of the job.
+        /// Optional. Gets or sets the parameters of the job that is created
+        /// when the webhook calls the runbook it is associated with.
         /// </summary>
         public IDictionary<string, string> Parameters
         {
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private RunbookAssociationProperty _runbook;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the runbook the webhook is associated with.
         /// </summary>
         public RunbookAssociationProperty Runbook
         {
@@ -87,15 +88,15 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._runbook = value; }
         }
         
-        private string _token;
+        private string _uri;
         
         /// <summary>
-        /// Optional. Gets or sets the token.
+        /// Optional. Gets or sets the webhook uri.
         /// </summary>
-        public string Token
+        public string Uri
         {
-            get { return this._token; }
-            set { this._token = value; }
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>

@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
+        /// Optional. The name of the resource group
         /// </param>
         /// <returns>
         /// The response model for the list account operation.
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
+        /// Optional. The name of the resource group
         /// </param>
         /// <returns>
         /// The response model for the list account operation.

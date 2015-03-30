@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Automation
     public partial interface IWebhookOperations
     {
         /// <summary>
-        /// Create the runbook identified by webhook name.  (see
+        /// Create the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Automation
         Task<WebhookListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Patch the runbook identified by webhook name.  (see
+        /// Patch the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>

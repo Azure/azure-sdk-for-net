@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Create the runbook identified by webhook name.  (see
+        /// Create the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -191,9 +191,9 @@ namespace Microsoft.Azure.Management.Automation
                 
                 propertiesValue["isEnabled"] = parameters.Properties.IsEnabled;
                 
-                if (parameters.Properties.Token != null)
+                if (parameters.Properties.Uri != null)
                 {
-                    propertiesValue["token"] = parameters.Properties.Token;
+                    propertiesValue["uri"] = parameters.Properties.Uri;
                 }
                 
                 propertiesValue["expiryTime"] = parameters.Properties.ExpiryTime;
@@ -616,11 +616,11 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.IsEnabled = isEnabledInstance;
                                 }
                                 
-                                JToken tokenValue = propertiesValue["token"];
-                                if (tokenValue != null && tokenValue.Type != JTokenType.Null)
+                                JToken uriValue = propertiesValue["uri"];
+                                if (uriValue != null && uriValue.Type != JTokenType.Null)
                                 {
-                                    string tokenInstance = ((string)tokenValue);
-                                    propertiesInstance.Token = tokenInstance;
+                                    string uriInstance = ((string)uriValue);
+                                    propertiesInstance.Uri = uriInstance;
                                 }
                                 
                                 JToken expiryTimeValue = propertiesValue["expiryTime"];
@@ -879,11 +879,11 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.IsEnabled = isEnabledInstance;
                                         }
                                         
-                                        JToken tokenValue = propertiesValue["token"];
-                                        if (tokenValue != null && tokenValue.Type != JTokenType.Null)
+                                        JToken uriValue = propertiesValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
                                         {
-                                            string tokenInstance = ((string)tokenValue);
-                                            propertiesInstance.Token = tokenInstance;
+                                            string uriInstance = ((string)uriValue);
+                                            propertiesInstance.Uri = uriInstance;
                                         }
                                         
                                         JToken expiryTimeValue = propertiesValue["expiryTime"];
@@ -1119,11 +1119,11 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.IsEnabled = isEnabledInstance;
                                         }
                                         
-                                        JToken tokenValue = propertiesValue["token"];
-                                        if (tokenValue != null && tokenValue.Type != JTokenType.Null)
+                                        JToken uriValue = propertiesValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
                                         {
-                                            string tokenInstance = ((string)tokenValue);
-                                            propertiesInstance.Token = tokenInstance;
+                                            string uriInstance = ((string)uriValue);
+                                            propertiesInstance.Uri = uriInstance;
                                         }
                                         
                                         JToken expiryTimeValue = propertiesValue["expiryTime"];
@@ -1235,7 +1235,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Patch the runbook identified by webhook name.  (see
+        /// Patch the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -1446,11 +1446,11 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.IsEnabled = isEnabledInstance;
                                 }
                                 
-                                JToken tokenValue = propertiesValue2["token"];
-                                if (tokenValue != null && tokenValue.Type != JTokenType.Null)
+                                JToken uriValue = propertiesValue2["uri"];
+                                if (uriValue != null && uriValue.Type != JTokenType.Null)
                                 {
-                                    string tokenInstance = ((string)tokenValue);
-                                    propertiesInstance.Token = tokenInstance;
+                                    string uriInstance = ((string)uriValue);
+                                    propertiesInstance.Uri = uriInstance;
                                 }
                                 
                                 JToken expiryTimeValue = propertiesValue2["expiryTime"];

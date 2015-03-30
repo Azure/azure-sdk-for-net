@@ -76,15 +76,15 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._runbook = value; }
         }
         
-        private string _token;
+        private string _uri;
         
         /// <summary>
-        /// Optional. Gets or sets the token.
+        /// Optional. Gets or sets the uri.
         /// </summary>
-        public string Token
+        public string Uri
         {
-            get { return this._token; }
-            set { this._token = value; }
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>

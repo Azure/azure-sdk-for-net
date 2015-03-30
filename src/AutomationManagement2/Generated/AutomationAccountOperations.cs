@@ -851,7 +851,7 @@ namespace Microsoft.Azure.Management.Automation
         /// more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
+        /// Optional. The name of the resource group
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -862,10 +862,6 @@ namespace Microsoft.Azure.Management.Automation
         public async Task<AutomationAccountListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -885,9 +881,12 @@ namespace Microsoft.Azure.Management.Automation
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
+            url = url + "/";
+            if (resourceGroupName != null)
+            {
+                url = url + "resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/";
+            }
+            url = url + "providers/";
             if (this.Client.ResourceNamespace != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);

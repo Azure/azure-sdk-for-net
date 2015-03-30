@@ -93,6 +93,68 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Retrieve a test job streams identified by runbook name and stream
+        /// id.  (see http://aka.ms/azureautomationsdk/jobstreamoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='runbookName'>
+        /// Required. The runbook name.
+        /// </param>
+        /// <param name='jobStreamId'>
+        /// Required. The job stream id.
+        /// </param>
+        /// <returns>
+        /// The response model for the get job stream operation.
+        /// </returns>
+        public static JobStreamGetResponse GetTestJobStream(this IJobStreamOperations operations, string resourceGroupName, string automationAccount, string runbookName, string jobStreamId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobStreamOperations)s).GetTestJobStreamAsync(resourceGroupName, automationAccount, runbookName, jobStreamId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve a test job streams identified by runbook name and stream
+        /// id.  (see http://aka.ms/azureautomationsdk/jobstreamoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='runbookName'>
+        /// Required. The runbook name.
+        /// </param>
+        /// <param name='jobStreamId'>
+        /// Required. The job stream id.
+        /// </param>
+        /// <returns>
+        /// The response model for the get job stream operation.
+        /// </returns>
+        public static Task<JobStreamGetResponse> GetTestJobStreamAsync(this IJobStreamOperations operations, string resourceGroupName, string automationAccount, string runbookName, string jobStreamId)
+        {
+            return operations.GetTestJobStreamAsync(resourceGroupName, automationAccount, runbookName, jobStreamId, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve a list of jobs streams identified by job id.  (see
         /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
         /// information)
