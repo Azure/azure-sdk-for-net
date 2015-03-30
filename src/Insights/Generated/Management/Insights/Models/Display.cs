@@ -21,32 +21,29 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Represents how the sku is displayed.
     /// </summary>
-    public partial class SkuGetResponse : AzureOperationResponse
+    public partial class Display
     {
-        private SkuGetProperties _properties;
-
+        private string _title;
+        
         /// <summary>
-        /// Optional. The resource properties.
+        /// Optional. The display title.
         /// </summary>
-        public SkuGetProperties Properties
+        public string Title
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._title; }
+            set { this._title = value; }
         }
-
+        
         /// <summary>
-        /// Initializes a new instance of the SkuGetResponse class.
+        /// Initializes a new instance of the Display class.
         /// </summary>
-        public SkuGetResponse()
+        public Display()
         {
         }
     }
