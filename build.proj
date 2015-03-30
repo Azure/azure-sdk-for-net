@@ -123,8 +123,7 @@
     
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;$(_ExtraPropertyList)"
-             Targets="Build" 
-             Condition="  '$(Scope)' != 'All' and '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication'" />
+             Targets="Build" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
