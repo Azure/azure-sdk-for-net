@@ -27,6 +27,9 @@
     <Compile Include="Models\OperationStatus.cs" />
     <Compile Include="Models\OperationStatusResponse.cs" />
     <Compile Include="Handlers\ClientRequestTrackingHandler.cs" />
+    <Compile Include="Models\ResourceBase.cs" />
+    <Compile Include="Models\ResourceBaseExtended.cs" />
+    <Compile Include="Models\ResourceIdentity.cs" />
     <Compile Include="OData\FilterParameterAttribute.cs" />
     <Compile Include="OData\FilterString.cs" />
     <Compile Include="OData\UrlExpressionVisitor.cs" />
