@@ -81,6 +81,25 @@ namespace Microsoft.Azure.Management.Automation
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccount, string webhookName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Retrieve the generate uri of the webhook.  (see
+        /// http://aka.ms/azureautomationsdk/webhookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the generate uri operation.
+        /// </returns>
+        Task<WebhookGenerateUriResponse> GenerateUriAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Retrieve the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
@@ -113,13 +132,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccount'>
         /// The automation account name.
         /// </param>
+        /// <param name='runbookName'>
+        /// The automation runbook name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response model for the list webhook operation.
         /// </returns>
-        Task<WebhookListResponse> ListAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken);
+        Task<WebhookListResponse> ListAsync(string resourceGroupName, string automationAccount, string runbookName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve next list of webhooks.  (see

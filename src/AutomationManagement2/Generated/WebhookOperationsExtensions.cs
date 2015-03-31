@@ -146,6 +146,56 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Retrieve the generate uri of the webhook.  (see
+        /// http://aka.ms/azureautomationsdk/webhookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IWebhookOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <returns>
+        /// The response model for the generate uri operation.
+        /// </returns>
+        public static WebhookGenerateUriResponse GenerateUri(this IWebhookOperations operations, string resourceGroupName, string automationAccount)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebhookOperations)s).GenerateUriAsync(resourceGroupName, automationAccount);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve the generate uri of the webhook.  (see
+        /// http://aka.ms/azureautomationsdk/webhookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IWebhookOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <returns>
+        /// The response model for the generate uri operation.
+        /// </returns>
+        public static Task<WebhookGenerateUriResponse> GenerateUriAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccount)
+        {
+            return operations.GenerateUriAsync(resourceGroupName, automationAccount, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve the webhook identified by webhook name.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
@@ -216,14 +266,17 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
+        /// <param name='runbookName'>
+        /// Optional. The automation runbook name.
+        /// </param>
         /// <returns>
         /// The response model for the list webhook operation.
         /// </returns>
-        public static WebhookListResponse List(this IWebhookOperations operations, string resourceGroupName, string automationAccount)
+        public static WebhookListResponse List(this IWebhookOperations operations, string resourceGroupName, string automationAccount, string runbookName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebhookOperations)s).ListAsync(resourceGroupName, automationAccount);
+                return ((IWebhookOperations)s).ListAsync(resourceGroupName, automationAccount, runbookName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -243,12 +296,15 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
+        /// <param name='runbookName'>
+        /// Optional. The automation runbook name.
+        /// </param>
         /// <returns>
         /// The response model for the list webhook operation.
         /// </returns>
-        public static Task<WebhookListResponse> ListAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccount)
+        public static Task<WebhookListResponse> ListAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccount, string runbookName)
         {
-            return operations.ListAsync(resourceGroupName, automationAccount, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, automationAccount, runbookName, CancellationToken.None);
         }
         
         /// <summary>

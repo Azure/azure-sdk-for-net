@@ -173,6 +173,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._psCredentials; }
         }
         
+        private IHybridRunbookWorkerGroupOperations _hybridRunbookWorkerGroups;
+        
+        /// <summary>
+        /// Service operation for automation hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        public virtual IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroups
+        {
+            get { return this._hybridRunbookWorkerGroups; }
+        }
+        
         private IJobOperations _jobs;
         
         /// <summary>
@@ -305,6 +317,7 @@ namespace Microsoft.Azure.Management.Automation
             this._connections = new ConnectionOperations(this);
             this._connectionTypes = new ConnectionTypeOperations(this);
             this._psCredentials = new CredentialOperations(this);
+            this._hybridRunbookWorkerGroups = new HybridRunbookWorkerGroupOperations(this);
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
             this._jobStreams = new JobStreamOperations(this);
@@ -387,6 +400,7 @@ namespace Microsoft.Azure.Management.Automation
             this._connections = new ConnectionOperations(this);
             this._connectionTypes = new ConnectionTypeOperations(this);
             this._psCredentials = new CredentialOperations(this);
+            this._hybridRunbookWorkerGroups = new HybridRunbookWorkerGroupOperations(this);
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
             this._jobStreams = new JobStreamOperations(this);

@@ -142,6 +142,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroups
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation jobs.  (see
         /// http://aka.ms/azureautomationsdk/joboperations for more
         /// information)
