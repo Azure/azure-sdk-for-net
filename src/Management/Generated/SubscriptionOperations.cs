@@ -536,14 +536,14 @@ namespace Microsoft.WindowsAzure.Management
                                     XElement operationStartedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationStartedTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (operationStartedTimeElement != null)
                                     {
-                                        DateTime operationStartedTimeInstance = DateTime.Parse(operationStartedTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime operationStartedTimeInstance = DateTime.Parse(operationStartedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         subscriptionOperationInstance.OperationStartedTime = operationStartedTimeInstance;
                                     }
                                     
                                     XElement operationCompletedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationCompletedTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (operationCompletedTimeElement != null)
                                     {
-                                        DateTime operationCompletedTimeInstance = DateTime.Parse(operationCompletedTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime operationCompletedTimeInstance = DateTime.Parse(operationCompletedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         subscriptionOperationInstance.OperationCompletedTime = operationCompletedTimeInstance;
                                     }
                                 }

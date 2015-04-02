@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Client that can be used to manage and query indexes and documents on an
     /// Azure Search service.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
     /// information)
     /// </summary>
     public partial interface ISearchServiceClient : IDisposable
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Gets or sets the credentials used to authenticate to an Azure
         /// Search service.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
+        /// information)
         /// </summary>
         SearchCredentials Credentials
         {
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Search
         
         /// <summary>
         /// Operations for managing indexes.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798918.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798918.aspx for more
+        /// information)
         /// </summary>
         IIndexOperations Indexes
         {

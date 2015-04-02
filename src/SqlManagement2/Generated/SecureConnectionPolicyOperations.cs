@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, SecureConnectionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecureConnectionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateDatabasePolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -183,11 +183,11 @@ namespace Microsoft.Azure.Management.Sql
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject secureConnectionPolicyCreateOrUpdateParametersValue = new JObject();
-                requestDoc = secureConnectionPolicyCreateOrUpdateParametersValue;
+                JObject databaseSecureConnectionPolicyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = databaseSecureConnectionPolicyCreateOrUpdateParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                secureConnectionPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                databaseSecureConnectionPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
                 if (parameters.Properties.SecurityEnabledAccess != null)
                 {
@@ -276,9 +276,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get secure connection request.
+        /// Represents the response to a Get database secure connection request.
         /// </returns>
-        public async Task<SecureConnectionPolicyGetResponse> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        public async Task<DatabaseSecureConnectionPolicyGetResponse> GetDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetDatabasePolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -383,13 +383,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    SecureConnectionPolicyGetResponse result = null;
+                    DatabaseSecureConnectionPolicyGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new SecureConnectionPolicyGetResponse();
+                        result = new DatabaseSecureConnectionPolicyGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            SecureConnectionPolicy secureConnectionPolicyInstance = new SecureConnectionPolicy();
+                            DatabaseSecureConnectionPolicy secureConnectionPolicyInstance = new DatabaseSecureConnectionPolicy();
                             result.SecureConnectionPolicy = secureConnectionPolicyInstance;
                             
                             JToken nameValue = responseDoc["name"];
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.Sql
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                SecureConnectionPolicyProperties propertiesInstance = new SecureConnectionPolicyProperties();
+                                DatabaseSecureConnectionPolicyProperties propertiesInstance = new DatabaseSecureConnectionPolicyProperties();
                                 secureConnectionPolicyInstance.Properties = propertiesInstance;
                                 
                                 JToken proxyDnsNameValue = propertiesValue["proxyDnsName"];

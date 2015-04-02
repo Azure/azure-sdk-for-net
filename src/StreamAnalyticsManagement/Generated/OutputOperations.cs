@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(outputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -266,11 +266,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Output.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -569,6 +569,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (derived3.Properties.EventHubName != null)
                                     {
                                         propertiesValue4["eventHubName"] = derived3.Properties.EventHubName;
+                                    }
+                                    
+                                    if (derived3.Properties.PartitionKey != null)
+                                    {
+                                        propertiesValue4["partitionKey"] = derived3.Properties.PartitionKey;
                                     }
                                 }
                                 
@@ -927,6 +932,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string eventHubNameInstance = ((string)eventHubNameValue);
                                                 propertiesInstance4.EventHubName = eventHubNameInstance;
                                             }
+                                            
+                                            JToken partitionKeyValue2 = propertiesValue11["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                propertiesInstance4.PartitionKey = partitionKeyInstance2;
+                                            }
                                         }
                                         
                                         JToken typeValue3 = datasourceValue2["type"];
@@ -1192,7 +1204,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1463,6 +1475,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string eventHubNameInstance = ((string)eventHubNameValue);
                                                 propertiesInstance4.EventHubName = eventHubNameInstance;
                                             }
+                                            
+                                            JToken partitionKeyValue2 = propertiesValue4["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                propertiesInstance4.PartitionKey = partitionKeyInstance2;
+                                            }
                                         }
                                         
                                         JToken typeValue3 = datasourceValue["type"];
@@ -1714,7 +1733,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1871,7 +1890,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2137,6 +2156,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string eventHubNameInstance = ((string)eventHubNameValue);
                                                 propertiesInstance4.EventHubName = eventHubNameInstance;
                                             }
+                                            
+                                            JToken partitionKeyValue2 = propertiesValue4["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                propertiesInstance4.PartitionKey = partitionKeyInstance2;
+                                            }
                                         }
                                         
                                         JToken typeValue3 = datasourceValue["type"];
@@ -2379,7 +2405,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/outputs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2650,6 +2676,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         string eventHubNameInstance = ((string)eventHubNameValue);
                                                         propertiesInstance4.EventHubName = eventHubNameInstance;
                                                     }
+                                                    
+                                                    JToken partitionKeyValue2 = propertiesValue4["partitionKey"];
+                                                    if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                        propertiesInstance4.PartitionKey = partitionKeyInstance2;
+                                                    }
                                                 }
                                                 
                                                 JToken typeValue3 = datasourceValue["type"];
@@ -2919,7 +2952,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3108,6 +3141,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             if (derived3.Properties.EventHubName != null)
                             {
                                 propertiesValue4["eventHubName"] = derived3.Properties.EventHubName;
+                            }
+                            
+                            if (derived3.Properties.PartitionKey != null)
+                            {
+                                propertiesValue4["partitionKey"] = derived3.Properties.PartitionKey;
                             }
                         }
                         
@@ -3453,6 +3491,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             {
                                                 string eventHubNameInstance = ((string)eventHubNameValue);
                                                 propertiesInstance4.EventHubName = eventHubNameInstance;
+                                            }
+                                            
+                                            JToken partitionKeyValue2 = propertiesValue11["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                propertiesInstance4.PartitionKey = partitionKeyInstance2;
                                             }
                                         }
                                         

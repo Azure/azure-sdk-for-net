@@ -1526,14 +1526,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement dateCreatedElement = hostedServicePropertiesElement.Element(XName.Get("DateCreated", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateCreatedElement != null)
                                 {
-                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateCreated = dateCreatedInstance;
                                 }
                                 
                                 XElement dateLastModifiedElement = hostedServicePropertiesElement.Element(XName.Get("DateLastModified", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateLastModifiedElement != null)
                                 {
-                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateLastModified = dateLastModifiedInstance;
                                 }
                                 
@@ -1928,7 +1928,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement timestampElement = guestAgentStatusElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
                                                 if (timestampElement != null && !string.IsNullOrEmpty(timestampElement.Value))
                                                 {
-                                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture);
+                                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                     guestAgentStatusInstance.Timestamp = timestampInstance;
                                                 }
                                                 
@@ -2087,14 +2087,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         XElement timestampElement2 = extensionSettingStatusElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
                                                         if (timestampElement2 != null && !string.IsNullOrEmpty(timestampElement2.Value))
                                                         {
-                                                            DateTime timestampInstance2 = DateTime.Parse(timestampElement2.Value, CultureInfo.InvariantCulture);
+                                                            DateTime timestampInstance2 = DateTime.Parse(timestampElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                             extensionSettingStatusInstance.Timestamp = timestampInstance2;
                                                         }
                                                         
                                                         XElement configurationAppliedTimeElement = extensionSettingStatusElement.Element(XName.Get("ConfigurationAppliedTime", "http://schemas.microsoft.com/windowsazure"));
                                                         if (configurationAppliedTimeElement != null && !string.IsNullOrEmpty(configurationAppliedTimeElement.Value))
                                                         {
-                                                            DateTime configurationAppliedTimeInstance = DateTime.Parse(configurationAppliedTimeElement.Value, CultureInfo.InvariantCulture);
+                                                            DateTime configurationAppliedTimeInstance = DateTime.Parse(configurationAppliedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                             extensionSettingStatusInstance.ConfigurationAppliedTime = configurationAppliedTimeInstance;
                                                         }
                                                         
@@ -3280,7 +3280,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement createdTimeElement = deploymentsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (createdTimeElement != null)
                                     {
-                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         deploymentInstance.CreatedTime = createdTimeInstance;
                                     }
                                     
@@ -3318,14 +3318,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement startTimeElement = persistentVMDowntimeElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (startTimeElement != null)
                                         {
-                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             persistentVMDowntimeInstance.StartTime = startTimeInstance;
                                         }
                                         
                                         XElement endTimeElement = persistentVMDowntimeElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (endTimeElement != null)
                                         {
-                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             persistentVMDowntimeInstance.EndTime = endTimeInstance;
                                         }
                                         
@@ -3459,14 +3459,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement dateCreatedElement = hostedServicePropertiesElement.Element(XName.Get("DateCreated", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateCreatedElement != null)
                                 {
-                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateCreated = dateCreatedInstance;
                                 }
                                 
                                 XElement dateLastModifiedElement = hostedServicePropertiesElement.Element(XName.Get("DateLastModified", "http://schemas.microsoft.com/windowsazure"));
                                 if (dateLastModifiedElement != null)
                                 {
-                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     hostedServicePropertiesInstance.DateLastModified = dateLastModifiedInstance;
                                 }
                                 
@@ -3911,14 +3911,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement dateCreatedElement = hostedServicePropertiesElement.Element(XName.Get("DateCreated", "http://schemas.microsoft.com/windowsazure"));
                                     if (dateCreatedElement != null)
                                     {
-                                        DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime dateCreatedInstance = DateTime.Parse(dateCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         hostedServicePropertiesInstance.DateCreated = dateCreatedInstance;
                                     }
                                     
                                     XElement dateLastModifiedElement = hostedServicePropertiesElement.Element(XName.Get("DateLastModified", "http://schemas.microsoft.com/windowsazure"));
                                     if (dateLastModifiedElement != null)
                                     {
-                                        DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime dateLastModifiedInstance = DateTime.Parse(dateLastModifiedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         hostedServicePropertiesInstance.DateLastModified = dateLastModifiedInstance;
                                     }
                                     
@@ -4291,7 +4291,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publishedDateElement = extensionImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                                 if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                                 {
-                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     extensionImageInstance.PublishedDate = publishedDateInstance;
                                 }
                                 
@@ -4945,7 +4945,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publishedDateElement = extensionImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                                 if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                                 {
-                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     extensionImageInstance.PublishedDate = publishedDateInstance;
                                 }
                                 

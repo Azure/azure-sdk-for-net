@@ -1100,8 +1100,10 @@ namespace Common.Authentication.Test
             Assert.Equal(azureSubscription2.Id, currentProfile.Context.Subscription.Id);
             Assert.Equal(azureSubscription2.Account, currentProfile.Context.Account.Id);
             Assert.Equal(azureSubscription2.Environment, currentProfile.Context.Environment.Name);
-            Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault("bad", null));
-            Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault(null, null));
+            var notFoundEx = Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault("bad", null));
+            var invalidEx = Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault(null, null));
+            Assert.Contains("doesn't exist", notFoundEx.Message);
+            Assert.Contains("non-null", invalidEx.Message);
         }
 
         [Fact]

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerGetResponse> GetAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
         
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
     }

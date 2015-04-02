@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Search
 {
     internal partial class DocumentOperations
     {
-        /// <inheritdoc />
         public Task<DocumentSearchResponse> ContinueSearchAsync(
             SearchContinuationToken continuationToken,
             CancellationToken cancellationToken)
@@ -40,7 +39,6 @@ namespace Microsoft.Azure.Search
                 DeserializeForSearch);
         }
 
-        /// <inheritdoc />
         public Task<DocumentSearchResponse<T>> ContinueSearchAsync<T>(
             SearchContinuationToken continuationToken,
             CancellationToken cancellationToken) where T : class

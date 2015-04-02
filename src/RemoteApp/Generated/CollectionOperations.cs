@@ -112,13 +112,13 @@ namespace Microsoft.Azure.Management.RemoteApp
                     }
                 }
             }
-            if (collectionDetails.BillingPlanName == null)
-            {
-                throw new ArgumentNullException("collectionDetails.BillingPlanName");
-            }
             if (collectionDetails.Name == null)
             {
                 throw new ArgumentNullException("collectionDetails.Name");
+            }
+            if (collectionDetails.PlanName == null)
+            {
+                throw new ArgumentNullException("collectionDetails.PlanName");
             }
             if (collectionDetails.PublishedApplications != null)
             {
@@ -211,9 +211,9 @@ namespace Microsoft.Azure.Management.RemoteApp
                     collectionCreationDetailsValue["TemplateImageName"] = collectionDetails.TemplateImageName;
                 }
                 
-                if (collectionDetails.VnetName != null)
+                if (collectionDetails.VNetName != null)
                 {
-                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VnetName;
+                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VNetName;
                 }
                 
                 if (collectionDetails.AdInfo != null)
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                     adInfoValue["ServiceAccountPassword"] = collectionDetails.AdInfo.Password;
                 }
                 
-                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.BillingPlanName;
+                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.PlanName;
                 
                 if (collectionDetails.CustomRdpProperty != null)
                 {
@@ -243,8 +243,6 @@ namespace Microsoft.Azure.Management.RemoteApp
                 collectionCreationDetailsValue["ReadyForPublishing"] = collectionDetails.ReadyForPublishing;
                 
                 collectionCreationDetailsValue["Mode"] = ((int)collectionDetails.Mode);
-                
-                collectionCreationDetailsValue["WaitBeforeShutdownInMinutes"] = collectionDetails.WaitBeforeShutdownInMinutes;
                 
                 if (collectionDetails.Region != null)
                 {
@@ -903,7 +901,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                             if (vnetNameValue != null && vnetNameValue.Type != JTokenType.Null)
                             {
                                 string vnetNameInstance = ((string)vnetNameValue);
-                                collectionInstance.VnetName = vnetNameInstance;
+                                collectionInstance.VNetName = vnetNameInstance;
                             }
                             
                             JToken adInfoValue = responseDoc["AdInfo"];
@@ -945,7 +943,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                             if (billingPlanNameValue != null && billingPlanNameValue.Type != JTokenType.Null)
                             {
                                 string billingPlanNameInstance = ((string)billingPlanNameValue);
-                                collectionInstance.BillingPlanName = billingPlanNameInstance;
+                                collectionInstance.PlanName = billingPlanNameInstance;
                             }
                             
                             JToken customRdpPropertyValue = responseDoc["CustomRdpProperty"];
@@ -1830,7 +1828,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                                     if (vnetNameValue != null && vnetNameValue.Type != JTokenType.Null)
                                     {
                                         string vnetNameInstance = ((string)vnetNameValue);
-                                        collectionInstance.VnetName = vnetNameInstance;
+                                        collectionInstance.VNetName = vnetNameInstance;
                                     }
                                     
                                     JToken adInfoValue = collectionsValue["AdInfo"];
@@ -1872,7 +1870,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                                     if (billingPlanNameValue != null && billingPlanNameValue.Type != JTokenType.Null)
                                     {
                                         string billingPlanNameInstance = ((string)billingPlanNameValue);
-                                        collectionInstance.BillingPlanName = billingPlanNameInstance;
+                                        collectionInstance.PlanName = billingPlanNameInstance;
                                     }
                                     
                                     JToken customRdpPropertyValue = collectionsValue["CustomRdpProperty"];
@@ -2704,7 +2702,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// collection details(true for populate only).
         /// </param>
         /// <param name='collectionDetails'>
-        /// Required. Details for the collection to be created.
+        /// Required. Details for the collection to be updated.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2712,7 +2710,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// <returns>
         /// The response containing the operation tracking id.
         /// </returns>
-        public async Task<OperationResultWithTrackingId> SetAsync(string collectionName, bool forceRedeploy, bool populateOnly, CollectionCreationDetails collectionDetails, CancellationToken cancellationToken)
+        public async Task<OperationResultWithTrackingId> SetAsync(string collectionName, bool forceRedeploy, bool populateOnly, CollectionUpdateDetails collectionDetails, CancellationToken cancellationToken)
         {
             // Validate
             if (collectionName == null)
@@ -2736,34 +2734,6 @@ namespace Microsoft.Azure.Management.RemoteApp
                 if (collectionDetails.AdInfo.UserName == null)
                 {
                     throw new ArgumentNullException("collectionDetails.AdInfo.UserName");
-                }
-            }
-            if (collectionDetails.AllowedPrincipals != null)
-            {
-                foreach (SecurityPrincipal allowedPrincipalsParameterItem in collectionDetails.AllowedPrincipals)
-                {
-                    if (allowedPrincipalsParameterItem.Name == null)
-                    {
-                        throw new ArgumentNullException("collectionDetails.AllowedPrincipals.Name");
-                    }
-                }
-            }
-            if (collectionDetails.BillingPlanName == null)
-            {
-                throw new ArgumentNullException("collectionDetails.BillingPlanName");
-            }
-            if (collectionDetails.Name == null)
-            {
-                throw new ArgumentNullException("collectionDetails.Name");
-            }
-            if (collectionDetails.PublishedApplications != null)
-            {
-                foreach (PublishedApplicationDetails publishedApplicationsParameterItem in collectionDetails.PublishedApplications)
-                {
-                    if (publishedApplicationsParameterItem.Name == null)
-                    {
-                        throw new ArgumentNullException("collectionDetails.PublishedApplications.Name");
-                    }
                 }
             }
             
@@ -2835,30 +2805,23 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject collectionCreationDetailsValue = new JObject();
-                requestDoc = collectionCreationDetailsValue;
-                
-                collectionCreationDetailsValue["Name"] = collectionDetails.Name;
+                JObject collectionUpdateDetailsValue = new JObject();
+                requestDoc = collectionUpdateDetailsValue;
                 
                 if (collectionDetails.Description != null)
                 {
-                    collectionCreationDetailsValue["Description"] = collectionDetails.Description;
+                    collectionUpdateDetailsValue["Description"] = collectionDetails.Description;
                 }
                 
                 if (collectionDetails.TemplateImageName != null)
                 {
-                    collectionCreationDetailsValue["TemplateImageName"] = collectionDetails.TemplateImageName;
-                }
-                
-                if (collectionDetails.VnetName != null)
-                {
-                    collectionCreationDetailsValue["VnetName"] = collectionDetails.VnetName;
+                    collectionUpdateDetailsValue["TemplateImageName"] = collectionDetails.TemplateImageName;
                 }
                 
                 if (collectionDetails.AdInfo != null)
                 {
                     JObject adInfoValue = new JObject();
-                    collectionCreationDetailsValue["AdInfo"] = adInfoValue;
+                    collectionUpdateDetailsValue["AdInfo"] = adInfoValue;
                     
                     adInfoValue["DomainName"] = collectionDetails.AdInfo.DomainName;
                     
@@ -2872,135 +2835,17 @@ namespace Microsoft.Azure.Management.RemoteApp
                     adInfoValue["ServiceAccountPassword"] = collectionDetails.AdInfo.Password;
                 }
                 
-                collectionCreationDetailsValue["BillingPlanName"] = collectionDetails.BillingPlanName;
+                if (collectionDetails.PlanName != null)
+                {
+                    collectionUpdateDetailsValue["BillingPlanName"] = collectionDetails.PlanName;
+                }
                 
                 if (collectionDetails.CustomRdpProperty != null)
                 {
-                    collectionCreationDetailsValue["CustomRdpProperty"] = collectionDetails.CustomRdpProperty;
+                    collectionUpdateDetailsValue["CustomRdpProperty"] = collectionDetails.CustomRdpProperty;
                 }
                 
-                collectionCreationDetailsValue["ReadyForPublishing"] = collectionDetails.ReadyForPublishing;
-                
-                collectionCreationDetailsValue["Mode"] = ((int)collectionDetails.Mode);
-                
-                collectionCreationDetailsValue["WaitBeforeShutdownInMinutes"] = collectionDetails.WaitBeforeShutdownInMinutes;
-                
-                if (collectionDetails.Region != null)
-                {
-                    collectionCreationDetailsValue["Region"] = collectionDetails.Region;
-                }
-                
-                if (collectionDetails.PublishedApplications != null)
-                {
-                    if (collectionDetails.PublishedApplications is ILazyCollection == false || ((ILazyCollection)collectionDetails.PublishedApplications).IsInitialized)
-                    {
-                        JArray publishedApplicationsArray = new JArray();
-                        foreach (PublishedApplicationDetails publishedApplicationsItem in collectionDetails.PublishedApplications)
-                        {
-                            JObject publishedApplicationDetailsValue = new JObject();
-                            publishedApplicationsArray.Add(publishedApplicationDetailsValue);
-                            
-                            publishedApplicationDetailsValue["AvailableToUsers"] = publishedApplicationsItem.AvailableToUsers;
-                            
-                            if (publishedApplicationsItem.Alias != null)
-                            {
-                                publishedApplicationDetailsValue["Alias"] = publishedApplicationsItem.Alias;
-                            }
-                            
-                            if (publishedApplicationsItem.CommandLineArguments != null)
-                            {
-                                publishedApplicationDetailsValue["CommandLineArguments"] = publishedApplicationsItem.CommandLineArguments;
-                            }
-                            
-                            if (publishedApplicationsItem.IconUri != null)
-                            {
-                                publishedApplicationDetailsValue["IconUri"] = publishedApplicationsItem.IconUri;
-                            }
-                            
-                            publishedApplicationDetailsValue["Name"] = publishedApplicationsItem.Name;
-                            
-                            publishedApplicationDetailsValue["Status"] = ((int)publishedApplicationsItem.Status);
-                            
-                            if (publishedApplicationsItem.IconPngUris != null)
-                            {
-                                JObject iconPngUrisValue = new JObject();
-                                publishedApplicationDetailsValue["IconPngUris"] = iconPngUrisValue;
-                                
-                                if (publishedApplicationsItem.IconPngUris.IconPngUris != null)
-                                {
-                                    if (publishedApplicationsItem.IconPngUris.IconPngUris is ILazyCollection == false || ((ILazyCollection)publishedApplicationsItem.IconPngUris.IconPngUris).IsInitialized)
-                                    {
-                                        JArray iconPngUrisDictionary = new JArray();
-                                        foreach (KeyValuePair<int, string> pair in publishedApplicationsItem.IconPngUris.IconPngUris)
-                                        {
-                                            int iconPngUrisKey = pair.Key;
-                                            string iconPngUrisValue2 = pair.Value;
-                                            JObject iconPngUrisItemObject = new JObject();
-                                            iconPngUrisItemObject["Key"] = iconPngUrisKey.ToString();
-                                            iconPngUrisItemObject["Value"] = iconPngUrisValue2;
-                                            iconPngUrisDictionary.Add(iconPngUrisItemObject);
-                                        }
-                                        iconPngUrisValue["IconPngUris"] = iconPngUrisDictionary;
-                                    }
-                                }
-                            }
-                            
-                            if (publishedApplicationsItem.VirtualPath != null)
-                            {
-                                publishedApplicationDetailsValue["VirtualPath"] = publishedApplicationsItem.VirtualPath;
-                            }
-                        }
-                        collectionCreationDetailsValue["PublishedApplications"] = publishedApplicationsArray;
-                    }
-                }
-                
-                if (collectionDetails.AllowedPrincipals != null)
-                {
-                    if (collectionDetails.AllowedPrincipals is ILazyCollection == false || ((ILazyCollection)collectionDetails.AllowedPrincipals).IsInitialized)
-                    {
-                        JArray allowedPrincipalsArray = new JArray();
-                        foreach (SecurityPrincipal allowedPrincipalsItem in collectionDetails.AllowedPrincipals)
-                        {
-                            JObject securityPrincipalValue = new JObject();
-                            allowedPrincipalsArray.Add(securityPrincipalValue);
-                            
-                            securityPrincipalValue["SecurityPrincipalType"] = ((int)allowedPrincipalsItem.SecurityPrincipalType);
-                            
-                            securityPrincipalValue["UserIdType"] = ((int)allowedPrincipalsItem.UserIdType);
-                            
-                            securityPrincipalValue["Name"] = allowedPrincipalsItem.Name;
-                            
-                            if (allowedPrincipalsItem.AadObjectId != null)
-                            {
-                                securityPrincipalValue["AadObjectId"] = allowedPrincipalsItem.AadObjectId;
-                            }
-                            
-                            if (allowedPrincipalsItem.Description != null)
-                            {
-                                securityPrincipalValue["Description"] = allowedPrincipalsItem.Description;
-                            }
-                        }
-                        collectionCreationDetailsValue["AllowedPrincipals"] = allowedPrincipalsArray;
-                    }
-                }
-                
-                if (collectionDetails.DnsServers != null)
-                {
-                    if (collectionDetails.DnsServers is ILazyCollection == false || ((ILazyCollection)collectionDetails.DnsServers).IsInitialized)
-                    {
-                        JArray dnsServersArray = new JArray();
-                        foreach (string dnsServersItem in collectionDetails.DnsServers)
-                        {
-                            dnsServersArray.Add(dnsServersItem);
-                        }
-                        collectionCreationDetailsValue["DnsServers"] = dnsServersArray;
-                    }
-                }
-                
-                if (collectionDetails.SubnetName != null)
-                {
-                    collectionCreationDetailsValue["SubnetName"] = collectionDetails.SubnetName;
-                }
+                collectionUpdateDetailsValue["WaitBeforeShutdownInMinutes"] = collectionDetails.WaitBeforeShutdownInMinutes;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

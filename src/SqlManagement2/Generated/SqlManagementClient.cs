@@ -152,18 +152,6 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._secureConnection; }
         }
         
-        private ISecurityOperations _databaseSecurity;
-        
-        /// <summary>
-        /// Represents all the operations for operating on Azure SQL Database
-        /// security policy.  Contains operations to: Retrieve and Update
-        /// security policy
-        /// </summary>
-        public virtual ISecurityOperations DatabaseSecurity
-        {
-            get { return this._databaseSecurity; }
-        }
-        
         private IServerOperations _servers;
         
         /// <summary>
@@ -174,6 +162,18 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerOperations Servers
         {
             get { return this._servers; }
+        }
+        
+        private IServiceObjectiveOperations _serviceObjectives;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Service Objectives.   Contains operations to: Retrieve service
+        /// objectives.
+        /// </summary>
+        public virtual IServiceObjectiveOperations ServiceObjectives
+        {
+            get { return this._serviceObjectives; }
         }
         
         /// <summary>
@@ -187,8 +187,8 @@ namespace Microsoft.Azure.Management.Sql
             this._dataMasking = new DataMaskingOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
-            this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
+            this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -259,8 +259,8 @@ namespace Microsoft.Azure.Management.Sql
             this._dataMasking = new DataMaskingOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
-            this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
+            this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

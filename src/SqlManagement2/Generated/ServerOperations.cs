@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public async Task<ServerGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -468,7 +468,7 @@ namespace Microsoft.Azure.Management.Sql
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -526,7 +526,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public async Task<ServerGetResponse> GetAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
         {
@@ -759,7 +759,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public async Task<ServerListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {

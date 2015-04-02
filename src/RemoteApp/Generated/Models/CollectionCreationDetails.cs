@@ -35,8 +35,7 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         private ActiveDirectoryConfig _adInfo;
         
         /// <summary>
-        /// Optional. Active Directory Parameters for the AD associated with
-        /// this collection.
+        /// Optional. Active Directory configuration details.
         /// </summary>
         public ActiveDirectoryConfig AdInfo
         {
@@ -56,22 +55,11 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._allowedPrincipals = value; }
         }
         
-        private string _billingPlanName;
-        
-        /// <summary>
-        /// Required. The RemoteApp billing plan to use.
-        /// </summary>
-        public string BillingPlanName
-        {
-            get { return this._billingPlanName; }
-            set { this._billingPlanName = value; }
-        }
-        
         private string _customRdpProperty;
         
         /// <summary>
-        /// Optional. Optional customer-defined RDP properties of the
-        /// collection.
+        /// Optional. Customer defined Remote Desktop Protocol (RDP) properties
+        /// of the collection.
         /// </summary>
         public string CustomRdpProperty
         {
@@ -121,6 +109,17 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private string _planName;
+        
+        /// <summary>
+        /// Required. The RemoteApp plan to use.
+        /// </summary>
+        public string PlanName
+        {
+            get { return this._planName; }
+            set { this._planName = value; }
         }
         
         private IList<PublishedApplicationDetails> _publishedApplications;
@@ -173,8 +172,8 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         private string _templateImageName;
         
         /// <summary>
-        /// Optional. The name of the application template image to be used to
-        /// create this collection.
+        /// Optional. The name of the template image to be used to create this
+        /// collection.
         /// </summary>
         public string TemplateImageName
         {
@@ -182,31 +181,15 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._templateImageName = value; }
         }
         
-        private string _vnetName;
+        private string _vNetName;
         
         /// <summary>
-        /// Optional. The Vnet name associated with this collection.
+        /// Optional. The VNet name associated with this collection.
         /// </summary>
-        public string VnetName
+        public string VNetName
         {
-            get { return this._vnetName; }
-            set { this._vnetName = value; }
-        }
-        
-        private int _waitBeforeShutdownInMinutes;
-        
-        /// <summary>
-        /// Optional. Number of minutes to wait before logging off the end
-        /// users when updating this collection.The value of -1 denotes
-        /// immediate force logoff after the patching is successfully
-        /// completed.The value of 0 denotes logoff after 60 minutes after the
-        /// patching is successfully completed.Any other value less than 300
-        /// minutes will be honored as is.
-        /// </summary>
-        public int WaitBeforeShutdownInMinutes
-        {
-            get { return this._waitBeforeShutdownInMinutes; }
-            set { this._waitBeforeShutdownInMinutes = value; }
+            get { return this._vNetName; }
+            set { this._vNetName = value; }
         }
         
         /// <summary>
@@ -223,19 +206,19 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// Initializes a new instance of the CollectionCreationDetails class
         /// with required arguments.
         /// </summary>
-        public CollectionCreationDetails(string name, string billingPlanName)
+        public CollectionCreationDetails(string name, string planName)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (billingPlanName == null)
+            if (planName == null)
             {
-                throw new ArgumentNullException("billingPlanName");
+                throw new ArgumentNullException("planName");
             }
             this.Name = name;
-            this.BillingPlanName = billingPlanName;
+            this.PlanName = planName;
         }
     }
 }

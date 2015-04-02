@@ -33,6 +33,56 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
     /// </summary>
     public static partial class DeviceDetailsOperationsExtensions
     {
+        /// <summary>
+        /// Begin task for updating device details as specified by
+        /// deviceDetails. The task can then be tracked for completion using
+        /// returned task information
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.StorSimple.IDeviceDetailsOperations.
+        /// </param>
+        /// <param name='deviceDetails'>
+        /// Required. Updated DeviceDetails. Contains the corresponding DeviceId
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. The Custom Request Headers which client must use.
+        /// </param>
+        /// <returns>
+        /// This is the Task Response for all Async Calls
+        /// </returns>
+        public static GuidTaskResponse BeginUpdateDeviceDetails(this IDeviceDetailsOperations operations, DeviceDetailsRequest deviceDetails, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeviceDetailsOperations)s).BeginUpdateDeviceDetailsAsync(deviceDetails, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begin task for updating device details as specified by
+        /// deviceDetails. The task can then be tracked for completion using
+        /// returned task information
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.StorSimple.IDeviceDetailsOperations.
+        /// </param>
+        /// <param name='deviceDetails'>
+        /// Required. Updated DeviceDetails. Contains the corresponding DeviceId
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. The Custom Request Headers which client must use.
+        /// </param>
+        /// <returns>
+        /// This is the Task Response for all Async Calls
+        /// </returns>
+        public static Task<GuidTaskResponse> BeginUpdateDeviceDetailsAsync(this IDeviceDetailsOperations operations, DeviceDetailsRequest deviceDetails, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginUpdateDeviceDetailsAsync(deviceDetails, customRequestHeaders, CancellationToken.None);
+        }
+        
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.StorSimple.IDeviceDetailsOperations.
@@ -71,6 +121,52 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         public static Task<DeviceDetailsResponse> GetAsync(this IDeviceDetailsOperations operations, string deviceId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(deviceId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update device details as specified by deviceDetails
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.StorSimple.IDeviceDetailsOperations.
+        /// </param>
+        /// <param name='deviceDetails'>
+        /// Required. Updated DeviceDetails. Contains the corresponding DeviceId
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. The Custom Request Headers which client must use.
+        /// </param>
+        /// <returns>
+        /// Info about the async task
+        /// </returns>
+        public static TaskStatusInfo UpdateDeviceDetails(this IDeviceDetailsOperations operations, DeviceDetailsRequest deviceDetails, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeviceDetailsOperations)s).UpdateDeviceDetailsAsync(deviceDetails, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update device details as specified by deviceDetails
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.StorSimple.IDeviceDetailsOperations.
+        /// </param>
+        /// <param name='deviceDetails'>
+        /// Required. Updated DeviceDetails. Contains the corresponding DeviceId
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. The Custom Request Headers which client must use.
+        /// </param>
+        /// <returns>
+        /// Info about the async task
+        /// </returns>
+        public static Task<TaskStatusInfo> UpdateDeviceDetailsAsync(this IDeviceDetailsOperations operations, DeviceDetailsRequest deviceDetails, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UpdateDeviceDetailsAsync(deviceDetails, customRequestHeaders, CancellationToken.None);
         }
     }
 }

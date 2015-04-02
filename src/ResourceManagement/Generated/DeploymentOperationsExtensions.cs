@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Template deployment operation create result.
         /// </returns>
-        public static DeploymentOperationsCreateResult CreateOrUpdate(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, BasicDeployment parameters)
+        public static DeploymentOperationsCreateResult CreateOrUpdate(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Template deployment operation create result.
         /// </returns>
-        public static Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, BasicDeployment parameters)
+        public static Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, deploymentName, parameters, CancellationToken.None);
         }
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Information from validate template deployment response.
         /// </returns>
-        public static DeploymentValidateResponse Validate(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, BasicDeployment parameters)
+        public static DeploymentValidateResponse Validate(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Information from validate template deployment response.
         /// </returns>
-        public static Task<DeploymentValidateResponse> ValidateAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, BasicDeployment parameters)
+        public static Task<DeploymentValidateResponse> ValidateAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
         {
             return operations.ValidateAsync(resourceGroupName, deploymentName, parameters, CancellationToken.None);
         }

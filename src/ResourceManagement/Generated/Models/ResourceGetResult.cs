@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class ResourceGetResult : AzureOperationResponse
     {
-        private Resource _resource;
+        private GenericResourceExtended _resource;
         
         /// <summary>
         /// Optional. Gets or sets the resource.
         /// </summary>
-        public Resource Resource
+        public GenericResourceExtended Resource
         {
             get { return this._resource; }
             set { this._resource = value; }

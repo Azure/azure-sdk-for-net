@@ -43,17 +43,6 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._adInfo = value; }
         }
         
-        private string _billingPlanName;
-        
-        /// <summary>
-        /// Required. The billing plan name associated with this collection.
-        /// </summary>
-        public string BillingPlanName
-        {
-            get { return this._billingPlanName; }
-            set { this._billingPlanName = value; }
-        }
-        
         private string _customRdpProperty;
         
         /// <summary>
@@ -156,6 +145,17 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._officeType = value; }
         }
         
+        private string _planName;
+        
+        /// <summary>
+        /// Required. The plan name associated with this collection.
+        /// </summary>
+        public string PlanName
+        {
+            get { return this._planName; }
+            set { this._planName = value; }
+        }
+        
         private bool _readyForPublishing;
         
         /// <summary>
@@ -251,15 +251,15 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._type = value; }
         }
         
-        private string _vnetName;
+        private string _vNetName;
         
         /// <summary>
-        /// Optional. The Vnet name associated with this collection.
+        /// Optional. The VNet name associated with this collection.
         /// </summary>
-        public string VnetName
+        public string VNetName
         {
-            get { return this._vnetName; }
-            set { this._vnetName = value; }
+            get { return this._vNetName; }
+            set { this._vNetName = value; }
         }
         
         /// <summary>
@@ -274,19 +274,19 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// Initializes a new instance of the Collection class with required
         /// arguments.
         /// </summary>
-        public Collection(string name, string billingPlanName)
+        public Collection(string name, string planName)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (billingPlanName == null)
+            if (planName == null)
             {
-                throw new ArgumentNullException("billingPlanName");
+                throw new ArgumentNullException("planName");
             }
             this.Name = name;
-            this.BillingPlanName = billingPlanName;
+            this.PlanName = planName;
         }
     }
 }
