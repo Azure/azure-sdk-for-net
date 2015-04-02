@@ -12,6 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System.Security.Cryptography;
+using Hyak.Common;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -48,7 +50,7 @@ namespace Microsoft.Azure.Common.Authentication
             return new AdalAccessToken(AcquireToken(config, promptBehavior, userId, password), this, config);
         }
 
-        private readonly static TimeSpan thresholdExpiration = new TimeSpan(0, 5, 0);
+        private readonly static TimeSpan expirationThreshold = TimeSpan.FromMinutes(5);
 
         private bool IsExpired(AdalAccessToken token)
         {
@@ -58,14 +60,27 @@ namespace Microsoft.Azure.Common.Authentication
                 return true;
             }
 #endif
-
-            return token.AuthResult.ExpiresOn - DateTimeOffset.Now < thresholdExpiration;
+            var expiration = token.AuthResult.ExpiresOn;
+            var currentTime = DateTimeOffset.UtcNow;
+            var timeUntilExpiration = expiration - currentTime;
+            TracingAdapter.Information(Resources.UPNTokenExpirationCheckTrace, expiration, currentTime, expirationThreshold,
+                timeUntilExpiration);
+            return timeUntilExpiration < expirationThreshold;
         }
 
         private void Renew(AdalAccessToken token)
         {
+            TracingAdapter.Information(Resources.UPNRenewTokenTrace, token.AuthResult.AccessTokenType, token.AuthResult.ExpiresOn,
+                token.AuthResult.IsMultipleResourceRefreshToken, token.AuthResult.TenantId, token.UserId);
+            var user = token.AuthResult.UserInfo;
+            if (user != null)
+            {
+                TracingAdapter.Information(Resources.UPNRenewTokenUserInfoTrace, user.DisplayableId, user.FamilyName,
+                    user.GivenName, user.IdentityProvider, user.UniqueId);
+            }
             if (IsExpired(token))
             {
+                TracingAdapter.Information(Resources.UPNExpiredTokenTrace);
                 AuthenticationResult result = AcquireToken(token.Configuration, ShowDialog.Never, token.UserId, null);
 
                 if (result == null)
@@ -89,7 +104,7 @@ namespace Microsoft.Azure.Common.Authentication
 
         // We have to run this in a separate thread to guarantee that it's STA. This method
         // handles the threading details.
-        private AuthenticationResult AcquireToken(AdalConfiguration config, ShowDialog promptBehavior, string userId, 
+        private AuthenticationResult AcquireToken(AdalConfiguration config, ShowDialog promptBehavior, string userId,
             SecureString password)
         {
             AuthenticationResult result = null;
@@ -132,10 +147,10 @@ namespace Microsoft.Azure.Common.Authentication
         }
 
         private AuthenticationResult SafeAquireToken(
-            AdalConfiguration config, 
-            ShowDialog showDialog, 
+            AdalConfiguration config,
+            ShowDialog showDialog,
             string userId,
-            SecureString password, 
+            SecureString password,
             out Exception ex)
         {
             try
@@ -168,12 +183,16 @@ namespace Microsoft.Azure.Common.Authentication
             return null;
         }
 
-        private AuthenticationResult DoAcquireToken(AdalConfiguration config, PromptBehavior promptBehavior, string userId, 
+        private AuthenticationResult DoAcquireToken(AdalConfiguration config, PromptBehavior promptBehavior, string userId,
             SecureString password)
         {
             AuthenticationResult result;
             var context = CreateContext(config);
 
+            TracingAdapter.Information(Resources.UPNAcquireTokenContextTrace, context.Authority, context.CorrelationId,
+                context.ValidateAuthority);
+            TracingAdapter.Information(Resources.UPNAcquireTokenConfigTrace, config.AdDomain, config.AdEndpoint,
+                config.ClientId, config.ClientRedirectUri);
             if (string.IsNullOrEmpty(userId))
             {
                 if (promptBehavior != PromptBehavior.Never)

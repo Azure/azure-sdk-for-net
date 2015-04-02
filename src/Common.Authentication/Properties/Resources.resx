@@ -201,6 +201,12 @@
   <data name="ServiceNameExists" xml:space="preserve">
     <value>The provided service name {0} already exists, please pick another name</value>
   </data>
+  <data name="SPNRenewTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Renewing token using AppId: '{0}', AdalConfiguration with ADDomain: '{1}', AdEndpoint: '{2}', ClientId: '{3}', RedirectUri: '{4}'</value>
+  </data>
+  <data name="SPNTokenExpirationCheckTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Checking token expiration, token expires '{0}' Comparing to '{1}' With threshold '{2}', calculated time until token expiry: '{3}'</value>
+  </data>
   <data name="SubscriptionIdNotFoundMessage" xml:space="preserve">
     <value>The subscription id {0} doesn't exist.</value>
   </data>
@@ -218,6 +224,24 @@
   </data>
   <data name="UnknownCredentialType" xml:space="preserve">
     <value>Illegal credential type</value>
+  </data>
+  <data name="UPNAcquireTokenConfigTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Acquiring token using AdalConfiguration with Domain: '{0}', AdEndpoint: '{1}', ClientId: '{2}', ClientRedirectUri: {3}</value>
+  </data>
+  <data name="UPNAcquireTokenContextTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Acquiring token using context with Authority '{0}', CorrelationId: '{1}', ValidateAuthority: '{2}'</value>
+  </data>
+  <data name="UPNExpiredTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Token is expired</value>
+  </data>
+  <data name="UPNRenewTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Renewing Token with Type: '{0}', Expiry: '{1}', MultipleResource? '{2}', Tenant: '{3}', UserId: '{4}'</value>
+  </data>
+  <data name="UPNRenewTokenUserInfoTrace" xml:space="preserve">
+    <value>[Common.Authentication]: User info for token DisplayId: '{0}', Name: {2} {1}, IdProvider: '{3}', Uid: '{4}'</value>
+  </data>
+  <data name="UPNTokenExpirationCheckTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Checking token expiration, token expires '{0}' Comparing to '{1}' With threshold '{2}', calculated time until token expiry: '{3}'</value>
   </data>
   <data name="UserNameIsNotValid" xml:space="preserve">
     <value>User name is not valid</value>

@@ -17,6 +17,7 @@ using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.Linq;
 using System.Security;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Common.Authentication.Factories
 {
@@ -34,7 +35,12 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
-            var token = TokenProvider.GetAccessToken(GetAdalConfiguration(environment, tenant, resourceId), promptBehavior, account.Id, password, account.Type);
+            var configuration = GetAdalConfiguration(environment, tenant, resourceId);
+            TracingAdapter.Information("Authenticating using configuration values: Domain: '{0}', Endpoint: '{1}', " +
+                "ClientId: '{2}', ClientRedirect: '{3}', ResourceClientUri: '{4}', ValidateAuthrity: '{5}'", 
+                configuration.AdDomain, configuration.AdEndpoint, configuration.ClientId, configuration.ClientRedirectUri, 
+                configuration.ResourceClientUri, configuration.ValidateAuthority);
+            var token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
             account.Id = token.UserId;
             return token;
         }
@@ -73,7 +79,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             try
             {
+                TracingAdapter.Information("Authenticting using Account: '{0}', environment: '{1}', tenant: '{2}'", 
+                    context.Account.Id, context.Environment.Name, tenant);
                 var token = Authenticate(context.Account, context.Environment, tenant, null, ShowDialog.Never);
+                TracingAdapter.Information("Received token with LoginType '{0}', Tenant: '{1}', UserId: '{2}'", 
+                    token.LoginType, token.TenantId, token.UserId);
                 return new AccessTokenCredential(context.Subscription.Id, token);
             }
             catch (Exception ex)
