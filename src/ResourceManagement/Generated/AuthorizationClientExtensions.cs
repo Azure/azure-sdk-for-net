@@ -21,31 +21,10 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.Resources
 {
-    /// <summary>
-    /// Deployment operation parameters.
-    /// </summary>
-    public partial class Deployment
+    public static partial class AuthorizationClientExtensions
     {
-        private DeploymentProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the deployment properties.
-        /// </summary>
-        public DeploymentProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Deployment class.
-        /// </summary>
-        public Deployment()
-        {
-        }
     }
 }

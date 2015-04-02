@@ -20,59 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// The management lock properties.
     /// </summary>
-    public partial class ResourceBase
+    public partial class ManagementLockProperties
     {
-        private string _location;
+        private string _level;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Optional. Gets or sets the lock level of the management lock.
         /// </summary>
-        public string Location
+        public string Level
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._level; }
+            set { this._level = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _notes;
         
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Optional. Gets or sets the notes of the management lock.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string Notes
         {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
-        /// </summary>
-        public ResourceBase()
-        {
-            this.Tags = new LazyDictionary<string, string>();
+            get { return this._notes; }
+            set { this._notes = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class with required
-        /// arguments.
+        /// Initializes a new instance of the ManagementLockProperties class.
         /// </summary>
-        public ResourceBase(string location)
-            : this()
+        public ManagementLockProperties()
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

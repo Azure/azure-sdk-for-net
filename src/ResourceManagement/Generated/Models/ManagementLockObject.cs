@@ -20,59 +20,65 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// Management lock information.
     /// </summary>
-    public partial class ResourceBase
+    public partial class ManagementLockObject
     {
-        private string _location;
+        private string _id;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Optional. Gets or sets the Id of the lock.
         /// </summary>
-        public string Location
+        public string Id
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Optional. Gets or sets the name of the lock.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string Name
         {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private ManagementLockProperties _properties;
+        
+        /// <summary>
+        /// Optional. Gets or sets the properties of the lock.
+        /// </summary>
+        public ManagementLockProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the lock.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
+        /// Initializes a new instance of the ManagementLockObject class.
         /// </summary>
-        public ResourceBase()
+        public ManagementLockObject()
         {
-            this.Tags = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceBase class with required
-        /// arguments.
-        /// </summary>
-        public ResourceBase(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

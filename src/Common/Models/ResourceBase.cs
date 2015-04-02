@@ -21,10 +21,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure
 {
     /// <summary>
     /// Resource information.

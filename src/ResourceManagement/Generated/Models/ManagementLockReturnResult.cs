@@ -21,30 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Deployment operation parameters.
+    /// Management lock information.
     /// </summary>
-    public partial class Deployment
+    public partial class ManagementLockReturnResult : AzureOperationResponse
     {
-        private DeploymentProperties _properties;
+        private ManagementLockObject _managementLock;
         
         /// <summary>
-        /// Optional. Gets or sets the deployment properties.
+        /// Optional. Gets or sets the management lock.
         /// </summary>
-        public DeploymentProperties Properties
+        public ManagementLockObject ManagementLock
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._managementLock; }
+            set { this._managementLock = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Deployment class.
+        /// Initializes a new instance of the ManagementLockReturnResult class.
         /// </summary>
-        public Deployment()
+        public ManagementLockReturnResult()
         {
         }
     }

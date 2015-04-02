@@ -21,31 +21,27 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Deployment operation parameters.
+    /// Lock level states.
     /// </summary>
-    public partial class Deployment
+    public static partial class LockLevel
     {
-        private DeploymentProperties _properties;
+        /// <summary>
+        /// The lock level is not specified.
+        /// </summary>
+        public const string NotSpecified = "NotSpecified";
         
         /// <summary>
-        /// Optional. Gets or sets the deployment properties.
+        /// The lock blocks delete.
         /// </summary>
-        public DeploymentProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
+        public const string CanNotDelete = "CanNotDelete";
         
         /// <summary>
-        /// Initializes a new instance of the Deployment class.
+        /// The lock blocks all updates and delete.
         /// </summary>
-        public Deployment()
-        {
-        }
+        public const string ReadOnly = "ReadOnly";
     }
 }

@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
@@ -30,74 +28,65 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Deployment properties.
     /// </summary>
-    public partial class DeploymentProperties : BasicDeployment
+    public partial class DeploymentProperties
     {
-        private string _correlationId;
+        private DeploymentMode _mode;
         
         /// <summary>
-        /// Optional. Gets or sets the correlation ID of the deployment.
+        /// Optional. Gets or sets the deployment mode.
         /// </summary>
-        public string CorrelationId
+        public DeploymentMode Mode
         {
-            get { return this._correlationId; }
-            set { this._correlationId = value; }
+            get { return this._mode; }
+            set { this._mode = value; }
         }
         
-        private IList<Dependency> _dependencies;
+        private string _parameters;
         
         /// <summary>
-        /// Optional. Gets the list of deployment dependencies.
+        /// Optional. Deployment parameters. Use only one of Parameters or
+        /// ParametersLink.
         /// </summary>
-        public IList<Dependency> Dependencies
+        public string Parameters
         {
-            get { return this._dependencies; }
-            set { this._dependencies = value; }
+            get { return this._parameters; }
+            set { this._parameters = value; }
         }
         
-        private string _outputs;
+        private ParametersLink _parametersLink;
         
         /// <summary>
-        /// Optional. Gets or sets key/value pairs that represent
-        /// deploymentoutput.
+        /// Optional. Gets or sets the URI referencing the parameters. Use only
+        /// one of Parameters or ParametersLink.
         /// </summary>
-        public string Outputs
+        public ParametersLink ParametersLink
         {
-            get { return this._outputs; }
-            set { this._outputs = value; }
+            get { return this._parametersLink; }
+            set { this._parametersLink = value; }
         }
         
-        private IList<Provider> _providers;
+        private string _template;
         
         /// <summary>
-        /// Optional. Gets the list of resource providers needed for the
-        /// deployment.
+        /// Optional. Gets or sets the template content. Use only one of
+        /// Template or TemplateLink.
         /// </summary>
-        public IList<Provider> Providers
+        public string Template
         {
-            get { return this._providers; }
-            set { this._providers = value; }
+            get { return this._template; }
+            set { this._template = value; }
         }
         
-        private string _provisioningState;
+        private TemplateLink _templateLink;
         
         /// <summary>
-        /// Optional. Gets or sets the state of the provisioning.
+        /// Optional. Gets or sets the URI referencing the template. Use only
+        /// one of Template or TemplateLink.
         /// </summary>
-        public string ProvisioningState
+        public TemplateLink TemplateLink
         {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
-        }
-        
-        private DateTime _timestamp;
-        
-        /// <summary>
-        /// Optional. Gets or sets the timestamp of the template deployment.
-        /// </summary>
-        public DateTime Timestamp
-        {
-            get { return this._timestamp; }
-            set { this._timestamp = value; }
+            get { return this._templateLink; }
+            set { this._templateLink = value; }
         }
         
         /// <summary>
@@ -105,8 +94,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentProperties()
         {
-            this.Dependencies = new LazyList<Dependency>();
-            this.Providers = new LazyList<Provider>();
         }
     }
 }

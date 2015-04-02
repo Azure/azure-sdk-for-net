@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Deployment operation parameters.
+    /// Management lock get operation scope filter parameters.
     /// </summary>
-    public partial class Deployment
+    public partial class ManagementLockGetQueryParameter
     {
-        private DeploymentProperties _properties;
+        private string _atScope;
         
         /// <summary>
-        /// Optional. Gets or sets the deployment properties.
+        /// Optional. Get or sets the atScope parameter. If empty is passed
+        /// returns all locks at, above or below the scope. Otherwise, returns
+        /// locks at or above the scope.
         /// </summary>
-        public DeploymentProperties Properties
+        public string AtScope
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._atScope; }
+            set { this._atScope = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Deployment class.
+        /// Initializes a new instance of the ManagementLockGetQueryParameter
+        /// class.
         /// </summary>
-        public Deployment()
+        public ManagementLockGetQueryParameter()
         {
         }
     }

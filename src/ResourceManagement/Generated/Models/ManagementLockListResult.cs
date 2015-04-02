@@ -23,56 +23,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// List of management locks.
     /// </summary>
-    public partial class ResourceBase
+    public partial class ManagementLockListResult : AzureOperationResponse
     {
-        private string _location;
+        private IList<ManagementLockObject> _lock;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Optional. Gets or sets the list of locks.
         /// </summary>
-        public string Location
+        public IList<ManagementLockObject> Lock
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._lock; }
+            set { this._lock = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Optional. Gets or sets the URL to get the next set of results.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string NextLink
         {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
-        /// </summary>
-        public ResourceBase()
-        {
-            this.Tags = new LazyDictionary<string, string>();
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class with required
-        /// arguments.
+        /// Initializes a new instance of the ManagementLockListResult class.
         /// </summary>
-        public ResourceBase(string location)
-            : this()
+        public ManagementLockListResult()
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
+            this.Lock = new LazyList<ManagementLockObject>();
         }
     }
 }
