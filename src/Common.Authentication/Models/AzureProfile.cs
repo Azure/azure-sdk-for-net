@@ -16,6 +16,7 @@ using Hyak.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Common.Authentication.Properties;
 using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Common.Authentication.Models
@@ -94,7 +95,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                     else
                     {
-                        TracingAdapter.Information("[Common.Authentication]: No matching account record for account {0} in subscription {1}", DefaultSubscription.Account, DefaultSubscription.Id);
+                        TracingAdapter.Information(Resources.NoAccountInContext, DefaultSubscription.Account, DefaultSubscription.Id);
                     }
 
                     if (Environments.ContainsKey(DefaultSubscription.Account))
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                     else
                     {
-                         TracingAdapter.Information("[Common.Authentication]: No matching environment record for environment {0} in subscription {1}, using AzureCloud environment instead", DefaultSubscription.Account, DefaultSubscription.Id);                       
+                         TracingAdapter.Information(Resources.NoEnvironmentInContext, DefaultSubscription.Environment, DefaultSubscription.Id);                       
                     }
 
                     context = new AzureContext(DefaultSubscription, account, environment); ;

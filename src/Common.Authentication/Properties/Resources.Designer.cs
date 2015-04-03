@@ -277,6 +277,24 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: No matching account record for account {0} in subscription {1}.
+        /// </summary>
+        public static string NoAccountInContext {
+            get {
+                return ResourceManager.GetString("NoAccountInContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: No matching environment record for environment {0} in subscription {1}, using AzureCloud environment instead.
+        /// </summary>
+        public static string NoEnvironmentInContext {
+            get {
+                return ResourceManager.GetString("NoEnvironmentInContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please connect to internet before executing this cmdlet.
         /// </summary>
         public static string NoInternetConnection {

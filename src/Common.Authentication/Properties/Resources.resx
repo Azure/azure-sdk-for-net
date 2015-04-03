@@ -273,4 +273,10 @@
   <data name="UPNAuthenticationTrace" xml:space="preserve">
     <value>[Common.Authentication]: Authenticating using Account: '{0}', environment: '{1}', tenant: '{2}'</value>
   </data>
+  <data name="NoAccountInContext" xml:space="preserve">
+    <value>[Common.Authentication]: No matching account record for account {0} in subscription {1}</value>
+  </data>
+  <data name="NoEnvironmentInContext" xml:space="preserve">
+    <value>[Common.Authentication]: No matching environment record for environment {0} in subscription {1}, using AzureCloud environment instead</value>
+  </data>
 </root>
