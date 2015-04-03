@@ -208,6 +208,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 virtualNetworkNameElement.Value = virtualDeviceProvisioningInfo.VirtualNetworkName;
                 virtualApplianceProvisioningInfoElement.Add(virtualNetworkNameElement);
                 
+                if (virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure != null)
+                {
+                    XElement deleteAzureCisVMOnFailureElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    deleteAzureCisVMOnFailureElement.Value = virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure.ToString().ToLower();
+                    virtualApplianceProvisioningInfoElement.Add(deleteAzureCisVMOnFailureElement);
+                }
+                else
+                {
+                    XElement emptyElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute.Value = "true";
+                    emptyElement.Add(nilAttribute);
+                    virtualApplianceProvisioningInfoElement.Add(emptyElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
