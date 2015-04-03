@@ -86,9 +86,27 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
                 if (DefaultSubscription != null)
                 {
-                    context = new AzureContext(DefaultSubscription,
-                        Accounts.Values.FirstOrDefault(a => a.Id == DefaultSubscription.Account),
-                        Environments.Values.FirstOrDefault(e => e.Name == DefaultSubscription.Environment)); ;
+                    AzureAccount account = null;
+                    AzureEnvironment environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+                    if (Accounts.ContainsKey(DefaultSubscription.Account))
+                    {
+                        account = Accounts[DefaultSubscription.Account];
+                    }
+                    else
+                    {
+                        TracingAdapter.Information("[Common.Authentication]: No matching account record for account {0} in subscription {1}", DefaultSubscription.Account, DefaultSubscription.Id);
+                    }
+
+                    if (Environments.ContainsKey(DefaultSubscription.Account))
+                    {
+                        environment = Environments[DefaultSubscription.Environment];
+                    }
+                    else
+                    {
+                         TracingAdapter.Information("[Common.Authentication]: No matching environment record for environment {0} in subscription {1}, using AzureCloud environment instead", DefaultSubscription.Account, DefaultSubscription.Id);                       
+                    }
+
+                    context = new AzureContext(DefaultSubscription, account, environment); ;
                 }
 
                 return context;

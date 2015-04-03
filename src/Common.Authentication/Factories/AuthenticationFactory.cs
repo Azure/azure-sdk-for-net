@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             
             if (context.Account == null)
             {
-                throw new ArgumentException(Resources.InvalidSubscriptionState);
+                throw new ArgumentException(Resources.AccountNotFound);
             }
 
             if (context.Account.Type == AzureAccount.AccountType.Certificate)
@@ -74,20 +74,22 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             if (tenant == null)
             {
-                throw new ArgumentException(Resources.InvalidSubscriptionState);
+                throw new ArgumentException(Resources.TenantNotFound);
             }
 
             try
             {
-                TracingAdapter.Information("Authenticting using Account: '{0}', environment: '{1}', tenant: '{2}'", 
+                TracingAdapter.Information(Resources.UPNAuthenticationTrace, 
                     context.Account.Id, context.Environment.Name, tenant);
-                var token = Authenticate(context.Account, context.Environment, tenant, null, ShowDialog.Never);
-                TracingAdapter.Information("Received token with LoginType '{0}', Tenant: '{1}', UserId: '{2}'", 
+                var token = Authenticate(context.Account, context.Environment, 
+                    tenant, null, ShowDialog.Never);
+                TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace, 
                     token.LoginType, token.TenantId, token.UserId);
                 return new AccessTokenCredential(context.Subscription.Id, token);
             }
             catch (Exception ex)
             {
+                 TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
                 throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
             }
         }

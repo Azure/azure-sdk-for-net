@@ -70,6 +70,42 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No account was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount..
+        /// </summary>
+        public static string AccountNotFound {
+            get {
+                return ResourceManager.GetString("AccountNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Received exception {0}, while authenticating..
+        /// </summary>
+        public static string AdalAuthException {
+            get {
+                return ResourceManager.GetString("AdalAuthException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple tokens were found for this user. Please clear your token cache using, Clear-AzureProfile and try this command again..
+        /// </summary>
+        public static string AdalMultipleTokens {
+            get {
+                return ResourceManager.GetString("AdalMultipleTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Interaction is required to authenticate this user. Please execute Add-AzureAccount without parameters and enter your credentials..
+        /// </summary>
+        public static string AdalUserInteractionRequired {
+            get {
+                return ResourceManager.GetString("AdalUserInteractionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows Azure Powershell.
         /// </summary>
         public static string AzureDirectoryName {
@@ -367,6 +403,15 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No tenant was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount..
+        /// </summary>
+        public static string TenantNotFound {
+            get {
+                return ResourceManager.GetString("TenantNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to update mismatching Json structured: {0} {1}..
         /// </summary>
         public static string UnableToPatchJson {
@@ -399,6 +444,24 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         public static string UPNAcquireTokenContextTrace {
             get {
                 return ResourceManager.GetString("UPNAcquireTokenContextTrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Received token with LoginType &apos;{0}&apos;, Tenant: &apos;{1}&apos;, UserId: &apos;{2}&apos;.
+        /// </summary>
+        public static string UPNAuthenticationTokenTrace {
+            get {
+                return ResourceManager.GetString("UPNAuthenticationTokenTrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Authenticating using Account: &apos;{0}&apos;, environment: &apos;{1}&apos;, tenant: &apos;{2}&apos;.
+        /// </summary>
+        public static string UPNAuthenticationTrace {
+            get {
+                return ResourceManager.GetString("UPNAuthenticationTrace", resourceCulture);
             }
         }
         

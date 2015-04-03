@@ -252,4 +252,25 @@
   <data name="x86InProgramFiles" xml:space="preserve">
     <value> (x86)</value>
   </data>
+  <data name="AccountNotFound" xml:space="preserve">
+    <value>No account was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount.</value>
+  </data>
+  <data name="AdalAuthException" xml:space="preserve">
+    <value>[Common.Authentication]: Received exception {0}, while authenticating.</value>
+  </data>
+  <data name="AdalMultipleTokens" xml:space="preserve">
+    <value>Multiple tokens were found for this user. Please clear your token cache using, Clear-AzureProfile and try this command again.</value>
+  </data>
+  <data name="AdalUserInteractionRequired" xml:space="preserve">
+    <value>User Interaction is required to authenticate this user. Please execute Add-AzureAccount without parameters and enter your credentials.</value>
+  </data>
+  <data name="TenantNotFound" xml:space="preserve">
+    <value>No tenant was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount.</value>
+  </data>
+  <data name="UPNAuthenticationTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Received token with LoginType '{0}', Tenant: '{1}', UserId: '{2}'</value>
+  </data>
+  <data name="UPNAuthenticationTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Authenticating using Account: '{0}', environment: '{1}', tenant: '{2}'</value>
+  </data>
 </root>

@@ -165,7 +165,13 @@ namespace Microsoft.Azure.Common.Authentication
                 if (adalEx.ErrorCode == AdalError.UserInteractionRequired ||
                     adalEx.ErrorCode == AdalError.MultipleTokensMatched)
                 {
-                    ex = new AadAuthenticationFailedWithoutPopupException(Resources.InvalidSubscriptionState, adalEx);
+                    string message = Resources.AdalUserInteractionRequired;
+                    if (adalEx.ErrorCode == AdalError.MultipleTokensMatched)
+                    {
+                        message = Resources.AdalMultipleTokens;
+                    }
+
+                    ex = new AadAuthenticationFailedWithoutPopupException(message, adalEx);
                 }
                 else if (adalEx.ErrorCode == AdalError.MissingFederationMetadataUrl)
                 {
