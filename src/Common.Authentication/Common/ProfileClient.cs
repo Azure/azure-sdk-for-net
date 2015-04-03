@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Common.Authentication
 
             foreach (AzureSubscription subscription in account.GetSubscriptions(Profile).ToArray())
             {
-                if (subscription.Account == accountId)
+                if (string.Equals(subscription.Account, accountId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     AzureAccount remainingAccount = GetSubscriptionAccount(subscription.Id);
                     // There's no default account to use, remove the subscription.

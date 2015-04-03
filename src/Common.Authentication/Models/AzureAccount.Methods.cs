@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }
             else
             {
-                return anotherAccount.Id == Id;
+                return string.Equals(anotherAccount.Id, Id, StringComparison.InvariantCultureIgnoreCase);
             }
         }
 
