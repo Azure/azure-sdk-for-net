@@ -273,6 +273,9 @@
   <data name="UPNAuthenticationTrace" xml:space="preserve">
     <value>[Common.Authentication]: Authenticating using Account: '{0}', environment: '{1}', tenant: '{2}'</value>
   </data>
+  <data name="AdalAuthConfigurationTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Authenticating using configuration values: Domain: '{0}', Endpoint: '{1}', ClientId: '{2}', ClientRedirect: '{3}', ResourceClientUri: '{4}', ValidateAuthrity: '{5}'</value>
+  </data>
   <data name="NoAccountInContext" xml:space="preserve">
     <value>[Common.Authentication]: No matching account record for account {0} in subscription {1}</value>
   </data>

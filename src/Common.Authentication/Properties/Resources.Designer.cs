@@ -79,6 +79,15 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Authenticating using configuration values: Domain: &apos;{0}&apos;, Endpoint: &apos;{1}&apos;, ClientId: &apos;{2}&apos;, ClientRedirect: &apos;{3}&apos;, ResourceClientUri: &apos;{4}&apos;, ValidateAuthrity: &apos;{5}&apos;.
+        /// </summary>
+        public static string AdalAuthConfigurationTrace {
+            get {
+                return ResourceManager.GetString("AdalAuthConfigurationTrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Common.Authentication]: Received exception {0}, while authenticating..
         /// </summary>
         public static string AdalAuthException {

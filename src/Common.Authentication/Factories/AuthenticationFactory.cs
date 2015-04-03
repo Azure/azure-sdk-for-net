@@ -36,10 +36,8 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
             var configuration = GetAdalConfiguration(environment, tenant, resourceId);
-            TracingAdapter.Information("Authenticating using configuration values: Domain: '{0}', Endpoint: '{1}', " +
-                "ClientId: '{2}', ClientRedirect: '{3}', ResourceClientUri: '{4}', ValidateAuthrity: '{5}'", 
-                configuration.AdDomain, configuration.AdEndpoint, configuration.ClientId, configuration.ClientRedirectUri, 
-                configuration.ResourceClientUri, configuration.ValidateAuthority);
+            TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint, 
+                configuration.ClientId, configuration.ClientRedirectUri, configuration.ResourceClientUri, configuration.ValidateAuthority);
             var token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
             account.Id = token.UserId;
             return token;
