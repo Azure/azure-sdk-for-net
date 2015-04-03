@@ -60,7 +60,7 @@ For the best development experience, developers should use the official Microsof
 
 - .NET Framework 4.5 and newer
 - .NET Framework 4.0
-- Storage Libraries are available for Windows 8 for Windows Store development as well as indows Phone 8
+- Storage Libraries are available for Windows 8 for Windows Store development as well as Windows Phone 8
 
 As of 10/2013, SDK 2.2 supports targeting only .NET Framework 4.0 and newer.
 
