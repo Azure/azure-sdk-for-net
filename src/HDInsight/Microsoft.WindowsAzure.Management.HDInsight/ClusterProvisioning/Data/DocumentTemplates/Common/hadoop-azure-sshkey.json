@@ -169,7 +169,7 @@
                     }
                 },
                 "hardwareProfile": {
-                    "vmSize": "Large"
+                    "vmSize": "#DataNodeVMSize"
                 },
                 "storageProfile": {
                     "osDisk": {

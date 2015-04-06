@@ -340,13 +340,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 throw new InvalidOperationException(String.Format("Allowed values for Head Node Size are: {0}", String.Join(",", allowedValuesForHeadNodeSize)));
             }
 
-            // If OSType == Linux, allowable values for DataNodeSize are { Large }
-            var allowedValuesForDataNodeSize = new String[] { NodeVMSize.Large.ToString() };
-            if (this.OSType == HDInsight.OSType.Linux && !allowedValuesForDataNodeSize.Contains(DataNodeSize))
-            {
-                throw new InvalidOperationException(String.Format("Data Node size is not configurable for clusters with OS Type {0}. Allowed values for Data Node Size are: {1}", this.OSType, String.Join(",", allowedValuesForHeadNodeSize)));
-            }
-
             // If OSType == Linux, Zookeeper node size must not be set
             if (this.OSType == HDInsight.OSType.Linux && !String.IsNullOrEmpty(ZookeeperNodeSize))
             {

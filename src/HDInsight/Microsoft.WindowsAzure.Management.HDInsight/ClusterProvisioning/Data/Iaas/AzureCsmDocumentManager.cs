@@ -17,6 +17,7 @@
         private const string LocationParameterTag = "#Location";
         private const string WorkerNodeInstanceCountParameterTag = "#WorkerNodeInstanceCount";
         private const string HeadNodeVMSizeParameterTag = "#HeadNodeVMSize";
+        private const string DataNodeVMSizeParameterTag = "#DataNodeVMSize";
 
         private const string SshUserNameParameterTag = "#SshUsername";
         private const string SshPasswordParameterTag = "#SshPassword";
@@ -118,6 +119,15 @@
             Document = Document.Replace(HeadNodeVMSizeParameterTag, JsonHelper.EncodeStringForJson(headnodeSize));
         }
 
+        public void SetDataNodeVMSize(string datanodeSize)
+        {
+            if (String.IsNullOrEmpty(datanodeSize))
+            {
+                throw new ArgumentException("datanodeSize cannot be null or empty.");
+            }
+
+            Document = Document.Replace(DataNodeVMSizeParameterTag, JsonHelper.EncodeStringForJson(datanodeSize));
+        }
         public int GetWorkerNodeCount()
         {
             JObject azureConfiguration = JObject.Parse(Document);
