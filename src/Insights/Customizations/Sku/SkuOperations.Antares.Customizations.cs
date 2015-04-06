@@ -166,6 +166,51 @@ namespace Microsoft.Azure.Management.Insights
                         {
                             ScaleType = SupportedScaleType.None
                         }
+                    },
+                    new SkuDefinition 
+                    {
+                        Sku =  new Sku
+                        {
+                            Name = "P1",
+                            Tier = "Premium"
+                        },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 20,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Automatic
+                        }
+                    },
+                    new SkuDefinition 
+                    {
+                        Sku =  new Sku
+                        {
+                            Name = "P2",
+                            Tier = "Premium"
+                        },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 20,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Automatic
+                        }
+                    },
+                    new SkuDefinition 
+                    {
+                        Sku =  new Sku
+                        {
+                            Name = "P3",
+                            Tier = "Premium"
+                        },
+                        Capacity = new Capacity
+                        {
+                            Minimum = 1,
+                            Maximum = 20,
+                            Default = 1,
+                            ScaleType = SupportedScaleType.Automatic
+                        }
                     }
                 }
             };
@@ -214,12 +259,15 @@ namespace Microsoft.Azure.Management.Insights
                 case "B1":
                 case "D1":
                 case "F1":
+                case "P1":
                     return 0;
                 case "S2":
                 case "B2":
+                case "P2":
                     return 1;
                 case "S3":
                 case "B3":
+                case "P3":
                     return 2;
                 default:
                     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid SKU Name: {0}", skuName));
@@ -241,6 +289,8 @@ namespace Microsoft.Azure.Management.Insights
                             return "D1";
                         case "Free":
                             return "F1";
+                        case "Premium":
+                            return "P1";
                         default:
                             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
                     }
@@ -251,6 +301,8 @@ namespace Microsoft.Azure.Management.Insights
                             return "S2";
                         case "Basic":
                             return "B2";
+                        case "Premium":
+                            return "P2";
                         default:
                             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
                     }
@@ -261,6 +313,8 @@ namespace Microsoft.Azure.Management.Insights
                             return "S3";
                         case "Basic":
                             return "B3";
+                        case "Premium":
+                            return "P3";
                         default:
                             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
                     }
