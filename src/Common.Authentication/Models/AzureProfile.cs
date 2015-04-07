@@ -16,6 +16,7 @@ using Hyak.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Common.Authentication.Properties;
 using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Common.Authentication.Models
@@ -86,9 +87,29 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
                 if (DefaultSubscription != null)
                 {
-                    context = new AzureContext(DefaultSubscription,
-                        Accounts.Values.FirstOrDefault(a => a.Id == DefaultSubscription.Account),
-                        Environments.Values.FirstOrDefault(e => e.Name == DefaultSubscription.Environment)); ;
+                    AzureAccount account = null;
+                    AzureEnvironment environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+                    if (DefaultSubscription.Account != null &&
+                        Accounts.ContainsKey(DefaultSubscription.Account))
+                    {
+                        account = Accounts[DefaultSubscription.Account];
+                    }
+                    else
+                    {
+                        TracingAdapter.Information(Resources.NoAccountInContext, DefaultSubscription.Account, DefaultSubscription.Id);
+                    }
+
+                    if (DefaultSubscription.Account != null &&
+                        Environments.ContainsKey(DefaultSubscription.Account))
+                    {
+                        environment = Environments[DefaultSubscription.Environment];
+                    }
+                    else
+                    {
+                         TracingAdapter.Information(Resources.NoEnvironmentInContext, DefaultSubscription.Environment, DefaultSubscription.Id);                       
+                    }
+
+                    context = new AzureContext(DefaultSubscription, account, environment);
                 }
 
                 return context;

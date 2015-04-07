@@ -432,7 +432,8 @@ namespace Microsoft.Azure.Management.Resources
         /// Microsoft.Azure.Management.Resources.IManagementLockOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='identity'>
         /// Required. Resource identity.
@@ -463,7 +464,8 @@ namespace Microsoft.Azure.Management.Resources
         /// Microsoft.Azure.Management.Resources.IManagementLockOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='identity'>
         /// Required. Resource identity.

@@ -20,61 +20,68 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of resource groups.
+    /// Deployment information.
     /// </summary>
-    public partial class ResourceListResult : AzureOperationResponse
+    public partial class DeploymentExtended
     {
-        private string _nextLink;
+        private string _id;
         
         /// <summary>
-        /// Required. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets the ID of the deployment.
         /// </summary>
-        public string NextLink
+        public string Id
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IList<GenericResourceExtended> _resources;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the list of resource groups.
+        /// Required. Gets or sets the name of the deployment.
         /// </summary>
-        public IList<GenericResourceExtended> Resources
+        public string Name
         {
-            get { return this._resources; }
-            set { this._resources = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private DeploymentPropertiesExtended _properties;
+        
+        /// <summary>
+        /// Optional. Gets or sets deployment properties.
+        /// </summary>
+        public DeploymentPropertiesExtended Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class.
+        /// Initializes a new instance of the DeploymentExtended class.
         /// </summary>
-        public ResourceListResult()
+        public DeploymentExtended()
         {
-            this.Resources = new LazyList<GenericResourceExtended>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class with
+        /// Initializes a new instance of the DeploymentExtended class with
         /// required arguments.
         /// </summary>
-        public ResourceListResult(string nextLink)
+        public DeploymentExtended(string name)
             : this()
         {
-            if (nextLink == null)
+            if (name == null)
             {
-                throw new ArgumentNullException("nextLink");
+                throw new ArgumentNullException("name");
             }
-            this.NextLink = nextLink;
+            this.Name = name;
         }
     }
 }
