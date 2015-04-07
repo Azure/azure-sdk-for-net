@@ -119,8 +119,25 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/default?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -351,8 +368,25 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/default?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -501,8 +535,25 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/default?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -774,8 +825,25 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/default?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
