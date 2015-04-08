@@ -99,8 +99,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         TracingAdapter.Information(Resources.NoAccountInContext, DefaultSubscription.Account, DefaultSubscription.Id);
                     }
 
-                    if (DefaultSubscription.Account != null &&
-                        Environments.ContainsKey(DefaultSubscription.Account))
+                    if (DefaultSubscription.Environment != null &&
+                        Environments.ContainsKey(DefaultSubscription.Environment))
                     {
                         environment = Environments[DefaultSubscription.Environment];
                     }

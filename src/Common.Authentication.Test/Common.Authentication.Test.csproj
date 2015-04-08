@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureProfileTests.cs" />
     <Compile Include="ClientFactoryTests.cs" />
     <Compile Include="AuthenticationFactoryTests.cs" />
     <Compile Include="ConversionUtilitiesTests.cs" />
