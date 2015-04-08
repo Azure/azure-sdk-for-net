@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<Incident> _value;
         
         /// <summary>
-        /// Optional. Incident collection.
+        /// Optional. Gets or sets the incident collection.
         /// </summary>
         public IList<Incident> Value
         {

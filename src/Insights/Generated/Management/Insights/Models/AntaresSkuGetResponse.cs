@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private AntaresSku _properties;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the properties.
         /// </summary>
         public AntaresSku Properties
         {

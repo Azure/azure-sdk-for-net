@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _emailAddress;
         
         /// <summary>
-        /// Optional. The email address.
+        /// Optional. Gets or sets the email address.
         /// </summary>
         public string EmailAddress
         {

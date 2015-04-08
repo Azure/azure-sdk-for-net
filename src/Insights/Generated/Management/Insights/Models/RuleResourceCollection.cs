@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<RuleResource> _value;
         
         /// <summary>
-        /// Optional. The values for the alert rule resources.
+        /// Optional. Gets or sets the values for the alert rule resources.
         /// </summary>
         public IList<RuleResource> Value
         {

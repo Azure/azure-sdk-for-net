@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _default;
         
         /// <summary>
-        /// Optional. The number of instances that will be set if metrics are
-        /// not available for evaluation. The default is only used if the
-        /// current instance count is lower than the default.
+        /// Optional. Gets or sets the number of instances that will be set if
+        /// metrics are not available for evaluation. The default is only used
+        /// if the current instance count is lower than the default.
         /// </summary>
         public string Default
         {
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _maximum;
         
         /// <summary>
-        /// Optional. The maximum number of instances for the resource. The
-        /// actual maximum number may be limited by the cores that are
-        /// available.
+        /// Optional. Gets or sets the maximum number of instances for the
+        /// resource. The actual maximum number may be limited by the cores
+        /// that are available.
         /// </summary>
         public string Maximum
         {
@@ -58,7 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _minimum;
         
         /// <summary>
-        /// Optional. The minimum number of instances for the resource.
+        /// Optional. Gets or sets the minimum number of instances for the
+        /// resource.
         /// </summary>
         public string Minimum
         {

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private AutoscaleSettingResourceCollection _autoscaleSettingResourceCollection;
         
         /// <summary>
-        /// Optional. The retrieved autoscale settings.
+        /// Optional. Gets or sets the retrieved autoscale settings.
         /// </summary>
         public AutoscaleSettingResourceCollection AutoscaleSettingResourceCollection
         {

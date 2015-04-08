@@ -33,8 +33,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _cooldown;
         
         /// <summary>
-        /// Optional. The amount of time to wait since the last scaling action
-        /// before this action occurs. Must be between 1 week and 1 minute.
+        /// Optional. Gets or sets the amount of time to wait since the last
+        /// scaling action before this action occurs. Must be between 1 week
+        /// and 1 minute.
         /// </summary>
         public TimeSpan Cooldown
         {
@@ -45,8 +46,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ScaleDirection _direction;
         
         /// <summary>
-        /// Optional. Whether the scaling action increases or decreases the
-        /// number of instances.
+        /// Optional. Gets or sets the scale direction. Whether the scaling
+        /// action increases or decreases the number of instances.
         /// </summary>
         public ScaleDirection Direction
         {
@@ -57,8 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ScaleType _type;
         
         /// <summary>
-        /// Optional. The type of action that should occur, this must be set to
-        /// ChangeCount.
+        /// Optional. Gets or sets the type of action that should occur, this
+        /// must be set to ChangeCount.
         /// </summary>
         public ScaleType Type
         {
@@ -69,8 +70,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _value;
         
         /// <summary>
-        /// Optional. The number of instances that are involved in the scaling
-        /// action. This value must be 1 or greater. The default value is 1.
+        /// Optional. Gets or sets the number of instances that are involved in
+        /// the scaling action. This value must be 1 or greater. The default
+        /// value is 1.
         /// </summary>
         public string Value
         {

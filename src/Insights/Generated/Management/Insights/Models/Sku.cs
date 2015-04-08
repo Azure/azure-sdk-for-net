@@ -30,27 +30,27 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class Sku
     {
         private string _name;
-
+        
         /// <summary>
-        /// Optional. The name of the sku.
+        /// Optional. Gets or sets the name of the sku.
         /// </summary>
         public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
-
+        
         private string _tier;
-
+        
         /// <summary>
-        /// Optional. The tier of the sku.
+        /// Optional. Gets or sets the tier of the sku.
         /// </summary>
         public string Tier
         {
             get { return this._tier; }
             set { this._tier = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>

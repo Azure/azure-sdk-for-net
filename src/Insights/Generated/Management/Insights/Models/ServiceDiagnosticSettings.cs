@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DiagnosticSettingsStatus _status;
         
         /// <summary>
-        /// Optional. Indicates the status of the last call to set the
-        /// configuration. Don't need to set this flag when applying
-        /// configuration.
+        /// Optional. Gets or sets the diagnostic setting status. Indicates the
+        /// status of the last call to set the configuration. Don't need to
+        /// set this flag when applying configuration.
         /// </summary>
         public DiagnosticSettingsStatus Status
         {
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _storageAccountName;
         
         /// <summary>
-        /// Optional. The name of the Azure Storage account to store the data
-        /// in.
+        /// Optional. Gets or sets the name of the Azure Storage account to
+        /// store the data in.
         /// </summary>
         public string StorageAccountName
         {

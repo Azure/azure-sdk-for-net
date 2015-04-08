@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _numberOfWorkers;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the number of workers
         /// </summary>
         public int NumberOfWorkers
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _sku;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the sku.
         /// </summary>
         public string Sku
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _workerSize;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the worker size
         /// </summary>
         public int WorkerSize
         {

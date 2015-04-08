@@ -28,16 +28,16 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class SkuUpdateParameters
     {
         private CurrentSku _sku;
-
+        
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the current sku.
         /// </summary>
         public CurrentSku Sku
         {
             get { return this._sku; }
             set { this._sku = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the SkuUpdateParameters class.
         /// </summary>

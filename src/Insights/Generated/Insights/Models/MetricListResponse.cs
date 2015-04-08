@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
         private MetricCollection _metricCollection;
         
         /// <summary>
-        /// Optional. The retrieved metric value sets.
+        /// Optional. Gets or sets the retrieved metric value sets.
         /// </summary>
         public MetricCollection MetricCollection
         {

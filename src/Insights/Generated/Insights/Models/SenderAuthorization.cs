@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _action;
         
         /// <summary>
-        /// Optional. The Action.
+        /// Optional. Gets or sets the Action.
         /// </summary>
         public string Action
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _condition;
         
         /// <summary>
-        /// Optional. The condition.
+        /// Optional. Gets or sets the condition.
         /// </summary>
         public string Condition
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _role;
         
         /// <summary>
-        /// Optional. The role.
+        /// Optional. Gets or sets the role.
         /// </summary>
         public string Role
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _scope;
         
         /// <summary>
-        /// Optional. The scope.
+        /// Optional. Gets or sets the scope.
         /// </summary>
         public string Scope
         {

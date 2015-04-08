@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ScaleCapacity _capacity;
         
         /// <summary>
-        /// Optional. The number of instances that can be used during this
-        /// profile.
+        /// Optional. Gets or sets the number of instances that can be used
+        /// during this profile.
         /// </summary>
         public ScaleCapacity Capacity
         {
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeWindow _fixedDate;
         
         /// <summary>
-        /// Optional. A specific date for the profile. This element is not used
-        /// if the Recurrence element is used.
+        /// Optional. Gets or sets the specific date for the profile. This
+        /// element is not used if the Recurrence element is used.
         /// </summary>
         public TimeWindow FixedDate
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the profile.
+        /// Optional. Gets or sets the name of the profile.
         /// </summary>
         public string Name
         {
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Recurrence _recurrence;
         
         /// <summary>
-        /// Optional. The repeating times at which this profile begins. This
-        /// element is not used if the FixedDate element is used.
+        /// Optional. Gets or sets the repeating times at which this profile
+        /// begins. This element is not used if the FixedDate element is used.
         /// </summary>
         public Recurrence Recurrence
         {
@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<ScaleRule> _rules;
         
         /// <summary>
-        /// Optional. Contains a collection of rules that provide the triggers
-        /// and parameters for the scaling action. A maximum of 10 rules can
-        /// be specified.
+        /// Optional. Gets or sets the collection of rules that provide the
+        /// triggers and parameters for the scaling action. A maximum of 10
+        /// rules can be specified.
         /// </summary>
         public IList<ScaleRule> Rules
         {

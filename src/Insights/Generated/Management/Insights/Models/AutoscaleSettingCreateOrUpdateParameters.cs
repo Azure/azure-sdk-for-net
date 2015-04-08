@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location of the setting.
+        /// Optional. Gets or sets the location of the setting.
         /// </summary>
         public string Location
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private AutoscaleSetting _properties;
         
         /// <summary>
-        /// Optional. The setting to create or update.
+        /// Optional. Gets or sets the setting to create or update.
         /// </summary>
         public AutoscaleSetting Properties
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. The tags of the rule.
+        /// Optional. Gets or sets the tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {

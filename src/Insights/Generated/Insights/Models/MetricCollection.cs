@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<Metric> _value;
         
         /// <summary>
-        /// Optional. The value of the collection.
+        /// Optional. Gets or sets the value of the collection.
         /// </summary>
         public IList<Metric> Value
         {

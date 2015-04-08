@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _delete;
         
         /// <summary>
-        /// Optional. Indicates whether all delete requests should be logged.
+        /// Optional. Gets or sets the delete flag. Indicates whether all
+        /// delete requests should be logged.
         /// </summary>
         public bool Delete
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _read;
         
         /// <summary>
-        /// Optional. Indicates whether all read requests should be logged.
+        /// Optional. Gets or sets the read flag. Indicates whether all read
+        /// requests should be logged.
         /// </summary>
         public bool Read
         {
@@ -55,10 +57,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. Indicates the how long log data should be retained (must
-        /// be an even number of days). All data older than this value will be
-        /// deleted. The minimum number of days is 1; the largest value is 365
-        /// (one year).
+        /// Optional. Gets or sets the retention flag. Indicates the how long
+        /// log data should be retained (must be an even number of days). All
+        /// data older than this value will be deleted. The minimum number of
+        /// days is 1; the largest value is 365 (one year).
         /// </summary>
         public TimeSpan Retention
         {
@@ -69,7 +71,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _write;
         
         /// <summary>
-        /// Optional. Indicates whether all write requests should be logged.
+        /// Optional. Gets or sets the write flag. Indicates whether all write
+        /// requests should be logged.
         /// </summary>
         public bool Write
         {

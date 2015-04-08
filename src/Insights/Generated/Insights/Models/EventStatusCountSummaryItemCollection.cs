@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<EventStatusCountSummaryItem> _value;
         
         /// <summary>
-        /// Optional. The event status count summary items.
+        /// Optional. Gets or sets the event status count summary items.
         /// </summary>
         public IList<EventStatusCountSummaryItem> Value
         {

@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleAction _action;
         
         /// <summary>
-        /// Optional. The action that is performed when the alert rule becomes
-        /// active, and when an alert condition is resolved.
+        /// Optional. Gets or sets the action that is performed when the alert
+        /// rule becomes active, and when an alert condition is resolved.
         /// </summary>
         public RuleAction Action
         {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleCondition _condition;
         
         /// <summary>
-        /// Optional. The condition that results in the alert rule being
-        /// activated.
+        /// Optional. Gets or sets the condition that results in the alert rule
+        /// being activated.
         /// </summary>
         public RuleCondition Condition
         {
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _description;
         
         /// <summary>
-        /// Optional. Description of the alert rule that will be included in
-        /// the alert email.
+        /// Optional. Gets or sets the description of the alert rule that will
+        /// be included in the alert email.
         /// </summary>
         public string Description
         {
@@ -69,7 +69,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _isEnabled;
         
         /// <summary>
-        /// Optional. Indicates whether the alert rule is enabled.
+        /// Optional. Gets or sets the flag that indicates whether the alert
+        /// rule is enabled.
         /// </summary>
         public bool IsEnabled
         {
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Name of the alert rule.
+        /// Optional. Gets or sets the name of the alert rule.
         /// </summary>
         public string Name
         {

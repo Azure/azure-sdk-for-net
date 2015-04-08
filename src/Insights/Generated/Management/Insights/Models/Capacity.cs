@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _default;
         
         /// <summary>
-        /// Optional. The default capacity.
+        /// Optional. Gets or sets the default capacity.
         /// </summary>
         public int Default
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _maximum;
         
         /// <summary>
-        /// Optional. The maximum capacity.
+        /// Optional. Gets or sets the maximum capacity.
         /// </summary>
         public int Maximum
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _minimum;
         
         /// <summary>
-        /// Optional. The minimum capacity.
+        /// Optional. Gets or sets the minimum capacity.
         /// </summary>
         public int Minimum
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private SupportedScaleType _scaleType;
         
         /// <summary>
-        /// Optional. The scale type supported.
+        /// Optional. Gets or sets the scale type supported.
         /// </summary>
         public SupportedScaleType ScaleType
         {

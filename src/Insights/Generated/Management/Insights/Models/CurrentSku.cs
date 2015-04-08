@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _capacity;
         
         /// <summary>
-        /// Optional. The current capacity.
+        /// Optional. Gets or sets the current capacity.
         /// </summary>
         public int Capacity
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the sku.
+        /// Optional. Gets or sets the name of the sku.
         /// </summary>
         public string Name
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _tier;
         
         /// <summary>
-        /// Optional. The tier of the sku.
+        /// Optional. Gets or sets the tier of the sku.
         /// </summary>
         public string Tier
         {

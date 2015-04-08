@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DateTime _end;
         
         /// <summary>
-        /// Optional. The end time for the profile.
+        /// Optional. Gets or sets the end time for the profile.
         /// </summary>
         public DateTime End
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DateTime _start;
         
         /// <summary>
-        /// Optional. The start time for the profile.
+        /// Optional. Gets or sets the start time for the profile.
         /// </summary>
         public DateTime Start
         {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _timeZone;
         
         /// <summary>
-        /// Optional. The time zone of the start and end times for the profile.
+        /// Optional. Gets or sets the time zone of the start and end times for
+        /// the profile.
         /// </summary>
         public string TimeZone
         {

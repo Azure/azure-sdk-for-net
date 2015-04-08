@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<EtwProvider> _eventSourceProviders;
         
         /// <summary>
-        /// Optional. Configures collection of ETW events from EventSource
-        /// providers.
+        /// Optional. Gets or sets the collection of ETW events from
+        /// EventSource providers.
         /// </summary>
         public IList<EtwProvider> EventSourceProviders
         {
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<EtwProvider> _manifestProviders;
         
         /// <summary>
-        /// Optional. Configures collection of ETW events from ETW Manifest
-        /// providers.
+        /// Optional. Gets or sets the collection of ETW events from ETW
+        /// Manifest providers.
         /// </summary>
         public IList<EtwProvider> ManifestProviders
         {

@@ -33,16 +33,16 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class SkuGetResponse : AzureOperationResponse
     {
         private SkuGetProperties _properties;
-
+        
         /// <summary>
-        /// Optional. The resource properties.
+        /// Optional. Gets or sets the resource properties.
         /// </summary>
         public SkuGetProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the SkuGetResponse class.
         /// </summary>

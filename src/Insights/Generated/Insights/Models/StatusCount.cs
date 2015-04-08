@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Insights.Models
         private int _count;
         
         /// <summary>
-        /// Optional. The count.
+        /// Optional. Gets or sets the count.
         /// </summary>
         public int Count
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _status;
         
         /// <summary>
-        /// Optional. The status.
+        /// Optional. Gets or sets the status.
         /// </summary>
         public LocalizableString Status
         {

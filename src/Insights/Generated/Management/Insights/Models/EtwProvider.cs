@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _defaultDestination;
         
         /// <summary>
-        /// Optional. The name of the table to store the events in.
+        /// Optional. Gets or sets the name of the table to store the events in.
         /// </summary>
         public string DefaultDestination
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<EtwEventConfiguration> _events;
         
         /// <summary>
-        /// Optional. The list of events to collect.
+        /// Optional. Gets or sets the list of events to collect.
         /// </summary>
         public IList<EtwEventConfiguration> Events
         {
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _provider;
         
         /// <summary>
-        /// Optional. The class name of the EventSource event, or, the GUID of
-        /// the event provider.
+        /// Optional. Gets or sets the class name of the EventSource event, or,
+        /// the GUID of the event provider.
         /// </summary>
         public string Provider
         {
@@ -70,8 +70,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ulong? _scheduledTransferKeywordFilter;
         
         /// <summary>
-        /// Optional. This field is a bitmask of the keywords that you would
-        /// like logged. For details on EventSource keywords see:
+        /// Optional. Gets or sets the scheduled transfer key filter. This
+        /// field is a bitmask of the keywords that you would like logged. For
+        /// details on EventSource keywords see:
         /// http://msdn.microsoft.com/en-us/library/system.diagnostics.tracing.eventsource(v=vs.110).aspx.
         /// For details on ETW event keywords see:
         /// http://msdn.microsoft.com/en-us/library/windows/desktop/dd996930(v=vs.85).aspx.
@@ -85,8 +86,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Microsoft.Azure.Management.Insights.Models.LogLevel? _scheduledTransferLogLevelFilter;
         
         /// <summary>
-        /// Optional. The minimum severity level to transfer to your storage
-        /// account.
+        /// Optional. Gets or sets the minimum severity level to transfer to
+        /// your storage account.
         /// </summary>
         public Microsoft.Azure.Management.Insights.Models.LogLevel? ScheduledTransferLogLevelFilter
         {
@@ -97,9 +98,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _scheduledTransferPeriod;
         
         /// <summary>
-        /// Optional. The interval between scheduled transfers to storage
-        /// rounded up to the nearest minute. Note that the value is an XML
-        /// "Duration Data Type".
+        /// Optional. Gets or sets the interval between scheduled transfers to
+        /// storage rounded up to the nearest minute. Note that the value is
+        /// an XML "Duration Data Type".
         /// </summary>
         public TimeSpan ScheduledTransferPeriod
         {

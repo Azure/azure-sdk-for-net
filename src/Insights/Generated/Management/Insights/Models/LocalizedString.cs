@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _locale;
         
         /// <summary>
-        /// Optional. The locale to use when displaying the counter name.
+        /// Optional. Gets or sets the locale to use when displaying the
+        /// counter name.
         /// </summary>
         public string Locale
         {
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _value;
         
         /// <summary>
-        /// Optional. The display name for the counter.
+        /// Optional. Gets or sets the display name for the counter.
         /// </summary>
         public string Value
         {

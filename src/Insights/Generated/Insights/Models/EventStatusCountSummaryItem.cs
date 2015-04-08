@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _eventTime;
         
         /// <summary>
-        /// Optional. The event summary time.
+        /// Optional. Gets or sets the event summary time.
         /// </summary>
         public DateTime EventTime
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _id;
         
         /// <summary>
-        /// Optional. The resource id.
+        /// Optional. Gets or sets the resource id.
         /// </summary>
         public string Id
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<StatusCount> _statusCounts;
         
         /// <summary>
-        /// Optional. The status counts.
+        /// Optional. Gets or sets the status counts.
         /// </summary>
         public IList<StatusCount> StatusCounts
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The time grain of the summary item.
+        /// Optional. Gets or sets the time grain of the summary item.
         /// </summary>
         public TimeSpan TimeGrain
         {

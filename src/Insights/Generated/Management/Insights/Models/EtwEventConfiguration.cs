@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _destination;
         
         /// <summary>
-        /// Optional. The name of the table to store the events in.
+        /// Optional. Gets or sets the name of the table to store the events in.
         /// </summary>
         public string Destination
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _eventId;
         
         /// <summary>
-        /// Optional. The id of the event.
+        /// Optional. Gets or sets the id of the event.
         /// </summary>
         public int EventId
         {

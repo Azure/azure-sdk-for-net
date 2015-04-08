@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _currentNumberOfWorkers;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the current number of workers.
         /// </summary>
         public int CurrentNumberOfWorkers
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _currentWorkerSize;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the current worker size
         /// </summary>
         public int CurrentWorkerSize
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _sku;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the name of the sku.
         /// </summary>
         public string Sku
         {

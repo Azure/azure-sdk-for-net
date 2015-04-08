@@ -31,38 +31,38 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class SkuDefinition
     {
         private Capacity _capacity;
-
+        
         /// <summary>
-        /// Optional. The capacity of the sku.
+        /// Optional. Gets or sets the capacity of the sku.
         /// </summary>
         public Capacity Capacity
         {
             get { return this._capacity; }
             set { this._capacity = value; }
         }
-
+        
         private Display _display;
-
+        
         /// <summary>
-        /// Optional. The capacity of the sku.
+        /// Optional. Gets or sets the capacity of the sku.
         /// </summary>
         public Display Display
         {
             get { return this._display; }
             set { this._display = value; }
         }
-
+        
         private Sku _sku;
-
+        
         /// <summary>
-        /// Optional. The sku.
+        /// Optional. Gets or sets the sku.
         /// </summary>
         public Sku Sku
         {
             get { return this._sku; }
             set { this._sku = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the SkuDefinition class.
         /// </summary>

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. The name.
+        /// Optional. Gets or sets the name.
         /// </summary>
         public LocalizableString Name
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<LocalizableString> _values;
         
         /// <summary>
-        /// Optional. The list of values.
+        /// Optional. Gets or sets the list of values.
         /// </summary>
         public IList<LocalizableString> Values
         {

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DatabaseBackupOption _backupOption;
         
         /// <summary>
-        /// Optional. The backup job options.
+        /// Optional. Gets or sets the backup job options.
         /// </summary>
         public DatabaseBackupOption BackupOption
         {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private BackupLocationProfile _blobStorageSetting;
         
         /// <summary>
-        /// Optional. The blob storage settings, where the exported file will
-        /// be written.
+        /// Optional. Gets or sets the blob storage settings, where the
+        /// exported file will be written.
         /// </summary>
         public BackupLocationProfile BlobStorageSetting
         {
@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DatabaseServerCredential _databaseCredential;
         
         /// <summary>
-        /// Optional. The credential for the server hosting the database.
+        /// Optional. Gets or sets the credential for the server hosting the
+        /// database.
         /// </summary>
         public DatabaseServerCredential DatabaseCredential
         {
@@ -68,8 +69,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _enabled;
         
         /// <summary>
-        /// Optional. Specifies whether automated export is enabled for the
-        /// resource.
+        /// Optional. Gets or sets the enable flag. Specifies whether automated
+        /// export is enabled for the resource.
         /// </summary>
         public bool Enabled
         {

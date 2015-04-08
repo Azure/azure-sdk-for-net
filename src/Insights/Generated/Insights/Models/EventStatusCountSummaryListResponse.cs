@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
         private EventStatusCountSummaryItemCollection _eventStatusCountSummaryItemCollection;
         
         /// <summary>
-        /// Optional. The retrieved summary.
+        /// Optional. Gets or sets the retrieved summary.
         /// </summary>
         public EventStatusCountSummaryItemCollection EventStatusCountSummaryItemCollection
         {
