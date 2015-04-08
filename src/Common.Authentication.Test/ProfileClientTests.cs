@@ -452,7 +452,7 @@ namespace Common.Authentication.Test
             Assert.Equal("UserB", subGuest.Account);
         }
         /// <summary>
-        /// Test that when account is added more than once with different capitalization, only a single account is added
+        /// Test that when accountId is added more than once with different capitalization, only a single accountId is added
         /// and that accounts can be retrieved case-insensitively
         /// </summary>
         [Fact]
