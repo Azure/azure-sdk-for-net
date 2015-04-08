@@ -20,53 +20,50 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
-    /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
-    /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse, IEnumerable<SkuDefinition>
+    public partial class CurrentSku
     {
-        private IList<SkuDefinition> _value;
-
+        private int _capacity;
+        
         /// <summary>
-        /// Optional. The values for the sku definition.
+        /// Optional. The current capacity.
         /// </summary>
-        public IList<SkuDefinition> Value
+        public int Capacity
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._capacity; }
+            set { this._capacity = value; }
         }
-
+        
+        private string _name;
+        
         /// <summary>
-        /// Initializes a new instance of the SkuListResponse class.
+        /// Optional. The name of the sku.
         /// </summary>
-        public SkuListResponse()
+        public string Name
         {
-            this.Value = new LazyList<SkuDefinition>();
+            get { return this._name; }
+            set { this._name = value; }
         }
-
+        
+        private string _tier;
+        
         /// <summary>
-        /// Gets the sequence of Value.
+        /// Optional. The tier of the sku.
         /// </summary>
-        public IEnumerator<SkuDefinition> GetEnumerator()
+        public string Tier
         {
-            return this.Value.GetEnumerator();
+            get { return this._tier; }
+            set { this._tier = value; }
         }
-
+        
         /// <summary>
-        /// Gets the sequence of Value.
+        /// Initializes a new instance of the CurrentSku class.
         /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        public CurrentSku()
         {
-            return this.GetEnumerator();
         }
     }
 }

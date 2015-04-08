@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -29,6 +28,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure;
@@ -74,9 +74,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -87,7 +84,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> CreateOrUpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -101,10 +98,6 @@ namespace Microsoft.Azure.Management.Insights
             if (databaseName == null)
             {
                 throw new ArgumentNullException("databaseName");
-            }
-            if (automatedExportSettingName == null)
-            {
-                throw new ArgumentNullException("automatedExportSettingName");
             }
             if (parameters == null)
             {
@@ -121,14 +114,30 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("automatedExportSettingName", automatedExportSettingName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateSettingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/" + Uri.EscapeDataString(automatedExportSettingName) + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -223,9 +232,9 @@ namespace Microsoft.Azure.Management.Insights
                         
                         backupOptionValue["startTime"] = parameters.Properties.BackupOption.StartTime;
                         
-                        backupOptionValue["repeatInterval"] = parameters.Properties.BackupOption.RepeatInterval.ToString();
+                        backupOptionValue["repeatInterval"] = XmlConvert.ToString(parameters.Properties.BackupOption.RepeatInterval);
                         
-                        backupOptionValue["retentionPeriod"] = parameters.Properties.BackupOption.RetentionPeriod.ToString();
+                        backupOptionValue["retentionPeriod"] = XmlConvert.ToString(parameters.Properties.BackupOption.RetentionPeriod);
                         
                         backupOptionValue["keepAtLeastOneBackup"] = parameters.Properties.BackupOption.KeepAtLeastOneBackup;
                         
@@ -233,16 +242,6 @@ namespace Microsoft.Azure.Management.Insights
                     }
                     
                     propertiesValue["enabled"] = parameters.Properties.Enabled;
-                    
-                    if (parameters.Properties.Name != null)
-                    {
-                        propertiesValue["name"] = parameters.Properties.Name;
-                    }
-                    
-                    if (parameters.Properties.TargetResourceUri != null)
-                    {
-                        propertiesValue["targetResourceUri"] = parameters.Properties.TargetResourceUri;
-                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -332,9 +331,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -342,7 +338,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteSettingAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -357,10 +353,6 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("databaseName");
             }
-            if (automatedExportSettingName == null)
-            {
-                throw new ArgumentNullException("automatedExportSettingName");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -372,13 +364,29 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("automatedExportSettingName", automatedExportSettingName);
                 TracingAdapter.Enter(invocationId, this, "DeleteSettingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/" + Uri.EscapeDataString(automatedExportSettingName) + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -490,9 +498,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -500,7 +505,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AutomatedExportSettingGetResponse> GetSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, CancellationToken cancellationToken)
+        public async Task<AutomatedExportSettingGetResponse> GetSettingAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -515,10 +520,6 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("databaseName");
             }
-            if (automatedExportSettingName == null)
-            {
-                throw new ArgumentNullException("automatedExportSettingName");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -530,13 +531,29 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("automatedExportSettingName", automatedExportSettingName);
                 TracingAdapter.Enter(invocationId, this, "GetSettingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/" + Uri.EscapeDataString(automatedExportSettingName) + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -614,13 +631,6 @@ namespace Microsoft.Azure.Management.Insights
                                 result.Id = idInstance;
                             }
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                result.Name = nameInstance;
-                            }
-                            
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
@@ -696,14 +706,14 @@ namespace Microsoft.Azure.Management.Insights
                                     JToken repeatIntervalValue = backupOptionValue["repeatInterval"];
                                     if (repeatIntervalValue != null && repeatIntervalValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan repeatIntervalInstance = TimeSpan.Parse(((string)repeatIntervalValue), CultureInfo.InvariantCulture);
+                                        TimeSpan repeatIntervalInstance = XmlConvert.ToTimeSpan(((string)repeatIntervalValue));
                                         backupOptionInstance.RepeatInterval = repeatIntervalInstance;
                                     }
                                     
                                     JToken retentionPeriodValue = backupOptionValue["retentionPeriod"];
                                     if (retentionPeriodValue != null && retentionPeriodValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan retentionPeriodInstance = TimeSpan.Parse(((string)retentionPeriodValue), CultureInfo.InvariantCulture);
+                                        TimeSpan retentionPeriodInstance = XmlConvert.ToTimeSpan(((string)retentionPeriodValue));
                                         backupOptionInstance.RetentionPeriod = retentionPeriodInstance;
                                     }
                                     
@@ -727,20 +737,6 @@ namespace Microsoft.Azure.Management.Insights
                                 {
                                     bool enabledInstance = ((bool)enabledValue);
                                     propertiesInstance.Enabled = enabledInstance;
-                                }
-                                
-                                JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    propertiesInstance.Name = nameInstance2;
-                                }
-                                
-                                JToken targetResourceUriValue = propertiesValue["targetResourceUri"];
-                                if (targetResourceUriValue != null && targetResourceUriValue.Type != JTokenType.Null)
-                                {
-                                    string targetResourceUriInstance = ((string)targetResourceUriValue);
-                                    propertiesInstance.TargetResourceUri = targetResourceUriInstance;
                                 }
                             }
                         }
@@ -784,9 +780,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -797,7 +790,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -811,10 +804,6 @@ namespace Microsoft.Azure.Management.Insights
             if (databaseName == null)
             {
                 throw new ArgumentNullException("databaseName");
-            }
-            if (automatedExportSettingName == null)
-            {
-                throw new ArgumentNullException("automatedExportSettingName");
             }
             if (parameters == null)
             {
@@ -831,14 +820,30 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("automatedExportSettingName", automatedExportSettingName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "UpdateSettingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/microsoft.sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "/providers/microsoft.insights/automatedexportsettings/" + Uri.EscapeDataString(automatedExportSettingName) + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/microsoft.sql/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/providers/microsoft.insights/automatedexportsettings/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -933,9 +938,9 @@ namespace Microsoft.Azure.Management.Insights
                         
                         backupOptionValue["startTime"] = parameters.Properties.BackupOption.StartTime;
                         
-                        backupOptionValue["repeatInterval"] = parameters.Properties.BackupOption.RepeatInterval.ToString();
+                        backupOptionValue["repeatInterval"] = XmlConvert.ToString(parameters.Properties.BackupOption.RepeatInterval);
                         
-                        backupOptionValue["retentionPeriod"] = parameters.Properties.BackupOption.RetentionPeriod.ToString();
+                        backupOptionValue["retentionPeriod"] = XmlConvert.ToString(parameters.Properties.BackupOption.RetentionPeriod);
                         
                         backupOptionValue["keepAtLeastOneBackup"] = parameters.Properties.BackupOption.KeepAtLeastOneBackup;
                         
@@ -943,16 +948,6 @@ namespace Microsoft.Azure.Management.Insights
                     }
                     
                     propertiesValue["enabled"] = parameters.Properties.Enabled;
-                    
-                    if (parameters.Properties.Name != null)
-                    {
-                        propertiesValue["name"] = parameters.Properties.Name;
-                    }
-                    
-                    if (parameters.Properties.TargetResourceUri != null)
-                    {
-                        propertiesValue["targetResourceUri"] = parameters.Properties.TargetResourceUri;
-                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

@@ -20,53 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Represents a sku definition.
     /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse, IEnumerable<SkuDefinition>
+    public partial class SkuDefinition
     {
-        private IList<SkuDefinition> _value;
+        private Capacity _capacity;
 
         /// <summary>
-        /// Optional. The values for the sku definition.
+        /// Optional. The capacity of the sku.
         /// </summary>
-        public IList<SkuDefinition> Value
+        public Capacity Capacity
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._capacity; }
+            set { this._capacity = value; }
+        }
+
+        private Display _display;
+
+        /// <summary>
+        /// Optional. The capacity of the sku.
+        /// </summary>
+        public Display Display
+        {
+            get { return this._display; }
+            set { this._display = value; }
+        }
+
+        private Sku _sku;
+
+        /// <summary>
+        /// Optional. The sku.
+        /// </summary>
+        public Sku Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
 
         /// <summary>
-        /// Initializes a new instance of the SkuListResponse class.
+        /// Initializes a new instance of the SkuDefinition class.
         /// </summary>
-        public SkuListResponse()
+        public SkuDefinition()
         {
-            this.Value = new LazyList<SkuDefinition>();
-        }
-
-        /// <summary>
-        /// Gets the sequence of Value.
-        /// </summary>
-        public IEnumerator<SkuDefinition> GetEnumerator()
-        {
-            return this.Value.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Gets the sequence of Value.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }
