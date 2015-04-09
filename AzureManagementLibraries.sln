@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search", "src\Search\Search
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiManagementManagement", "src\ApiManagementManagement\ApiManagementManagement.csproj", "{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault", "src\KeyVault\Microsoft.Azure.KeyVault\KeyVault.csproj", "{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net40-Debug|Any CPU = Net40-Debug|Any CPU
@@ -431,6 +433,16 @@ Global
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -465,6 +477,7 @@ Global
 		{29F1C6AD-41C7-428C-8024-88E97033CE1A} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{2C21CBE7-5D68-434A-BB20-463886BE5551} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
