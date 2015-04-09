@@ -25,11 +25,6 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.0.4,3.0)" />
-      <dependency id="Microsoft.Net.Http" version="2.2.22" />
-      <dependency id="Newtonsoft.Json" version="6.0.4" />
-      <dependency id="Hyak.Common" version="1.0.2" />
-      <dependency id="Microsoft.Bcl" version="1.1.9" />
-      <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
     </dependencies>
   </metadata>
   <files>
