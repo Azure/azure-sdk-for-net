@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     {
                         { AzureEnvironment.Endpoint.PublishSettingsFileUrl, AzureEnvironmentConstants.ChinaPublishSettingsFileUrl },
                         { AzureEnvironment.Endpoint.ServiceManagement, AzureEnvironmentConstants.ChinaServiceEndpoint },
-                        { AzureEnvironment.Endpoint.ResourceManager, null },
+                        { AzureEnvironment.Endpoint.ResourceManager, AzureEnvironmentConstants.ChinaResourceManagerEndpoint },
                         { AzureEnvironment.Endpoint.ManagementPortalUrl, AzureEnvironmentConstants.ChinaManagementPortalUrl },
                         { AzureEnvironment.Endpoint.ActiveDirectory, AzureEnvironmentConstants.ChinaActiveDirectoryEndpoint },
                         { AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId, AzureEnvironmentConstants.ChinaServiceEndpoint },
@@ -302,6 +302,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public const string ChinaServiceEndpoint = "https://management.core.chinacloudapi.cn/";
 
         public const string AzureResourceManagerEndpoint = "https://management.azure.com/";
+
+        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn";
 
         public const string GalleryEndpoint = "https://gallery.azure.com/";
 
