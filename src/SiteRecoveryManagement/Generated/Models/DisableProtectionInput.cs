@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a EnableProtectionInput object.
+    /// The definition of a DisableProtectionInput object.
     /// </summary>
-    public partial class EnableProtectionInput
+    public partial class DisableProtectionInput
     {
         private string _protectionProfileId;
         
@@ -43,11 +43,8 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         private string _replicationProviderInput;
         
         /// <summary>
-        /// Required. Gets or sets the ReplicationProviderInput. For
-        /// HyperVReplicaAzure provider it will be serialized
-        /// AzureEnableProtectionInput object. For San provider it will be
-        /// serialized SanEnableProtectionInput object. For HyperVReplicaAzure
-        /// it can be null
+        /// Required. Gets or sets the ReplicationProviderInput. For San
+        /// provider it will be seriazlied SanEnableProtectionInput object.
         /// </summary>
         public string ReplicationProviderInput
         {
@@ -56,17 +53,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the EnableProtectionInput class.
+        /// Initializes a new instance of the DisableProtectionInput class.
         /// </summary>
-        public EnableProtectionInput()
+        public DisableProtectionInput()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the EnableProtectionInput class with
+        /// Initializes a new instance of the DisableProtectionInput class with
         /// required arguments.
         /// </summary>
-        public EnableProtectionInput(string replicationProviderInput)
+        public DisableProtectionInput(string replicationProviderInput)
             : this()
         {
             if (replicationProviderInput == null)

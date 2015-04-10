@@ -131,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/StorageMappings";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -246,14 +246,14 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                             if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                             if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -319,14 +319,14 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (startTimeElement2 != null)
                                     {
-                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         taskInstance.StartTime = startTimeInstance2;
                                     }
                                     
                                     XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (endTimeElement2 != null)
                                     {
-                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         taskInstance.EndTime = endTimeInstance2;
                                     }
                                     
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                         XElement creationTimeUtcElement = providerErrorDetailsElement.Element(XName.Get("CreationTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                                         if (creationTimeUtcElement != null)
                                         {
-                                            DateTime creationTimeUtcInstance = DateTime.Parse(creationTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime creationTimeUtcInstance = DateTime.Parse(creationTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
                                         }
                                         
@@ -621,7 +621,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/StorageMappings";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -736,14 +736,14 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                             if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                             if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -809,14 +809,14 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (startTimeElement2 != null)
                                     {
-                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         taskInstance.StartTime = startTimeInstance2;
                                     }
                                     
                                     XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (endTimeElement2 != null)
                                     {
-                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         taskInstance.EndTime = endTimeInstance2;
                                     }
                                     
@@ -967,7 +967,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                         XElement creationTimeUtcElement = providerErrorDetailsElement.Element(XName.Get("CreationTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                                         if (creationTimeUtcElement != null)
                                         {
-                                            DateTime creationTimeUtcInstance = DateTime.Parse(creationTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime creationTimeUtcInstance = DateTime.Parse(creationTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
                                         }
                                         
@@ -1103,7 +1103,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/StorageMappings";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             queryParameters.Add("PrimaryServerId=" + Uri.EscapeDataString(primaryServerId));
             queryParameters.Add("RecoveryServerId=" + Uri.EscapeDataString(recoveryServerId));
             if (queryParameters.Count > 0)
