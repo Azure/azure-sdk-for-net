@@ -17,6 +17,7 @@ using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.Linq;
 using System.Security;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Common.Authentication.Factories
 {
@@ -34,7 +35,10 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
-            var token = TokenProvider.GetAccessToken(GetAdalConfiguration(environment, tenant, resourceId), promptBehavior, account.Id, password, account.Type);
+            var configuration = GetAdalConfiguration(environment, tenant, resourceId);
+            TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint, 
+                configuration.ClientId, configuration.ClientRedirectUri, configuration.ResourceClientUri, configuration.ValidateAuthority);
+            var token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
             account.Id = token.UserId;
             return token;
         }
@@ -48,7 +52,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             
             if (context.Account == null)
             {
-                throw new ArgumentException(Resources.InvalidSubscriptionState);
+                throw new ArgumentException(Resources.AccountNotFound);
             }
 
             if (context.Account.Type == AzureAccount.AccountType.Certificate)
@@ -68,16 +72,22 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             if (tenant == null)
             {
-                throw new ArgumentException(Resources.InvalidSubscriptionState);
+                throw new ArgumentException(Resources.TenantNotFound);
             }
 
             try
             {
-                var token = Authenticate(context.Account, context.Environment, tenant, null, ShowDialog.Never);
+                TracingAdapter.Information(Resources.UPNAuthenticationTrace, 
+                    context.Account.Id, context.Environment.Name, tenant);
+                var token = Authenticate(context.Account, context.Environment, 
+                    tenant, null, ShowDialog.Never);
+                TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace, 
+                    token.LoginType, token.TenantId, token.UserId);
                 return new AccessTokenCredential(context.Subscription.Id, token);
             }
             catch (Exception ex)
             {
+                 TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
                 throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
             }
         }

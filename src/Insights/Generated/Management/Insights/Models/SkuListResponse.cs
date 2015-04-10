@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
 
@@ -30,24 +32,41 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse
+    public partial class SkuListResponse : AzureOperationResponse, IEnumerable<SkuDefinition>
     {
-        private SkuCollection _skus;
-        
+        private IList<SkuDefinition> _value;
+
         /// <summary>
-        /// Optional. List of available Skus.
+        /// Optional. The values for the sku definition.
         /// </summary>
-        public SkuCollection Skus
+        public IList<SkuDefinition> Value
         {
-            get { return this._skus; }
-            set { this._skus = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the SkuListResponse class.
         /// </summary>
         public SkuListResponse()
         {
+            this.Value = new LazyList<SkuDefinition>();
+        }
+
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        public IEnumerator<SkuDefinition> GetEnumerator()
+        {
+            return this.Value.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

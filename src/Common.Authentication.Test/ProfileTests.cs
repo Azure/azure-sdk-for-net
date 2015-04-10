@@ -127,5 +127,40 @@ namespace Common.Authentication.Test
             var jDeserializedProfile = JsonConvert.SerializeObject(deserializedProfile);
             Assert.Equal(jCurrentProfile, jDeserializedProfile);
         }
+
+        [Fact]
+        public void AccountMatchingIgnoresCase()
+        {
+            var profile = new AzureProfile();
+            string accountName = "howdy@contoso.com";
+            string accountNameCase = "Howdy@Contoso.com";
+            var subscriptionId = Guid.NewGuid();
+            var tenantId = Guid.NewGuid();
+            var account = new AzureAccount
+            {
+                Id = accountName,
+                Type = AzureAccount.AccountType.User
+            };
+
+            account.SetProperty(AzureAccount.Property.Subscriptions, subscriptionId.ToString());
+            account.SetProperty(AzureAccount.Property.Tenants, tenantId.ToString());
+            var subscription = new AzureSubscription
+            {
+                Id = subscriptionId,
+                Account = accountNameCase,
+                Environment = EnvironmentName.AzureCloud
+            };
+            
+            subscription.SetProperty(AzureSubscription.Property.Default, "true");
+            subscription.SetProperty(AzureSubscription.Property.Tenants, tenantId.ToString());
+            profile.Accounts.Add(accountName, account);
+            profile.Subscriptions.Add(subscriptionId, subscription);
+            Assert.NotNull(profile.Context);
+            Assert.NotNull(profile.Context.Account);
+            Assert.NotNull(profile.Context.Environment);
+            Assert.NotNull(profile.Context.Subscription);
+            Assert.Equal(account, profile.Context.Account);
+            Assert.Equal(subscription, profile.Context.Subscription);
+        }
     }
 }

@@ -22,6 +22,7 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -31,39 +32,17 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// </summary>
     public partial class SkuGetResponse : AzureOperationResponse
     {
-        private int _capacity;
-        
+        private SkuGetProperties _properties;
+
         /// <summary>
-        /// Optional. The current capacity.
+        /// Optional. The resource properties.
         /// </summary>
-        public int Capacity
+        public SkuGetProperties Properties
         {
-            get { return this._capacity; }
-            set { this._capacity = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the sku.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _tier;
-        
-        /// <summary>
-        /// Optional. The tier of the sku.
-        /// </summary>
-        public string Tier
-        {
-            get { return this._tier; }
-            set { this._tier = value; }
-        }
-        
+
         /// <summary>
         /// Initializes a new instance of the SkuGetResponse class.
         /// </summary>

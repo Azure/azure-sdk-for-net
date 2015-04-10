@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -30,19 +29,8 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// </summary>
     public partial class Sku
     {
-        private Capacity _capacity;
-        
-        /// <summary>
-        /// Optional. The capacity of the sku.
-        /// </summary>
-        public Capacity Capacity
-        {
-            get { return this._capacity; }
-            set { this._capacity = value; }
-        }
-        
         private string _name;
-        
+
         /// <summary>
         /// Optional. The name of the sku.
         /// </summary>
@@ -51,9 +39,9 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._name; }
             set { this._name = value; }
         }
-        
+
         private string _tier;
-        
+
         /// <summary>
         /// Optional. The tier of the sku.
         /// </summary>
@@ -62,7 +50,7 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._tier; }
             set { this._tier = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
