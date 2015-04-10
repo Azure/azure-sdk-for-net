@@ -1211,7 +1211,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     XElement lastSuccessfulRunElement = schedulesElement.Element(XName.Get("LastSuccessfulRun", "http://windowscloudbackup.com/CiS/V2013_03"));
                                     if (lastSuccessfulRunElement != null)
                                     {
-                                        DateTime lastSuccessfulRunInstance = DateTime.Parse(lastSuccessfulRunElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime lastSuccessfulRunInstance = DateTime.Parse(lastSuccessfulRunElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         backupScheduleResponseInstance.LastSuccessfulRun = lastSuccessfulRunInstance;
                                     }
                                     
@@ -1344,14 +1344,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                             XElement nextBackupElement = backupPolicyDetailsElement.Element(XName.Get("NextBackup", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (nextBackupElement != null)
                             {
-                                DateTime nextBackupInstance = DateTime.Parse(nextBackupElement.Value, CultureInfo.InvariantCulture);
+                                DateTime nextBackupInstance = DateTime.Parse(nextBackupElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 backupPolicyDetailsInstance.NextBackup = nextBackupInstance;
                             }
                             
                             XElement lastBackupElement = backupPolicyDetailsElement.Element(XName.Get("LastBackup", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (lastBackupElement != null && !string.IsNullOrEmpty(lastBackupElement.Value))
                             {
-                                DateTime lastBackupInstance = DateTime.Parse(lastBackupElement.Value, CultureInfo.InvariantCulture);
+                                DateTime lastBackupInstance = DateTime.Parse(lastBackupElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 backupPolicyDetailsInstance.LastBackup = lastBackupInstance;
                             }
                             
@@ -1573,14 +1573,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                 XElement nextBackupElement = arrayOfBackupPolicyElement.Element(XName.Get("NextBackup", "http://windowscloudbackup.com/CiS/V2013_03"));
                                 if (nextBackupElement != null)
                                 {
-                                    DateTime nextBackupInstance = DateTime.Parse(nextBackupElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime nextBackupInstance = DateTime.Parse(nextBackupElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     backupPolicyInstance.NextBackup = nextBackupInstance;
                                 }
                                 
                                 XElement lastBackupElement = arrayOfBackupPolicyElement.Element(XName.Get("LastBackup", "http://windowscloudbackup.com/CiS/V2013_03"));
                                 if (lastBackupElement != null && !string.IsNullOrEmpty(lastBackupElement.Value))
                                 {
-                                    DateTime lastBackupInstance = DateTime.Parse(lastBackupElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime lastBackupInstance = DateTime.Parse(lastBackupElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     backupPolicyInstance.LastBackup = lastBackupInstance;
                                 }
                                 
