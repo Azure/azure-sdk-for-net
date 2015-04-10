@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices
@@ -54,6 +53,31 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
         Task<VaultCreateResponse> BeginCreatingAsync(string cloudServiceName, string vaultName, VaultCreateArgs vaultCreationInput, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Deletes a vault
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The name of the cloud service containing the job collection.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the vault to delete.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<RecoveryServicesOperationStatusResponse> BeginDeletingAsync(string cloudServiceName, string vaultName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Creates a vault
         /// </summary>
         /// <param name='cloudServiceName'>
@@ -82,21 +106,28 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
         Task<RecoveryServicesOperationStatusResponse> CreateAsync(string cloudServiceName, string vaultName, VaultCreateArgs vaultCreationInput, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Creates a Cloud services
+        /// Deletes a vault
         /// </summary>
         /// <param name='cloudServiceName'>
         /// The name of the cloud service containing the job collection.
         /// </param>
         /// <param name='vaultName'>
-        /// The name of the vault to create.
+        /// The name of the vault to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string cloudServiceName, string vaultName, CancellationToken cancellationToken);
+        Task<RecoveryServicesOperationStatusResponse> DeleteAsync(string cloudServiceName, string vaultName, CancellationToken cancellationToken);
     }
 }

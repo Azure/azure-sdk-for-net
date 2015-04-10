@@ -28,59 +28,16 @@ using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 namespace Microsoft.WindowsAzure.Management.SiteRecovery
 {
     /// <summary>
-    /// Definition of virtual machine operations for the Site Recovery
+    /// Definition of storage pool mapping operations for the Site Recovery
     /// extension.
     /// </summary>
-    public partial interface IVirtualMachineOperations
+    public partial interface IStoragePoolMappingOperations
     {
         /// <summary>
-        /// Get the VM object by Id.
+        /// Create storage mapping.
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
-        /// </param>
-        /// <param name='virtualMachineId'>
-        /// VM ID.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the Vm object.
-        /// </returns>
-        Task<VirtualMachineResponse> GetAsync(string protectionContainerId, string virtualMachineId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the list of all Vms.
-        /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list Vm operation.
-        /// </returns>
-        Task<VirtualMachineListResponse> ListAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Updates VM properties.
-        /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
-        /// </param>
-        /// <param name='virtualMachineId'>
-        /// VM ID.
-        /// </param>
         /// <param name='parameters'>
-        /// Update VM properties input.
+        /// Storage pool mapping input.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -91,6 +48,43 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        Task<JobResponse> UpdateVmPropertiesAsync(string protectionContainerId, string virtualMachineId, VMProperties parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> CreateAsync(StoragePoolMappingInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Delete storage mapping.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Storage pool mapping input
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        Task<JobResponse> DeleteAsync(StoragePoolMappingInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all storage pool mappings under the vault.
+        /// </summary>
+        /// <param name='primaryServerId'>
+        /// Primary server Id.
+        /// </param>
+        /// <param name='recoveryServerId'>
+        /// Recovery server Id.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of storage pool mappings operation.
+        /// </returns>
+        Task<StoragePoolMappingListResponse> ListAsync(string primaryServerId, string recoveryServerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

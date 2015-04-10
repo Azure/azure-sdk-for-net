@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static JobResponse UpdateVmProperties(this IVirtualMachineOperations operations, string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders)
+        public static JobResponse UpdateVmProperties(this IVirtualMachineOperations operations, string protectionContainerId, string virtualMachineId, VMProperties parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -181,7 +181,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static Task<JobResponse> UpdateVmPropertiesAsync(this IVirtualMachineOperations operations, string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobResponse> UpdateVmPropertiesAsync(this IVirtualMachineOperations operations, string protectionContainerId, string virtualMachineId, VMProperties parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UpdateVmPropertiesAsync(protectionContainerId, virtualMachineId, parameters, customRequestHeaders, CancellationToken.None);
         }
