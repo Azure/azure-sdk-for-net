@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Retrieves the next page of search results from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
         /// </summary>
         /// <param name="continuationToken">
         /// Encapsulates the state required to fetch the next page of search results from the index.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves the next page of search results from the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents

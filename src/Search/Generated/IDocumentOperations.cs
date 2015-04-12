@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Operations for querying an index and uploading, merging, and deleting
     /// documents.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn800962.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn800962.aspx for more
     /// information)
     /// </summary>
     public partial interface IDocumentOperations
     {
         /// <summary>
         /// Queries the number of documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798939.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798939.aspx for more
+        /// information)
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// details(true for populate only).
         /// </param>
         /// <param name='collectionDetails'>
-        /// Details for the collection to be created.
+        /// Details for the collection to be updated.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// <returns>
         /// The response containing the operation tracking id.
         /// </returns>
-        Task<OperationResultWithTrackingId> SetAsync(string collectionName, bool forceRedeploy, bool populateOnly, CollectionCreationDetails collectionDetails, CancellationToken cancellationToken);
+        Task<OperationResultWithTrackingId> SetAsync(string collectionName, bool forceRedeploy, bool populateOnly, CollectionUpdateDetails collectionDetails, CancellationToken cancellationToken);
         
         /// <summary>
         /// Updates the specified Active directory's configuration.

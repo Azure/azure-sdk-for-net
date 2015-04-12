@@ -12,6 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Hyak.Common;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.Common.Authentication
 {
     internal class ServicePrincipalTokenProvider : ITokenProvider
     {
-        private static readonly TimeSpan expirationThreshold = new TimeSpan(0, 5, 0);
+        private static readonly TimeSpan expirationThreshold = TimeSpan.FromMinutes(5);
 
         public IAccessToken GetAccessToken(AdalConfiguration config, ShowDialog promptBehavior, string userId, SecureString password,
             AzureAccount.AccountType credentialType)
@@ -53,7 +54,9 @@ namespace Microsoft.Azure.Common.Authentication
 
         private AuthenticationResult Renew(AdalConfiguration config, string appId)
         {
-            using (SecureString appKey = LoadAppKey(appId, config.AdDomain))
+            TracingAdapter.Information(Resources.SPNRenewTokenTrace, appId, config.AdDomain, config.AdEndpoint, 
+                config.ClientId, config.ClientRedirectUri);
+           using (SecureString appKey = LoadAppKey(appId, config.AdDomain))
             {
                 if (appKey == null)
                 {
@@ -99,7 +102,7 @@ namespace Microsoft.Azure.Common.Authentication
                 authTokenSetter(AuthResult.AccessTokenType, AuthResult.AccessToken);
             }
 
-            public string UserId { get { return appId; }}
+            public string UserId { get { return appId; } }
             public string AccessToken { get { return AuthResult.AccessToken; } }
             public LoginType LoginType { get { return LoginType.OrgId; } }
             public string TenantId { get { return this.Configuration.AdDomain; } }
@@ -115,7 +118,12 @@ namespace Microsoft.Azure.Common.Authentication
                     }
 #endif
 
-                    return AuthResult.ExpiresOn - expirationThreshold < DateTimeOffset.Now;
+                    var expiration = AuthResult.ExpiresOn;
+                    var currentTime = DateTimeOffset.UtcNow;
+                    var timeUntilExpiration = expiration - currentTime;
+                    TracingAdapter.Information(Resources.SPNTokenExpirationCheckTrace, expiration, currentTime, 
+                        expirationThreshold, timeUntilExpiration);
+                    return timeUntilExpiration < expirationThreshold;
                 }
             }
         }

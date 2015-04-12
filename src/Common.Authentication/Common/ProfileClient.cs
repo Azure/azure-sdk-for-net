@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Common.Authentication
 
             foreach (AzureSubscription subscription in account.GetSubscriptions(Profile).ToArray())
             {
-                if (subscription.Account == accountId)
+                if (string.Equals(subscription.Account, accountId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     AzureAccount remainingAccount = GetSubscriptionAccount(subscription.Id);
                     // There's no default account to use, remove the subscription.
@@ -632,11 +632,16 @@ namespace Microsoft.Azure.Common.Authentication
         
         public AzureSubscription SetSubscriptionAsDefault(string name, string accountName)
         {
+            if (name == null)
+            {
+                throw new ArgumentException(string.Format(Resources.InvalidSubscriptionName, name), "name");
+            }
+
             var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Name == name);
 
             if (subscription == null)
             {
-                throw new ArgumentException(string.Format(Resources.InvalidSubscriptionName, name), "name");
+                throw new ArgumentException(string.Format(Resources.SubscriptionNameNotFoundMessage, name), "name");
             }
 
             return SetSubscriptionAsDefault(subscription.Id, accountName);

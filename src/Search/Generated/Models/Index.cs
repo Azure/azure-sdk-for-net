@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Search.Models
         
         /// <summary>
         /// Optional. Gets or sets the name of the index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn857353.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn857353.aspx for more
+        /// information)
         /// </summary>
         public string Name
         {

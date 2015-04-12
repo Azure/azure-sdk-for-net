@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
         /// Initializes a new instance of the WebProxySettings class with
         /// required arguments.
         /// </summary>
-        public WebProxySettings(string connectionURI, AuthenticationType authentication, string username)
+        public WebProxySettings(AuthenticationType authentication, string connectionURI, string username)
             : this()
         {
             if (connectionURI == null)
@@ -85,8 +85,8 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
             {
                 throw new ArgumentNullException("username");
             }
-            this.ConnectionURI = connectionURI;
             this.Authentication = authentication;
+            this.ConnectionURI = connectionURI;
             this.Username = username;
         }
     }

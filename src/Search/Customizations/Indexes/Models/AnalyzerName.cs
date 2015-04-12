@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
     /// Defines the names of all text analyzers supported by Azure Search.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn879793.aspx for more information)
+    /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx"/> for more information)
     /// </summary>
     public sealed class AnalyzerName
     {
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Search.Models
         /// <remarks>
         /// <list type="bullet">
         /// <item>
-        /// <description>Indexes bigrams (overlapping groups of two adjacent Chinese characters)</description>
+        /// <description>Indexes bigrams (overlapping groups of two adjacent Hangul characters)</description>
         /// </item>
         /// <item>
         /// <description>Normalizes character width differences</description>

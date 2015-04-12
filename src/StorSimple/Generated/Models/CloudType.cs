@@ -34,5 +34,11 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
         Azure = 2,
         
         S3 = 3,
+        
+        S3RRS = 11,
+        
+        OpenStack = 13,
+        
+        HP = 14,
     }
 }

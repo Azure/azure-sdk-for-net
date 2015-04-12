@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Search
     /// <summary>
     /// Client that can be used to query an Azure Search index and upload,
     /// merge, or delete documents.  (see
-    /// https://msdn.microsoft.com/en-us/library/azure/dn798935.aspx for more
+    /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
     /// information)
     /// </summary>
     public static partial class DocumentOperationsExtensions
     {
         /// <summary>
         /// Queries the number of documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798939.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798939.aspx for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Search
         
         /// <summary>
         /// Queries the number of documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798939.aspx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/dn798939.aspx for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.

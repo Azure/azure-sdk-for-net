@@ -42,8 +42,62 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// The automated export setting name.
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> CreateOrUpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The resource name.
+        /// </param>
+        /// <param name='serverName'>
+        /// The server name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The database name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteSettingAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The resource name.
+        /// </param>
+        /// <param name='serverName'>
+        /// The server name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The database name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AutomatedExportSettingGetResponse> GetSettingAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The resource name.
+        /// </param>
+        /// <param name='serverName'>
+        /// The server name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The database name.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
@@ -55,72 +109,6 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> CreateOrUpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='serverName'>
-        /// The server name.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The database name.
-        /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// The automated export setting name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AzureOperationResponse> DeleteSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, CancellationToken cancellationToken);
-        
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='serverName'>
-        /// The server name.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The database name.
-        /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// The automated export setting name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AutomatedExportSettingGetResponse> GetSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, CancellationToken cancellationToken);
-        
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='serverName'>
-        /// The server name.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The database name.
-        /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// The automated export setting name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AzureOperationResponse> UpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateSettingAsync(string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

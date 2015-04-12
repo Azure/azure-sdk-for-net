@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -323,7 +323,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -503,7 +503,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -905,7 +905,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             url = url + "/resources/";
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/~/";
-            url = url + "CiSVault";
+            url = url + "CisVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/api/devices/";
@@ -1030,7 +1030,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     XElement createdOnElement = backupSetsListElement.Element(XName.Get("CreatedOn", "http://windowscloudbackup.com/CiS/V2013_03"));
                                     if (createdOnElement != null)
                                     {
-                                        DateTime createdOnInstance = DateTime.Parse(createdOnElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdOnInstance = DateTime.Parse(createdOnElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         backupSetInfoInstance.CreatedOn = createdOnInstance;
                                     }
                                     

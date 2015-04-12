@@ -24,11 +24,12 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Searches for documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
         /// </summary>
         /// <param name="searchText">
-        /// A full-text search query expression; See https://msdn.microsoft.com/en-us/library/azure/dn798920.aspx for
-        /// more information about search query syntax.
+        /// A full-text search query expression; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
+        /// query syntax.
         /// </param>
         /// <param name="searchParameters">
         /// Parameters to further refine the search query.
@@ -52,15 +53,16 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the Azure Search index.  (see
-        /// https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx for more information)
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
         /// from the index.
         /// </typeparam>
         /// <param name="searchText">
-        /// A full-text search query expression; See https://msdn.microsoft.com/en-us/library/azure/dn798920.aspx for
-        /// more information about search query syntax.
+        /// A full-text search query expression; See
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
+        /// query syntax.
         /// </param>
         /// <param name="searchParameters">
         /// Parameters to further refine the search query.

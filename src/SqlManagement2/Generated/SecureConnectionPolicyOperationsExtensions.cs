@@ -64,11 +64,11 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse CreateOrUpdate(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, SecureConnectionPolicyCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateDatabasePolicy(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecureConnectionPolicyCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISecureConnectionPolicyOperations)s).CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters);
+                return ((ISecureConnectionPolicyOperations)s).CreateOrUpdateDatabasePolicyAsync(resourceGroupName, serverName, databaseName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> CreateOrUpdateAsync(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, SecureConnectionPolicyCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateDatabasePolicyAsync(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecureConnectionPolicyCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateDatabasePolicyAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -125,13 +125,13 @@ namespace Microsoft.Azure.Management.Sql
         /// connection policy applies.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get secure connection request.
+        /// Represents the response to a Get database secure connection request.
         /// </returns>
-        public static SecureConnectionPolicyGetResponse Get(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName)
+        public static DatabaseSecureConnectionPolicyGetResponse GetDatabasePolicy(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISecureConnectionPolicyOperations)s).GetAsync(resourceGroupName, serverName, databaseName);
+                return ((ISecureConnectionPolicyOperations)s).GetDatabasePolicyAsync(resourceGroupName, serverName, databaseName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -156,11 +156,11 @@ namespace Microsoft.Azure.Management.Sql
         /// connection policy applies.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get secure connection request.
+        /// Represents the response to a Get database secure connection request.
         /// </returns>
-        public static Task<SecureConnectionPolicyGetResponse> GetAsync(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName)
+        public static Task<DatabaseSecureConnectionPolicyGetResponse> GetDatabasePolicyAsync(this ISecureConnectionPolicyOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
-            return operations.GetAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
+            return operations.GetDatabasePolicyAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
         }
     }
 }

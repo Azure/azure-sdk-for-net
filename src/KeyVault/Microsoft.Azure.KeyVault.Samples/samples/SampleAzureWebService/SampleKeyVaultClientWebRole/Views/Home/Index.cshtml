@@ -1,0 +1,55 @@
+﻿@model SampleKeyVaultClientWebRole.Models.MessageBoardModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Azure Key Vault</h1>
+    <p class="lead">Azure Key Vault gives you a secure and easy way to manage the credentials and secrets needed by your application.</p>
+    <p><a href="http://azure.microsoft.com/en-us/documentation/services/key-vault/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+</div>
+
+@using (Html.BeginForm())
+{
+    <h2>Post a message</h2>
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewMessage.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NewMessage.UserName)
+                @Html.ValidationMessageFor(model => model.NewMessage.UserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewMessage.MessageText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NewMessage.MessageText)
+                @Html.ValidationMessageFor(model => model.NewMessage.MessageText)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <h2>Recent messages</h2>
+    <div style="height: 150px; overflow-y: scroll; overflow-x: auto" contenteditable="false">
+        @Html.Raw("<pre>" + Html.Encode(Model.RecentMessagesAsString) + "</pre>")
+    </div>
+    <p>
+        <a class="btn btn-default" onclick="location.href='@Url.Action("Index", "Home")'">
+            Read &raquo;
+        </a>
+    </p>
+    <h2>What's happening in the background</h2>
+    <div style="height: 500px; overflow-y: scroll; overflow-x: auto" contenteditable="false">
+        @Html.Raw("<pre>" + Html.Encode(Model.TracesAsString) + "</pre>")
+    </div>
+}

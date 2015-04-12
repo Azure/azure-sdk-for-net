@@ -452,7 +452,7 @@ namespace Common.Authentication.Test
             Assert.Equal("UserB", subGuest.Account);
         }
         /// <summary>
-        /// Test that when account is added more than once with different capitalization, only a single account is added
+        /// Test that when accountId is added more than once with different capitalization, only a single accountId is added
         /// and that accounts can be retrieved case-insensitively
         /// </summary>
         [Fact]
@@ -1015,10 +1015,10 @@ namespace Common.Authentication.Test
 
             var subscriptions = client.RefreshSubscriptions(client.Profile.Environments[EnvironmentName.AzureChinaCloud]);
 
-            Assert.Equal(2, subscriptions.Count);
-            Assert.Equal(2, subscriptions.Count(s => s.Account == "test"));
+            Assert.Equal(3, subscriptions.Count);
+            Assert.Equal(3, subscriptions.Count(s => s.Account == "test"));
             Assert.Equal(1, subscriptions.Count(s => s.Id == new Guid(rdfeSubscription1.SubscriptionId)));
-            Assert.Equal(1, subscriptions.First(s => s.Id == new Guid(rdfeSubscription1.SubscriptionId)).GetPropertyAsArray(AzureSubscription.Property.SupportedModes).Count());
+            Assert.Equal(2, subscriptions.First(s => s.Id == new Guid(rdfeSubscription1.SubscriptionId)).GetPropertyAsArray(AzureSubscription.Property.SupportedModes).Count());
             Assert.Equal(1, subscriptions.Count(s => s.Id == new Guid(rdfeSubscription2.SubscriptionId)));
         }
 
@@ -1100,8 +1100,10 @@ namespace Common.Authentication.Test
             Assert.Equal(azureSubscription2.Id, currentProfile.Context.Subscription.Id);
             Assert.Equal(azureSubscription2.Account, currentProfile.Context.Account.Id);
             Assert.Equal(azureSubscription2.Environment, currentProfile.Context.Environment.Name);
-            Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault("bad", null));
-            Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault(null, null));
+            var notFoundEx = Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault("bad", null));
+            var invalidEx = Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault(null, null));
+            Assert.Contains("doesn't exist", notFoundEx.Message);
+            Assert.Contains("non-null", invalidEx.Message);
         }
 
         [Fact]

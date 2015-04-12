@@ -54,12 +54,12 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._isValid = value; }
         }
         
-        private DeploymentProperties _properties;
+        private DeploymentPropertiesExtended _properties;
         
         /// <summary>
         /// Optional. Gets or sets the template deployment properties.
         /// </summary>
-        public DeploymentProperties Properties
+        public DeploymentPropertiesExtended Properties
         {
             get { return this._properties; }
             set { this._properties = value; }

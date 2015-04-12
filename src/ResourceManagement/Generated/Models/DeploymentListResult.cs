@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentListResult : AzureOperationResponse
     {
-        private IList<Deployment> _deployments;
+        private IList<DeploymentExtended> _deployments;
         
         /// <summary>
         /// Optional. Gets or sets the list of deployments.
         /// </summary>
-        public IList<Deployment> Deployments
+        public IList<DeploymentExtended> Deployments
         {
             get { return this._deployments; }
             set { this._deployments = value; }
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentListResult()
         {
-            this.Deployments = new LazyList<Deployment>();
+            this.Deployments = new LazyList<DeploymentExtended>();
         }
     }
 }

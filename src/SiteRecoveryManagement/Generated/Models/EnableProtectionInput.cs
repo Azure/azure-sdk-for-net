@@ -44,9 +44,10 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         
         /// <summary>
         /// Required. Gets or sets the ReplicationProviderInput. For
-        /// HyperVReplicaAzure provider it will be seriazlied
-        /// AzureEnableProtectionInput object. For HyperVReplicaAzure it can
-        /// be null
+        /// HyperVReplicaAzure provider it will be serialized
+        /// AzureEnableProtectionInput object. For San provider it will be
+        /// serialized SanEnableProtectionInput object. For HyperVReplicaAzure
+        /// it can be null
         /// </summary>
         public string ReplicationProviderInput
         {

@@ -901,7 +901,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement lastGeoFailoverTimeElement = storageServicePropertiesElement.Element(XName.Get("LastGeoFailoverTime", "http://schemas.microsoft.com/windowsazure"));
                                 if (lastGeoFailoverTimeElement != null && !string.IsNullOrEmpty(lastGeoFailoverTimeElement.Value))
                                 {
-                                    DateTime lastGeoFailoverTimeInstance = DateTime.Parse(lastGeoFailoverTimeElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime lastGeoFailoverTimeInstance = DateTime.Parse(lastGeoFailoverTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     storageServicePropertiesInstance.LastGeoFailoverTime = lastGeoFailoverTimeInstance;
                                 }
                                 
@@ -1332,7 +1332,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                     XElement lastGeoFailoverTimeElement = storageServicePropertiesElement.Element(XName.Get("LastGeoFailoverTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (lastGeoFailoverTimeElement != null && !string.IsNullOrEmpty(lastGeoFailoverTimeElement.Value))
                                     {
-                                        DateTime lastGeoFailoverTimeInstance = DateTime.Parse(lastGeoFailoverTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime lastGeoFailoverTimeInstance = DateTime.Parse(lastGeoFailoverTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         storageServicePropertiesInstance.LastGeoFailoverTime = lastGeoFailoverTimeInstance;
                                     }
                                     
