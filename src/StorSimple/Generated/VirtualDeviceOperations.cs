@@ -181,6 +181,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 createNewStorageAccountElement.Value = virtualDeviceProvisioningInfo.CreateNewStorageAccount.ToString().ToLower();
                 virtualApplianceProvisioningInfoElement.Add(createNewStorageAccountElement);
                 
+                if (virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure != null)
+                {
+                    XElement deleteAzureCisVMOnFailureElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    deleteAzureCisVMOnFailureElement.Value = virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure.ToString().ToLower();
+                    virtualApplianceProvisioningInfoElement.Add(deleteAzureCisVMOnFailureElement);
+                }
+                else
+                {
+                    XElement emptyElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute.Value = "true";
+                    emptyElement.Add(nilAttribute);
+                    virtualApplianceProvisioningInfoElement.Add(emptyElement);
+                }
+                
                 XElement deviceNameElement = new XElement(XName.Get("DeviceName", "http://windowscloudbackup.com/CiS/V2013_03"));
                 deviceNameElement.Value = virtualDeviceProvisioningInfo.DeviceName;
                 virtualApplianceProvisioningInfoElement.Add(deviceNameElement);
@@ -207,21 +222,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 XElement virtualNetworkNameElement = new XElement(XName.Get("VirtualNetworkName", "http://windowscloudbackup.com/CiS/V2013_03"));
                 virtualNetworkNameElement.Value = virtualDeviceProvisioningInfo.VirtualNetworkName;
                 virtualApplianceProvisioningInfoElement.Add(virtualNetworkNameElement);
-                
-                if (virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure != null)
-                {
-                    XElement deleteAzureCisVMOnFailureElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    deleteAzureCisVMOnFailureElement.Value = virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure.ToString().ToLower();
-                    virtualApplianceProvisioningInfoElement.Add(deleteAzureCisVMOnFailureElement);
-                }
-                else
-                {
-                    XElement emptyElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                    nilAttribute.Value = "true";
-                    emptyElement.Add(nilAttribute);
-                    virtualApplianceProvisioningInfoElement.Add(emptyElement);
-                }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

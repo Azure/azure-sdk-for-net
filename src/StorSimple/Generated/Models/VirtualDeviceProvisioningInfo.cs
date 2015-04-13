@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
         
         /// <summary>
         /// Optional. The boolean value to retain Azure VM on failure for
-        /// debugging purposes.
+        /// debugging purpose.
         /// </summary>
         public bool? DeleteAzureCisVMOnFailure
         {
