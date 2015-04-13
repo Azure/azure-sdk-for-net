@@ -181,20 +181,9 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 createNewStorageAccountElement.Value = virtualDeviceProvisioningInfo.CreateNewStorageAccount.ToString().ToLower();
                 virtualApplianceProvisioningInfoElement.Add(createNewStorageAccountElement);
                 
-                if (virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure != null)
-                {
-                    XElement deleteAzureCisVMOnFailureElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    deleteAzureCisVMOnFailureElement.Value = virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure.ToString().ToLower();
-                    virtualApplianceProvisioningInfoElement.Add(deleteAzureCisVMOnFailureElement);
-                }
-                else
-                {
-                    XElement emptyElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                    nilAttribute.Value = "true";
-                    emptyElement.Add(nilAttribute);
-                    virtualApplianceProvisioningInfoElement.Add(emptyElement);
-                }
+                XElement deleteAzureCisVMOnFailureElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
+                deleteAzureCisVMOnFailureElement.Value = virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure.ToString().ToLower();
+                virtualApplianceProvisioningInfoElement.Add(deleteAzureCisVMOnFailureElement);
                 
                 XElement deviceNameElement = new XElement(XName.Get("DeviceName", "http://windowscloudbackup.com/CiS/V2013_03"));
                 deviceNameElement.Value = virtualDeviceProvisioningInfo.DeviceName;
