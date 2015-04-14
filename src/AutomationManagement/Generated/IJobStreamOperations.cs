@@ -57,6 +57,28 @@ namespace Microsoft.WindowsAzure.Management.Automation
         Task<JobStreamGetResponse> GetAsync(string automationAccount, Guid jobId, string jobStreamId, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Retrieve a test job streams identified by runbook name and stream
+        /// id.  (see http://aka.ms/azureautomationsdk/jobstreamoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='runbookName'>
+        /// The runbook name.
+        /// </param>
+        /// <param name='jobStreamId'>
+        /// The job stream id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get job stream operation.
+        /// </returns>
+        Task<JobStreamGetResponse> GetTestJobStreamAsync(string automationAccount, string runbookName, string jobStreamId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Retrieve a list of jobs streams identified by job id.  (see
         /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
         /// information)
