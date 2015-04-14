@@ -319,6 +319,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     }
                     cloneRequestV2Element.Add(targetACRListSequenceElement);
                 }
+                else
+                {
+                    XElement emptyElement3 = new XElement(XName.Get("TargetACRList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute3 = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute3.Value = "true";
+                    emptyElement3.Add(nilAttribute3);
+                    cloneRequestV2Element.Add(emptyElement3);
+                }
                 
                 XElement targetDeviceIdElement = new XElement(XName.Get("TargetDeviceId", "http://windowscloudbackup.com/CiS/V2013_03"));
                 targetDeviceIdElement.Value = triggerCloneRequest.TargetDeviceId;

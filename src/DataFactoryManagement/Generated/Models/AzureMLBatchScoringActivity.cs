@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class AzureMLBatchScoringActivity : BaseActivity
     {
+        private AzureMLActivityProperties _transformation;
+        
+        /// <summary>
+        /// Optional. Transformation holding AzureML activity properties.
+        /// </summary>
+        public AzureMLActivityProperties Transformation
+        {
+            get { return this._transformation; }
+            set { this._transformation = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AzureMLBatchScoringActivity class.
         /// </summary>

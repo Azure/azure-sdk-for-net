@@ -77,29 +77,6 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._enabled = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the automated export setting.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _targetResourceUri;
-        
-        /// <summary>
-        /// Optional. The resource identifier of the resource that the
-        /// automated export setting applies to.
-        /// </summary>
-        public string TargetResourceUri
-        {
-            get { return this._targetResourceUri; }
-            set { this._targetResourceUri = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the AutomatedExportSetting class.
         /// </summary>

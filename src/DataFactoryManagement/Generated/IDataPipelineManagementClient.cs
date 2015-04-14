@@ -54,6 +54,22 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
         /// Operations for managing data factories.
         /// </summary>
         IDataFactoryOperations DataFactories

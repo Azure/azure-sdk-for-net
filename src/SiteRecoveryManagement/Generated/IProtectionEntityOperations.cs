@@ -65,6 +65,9 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Protection entity ID.
         /// </param>
+        /// <param name='input'>
+        /// Protection entity ID.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -74,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        Task<JobResponse> DisableProtectionAsync(string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> DisableProtectionAsync(string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Enable Protection for the given protection entity.

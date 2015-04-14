@@ -217,6 +217,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             get { return this._storages; }
         }
         
+        private IStoragePoolMappingOperations _storagePoolMappings;
+        
+        /// <summary>
+        /// Definition of storage pool mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IStoragePoolMappingOperations StoragePoolMappings
+        {
+            get { return this._storagePoolMappings; }
+        }
+        
         private IVaultExtendedInfoOperations _vaultExtendedInfo;
         
         /// <summary>
@@ -268,6 +279,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             this._sites = new SiteOperations(this);
             this._storageMappings = new StorageMappingOperations(this);
             this._storages = new StorageOperations(this);
+            this._storagePoolMappings = new StoragePoolMappingOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vmGroup = new VirtualMachineGroupOperations(this);
             this._vm = new VirtualMachineOperations(this);
@@ -382,6 +394,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             this._sites = new SiteOperations(this);
             this._storageMappings = new StorageMappingOperations(this);
             this._storages = new StorageOperations(this);
+            this._storagePoolMappings = new StoragePoolMappingOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vmGroup = new VirtualMachineGroupOperations(this);
             this._vm = new VirtualMachineOperations(this);

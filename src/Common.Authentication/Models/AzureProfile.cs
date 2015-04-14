@@ -89,7 +89,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                 {
                     AzureAccount account = null;
                     AzureEnvironment environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
-                    if (Accounts.ContainsKey(DefaultSubscription.Account))
+                    if (DefaultSubscription.Account != null &&
+                        Accounts.ContainsKey(DefaultSubscription.Account))
                     {
                         account = Accounts[DefaultSubscription.Account];
                     }
@@ -98,7 +99,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         TracingAdapter.Information(Resources.NoAccountInContext, DefaultSubscription.Account, DefaultSubscription.Id);
                     }
 
-                    if (Environments.ContainsKey(DefaultSubscription.Account))
+                    if (DefaultSubscription.Environment != null &&
+                        Environments.ContainsKey(DefaultSubscription.Environment))
                     {
                         environment = Environments[DefaultSubscription.Environment];
                     }
@@ -107,7 +109,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                          TracingAdapter.Information(Resources.NoEnvironmentInContext, DefaultSubscription.Environment, DefaultSubscription.Id);                       
                     }
 
-                    context = new AzureContext(DefaultSubscription, account, environment); ;
+                    context = new AzureContext(DefaultSubscription, account, environment);
                 }
 
                 return context;

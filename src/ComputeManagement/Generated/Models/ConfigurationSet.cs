@@ -341,6 +341,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class PublicIP
         {
+            private string _domainNameLabel;
+            
+            /// <summary>
+            /// Optional. The DNS name of the public IP.
+            /// </summary>
+            public string DomainNameLabel
+            {
+                get { return this._domainNameLabel; }
+                set { this._domainNameLabel = value; }
+            }
+            
             private int? _idleTimeoutInMinutes;
             
             /// <summary>

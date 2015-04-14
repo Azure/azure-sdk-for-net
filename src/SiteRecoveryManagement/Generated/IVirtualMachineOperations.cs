@@ -91,6 +91,6 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        Task<JobResponse> UpdateVmPropertiesAsync(string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> UpdateVmPropertiesAsync(string protectionContainerId, string virtualMachineId, VMProperties parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
