@@ -20,46 +20,38 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.DataFactories.Models;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// AzureML Web Service batch scoring activity.
+    /// AzureML activity properties.
     /// </summary>
-    public partial class AzureMLBatchScoringActivity : BaseActivity
+    public partial class AzureMLActivityProperties
     {
-        private AzureMLActivityProperties _transformation;
+        private IDictionary<string, string> _webServiceParameters;
         
         /// <summary>
-        /// Optional. Transformation holding AzureML activity properties.
+        /// Optional. Key,Value pairs to be passed to the AzureML Batch
+        /// Execution Service Endpoint (these are also referred to as
+        /// GlobalParameters). Keys must match the names of web service
+        /// parameters defined in published the AzureML web service. Values
+        /// may include ADF macros to be resolved at each slice execution time.
         /// </summary>
-        public AzureMLActivityProperties Transformation
+        public IDictionary<string, string> WebServiceParameters
         {
-            get { return this._transformation; }
-            set { this._transformation = value; }
+            get { return this._webServiceParameters; }
+            set { this._webServiceParameters = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AzureMLBatchScoringActivity class.
+        /// Initializes a new instance of the AzureMLActivityProperties class.
         /// </summary>
-        public AzureMLBatchScoringActivity()
+        public AzureMLActivityProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AzureMLBatchScoringActivity class
-        /// with required arguments.
-        /// </summary>
-        public AzureMLBatchScoringActivity(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
+            this.WebServiceParameters = new LazyDictionary<string, string>();
         }
     }
 }

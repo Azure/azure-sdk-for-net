@@ -21,45 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// AzureML Web Service batch scoring activity.
+    /// HCatalog properties.
     /// </summary>
-    public partial class AzureMLBatchScoringActivity : BaseActivity
+    public partial class HCatalogProperties
     {
-        private AzureMLActivityProperties _transformation;
+        private bool _alterSchema;
         
         /// <summary>
-        /// Optional. Transformation holding AzureML activity properties.
+        /// Optional. Flag to indicate if alter schema should be performed.
         /// </summary>
-        public AzureMLActivityProperties Transformation
+        public bool AlterSchema
         {
-            get { return this._transformation; }
-            set { this._transformation = value; }
+            get { return this._alterSchema; }
+            set { this._alterSchema = value; }
+        }
+        
+        private string _linkedServiceName;
+        
+        /// <summary>
+        /// Optional. The name of Azure SQL linked service.
+        /// </summary>
+        public string LinkedServiceName
+        {
+            get { return this._linkedServiceName; }
+            set { this._linkedServiceName = value; }
+        }
+        
+        private bool _recoverPartitions;
+        
+        /// <summary>
+        /// Optional. Flag to indicate to recover partitions.
+        /// </summary>
+        public bool RecoverPartitions
+        {
+            get { return this._recoverPartitions; }
+            set { this._recoverPartitions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AzureMLBatchScoringActivity class.
+        /// Initializes a new instance of the HCatalogProperties class.
         /// </summary>
-        public AzureMLBatchScoringActivity()
+        public HCatalogProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AzureMLBatchScoringActivity class
-        /// with required arguments.
-        /// </summary>
-        public AzureMLBatchScoringActivity(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }
