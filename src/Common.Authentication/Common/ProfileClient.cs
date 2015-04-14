@@ -770,7 +770,7 @@ namespace Microsoft.Azure.Common.Authentication
                     var storedTenants = account.GetPropertyAsArray(AzureAccount.Property.Tenants);
                     if (account.Type == AzureAccount.AccountType.User && storedTenants.Count() == 1)
                     {
-                        TracingAdapter.Information(Resources.AuthenicatingForSingleTenant, account.Id, storedTenants[0]);
+                        TracingAdapter.Information(Resources.AuthenticatingForSingleTenant, account.Id, storedTenants[0]);
                         AzureSession.AuthenticationFactory.Authenticate(account, environment, storedTenants[0], password,
                             promptBehavior);
                     }
