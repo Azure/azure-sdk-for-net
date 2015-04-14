@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{937E445A-5604-4998-A9F5-9BE1E39001A4}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.KeyVault</RootNamespace>
+    <AssemblyName>Microsoft.Azure.KeyVault.Extensions</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <None Include="Microsoft.Azure.KeyVault.Extensions.nuspec" />
+    <None Include="Microsoft.Azure.KeyVault.Extensions.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault.Core\KeyVault.Core.csproj">
+      <Project>{b419782d-ca57-40f9-9322-340a4e852e82}</Project>
+      <Name>KeyVault.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault\KeyVault.csproj">
+      <Project>{bec7dbf7-a3b1-4088-bdff-c1c2a0fd6f56}</Project>
+      <Name>KeyVault</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AggregateKeyResolver.cs" />
+    <Compile Include="KeyVaultKey.cs" />
+    <Compile Include="KeyVaultKeyResolver.cs" />
+    <Compile Include="Cryptography\RsaExtensions.cs" />
+    <Compile Include="Cryptography\AesExtensions.cs" />
+    <Compile Include="Cryptography\Algorithm.cs" />
+    <Compile Include="Cryptography\AlgorithmResolver.cs" />
+    <Compile Include="Cryptography\Algorithms\Aes128CbcHmacSha256.cs" />
+    <Compile Include="Cryptography\Algorithms\Aes192CbcHmacSha384.cs" />
+    <Compile Include="Cryptography\Algorithms\Aes256CbcHmacSha512.cs" />
+    <Compile Include="Cryptography\Algorithms\AesCbc.cs" />
+    <Compile Include="Cryptography\Algorithms\AesCbcHmacSha2.cs" />
+    <Compile Include="Cryptography\Algorithms\AesKw.cs" />
+    <Compile Include="Cryptography\Algorithms\AesKw128.cs" />
+    <Compile Include="Cryptography\Algorithms\AesKw192.cs" />
+    <Compile Include="Cryptography\Algorithms\AesKw256.cs" />
+    <Compile Include="Cryptography\Algorithms\NativeMethods.cs" />
+    <Compile Include="Cryptography\Algorithms\Rs256.cs" />
+    <Compile Include="Cryptography\Algorithms\Rsa15.cs" />
+    <Compile Include="Cryptography\Algorithms\RsaEncryption.cs" />
+    <Compile Include="Cryptography\Algorithms\RsaOaep.cs" />
+    <Compile Include="Cryptography\Algorithms\RsNull.cs" />
+    <Compile Include="Cryptography\ByteExtensions.cs" />
+    <Compile Include="Cryptography\EncryptionAlgorithm.cs" />
+    <Compile Include="Cryptography\IAuthenticatedCryptoTransform.cs" />
+    <Compile Include="Cryptography\KeyWrapAlgorithm.cs" />
+    <Compile Include="Cryptography\SignatureAlgorithm.cs" />
+    <Compile Include="RsaKey.cs" />
+    <Compile Include="SymmetricKey.cs" />
+    <Compile Include="WebKey\JsonWebKey.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+</Project>
