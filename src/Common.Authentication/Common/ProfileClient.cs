@@ -765,6 +765,16 @@ namespace Microsoft.Azure.Common.Authentication
                 {
                     tenants = LoadAccountTenants(account, environment, password, promptBehavior);
                 }
+                else
+                {
+                    var storedTenants = account.GetPropertyAsArray(AzureAccount.Property.Tenants);
+                    if (account.Type == AzureAccount.AccountType.User && storedTenants.Count() == 1)
+                    {
+                        TracingAdapter.Information(Resources.AuthenicatingForSingleTenant, account.Id, storedTenants[0]);
+                        AzureSession.AuthenticationFactory.Authenticate(account, environment, storedTenants[0], password,
+                            promptBehavior);
+                    }
+                }
             }
             catch (AadAuthenticationException aadEx)
             {
