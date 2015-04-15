@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
@@ -30,23 +29,23 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class DedicatedCircuitUpdateParameters
     {
-        private uint _bandwidth;
+        private string _bandwidth;
         
         /// <summary>
         /// Optional. Bandwidth requested for the circuit in Mbps.
         /// </summary>
-        public uint Bandwidth
+        public string Bandwidth
         {
             get { return this._bandwidth; }
             set { this._bandwidth = value; }
         }
         
-        private CircuitSku _sku;
+        private string _sku;
         
         /// <summary>
         /// Optional. Sku to be used for the new dedicated circuit.
         /// </summary>
-        public CircuitSku Sku
+        public string Sku
         {
             get { return this._sku; }
             set { this._sku = value; }
