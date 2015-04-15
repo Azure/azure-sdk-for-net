@@ -115,6 +115,15 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Authenticating for account {0} with single tenant {1}.
+        /// </summary>
+        public static string AuthenticatingForSingleTenant {
+            get {
+                return ResourceManager.GetString("AuthenticatingForSingleTenant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows Azure Powershell.
         /// </summary>
         public static string AzureDirectoryName {
