@@ -35,9 +35,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private ComputeImageAttributes _computeImageAttributes;
         
         /// <summary>
-        /// Required. The compute image attributes.Values needed for the image
-        /// to show up in CRP. The combination of values provided for Offer,
-        /// Sku, and verison must be unique within a publisher’s subscription.
+        /// Required. The compute image attributes. Metadata which is required
+        /// for this image to be useablein the Microsoft.Compute Provider.The
+        /// combination of values provided for Offer, Sku, and Verison must be
+        /// unique for a publisher.
         /// </summary>
         public ComputeImageAttributes ComputeImageAttributes
         {
@@ -48,8 +49,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private MarketplaceImageAttributes _marketplaceImageAttributes;
         
         /// <summary>
-        /// Optional. The market place image attributes.Must be set if the
-        /// publisher is a marketplace publisher.
+        /// Optional. The market place image attributes.Metadata which is
+        /// required for VM Marketplace sourced imagesto be useable in the
+        /// Microsoft.Compute Provider.
         /// </summary>
         public MarketplaceImageAttributes MarketplaceImageAttributes
         {

@@ -60,8 +60,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Required. Gets or sets the publisher defined version of the image.
         /// The allowed characters are digit and period. Format:
-        /// <MajorVersion>.<MinorVersion> Example: '1.0.0' or '1.1.0' The 3
-        /// version number to follow standard of most of the RPs. See
+        /// <MajorVersion>.<MinorVersion>.<Patch>Example: '1.0.0' or '1.1.0'
+        /// The 3 version number to follow standard of most of the RPs.See
         /// http://semver.org/.
         /// </summary>
         public string Version

@@ -45,7 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _publisherId;
         
         /// <summary>
-        /// Required. Gets or sets the CRP publisher Id.
+        /// Required. Gets or sets the publisher Id. This is the
+        /// Microsoft.Compute Provider publisher name to use for image.
         /// </summary>
         public string PublisherId
         {

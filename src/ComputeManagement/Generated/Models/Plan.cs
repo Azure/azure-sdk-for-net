@@ -45,8 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Gets or sets the 3rd party artifact that is being
-        /// procured. E.g. NewRelic.Product maps to the OfferID specified for
-        /// the artifact at the time of Data Market onboarding.
+        /// procured.E.g. Northwind.
         /// </summary>
         public string Product
         {
@@ -58,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Gets or sets the publisher of the 3rd party artifact that
-        /// is being bought.E.g. NewRelic.
+        /// is being bought.E.g. Contoso.
         /// </summary>
         public string Publisher
         {
