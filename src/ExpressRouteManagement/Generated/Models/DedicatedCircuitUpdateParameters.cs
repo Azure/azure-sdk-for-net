@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private uint _bandwidth;
         
         /// <summary>
-        /// Required. Bandwidth requested for the circuit in Mbps.
+        /// Optional. Bandwidth requested for the circuit in Mbps.
         /// </summary>
         public uint Bandwidth
         {
@@ -58,16 +58,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitUpdateParameters()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitUpdateParameters
-        /// class with required arguments.
-        /// </summary>
-        public DedicatedCircuitUpdateParameters(uint bandwidth)
-            : this()
-        {
-            this.Bandwidth = bandwidth;
         }
     }
 }
