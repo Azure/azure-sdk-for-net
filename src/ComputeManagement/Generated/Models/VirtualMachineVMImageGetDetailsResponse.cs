@@ -55,6 +55,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._category = value; }
         }
         
+        private ComputeImageAttributes _computeImageAttributes;
+        
+        /// <summary>
+        /// Required. The compute image attributes.Values needed for the image
+        /// to show up in CRP. The combination of values provided for Offer,
+        /// Sku, and verison must be unique within a publisher’s subscription.
+        /// </summary>
+        public ComputeImageAttributes ComputeImageAttributes
+        {
+            get { return this._computeImageAttributes; }
+            set { this._computeImageAttributes = value; }
+        }
+        
         private System.DateTime? _createdTime;
         
         /// <summary>
@@ -190,6 +203,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._location; }
             set { this._location = value; }
+        }
+        
+        private MarketplaceImageAttributes _marketplaceImageAttributes;
+        
+        /// <summary>
+        /// Optional. The market place image attributes.Must be set if the
+        /// publisher is a marketplace publisher.
+        /// </summary>
+        public MarketplaceImageAttributes MarketplaceImageAttributes
+        {
+            get { return this._marketplaceImageAttributes; }
+            set { this._marketplaceImageAttributes = value; }
         }
         
         private System.DateTime? _modifiedTime;
@@ -368,6 +393,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             this.DataDiskConfigurations = new LazyList<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
             this.ReplicationProgress = new LazyList<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineVMImageGetDetailsResponse class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineVMImageGetDetailsResponse(ComputeImageAttributes computeImageAttributes)
+            : this()
+        {
+            if (computeImageAttributes == null)
+            {
+                throw new ArgumentNullException("computeImageAttributes");
+            }
+            this.ComputeImageAttributes = computeImageAttributes;
         }
         
         /// <summary>

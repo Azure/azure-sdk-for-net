@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -31,10 +32,35 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class VirtualMachineVMImageReplicateParameters
     {
+        private ComputeImageAttributes _computeImageAttributes;
+        
+        /// <summary>
+        /// Required. The compute image attributes.Values needed for the image
+        /// to show up in CRP. The combination of values provided for Offer,
+        /// Sku, and verison must be unique within a publisher’s subscription.
+        /// </summary>
+        public ComputeImageAttributes ComputeImageAttributes
+        {
+            get { return this._computeImageAttributes; }
+            set { this._computeImageAttributes = value; }
+        }
+        
+        private MarketplaceImageAttributes _marketplaceImageAttributes;
+        
+        /// <summary>
+        /// Optional. The market place image attributes.Must be set if the
+        /// publisher is a marketplace publisher.
+        /// </summary>
+        public MarketplaceImageAttributes MarketplaceImageAttributes
+        {
+            get { return this._marketplaceImageAttributes; }
+            set { this._marketplaceImageAttributes = value; }
+        }
+        
         private IList<string> _targetLocations;
         
         /// <summary>
-        /// Optional. The replication target regional locations.Note: The
+        /// Required. The replication target regional locations.Note: The
         /// regions in the request body are not additive. If a VM Image has
         /// already been replicated to Regions A, B, and C, and a request is
         /// made to replicate to Regions A and D, the VM Image will remain in
@@ -54,6 +80,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineVMImageReplicateParameters()
         {
             this.TargetLocations = new LazyList<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineVMImageReplicateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineVMImageReplicateParameters(IList<string> targetLocations, ComputeImageAttributes computeImageAttributes)
+            : this()
+        {
+            if (targetLocations == null)
+            {
+                throw new ArgumentNullException("targetLocations");
+            }
+            if (computeImageAttributes == null)
+            {
+                throw new ArgumentNullException("computeImageAttributes");
+            }
+            this.TargetLocations = targetLocations;
+            this.ComputeImageAttributes = computeImageAttributes;
         }
     }
 }
