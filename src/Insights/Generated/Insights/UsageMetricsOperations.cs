@@ -69,18 +69,25 @@ namespace Microsoft.Azure.Insights
         /// name of the usage. For example, "name.value eq 'Percentage CPU'".
         /// Name is optional, meaning the expression may be "".
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        public async Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
+        public async Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
             {
                 throw new ArgumentNullException("resourceUri");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
             }
             
             // Tracing
@@ -92,6 +99,7 @@ namespace Microsoft.Azure.Insights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
+                tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -101,7 +109,7 @@ namespace Microsoft.Azure.Insights
             url = url + Uri.EscapeDataString(resourceUri);
             url = url + "/usages";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
             List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
@@ -138,7 +146,7 @@ namespace Microsoft.Azure.Insights
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", apiVersion);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -296,13 +304,16 @@ namespace Microsoft.Azure.Insights
         /// <param name='metricNames'>
         /// Required. metric names to return.
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Deprecated. The List Usage Metric operation response.
         /// </returns>
-        public async Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken)
+        public async Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(string resourceUri, IList<string> metricNames, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
@@ -312,6 +323,10 @@ namespace Microsoft.Azure.Insights
             if (metricNames == null)
             {
                 throw new ArgumentNullException("metricNames");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
             }
             
             // Tracing
@@ -323,6 +338,7 @@ namespace Microsoft.Azure.Insights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("metricNames", metricNames);
+                tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "ListDeprecatedAsync", tracingParameters);
             }
             
@@ -332,7 +348,7 @@ namespace Microsoft.Azure.Insights
             url = url + Uri.EscapeDataString(resourceUri);
             url = url + "/usages";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
             if (metricNames.Count > 0)
             {
                 queryParameters.Add("names=" + Uri.EscapeDataString(string.Join(",", metricNames)));
@@ -364,7 +380,7 @@ namespace Microsoft.Azure.Insights
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", apiVersion);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

@@ -181,6 +181,10 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 createNewStorageAccountElement.Value = virtualDeviceProvisioningInfo.CreateNewStorageAccount.ToString().ToLower();
                 virtualApplianceProvisioningInfoElement.Add(createNewStorageAccountElement);
                 
+                XElement deleteAzureCisVMOnFailureElement = new XElement(XName.Get("DeleteAzureCisVMOnFailure", "http://windowscloudbackup.com/CiS/V2013_03"));
+                deleteAzureCisVMOnFailureElement.Value = virtualDeviceProvisioningInfo.DeleteAzureCisVMOnFailure.ToString().ToLower();
+                virtualApplianceProvisioningInfoElement.Add(deleteAzureCisVMOnFailureElement);
+                
                 XElement deviceNameElement = new XElement(XName.Get("DeviceName", "http://windowscloudbackup.com/CiS/V2013_03"));
                 deviceNameElement.Value = virtualDeviceProvisioningInfo.DeviceName;
                 virtualApplianceProvisioningInfoElement.Add(deviceNameElement);

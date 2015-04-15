@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -63,6 +65,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._serverID = value; }
         }
         
+        private IList<StoragePool> _storagePools;
+        
+        /// <summary>
+        /// Optional. The list of Storage Pools in a storage array.
+        /// </summary>
+        public IList<StoragePool> StoragePools
+        {
+            get { return this._storagePools; }
+            set { this._storagePools = value; }
+        }
+        
         private string _type;
         
         /// <summary>
@@ -79,6 +92,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         /// </summary>
         public AsrStorage()
         {
+            this.StoragePools = new LazyList<StoragePool>();
         }
     }
 }

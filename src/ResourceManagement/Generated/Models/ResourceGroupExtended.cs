@@ -28,12 +28,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Resource group information.
     /// </summary>
-    public partial class Resource : BasicResource
+    public partial class ResourceGroupExtended : ResourceGroup
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the ID of the resource.
+        /// Optional. Gets or sets the ID of the resource group.
         /// </summary>
         public string Id
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Optional. Gets or sets the Name of the resource group.
         /// </summary>
         public string Name
         {
@@ -52,29 +52,18 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._name = value; }
         }
         
-        private string _type;
-        
         /// <summary>
-        /// Optional. Gets or sets the type of the resource.
+        /// Initializes a new instance of the ResourceGroupExtended class.
         /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Resource class.
-        /// </summary>
-        public Resource()
+        public ResourceGroupExtended()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Resource class with required
-        /// arguments.
+        /// Initializes a new instance of the ResourceGroupExtended class with
+        /// required arguments.
         /// </summary>
-        public Resource(string location)
+        public ResourceGroupExtended(string location)
             : this()
         {
             if (location == null)

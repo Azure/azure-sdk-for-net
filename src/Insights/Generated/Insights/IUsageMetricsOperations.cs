@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Insights
         /// the usage. For example, "name.value eq 'Percentage CPU'". Name is
         /// optional, meaning the expression may be "".
         /// </param>
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
+        Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, string apiVersion, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
@@ -58,12 +61,15 @@ namespace Microsoft.Azure.Insights
         /// <param name='metricNames'>
         /// metric names to return.
         /// </param>
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Deprecated. The List Usage Metric operation response.
         /// </returns>
-        Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
+        Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(string resourceUri, IList<string> metricNames, string apiVersion, CancellationToken cancellationToken);
     }
 }

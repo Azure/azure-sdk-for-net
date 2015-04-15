@@ -74,8 +74,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
-    <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
+    <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(Scope)\*.csproj" Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>
   
@@ -116,16 +115,15 @@
              Properties="Configuration=Net45-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build"
              Condition=" '$(Scope)' == 'Authentication' or '$(Scope)' == 'All' " />
-    
+
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" 
              Condition=" '$(Scope)' == 'All' " />
     
-    <MSBuild Projects="$(Scope)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;$(_ExtraPropertyList)"
-             Targets="Build"
-             Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' and '$(Scope)' != 'Authentication' " />
+             Targets="Build" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
@@ -209,6 +207,8 @@
 
     <Message Text="Code signing" Importance="high" />
 
+    <Message Text="Signing project: $(MSBuildProjectFullPath)" />
+    
     <MSBuild Projects="$(MSBuildProjectFullPath)"
              Targets="SignBinariesForAFxTarget"
              Properties="LibraryFxTarget=%(LibraryFxTargetList.Identity);StrongNameToken=$(StrongNameToken)">    

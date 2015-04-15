@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
         private IList<string> _targetACRIdList;
         
         /// <summary>
-        /// Required. List of existing access control records to add to the
+        /// Optional. List of existing access control records to add to the
         /// cloned volume
         /// </summary>
         public IList<string> TargetACRIdList
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
         private IList<AccessControlRecord> _targetACRList;
         
         /// <summary>
-        /// Required. List of new access control records to add to the cloned
+        /// Optional. List of new access control records to add to the cloned
         /// volume
         /// </summary>
         public IList<AccessControlRecord> TargetACRList
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
         private string _targetVolName;
         
         /// <summary>
-        /// Optional. Name of the cloned volume
+        /// Required. Name of the cloned volume
         /// </summary>
         public string TargetVolName
         {

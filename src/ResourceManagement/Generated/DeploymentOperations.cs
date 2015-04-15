@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Template deployment operation create result.
         /// </returns>
-        public async Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, BasicDeployment parameters, CancellationToken cancellationToken)
+        public async Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -260,18 +260,21 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ParametersLink != null)
+            if (parameters.Properties != null)
             {
-                if (parameters.ParametersLink.Uri == null)
+                if (parameters.Properties.ParametersLink != null)
                 {
-                    throw new ArgumentNullException("parameters.ParametersLink.Uri");
+                    if (parameters.Properties.ParametersLink.Uri == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.ParametersLink.Uri");
+                    }
                 }
-            }
-            if (parameters.TemplateLink != null)
-            {
-                if (parameters.TemplateLink.Uri == null)
+                if (parameters.Properties.TemplateLink != null)
                 {
-                    throw new ArgumentNullException("parameters.TemplateLink.Uri");
+                    if (parameters.Properties.TemplateLink.Uri == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.TemplateLink.Uri");
+                    }
                 }
             }
             
@@ -336,47 +339,52 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                JObject deploymentValue = new JObject();
+                requestDoc = deploymentValue;
                 
-                if (parameters.Template != null)
+                if (parameters.Properties != null)
                 {
-                    propertiesValue["template"] = JObject.Parse(parameters.Template);
-                }
-                
-                if (parameters.TemplateLink != null)
-                {
-                    JObject templateLinkValue = new JObject();
-                    propertiesValue["templateLink"] = templateLinkValue;
+                    JObject propertiesValue = new JObject();
+                    deploymentValue["properties"] = propertiesValue;
                     
-                    templateLinkValue["uri"] = parameters.TemplateLink.Uri.AbsoluteUri;
-                    
-                    if (parameters.TemplateLink.ContentVersion != null)
+                    if (parameters.Properties.Template != null)
                     {
-                        templateLinkValue["contentVersion"] = parameters.TemplateLink.ContentVersion;
+                        propertiesValue["template"] = JObject.Parse(parameters.Properties.Template);
                     }
-                }
-                
-                if (parameters.Parameters != null)
-                {
-                    propertiesValue["parameters"] = JObject.Parse(parameters.Parameters);
-                }
-                
-                if (parameters.ParametersLink != null)
-                {
-                    JObject parametersLinkValue = new JObject();
-                    propertiesValue["parametersLink"] = parametersLinkValue;
                     
-                    parametersLinkValue["uri"] = parameters.ParametersLink.Uri.AbsoluteUri;
-                    
-                    if (parameters.ParametersLink.ContentVersion != null)
+                    if (parameters.Properties.TemplateLink != null)
                     {
-                        parametersLinkValue["contentVersion"] = parameters.ParametersLink.ContentVersion;
+                        JObject templateLinkValue = new JObject();
+                        propertiesValue["templateLink"] = templateLinkValue;
+                        
+                        templateLinkValue["uri"] = parameters.Properties.TemplateLink.Uri.AbsoluteUri;
+                        
+                        if (parameters.Properties.TemplateLink.ContentVersion != null)
+                        {
+                            templateLinkValue["contentVersion"] = parameters.Properties.TemplateLink.ContentVersion;
+                        }
                     }
+                    
+                    if (parameters.Properties.Parameters != null)
+                    {
+                        propertiesValue["parameters"] = JObject.Parse(parameters.Properties.Parameters);
+                    }
+                    
+                    if (parameters.Properties.ParametersLink != null)
+                    {
+                        JObject parametersLinkValue = new JObject();
+                        propertiesValue["parametersLink"] = parametersLinkValue;
+                        
+                        parametersLinkValue["uri"] = parameters.Properties.ParametersLink.Uri.AbsoluteUri;
+                        
+                        if (parameters.Properties.ParametersLink.ContentVersion != null)
+                        {
+                            parametersLinkValue["contentVersion"] = parameters.Properties.ParametersLink.ContentVersion;
+                        }
+                    }
+                    
+                    propertiesValue["mode"] = parameters.Properties.Mode.ToString();
                 }
-                
-                propertiesValue["mode"] = parameters.Mode.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -424,7 +432,7 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Deployment deploymentInstance = new Deployment();
+                            DeploymentExtended deploymentInstance = new DeploymentExtended();
                             result.Deployment = deploymentInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -444,7 +452,7 @@ namespace Microsoft.Azure.Management.Resources
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                DeploymentProperties propertiesInstance = new DeploymentProperties();
+                                DeploymentPropertiesExtended propertiesInstance = new DeploymentPropertiesExtended();
                                 deploymentInstance.Properties = propertiesInstance;
                                 
                                 JToken provisioningStateValue = propertiesValue2["provisioningState"];
@@ -843,7 +851,7 @@ namespace Microsoft.Azure.Management.Resources
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Deployment deploymentInstance = new Deployment();
+                            DeploymentExtended deploymentInstance = new DeploymentExtended();
                             result.Deployment = deploymentInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -863,7 +871,7 @@ namespace Microsoft.Azure.Management.Resources
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                DeploymentProperties propertiesInstance = new DeploymentProperties();
+                                DeploymentPropertiesExtended propertiesInstance = new DeploymentPropertiesExtended();
                                 deploymentInstance.Properties = propertiesInstance;
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -1268,28 +1276,28 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Deployment deploymentInstance = new Deployment();
-                                    result.Deployments.Add(deploymentInstance);
+                                    DeploymentExtended deploymentExtendedInstance = new DeploymentExtended();
+                                    result.Deployments.Add(deploymentExtendedInstance);
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        deploymentInstance.Id = idInstance;
+                                        deploymentExtendedInstance.Id = idInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        deploymentInstance.Name = nameInstance;
+                                        deploymentExtendedInstance.Name = nameInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        DeploymentProperties propertiesInstance = new DeploymentProperties();
-                                        deploymentInstance.Properties = propertiesInstance;
+                                        DeploymentPropertiesExtended propertiesInstance = new DeploymentPropertiesExtended();
+                                        deploymentExtendedInstance.Properties = propertiesInstance;
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
                                         if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -1660,28 +1668,28 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Deployment deploymentInstance = new Deployment();
-                                    result.Deployments.Add(deploymentInstance);
+                                    DeploymentExtended deploymentExtendedInstance = new DeploymentExtended();
+                                    result.Deployments.Add(deploymentExtendedInstance);
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        deploymentInstance.Id = idInstance;
+                                        deploymentExtendedInstance.Id = idInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        deploymentInstance.Name = nameInstance;
+                                        deploymentExtendedInstance.Name = nameInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        DeploymentProperties propertiesInstance = new DeploymentProperties();
-                                        deploymentInstance.Properties = propertiesInstance;
+                                        DeploymentPropertiesExtended propertiesInstance = new DeploymentPropertiesExtended();
+                                        deploymentExtendedInstance.Properties = propertiesInstance;
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
                                         if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -1973,7 +1981,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Information from validate template deployment response.
         /// </returns>
-        public async Task<DeploymentValidateResponse> ValidateAsync(string resourceGroupName, string deploymentName, BasicDeployment parameters, CancellationToken cancellationToken)
+        public async Task<DeploymentValidateResponse> ValidateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1996,18 +2004,21 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ParametersLink != null)
+            if (parameters.Properties != null)
             {
-                if (parameters.ParametersLink.Uri == null)
+                if (parameters.Properties.ParametersLink != null)
                 {
-                    throw new ArgumentNullException("parameters.ParametersLink.Uri");
+                    if (parameters.Properties.ParametersLink.Uri == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.ParametersLink.Uri");
+                    }
                 }
-            }
-            if (parameters.TemplateLink != null)
-            {
-                if (parameters.TemplateLink.Uri == null)
+                if (parameters.Properties.TemplateLink != null)
                 {
-                    throw new ArgumentNullException("parameters.TemplateLink.Uri");
+                    if (parameters.Properties.TemplateLink.Uri == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.TemplateLink.Uri");
+                    }
                 }
             }
             
@@ -2073,47 +2084,52 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                JObject deploymentValue = new JObject();
+                requestDoc = deploymentValue;
                 
-                if (parameters.Template != null)
+                if (parameters.Properties != null)
                 {
-                    propertiesValue["template"] = JObject.Parse(parameters.Template);
-                }
-                
-                if (parameters.TemplateLink != null)
-                {
-                    JObject templateLinkValue = new JObject();
-                    propertiesValue["templateLink"] = templateLinkValue;
+                    JObject propertiesValue = new JObject();
+                    deploymentValue["properties"] = propertiesValue;
                     
-                    templateLinkValue["uri"] = parameters.TemplateLink.Uri.AbsoluteUri;
-                    
-                    if (parameters.TemplateLink.ContentVersion != null)
+                    if (parameters.Properties.Template != null)
                     {
-                        templateLinkValue["contentVersion"] = parameters.TemplateLink.ContentVersion;
+                        propertiesValue["template"] = JObject.Parse(parameters.Properties.Template);
                     }
-                }
-                
-                if (parameters.Parameters != null)
-                {
-                    propertiesValue["parameters"] = JObject.Parse(parameters.Parameters);
-                }
-                
-                if (parameters.ParametersLink != null)
-                {
-                    JObject parametersLinkValue = new JObject();
-                    propertiesValue["parametersLink"] = parametersLinkValue;
                     
-                    parametersLinkValue["uri"] = parameters.ParametersLink.Uri.AbsoluteUri;
-                    
-                    if (parameters.ParametersLink.ContentVersion != null)
+                    if (parameters.Properties.TemplateLink != null)
                     {
-                        parametersLinkValue["contentVersion"] = parameters.ParametersLink.ContentVersion;
+                        JObject templateLinkValue = new JObject();
+                        propertiesValue["templateLink"] = templateLinkValue;
+                        
+                        templateLinkValue["uri"] = parameters.Properties.TemplateLink.Uri.AbsoluteUri;
+                        
+                        if (parameters.Properties.TemplateLink.ContentVersion != null)
+                        {
+                            templateLinkValue["contentVersion"] = parameters.Properties.TemplateLink.ContentVersion;
+                        }
                     }
+                    
+                    if (parameters.Properties.Parameters != null)
+                    {
+                        propertiesValue["parameters"] = JObject.Parse(parameters.Properties.Parameters);
+                    }
+                    
+                    if (parameters.Properties.ParametersLink != null)
+                    {
+                        JObject parametersLinkValue = new JObject();
+                        propertiesValue["parametersLink"] = parametersLinkValue;
+                        
+                        parametersLinkValue["uri"] = parameters.Properties.ParametersLink.Uri.AbsoluteUri;
+                        
+                        if (parameters.Properties.ParametersLink.ContentVersion != null)
+                        {
+                            parametersLinkValue["contentVersion"] = parameters.Properties.ParametersLink.ContentVersion;
+                        }
+                    }
+                    
+                    propertiesValue["mode"] = parameters.Properties.Mode.ToString();
                 }
-                
-                propertiesValue["mode"] = parameters.Mode.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -2223,7 +2239,7 @@ namespace Microsoft.Azure.Management.Resources
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                DeploymentProperties propertiesInstance = new DeploymentProperties();
+                                DeploymentPropertiesExtended propertiesInstance = new DeploymentPropertiesExtended();
                                 result.Properties = propertiesInstance;
                                 
                                 JToken provisioningStateValue = propertiesValue2["provisioningState"];

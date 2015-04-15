@@ -63,6 +63,28 @@ namespace Microsoft.Azure.Management.DataFactories
             set { this._credentials = value; }
         }
         
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
+        }
+        
         private IDataFactoryOperations _dataFactories;
         
         /// <summary>
@@ -169,6 +191,8 @@ namespace Microsoft.Azure.Management.DataFactories
             this._pipelines = new PipelineOperations(this);
             this._pipelineRuns = new PipelineRunOperations(this);
             this._tables = new TableOperations(this);
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
         }
         
@@ -251,6 +275,8 @@ namespace Microsoft.Azure.Management.DataFactories
             this._pipelines = new PipelineOperations(this);
             this._pipelineRuns = new PipelineRunOperations(this);
             this._tables = new TableOperations(this);
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
         }
         
@@ -337,6 +363,8 @@ namespace Microsoft.Azure.Management.DataFactories
                 
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }

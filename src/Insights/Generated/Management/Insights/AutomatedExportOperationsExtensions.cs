@@ -44,9 +44,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -54,11 +51,11 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse CreateOrUpdateSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAutomatedExportOperations)s).CreateOrUpdateSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName, parameters);
+                return ((IAutomatedExportOperations)s).CreateOrUpdateSettingAsync(resourceGroupName, serverName, databaseName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -76,9 +73,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -86,9 +80,9 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> CreateOrUpdateSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateSettingAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
         
         /// <param name='operations'>
@@ -104,18 +98,15 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse DeleteSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName)
+        public static AzureOperationResponse DeleteSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAutomatedExportOperations)s).DeleteSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName);
+                return ((IAutomatedExportOperations)s).DeleteSettingAsync(resourceGroupName, serverName, databaseName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -133,16 +124,13 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName)
+        public static Task<AzureOperationResponse> DeleteSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
-            return operations.DeleteSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName, CancellationToken.None);
+            return operations.DeleteSettingAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
         }
         
         /// <param name='operations'>
@@ -158,18 +146,15 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AutomatedExportSettingGetResponse GetSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName)
+        public static AutomatedExportSettingGetResponse GetSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAutomatedExportOperations)s).GetSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName);
+                return ((IAutomatedExportOperations)s).GetSettingAsync(resourceGroupName, serverName, databaseName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -187,16 +172,13 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AutomatedExportSettingGetResponse> GetSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName)
+        public static Task<AutomatedExportSettingGetResponse> GetSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
-            return operations.GetSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName, CancellationToken.None);
+            return operations.GetSettingAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
         }
         
         /// <param name='operations'>
@@ -212,9 +194,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -222,11 +201,11 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse UpdateSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse UpdateSetting(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAutomatedExportOperations)s).UpdateSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName, parameters);
+                return ((IAutomatedExportOperations)s).UpdateSettingAsync(resourceGroupName, serverName, databaseName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -244,9 +223,6 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='databaseName'>
         /// Required. The database name.
         /// </param>
-        /// <param name='automatedExportSettingName'>
-        /// Required. The automated export setting name.
-        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -254,9 +230,9 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> UpdateSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, string automatedExportSettingName, AutomatedExportSettingCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateSettingAsync(this IAutomatedExportOperations operations, string resourceGroupName, string serverName, string databaseName, AutomatedExportSettingCreateOrUpdateParameters parameters)
         {
-            return operations.UpdateSettingAsync(resourceGroupName, serverName, databaseName, automatedExportSettingName, parameters, CancellationToken.None);
+            return operations.UpdateSettingAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
     }
 }

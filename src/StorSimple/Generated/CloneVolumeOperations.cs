@@ -118,14 +118,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             {
                 throw new ArgumentNullException("triggerCloneRequest.SourceSnapshot.VolumeId");
             }
-            if (triggerCloneRequest.TargetACRIdList == null)
-            {
-                throw new ArgumentNullException("triggerCloneRequest.TargetACRIdList");
-            }
-            if (triggerCloneRequest.TargetACRList == null)
-            {
-                throw new ArgumentNullException("triggerCloneRequest.TargetACRList");
-            }
             if (triggerCloneRequest.TargetACRList != null)
             {
                 foreach (AccessControlRecord targetACRListParameterItem in triggerCloneRequest.TargetACRList)
@@ -143,6 +135,10 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             if (triggerCloneRequest.TargetDeviceId == null)
             {
                 throw new ArgumentNullException("triggerCloneRequest.TargetDeviceId");
+            }
+            if (triggerCloneRequest.TargetVolName == null)
+            {
+                throw new ArgumentNullException("triggerCloneRequest.TargetVolName");
             }
             if (customRequestHeaders == null)
             {
@@ -255,71 +251,90 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 volumeIdElement.Value = triggerCloneRequest.SourceSnapshot.VolumeId;
                 sourceSnapshotElement.Add(volumeIdElement);
                 
-                XElement targetACRIdListSequenceElement = new XElement(XName.Get("TargetACRIdList", "http://windowscloudbackup.com/CiS/V2013_03"));
-                foreach (string targetACRIdListItem in triggerCloneRequest.TargetACRIdList)
+                if (triggerCloneRequest.TargetACRIdList != null)
                 {
-                    XElement targetACRIdListItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
-                    targetACRIdListItemElement.Value = targetACRIdListItem;
-                    targetACRIdListSequenceElement.Add(targetACRIdListItemElement);
+                    XElement targetACRIdListSequenceElement = new XElement(XName.Get("TargetACRIdList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    foreach (string targetACRIdListItem in triggerCloneRequest.TargetACRIdList)
+                    {
+                        XElement targetACRIdListItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                        targetACRIdListItemElement.Value = targetACRIdListItem;
+                        targetACRIdListSequenceElement.Add(targetACRIdListItemElement);
+                    }
+                    cloneRequestV2Element.Add(targetACRIdListSequenceElement);
                 }
-                cloneRequestV2Element.Add(targetACRIdListSequenceElement);
+                else
+                {
+                    XElement emptyElement = new XElement(XName.Get("TargetACRIdList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute.Value = "true";
+                    emptyElement.Add(nilAttribute);
+                    cloneRequestV2Element.Add(emptyElement);
+                }
                 
-                XElement targetACRListSequenceElement = new XElement(XName.Get("TargetACRList", "http://windowscloudbackup.com/CiS/V2013_03"));
-                foreach (AccessControlRecord targetACRListItem in triggerCloneRequest.TargetACRList)
+                if (triggerCloneRequest.TargetACRList != null)
                 {
-                    XElement accessControlRecordElement = new XElement(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    targetACRListSequenceElement.Add(accessControlRecordElement);
-                    
-                    if (targetACRListItem.InstanceId != null)
+                    XElement targetACRListSequenceElement = new XElement(XName.Get("TargetACRList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    foreach (AccessControlRecord targetACRListItem in triggerCloneRequest.TargetACRList)
                     {
-                        XElement instanceIdElement = new XElement(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        instanceIdElement.Value = targetACRListItem.InstanceId;
-                        accessControlRecordElement.Add(instanceIdElement);
+                        XElement accessControlRecordElement = new XElement(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        targetACRListSequenceElement.Add(accessControlRecordElement);
+                        
+                        if (targetACRListItem.InstanceId != null)
+                        {
+                            XElement instanceIdElement = new XElement(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            instanceIdElement.Value = targetACRListItem.InstanceId;
+                            accessControlRecordElement.Add(instanceIdElement);
+                        }
+                        
+                        XElement nameElement2 = new XElement(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        nameElement2.Value = targetACRListItem.Name;
+                        accessControlRecordElement.Add(nameElement2);
+                        
+                        if (targetACRListItem.GlobalId != null)
+                        {
+                            XElement globalIdElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                            globalIdElement.Value = targetACRListItem.GlobalId;
+                            accessControlRecordElement.Add(globalIdElement);
+                        }
+                        else
+                        {
+                            XElement emptyElement2 = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
+                            XAttribute nilAttribute2 = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                            nilAttribute2.Value = "true";
+                            emptyElement2.Add(nilAttribute2);
+                            accessControlRecordElement.Add(emptyElement2);
+                        }
+                        
+                        XElement operationInProgressElement = new XElement(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        operationInProgressElement.Value = targetACRListItem.OperationInProgress.ToString();
+                        accessControlRecordElement.Add(operationInProgressElement);
+                        
+                        XElement initiatorNameElement = new XElement(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        initiatorNameElement.Value = targetACRListItem.InitiatorName;
+                        accessControlRecordElement.Add(initiatorNameElement);
+                        
+                        XElement volumeCountElement = new XElement(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        volumeCountElement.Value = targetACRListItem.VolumeCount.ToString();
+                        accessControlRecordElement.Add(volumeCountElement);
                     }
-                    
-                    XElement nameElement2 = new XElement(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    nameElement2.Value = targetACRListItem.Name;
-                    accessControlRecordElement.Add(nameElement2);
-                    
-                    if (targetACRListItem.GlobalId != null)
-                    {
-                        XElement globalIdElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
-                        globalIdElement.Value = targetACRListItem.GlobalId;
-                        accessControlRecordElement.Add(globalIdElement);
-                    }
-                    else
-                    {
-                        XElement emptyElement = new XElement(XName.Get("GlobalId", "http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal"));
-                        XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                        nilAttribute.Value = "true";
-                        emptyElement.Add(nilAttribute);
-                        accessControlRecordElement.Add(emptyElement);
-                    }
-                    
-                    XElement operationInProgressElement = new XElement(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    operationInProgressElement.Value = targetACRListItem.OperationInProgress.ToString();
-                    accessControlRecordElement.Add(operationInProgressElement);
-                    
-                    XElement initiatorNameElement = new XElement(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    initiatorNameElement.Value = targetACRListItem.InitiatorName;
-                    accessControlRecordElement.Add(initiatorNameElement);
-                    
-                    XElement volumeCountElement = new XElement(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    volumeCountElement.Value = targetACRListItem.VolumeCount.ToString();
-                    accessControlRecordElement.Add(volumeCountElement);
+                    cloneRequestV2Element.Add(targetACRListSequenceElement);
                 }
-                cloneRequestV2Element.Add(targetACRListSequenceElement);
+                else
+                {
+                    XElement emptyElement3 = new XElement(XName.Get("TargetACRList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                    XAttribute nilAttribute3 = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                    nilAttribute3.Value = "true";
+                    emptyElement3.Add(nilAttribute3);
+                    cloneRequestV2Element.Add(emptyElement3);
+                }
                 
                 XElement targetDeviceIdElement = new XElement(XName.Get("TargetDeviceId", "http://windowscloudbackup.com/CiS/V2013_03"));
                 targetDeviceIdElement.Value = triggerCloneRequest.TargetDeviceId;
                 cloneRequestV2Element.Add(targetDeviceIdElement);
                 
-                if (triggerCloneRequest.TargetVolName != null)
-                {
-                    XElement targetVolNameElement = new XElement(XName.Get("TargetVolName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    targetVolNameElement.Value = triggerCloneRequest.TargetVolName;
-                    cloneRequestV2Element.Add(targetVolNameElement);
-                }
+                XElement targetVolNameElement = new XElement(XName.Get("TargetVolName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                targetVolNameElement.Value = triggerCloneRequest.TargetVolName;
+                cloneRequestV2Element.Add(targetVolNameElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// FilterDimension class represents a dimension name and corresponding (optional) dimension values
     /// </summary>
-    internal class FilterDimension
+    public class FilterDimension
     {
         private string name;
         private IEnumerable<string> values;

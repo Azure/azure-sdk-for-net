@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentGetResult : AzureOperationResponse
     {
-        private Deployment _deployment;
+        private DeploymentExtended _deployment;
         
         /// <summary>
         /// Optional. Gets or sets the deployment.
         /// </summary>
-        public Deployment Deployment
+        public DeploymentExtended Deployment
         {
             get { return this._deployment; }
             set { this._deployment = value; }

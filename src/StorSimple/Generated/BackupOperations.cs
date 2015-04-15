@@ -1030,7 +1030,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     XElement createdOnElement = backupSetsListElement.Element(XName.Get("CreatedOn", "http://windowscloudbackup.com/CiS/V2013_03"));
                                     if (createdOnElement != null)
                                     {
-                                        DateTime createdOnInstance = DateTime.Parse(createdOnElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdOnInstance = DateTime.Parse(createdOnElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         backupSetInfoInstance.CreatedOn = createdOnInstance;
                                     }
                                     

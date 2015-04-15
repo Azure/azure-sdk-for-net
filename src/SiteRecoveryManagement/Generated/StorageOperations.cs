@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/Storages";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             queryParameters.Add("ServerId=" + Uri.EscapeDataString(serverId));
             if (queryParameters.Count > 0)
             {
@@ -220,18 +220,42 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     storageInstance.ServerID = serverIDInstance;
                                 }
                                 
-                                XElement nameElement = arrayOfStorageElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement != null)
+                                XElement storagePoolsSequenceElement = arrayOfStorageElement.Element(XName.Get("StoragePools", "http://schemas.microsoft.com/windowsazure"));
+                                if (storagePoolsSequenceElement != null)
                                 {
-                                    string nameInstance = nameElement.Value;
-                                    storageInstance.Name = nameInstance;
+                                    foreach (XElement storagePoolsElement in storagePoolsSequenceElement.Elements(XName.Get("StoragePool", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        StoragePool storagePoolInstance = new StoragePool();
+                                        storageInstance.StoragePools.Add(storagePoolInstance);
+                                        
+                                        XElement idElement = storagePoolsElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                                        if (idElement != null)
+                                        {
+                                            string idInstance = idElement.Value;
+                                            storagePoolInstance.ID = idInstance;
+                                        }
+                                        
+                                        XElement nameElement = storagePoolsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement != null)
+                                        {
+                                            string nameInstance = nameElement.Value;
+                                            storagePoolInstance.Name = nameInstance;
+                                        }
+                                    }
                                 }
                                 
-                                XElement idElement = arrayOfStorageElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                                if (idElement != null)
+                                XElement nameElement2 = arrayOfStorageElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
                                 {
-                                    string idInstance = idElement.Value;
-                                    storageInstance.ID = idInstance;
+                                    string nameInstance2 = nameElement2.Value;
+                                    storageInstance.Name = nameInstance2;
+                                }
+                                
+                                XElement idElement2 = arrayOfStorageElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                                if (idElement2 != null)
+                                {
+                                    string idInstance2 = idElement2.Value;
+                                    storageInstance.ID = idInstance2;
                                 }
                             }
                         }

@@ -36,96 +36,124 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static SkuGetResponse GetCurrentSku(this ISkuOperations operations, string resourceId)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((ISkuOperations)s).GetCurrentSkuAsync(resourceId);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
-        /// </param>
-        /// <param name='resourceId'>
-        /// Required. The resource id.
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<SkuGetResponse> GetCurrentSkuAsync(this ISkuOperations operations, string resourceId)
-        {
-            return operations.GetCurrentSkuAsync(resourceId, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Updates the current sku.
-        /// </summary>
-        /// <param name="operations">The operations.</param>
-        /// <param name="resourceId">The resource identifier.</param>
-        /// <param name="skuName">Name of the sku.</param>
-        /// <param name="skuTier">The sku tier.</param>
-        /// <param name="skuCapacity">The sku capacity.</param>
-        public static SkuUpdateResponse UpdateCurrentSku(this ISkuOperations operations, string resourceId, string skuName, string skuTier, int skuCapacity)
+        public static SkuGetResponse GetCurrentSku(this ISkuOperations operations, string resourceId, string apiVersion)
         {
             return Task.Factory.StartNew((object s) =>
             {
-                return ((ISkuOperations)s).UpdateCurrentSkuAsync(resourceId, skuName, skuTier, skuCapacity);
+                return ((ISkuOperations)s).GetCurrentSkuAsync(resourceId, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
-        /// <summary>
-        /// Updates the current sku asynchronous.
-        /// </summary>
-        /// <param name="operations">The operations.</param>
-        /// <param name="resourceId">The resource identifier.</param>
-        /// <param name="skuName">Name of the sku.</param>
-        /// <param name="skuTier">The sku tier.</param>
-        /// <param name="skuCapacity">The sku capacity.</param>
-        public static Task<SkuUpdateResponse> UpdateCurrentSkuAsync(this ISkuOperations operations, string resourceId, string skuName, string skuTier, int skuCapacity)
-        {
-            return operations.UpdateCurrentSkuAsync(resourceId, skuName, skuTier, skuCapacity, CancellationToken.None);
-        }
-        
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static SkuListResponse ListAvailableSkus(this ISkuOperations operations, string resourceId)
+        public static Task<SkuGetResponse> GetCurrentSkuAsync(this ISkuOperations operations, string resourceId, string apiVersion)
         {
-            return Task.Factory.StartNew((object s) => 
+            return operations.GetCurrentSkuAsync(resourceId, apiVersion, CancellationToken.None);
+        }
+
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// Required. The resource id.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static SkuListResponse ListSkuDefinitions(this ISkuOperations operations, string resourceId, string apiVersion)
+        {
+            return Task.Factory.StartNew((object s) =>
             {
-                return ((ISkuOperations)s).ListAvailableSkusAsync(resourceId);
+                return ((ISkuOperations)s).ListSkuDefinitionsAsync(resourceId, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
-        
+
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<SkuListResponse> ListAvailableSkusAsync(this ISkuOperations operations, string resourceId)
+        public static Task<SkuListResponse> ListSkuDefinitionsAsync(this ISkuOperations operations, string resourceId, string apiVersion)
         {
-            return operations.ListAvailableSkusAsync(resourceId, CancellationToken.None);
+            return operations.ListSkuDefinitionsAsync(resourceId, apiVersion, CancellationToken.None);
+        }
+
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static SkuUpdateResponse UpdateCurrentSku(this ISkuOperations operations, string resourceId, SkuUpdateParameters parameters, string apiVersion)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((ISkuOperations)s).UpdateCurrentSkuAsync(resourceId, parameters, apiVersion);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<SkuUpdateResponse> UpdateCurrentSkuAsync(this ISkuOperations operations, string resourceId, SkuUpdateParameters parameters, string apiVersion)
+        {
+            return operations.UpdateCurrentSkuAsync(resourceId, parameters, apiVersion, CancellationToken.None);
         }
     }
 }

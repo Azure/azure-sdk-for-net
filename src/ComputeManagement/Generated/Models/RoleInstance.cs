@@ -264,6 +264,28 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._address = value; }
             }
             
+            private string _domainNameLabel;
+            
+            /// <summary>
+            /// Optional. The DNS name of the public IP.
+            /// </summary>
+            public string DomainNameLabel
+            {
+                get { return this._domainNameLabel; }
+                set { this._domainNameLabel = value; }
+            }
+            
+            private IList<string> _fqdns;
+            
+            /// <summary>
+            /// Optional. The list of FQDN for the public IP.
+            /// </summary>
+            public IList<string> Fqdns
+            {
+                get { return this._fqdns; }
+                set { this._fqdns = value; }
+            }
+            
             private int? _idleTimeoutInMinutes;
             
             /// <summary>
@@ -291,6 +313,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public PublicIP()
             {
+                this.Fqdns = new LazyList<string>();
             }
         }
     }
