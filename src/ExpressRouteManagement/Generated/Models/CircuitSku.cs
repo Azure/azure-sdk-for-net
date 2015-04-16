@@ -25,38 +25,12 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The parameters to the Update Dedicated Circuit request.
+    /// The Skus available for a dedicated circuit
     /// </summary>
-    public partial class DedicatedCircuitUpdateParameters
+    public enum CircuitSku
     {
-        private string _bandwidth;
+        Standard = 0,
         
-        /// <summary>
-        /// Optional. Bandwidth requested for the circuit in Mbps.
-        /// </summary>
-        public string Bandwidth
-        {
-            get { return this._bandwidth; }
-            set { this._bandwidth = value; }
-        }
-        
-        private string _sku;
-        
-        /// <summary>
-        /// Optional. Sku to be used for the new dedicated circuit.
-        /// </summary>
-        public string Sku
-        {
-            get { return this._sku; }
-            set { this._sku = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitUpdateParameters
-        /// class.
-        /// </summary>
-        public DedicatedCircuitUpdateParameters()
-        {
-        }
+        Premium = 1,
     }
 }

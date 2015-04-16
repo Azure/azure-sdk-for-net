@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
@@ -72,6 +73,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._serviceProviderName; }
             set { this._serviceProviderName = value; }
+        }
+        
+        private CircuitSku _sku;
+        
+        /// <summary>
+        /// Optional. Sku to be used for the new dedicated circuit.
+        /// </summary>
+        public CircuitSku Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>
