@@ -51,7 +51,6 @@ namespace Microsoft.Azure.Common.Authentication
                     "Microsoft.Web",
                     "microsoft.visualstudio",
                     "microsoft.insights",
-                    "successbricks.cleardb",
                     "microsoft.cache",
                     "Microsoft.KeyVault",
                     "Microsoft.Compute",
