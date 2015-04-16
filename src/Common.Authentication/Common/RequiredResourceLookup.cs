@@ -53,18 +53,41 @@ namespace Microsoft.Azure.Common.Authentication
                     "microsoft.insights",
                     "successbricks.cleardb",
                     "microsoft.cache",
-                    "Microsoft.KeyVault" };
+                    "Microsoft.KeyVault",
+                    "Microsoft.Compute",
+                    "Microsoft.Network",
+                    "Microsoft.Storage"
+                };
             }
             if (typeof(T).FullName.EndsWith("BatchManagementClient"))
             {
                 return new[] { "microsoft.batch" };
             }
-            
+
+            if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Compute.ComputeManagementClient"))
+            {
+                return new[] { "Microsoft.Compute" };
+            }
+
+            if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Dns.DnsManagementClient"))
+            {
+                return new[] { "Microsoft.Network" };
+            }
+
             if (typeof(T).FullName.EndsWith("DataPipelineManagementClient"))
             {
                 return new[] { "Microsoft.DataFactory" };
             }
 
+            if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Network.NetworkManagementClient"))
+            {
+                return new[] { "Microsoft.Network" };
+            }
+
+            if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Storage.StorageManagementClient"))
+            {
+                return new[] { "Microsoft.Storage" };
+            }
 
             return new string[0];
         }
