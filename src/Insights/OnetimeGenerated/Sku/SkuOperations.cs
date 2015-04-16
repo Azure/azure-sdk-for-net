@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "/skuDefinitions?";
+            string url = "/" + Uri.EscapeDataString(resourceId) + "/skus?";
             url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
