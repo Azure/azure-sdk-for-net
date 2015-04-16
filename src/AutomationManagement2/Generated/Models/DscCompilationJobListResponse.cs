@@ -20,42 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the update certificate operation
+    /// The response model for the list job operation.
     /// </summary>
-    public partial class CertificateUpdateProperties
+    public partial class DscCompilationJobListResponse : OperationResponseWithSkipToken
     {
-        private string _description;
+        private IList<DscCompilationJob> _dscCompilationJobs;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the certificate.
+        /// Optional. Gets or sets a list of Dsc Compilation jobs.
         /// </summary>
-        public string Description
+        public IList<DscCompilationJob> DscCompilationJobs
         {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private bool _isExportable;
-        
-        /// <summary>
-        /// Optional. Gets or sets the is exportable flag of the certificate.
-        /// </summary>
-        public bool IsExportable
-        {
-            get { return this._isExportable; }
-            set { this._isExportable = value; }
+            get { return this._dscCompilationJobs; }
+            set { this._dscCompilationJobs = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateUpdateProperties class.
+        /// Initializes a new instance of the DscCompilationJobListResponse
+        /// class.
         /// </summary>
-        public CertificateUpdateProperties()
+        public DscCompilationJobListResponse()
         {
+            this.DscCompilationJobs = new LazyList<DscCompilationJob>();
         }
     }
 }

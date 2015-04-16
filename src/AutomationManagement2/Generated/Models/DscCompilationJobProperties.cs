@@ -26,40 +26,37 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update module operation.
+    /// Definition of Dsc Compilation job properties.
     /// </summary>
-    public partial class ModuleUpdateParameters : ResourceCreateOrUpdateParameterBase
+    public partial class DscCompilationJobProperties : JobPropertiesBase
     {
-        private ModuleUpdateProperties _properties;
+        private DscConfigurationAssociationProperty _configuration;
         
         /// <summary>
-        /// Required. Gets or sets the module update properties.
+        /// Optional. Gets or sets the configuration.
         /// </summary>
-        public ModuleUpdateProperties Properties
+        public DscConfigurationAssociationProperty Configuration
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
+        }
+        
+        private string _startedBy;
+        
+        /// <summary>
+        /// Optional. Gets or sets the compilation job started by.
+        /// </summary>
+        public string StartedBy
+        {
+            get { return this._startedBy; }
+            set { this._startedBy = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ModuleUpdateParameters class.
+        /// Initializes a new instance of the DscCompilationJobProperties class.
         /// </summary>
-        public ModuleUpdateParameters()
+        public DscCompilationJobProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ModuleUpdateParameters class with
-        /// required arguments.
-        /// </summary>
-        public ModuleUpdateParameters(ModuleUpdateProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The frequency of schedule.
+    /// The configuration state.
     /// </summary>
-    public static partial class ScheduleFrequency
+    public static partial class DscConfigurationState
     {
-        public const string OneTime = "OneTime";
+        public const string New = "New";
         
-        public const string Day = "Day";
+        public const string Edit = "Edit";
         
-        public const string Hour = "Hour";
+        public const string Published = "Published";
     }
 }

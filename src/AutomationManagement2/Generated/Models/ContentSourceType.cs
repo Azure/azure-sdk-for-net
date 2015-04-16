@@ -21,31 +21,16 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update runbook operation.
+    /// The type of content source.
     /// </summary>
-    public partial class RunbookUpdateParameters : ResourceCreateOrUpdateParameterBase
+    public static partial class ContentSourceType
     {
-        private RunbookUpdateProperties _properties;
+        public const string EmbeddedContent = "embeddedContent";
         
-        /// <summary>
-        /// Optional. Gets or sets the runbook update properties.
-        /// </summary>
-        public RunbookUpdateProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RunbookUpdateParameters class.
-        /// </summary>
-        public RunbookUpdateParameters()
-        {
-        }
+        public const string Uri = "uri";
     }
 }

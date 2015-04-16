@@ -26,48 +26,25 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// Definition of the Dsc Compilation job.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscCompilationJob
     {
-        private RunbookAssociationProperty _runbook;
+        private DscCompilationJobProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the properties of the Dsc Compilation job.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public DscCompilationJobProperties Properties
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscCompilationJob class.
         /// </summary>
-        public JobProperties()
+        public DscCompilationJob()
         {
         }
     }

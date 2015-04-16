@@ -113,6 +113,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._activities; }
         }
         
+        private IAgentRegistrationOperation _agentRegistrationInformation;
+        
+        /// <summary>
+        /// Service operation for automation agent registration information.
+        /// (see http://aka.ms/azureautomationsdk/agentregistrationoperations
+        /// for more information)
+        /// </summary>
+        public virtual IAgentRegistrationOperation AgentRegistrationInformation
+        {
+            get { return this._agentRegistrationInformation; }
+        }
+        
         private IAutomationAccountOperations _automationAccounts;
         
         /// <summary>
@@ -171,6 +183,55 @@ namespace Microsoft.Azure.Management.Automation
         public virtual ICredentialOperations PsCredentials
         {
             get { return this._psCredentials; }
+        }
+        
+        private IDscCompilationJobOperations _compilationJobs;
+        
+        /// <summary>
+        /// Service operation for automation dsc configuration compile jobs.
+        /// (see
+        /// http://aka.ms/azureautomationsdk/dscccompilationjoboperations for
+        /// more information)
+        /// </summary>
+        public virtual IDscCompilationJobOperations CompilationJobs
+        {
+            get { return this._compilationJobs; }
+        }
+        
+        private IDscConfigurationOperations _configurations;
+        
+        /// <summary>
+        /// Service operation for configurations.  (see
+        /// http://aka.ms/azureautomationsdk/configurationoperations for more
+        /// information)
+        /// </summary>
+        public virtual IDscConfigurationOperations Configurations
+        {
+            get { return this._configurations; }
+        }
+        
+        private IDscNodeConfigurationOperations _nodeConfigurations;
+        
+        /// <summary>
+        /// Service operation for automation dsc node configurations.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more
+        /// information)
+        /// </summary>
+        public virtual IDscNodeConfigurationOperations NodeConfigurations
+        {
+            get { return this._nodeConfigurations; }
+        }
+        
+        private IDscNodeOperations _nodes;
+        
+        /// <summary>
+        /// Service operation for dsc nodes.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
+        /// information)
+        /// </summary>
+        public virtual IDscNodeOperations Nodes
+        {
+            get { return this._nodes; }
         }
         
         private IHybridRunbookWorkerGroupOperations _hybridRunbookWorkerGroups;
@@ -312,11 +373,16 @@ namespace Microsoft.Azure.Management.Automation
             : base()
         {
             this._activities = new ActivityOperations(this);
+            this._agentRegistrationInformation = new AgentRegistrationOperation(this);
             this._automationAccounts = new AutomationAccountOperations(this);
             this._certificates = new CertificateOperations(this);
             this._connections = new ConnectionOperations(this);
             this._connectionTypes = new ConnectionTypeOperations(this);
             this._psCredentials = new CredentialOperations(this);
+            this._compilationJobs = new DscCompilationJobOperations(this);
+            this._configurations = new DscConfigurationOperations(this);
+            this._nodeConfigurations = new DscNodeConfigurationOperations(this);
+            this._nodes = new DscNodeOperations(this);
             this._hybridRunbookWorkerGroups = new HybridRunbookWorkerGroupOperations(this);
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
@@ -395,11 +461,16 @@ namespace Microsoft.Azure.Management.Automation
             : base(httpClient)
         {
             this._activities = new ActivityOperations(this);
+            this._agentRegistrationInformation = new AgentRegistrationOperation(this);
             this._automationAccounts = new AutomationAccountOperations(this);
             this._certificates = new CertificateOperations(this);
             this._connections = new ConnectionOperations(this);
             this._connectionTypes = new ConnectionTypeOperations(this);
             this._psCredentials = new CredentialOperations(this);
+            this._compilationJobs = new DscCompilationJobOperations(this);
+            this._configurations = new DscConfigurationOperations(this);
+            this._nodeConfigurations = new DscNodeConfigurationOperations(this);
+            this._nodes = new DscNodeOperations(this);
             this._hybridRunbookWorkerGroups = new HybridRunbookWorkerGroupOperations(this);
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
@@ -597,15 +668,15 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Created)
-                    {
-                        result.Status = OperationStatus.Succeeded;
-                    }
                     if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
                     if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

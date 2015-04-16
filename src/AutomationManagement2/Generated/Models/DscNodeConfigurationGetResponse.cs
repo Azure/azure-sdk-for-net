@@ -27,26 +27,26 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create account operation.
+    /// The response model for the get Dsc node configuration operation.
     /// </summary>
-    public partial class AutomationAccountUpdateResponse : AzureOperationResponse
+    public partial class DscNodeConfigurationGetResponse : AzureOperationResponse
     {
-        private AutomationAccount _automationAccount;
+        private DscNodeConfiguration _nodeConfiguration;
         
         /// <summary>
-        /// Optional. Gets or sets a account.
+        /// Optional. Gets or sets a Dsc Node Configuration.
         /// </summary>
-        public AutomationAccount AutomationAccount
+        public DscNodeConfiguration NodeConfiguration
         {
-            get { return this._automationAccount; }
-            set { this._automationAccount = value; }
+            get { return this._nodeConfiguration; }
+            set { this._nodeConfiguration = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountUpdateResponse
+        /// Initializes a new instance of the DscNodeConfigurationGetResponse
         /// class.
         /// </summary>
-        public AutomationAccountUpdateResponse()
+        public DscNodeConfigurationGetResponse()
         {
         }
     }

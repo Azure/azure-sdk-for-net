@@ -26,48 +26,36 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The parameters supplied to the patch dsc node operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscNodePatchParameters
     {
-        private RunbookAssociationProperty _runbook;
+        private Guid _id;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the id of the dsc node.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public Guid Id
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private string _runOn;
+        private DscNodeConfigurationAssociationProperty _nodeConfiguration;
         
         /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
+        /// Optional. Gets or sets the configuration of the node.
         /// </summary>
-        public string RunOn
+        public DscNodeConfigurationAssociationProperty NodeConfiguration
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._nodeConfiguration; }
+            set { this._nodeConfiguration = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscNodePatchParameters class.
         /// </summary>
-        public JobProperties()
+        public DscNodePatchParameters()
         {
         }
     }

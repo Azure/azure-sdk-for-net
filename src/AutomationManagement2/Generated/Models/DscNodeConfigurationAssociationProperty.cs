@@ -25,47 +25,26 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the update credential
+    /// The dsc nodeconfiguration property associated with the entity.
     /// </summary>
-    public partial class CredentialUpdateProperties
+    public partial class DscNodeConfigurationAssociationProperty
     {
-        private string _description;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the credential.
+        /// Optional. Gets or sets the name of the dsc nodeconfiguration.
         /// </summary>
-        public string Description
+        public string Name
         {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private string _password;
-        
-        /// <summary>
-        /// Optional. Gets or sets the password of the credential.
-        /// </summary>
-        public string Password
-        {
-            get { return this._password; }
-            set { this._password = value; }
-        }
-        
-        private string _userName;
-        
-        /// <summary>
-        /// Optional. Gets or sets the user name of the credential.
-        /// </summary>
-        public string UserName
-        {
-            get { return this._userName; }
-            set { this._userName = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CredentialUpdateProperties class.
+        /// Initializes a new instance of the
+        /// DscNodeConfigurationAssociationProperty class.
         /// </summary>
-        public CredentialUpdateProperties()
+        public DscNodeConfigurationAssociationProperty()
         {
         }
     }

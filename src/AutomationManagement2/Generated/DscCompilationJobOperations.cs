@@ -31,7 +31,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
 using Newtonsoft.Json.Linq;
@@ -39,18 +38,19 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Automation
 {
     /// <summary>
-    /// Service operation for automation jobs.  (see
-    /// http://aka.ms/azureautomationsdk/joboperations for more information)
+    /// Service operation for automation dsc configuration compile jobs.  (see
+    /// http://aka.ms/azureautomationsdk/dscccompilationjoboperations for more
+    /// information)
     /// </summary>
-    internal partial class JobOperations : IServiceOperations<AutomationManagementClient>, IJobOperations
+    internal partial class DscCompilationJobOperations : IServiceOperations<AutomationManagementClient>, IDscCompilationJobOperations
     {
         /// <summary>
-        /// Initializes a new instance of the JobOperations class.
+        /// Initializes a new instance of the DscCompilationJobOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal JobOperations(AutomationManagementClient client)
+        internal DscCompilationJobOperations(AutomationManagementClient client)
         {
             this._client = client;
         }
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Create a job of the runbook.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
-        /// information)
+        /// Creates the Dsc compilation job of the configuration.  (see
+        /// http://aka.ms/azureautomationsdk/dscconfigurationcompilejoboperations
+        /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group
@@ -78,15 +78,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create job operation.
+        /// Required. The parameters supplied to the create compilation job
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create job operation.
+        /// The response model for the create Dsc Compilation job operation.
         /// </returns>
-        public async Task<JobCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, JobCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<DscCompilationJobCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, DscCompilationJobCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -105,9 +106,9 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ArgumentNullException("parameters.Properties");
             }
-            if (parameters.Properties.Runbook == null)
+            if (parameters.Properties.Configuration == null)
             {
-                throw new ArgumentNullException("parameters.Properties.Runbook");
+                throw new ArgumentNullException("parameters.Properties.Configuration");
             }
             
             // Tracing
@@ -139,7 +140,7 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/jobs/";
+            url = url + "/compilationjobs/";
             url = url + Guid.NewGuid().ToString();
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-01-01-preview");
@@ -180,18 +181,18 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject jobCreateParametersValue = new JObject();
-                requestDoc = jobCreateParametersValue;
+                JObject dscCompilationJobCreateParametersValue = new JObject();
+                requestDoc = dscCompilationJobCreateParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                jobCreateParametersValue["properties"] = propertiesValue;
+                dscCompilationJobCreateParametersValue["properties"] = propertiesValue;
                 
-                JObject runbookValue = new JObject();
-                propertiesValue["runbook"] = runbookValue;
+                JObject configurationValue = new JObject();
+                propertiesValue["configuration"] = configurationValue;
                 
-                if (parameters.Properties.Runbook.Name != null)
+                if (parameters.Properties.Configuration.Name != null)
                 {
-                    runbookValue["name"] = parameters.Properties.Runbook.Name;
+                    configurationValue["name"] = parameters.Properties.Configuration.Name;
                 }
                 
                 if (parameters.Properties.Parameters != null)
@@ -209,19 +210,14 @@ namespace Microsoft.Azure.Management.Automation
                     }
                 }
                 
-                if (parameters.Properties.RunOn != null)
-                {
-                    propertiesValue["runOn"] = parameters.Properties.RunOn;
-                }
-                
                 if (parameters.Name != null)
                 {
-                    jobCreateParametersValue["name"] = parameters.Name;
+                    dscCompilationJobCreateParametersValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Location != null)
                 {
-                    jobCreateParametersValue["location"] = parameters.Location;
+                    dscCompilationJobCreateParametersValue["location"] = parameters.Location;
                 }
                 
                 if (parameters.Tags != null)
@@ -233,7 +229,7 @@ namespace Microsoft.Azure.Management.Automation
                         string tagsValue = pair2.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    jobCreateParametersValue["tags"] = tagsDictionary;
+                    dscCompilationJobCreateParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -267,13 +263,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobCreateResponse result = null;
+                    DscCompilationJobCreateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobCreateResponse();
+                        result = new DscCompilationJobCreateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -282,26 +278,26 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Job jobInstance = new Job();
-                            result.Job = jobInstance;
+                            DscCompilationJob dscCompilationJobInstance = new DscCompilationJob();
+                            result.DscCompilationJob = dscCompilationJobInstance;
                             
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                JobProperties propertiesInstance = new JobProperties();
-                                jobInstance.Properties = propertiesInstance;
+                                DscCompilationJobProperties propertiesInstance = new DscCompilationJobProperties();
+                                dscCompilationJobInstance.Properties = propertiesInstance;
                                 
-                                JToken runbookValue2 = propertiesValue2["runbook"];
-                                if (runbookValue2 != null && runbookValue2.Type != JTokenType.Null)
+                                JToken configurationValue2 = propertiesValue2["configuration"];
+                                if (configurationValue2 != null && configurationValue2.Type != JTokenType.Null)
                                 {
-                                    RunbookAssociationProperty runbookInstance = new RunbookAssociationProperty();
-                                    propertiesInstance.Runbook = runbookInstance;
+                                    DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
+                                    propertiesInstance.Configuration = configurationInstance;
                                     
-                                    JToken nameValue = runbookValue2["name"];
+                                    JToken nameValue = configurationValue2["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        runbookInstance.Name = nameInstance;
+                                        configurationInstance.Name = nameInstance;
                                     }
                                 }
                                 
@@ -310,13 +306,6 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string startedByInstance = ((string)startedByValue);
                                     propertiesInstance.StartedBy = startedByInstance;
-                                }
-                                
-                                JToken runOnValue = propertiesValue2["runOn"];
-                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
-                                {
-                                    string runOnInstance = ((string)runOnValue);
-                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken jobIdValue = propertiesValue2["jobId"];
@@ -426,9 +415,10 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the job identified by job id.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
-        /// information)
+        /// Retrieve the Dsc configuration compilation job identified by job
+        /// id.  (see
+        /// http://aka.ms/azureautomationsdk/dsccompilationjoboperations for
+        /// more information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group
@@ -437,15 +427,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='jobId'>
-        /// Required. The job id.
+        /// Required. The Dsc configuration compilation job id.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the get job operation.
+        /// The response model for the get Dsc compilation job operation.
         /// </returns>
-        public async Task<JobGetResponse> GetAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
+        public async Task<DscCompilationJobGetResponse> GetAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -486,7 +476,7 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/Jobs/";
+            url = url + "/compilationjobs/";
             url = url + Uri.EscapeDataString(jobId.ToString());
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-01-01-preview");
@@ -550,13 +540,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobGetResponse result = null;
+                    DscCompilationJobGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobGetResponse();
+                        result = new DscCompilationJobGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -565,26 +555,26 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Job jobInstance = new Job();
-                            result.Job = jobInstance;
+                            DscCompilationJob dscCompilationJobInstance = new DscCompilationJob();
+                            result.DscCompilationJob = dscCompilationJobInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                JobProperties propertiesInstance = new JobProperties();
-                                jobInstance.Properties = propertiesInstance;
+                                DscCompilationJobProperties propertiesInstance = new DscCompilationJobProperties();
+                                dscCompilationJobInstance.Properties = propertiesInstance;
                                 
-                                JToken runbookValue = propertiesValue["runbook"];
-                                if (runbookValue != null && runbookValue.Type != JTokenType.Null)
+                                JToken configurationValue = propertiesValue["configuration"];
+                                if (configurationValue != null && configurationValue.Type != JTokenType.Null)
                                 {
-                                    RunbookAssociationProperty runbookInstance = new RunbookAssociationProperty();
-                                    propertiesInstance.Runbook = runbookInstance;
+                                    DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
+                                    propertiesInstance.Configuration = configurationInstance;
                                     
-                                    JToken nameValue = runbookValue["name"];
+                                    JToken nameValue = configurationValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        runbookInstance.Name = nameInstance;
+                                        configurationInstance.Name = nameInstance;
                                     }
                                 }
                                 
@@ -593,13 +583,6 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string startedByInstance = ((string)startedByValue);
                                     propertiesInstance.StartedBy = startedByInstance;
-                                }
-                                
-                                JToken runOnValue = propertiesValue["runOn"];
-                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
-                                {
-                                    string runOnInstance = ((string)runOnValue);
-                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken jobIdValue = propertiesValue["jobId"];
@@ -709,8 +692,8 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the job output identified by job id.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// Retrieve the job stream identified by job stream id.  (see
+        /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
         /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -722,13 +705,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='jobId'>
         /// Required. The job id.
         /// </param>
+        /// <param name='jobStreamId'>
+        /// Required. The job stream id.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the get job output operation.
+        /// The response model for the get job stream operation.
         /// </returns>
-        public async Task<JobGetOutputResponse> GetOutputAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
+        public async Task<JobStreamGetResponse> GetOutputAsync(string resourceGroupName, string automationAccount, Guid jobId, string jobStreamId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -738,6 +724,10 @@ namespace Microsoft.Azure.Management.Automation
             if (automationAccount == null)
             {
                 throw new ArgumentNullException("automationAccount");
+            }
+            if (jobStreamId == null)
+            {
+                throw new ArgumentNullException("jobStreamId");
             }
             
             // Tracing
@@ -750,6 +740,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobStreamId", jobStreamId);
                 TracingAdapter.Enter(invocationId, this, "GetOutputAsync", tracingParameters);
             }
             
@@ -769,9 +760,10 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/Jobs/";
+            url = url + "/compilationjobs/";
             url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/output";
+            url = url + "/streams/";
+            url = url + Uri.EscapeDataString(jobStreamId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
@@ -834,179 +826,77 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobGetOutputResponse result = null;
+                    JobStreamGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobGetOutputResponse();
-                        result.Output = responseContent;
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Retrieve the runbook content of the job identified by job id.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
-        /// information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='jobId'>
-        /// Required. The job id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the get runbook content of the job operation.
-        /// </returns>
-        public async Task<JobGetRunbookContentResponse> GetRunbookContentAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("jobId", jobId);
-                TracingAdapter.Enter(invocationId, this, "GetRunbookContentAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            if (this.Client.ResourceNamespace != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
-            }
-            url = url + "/automationAccounts/";
-            url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/Jobs/";
-            url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/runbookContent";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
+                        result = new JobStreamGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            TracingAdapter.Error(invocationId, ex);
+                            responseDoc = JToken.Parse(responseContent);
                         }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    JobGetRunbookContentResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobGetRunbookContentResponse();
-                        result.Content = responseContent;
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JobStream jobStreamInstance = new JobStream();
+                            result.JobStream = jobStreamInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JobStreamProperties propertiesInstance = new JobStreamProperties();
+                                jobStreamInstance.Properties = propertiesInstance;
+                                
+                                JToken jobStreamIdValue = propertiesValue["jobStreamId"];
+                                if (jobStreamIdValue != null && jobStreamIdValue.Type != JTokenType.Null)
+                                {
+                                    string jobStreamIdInstance = ((string)jobStreamIdValue);
+                                    propertiesInstance.JobStreamId = jobStreamIdInstance;
+                                }
+                                
+                                JToken timeValue = propertiesValue["time"];
+                                if (timeValue != null && timeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset timeInstance = ((DateTimeOffset)timeValue);
+                                    propertiesInstance.Time = timeInstance;
+                                }
+                                
+                                JToken streamTypeValue = propertiesValue["streamType"];
+                                if (streamTypeValue != null && streamTypeValue.Type != JTokenType.Null)
+                                {
+                                    string streamTypeInstance = ((string)streamTypeValue);
+                                    propertiesInstance.StreamType = streamTypeInstance;
+                                }
+                                
+                                JToken streamTextValue = propertiesValue["streamText"];
+                                if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
+                                {
+                                    string streamTextInstance = ((string)streamTextValue);
+                                    propertiesInstance.StreamText = streamTextInstance;
+                                }
+                                
+                                JToken summaryValue = propertiesValue["summary"];
+                                if (summaryValue != null && summaryValue.Type != JTokenType.Null)
+                                {
+                                    string summaryInstance = ((string)summaryValue);
+                                    propertiesInstance.Summary = summaryInstance;
+                                }
+                                
+                                JToken valueSequenceElement = ((JToken)propertiesValue["value"]);
+                                if (valueSequenceElement != null && valueSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in valueSequenceElement)
+                                    {
+                                        string valueKey = ((string)property.Name);
+                                        object valueValue = property.Value.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        propertiesInstance.Value.Add(valueKey, valueValue);
+                                    }
+                                }
+                            }
+                        }
                         
                     }
                     result.StatusCode = statusCode;
@@ -1039,8 +929,8 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// Retrieve a list of dsc compilation jobs.  (see
+        /// http://aka.ms/azureautomationsdk/compilationjoboperations for more
         /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1058,7 +948,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list job operation.
         /// </returns>
-        public async Task<JobListResponse> ListAsync(string resourceGroupName, string automationAccount, JobListParameters parameters, CancellationToken cancellationToken)
+        public async Task<DscCompilationJobListResponse> ListAsync(string resourceGroupName, string automationAccount, DscCompilationJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1099,7 +989,7 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/jobs";
+            url = url + "/compilationjobs";
             List<string> queryParameters = new List<string>();
             List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.StartTime != null)
@@ -1114,9 +1004,9 @@ namespace Microsoft.Azure.Management.Automation
             {
                 odataFilter.Add("properties/status eq '" + Uri.EscapeDataString(parameters.Status) + "'");
             }
-            if (parameters != null && parameters.RunbookName != null)
+            if (parameters != null && parameters.ConfigurationName != null)
             {
-                odataFilter.Add("properties/runbook/name eq '" + Uri.EscapeDataString(parameters.RunbookName) + "'");
+                odataFilter.Add("properties/configuration/name eq '" + Uri.EscapeDataString(parameters.ConfigurationName) + "'");
             }
             if (odataFilter.Count > 0)
             {
@@ -1184,13 +1074,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobListResponse result = null;
+                    DscCompilationJobListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobListResponse();
+                        result = new DscCompilationJobListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1204,26 +1094,26 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Job jobInstance = new Job();
-                                    result.Jobs.Add(jobInstance);
+                                    DscCompilationJob dscCompilationJobInstance = new DscCompilationJob();
+                                    result.DscCompilationJobs.Add(dscCompilationJobInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        JobProperties propertiesInstance = new JobProperties();
-                                        jobInstance.Properties = propertiesInstance;
+                                        DscCompilationJobProperties propertiesInstance = new DscCompilationJobProperties();
+                                        dscCompilationJobInstance.Properties = propertiesInstance;
                                         
-                                        JToken runbookValue = propertiesValue["runbook"];
-                                        if (runbookValue != null && runbookValue.Type != JTokenType.Null)
+                                        JToken configurationValue = propertiesValue["configuration"];
+                                        if (configurationValue != null && configurationValue.Type != JTokenType.Null)
                                         {
-                                            RunbookAssociationProperty runbookInstance = new RunbookAssociationProperty();
-                                            propertiesInstance.Runbook = runbookInstance;
+                                            DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
+                                            propertiesInstance.Configuration = configurationInstance;
                                             
-                                            JToken nameValue = runbookValue["name"];
+                                            JToken nameValue = configurationValue["name"];
                                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                                             {
                                                 string nameInstance = ((string)nameValue);
-                                                runbookInstance.Name = nameInstance;
+                                                configurationInstance.Name = nameInstance;
                                             }
                                         }
                                         
@@ -1232,13 +1122,6 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string startedByInstance = ((string)startedByValue);
                                             propertiesInstance.StartedBy = startedByInstance;
-                                        }
-                                        
-                                        JToken runOnValue = propertiesValue["runOn"];
-                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
-                                        {
-                                            string runOnInstance = ((string)runOnValue);
-                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                         
                                         JToken jobIdValue = propertiesValue["jobId"];
@@ -1364,8 +1247,8 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve next list of jobs.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// Retrieve next list of dsc compilation jobs.  (see
+        /// http://aka.ms/azureautomationsdk/compilationjoboperations for more
         /// information)
         /// </summary>
         /// <param name='nextLink'>
@@ -1377,7 +1260,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list job operation.
         /// </returns>
-        public async Task<JobListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        public async Task<DscCompilationJobListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
@@ -1445,13 +1328,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobListResponse result = null;
+                    DscCompilationJobListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobListResponse();
+                        result = new DscCompilationJobListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1465,26 +1348,26 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Job jobInstance = new Job();
-                                    result.Jobs.Add(jobInstance);
+                                    DscCompilationJob dscCompilationJobInstance = new DscCompilationJob();
+                                    result.DscCompilationJobs.Add(dscCompilationJobInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        JobProperties propertiesInstance = new JobProperties();
-                                        jobInstance.Properties = propertiesInstance;
+                                        DscCompilationJobProperties propertiesInstance = new DscCompilationJobProperties();
+                                        dscCompilationJobInstance.Properties = propertiesInstance;
                                         
-                                        JToken runbookValue = propertiesValue["runbook"];
-                                        if (runbookValue != null && runbookValue.Type != JTokenType.Null)
+                                        JToken configurationValue = propertiesValue["configuration"];
+                                        if (configurationValue != null && configurationValue.Type != JTokenType.Null)
                                         {
-                                            RunbookAssociationProperty runbookInstance = new RunbookAssociationProperty();
-                                            propertiesInstance.Runbook = runbookInstance;
+                                            DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
+                                            propertiesInstance.Configuration = configurationInstance;
                                             
-                                            JToken nameValue = runbookValue["name"];
+                                            JToken nameValue = configurationValue["name"];
                                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                                             {
                                                 string nameInstance = ((string)nameValue);
-                                                runbookInstance.Name = nameInstance;
+                                                configurationInstance.Name = nameInstance;
                                             }
                                         }
                                         
@@ -1493,13 +1376,6 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string startedByInstance = ((string)startedByValue);
                                             propertiesInstance.StartedBy = startedByInstance;
-                                        }
-                                        
-                                        JToken runOnValue = propertiesValue["runOn"];
-                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
-                                        {
-                                            string runOnInstance = ((string)runOnValue);
-                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                         
                                         JToken jobIdValue = propertiesValue["jobId"];
@@ -1595,483 +1471,6 @@ namespace Microsoft.Azure.Management.Automation
                         }
                         
                     }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Resume the job identified by jobId.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
-        /// information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='jobId'>
-        /// Required. The job id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> ResumeAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("jobId", jobId);
-                TracingAdapter.Enter(invocationId, this, "ResumeAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            if (this.Client.ResourceNamespace != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
-            }
-            url = url + "/automationAccounts/";
-            url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/jobs/";
-            url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/resume";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AzureOperationResponse result = null;
-                    // Deserialize Response
-                    result = new AzureOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Stop the job identified by jobId.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
-        /// information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='jobId'>
-        /// Required. The job id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> StopAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("jobId", jobId);
-                TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            if (this.Client.ResourceNamespace != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
-            }
-            url = url + "/automationAccounts/";
-            url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/jobs/";
-            url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/stop";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AzureOperationResponse result = null;
-                    // Deserialize Response
-                    result = new AzureOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Suspend the job identified by jobId.  (see
-        /// http://aka.ms/azureautomationsdk/joboperations for more
-        /// information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='jobId'>
-        /// Required. The job id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> SuspendAsync(string resourceGroupName, string automationAccount, Guid jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("jobId", jobId);
-                TracingAdapter.Enter(invocationId, this, "SuspendAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            if (this.Client.ResourceNamespace != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
-            }
-            url = url + "/automationAccounts/";
-            url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/jobs/";
-            url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/suspend";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AzureOperationResponse result = null;
-                    // Deserialize Response
-                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

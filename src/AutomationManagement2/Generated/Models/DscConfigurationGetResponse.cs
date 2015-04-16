@@ -21,53 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The response model for the get configuration operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscConfigurationGetResponse : AzureOperationResponse
     {
-        private RunbookAssociationProperty _runbook;
+        private DscConfiguration _configuration;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets a configuration.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public DscConfiguration Configuration
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscConfigurationGetResponse class.
         /// </summary>
-        public JobProperties()
+        public DscConfigurationGetResponse()
         {
         }
     }

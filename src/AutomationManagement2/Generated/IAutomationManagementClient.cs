@@ -92,6 +92,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation agent registration information.
+        /// (see http://aka.ms/azureautomationsdk/agentregistrationoperations
+        /// for more information)
+        /// </summary>
+        IAgentRegistrationOperation AgentRegistrationInformation
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation accounts.  (see
         /// http://aka.ms/azureautomationsdk/automationaccountoperations for
         /// more information)
@@ -137,6 +147,47 @@ namespace Microsoft.Azure.Management.Automation
         /// information)
         /// </summary>
         ICredentialOperations PsCredentials
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation dsc configuration compile jobs.
+        /// (see
+        /// http://aka.ms/azureautomationsdk/dscccompilationjoboperations for
+        /// more information)
+        /// </summary>
+        IDscCompilationJobOperations CompilationJobs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for configurations.  (see
+        /// http://aka.ms/azureautomationsdk/configurationoperations for more
+        /// information)
+        /// </summary>
+        IDscConfigurationOperations Configurations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation dsc node configurations.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more
+        /// information)
+        /// </summary>
+        IDscNodeConfigurationOperations NodeConfigurations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for dsc nodes.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
+        /// information)
+        /// </summary>
+        IDscNodeOperations Nodes
         {
             get; 
         }

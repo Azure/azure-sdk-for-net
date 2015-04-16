@@ -21,53 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The parameters supplied to the list dsc node operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscNodeListParameters
     {
-        private RunbookAssociationProperty _runbook;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the name of the dsc node.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public string Name
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private string _runOn;
+        private string _nodeConfigurationName;
         
         /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
+        /// Optional. Gets or sets the dsc nodeconfiguration name.
         /// </summary>
-        public string RunOn
+        public string NodeConfigurationName
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
+            get { return this._nodeConfigurationName; }
+            set { this._nodeConfigurationName = value; }
         }
         
-        private string _startedBy;
+        private string _status;
         
         /// <summary>
-        /// Optional. Gets or sets the job started by.
+        /// Optional. Gets or sets the status of the dsc node.
         /// </summary>
-        public string StartedBy
+        public string Status
         {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscNodeListParameters class.
         /// </summary>
-        public JobProperties()
+        public DscNodeListParameters()
         {
         }
     }

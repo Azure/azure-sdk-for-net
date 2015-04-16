@@ -20,57 +20,61 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update schedule operation.
+    /// The parameters supplied to the create compilation job operation.
     /// </summary>
-    public partial class ScheduleUpdateParameters
+    public partial class DscCompilationJobCreateProperties
     {
-        private string _name;
+        private DscConfigurationAssociationProperty _configuration;
         
         /// <summary>
-        /// Required. Gets or sets the name of the schedule.
+        /// Required. Gets or sets the configuration.
         /// </summary>
-        public string Name
+        public DscConfigurationAssociationProperty Configuration
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
         }
         
-        private ScheduleUpdateProperties _properties;
+        private IDictionary<string, string> _parameters;
         
         /// <summary>
-        /// Optional. Gets or sets the list of schedule properties.
+        /// Optional. Gets or sets the parameters of the job.
         /// </summary>
-        public ScheduleUpdateProperties Properties
+        public IDictionary<string, string> Parameters
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ScheduleUpdateParameters class.
-        /// </summary>
-        public ScheduleUpdateParameters()
-        {
+            get { return this._parameters; }
+            set { this._parameters = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleUpdateParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the DscCompilationJobCreateProperties
+        /// class.
         /// </summary>
-        public ScheduleUpdateParameters(string name)
+        public DscCompilationJobCreateProperties()
+        {
+            this.Parameters = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DscCompilationJobCreateProperties
+        /// class with required arguments.
+        /// </summary>
+        public DscCompilationJobCreateProperties(DscConfigurationAssociationProperty configuration)
             : this()
         {
-            if (name == null)
+            if (configuration == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("configuration");
             }
-            this.Name = name;
+            this.Configuration = configuration;
         }
     }
 }

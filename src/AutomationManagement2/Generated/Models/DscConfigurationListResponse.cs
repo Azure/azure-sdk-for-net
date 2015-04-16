@@ -20,33 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create account properties.
+    /// The response model for the list configuration operation.
     /// </summary>
-    public partial class AutomationAccountUpdateProperties
+    public partial class DscConfigurationListResponse : OperationResponseWithSkipToken
     {
-        private Sku _sku;
+        private IList<DscConfiguration> _configurations;
         
         /// <summary>
-        /// Optional. Gets or sets account sku.
+        /// Optional. Gets or sets a list of configurations.
         /// </summary>
-        public Sku Sku
+        public IList<DscConfiguration> Configurations
         {
-            get { return this._sku; }
-            set { this._sku = value; }
+            get { return this._configurations; }
+            set { this._configurations = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountUpdateProperties
+        /// Initializes a new instance of the DscConfigurationListResponse
         /// class.
         /// </summary>
-        public AutomationAccountUpdateProperties()
+        public DscConfigurationListResponse()
         {
+            this.Configurations = new LazyList<DscConfiguration>();
         }
     }
 }

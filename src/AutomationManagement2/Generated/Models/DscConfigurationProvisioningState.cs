@@ -25,37 +25,10 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the update variable
+    /// Provisioning state of the configuration operation.
     /// </summary>
-    public partial class VariableUpdateProperties
+    public enum DscConfigurationProvisioningState
     {
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Gets or sets the description of the variable.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private string _value;
-        
-        /// <summary>
-        /// Optional. Gets or sets the value of the variable.
-        /// </summary>
-        public string Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the VariableUpdateProperties class.
-        /// </summary>
-        public VariableUpdateProperties()
-        {
-        }
+        Succeeded = 0,
     }
 }

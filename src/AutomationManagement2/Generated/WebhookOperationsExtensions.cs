@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the generate uri of the webhook.  (see
+        /// Generates a Uri for use in creating a webhook.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -155,13 +155,13 @@ namespace Microsoft.Azure.Management.Automation
         /// Microsoft.Azure.Management.Automation.IWebhookOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
         /// <returns>
-        /// The response model for the generate uri operation.
+        /// The response model for the webhook get uri response.
         /// </returns>
         public static WebhookGenerateUriResponse GenerateUri(this IWebhookOperations operations, string resourceGroupName, string automationAccount)
         {
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the generate uri of the webhook.  (see
+        /// Generates a Uri for use in creating a webhook.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
@@ -182,13 +182,13 @@ namespace Microsoft.Azure.Management.Automation
         /// Microsoft.Azure.Management.Automation.IWebhookOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
         /// <returns>
-        /// The response model for the generate uri operation.
+        /// The response model for the webhook get uri response.
         /// </returns>
         public static Task<WebhookGenerateUriResponse> GenerateUriAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccount)
         {

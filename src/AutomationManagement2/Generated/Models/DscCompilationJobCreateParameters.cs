@@ -26,51 +26,41 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update certificate operation.
+    /// The parameters supplied to the create compilation job operation.
     /// </summary>
-    public partial class CertificateUpdateParameters
+    public partial class DscCompilationJobCreateParameters : ResourceCreateOrUpdateParameterBase
     {
-        private string _name;
+        private DscCompilationJobCreateProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the name of the certificate.
+        /// Required. Gets or sets the list of compilation job properties.
         /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private CertificateUpdateProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the properties of the certificate.
-        /// </summary>
-        public CertificateUpdateProperties Properties
+        public DscCompilationJobCreateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateUpdateParameters class.
+        /// Initializes a new instance of the DscCompilationJobCreateParameters
+        /// class.
         /// </summary>
-        public CertificateUpdateParameters()
+        public DscCompilationJobCreateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateUpdateParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the DscCompilationJobCreateParameters
+        /// class with required arguments.
         /// </summary>
-        public CertificateUpdateParameters(string name)
+        public DscCompilationJobCreateParameters(DscCompilationJobCreateProperties properties)
             : this()
         {
-            if (name == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("properties");
             }
-            this.Name = name;
+            this.Properties = properties;
         }
     }
 }

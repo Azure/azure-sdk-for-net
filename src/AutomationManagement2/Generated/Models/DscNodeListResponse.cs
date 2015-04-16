@@ -20,55 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The response model for the list dsc nodes operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscNodeListResponse : OperationResponseWithSkipToken
     {
-        private RunbookAssociationProperty _runbook;
+        private IList<DscNode> _nodes;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets a list of dsc nodes.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public IList<DscNode> Nodes
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._nodes; }
+            set { this._nodes = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscNodeListResponse class.
         /// </summary>
-        public JobProperties()
+        public DscNodeListResponse()
         {
+            this.Nodes = new LazyList<DscNode>();
         }
     }
 }

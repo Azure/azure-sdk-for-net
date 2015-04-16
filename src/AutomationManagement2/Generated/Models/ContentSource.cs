@@ -26,51 +26,60 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update credential operation.
+    /// Definition of the content source.
     /// </summary>
-    public partial class CredentialUpdateParameters
+    public partial class ContentSource
     {
-        private string _name;
+        private ContentHash _contentHash;
         
         /// <summary>
-        /// Required. Gets or sets the name of the credential.
+        /// Optional. Gets or sets the hash.
         /// </summary>
-        public string Name
+        public ContentHash ContentHash
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._contentHash; }
+            set { this._contentHash = value; }
         }
         
-        private CredentialUpdateProperties _properties;
+        private string _contentType;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the variable.
+        /// Optional. Gets or sets the content source type.
         /// </summary>
-        public CredentialUpdateProperties Properties
+        public string ContentType
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._contentType; }
+            set { this._contentType = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// Optional. Gets or sets the value of the content. This is based on
+        /// the content source type.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        private string _version;
+        
+        /// <summary>
+        /// Optional. Gets or sets the version of the content.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CredentialUpdateParameters class.
+        /// Initializes a new instance of the ContentSource class.
         /// </summary>
-        public CredentialUpdateParameters()
+        public ContentSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CredentialUpdateParameters class
-        /// with required arguments.
-        /// </summary>
-        public CredentialUpdateParameters(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

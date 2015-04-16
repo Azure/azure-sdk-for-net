@@ -21,19 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update connection operation.
+    /// The Dsc configuration property associated with the entity.
     /// </summary>
-    public partial class ConnectionUpdateParameters
+    public partial class DscConfigurationAssociationProperty
     {
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the connection.
+        /// Optional. Gets or sets the name of the Dsc configuration.
         /// </summary>
         public string Name
         {
@@ -41,36 +40,12 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private ConnectionUpdateProperties _properties;
-        
         /// <summary>
-        /// Required. Gets or sets the properties of the connection.
+        /// Initializes a new instance of the
+        /// DscConfigurationAssociationProperty class.
         /// </summary>
-        public ConnectionUpdateProperties Properties
+        public DscConfigurationAssociationProperty()
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ConnectionUpdateParameters class.
-        /// </summary>
-        public ConnectionUpdateParameters()
-        {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ConnectionUpdateParameters class
-        /// with required arguments.
-        /// </summary>
-        public ConnectionUpdateParameters(ConnectionUpdateProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

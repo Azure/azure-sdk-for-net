@@ -21,46 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update automation account operation.
+    /// The response model for the get dsc node operation.
     /// </summary>
-    public partial class AutomationAccountUpdateParameters : ResourceCreateOrUpdateParameterBase
+    public partial class DscNodeGetResponse : AzureOperationResponse
     {
-        private AutomationAccountUpdateProperties _properties;
+        private DscNode _node;
         
         /// <summary>
-        /// Required. Gets or sets account update properties.
+        /// Optional. Gets or sets a dsc node.
         /// </summary>
-        public AutomationAccountUpdateProperties Properties
+        public DscNode Node
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._node; }
+            set { this._node = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the DscNodeGetResponse class.
         /// </summary>
-        public AutomationAccountUpdateParameters()
+        public DscNodeGetResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AutomationAccountUpdateParameters
-        /// class with required arguments.
-        /// </summary>
-        public AutomationAccountUpdateParameters(AutomationAccountUpdateProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

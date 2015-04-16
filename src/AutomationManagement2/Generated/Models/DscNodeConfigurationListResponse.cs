@@ -20,55 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The response model for the list job operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscNodeConfigurationListResponse : OperationResponseWithSkipToken
     {
-        private RunbookAssociationProperty _runbook;
+        private IList<DscNodeConfiguration> _dscNodeConfigurations;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets a list of Dsc node configurations.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public IList<DscNodeConfiguration> DscNodeConfigurations
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._dscNodeConfigurations; }
+            set { this._dscNodeConfigurations = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscNodeConfigurationListResponse
+        /// class.
         /// </summary>
-        public JobProperties()
+        public DscNodeConfigurationListResponse()
         {
+            this.DscNodeConfigurations = new LazyList<DscNodeConfiguration>();
         }
     }
 }

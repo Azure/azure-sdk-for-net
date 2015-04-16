@@ -21,41 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update schedule operation.
+    /// The response model for the configuration create response.
     /// </summary>
-    public partial class ScheduleUpdateProperties
+    public partial class DscConfigurationCreateOrUpdateResponse : AzureOperationResponse
     {
-        private string _description;
+        private DscConfiguration _configuration;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the schedule.
+        /// Optional. Gets or sets a configuration.
         /// </summary>
-        public string Description
+        public DscConfiguration Configuration
         {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private bool? _isEnabled;
-        
-        /// <summary>
-        /// Optional. Gets or sets a value indicating whether this schedule is
-        /// enabled.
-        /// </summary>
-        public bool? IsEnabled
-        {
-            get { return this._isEnabled; }
-            set { this._isEnabled = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleUpdateProperties class.
+        /// Initializes a new instance of the
+        /// DscConfigurationCreateOrUpdateResponse class.
         /// </summary>
-        public ScheduleUpdateProperties()
+        public DscConfigurationCreateOrUpdateResponse()
         {
         }
     }

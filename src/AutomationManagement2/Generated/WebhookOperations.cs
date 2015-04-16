@@ -257,7 +257,112 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     WebhookCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    result = new WebhookCreateOrUpdateResponse();
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebhookCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Webhook webhookInstance = new Webhook();
+                            result.Webhook = webhookInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                webhookInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                WebhookProperties propertiesInstance = new WebhookProperties();
+                                webhookInstance.Properties = propertiesInstance;
+                                
+                                JToken isEnabledValue = propertiesValue2["isEnabled"];
+                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEnabledInstance = ((bool)isEnabledValue);
+                                    propertiesInstance.IsEnabled = isEnabledInstance;
+                                }
+                                
+                                JToken uriValue = propertiesValue2["uri"];
+                                if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                {
+                                    string uriInstance = ((string)uriValue);
+                                    propertiesInstance.Uri = uriInstance;
+                                }
+                                
+                                JToken expiryTimeValue = propertiesValue2["expiryTime"];
+                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
+                                    propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken lastInvokedTimeValue = propertiesValue2["lastInvokedTime"];
+                                if (lastInvokedTimeValue != null && lastInvokedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastInvokedTimeInstance = ((DateTimeOffset)lastInvokedTimeValue);
+                                    propertiesInstance.LastInvokedTime = lastInvokedTimeInstance;
+                                }
+                                
+                                JToken parametersSequenceElement = ((JToken)propertiesValue2["parameters"]);
+                                if (parametersSequenceElement != null && parametersSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in parametersSequenceElement)
+                                    {
+                                        string parametersKey2 = ((string)property.Name);
+                                        string parametersValue2 = ((string)property.Value);
+                                        propertiesInstance.Parameters.Add(parametersKey2, parametersValue2);
+                                    }
+                                }
+                                
+                                JToken runbookValue2 = propertiesValue2["runbook"];
+                                if (runbookValue2 != null && runbookValue2.Type != JTokenType.Null)
+                                {
+                                    RunbookAssociationProperty runbookInstance = new RunbookAssociationProperty();
+                                    propertiesInstance.Runbook = runbookInstance;
+                                    
+                                    JToken nameValue2 = runbookValue2["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        runbookInstance.Name = nameInstance2;
+                                    }
+                                }
+                                
+                                JToken creationTimeValue = propertiesValue2["creationTime"];
+                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                    propertiesInstance.CreationTime = creationTimeInstance;
+                                }
+                                
+                                JToken lastModifiedTimeValue = propertiesValue2["lastModifiedTime"];
+                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                    propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue2["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -450,12 +555,12 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the generate uri of the webhook.  (see
+        /// Generates a Uri for use in creating a webhook.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -464,7 +569,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the generate uri operation.
+        /// The response model for the webhook get uri response.
         /// </returns>
         public async Task<WebhookGenerateUriResponse> GenerateUriAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken)
         {
@@ -531,7 +636,7 @@ namespace Microsoft.Azure.Management.Automation
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -576,7 +681,17 @@ namespace Microsoft.Azure.Management.Automation
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new WebhookGenerateUriResponse();
-                        result.Uri = responseContent;
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            string uriInstance = ((string)responseDoc);
+                            result.Uri = uriInstance;
+                        }
                         
                     }
                     result.StatusCode = statusCode;
@@ -940,7 +1055,7 @@ namespace Microsoft.Azure.Management.Automation
             List<string> odataFilter = new List<string>();
             if (runbookName != null)
             {
-                odataFilter.Add("properties/runbook/name -eq '" + Uri.EscapeDataString(runbookName) + "'");
+                odataFilter.Add("properties/runbook/name eq '" + Uri.EscapeDataString(runbookName) + "'");
             }
             if (odataFilter.Count > 0)
             {

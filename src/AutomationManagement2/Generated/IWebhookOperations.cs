@@ -81,12 +81,12 @@ namespace Microsoft.Azure.Management.Automation
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccount, string webhookName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieve the generate uri of the webhook.  (see
+        /// Generates a Uri for use in creating a webhook.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group
+        /// The name of the resource group.
         /// </param>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the generate uri operation.
+        /// The response model for the webhook get uri response.
         /// </returns>
         Task<WebhookGenerateUriResponse> GenerateUriAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken);
         

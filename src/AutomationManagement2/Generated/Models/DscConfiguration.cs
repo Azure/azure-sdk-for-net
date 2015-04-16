@@ -20,46 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the update connection operation.
+    /// Definition of the configuration type.
     /// </summary>
-    public partial class ConnectionUpdateProperties
+    public partial class DscConfiguration : ResourceBase
     {
-        private string _description;
+        private DscConfigurationProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the connection.
+        /// Optional. Gets or sets the configuration properties.
         /// </summary>
-        public string Description
+        public DscConfigurationProperties Properties
         {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private IDictionary<string, string> _fieldDefinitionValues;
-        
-        /// <summary>
-        /// Optional. Gets or sets the field definition values of the
-        /// connection.
-        /// </summary>
-        public IDictionary<string, string> FieldDefinitionValues
-        {
-            get { return this._fieldDefinitionValues; }
-            set { this._fieldDefinitionValues = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ConnectionUpdateProperties class.
+        /// Initializes a new instance of the DscConfiguration class.
         /// </summary>
-        public ConnectionUpdateProperties()
+        public DscConfiguration()
         {
-            this.FieldDefinitionValues = new LazyDictionary<string, string>();
         }
     }
 }

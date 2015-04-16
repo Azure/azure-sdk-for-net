@@ -58,5 +58,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         Failed = 13,
         
         Cancelled = 14,
+        
+        Updating = 15,
     }
 }

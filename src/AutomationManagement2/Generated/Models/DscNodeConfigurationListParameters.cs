@@ -25,47 +25,26 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update runbook properties.
+    /// The parameters supplied to the list node configuration operation.
     /// </summary>
-    public partial class RunbookUpdateProperties
+    public partial class DscNodeConfigurationListParameters
     {
-        private string _description;
+        private string _configurationName;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the runbook.
+        /// Optional. Gets or sets the configuration name.
         /// </summary>
-        public string Description
+        public string ConfigurationName
         {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private bool _logProgress;
-        
-        /// <summary>
-        /// Optional. Gets or sets progress log option.
-        /// </summary>
-        public bool LogProgress
-        {
-            get { return this._logProgress; }
-            set { this._logProgress = value; }
-        }
-        
-        private bool _logVerbose;
-        
-        /// <summary>
-        /// Optional. Gets or sets verbose log option.
-        /// </summary>
-        public bool LogVerbose
-        {
-            get { return this._logVerbose; }
-            set { this._logVerbose = value; }
+            get { return this._configurationName; }
+            set { this._configurationName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookUpdateProperties class.
+        /// Initializes a new instance of the
+        /// DscNodeConfigurationListParameters class.
         /// </summary>
-        public RunbookUpdateProperties()
+        public DscNodeConfigurationListParameters()
         {
         }
     }

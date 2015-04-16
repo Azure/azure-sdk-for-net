@@ -26,51 +26,39 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update variable operation.
+    /// Definition of Dsc configuration job properties.
     /// </summary>
-    public partial class VariableUpdateParameters
+    public partial class DscConfigurationJobProperties : JobPropertiesBase
     {
-        private string _name;
+        private DscConfigurationAssociationProperty _configuration;
         
         /// <summary>
-        /// Required. Gets or sets the name of the variable.
+        /// Optional. Gets or sets the configuration.
         /// </summary>
-        public string Name
+        public DscConfigurationAssociationProperty Configuration
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
         }
         
-        private VariableUpdateProperties _properties;
+        private string _configurationName;
         
         /// <summary>
-        /// Optional. Gets or sets the value of the variable.
+        /// Optional. Gets or sets the configuration name of the Dsc
+        /// configuration job.
         /// </summary>
-        public VariableUpdateProperties Properties
+        public string ConfigurationName
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the VariableUpdateParameters class.
-        /// </summary>
-        public VariableUpdateParameters()
-        {
+            get { return this._configurationName; }
+            set { this._configurationName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VariableUpdateParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the DscConfigurationJobProperties
+        /// class.
         /// </summary>
-        public VariableUpdateParameters(string name)
-            : this()
+        public DscConfigurationJobProperties()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

@@ -26,49 +26,42 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The parameters supplied to the create or update configuration operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscConfigurationCreateOrUpdateParameters : ResourceCreateOrUpdateParameterBase
     {
-        private RunbookAssociationProperty _runbook;
+        private DscConfigurationCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Required. Gets or sets configuration create or update properties.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public DscConfigurationCreateOrUpdateProperties Properties
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the
+        /// DscConfigurationCreateOrUpdateParameters class.
         /// </summary>
-        public JobProperties()
+        public DscConfigurationCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DscConfigurationCreateOrUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public DscConfigurationCreateOrUpdateParameters(DscConfigurationCreateOrUpdateProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

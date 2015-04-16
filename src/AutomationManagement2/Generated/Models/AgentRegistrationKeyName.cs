@@ -21,31 +21,16 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update properties.
+    /// The name of agent registration key.
     /// </summary>
-    public partial class ModuleUpdateProperties
+    public static partial class AgentRegistrationKeyName
     {
-        private ContentLink _contentLink;
+        public const string Primary = "Primary";
         
-        /// <summary>
-        /// Optional. Gets or sets the module content link.
-        /// </summary>
-        public ContentLink ContentLink
-        {
-            get { return this._contentLink; }
-            set { this._contentLink = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ModuleUpdateProperties class.
-        /// </summary>
-        public ModuleUpdateProperties()
-        {
-        }
+        public const string Secondary = "Secondary";
     }
 }

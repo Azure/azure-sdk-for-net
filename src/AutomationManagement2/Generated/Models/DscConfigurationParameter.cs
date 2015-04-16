@@ -21,53 +21,63 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// Definition of the configuration parameter type.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscConfigurationParameter
     {
-        private RunbookAssociationProperty _runbook;
+        private string _defaultValue;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the default value of parameter.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public string DefaultValue
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
+            get { return this._defaultValue; }
+            set { this._defaultValue = value; }
         }
         
-        private string _runOn;
+        private bool _isMandatory;
         
         /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
+        /// Optional. Gets or sets a Boolean value to indicate whether the
+        /// parameter is madatory or not.
         /// </summary>
-        public string RunOn
+        public bool IsMandatory
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
+            get { return this._isMandatory; }
+            set { this._isMandatory = value; }
         }
         
-        private string _startedBy;
+        private int _position;
         
         /// <summary>
-        /// Optional. Gets or sets the job started by.
+        /// Optional. Get or sets the position of the parameter.
         /// </summary>
-        public string StartedBy
+        public int Position
         {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._position; }
+            set { this._position = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the parameter.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscConfigurationParameter class.
         /// </summary>
-        public JobProperties()
+        public DscConfigurationParameter()
         {
         }
     }

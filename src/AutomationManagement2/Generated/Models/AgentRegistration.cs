@@ -26,48 +26,47 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// Definition of the agent registration infomration type.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class AgentRegistration
     {
-        private RunbookAssociationProperty _runbook;
+        private string _dscMetaConfiguration;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the dsc meta configuration.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public string DscMetaConfiguration
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
+            get { return this._dscMetaConfiguration; }
+            set { this._dscMetaConfiguration = value; }
         }
         
-        private string _runOn;
+        private string _endpoint;
         
         /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
+        /// Optional. Gets or sets the dsc server endpoint.
         /// </summary>
-        public string RunOn
+        public string Endpoint
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
+            get { return this._endpoint; }
+            set { this._endpoint = value; }
         }
         
-        private string _startedBy;
+        private AgentRegistrationKeys _keys;
         
         /// <summary>
-        /// Optional. Gets or sets the job started by.
+        /// Optional. Gets or sets the agent registration keys.
         /// </summary>
-        public string StartedBy
+        public AgentRegistrationKeys Keys
         {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._keys; }
+            set { this._keys = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the AgentRegistration class.
         /// </summary>
-        public JobProperties()
+        public AgentRegistration()
         {
         }
     }

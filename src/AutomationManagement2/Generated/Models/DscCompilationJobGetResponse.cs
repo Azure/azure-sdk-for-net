@@ -21,53 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The response model for the get Dsc compilation job operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscCompilationJobGetResponse : AzureOperationResponse
     {
-        private RunbookAssociationProperty _runbook;
+        private DscCompilationJob _dscCompilationJob;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets a Dsc compilation job.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public DscCompilationJob DscCompilationJob
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._dscCompilationJob; }
+            set { this._dscCompilationJob = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscCompilationJobGetResponse
+        /// class.
         /// </summary>
-        public JobProperties()
+        public DscCompilationJobGetResponse()
         {
         }
     }

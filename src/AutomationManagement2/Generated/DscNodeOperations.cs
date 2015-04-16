@@ -24,10 +24,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
 using Newtonsoft.Json.Linq;
@@ -35,19 +38,19 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Automation
 {
     /// <summary>
-    /// Service operation for automation job streams.  (see
-    /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
+    /// Service operation for dsc nodes.  (see
+    /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
     /// information)
     /// </summary>
-    internal partial class JobStreamOperations : IServiceOperations<AutomationManagementClient>, IJobStreamOperations
+    internal partial class DscNodeOperations : IServiceOperations<AutomationManagementClient>, IDscNodeOperations
     {
         /// <summary>
-        /// Initializes a new instance of the JobStreamOperations class.
+        /// Initializes a new instance of the DscNodeOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal JobStreamOperations(AutomationManagementClient client)
+        internal DscNodeOperations(AutomationManagementClient client)
         {
             this._client = client;
         }
@@ -64,29 +67,27 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the job stream identified by job stream id.  (see
-        /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
+        /// Delete the dsc node identified by node id.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
         /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group
         /// </param>
         /// <param name='automationAccount'>
-        /// Required. The automation account name.
+        /// Required. Automation account name.
         /// </param>
-        /// <param name='jobId'>
-        /// Required. The job id.
-        /// </param>
-        /// <param name='jobStreamId'>
-        /// Required. The job stream id.
+        /// <param name='nodeId'>
+        /// Required. The node id.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the get job stream operation.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<JobStreamGetResponse> GetAsync(string resourceGroupName, string automationAccount, Guid jobId, string jobStreamId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccount, Guid nodeId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -96,10 +97,6 @@ namespace Microsoft.Azure.Management.Automation
             if (automationAccount == null)
             {
                 throw new ArgumentNullException("automationAccount");
-            }
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException("jobStreamId");
             }
             
             // Tracing
@@ -111,8 +108,163 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("jobId", jobId);
-                tracingParameters.Add("jobStreamId", jobStreamId);
+                tracingParameters.Add("nodeId", nodeId);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
+            url = url + "/automationAccounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/nodes/";
+            url = url + Uri.EscapeDataString(nodeId.ToString());
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieve the dsc node identified by node id.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='nodeId'>
+        /// Required. The node id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get dsc node operation.
+        /// </returns>
+        public async Task<DscNodeGetResponse> GetAsync(string resourceGroupName, string automationAccount, Guid nodeId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (automationAccount == null)
+            {
+                throw new ArgumentNullException("automationAccount");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("automationAccount", automationAccount);
+                tracingParameters.Add("nodeId", nodeId);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -132,10 +284,8 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/Jobs/";
-            url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/streams/";
-            url = url + Uri.EscapeDataString(jobStreamId);
+            url = url + "/nodes/";
+            url = url + Uri.EscapeDataString(nodeId.ToString());
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
@@ -198,13 +348,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobStreamGetResponse result = null;
+                    DscNodeGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobStreamGetResponse();
+                        result = new DscNodeGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -213,60 +363,102 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JobStream jobStreamInstance = new JobStream();
-                            result.JobStream = jobStreamInstance;
+                            DscNode nodeInstance = new DscNode();
+                            result.Node = nodeInstance;
                             
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            JToken lastSeenValue = responseDoc["lastSeen"];
+                            if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
                             {
-                                JobStreamProperties propertiesInstance = new JobStreamProperties();
-                                jobStreamInstance.Properties = propertiesInstance;
+                                DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                nodeInstance.LastSeen = lastSeenInstance;
+                            }
+                            
+                            JToken registrationTimeValue = responseDoc["registrationTime"];
+                            if (registrationTimeValue != null && registrationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset registrationTimeInstance = ((DateTimeOffset)registrationTimeValue);
+                                nodeInstance.RegistrationTime = registrationTimeInstance;
+                            }
+                            
+                            JToken ipValue = responseDoc["ip"];
+                            if (ipValue != null && ipValue.Type != JTokenType.Null)
+                            {
+                                string ipInstance = ((string)ipValue);
+                                nodeInstance.Ip = ipInstance;
+                            }
+                            
+                            JToken accountIdValue = responseDoc["accountId"];
+                            if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                            {
+                                Guid accountIdInstance = Guid.Parse(((string)accountIdValue));
+                                nodeInstance.AccountId = accountIdInstance;
+                            }
+                            
+                            JToken nodeConfigurationValue = responseDoc["nodeConfiguration"];
+                            if (nodeConfigurationValue != null && nodeConfigurationValue.Type != JTokenType.Null)
+                            {
+                                DscNodeConfigurationAssociationProperty nodeConfigurationInstance = new DscNodeConfigurationAssociationProperty();
+                                nodeInstance.NodeConfiguration = nodeConfigurationInstance;
                                 
-                                JToken jobStreamIdValue = propertiesValue["jobStreamId"];
-                                if (jobStreamIdValue != null && jobStreamIdValue.Type != JTokenType.Null)
+                                JToken nameValue = nodeConfigurationValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string jobStreamIdInstance = ((string)jobStreamIdValue);
-                                    propertiesInstance.JobStreamId = jobStreamIdInstance;
+                                    string nameInstance = ((string)nameValue);
+                                    nodeConfigurationInstance.Name = nameInstance;
                                 }
-                                
-                                JToken timeValue = propertiesValue["time"];
-                                if (timeValue != null && timeValue.Type != JTokenType.Null)
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                nodeInstance.Status = statusInstance;
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                nodeInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                nodeInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                nodeInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    DateTimeOffset timeInstance = ((DateTimeOffset)timeValue);
-                                    propertiesInstance.Time = timeInstance;
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    nodeInstance.Tags.Add(tagsKey, tagsValue);
                                 }
-                                
-                                JToken streamTypeValue = propertiesValue["streamType"];
-                                if (streamTypeValue != null && streamTypeValue.Type != JTokenType.Null)
-                                {
-                                    string streamTypeInstance = ((string)streamTypeValue);
-                                    propertiesInstance.StreamType = streamTypeInstance;
-                                }
-                                
-                                JToken streamTextValue = propertiesValue["streamText"];
-                                if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
-                                {
-                                    string streamTextInstance = ((string)streamTextValue);
-                                    propertiesInstance.StreamText = streamTextInstance;
-                                }
-                                
-                                JToken summaryValue = propertiesValue["summary"];
-                                if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                {
-                                    string summaryInstance = ((string)summaryValue);
-                                    propertiesInstance.Summary = summaryInstance;
-                                }
-                                
-                                JToken valueSequenceElement = ((JToken)propertiesValue["value"]);
-                                if (valueSequenceElement != null && valueSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in valueSequenceElement)
-                                    {
-                                        string valueKey = ((string)property.Name);
-                                        object valueValue = property.Value.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        propertiesInstance.Value.Add(valueKey, valueValue);
-                                    }
-                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                nodeInstance.Type = typeInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                nodeInstance.Etag = etagInstance;
                             }
                         }
                         
@@ -301,250 +493,8 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve a test job streams identified by runbook name and stream
-        /// id.  (see http://aka.ms/azureautomationsdk/jobstreamoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='runbookName'>
-        /// Required. The runbook name.
-        /// </param>
-        /// <param name='jobStreamId'>
-        /// Required. The job stream id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the get job stream operation.
-        /// </returns>
-        public async Task<JobStreamGetResponse> GetTestJobStreamAsync(string resourceGroupName, string automationAccount, string runbookName, string jobStreamId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (automationAccount == null)
-            {
-                throw new ArgumentNullException("automationAccount");
-            }
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException("runbookName");
-            }
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException("jobStreamId");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("runbookName", runbookName);
-                tracingParameters.Add("jobStreamId", jobStreamId);
-                TracingAdapter.Enter(invocationId, this, "GetTestJobStreamAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            if (this.Client.ResourceNamespace != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
-            }
-            url = url + "/automationAccounts/";
-            url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/runbooks/";
-            url = url + Uri.EscapeDataString(runbookName);
-            url = url + "/draft/testJob/streams/";
-            url = url + Uri.EscapeDataString(jobStreamId);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    JobStreamGetResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobStreamGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JobStream jobStreamInstance = new JobStream();
-                            result.JobStream = jobStreamInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                JobStreamProperties propertiesInstance = new JobStreamProperties();
-                                jobStreamInstance.Properties = propertiesInstance;
-                                
-                                JToken jobStreamIdValue = propertiesValue["jobStreamId"];
-                                if (jobStreamIdValue != null && jobStreamIdValue.Type != JTokenType.Null)
-                                {
-                                    string jobStreamIdInstance = ((string)jobStreamIdValue);
-                                    propertiesInstance.JobStreamId = jobStreamIdInstance;
-                                }
-                                
-                                JToken timeValue = propertiesValue["time"];
-                                if (timeValue != null && timeValue.Type != JTokenType.Null)
-                                {
-                                    DateTimeOffset timeInstance = ((DateTimeOffset)timeValue);
-                                    propertiesInstance.Time = timeInstance;
-                                }
-                                
-                                JToken streamTypeValue = propertiesValue["streamType"];
-                                if (streamTypeValue != null && streamTypeValue.Type != JTokenType.Null)
-                                {
-                                    string streamTypeInstance = ((string)streamTypeValue);
-                                    propertiesInstance.StreamType = streamTypeInstance;
-                                }
-                                
-                                JToken streamTextValue = propertiesValue["streamText"];
-                                if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
-                                {
-                                    string streamTextInstance = ((string)streamTextValue);
-                                    propertiesInstance.StreamText = streamTextInstance;
-                                }
-                                
-                                JToken summaryValue = propertiesValue["summary"];
-                                if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                {
-                                    string summaryInstance = ((string)summaryValue);
-                                    propertiesInstance.Summary = summaryInstance;
-                                }
-                                
-                                JToken valueSequenceElement = ((JToken)propertiesValue["value"]);
-                                if (valueSequenceElement != null && valueSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in valueSequenceElement)
-                                    {
-                                        string valueKey = ((string)property.Name);
-                                        object valueValue = property.Value.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        propertiesInstance.Value.Add(valueKey, valueValue);
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs streams identified by job id.  (see
-        /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
+        /// Retrieve a list of dsc nodes.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
         /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -553,20 +503,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
-        /// <param name='jobId'>
-        /// Required. The job Id.
-        /// </param>
         /// <param name='parameters'>
-        /// Optional. The parameters supplied to the list job stream's stream
-        /// items operation.
+        /// Optional. The parameters supplied to the list operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list job stream operation.
+        /// The response model for the list dsc nodes operation.
         /// </returns>
-        public async Task<JobStreamListResponse> ListAsync(string resourceGroupName, string automationAccount, Guid jobId, JobStreamListParameters parameters, CancellationToken cancellationToken)
+        public async Task<DscNodeListResponse> ListAsync(string resourceGroupName, string automationAccount, DscNodeListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -587,7 +533,6 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -608,18 +553,20 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/jobs/";
-            url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/streams";
+            url = url + "/nodes";
             List<string> queryParameters = new List<string>();
             List<string> odataFilter = new List<string>();
-            if (parameters != null && parameters.Time != null)
+            if (parameters != null && parameters.Status != null)
             {
-                odataFilter.Add("properties/time ge " + Uri.EscapeDataString(parameters.Time));
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(parameters.Status) + "'");
             }
-            if (parameters != null && parameters.StreamType != null)
+            if (parameters != null && parameters.NodeConfigurationName != null)
             {
-                odataFilter.Add("properties/streamType eq '" + Uri.EscapeDataString(parameters.StreamType) + "'");
+                odataFilter.Add("nodeConfiguration/name eq '" + Uri.EscapeDataString(parameters.NodeConfigurationName) + "'");
+            }
+            if (parameters != null && parameters.Name != null)
+            {
+                odataFilter.Add("name eq '" + Uri.EscapeDataString(parameters.Name) + "'");
             }
             if (odataFilter.Count > 0)
             {
@@ -687,13 +634,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobStreamListResponse result = null;
+                    DscNodeListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobStreamListResponse();
+                        result = new DscNodeListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -707,60 +654,102 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    JobStream jobStreamInstance = new JobStream();
-                                    result.JobStreams.Add(jobStreamInstance);
+                                    DscNode dscNodeInstance = new DscNode();
+                                    result.Nodes.Add(dscNodeInstance);
                                     
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    JToken lastSeenValue = valueValue["lastSeen"];
+                                    if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
                                     {
-                                        JobStreamProperties propertiesInstance = new JobStreamProperties();
-                                        jobStreamInstance.Properties = propertiesInstance;
+                                        DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                        dscNodeInstance.LastSeen = lastSeenInstance;
+                                    }
+                                    
+                                    JToken registrationTimeValue = valueValue["registrationTime"];
+                                    if (registrationTimeValue != null && registrationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTimeOffset registrationTimeInstance = ((DateTimeOffset)registrationTimeValue);
+                                        dscNodeInstance.RegistrationTime = registrationTimeInstance;
+                                    }
+                                    
+                                    JToken ipValue = valueValue["ip"];
+                                    if (ipValue != null && ipValue.Type != JTokenType.Null)
+                                    {
+                                        string ipInstance = ((string)ipValue);
+                                        dscNodeInstance.Ip = ipInstance;
+                                    }
+                                    
+                                    JToken accountIdValue = valueValue["accountId"];
+                                    if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid accountIdInstance = Guid.Parse(((string)accountIdValue));
+                                        dscNodeInstance.AccountId = accountIdInstance;
+                                    }
+                                    
+                                    JToken nodeConfigurationValue = valueValue["nodeConfiguration"];
+                                    if (nodeConfigurationValue != null && nodeConfigurationValue.Type != JTokenType.Null)
+                                    {
+                                        DscNodeConfigurationAssociationProperty nodeConfigurationInstance = new DscNodeConfigurationAssociationProperty();
+                                        dscNodeInstance.NodeConfiguration = nodeConfigurationInstance;
                                         
-                                        JToken jobStreamIdValue = propertiesValue["jobStreamId"];
-                                        if (jobStreamIdValue != null && jobStreamIdValue.Type != JTokenType.Null)
+                                        JToken nameValue = nodeConfigurationValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            string jobStreamIdInstance = ((string)jobStreamIdValue);
-                                            propertiesInstance.JobStreamId = jobStreamIdInstance;
+                                            string nameInstance = ((string)nameValue);
+                                            nodeConfigurationInstance.Name = nameInstance;
                                         }
-                                        
-                                        JToken timeValue = propertiesValue["time"];
-                                        if (timeValue != null && timeValue.Type != JTokenType.Null)
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        dscNodeInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        dscNodeInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        dscNodeInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        dscNodeInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            DateTimeOffset timeInstance = ((DateTimeOffset)timeValue);
-                                            propertiesInstance.Time = timeInstance;
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            dscNodeInstance.Tags.Add(tagsKey, tagsValue);
                                         }
-                                        
-                                        JToken streamTypeValue = propertiesValue["streamType"];
-                                        if (streamTypeValue != null && streamTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string streamTypeInstance = ((string)streamTypeValue);
-                                            propertiesInstance.StreamType = streamTypeInstance;
-                                        }
-                                        
-                                        JToken streamTextValue = propertiesValue["streamText"];
-                                        if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
-                                        {
-                                            string streamTextInstance = ((string)streamTextValue);
-                                            propertiesInstance.StreamText = streamTextInstance;
-                                        }
-                                        
-                                        JToken summaryValue = propertiesValue["summary"];
-                                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                        {
-                                            string summaryInstance = ((string)summaryValue);
-                                            propertiesInstance.Summary = summaryInstance;
-                                        }
-                                        
-                                        JToken valueSequenceElement = ((JToken)propertiesValue["value"]);
-                                        if (valueSequenceElement != null && valueSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in valueSequenceElement)
-                                            {
-                                                string valueKey = ((string)property.Name);
-                                                object valueValue2 = property.Value.ToString(Newtonsoft.Json.Formatting.Indented);
-                                                propertiesInstance.Value.Add(valueKey, valueValue2);
-                                            }
-                                        }
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        dscNodeInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        dscNodeInstance.Etag = etagInstance;
                                     }
                                 }
                             }
@@ -811,19 +800,20 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Gets the next page of job streams using next link.
+        /// Retrieve next list of configurations.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
+        /// information)
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to List
-        /// operation.
+        /// Required. The link to retrieve next set of items.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list job stream operation.
+        /// The response model for the list dsc nodes operation.
         /// </returns>
-        public async Task<JobStreamListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        public async Task<DscNodeListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
@@ -891,13 +881,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobStreamListResponse result = null;
+                    DscNodeListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobStreamListResponse();
+                        result = new DscNodeListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -911,60 +901,102 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    JobStream jobStreamInstance = new JobStream();
-                                    result.JobStreams.Add(jobStreamInstance);
+                                    DscNode dscNodeInstance = new DscNode();
+                                    result.Nodes.Add(dscNodeInstance);
                                     
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    JToken lastSeenValue = valueValue["lastSeen"];
+                                    if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
                                     {
-                                        JobStreamProperties propertiesInstance = new JobStreamProperties();
-                                        jobStreamInstance.Properties = propertiesInstance;
+                                        DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                        dscNodeInstance.LastSeen = lastSeenInstance;
+                                    }
+                                    
+                                    JToken registrationTimeValue = valueValue["registrationTime"];
+                                    if (registrationTimeValue != null && registrationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTimeOffset registrationTimeInstance = ((DateTimeOffset)registrationTimeValue);
+                                        dscNodeInstance.RegistrationTime = registrationTimeInstance;
+                                    }
+                                    
+                                    JToken ipValue = valueValue["ip"];
+                                    if (ipValue != null && ipValue.Type != JTokenType.Null)
+                                    {
+                                        string ipInstance = ((string)ipValue);
+                                        dscNodeInstance.Ip = ipInstance;
+                                    }
+                                    
+                                    JToken accountIdValue = valueValue["accountId"];
+                                    if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid accountIdInstance = Guid.Parse(((string)accountIdValue));
+                                        dscNodeInstance.AccountId = accountIdInstance;
+                                    }
+                                    
+                                    JToken nodeConfigurationValue = valueValue["nodeConfiguration"];
+                                    if (nodeConfigurationValue != null && nodeConfigurationValue.Type != JTokenType.Null)
+                                    {
+                                        DscNodeConfigurationAssociationProperty nodeConfigurationInstance = new DscNodeConfigurationAssociationProperty();
+                                        dscNodeInstance.NodeConfiguration = nodeConfigurationInstance;
                                         
-                                        JToken jobStreamIdValue = propertiesValue["jobStreamId"];
-                                        if (jobStreamIdValue != null && jobStreamIdValue.Type != JTokenType.Null)
+                                        JToken nameValue = nodeConfigurationValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            string jobStreamIdInstance = ((string)jobStreamIdValue);
-                                            propertiesInstance.JobStreamId = jobStreamIdInstance;
+                                            string nameInstance = ((string)nameValue);
+                                            nodeConfigurationInstance.Name = nameInstance;
                                         }
-                                        
-                                        JToken timeValue = propertiesValue["time"];
-                                        if (timeValue != null && timeValue.Type != JTokenType.Null)
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        dscNodeInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        dscNodeInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        dscNodeInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        dscNodeInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            DateTimeOffset timeInstance = ((DateTimeOffset)timeValue);
-                                            propertiesInstance.Time = timeInstance;
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            dscNodeInstance.Tags.Add(tagsKey, tagsValue);
                                         }
-                                        
-                                        JToken streamTypeValue = propertiesValue["streamType"];
-                                        if (streamTypeValue != null && streamTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string streamTypeInstance = ((string)streamTypeValue);
-                                            propertiesInstance.StreamType = streamTypeInstance;
-                                        }
-                                        
-                                        JToken streamTextValue = propertiesValue["streamText"];
-                                        if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
-                                        {
-                                            string streamTextInstance = ((string)streamTextValue);
-                                            propertiesInstance.StreamText = streamTextInstance;
-                                        }
-                                        
-                                        JToken summaryValue = propertiesValue["summary"];
-                                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                        {
-                                            string summaryInstance = ((string)summaryValue);
-                                            propertiesInstance.Summary = summaryInstance;
-                                        }
-                                        
-                                        JToken valueSequenceElement = ((JToken)propertiesValue["value"]);
-                                        if (valueSequenceElement != null && valueSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in valueSequenceElement)
-                                            {
-                                                string valueKey = ((string)property.Name);
-                                                object valueValue2 = property.Value.ToString(Newtonsoft.Json.Formatting.Indented);
-                                                propertiesInstance.Value.Add(valueKey, valueValue2);
-                                            }
-                                        }
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        dscNodeInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        dscNodeInstance.Etag = etagInstance;
                                     }
                                 }
                             }
@@ -1015,9 +1047,9 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve a list of test job streams identified by runbook name.
-        /// (see http://aka.ms/azureautomationsdk/jobstreamoperations for
-        /// more information)
+        /// Update the dsc node.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeoperations for more
+        /// information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group
@@ -1025,20 +1057,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
-        /// <param name='runbookName'>
-        /// Required. The runbook name.
-        /// </param>
         /// <param name='parameters'>
-        /// Optional. The parameters supplied to the list job stream's stream
-        /// items operation.
+        /// Required. Parameters supplied to the patch dsc node.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list job stream operation.
+        /// The response model for the patch dsc node operation.
         /// </returns>
-        public async Task<JobStreamListResponse> ListTestJobStreamsAsync(string resourceGroupName, string automationAccount, string runbookName, JobStreamListParameters parameters, CancellationToken cancellationToken)
+        public async Task<DscNodePatchResponse> PatchAsync(string resourceGroupName, string automationAccount, DscNodePatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1049,9 +1077,9 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ArgumentNullException("automationAccount");
             }
-            if (runbookName == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("runbookName");
+                throw new ArgumentNullException("parameters");
             }
             
             // Tracing
@@ -1063,9 +1091,8 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
-                tracingParameters.Add("runbookName", runbookName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "ListTestJobStreamsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1084,23 +1111,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/runbooks/";
-            url = url + Uri.EscapeDataString(runbookName);
-            url = url + "/draft/testJob/streams";
+            url = url + "/nodes/";
+            url = url + Uri.EscapeDataString(parameters.Id.ToString());
             List<string> queryParameters = new List<string>();
-            List<string> odataFilter = new List<string>();
-            if (parameters != null && parameters.Time != null)
-            {
-                odataFilter.Add("properties/time ge " + Uri.EscapeDataString(parameters.Time));
-            }
-            if (parameters != null && parameters.StreamType != null)
-            {
-                odataFilter.Add("properties/streamType eq '" + Uri.EscapeDataString(parameters.StreamType) + "'");
-            }
-            if (odataFilter.Count > 0)
-            {
-                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
-            }
             queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -1124,17 +1137,39 @@ namespace Microsoft.Azure.Management.Automation
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = new HttpMethod("PATCH");
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("ocp-referer", url);
                 httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject dscNodePatchParametersValue = new JObject();
+                requestDoc = dscNodePatchParametersValue;
+                
+                dscNodePatchParametersValue["id"] = parameters.Id.ToString();
+                
+                if (parameters.NodeConfiguration != null)
+                {
+                    JObject nodeConfigurationValue = new JObject();
+                    dscNodePatchParametersValue["nodeConfiguration"] = nodeConfigurationValue;
+                    
+                    if (parameters.NodeConfiguration.Name != null)
+                    {
+                        nodeConfigurationValue["name"] = parameters.NodeConfiguration.Name;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1154,7 +1189,7 @@ namespace Microsoft.Azure.Management.Automation
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -1163,13 +1198,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    JobStreamListResponse result = null;
+                    DscNodePatchResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobStreamListResponse();
+                        result = new DscNodePatchResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1178,81 +1213,102 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            DscNode nodeInstance = new DscNode();
+                            result.Node = nodeInstance;
+                            
+                            JToken lastSeenValue = responseDoc["lastSeen"];
+                            if (lastSeenValue != null && lastSeenValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken valueValue in ((JArray)valueArray))
+                                DateTimeOffset lastSeenInstance = ((DateTimeOffset)lastSeenValue);
+                                nodeInstance.LastSeen = lastSeenInstance;
+                            }
+                            
+                            JToken registrationTimeValue = responseDoc["registrationTime"];
+                            if (registrationTimeValue != null && registrationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset registrationTimeInstance = ((DateTimeOffset)registrationTimeValue);
+                                nodeInstance.RegistrationTime = registrationTimeInstance;
+                            }
+                            
+                            JToken ipValue = responseDoc["ip"];
+                            if (ipValue != null && ipValue.Type != JTokenType.Null)
+                            {
+                                string ipInstance = ((string)ipValue);
+                                nodeInstance.Ip = ipInstance;
+                            }
+                            
+                            JToken accountIdValue = responseDoc["accountId"];
+                            if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                            {
+                                Guid accountIdInstance = Guid.Parse(((string)accountIdValue));
+                                nodeInstance.AccountId = accountIdInstance;
+                            }
+                            
+                            JToken nodeConfigurationValue2 = responseDoc["nodeConfiguration"];
+                            if (nodeConfigurationValue2 != null && nodeConfigurationValue2.Type != JTokenType.Null)
+                            {
+                                DscNodeConfigurationAssociationProperty nodeConfigurationInstance = new DscNodeConfigurationAssociationProperty();
+                                nodeInstance.NodeConfiguration = nodeConfigurationInstance;
+                                
+                                JToken nameValue = nodeConfigurationValue2["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    JobStream jobStreamInstance = new JobStream();
-                                    result.JobStreams.Add(jobStreamInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        JobStreamProperties propertiesInstance = new JobStreamProperties();
-                                        jobStreamInstance.Properties = propertiesInstance;
-                                        
-                                        JToken jobStreamIdValue = propertiesValue["jobStreamId"];
-                                        if (jobStreamIdValue != null && jobStreamIdValue.Type != JTokenType.Null)
-                                        {
-                                            string jobStreamIdInstance = ((string)jobStreamIdValue);
-                                            propertiesInstance.JobStreamId = jobStreamIdInstance;
-                                        }
-                                        
-                                        JToken timeValue = propertiesValue["time"];
-                                        if (timeValue != null && timeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTimeOffset timeInstance = ((DateTimeOffset)timeValue);
-                                            propertiesInstance.Time = timeInstance;
-                                        }
-                                        
-                                        JToken streamTypeValue = propertiesValue["streamType"];
-                                        if (streamTypeValue != null && streamTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string streamTypeInstance = ((string)streamTypeValue);
-                                            propertiesInstance.StreamType = streamTypeInstance;
-                                        }
-                                        
-                                        JToken streamTextValue = propertiesValue["streamText"];
-                                        if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
-                                        {
-                                            string streamTextInstance = ((string)streamTextValue);
-                                            propertiesInstance.StreamText = streamTextInstance;
-                                        }
-                                        
-                                        JToken summaryValue = propertiesValue["summary"];
-                                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                        {
-                                            string summaryInstance = ((string)summaryValue);
-                                            propertiesInstance.Summary = summaryInstance;
-                                        }
-                                        
-                                        JToken valueSequenceElement = ((JToken)propertiesValue["value"]);
-                                        if (valueSequenceElement != null && valueSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in valueSequenceElement)
-                                            {
-                                                string valueKey = ((string)property.Name);
-                                                object valueValue2 = property.Value.ToString(Newtonsoft.Json.Formatting.Indented);
-                                                propertiesInstance.Value.Add(valueKey, valueValue2);
-                                            }
-                                        }
-                                    }
+                                    string nameInstance = ((string)nameValue);
+                                    nodeConfigurationInstance.Name = nameInstance;
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                                result.SkipToken = odatanextLinkInstance;
+                                string statusInstance = ((string)statusValue);
+                                nodeInstance.Status = statusInstance;
                             }
                             
-                            JToken nextLinkValue = responseDoc["nextLink"];
-                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
+                                string idInstance = ((string)idValue);
+                                nodeInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                nodeInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                nodeInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    nodeInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                nodeInstance.Type = typeInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                nodeInstance.Etag = etagInstance;
                             }
                         }
                         

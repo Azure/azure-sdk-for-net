@@ -26,49 +26,43 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// The parameters supplied to the regenerate keys operation.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class AgentRegistrationRegenerateKeyParameter : ResourceCreateOrUpdateParameterBase
     {
-        private RunbookAssociationProperty _runbook;
+        private string _keyName;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Required. Gets or sets the agent registration key name - Primary or
+        /// Secondary.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public string KeyName
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
-        }
-        
-        private string _runOn;
-        
-        /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
-        /// </summary>
-        public string RunOn
-        {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._keyName; }
+            set { this._keyName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the
+        /// AgentRegistrationRegenerateKeyParameter class.
         /// </summary>
-        public JobProperties()
+        public AgentRegistrationRegenerateKeyParameter()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// AgentRegistrationRegenerateKeyParameter class with required
+        /// arguments.
+        /// </summary>
+        public AgentRegistrationRegenerateKeyParameter(string keyName)
+            : this()
+        {
+            if (keyName == null)
+            {
+                throw new ArgumentNullException("keyName");
+            }
+            this.KeyName = keyName;
         }
     }
 }

@@ -26,14 +26,14 @@ using Microsoft.Azure;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the generate uri operation.
+    /// The response model for the webhook get uri response.
     /// </summary>
     public partial class WebhookGenerateUriResponse : AzureOperationResponse
     {
         private string _uri;
         
         /// <summary>
-        /// Optional. Gets or sets the uri of the webhook.
+        /// Optional. Gets or sets the webhook uri.
         /// </summary>
         public string Uri
         {

@@ -26,48 +26,58 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of job properties.
+    /// Definition of the dsc node configuration.
     /// </summary>
-    public partial class JobProperties : JobPropertiesBase
+    public partial class DscNodeConfiguration : ResourceBase
     {
-        private RunbookAssociationProperty _runbook;
+        private DscConfigurationAssociationProperty _configuration;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook.
+        /// Optional. Gets or sets the configuration of the node.
         /// </summary>
-        public RunbookAssociationProperty Runbook
+        public DscConfigurationAssociationProperty Configuration
         {
-            get { return this._runbook; }
-            set { this._runbook = value; }
+            get { return this._configuration; }
+            set { this._configuration = value; }
         }
         
-        private string _runOn;
+        private DateTimeOffset _creationTime;
         
         /// <summary>
-        /// Optional. Gets or sets the runOn which specifies the group name
-        /// where the job is to be executed.
+        /// Optional. Gets or sets creation time.
         /// </summary>
-        public string RunOn
+        public DateTimeOffset CreationTime
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
+            get { return this._creationTime; }
+            set { this._creationTime = value; }
         }
         
-        private string _startedBy;
+        private DateTimeOffset _lastModifiedTime;
         
         /// <summary>
-        /// Optional. Gets or sets the job started by.
+        /// Optional. Gets or sets the last modified time.
         /// </summary>
-        public string StartedBy
+        public DateTimeOffset LastModifiedTime
         {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._lastModifiedTime; }
+            set { this._lastModifiedTime = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the node configuration name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the DscNodeConfiguration class.
         /// </summary>
-        public JobProperties()
+        public DscNodeConfiguration()
         {
         }
     }
