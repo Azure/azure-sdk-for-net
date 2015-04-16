@@ -160,8 +160,7 @@ namespace Microsoft.Azure.Management.Resources
                 JToken requestDoc = null;
                 
                 JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                requestDoc = propertiesValue;
                 
                 if (parameters.Level != null)
                 {
@@ -435,8 +434,7 @@ namespace Microsoft.Azure.Management.Resources
                 JToken requestDoc = null;
                 
                 JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                requestDoc = propertiesValue;
                 
                 if (parameters.Level != null)
                 {
@@ -656,8 +654,7 @@ namespace Microsoft.Azure.Management.Resources
                 JToken requestDoc = null;
                 
                 JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                requestDoc = propertiesValue;
                 
                 if (parameters.Level != null)
                 {
@@ -1662,7 +1659,8 @@ namespace Microsoft.Azure.Management.Resources
         /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='identity'>
         /// Required. Resource identity.
@@ -1684,6 +1682,14 @@ namespace Microsoft.Azure.Management.Resources
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
             }
             if (identity == null)
             {

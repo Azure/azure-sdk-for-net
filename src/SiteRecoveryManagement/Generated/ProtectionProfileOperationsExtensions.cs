@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static JobResponse DissociateAndDelete(this IProtectionProfileOperations operations, string protectionProfileId, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
+        public static JobResponse DissociateAndDelete(this IProtectionProfileOperations operations, string protectionProfileId, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static Task<JobResponse> DissociateAndDeleteAsync(this IProtectionProfileOperations operations, string protectionProfileId, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobResponse> DissociateAndDeleteAsync(this IProtectionProfileOperations operations, string protectionProfileId, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.DissociateAndDeleteAsync(protectionProfileId, input, customRequestHeaders, CancellationToken.None);
         }

@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Common.Authentication
 
             foreach (AzureSubscription subscription in account.GetSubscriptions(Profile).ToArray())
             {
-                if (subscription.Account == accountId)
+                if (string.Equals(subscription.Account, accountId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     AzureAccount remainingAccount = GetSubscriptionAccount(subscription.Id);
                     // There's no default account to use, remove the subscription.
@@ -764,6 +764,16 @@ namespace Microsoft.Azure.Common.Authentication
                 if (!account.IsPropertySet(AzureAccount.Property.Tenants))
                 {
                     tenants = LoadAccountTenants(account, environment, password, promptBehavior);
+                }
+                else
+                {
+                    var storedTenants = account.GetPropertyAsArray(AzureAccount.Property.Tenants);
+                    if (account.Type == AzureAccount.AccountType.User && storedTenants.Count() == 1)
+                    {
+                        TracingAdapter.Information(Resources.AuthenticatingForSingleTenant, account.Id, storedTenants[0]);
+                        AzureSession.AuthenticationFactory.Authenticate(account, environment, storedTenants[0], password,
+                            promptBehavior);
+                    }
                 }
             }
             catch (AadAuthenticationException aadEx)

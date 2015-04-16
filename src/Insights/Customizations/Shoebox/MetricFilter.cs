@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Insights
     /// The stucture of the Filter represents an expression in disjunctive-normal-form
     /// Each filter contain a set of subfilters (the conjunctions) with the total filter being the disjunction of them
     /// </summary>
-    internal class MetricFilter
+    public class MetricFilter
     {
         private TimeSpan? timeGrain;
         private DateTime? startTime;

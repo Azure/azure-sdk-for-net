@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/Networks";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             queryParameters.Add("ServerId=" + Uri.EscapeDataString(serverId));
             if (queryParameters.Count > 0)
             {

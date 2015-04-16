@@ -101,17 +101,20 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Required. Protection entity ID.
         /// </param>
+        /// <param name='input'>
+        /// Optional. Protection entity ID.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static JobResponse DisableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        public static JobResponse DisableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionEntityOperations)s).DisableProtectionAsync(protectionContainerId, protectionEntityId, customRequestHeaders);
+                return ((IProtectionEntityOperations)s).DisableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -129,15 +132,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Required. Protection entity ID.
         /// </param>
+        /// <param name='input'>
+        /// Optional. Protection entity ID.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static Task<JobResponse> DisableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobResponse> DisableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.DisableProtectionAsync(protectionContainerId, protectionEntityId, customRequestHeaders, CancellationToken.None);
+            return operations.DisableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

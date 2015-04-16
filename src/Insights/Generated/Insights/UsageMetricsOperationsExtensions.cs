@@ -46,14 +46,17 @@ namespace Microsoft.Azure.Insights
         /// name of the usage. For example, "name.value eq 'Percentage CPU'".
         /// Name is optional, meaning the expression may be "".
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, string filterString)
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, string filterString, string apiVersion)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, filterString);
+                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, filterString, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -73,12 +76,15 @@ namespace Microsoft.Azure.Insights
         /// name of the usage. For example, "name.value eq 'Percentage CPU'".
         /// Name is optional, meaning the expression may be "".
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, string filterString)
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, string filterString, string apiVersion)
         {
-            return operations.ListAsync(resourceUri, filterString, CancellationToken.None);
+            return operations.ListAsync(resourceUri, filterString, apiVersion, CancellationToken.None);
         }
         
         /// <summary>
@@ -94,14 +100,17 @@ namespace Microsoft.Azure.Insights
         /// <param name='metricNames'>
         /// Required. metric names to return.
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <returns>
         /// Deprecated. The List Usage Metric operation response.
         /// </returns>
-        public static UsageMetricListResponseDeprecated ListDeprecated(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        public static UsageMetricListResponseDeprecated ListDeprecated(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames, string apiVersion)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IUsageMetricsOperations)s).ListDeprecatedAsync(resourceUri, metricNames);
+                return ((IUsageMetricsOperations)s).ListDeprecatedAsync(resourceUri, metricNames, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -119,12 +128,15 @@ namespace Microsoft.Azure.Insights
         /// <param name='metricNames'>
         /// Required. metric names to return.
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <returns>
         /// Deprecated. The List Usage Metric operation response.
         /// </returns>
-        public static Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        public static Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames, string apiVersion)
         {
-            return operations.ListDeprecatedAsync(resourceUri, metricNames, CancellationToken.None);
+            return operations.ListDeprecatedAsync(resourceUri, metricNames, apiVersion, CancellationToken.None);
         }
     }
 }

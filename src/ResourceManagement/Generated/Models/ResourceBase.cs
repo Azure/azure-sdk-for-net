@@ -23,14 +23,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource information.
     /// </summary>
-    public partial class BasicResource
+    public partial class ResourceBase
     {
         private string _location;
         
@@ -41,39 +40,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             get { return this._location; }
             set { this._location = value; }
-        }
-        
-        private Plan _plan;
-        
-        /// <summary>
-        /// Optional. Gets or sets the plan of the resource.
-        /// </summary>
-        public Plan Plan
-        {
-            get { return this._plan; }
-            set { this._plan = value; }
-        }
-        
-        private string _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the resource properties.
-        /// </summary>
-        public string Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _provisioningState;
-        
-        /// <summary>
-        /// Optional. Gets or sets resource provisioning state.
-        /// </summary>
-        public string ProvisioningState
-        {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
         }
         
         private IDictionary<string, string> _tags;
@@ -88,18 +54,18 @@ namespace Microsoft.Azure.Management.Resources.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the BasicResource class.
+        /// Initializes a new instance of the ResourceBase class.
         /// </summary>
-        public BasicResource()
+        public ResourceBase()
         {
             this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the BasicResource class with required
+        /// Initializes a new instance of the ResourceBase class with required
         /// arguments.
         /// </summary>
-        public BasicResource(string location)
+        public ResourceBase(string location)
             : this()
         {
             if (location == null)

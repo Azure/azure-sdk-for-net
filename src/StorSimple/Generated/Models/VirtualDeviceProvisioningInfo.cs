@@ -41,6 +41,18 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
             set { this._createNewStorageAccount = value; }
         }
         
+        private bool _deleteAzureCisVMOnFailure;
+        
+        /// <summary>
+        /// Optional. The boolean value to retain Azure VM on failure for
+        /// debugging purpose.
+        /// </summary>
+        public bool DeleteAzureCisVMOnFailure
+        {
+            get { return this._deleteAzureCisVMOnFailure; }
+            set { this._deleteAzureCisVMOnFailure = value; }
+        }
+        
         private string _deviceName;
         
         /// <summary>

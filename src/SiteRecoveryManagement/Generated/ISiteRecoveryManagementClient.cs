@@ -175,6 +175,15 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of storage pool mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IStoragePoolMappingOperations StoragePoolMappings
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of vault extended info operations for the Site Recovery
         /// extension.
         /// </summary>

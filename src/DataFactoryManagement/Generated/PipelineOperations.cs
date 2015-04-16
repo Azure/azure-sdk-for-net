@@ -1306,6 +1306,27 @@ namespace Microsoft.Azure.Management.DataFactories
                                     baseActivityValue["type"] = "AzureMLBatchScoringActivity";
                                     AzureMLBatchScoringActivity derived20 = ((AzureMLBatchScoringActivity)activitiesItem);
                                     
+                                    if (derived20.Transformation != null)
+                                    {
+                                        JObject transformationValue5 = new JObject();
+                                        baseActivityValue["transformation"] = transformationValue5;
+                                        
+                                        if (derived20.Transformation.WebServiceParameters != null)
+                                        {
+                                            if (derived20.Transformation.WebServiceParameters is ILazyCollection == false || ((ILazyCollection)derived20.Transformation.WebServiceParameters).IsInitialized)
+                                            {
+                                                JObject webServiceParametersDictionary = new JObject();
+                                                foreach (KeyValuePair<string, string> pair6 in derived20.Transformation.WebServiceParameters)
+                                                {
+                                                    string webServiceParametersKey = pair6.Key;
+                                                    string webServiceParametersValue = pair6.Value;
+                                                    webServiceParametersDictionary[webServiceParametersKey] = webServiceParametersValue;
+                                                }
+                                                transformationValue5["webServiceParameters"] = webServiceParametersDictionary;
+                                            }
+                                        }
+                                    }
+                                    
                                     baseActivityValue["name"] = derived20.Name;
                                     
                                     if (derived20.Description != null)
@@ -1523,13 +1544,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             CopyActivity copyActivityInstance = new CopyActivity();
                                             
-                                            JToken transformationValue5 = activitiesValue["transformation"];
-                                            if (transformationValue5 != null && transformationValue5.Type != JTokenType.Null)
+                                            JToken transformationValue6 = activitiesValue["transformation"];
+                                            if (transformationValue6 != null && transformationValue6.Type != JTokenType.Null)
                                             {
                                                 CopyActivityProperties transformationInstance = new CopyActivityProperties();
                                                 copyActivityInstance.Transformation = transformationInstance;
                                                 
-                                                JToken sourceValue2 = transformationValue5["source"];
+                                                JToken sourceValue2 = transformationValue6["source"];
                                                 if (sourceValue2 != null && sourceValue2.Type != JTokenType.Null)
                                                 {
                                                     string typeName2 = ((string)sourceValue2["type"]);
@@ -1693,7 +1714,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken sinkValue2 = transformationValue5["sink"];
+                                                JToken sinkValue2 = transformationValue6["sink"];
                                                 if (sinkValue2 != null && sinkValue2.Type != JTokenType.Null)
                                                 {
                                                     string typeName3 = ((string)sinkValue2["type"]);
@@ -2051,7 +2072,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken translatorValue2 = transformationValue5["translator"];
+                                                JToken translatorValue2 = transformationValue6["translator"];
                                                 if (translatorValue2 != null && translatorValue2.Type != JTokenType.Null)
                                                 {
                                                     string typeName4 = ((string)translatorValue2["type"]);
@@ -2207,36 +2228,36 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             HDInsightActivity hDInsightActivityInstance = new HDInsightActivity();
                                             
-                                            JToken transformationValue6 = activitiesValue["transformation"];
-                                            if (transformationValue6 != null && transformationValue6.Type != JTokenType.Null)
+                                            JToken transformationValue7 = activitiesValue["transformation"];
+                                            if (transformationValue7 != null && transformationValue7.Type != JTokenType.Null)
                                             {
-                                                string typeName5 = ((string)transformationValue6["type"]);
+                                                string typeName5 = ((string)transformationValue7["type"]);
                                                 if (typeName5 == "Hive")
                                                 {
                                                     Hive hiveInstance = new Hive();
                                                     
-                                                    JToken scriptValue = transformationValue6["script"];
+                                                    JToken scriptValue = transformationValue7["script"];
                                                     if (scriptValue != null && scriptValue.Type != JTokenType.Null)
                                                     {
                                                         string scriptInstance = ((string)scriptValue);
                                                         hiveInstance.Script = scriptInstance;
                                                     }
                                                     
-                                                    JToken scriptPathValue = transformationValue6["scriptPath"];
+                                                    JToken scriptPathValue = transformationValue7["scriptPath"];
                                                     if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
                                                     {
                                                         string scriptPathInstance = ((string)scriptPathValue);
                                                         hiveInstance.ScriptPath = scriptPathInstance;
                                                     }
                                                     
-                                                    JToken scriptLinkedServiceValue = transformationValue6["scriptLinkedService"];
+                                                    JToken scriptLinkedServiceValue = transformationValue7["scriptLinkedService"];
                                                     if (scriptLinkedServiceValue != null && scriptLinkedServiceValue.Type != JTokenType.Null)
                                                     {
                                                         string scriptLinkedServiceInstance = ((string)scriptLinkedServiceValue);
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
-                                                    JToken extendedPropertiesSequenceElement = ((JToken)transformationValue6["extendedProperties"]);
+                                                    JToken extendedPropertiesSequenceElement = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
                                                         foreach (JProperty property2 in extendedPropertiesSequenceElement)
@@ -2247,7 +2268,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken storageLinkedServicesArray5 = transformationValue6["storageLinkedServices"];
+                                                    JToken storageLinkedServicesArray5 = transformationValue7["storageLinkedServices"];
                                                     if (storageLinkedServicesArray5 != null && storageLinkedServicesArray5.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray5))
@@ -2261,28 +2282,28 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     Pig pigInstance = new Pig();
                                                     
-                                                    JToken scriptValue2 = transformationValue6["script"];
+                                                    JToken scriptValue2 = transformationValue7["script"];
                                                     if (scriptValue2 != null && scriptValue2.Type != JTokenType.Null)
                                                     {
                                                         string scriptInstance2 = ((string)scriptValue2);
                                                         pigInstance.Script = scriptInstance2;
                                                     }
                                                     
-                                                    JToken scriptPathValue2 = transformationValue6["scriptPath"];
+                                                    JToken scriptPathValue2 = transformationValue7["scriptPath"];
                                                     if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
                                                     {
                                                         string scriptPathInstance2 = ((string)scriptPathValue2);
                                                         pigInstance.ScriptPath = scriptPathInstance2;
                                                     }
                                                     
-                                                    JToken scriptLinkedServiceValue2 = transformationValue6["scriptLinkedService"];
+                                                    JToken scriptLinkedServiceValue2 = transformationValue7["scriptLinkedService"];
                                                     if (scriptLinkedServiceValue2 != null && scriptLinkedServiceValue2.Type != JTokenType.Null)
                                                     {
                                                         string scriptLinkedServiceInstance2 = ((string)scriptLinkedServiceValue2);
                                                         pigInstance.ScriptLinkedService = scriptLinkedServiceInstance2;
                                                     }
                                                     
-                                                    JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue6["extendedProperties"]);
+                                                    JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
                                                         foreach (JProperty property3 in extendedPropertiesSequenceElement2)
@@ -2293,7 +2314,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken storageLinkedServicesArray6 = transformationValue6["storageLinkedServices"];
+                                                    JToken storageLinkedServicesArray6 = transformationValue7["storageLinkedServices"];
                                                     if (storageLinkedServicesArray6 != null && storageLinkedServicesArray6.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray6))
@@ -2307,28 +2328,28 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     MapReduce mapReduceInstance = new MapReduce();
                                                     
-                                                    JToken classNameValue = transformationValue6["className"];
+                                                    JToken classNameValue = transformationValue7["className"];
                                                     if (classNameValue != null && classNameValue.Type != JTokenType.Null)
                                                     {
                                                         string classNameInstance = ((string)classNameValue);
                                                         mapReduceInstance.ClassName = classNameInstance;
                                                     }
                                                     
-                                                    JToken jarFilePathValue = transformationValue6["jarFilePath"];
+                                                    JToken jarFilePathValue = transformationValue7["jarFilePath"];
                                                     if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
                                                     {
                                                         string jarFilePathInstance = ((string)jarFilePathValue);
                                                         mapReduceInstance.JarFilePath = jarFilePathInstance;
                                                     }
                                                     
-                                                    JToken jarLinkedServiceValue = transformationValue6["jarLinkedService"];
+                                                    JToken jarLinkedServiceValue = transformationValue7["jarLinkedService"];
                                                     if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
                                                     {
                                                         string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
                                                         mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
                                                     }
                                                     
-                                                    JToken jarLibsArray2 = transformationValue6["jarLibs"];
+                                                    JToken jarLibsArray2 = transformationValue7["jarLibs"];
                                                     if (jarLibsArray2 != null && jarLibsArray2.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken jarLibsValue in ((JArray)jarLibsArray2))
@@ -2337,7 +2358,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray3 = transformationValue6["arguments"];
+                                                    JToken argumentsArray3 = transformationValue7["arguments"];
                                                     if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken argumentsValue in ((JArray)argumentsArray3))
@@ -2346,7 +2367,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken storageLinkedServicesArray7 = transformationValue6["storageLinkedServices"];
+                                                    JToken storageLinkedServicesArray7 = transformationValue7["storageLinkedServices"];
                                                     if (storageLinkedServicesArray7 != null && storageLinkedServicesArray7.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray7))
@@ -2360,35 +2381,35 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     Streaming streamingInstance = new Streaming();
                                                     
-                                                    JToken mapperValue = transformationValue6["mapper"];
+                                                    JToken mapperValue = transformationValue7["mapper"];
                                                     if (mapperValue != null && mapperValue.Type != JTokenType.Null)
                                                     {
                                                         string mapperInstance = ((string)mapperValue);
                                                         streamingInstance.Mapper = mapperInstance;
                                                     }
                                                     
-                                                    JToken reducerValue = transformationValue6["reducer"];
+                                                    JToken reducerValue = transformationValue7["reducer"];
                                                     if (reducerValue != null && reducerValue.Type != JTokenType.Null)
                                                     {
                                                         string reducerInstance = ((string)reducerValue);
                                                         streamingInstance.Reducer = reducerInstance;
                                                     }
                                                     
-                                                    JToken inputValue = transformationValue6["input"];
+                                                    JToken inputValue = transformationValue7["input"];
                                                     if (inputValue != null && inputValue.Type != JTokenType.Null)
                                                     {
                                                         string inputInstance = ((string)inputValue);
                                                         streamingInstance.Input = inputInstance;
                                                     }
                                                     
-                                                    JToken outputValue = transformationValue6["output"];
+                                                    JToken outputValue = transformationValue7["output"];
                                                     if (outputValue != null && outputValue.Type != JTokenType.Null)
                                                     {
                                                         string outputInstance = ((string)outputValue);
                                                         streamingInstance.Output = outputInstance;
                                                     }
                                                     
-                                                    JToken filePathsArray2 = transformationValue6["filePaths"];
+                                                    JToken filePathsArray2 = transformationValue7["filePaths"];
                                                     if (filePathsArray2 != null && filePathsArray2.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken filePathsValue in ((JArray)filePathsArray2))
@@ -2397,21 +2418,21 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken fileLinkedServiceValue = transformationValue6["fileLinkedService"];
+                                                    JToken fileLinkedServiceValue = transformationValue7["fileLinkedService"];
                                                     if (fileLinkedServiceValue != null && fileLinkedServiceValue.Type != JTokenType.Null)
                                                     {
                                                         string fileLinkedServiceInstance = ((string)fileLinkedServiceValue);
                                                         streamingInstance.FileLinkedService = fileLinkedServiceInstance;
                                                     }
                                                     
-                                                    JToken combinerValue = transformationValue6["combiner"];
+                                                    JToken combinerValue = transformationValue7["combiner"];
                                                     if (combinerValue != null && combinerValue.Type != JTokenType.Null)
                                                     {
                                                         string combinerInstance = ((string)combinerValue);
                                                         streamingInstance.Combiner = combinerInstance;
                                                     }
                                                     
-                                                    JToken commandEnvironmentArray2 = transformationValue6["commandEnvironment"];
+                                                    JToken commandEnvironmentArray2 = transformationValue7["commandEnvironment"];
                                                     if (commandEnvironmentArray2 != null && commandEnvironmentArray2.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken commandEnvironmentValue in ((JArray)commandEnvironmentArray2))
@@ -2420,7 +2441,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray4 = transformationValue6["arguments"];
+                                                    JToken argumentsArray4 = transformationValue7["arguments"];
                                                     if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken argumentsValue2 in ((JArray)argumentsArray4))
@@ -2429,7 +2450,7 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken storageLinkedServicesArray8 = transformationValue6["storageLinkedServices"];
+                                                    JToken storageLinkedServicesArray8 = transformationValue7["storageLinkedServices"];
                                                     if (storageLinkedServicesArray8 != null && storageLinkedServicesArray8.Type != JTokenType.Null)
                                                     {
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray8))
@@ -2578,41 +2599,41 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             DotNetActivity dotNetActivityInstance = new DotNetActivity();
                                             
-                                            JToken transformationValue7 = activitiesValue["transformation"];
-                                            if (transformationValue7 != null && transformationValue7.Type != JTokenType.Null)
+                                            JToken transformationValue8 = activitiesValue["transformation"];
+                                            if (transformationValue8 != null && transformationValue8.Type != JTokenType.Null)
                                             {
                                                 DotNetActivityProperties transformationInstance2 = new DotNetActivityProperties();
                                                 dotNetActivityInstance.Transformation = transformationInstance2;
                                                 
-                                                JToken assemblyNameValue = transformationValue7["assemblyName"];
+                                                JToken assemblyNameValue = transformationValue8["assemblyName"];
                                                 if (assemblyNameValue != null && assemblyNameValue.Type != JTokenType.Null)
                                                 {
                                                     string assemblyNameInstance = ((string)assemblyNameValue);
                                                     transformationInstance2.AssemblyName = assemblyNameInstance;
                                                 }
                                                 
-                                                JToken entryPointValue = transformationValue7["entryPoint"];
+                                                JToken entryPointValue = transformationValue8["entryPoint"];
                                                 if (entryPointValue != null && entryPointValue.Type != JTokenType.Null)
                                                 {
                                                     string entryPointInstance = ((string)entryPointValue);
                                                     transformationInstance2.EntryPoint = entryPointInstance;
                                                 }
                                                 
-                                                JToken packageLinkedServiceValue = transformationValue7["packageLinkedService"];
+                                                JToken packageLinkedServiceValue = transformationValue8["packageLinkedService"];
                                                 if (packageLinkedServiceValue != null && packageLinkedServiceValue.Type != JTokenType.Null)
                                                 {
                                                     string packageLinkedServiceInstance = ((string)packageLinkedServiceValue);
                                                     transformationInstance2.PackageLinkedService = packageLinkedServiceInstance;
                                                 }
                                                 
-                                                JToken packageFileValue = transformationValue7["packageFile"];
+                                                JToken packageFileValue = transformationValue8["packageFile"];
                                                 if (packageFileValue != null && packageFileValue.Type != JTokenType.Null)
                                                 {
                                                     string packageFileInstance = ((string)packageFileValue);
                                                     transformationInstance2.PackageFile = packageFileInstance;
                                                 }
                                                 
-                                                JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue7["extendedProperties"]);
+                                                JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue8["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                 {
                                                     foreach (JProperty property4 in extendedPropertiesSequenceElement3)
@@ -2761,20 +2782,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             StoredProcedureActivity storedProcedureActivityInstance = new StoredProcedureActivity();
                                             
-                                            JToken transformationValue8 = activitiesValue["transformation"];
-                                            if (transformationValue8 != null && transformationValue8.Type != JTokenType.Null)
+                                            JToken transformationValue9 = activitiesValue["transformation"];
+                                            if (transformationValue9 != null && transformationValue9.Type != JTokenType.Null)
                                             {
                                                 StoredProcedureActivityProperties transformationInstance3 = new StoredProcedureActivityProperties();
                                                 storedProcedureActivityInstance.Transformation = transformationInstance3;
                                                 
-                                                JToken storedProcedureNameValue = transformationValue8["storedProcedureName"];
+                                                JToken storedProcedureNameValue = transformationValue9["storedProcedureName"];
                                                 if (storedProcedureNameValue != null && storedProcedureNameValue.Type != JTokenType.Null)
                                                 {
                                                     string storedProcedureNameInstance = ((string)storedProcedureNameValue);
                                                     transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                 }
                                                 
-                                                JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue8["storedProcedureParameters"]);
+                                                JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue9["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
                                                     foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
@@ -2922,6 +2943,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         if (typeName == "AzureMLBatchScoringActivity")
                                         {
                                             AzureMLBatchScoringActivity azureMLBatchScoringActivityInstance = new AzureMLBatchScoringActivity();
+                                            
+                                            JToken transformationValue10 = activitiesValue["transformation"];
+                                            if (transformationValue10 != null && transformationValue10.Type != JTokenType.Null)
+                                            {
+                                                AzureMLActivityProperties transformationInstance4 = new AzureMLActivityProperties();
+                                                azureMLBatchScoringActivityInstance.Transformation = transformationInstance4;
+                                                
+                                                JToken webServiceParametersSequenceElement = ((JToken)transformationValue10["webServiceParameters"]);
+                                                if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property6 in webServiceParametersSequenceElement)
+                                                    {
+                                                        string webServiceParametersKey2 = ((string)property6.Name);
+                                                        string webServiceParametersValue2 = ((string)property6.Value);
+                                                        transformationInstance4.WebServiceParameters.Add(webServiceParametersKey2, webServiceParametersValue2);
+                                                    }
+                                                }
+                                            }
                                             
                                             JToken nameValue14 = activitiesValue["name"];
                                             if (nameValue14 != null && nameValue14.Type != JTokenType.Null)
@@ -4758,6 +4797,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             AzureMLBatchScoringActivity azureMLBatchScoringActivityInstance = new AzureMLBatchScoringActivity();
                                             
+                                            JToken transformationValue5 = activitiesValue["transformation"];
+                                            if (transformationValue5 != null && transformationValue5.Type != JTokenType.Null)
+                                            {
+                                                AzureMLActivityProperties transformationInstance4 = new AzureMLActivityProperties();
+                                                azureMLBatchScoringActivityInstance.Transformation = transformationInstance4;
+                                                
+                                                JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
+                                                if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property6 in webServiceParametersSequenceElement)
+                                                    {
+                                                        string webServiceParametersKey = ((string)property6.Name);
+                                                        string webServiceParametersValue = ((string)property6.Value);
+                                                        transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken nameValue14 = activitiesValue["name"];
                                             if (nameValue14 != null && nameValue14.Type != JTokenType.Null)
                                             {
@@ -5222,6 +5279,10 @@ namespace Microsoft.Azure.Management.DataFactories
             cancellationToken.ThrowIfCancellationRequested();
             PipelineCreateOrUpdateResponse result = await client.Pipelines.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5229,6 +5290,10 @@ namespace Microsoft.Azure.Management.DataFactories
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.Pipelines.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
             }
             
             if (shouldTrace)
@@ -5285,6 +5350,10 @@ namespace Microsoft.Azure.Management.DataFactories
             cancellationToken.ThrowIfCancellationRequested();
             PipelineCreateOrUpdateResponse result = await client.Pipelines.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5292,6 +5361,10 @@ namespace Microsoft.Azure.Management.DataFactories
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.Pipelines.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
             }
             
             if (shouldTrace)
@@ -5348,6 +5421,10 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 delayInSeconds = 30;
             }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5358,6 +5435,10 @@ namespace Microsoft.Azure.Management.DataFactories
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 15;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
             
@@ -6961,6 +7042,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         if (typeName == "AzureMLBatchScoringActivity")
                                         {
                                             AzureMLBatchScoringActivity azureMLBatchScoringActivityInstance = new AzureMLBatchScoringActivity();
+                                            
+                                            JToken transformationValue5 = activitiesValue["transformation"];
+                                            if (transformationValue5 != null && transformationValue5.Type != JTokenType.Null)
+                                            {
+                                                AzureMLActivityProperties transformationInstance4 = new AzureMLActivityProperties();
+                                                azureMLBatchScoringActivityInstance.Transformation = transformationInstance4;
+                                                
+                                                JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
+                                                if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property6 in webServiceParametersSequenceElement)
+                                                    {
+                                                        string webServiceParametersKey = ((string)property6.Name);
+                                                        string webServiceParametersValue = ((string)property6.Value);
+                                                        transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
+                                                    }
+                                                }
+                                            }
                                             
                                             JToken nameValue14 = activitiesValue["name"];
                                             if (nameValue14 != null && nameValue14.Type != JTokenType.Null)
@@ -8709,6 +8808,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         if (typeName == "AzureMLBatchScoringActivity")
                                         {
                                             AzureMLBatchScoringActivity azureMLBatchScoringActivityInstance = new AzureMLBatchScoringActivity();
+                                            
+                                            JToken transformationValue5 = activitiesValue["transformation"];
+                                            if (transformationValue5 != null && transformationValue5.Type != JTokenType.Null)
+                                            {
+                                                AzureMLActivityProperties transformationInstance4 = new AzureMLActivityProperties();
+                                                azureMLBatchScoringActivityInstance.Transformation = transformationInstance4;
+                                                
+                                                JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
+                                                if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property6 in webServiceParametersSequenceElement)
+                                                    {
+                                                        string webServiceParametersKey = ((string)property6.Name);
+                                                        string webServiceParametersValue = ((string)property6.Value);
+                                                        transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
+                                                    }
+                                                }
+                                            }
                                             
                                             JToken nameValue14 = activitiesValue["name"];
                                             if (nameValue14 != null && nameValue14.Type != JTokenType.Null)
@@ -10525,6 +10642,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     AzureMLBatchScoringActivity azureMLBatchScoringActivityInstance = new AzureMLBatchScoringActivity();
                                                     
+                                                    JToken transformationValue5 = activitiesValue["transformation"];
+                                                    if (transformationValue5 != null && transformationValue5.Type != JTokenType.Null)
+                                                    {
+                                                        AzureMLActivityProperties transformationInstance4 = new AzureMLActivityProperties();
+                                                        azureMLBatchScoringActivityInstance.Transformation = transformationInstance4;
+                                                        
+                                                        JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
+                                                        if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property6 in webServiceParametersSequenceElement)
+                                                            {
+                                                                string webServiceParametersKey = ((string)property6.Name);
+                                                                string webServiceParametersValue = ((string)property6.Value);
+                                                                transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
+                                                            }
+                                                        }
+                                                    }
+                                                    
                                                     JToken nameValue14 = activitiesValue["name"];
                                                     if (nameValue14 != null && nameValue14.Type != JTokenType.Null)
                                                     {
@@ -12289,6 +12424,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 if (typeName == "AzureMLBatchScoringActivity")
                                                 {
                                                     AzureMLBatchScoringActivity azureMLBatchScoringActivityInstance = new AzureMLBatchScoringActivity();
+                                                    
+                                                    JToken transformationValue5 = activitiesValue["transformation"];
+                                                    if (transformationValue5 != null && transformationValue5.Type != JTokenType.Null)
+                                                    {
+                                                        AzureMLActivityProperties transformationInstance4 = new AzureMLActivityProperties();
+                                                        azureMLBatchScoringActivityInstance.Transformation = transformationInstance4;
+                                                        
+                                                        JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
+                                                        if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property6 in webServiceParametersSequenceElement)
+                                                            {
+                                                                string webServiceParametersKey = ((string)property6.Name);
+                                                                string webServiceParametersValue = ((string)property6.Value);
+                                                                transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
+                                                            }
+                                                        }
+                                                    }
                                                     
                                                     JToken nameValue14 = activitiesValue["name"];
                                                     if (nameValue14 != null && nameValue14.Type != JTokenType.Null)

@@ -20,64 +20,68 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
     /// The definition of a Update VM properties input object.
     /// </summary>
-    public partial class UpdateVmPropertiesInput
+    public partial class VMProperties
     {
-        private string _recoveryAzureNetworkId;
-        
-        /// <summary>
-        /// Optional. Recovery Azure Network Id
-        /// </summary>
-        public string RecoveryAzureNetworkId
-        {
-            get { return this._recoveryAzureNetworkId; }
-            set { this._recoveryAzureNetworkId = value; }
-        }
-        
-        private string _recoveryAzureVmGivenName;
+        private string _recoveryAzureVMName;
         
         /// <summary>
         /// Optional. Recovery Azure VM given name
         /// </summary>
-        public string RecoveryAzureVmGivenName
+        public string RecoveryAzureVMName
         {
-            get { return this._recoveryAzureVmGivenName; }
-            set { this._recoveryAzureVmGivenName = value; }
+            get { return this._recoveryAzureVMName; }
+            set { this._recoveryAzureVMName = value; }
         }
         
-        private string _recoveryAzureVmSize;
+        private string _recoveryAzureVMSize;
         
         /// <summary>
         /// Optional. Recovery Azure VM size
         /// </summary>
-        public string RecoveryAzureVmSize
+        public string RecoveryAzureVMSize
         {
-            get { return this._recoveryAzureVmSize; }
-            set { this._recoveryAzureVmSize = value; }
+            get { return this._recoveryAzureVMSize; }
+            set { this._recoveryAzureVMSize = value; }
         }
         
-        private string _selectedPrimaryNicId;
+        private string _selectedRecoveryAzureNetworkId;
         
         /// <summary>
         /// Optional. Selected Primary NIC Id
         /// </summary>
-        public string SelectedPrimaryNicId
+        public string SelectedRecoveryAzureNetworkId
         {
-            get { return this._selectedPrimaryNicId; }
-            set { this._selectedPrimaryNicId = value; }
+            get { return this._selectedRecoveryAzureNetworkId; }
+            set { this._selectedRecoveryAzureNetworkId = value; }
+        }
+        
+        private IList<VMNicDetails> _vMNics;
+        
+        /// <summary>
+        /// Optional. Recovery Azure Network Id
+        /// </summary>
+        public IList<VMNicDetails> VMNics
+        {
+            get { return this._vMNics; }
+            set { this._vMNics = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVmPropertiesInput class.
+        /// Initializes a new instance of the VMProperties class.
         /// </summary>
-        public UpdateVmPropertiesInput()
+        public VMProperties()
         {
+            this.VMNics = new LazyList<VMNicDetails>();
         }
     }
 }

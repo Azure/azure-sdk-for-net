@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="SampleKeyVaultClientService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
+  <Role name="SampleKeyVaultClientWebRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageAccountName" value="" />
+      <Setting name="StorageAccountKeySecretUrl" value="" />
+      <Setting name="KeyVaultAuthClientId" value="" />
+      <Setting name="KeyVaultAuthCertThumbprint" value="6B862EADF8A215005109B6979A616F4B7B2874F2" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="KeyVaultAuthCert" thumbprint="6B862EADF8A215005109B6979A616F4B7B2874F2" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

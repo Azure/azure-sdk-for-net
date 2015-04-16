@@ -378,7 +378,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
             }
             url = url + "/cloudservices";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
