@@ -50,46 +50,14 @@ namespace Microsoft.Azure.Search
         }
         
         /// <summary>
-        /// Gets or sets the credentials used to authenticate to an Azure
-        /// Search service.  (see
+        /// Gets the credentials used to authenticate to an Azure Search
+        /// service.  (see
         /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
         /// information)
         /// </summary>
         SearchCredentials Credentials
         {
-            get; set; 
-        }
-        
-        /// <summary>
-        /// Gets or sets the name of the Azure Search index.
-        /// </summary>
-        string IndexName
-        {
-            get; set; 
-        }
-        
-        /// <summary>
-        /// Gets or sets the initial timeout for Long Running Operations.
-        /// </summary>
-        int LongRunningOperationInitialTimeout
-        {
-            get; set; 
-        }
-        
-        /// <summary>
-        /// Gets or sets the retry timeout for Long Running Operations.
-        /// </summary>
-        int LongRunningOperationRetryTimeout
-        {
-            get; set; 
-        }
-        
-        /// <summary>
-        /// Gets or sets the name of the Azure Search service.
-        /// </summary>
-        string SearchServiceName
-        {
-            get; set; 
+            get; 
         }
         
         /// <summary>

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Search.Models
     /// <typeparam name="T">
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
-    public class SuggestResult<T> where T : class
+    public class SuggestResult<T> : SuggestResultBase<T> where T : class
     {
         /// <summary>
         /// Initializes a new instance of the SuggestResult class.
@@ -30,15 +30,5 @@ namespace Microsoft.Azure.Search.Models
         {
             // Do nothing.
         }
-
-        /// <summary>
-        /// Gets the text of the suggestion result.
-        /// </summary>
-        public string Text { get; set; }
-
-        /// <summary>
-        /// Gets the document on which the suggested text is based.
-        /// </summary>
-        public T Document { get; set; }
     }
 }

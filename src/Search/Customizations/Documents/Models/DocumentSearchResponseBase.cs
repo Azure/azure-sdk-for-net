@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
     /// Type of the model class that encapsulates documents in a search response.
     /// </typeparam>
     public class DocumentSearchResponseBase<TResult, TDoc> : AzureOperationResponse, IEnumerable<TResult>
-        where TResult : SearchResult<TDoc>
+        where TResult : SearchResultBase<TDoc>
         where TDoc : class
     {
         private IList<TResult> _results;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the facet query results for the search operation, or null if the query did not include any facet
         /// expressions.
         /// </summary>
-        public Facets Facets { get; set; }
+        public FacetResults Facets { get; set; }
 
         /// <summary>
         /// Gets the sequence of results returned by the query.

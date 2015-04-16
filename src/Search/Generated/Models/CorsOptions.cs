@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Models
         private IList<string> _allowedOrigins;
         
         /// <summary>
-        /// Optional. Gets the list of origins from which JavaScript code will
+        /// Required. Gets the list of origins from which JavaScript code will
         /// be granted access to your index. Can contain a list of hosts of
         /// the form {protocol}://{fully-qualified-domain-name}[:{port#}], or
         /// a single '*' to allow all origins (not recommended).
@@ -66,6 +66,20 @@ namespace Microsoft.Azure.Search.Models
         {
             this.AllowedOrigins = new LazyList<string>();
             this.MaxAgeInSeconds = 300;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CorsOptions class with required
+        /// arguments.
+        /// </summary>
+        public CorsOptions(IList<string> allowedOrigins)
+            : this()
+        {
+            if (allowedOrigins == null)
+            {
+                throw new ArgumentNullException("allowedOrigins");
+            }
+            this.AllowedOrigins = allowedOrigins;
         }
     }
 }

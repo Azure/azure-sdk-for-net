@@ -14,13 +14,68 @@
 // 
 
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using Hyak.Common.Internals;
 
 namespace Microsoft.Azure.Search
 {
     public partial class SearchServiceClient
     {
         private const string ClientRequestIdHeaderName = "client-request-id";
+
+        /// <summary>
+        /// Initializes a new instance of the SearchServiceClient class.
+        /// </summary>
+        /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
+        /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx" />
+        /// </param>
+        /// <param name='httpClient'>The Http client</param>
+        public SearchServiceClient(string searchServiceName, SearchCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException("searchServiceName");
+            }
+            
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+
+            this._credentials = credentials;
+            this._baseUri = BuildBaseUriForService(searchServiceName);
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchServiceClient class.
+        /// </summary>
+        /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
+        /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx"/>
+        /// </param>
+        public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
+            : this()
+        {
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException("searchServiceName");
+            }
+
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            
+            this._credentials = credentials;
+            this._baseUri = BuildBaseUriForService(searchServiceName);
+
+            this.Credentials.InitializeServiceClient(this);
+        }
 
         /// <inheritdoc />
         public void SetClientRequestId(Guid guid)
@@ -33,6 +88,11 @@ namespace Microsoft.Azure.Search
             }
 
             headers.Add(ClientRequestIdHeaderName, guid.ToString());
+        }
+
+        private static Uri BuildBaseUriForService(string searchServiceName)
+        {
+            return TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/");
         }
     }
 }

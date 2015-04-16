@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// Type of the model class that encapsulates documents in a search response.
     /// </typeparam>
     internal class SearchResultConverter<TResult, TDoc> : JsonConverter
-        where TResult : SearchResult<TDoc>, new()
+        where TResult : SearchResultBase<TDoc>, new()
         where TDoc : class
     {
         public override bool CanRead
