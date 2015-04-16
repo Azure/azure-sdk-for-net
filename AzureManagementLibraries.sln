@@ -70,6 +70,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorSimple", "src\StorSimple\StorSimple.csproj", "{80D5051E-17F6-4353-9CBA-748EE6B10B2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomationManagement2", "src\AutomationManagement2\AutomationManagement2.csproj", "{3BC8F71C-6424-44F8-B553-BABC031F2AE7}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteApp", "src\RemoteApp\RemoteApp.csproj", "{29F1C6AD-41C7-428C-8024-88E97033CE1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search", "src\Search\Search.csproj", "{2C21CBE7-5D68-434A-BB20-463886BE5551}"
