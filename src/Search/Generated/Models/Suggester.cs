@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Search.Models
         private IList<string> _sourceFields;
         
         /// <summary>
-        /// Optional. Gets the list of field names to which the suggester
+        /// Required. Gets the list of field names to which the suggester
         /// applies. Each field must be searchable.
         /// </summary>
         public IList<string> SourceFields
@@ -80,15 +80,20 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the Suggester class with required
         /// arguments.
         /// </summary>
-        public Suggester(string name, SuggesterSearchMode searchMode)
+        public Suggester(string name, SuggesterSearchMode searchMode, IList<string> sourceFields)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
+            if (sourceFields == null)
+            {
+                throw new ArgumentNullException("sourceFields");
+            }
             this.Name = name;
             this.SearchMode = searchMode;
+            this.SourceFields = sourceFields;
         }
     }
 }

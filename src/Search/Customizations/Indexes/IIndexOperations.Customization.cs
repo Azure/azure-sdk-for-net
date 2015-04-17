@@ -51,9 +51,8 @@ namespace Microsoft.Azure.Search
         /// Lists the names of all indexes available for an Azure Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
-        /// if your Search Service has many indexes.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx"/> for
-        /// more information)
+        /// if your Search Service has many indexes.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx"/>
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -22,10 +22,10 @@ using Hyak.Common;
 namespace Microsoft.Azure.Search
 {
     /// <summary>
-    /// Credentials used to authenticate to an Azure Search service.  (see 
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx"/> for more information)
+    /// Credentials used to authenticate to an Azure Search service.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx"/>
     /// </summary>
-    public sealed class SearchCredentials : CloudCredentials
+    public class SearchCredentials : CloudCredentials
     {
         /// <summary>
         /// Initializes a new instance of the SearchCredentials class with a query key or an admin key. Use a query

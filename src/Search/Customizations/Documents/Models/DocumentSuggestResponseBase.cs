@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
     /// Type of the model class that encapsulates documents in a suggestion response.
     /// </typeparam>
     public class DocumentSuggestResponseBase<TResult, TDoc> : AzureOperationResponse, IEnumerable<TResult>
-        where TResult : SuggestResult<TDoc>
+        where TResult : SuggestResultBase<TDoc>
         where TDoc : class
     {
         private IList<TResult> _results;

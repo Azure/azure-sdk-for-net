@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Represents an index action that operates on a document.
     /// </summary>
-    public class IndexAction : IndexAction<Document>
+    public class IndexAction : IndexActionBase<Document>
     {
         /// <summary>
         /// Initializes a new instance of the IndexAction class.
@@ -32,16 +32,7 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the IndexAction class.
         /// </summary>
         /// <param name="document">The document on which the action will be performed.</param>
-        public IndexAction(Document document) : base(document)
-        {
-            // Do nothing.
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the IndexAction class with the given action type.
-        /// </summary>
-        /// <param name="actionType">The type of action to perform on the document.</param>
-        public IndexAction(IndexActionType actionType) : base(actionType)
+        public IndexAction(Document document) : this(default(IndexActionType), document)
         {
             // Do nothing.
         }
