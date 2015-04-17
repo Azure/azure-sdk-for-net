@@ -282,4 +282,7 @@
   <data name="NoEnvironmentInContext" xml:space="preserve">
     <value>[Common.Authentication]: No matching environment record for environment {0} in subscription {1}, using AzureCloud environment instead</value>
   </data>
+  <data name="AuthenticatingForSingleTenant" xml:space="preserve">
+    <value>[Common.Authentication]: Authenticating for account {0} with single tenant {1}</value>
+  </data>
 </root>
