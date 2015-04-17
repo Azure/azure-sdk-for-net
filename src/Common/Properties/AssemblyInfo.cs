@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Common Library")]
 [assembly: AssemblyDescription("Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Microsoft Azure libraries.")]
 
-[assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.0.7.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

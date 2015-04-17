@@ -133,12 +133,12 @@
     <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
              Targets="Clean" />
-    <MSBuild Projects="$(AuthenticationSolution)"
+    <!--<MSBuild Projects="$(AuthenticationSolution)"
              Properties="Configuration=Net45-$(Configuration);Platform=Any CPU"
              Targets="Clean" />
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean" />
+             Targets="Clean" />-->
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
@@ -231,8 +231,8 @@
   <Target Name="RestoreNugetPackages">
     <!--TODO: respect the 'scope', and do not always restore all of them-->
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
-    <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
-    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />
+    <!--<Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
+    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />-->
   </Target>
 
   <!--Smoke test the packages under the output dir-->
