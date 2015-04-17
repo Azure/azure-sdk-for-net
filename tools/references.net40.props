@@ -13,10 +13,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(SolutionDir)packages\Newtonsoft.Json.6.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.3\lib\net40\Microsoft.Rest.ClientRuntime.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO">
@@ -49,5 +45,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.6\lib\net40\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

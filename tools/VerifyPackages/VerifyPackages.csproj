@@ -34,13 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>packages\Microsoft.Azure.Common.2.0.1\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>packages\Microsoft.Azure.Common.2.0.3\lib\net45\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common.NetFramework">
-      <HintPath>packages\Microsoft.Azure.Common.2.0.1\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+      <HintPath>packages\Microsoft.Azure.Common.2.0.3\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>

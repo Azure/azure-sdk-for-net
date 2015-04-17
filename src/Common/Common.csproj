@@ -16,12 +16,8 @@
   <ItemGroup>
     <None Include="Microsoft.Azure.Common.Dependencies.nuget.proj" />
     <None Include="Microsoft.Azure.Common.Dependencies.nuspec" />
-    <None Include="Microsoft.Azure.Common.nuget.proj">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Microsoft.Azure.Common.nuspec">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Microsoft.Azure.Common.nuget.proj" />
+    <None Include="Microsoft.Azure.Common.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

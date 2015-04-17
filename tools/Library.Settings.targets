@@ -6,11 +6,6 @@
     <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <!--'GenerateHydraSpecs' is not a great name, means whether or not to invoke hyak.exe to regenerate the code. -->
-    <!--If we are inside visual studio, we always invoke code-gen. This is the optimization made for parnter service teams-->
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(BuildingInsideVisualStudio)' == 'true' " >true</GenerateHydraSpecs>
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</GenerateHydraSpecs>
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</GenerateHydraSpecs>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net45-Release'">
@@ -46,16 +41,8 @@
     <DelaySign>$(CodeSign)</DelaySign>
   </PropertyGroup>
   
-  <!-- Using NETCORE to indicate either net45 or net40 build -->
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45' or '$(LibraryFxTarget)' == 'net40'" >
-    <LibraryCustomConstants>$(LibraryCustomConstants);NETCORE</LibraryCustomConstants>
-  </PropertyGroup>
-   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45'" >
-    <LibraryCustomConstants>$(LibraryCustomConstants);NET45</LibraryCustomConstants>
-  </PropertyGroup>
-  <!-- Using PORTABLE to indicate windows phone 8.1 build -->
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable'" >
-    <LibraryCustomConstants>$(LibraryCustomConstants);PORTABLE</LibraryCustomConstants>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45'" >
+    <LibraryCustomConstants>NET45</LibraryCustomConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
@@ -70,7 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Release' or '$(Configuration)' == 'Net40-Release' or '$(Configuration)' == 'Portable-Release'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Release' or '$(Configuration)' == 'Net40-Release' or '$(Configuration)' == 'Portable-Release' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;$(LibraryCustomConstants)</DefineConstants>
@@ -100,6 +87,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wp80' ">
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wpa81' ">
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -111,7 +102,7 @@
     <Message Text="TargetFrameworkVersion: $(TargetFrameworkVersion) TargetFrameworkProfile: $(TargetFrameworkProfile)" />
   </Target>
 
-  <Target Name="CopySdkBinaries" AfterTargets="AfterBuild">
+  <Target Name="CopySdkBinaries" AfterTargets="AfterBuild" Condition=" '$(SDKTestProject)' != 'true' ">
     <PropertyGroup>
       <!--Folder where nuget.exe gets xml and pdb files to create the package-->
       <_ArtifactsDirectory>$(LibraryRoot)\binaries\$(LibraryFxTarget)</_ArtifactsDirectory>
@@ -128,7 +119,7 @@
     <MakeDir Directories="$(_BinariesDirectory)" Condition="!Exists($(_BinariesDirectory))" />
     <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).xml;$(ProjectDir)$(OutputPath)$(AssemblyName).pdb"
           DestinationFolder="$(_ArtifactsDirectory)"/>
-     <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).dll"
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).dll"
           DestinationFolder="$(_BinariesDirectory)"/>
   </Target>
 
@@ -141,11 +132,6 @@
 
     <!-- Update all explicit references to dependent versions. -->
     <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
-  </Target>
-  
-  <Target Name="BeforeCodeGen" BeforeTargets="GenerateCodeFromSpecs" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
-    <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
-    <RemoveDir Directories="Generated" ContinueOnError="True" />
   </Target>
   
   <!-- 
