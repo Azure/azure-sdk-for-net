@@ -24,9 +24,6 @@
         <reference file="Microsoft.Azure.KeyVault.Core.dll" />
       </group>
     </references>
-    <dependencies>
-      <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-    </dependencies>
   </metadata>
   <files>
     <file src="KeyVault\Microsoft.Azure.KeyVault.Core\**\*.cs" target="src" />
