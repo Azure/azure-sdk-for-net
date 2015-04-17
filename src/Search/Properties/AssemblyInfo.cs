@@ -31,4 +31,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-[assembly: InternalsVisibleTo("Search.Tests")]
+[assembly: InternalsVisibleTo("Search.Test")]
