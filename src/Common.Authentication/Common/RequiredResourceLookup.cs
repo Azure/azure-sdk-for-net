@@ -49,7 +49,6 @@ namespace Microsoft.Azure.Common.Authentication
             {
                 return new[] {
                     "Microsoft.Web",
-                    "microsoft.visualstudio",
                     "microsoft.insights",
                     "microsoft.cache",
                     "Microsoft.KeyVault",
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.Common.Authentication
                 return new[] { "Microsoft.DataFactory" };
             }
 
-            if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Network.NetworkManagementClient"))
+            if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Network.NetworkResourceProviderClient"))
             {
                 return new[] { "Microsoft.Network" };
             }
