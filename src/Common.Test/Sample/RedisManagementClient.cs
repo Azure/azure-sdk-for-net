@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,62 +15,11 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Rest;
+using Microsoft.Rest.TransientFaultHandling;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    public partial class RedisAccessKeys
-    {
-        private string _primaryKey;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string PrimaryKey
-        {
-            get { return this._primaryKey; }
-            set { this._primaryKey = value; }
-        }
-
-        private string _secondaryKey;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string SecondaryKey
-        {
-            get { return this._secondaryKey; }
-            set { this._secondaryKey = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the RedisAccessKeys class.
-        /// </summary>
-        public RedisAccessKeys()
-        {
-        }
-
-        /// <summary>
-        /// Deserialize the object
-        /// </summary>
-        public virtual void DeserializeJson(JToken inputObject)
-        {
-            if (inputObject != null && inputObject.Type != JTokenType.Null)
-            {
-                JToken primaryKeyValue = inputObject["PrimaryKey"];
-                if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
-                {
-                    this.PrimaryKey = ((string)primaryKeyValue);
-                }
-                JToken secondaryKeyValue = inputObject["SecondaryKey"];
-                if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
-                {
-                    this.SecondaryKey = ((string)secondaryKeyValue);
-                }
-            }
-        }
-    }
-
     public partial class RedisCreateOrUpdateParameters
     {
         private string _location;
@@ -126,143 +76,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         }
     }
 
-    public partial class RedisCreateOrUpdateResponse
+    public partial class RedisResource : ResourceBase
     {
-        private string _id;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-
-        private string _location;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-
-        private string _name;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-
-        private RedisReadablePropertiesWithAccessKey _properties;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public RedisReadablePropertiesWithAccessKey Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-
-        private string _type;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the RedisCreateOrUpdateResponse class.
-        /// </summary>
-        public RedisCreateOrUpdateResponse()
-        {
-        }
-
-        /// <summary>
-        /// Deserialize the object
-        /// </summary>
-        public virtual void DeserializeJson(JToken inputObject)
-        {
-            if (inputObject != null && inputObject.Type != JTokenType.Null)
-            {
-                JToken idValue = inputObject["Id"];
-                if (idValue != null && idValue.Type != JTokenType.Null)
-                {
-                    this.Id = ((string)idValue);
-                }
-                JToken locationValue = inputObject["Location"];
-                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                {
-                    this.Location = ((string)locationValue);
-                }
-                JToken nameValue = inputObject["Name"];
-                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                {
-                    this.Name = ((string)nameValue);
-                }
-                JToken propertiesValue = inputObject["Properties"];
-                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                {
-                    RedisReadablePropertiesWithAccessKey redisReadablePropertiesWithAccessKey = new RedisReadablePropertiesWithAccessKey();
-                    redisReadablePropertiesWithAccessKey.DeserializeJson(propertiesValue);
-                    this.Properties = redisReadablePropertiesWithAccessKey;
-                }
-                JToken typeValue = inputObject["Type"];
-                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                {
-                    this.Type = ((string)typeValue);
-                }
-            }
-        }
-    }
-
-    public partial class RedisGetResponse
-    {
-        private string _id;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-
-        private string _location;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-
-        private string _name;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-
         private RedisReadableProperties _properties;
 
         /// <summary>
@@ -274,21 +89,10 @@ namespace Microsoft.Azure.Management.Redis.Models
             set { this._properties = value; }
         }
 
-        private string _type;
-
         /// <summary>
-        /// Optional.
+        /// Initializes a new instance of the RedisResource class.
         /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the RedisGetResponse class.
-        /// </summary>
-        public RedisGetResponse()
+        public RedisResource()
         {
         }
 
@@ -299,32 +103,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
-                JToken idValue = inputObject["Id"];
-                if (idValue != null && idValue.Type != JTokenType.Null)
-                {
-                    this.Id = ((string)idValue);
-                }
-                JToken locationValue = inputObject["Location"];
-                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                {
-                    this.Location = ((string)locationValue);
-                }
-                JToken nameValue = inputObject["Name"];
-                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                {
-                    this.Name = ((string)nameValue);
-                }
-                JToken propertiesValue = inputObject["Properties"];
+                base.DeserializeJson(inputObject);
+                JToken propertiesValue = inputObject["properties"];
                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                 {
                     RedisReadableProperties redisReadableProperties = new RedisReadableProperties();
                     redisReadableProperties.DeserializeJson(propertiesValue);
                     this.Properties = redisReadableProperties;
-                }
-                JToken typeValue = inputObject["Type"];
-                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                {
-                    this.Type = ((string)typeValue);
                 }
             }
         }
@@ -499,45 +284,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         }
     }
 
-    public partial class RedisReadablePropertiesWithAccessKey
-    {
-        private RedisAccessKeys _accessKeys;
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public RedisAccessKeys AccessKeys
-        {
-            get { return this._accessKeys; }
-            set { this._accessKeys = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the
-        /// RedisReadablePropertiesWithAccessKey class.
-        /// </summary>
-        public RedisReadablePropertiesWithAccessKey()
-        {
-        }
-
-        /// <summary>
-        /// Deserialize the object
-        /// </summary>
-        public virtual void DeserializeJson(JToken inputObject)
-        {
-            if (inputObject != null && inputObject.Type != JTokenType.Null)
-            {
-                JToken accessKeysValue = inputObject["AccessKeys"];
-                if (accessKeysValue != null && accessKeysValue.Type != JTokenType.Null)
-                {
-                    RedisAccessKeys redisAccessKeys = new RedisAccessKeys();
-                    redisAccessKeys.DeserializeJson(accessKeysValue);
-                    this.AccessKeys = redisAccessKeys;
-                }
-            }
-        }
-    }
-
     public partial class Sku
     {
         private int? _capacity;
@@ -656,7 +402,7 @@ namespace Microsoft.Azure.Management.Redis
         }
     }
 
-    public partial class RedisManagementClient : ServiceClient<RedisManagementClient>, IRedisManagementClient
+    public partial class RedisManagementClient : ServiceClient<RedisManagementClient>, IRedisManagementClient, IAzureClient
     {
         private string _apiVersion;
 
@@ -861,7 +607,63 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='subscriptionId'>
         /// Required.
         /// </param>
-        public static RedisCreateOrUpdateResponse CreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId)
+        public static RedisResource BeginCreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IRedisOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, name, parameters, subscriptionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Create a redis cache, or replace (overwrite/recreate, with
+        /// potential downtime) an existing cache
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='name'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<RedisResource> BeginCreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            AzureOperationResponse<RedisResource> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, name, parameters, subscriptionId, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+
+        /// <summary>
+        /// Create a redis cache, or replace (overwrite/recreate, with
+        /// potential downtime) an existing cache
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='name'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Required.
+        /// </param>
+        public static RedisResource CreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId)
         {
             return Task.Factory.StartNew((object s) =>
             {
@@ -892,9 +694,9 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<RedisCreateOrUpdateResponse> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<RedisResource> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            HttpOperationResponse<RedisCreateOrUpdateResponse> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, name, parameters, subscriptionId, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<RedisResource> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, name, parameters, subscriptionId, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
 
@@ -913,11 +715,11 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='subscriptionId'>
         /// Required.
         /// </param>
-        public static object Delete(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
+        public static object BeginDelete(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
         {
             return Task.Factory.StartNew((object s) =>
             {
-                return ((IRedisOperations)s).DeleteAsync(resourceGroupName, name, subscriptionId);
+                return ((IRedisOperations)s).BeginDeleteAsync(resourceGroupName, name, subscriptionId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -940,9 +742,9 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<object> DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<object> BeginDeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            HttpOperationResponse<object> result = await operations.DeleteWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<object> result = await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
 
@@ -961,7 +763,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='subscriptionId'>
         /// Required.
         /// </param>
-        public static RedisGetResponse Get(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
+        public static RedisResource Get(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
         {
             return Task.Factory.StartNew((object s) =>
             {
@@ -988,9 +790,9 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<RedisGetResponse> GetAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<RedisResource> GetAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            HttpOperationResponse<RedisGetResponse> result = await operations.GetWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<RedisResource> result = await operations.GetWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
     }
@@ -1016,7 +818,9 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<RedisCreateOrUpdateResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<RedisResource>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        Task<AzureOperationResponse<RedisResource>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Deletes a redis cache. This operation takes a while to complete.
@@ -1033,7 +837,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> DeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<object>> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Gets a redis cache (resource description).
@@ -1050,7 +854,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<RedisGetResponse>> GetWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<RedisResource>> GetWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 
     internal partial class RedisOperations : IServiceOperations<RedisManagementClient>, IRedisOperations
@@ -1096,7 +900,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<RedisCreateOrUpdateResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<RedisResource>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (resourceGroupName == null)
@@ -1127,7 +931,7 @@ namespace Microsoft.Azure.Management.Redis
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("subscriptionId", subscriptionId);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdateAsync", tracingParameters);
             }
 
             // Construct URL
@@ -1200,14 +1004,14 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             // Create Result
-            HttpOperationResponse<RedisCreateOrUpdateResponse> result = new HttpOperationResponse<RedisCreateOrUpdateResponse>();
+            AzureOperationResponse<RedisResource> result = new AzureOperationResponse<RedisResource>();
             result.Request = httpRequest;
             result.Response = httpResponse;
 
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
             {
-                RedisCreateOrUpdateResponse resultModel = new RedisCreateOrUpdateResponse();
+                RedisResource resultModel = new RedisResource();
                 JToken responseDoc = null;
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
@@ -1227,6 +1031,23 @@ namespace Microsoft.Azure.Management.Redis
             return result;
         }
 
+        public async Task<AzureOperationResponse<RedisResource>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<RedisResource> response = await BeginCreateOrUpdateWithOperationResponseAsync(
+                resourceGroupName,
+                name,
+                parameters,
+                subscriptionId,
+                cancellationToken);
+
+            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || response.Response.StatusCode == HttpStatusCode.Created);
+
+            return await this.Client.GetCreateOrUpdateOperationResult(response, 
+                () => GetWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken),
+                cancellationToken);
+        }
+
         /// <summary>
         /// Deletes a redis cache. This operation takes a while to complete.
         /// </summary>
@@ -1242,7 +1063,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<object>> DeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<object>> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (resourceGroupName == null)
@@ -1268,7 +1089,7 @@ namespace Microsoft.Azure.Management.Redis
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("subscriptionId", subscriptionId);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
             }
 
             // Construct URL
@@ -1332,7 +1153,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             // Create Result
-            HttpOperationResponse<object> result = new HttpOperationResponse<object>();
+            AzureOperationResponse<object> result = new AzureOperationResponse<object>();
             result.Request = httpRequest;
             result.Response = httpResponse;
 
@@ -1346,6 +1167,22 @@ namespace Microsoft.Azure.Management.Redis
             }
             return result;
         }
+
+        //public async Task<AzureOperationResponse<object>> DeleteWithOperationResponseAsync(
+        //    string resourceGroupName, string name, string subscriptionId,
+        //    CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        //{
+        //    // Send Request
+        //    AzureOperationResponse<object> response = await BeginDeleteWithOperationResponseAsync(
+        //        resourceGroupName,
+        //        name,
+        //        subscriptionId,
+        //        cancellationToken);
+
+        //    Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || response.Response.StatusCode == HttpStatusCode.Created);
+
+        //    return await this.Client.GetDeleteOperationResult(response, cancellationToken);
+        //}
 
         /// <summary>
         /// Gets a redis cache (resource description).
@@ -1362,7 +1199,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<RedisGetResponse>> GetWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<RedisResource>> GetWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (resourceGroupName == null)
@@ -1452,14 +1289,14 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             // Create Result
-            HttpOperationResponse<RedisGetResponse> result = new HttpOperationResponse<RedisGetResponse>();
+            AzureOperationResponse<RedisResource> result = new AzureOperationResponse<RedisResource>();
             result.Request = httpRequest;
             result.Response = httpResponse;
 
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                RedisGetResponse resultModel = new RedisGetResponse();
+                RedisResource resultModel = new RedisResource();
                 JToken responseDoc = null;
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
