@@ -98,6 +98,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._serviceProviderProvisioningState = value; }
         }
         
+        private CircuitSku _sku;
+        
+        /// <summary>
+        /// Optional. Sku to be used for the new dedicated circuit.
+        /// </summary>
+        public CircuitSku Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
+        }
+        
         private DedicatedCircuitState _status;
         
         /// <summary>

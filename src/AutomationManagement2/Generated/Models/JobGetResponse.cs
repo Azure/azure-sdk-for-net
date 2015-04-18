@@ -20,35 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Represents a collection of SKUs.
+    /// The response model for the get job operation.
     /// </summary>
-    public partial class SkuCollection
+    public partial class JobGetResponse : AzureOperationResponse
     {
-        private IList<Sku> _value;
+        private Job _job;
         
         /// <summary>
-        /// Optional. The values for the sku.
+        /// Optional. Gets or sets a job.
         /// </summary>
-        public IList<Sku> Value
+        public Job Job
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._job; }
+            set { this._job = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SkuCollection class.
+        /// Initializes a new instance of the JobGetResponse class.
         /// </summary>
-        public SkuCollection()
+        public JobGetResponse()
         {
-            this.Value = new LazyList<Sku>();
         }
     }
 }

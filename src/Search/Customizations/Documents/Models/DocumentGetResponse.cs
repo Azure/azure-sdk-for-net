@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Response containing a document from an Azure Search index.
     /// </summary>
-    public class DocumentGetResponse : DocumentGetResponse<Document>
+    public class DocumentGetResponse : DocumentGetResponseBase<Document>
     {
         /// <summary>
         /// Initializes a new instance of the DocumentGetResponse class.

@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Search
     public partial interface IDocumentOperations
     {
         /// <summary>
-        /// Retrieves a document from the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
+        /// Retrieves a document from the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/>
         /// </summary>
         /// <param name="key">
         /// The key of the document to retrieve; See
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken);
 
         /// <summary>
-        /// Retrieves a document from the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/> for more information)
+        /// Retrieves a document from the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798929.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Search
         /// The generic overloads of the Get and GetAsync methods support mapping of Azure Search field types to .NET
         /// types via the type parameter T. Note that most Azure Search field types are nullable, so for primitives
         /// they often map to nullable types. The type mapping is as follows:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <listheader>
         /// <term>Azure Search field type</term>
         /// <description>.NET type</description>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Search
         /// System.Nullable&lt;System.DateTime&gt; (DateTime? in C#). Both types work, although we recommend using
         /// DateTimeOffset. When retrieving documents, DateTime values will always be in UTC. When indexing documents,
         /// DateTime values are interpreted as follows:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>UTC DateTime</term>
         /// <description>Sent as-is to the index.</description>

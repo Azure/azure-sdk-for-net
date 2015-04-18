@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Contains a document found by a search query, plus associated metadata.
     /// </summary>
-    public class SuggestResult : SuggestResult<Document>
+    public class SuggestResult : SuggestResultBase<Document>
     {
         /// <summary>
         /// Initializes a new instance of the SuggestResult class.

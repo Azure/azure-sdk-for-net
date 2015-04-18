@@ -167,7 +167,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -453,7 +453,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -569,7 +569,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             url = url + "/services/vmimages/";
             url = url + Uri.EscapeDataString(vmImageName);
-            url = url + "/share";
+            url = url + "/shareasync";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("permission=" + Uri.EscapeDataString(permission));
             if (queryParameters.Count > 0)
@@ -598,7 +598,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -619,7 +619,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -734,7 +734,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1050,7 +1050,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1408,6 +1408,76 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     }
                                 }
                             }
+                            
+                            XElement computeImageAttributesElement = vMImageDetailsElement.Element(XName.Get("ComputeImageAttributes", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeImageAttributesElement != null)
+                            {
+                                ComputeImageAttributes computeImageAttributesInstance = new ComputeImageAttributes();
+                                result.ComputeImageAttributes = computeImageAttributesInstance;
+                                
+                                XElement offerElement = computeImageAttributesElement.Element(XName.Get("Offer", "http://schemas.microsoft.com/windowsazure"));
+                                if (offerElement != null)
+                                {
+                                    string offerInstance = offerElement.Value;
+                                    computeImageAttributesInstance.Offer = offerInstance;
+                                }
+                                
+                                XElement skuElement = computeImageAttributesElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                                if (skuElement != null)
+                                {
+                                    string skuInstance = skuElement.Value;
+                                    computeImageAttributesInstance.Sku = skuInstance;
+                                }
+                                
+                                XElement versionElement = computeImageAttributesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                                if (versionElement != null)
+                                {
+                                    string versionInstance = versionElement.Value;
+                                    computeImageAttributesInstance.Version = versionInstance;
+                                }
+                            }
+                            
+                            XElement marketplaceImageAttributesElement = vMImageDetailsElement.Element(XName.Get("MarketplaceImageAttributes", "http://schemas.microsoft.com/windowsazure"));
+                            if (marketplaceImageAttributesElement != null)
+                            {
+                                MarketplaceImageAttributes marketplaceImageAttributesInstance = new MarketplaceImageAttributes();
+                                result.MarketplaceImageAttributes = marketplaceImageAttributesInstance;
+                                
+                                XElement publisherIdElement = marketplaceImageAttributesElement.Element(XName.Get("PublisherId", "http://schemas.microsoft.com/windowsazure"));
+                                if (publisherIdElement != null)
+                                {
+                                    string publisherIdInstance = publisherIdElement.Value;
+                                    marketplaceImageAttributesInstance.PublisherId = publisherIdInstance;
+                                }
+                                
+                                XElement planElement = marketplaceImageAttributesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                                if (planElement != null)
+                                {
+                                    Plan planInstance = new Plan();
+                                    marketplaceImageAttributesInstance.Plan = planInstance;
+                                    
+                                    XElement nameElement4 = planElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement4 != null)
+                                    {
+                                        string nameInstance4 = nameElement4.Value;
+                                        planInstance.Name = nameInstance4;
+                                    }
+                                    
+                                    XElement publisherElement = planElement.Element(XName.Get("Publisher", "http://schemas.microsoft.com/windowsazure"));
+                                    if (publisherElement != null)
+                                    {
+                                        string publisherInstance = publisherElement.Value;
+                                        planInstance.Publisher = publisherInstance;
+                                    }
+                                    
+                                    XElement productElement = planElement.Element(XName.Get("Product", "http://schemas.microsoft.com/windowsazure"));
+                                    if (productElement != null)
+                                    {
+                                        string productInstance = productElement.Value;
+                                        planInstance.Product = productInstance;
+                                    }
+                                }
+                            }
                         }
                         
                     }
@@ -1494,7 +1564,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1874,6 +1944,49 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.ComputeImageAttributes == null)
+            {
+                throw new ArgumentNullException("parameters.ComputeImageAttributes");
+            }
+            if (parameters.ComputeImageAttributes.Offer == null)
+            {
+                throw new ArgumentNullException("parameters.ComputeImageAttributes.Offer");
+            }
+            if (parameters.ComputeImageAttributes.Sku == null)
+            {
+                throw new ArgumentNullException("parameters.ComputeImageAttributes.Sku");
+            }
+            if (parameters.ComputeImageAttributes.Version == null)
+            {
+                throw new ArgumentNullException("parameters.ComputeImageAttributes.Version");
+            }
+            if (parameters.MarketplaceImageAttributes != null)
+            {
+                if (parameters.MarketplaceImageAttributes.Plan == null)
+                {
+                    throw new ArgumentNullException("parameters.MarketplaceImageAttributes.Plan");
+                }
+                if (parameters.MarketplaceImageAttributes.Plan.Name == null)
+                {
+                    throw new ArgumentNullException("parameters.MarketplaceImageAttributes.Plan.Name");
+                }
+                if (parameters.MarketplaceImageAttributes.Plan.Product == null)
+                {
+                    throw new ArgumentNullException("parameters.MarketplaceImageAttributes.Plan.Product");
+                }
+                if (parameters.MarketplaceImageAttributes.Plan.Publisher == null)
+                {
+                    throw new ArgumentNullException("parameters.MarketplaceImageAttributes.Plan.Publisher");
+                }
+                if (parameters.MarketplaceImageAttributes.PublisherId == null)
+                {
+                    throw new ArgumentNullException("parameters.MarketplaceImageAttributes.PublisherId");
+                }
+            }
+            if (parameters.TargetLocations == null)
+            {
+                throw new ArgumentNullException("parameters.TargetLocations");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1919,7 +2032,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1932,19 +2045,56 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 XElement replicationInputElement = new XElement(XName.Get("ReplicationInput", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(replicationInputElement);
                 
-                if (parameters.TargetLocations != null)
+                if (parameters.TargetLocations is ILazyCollection == false || ((ILazyCollection)parameters.TargetLocations).IsInitialized)
                 {
-                    if (parameters.TargetLocations is ILazyCollection == false || ((ILazyCollection)parameters.TargetLocations).IsInitialized)
+                    XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (string targetLocationsItem in parameters.TargetLocations)
                     {
-                        XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (string targetLocationsItem in parameters.TargetLocations)
-                        {
-                            XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
-                            targetLocationsItemElement.Value = targetLocationsItem;
-                            targetLocationsSequenceElement.Add(targetLocationsItemElement);
-                        }
-                        replicationInputElement.Add(targetLocationsSequenceElement);
+                        XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
+                        targetLocationsItemElement.Value = targetLocationsItem;
+                        targetLocationsSequenceElement.Add(targetLocationsItemElement);
                     }
+                    replicationInputElement.Add(targetLocationsSequenceElement);
+                }
+                
+                XElement computeImageAttributesElement = new XElement(XName.Get("ComputeImageAttributes", "http://schemas.microsoft.com/windowsazure"));
+                replicationInputElement.Add(computeImageAttributesElement);
+                
+                XElement offerElement = new XElement(XName.Get("Offer", "http://schemas.microsoft.com/windowsazure"));
+                offerElement.Value = parameters.ComputeImageAttributes.Offer;
+                computeImageAttributesElement.Add(offerElement);
+                
+                XElement skuElement = new XElement(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                skuElement.Value = parameters.ComputeImageAttributes.Sku;
+                computeImageAttributesElement.Add(skuElement);
+                
+                XElement versionElement = new XElement(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                versionElement.Value = parameters.ComputeImageAttributes.Version;
+                computeImageAttributesElement.Add(versionElement);
+                
+                if (parameters.MarketplaceImageAttributes != null)
+                {
+                    XElement marketplaceImageAttributesElement = new XElement(XName.Get("MarketplaceImageAttributes", "http://schemas.microsoft.com/windowsazure"));
+                    replicationInputElement.Add(marketplaceImageAttributesElement);
+                    
+                    XElement publisherIdElement = new XElement(XName.Get("PublisherId", "http://schemas.microsoft.com/windowsazure"));
+                    publisherIdElement.Value = parameters.MarketplaceImageAttributes.PublisherId;
+                    marketplaceImageAttributesElement.Add(publisherIdElement);
+                    
+                    XElement planElement = new XElement(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                    marketplaceImageAttributesElement.Add(planElement);
+                    
+                    XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                    nameElement.Value = parameters.MarketplaceImageAttributes.Plan.Name;
+                    planElement.Add(nameElement);
+                    
+                    XElement publisherElement = new XElement(XName.Get("Publisher", "http://schemas.microsoft.com/windowsazure"));
+                    publisherElement.Value = parameters.MarketplaceImageAttributes.Plan.Publisher;
+                    planElement.Add(publisherElement);
+                    
+                    XElement productElement = new XElement(XName.Get("Product", "http://schemas.microsoft.com/windowsazure"));
+                    productElement.Value = parameters.MarketplaceImageAttributes.Plan.Product;
+                    planElement.Add(productElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -2292,7 +2442,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

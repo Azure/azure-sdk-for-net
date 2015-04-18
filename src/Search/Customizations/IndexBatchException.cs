@@ -14,6 +14,7 @@
 // 
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
@@ -65,6 +66,55 @@ namespace Microsoft.Azure.Search
         public DocumentIndexResponse IndexResponse
         {
             get { return _indexResponse; }
+        }
+
+        /// <summary>
+        /// Finds all index actions in the given batch that failed and need to be retried, and returns them in a
+        /// new batch.
+        /// </summary>
+        /// <param name="originalBatch">The batch that partially failed indexing.</param>
+        /// <param name="keyFieldName">The name of the key field from the index schema.</param>
+        /// <returns>
+        /// A new batch containing all the actions from the given batch that failed and should be retried.
+        /// </returns>
+        public IndexBatch FindFailedActionsToRetry(IndexBatch originalBatch, string keyFieldName)
+        {
+            Func<Document, string> getKey = d => d[keyFieldName].ToString();
+            IEnumerable<IndexAction> failedActions = 
+                DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
+            return new IndexBatch(failedActions);
+        }
+
+        /// <summary>
+        /// Finds all index actions in the given batch that failed and need to be retried, and returns them in a
+        /// new batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+        /// </typeparam>
+        /// <param name="originalBatch">The batch that partially failed indexing.</param>
+        /// <param name="keySelector">A lambda that retrieves a key value from a given document of type T.</param>
+        /// <returns>
+        /// A new batch containing all the actions from the given batch that failed and should be retried.
+        /// </returns>
+        public IndexBatch<T> FindFailedActionsToRetry<T>(IndexBatch<T> originalBatch, Func<T, string> keySelector)
+            where T : class
+        {
+            IEnumerable<IndexAction<T>> failedActions = 
+                DoFindFailedActionsToRetry<IndexBatch<T>, IndexAction<T>, T>(originalBatch, keySelector);
+            return IndexBatch.Create(failedActions);
+        }
+
+        private IEnumerable<TAction> DoFindFailedActionsToRetry<TBatch, TAction, TDoc>(
+            TBatch originalBatch,
+            Func<TDoc, string> keySelector)
+            where TBatch : IndexBatchBase<TAction, TDoc>
+            where TAction : IndexActionBase<TDoc>
+            where TDoc : class
+        {
+            var failedKeys = new HashSet<string>(IndexResponse.Results.Where(r => !r.Succeeded).Select(r => r.Key));
+            Func<TAction, bool> isFailed = a => a.Document != null && failedKeys.Contains(keySelector(a.Document));
+            return originalBatch.Actions.Where(isFailed);
         }
 
         private static string CreateMessage(DocumentIndexResponse indexResponse)

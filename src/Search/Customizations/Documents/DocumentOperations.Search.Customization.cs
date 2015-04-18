@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken,
             Func<string, DocumentSearchResponseFormat<TResult, TDoc>> deserialize)
             where TResponse : DocumentSearchResponseBase<TResult, TDoc>, new()
-            where TResult : SearchResult<TDoc>
+            where TResult : SearchResultBase<TDoc>
             where TDoc : class
         {
             // Validate
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken,
             Func<string, DocumentSearchResponseFormat<TResult, TDoc>> deserialize)
             where TResponse : DocumentSearchResponseBase<TResult, TDoc>, new()
-            where TResult : SearchResult<TDoc>
+            where TResult : SearchResultBase<TDoc>
             where TDoc : class
         {
             // Create HTTP transport objects
@@ -225,14 +225,14 @@ namespace Microsoft.Azure.Search
         }
 
         private class DocumentSearchResponseFormat<TResult, TDoc>
-            where TResult : SearchResult<TDoc>
+            where TResult : SearchResultBase<TDoc>
             where TDoc : class 
         {
             [JsonProperty("@odata.count")]
             public long? Count { get; set; }
 
             [JsonProperty("@search.facets")]
-            public Facets Facets { get; set; }
+            public FacetResults Facets { get; set; }
 
             [JsonProperty("value")]
             public List<TResult> Documents { get; set; }

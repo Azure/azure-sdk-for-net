@@ -29,15 +29,26 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class DedicatedCircuitUpdateParameters
     {
-        private uint _bandwidth;
+        private string _bandwidth;
         
         /// <summary>
-        /// Required. Bandwidth requested for the circuit in Mbps.
+        /// Optional. Bandwidth requested for the circuit in Mbps.
         /// </summary>
-        public uint Bandwidth
+        public string Bandwidth
         {
             get { return this._bandwidth; }
             set { this._bandwidth = value; }
+        }
+        
+        private string _sku;
+        
+        /// <summary>
+        /// Optional. Sku to be used for the new dedicated circuit.
+        /// </summary>
+        public string Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>
@@ -46,16 +57,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitUpdateParameters()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitUpdateParameters
-        /// class with required arguments.
-        /// </summary>
-        public DedicatedCircuitUpdateParameters(uint bandwidth)
-            : this()
-        {
-            this.Bandwidth = bandwidth;
         }
     }
 }

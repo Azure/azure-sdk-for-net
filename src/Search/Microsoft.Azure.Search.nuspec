@@ -3,7 +3,7 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Search</id>
     <title>Microsoft Azure Search Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <releaseNotes>This preview release of the Azure Search .NET SDK includes support for Indexers, as well as other bug fixes and usability improvements.</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>

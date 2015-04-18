@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + "/Servers/";
             url = url + Uri.EscapeDataString(serverId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             XElement lastHeartbeatElement = serverElement.Element(XName.Get("LastHeartbeat", "http://schemas.microsoft.com/windowsazure"));
                             if (lastHeartbeatElement != null)
                             {
-                                DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture);
+                                DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 serverInstance.LastHeartbeat = lastHeartbeatInstance;
                             }
                             
@@ -327,7 +327,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/Servers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -423,7 +423,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 XElement lastHeartbeatElement = arrayOfServerElement.Element(XName.Get("LastHeartbeat", "http://schemas.microsoft.com/windowsazure"));
                                 if (lastHeartbeatElement != null)
                                 {
-                                    DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     serverInstance.LastHeartbeat = lastHeartbeatInstance;
                                 }
                                 

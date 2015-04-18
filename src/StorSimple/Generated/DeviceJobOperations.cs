@@ -510,14 +510,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                         XElement startTimestampElement = timeStatsElement.Element(XName.Get("StartTimestamp", "http://windowscloudbackup.com/CiS/V2013_03"));
                                         if (startTimestampElement != null)
                                         {
-                                            DateTime startTimestampInstance = DateTime.Parse(startTimestampElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime startTimestampInstance = DateTime.Parse(startTimestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             timeStatsInstance.StartTimestamp = startTimestampInstance;
                                         }
                                         
                                         XElement endTimestampElement = timeStatsElement.Element(XName.Get("EndTimestamp", "http://windowscloudbackup.com/CiS/V2013_03"));
                                         if (endTimestampElement != null)
                                         {
-                                            DateTime endTimestampInstance = DateTime.Parse(endTimestampElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime endTimestampInstance = DateTime.Parse(endTimestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             timeStatsInstance.EndTimestamp = endTimestampInstance;
                                         }
                                         
@@ -735,7 +735,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                     XElement backupTimeStampElement = deviceJobListElement.Element(XName.Get("BackupTimeStamp", "http://windowscloudbackup.com/CiS/V2013_03"));
                                     if (backupTimeStampElement != null)
                                     {
-                                        DateTime backupTimeStampInstance = DateTime.Parse(backupTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime backupTimeStampInstance = DateTime.Parse(backupTimeStampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         jobDetailsInstance.BackupTimeStamp = backupTimeStampInstance;
                                     }
                                     
