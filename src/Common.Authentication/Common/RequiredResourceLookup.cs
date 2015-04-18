@@ -23,6 +23,16 @@ namespace Microsoft.Azure.Common.Authentication
     /// </summary>
     internal static class RequiredResourceLookup
     {
+        private const string BatchProviderNamespace = "microsoft.batch";
+        private const string CacheProviderNamespace = "microsoft.cache";
+        private const string ComputeProviderNamespace = "Microsoft.Compute";
+        private const string DataFactoryProviderNamespace = "Microsoft.DataFactory";
+        private const string InsightsProviderNamespace = "microsoft.insights";
+        private const string KeyVaultProviderNamespace = "Microsoft.KeyVault";
+        private const string NetworkProviderNamespace = "Microsoft.Network";
+        private const string StorageProviderNamespace = "Microsoft.Storage";
+        private const string WebAppProviderNamespace = "Microsoft.Web";
+
         internal static IList<string> RequiredProvidersForServiceManagement<T>() where T : ServiceClient<T>
         {
             if (typeof(T).FullName.EndsWith("WebSiteManagementClient"))
@@ -48,43 +58,43 @@ namespace Microsoft.Azure.Common.Authentication
             if (typeof(T).FullName.EndsWith("ResourceManagementClient"))
             {
                 return new[] {
-                    "Microsoft.Web",
-                    "microsoft.insights",
-                    "microsoft.cache",
-                    "Microsoft.KeyVault",
-                    "Microsoft.Compute",
-                    "Microsoft.Network",
-                    "Microsoft.Storage"
+                    CacheProviderNamespace,
+                    ComputeProviderNamespace,
+                    InsightsProviderNamespace,
+                    KeyVaultProviderNamespace,
+                    NetworkProviderNamespace,
+                    StorageProviderNamespace,
+                    WebAppProviderNamespace
                 };
             }
             if (typeof(T).FullName.EndsWith("BatchManagementClient"))
             {
-                return new[] { "microsoft.batch" };
+                return new[] { BatchProviderNamespace };
             }
 
             if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Compute.ComputeManagementClient"))
             {
-                return new[] { "Microsoft.Compute" };
+                return new[] { ComputeProviderNamespace };
             }
 
             if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Dns.DnsManagementClient"))
             {
-                return new[] { "Microsoft.Network" };
+                return new[] { NetworkProviderNamespace };
             }
 
             if (typeof(T).FullName.EndsWith("DataPipelineManagementClient"))
             {
-                return new[] { "Microsoft.DataFactory" };
+                return new[] { DataFactoryProviderNamespace };
             }
 
             if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Network.NetworkResourceProviderClient"))
             {
-                return new[] { "Microsoft.Network" };
+                return new[] { NetworkProviderNamespace };
             }
 
             if (typeof(T).FullName.Equals("Microsoft.Azure.Management.Storage.StorageManagementClient"))
             {
-                return new[] { "Microsoft.Storage" };
+                return new[] { StorageProviderNamespace };
             }
 
             return new string[0];
