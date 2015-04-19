@@ -228,9 +228,19 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
                 }
                 
+                if (parameters.Properties.RetentionDays != null)
+                {
+                    propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                }
+                
                 if (parameters.Properties.UseServerDefault != null)
                 {
                     propertiesValue["useServerDefault"] = parameters.Properties.UseServerDefault;
+                }
+                
+                if (parameters.Properties.AuditLogsTableName != null)
+                {
+                    propertiesValue["auditLogsTableName"] = parameters.Properties.AuditLogsTableName;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -446,6 +456,16 @@ namespace Microsoft.Azure.Management.Sql
                 if (parameters.Properties.StorageAccountSubscriptionId != null)
                 {
                     propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
+                }
+                
+                if (parameters.Properties.RetentionDays != null)
+                {
+                    propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                }
+                
+                if (parameters.Properties.AuditLogsTableName != null)
+                {
+                    propertiesValue["auditLogsTableName"] = parameters.Properties.AuditLogsTableName;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -724,11 +744,25 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
                                 }
                                 
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    string retentionDaysInstance = ((string)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
                                 JToken useServerDefaultValue = propertiesValue["useServerDefault"];
                                 if (useServerDefaultValue != null && useServerDefaultValue.Type != JTokenType.Null)
                                 {
                                     string useServerDefaultInstance = ((string)useServerDefaultValue);
                                     propertiesInstance.UseServerDefault = useServerDefaultInstance;
+                                }
+                                
+                                JToken auditLogsTableNameValue = propertiesValue["auditLogsTableName"];
+                                if (auditLogsTableNameValue != null && auditLogsTableNameValue.Type != JTokenType.Null)
+                                {
+                                    string auditLogsTableNameInstance = ((string)auditLogsTableNameValue);
+                                    propertiesInstance.AuditLogsTableName = auditLogsTableNameInstance;
                                 }
                             }
                             
@@ -995,6 +1029,20 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
                                     propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
+                                }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    string retentionDaysInstance = ((string)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
+                                JToken auditLogsTableNameValue = propertiesValue["auditLogsTableName"];
+                                if (auditLogsTableNameValue != null && auditLogsTableNameValue.Type != JTokenType.Null)
+                                {
+                                    string auditLogsTableNameInstance = ((string)auditLogsTableNameValue);
+                                    propertiesInstance.AuditLogsTableName = auditLogsTableNameInstance;
                                 }
                             }
                             
