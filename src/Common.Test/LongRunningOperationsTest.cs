@@ -36,8 +36,15 @@ namespace Microsoft.Azure.Common.Test
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
 
             Assert.True(true);
-            //Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);
-            //Assert.Equal("abc", handler.RequestHeaders.Authorization.Parameter);
+            Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
+            Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis", 
+                handler.Requests[0].RequestUri.ToString());
+            Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
+            Assert.Equal("http://custom/status",
+                handler.Requests[1].RequestUri.ToString());
+            Assert.Equal(HttpMethod.Get, handler.Requests[2].Method);
+            Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis",
+                handler.Requests[2].RequestUri.ToString());
         }
 
         private IEnumerable<HttpResponseMessage> CreateOrUpdateWithTwoTries()
@@ -58,7 +65,7 @@ namespace Microsoft.Azure.Common.Test
                     }
                 }")
             };
-            response1.Headers.Add("Azure-AsyncOperation", "http://foo/bar");
+            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
 
             yield return response1;
 

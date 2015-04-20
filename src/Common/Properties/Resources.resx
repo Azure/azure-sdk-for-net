@@ -163,6 +163,9 @@ Parameter name: {0}</value>
   <data name="ExceptionRetryManagerNotSet" xml:space="preserve">
     <value>The default RetryManager has not been set. Set it by invoking the RetryManager.SetDefault static method, or if you are using declarative configuration, you can invoke the RetryPolicyFactory.CreateDefault() method to automatically create the retry manager from the configuration file.</value>
   </data>
+  <data name="LongRunningOperationFailed" xml:space="preserve">
+    <value>Long running operation failed.</value>
+  </data>
   <data name="ResponseStatusCodeError" xml:space="preserve">
     <value>Response status code indicates server error: {0} ({1}).</value>
   </data>

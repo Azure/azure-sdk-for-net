@@ -197,6 +197,15 @@ namespace Microsoft.Azure.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Long running operation failed..
+        /// </summary>
+        internal static string LongRunningOperationFailed {
+            get {
+                return ResourceManager.GetString("LongRunningOperationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Response status code indicates server error: {0} ({1})..
         /// </summary>
         internal static string ResponseStatusCodeError {

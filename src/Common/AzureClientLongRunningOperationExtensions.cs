@@ -9,12 +9,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Common.Properties;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure
 {
-    public static class AzureClientExtensions
+    public static class AzureClientLongRunningOperationExtensions
     {
         public static async Task<AzureOperationResponse<T>> GetCreateOrUpdateOperationResult<T>(this IAzureClient client, 
             AzureOperationResponse<T> response,
@@ -24,40 +25,69 @@ namespace Microsoft.Azure
             Debug.Assert(response != null);
             Debug.Assert(response.Body != null);
 
-            AzureOperationResponse<T> operationResponse = response;
+            AzureOperationResponse<T> responseWithResource = response;
+            AzureOperationResponse<AzureAsyncOperation> responseWithOperationStatus = null;
             string status = response.Body.ProvisioningState;
+            CloudError cloudError = null;
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
                 StringComparison.InvariantCultureIgnoreCase)))
             {
-                // Reset operationResponse
-                operationResponse = null;
-
                 // Check Azure-AsyncOperation header
                 if (response.Response.Headers.Contains("Azure-AsyncOperation"))
                 {
-                    string azureAsyncUrl = response.Response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    AzureOperationResponse<AzureAsyncOperation> asyncOperation =
-                        await client.GetAsyncOperation(azureAsyncUrl, cancellationToken).ConfigureAwait(false);
+                    // Reset operationResponse
+                    responseWithResource = null;
 
-                    status = asyncOperation.Body.Status;
+                    string azureAsyncUrl = response.Response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    responseWithOperationStatus = await client.GetAsyncOperation(azureAsyncUrl, 
+                        cancellationToken).ConfigureAwait(false);
+
+                    status = responseWithOperationStatus.Body.Status;
+                    cloudError = responseWithOperationStatus.Body.Error;
                 }
                 else
                 {
-                    // use get getOperationAction
-                    operationResponse = await getOperationAction().ConfigureAwait(false);
+                    // use get getOperationAction if Azure-AsyncOperation header is not present
+                    responseWithResource = await getOperationAction().ConfigureAwait(false);
 
-                    status = operationResponse.Body.ProvisioningState;
+                    status = responseWithResource.Body.ProvisioningState;
+                    cloudError = new CloudError()
+                    {
+                        Code = status,
+                        Message = Resources.LongRunningOperationFailed
+                    };
                 }
             }
 
-            if (operationResponse == null)
+            if (AzureAsyncOperation.AzureAsyncOperationFailedStates.Any(s => s.Equals(status,
+                StringComparison.InvariantCultureIgnoreCase)))
             {
-                operationResponse = await getOperationAction().ConfigureAwait(false);
+                CloudException exception = new CloudException(Resources.LongRunningOperationFailed)
+                {
+                    Body = cloudError
+                };
+
+                if (responseWithOperationStatus != null)
+                {
+                    exception.Request = responseWithOperationStatus.Request;
+                    exception.Response = responseWithOperationStatus.Response;
+                }
+                else
+                {
+                    exception.Request = responseWithResource.Request;
+                    exception.Response = responseWithResource.Response;
+                }
+                throw exception;
             }
 
-            return operationResponse;
+            if (responseWithResource == null)
+            {
+                responseWithResource = await getOperationAction().ConfigureAwait(false);
+            }
+
+            return responseWithResource;
         }
 
         //public static async Task<AzureOperationResponse<object>> GetDeleteOperationResult<T>(this IAzureClient client,
@@ -136,7 +166,7 @@ namespace Microsoft.Azure
                 }
             }
 
-            if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+            if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && resultModel == null)
             {
                 HttpOperationException<AzureAsyncOperation> ex = new HttpOperationException<AzureAsyncOperation>();
                 ex.Request = httpRequest;

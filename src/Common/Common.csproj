@@ -22,7 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAzureClient.cs" />
-    <Compile Include="AzureClientExtensions.cs" />
+    <Compile Include="AzureClientLongRunningOperationExtensions.cs" />
     <Compile Include="CertificateCloudCredentials.cs" />
     <Compile Include="CloudError.cs" />
     <Compile Include="CloudException.cs" />
