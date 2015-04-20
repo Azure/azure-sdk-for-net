@@ -992,10 +992,12 @@ namespace Microsoft.Azure.Management.Redis
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
             {
-                HttpOperationException<object> ex = new HttpOperationException<object>();
+                CloudError cloudError = new CloudError(responseContent);
+                CloudException ex = new CloudException(cloudError.Message);
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
-                ex.Body = null;
+                ex.Body = cloudError;
+                    
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
@@ -1141,10 +1143,11 @@ namespace Microsoft.Azure.Management.Redis
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NotFound)
             {
-                HttpOperationException<object> ex = new HttpOperationException<object>();
+                CloudError cloudError = new CloudError(responseContent);
+                CloudException ex = new CloudException(cloudError.Message);
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
-                ex.Body = null;
+                ex.Body = cloudError;
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
@@ -1277,10 +1280,11 @@ namespace Microsoft.Azure.Management.Redis
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (statusCode != HttpStatusCode.OK)
             {
-                HttpOperationException<object> ex = new HttpOperationException<object>();
+                CloudError cloudError = new CloudError(responseContent);
+                CloudException ex = new CloudException(cloudError.Message);
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
-                ex.Body = null;
+                ex.Body = cloudError;
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);

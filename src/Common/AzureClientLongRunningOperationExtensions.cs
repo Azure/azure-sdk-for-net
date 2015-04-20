@@ -74,7 +74,7 @@ namespace Microsoft.Azure
                     exception.Request = responseWithOperationStatus.Request;
                     exception.Response = responseWithOperationStatus.Response;
                 }
-                else
+                else if (responseWithResource != null)
                 {
                     exception.Request = responseWithResource.Request;
                     exception.Response = responseWithResource.Response;
@@ -166,7 +166,7 @@ namespace Microsoft.Azure
                 }
             }
 
-            if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && resultModel == null)
+            if (statusCode != HttpStatusCode.OK && resultModel == null)
             {
                 HttpOperationException<AzureAsyncOperation> ex = new HttpOperationException<AzureAsyncOperation>();
                 ex.Request = httpRequest;
