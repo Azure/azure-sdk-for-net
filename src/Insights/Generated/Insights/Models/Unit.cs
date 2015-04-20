@@ -33,30 +33,35 @@ namespace Microsoft.Azure.Insights.Models
         /// Count (how many).
         /// </summary>
         Count = 0,
-        
+
         /// <summary>
         /// Unit in bytes.
         /// </summary>
         Bytes = 1,
-        
+
         /// <summary>
         /// Unit in seconds.
         /// </summary>
         Seconds = 2,
-        
+
         /// <summary>
         /// How many per second.
         /// </summary>
         CountPerSecond = 3,
-        
+
         /// <summary>
         /// How many bytes per second.
         /// </summary>
         BytesPerSecond = 4,
-        
+
         /// <summary>
         /// Unit as a percentage.
         /// </summary>
         Percent = 5,
+
+        /// <summary>
+        /// Unit in milli-seconds.
+        /// </summary>
+        MilliSeconds = 6,
     }
 }
