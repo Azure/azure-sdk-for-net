@@ -32,7 +32,7 @@ namespace Microsoft.Azure
         /// Adds the tracking ID for this operation to the outgoing request header
         /// </summary>
         /// <param name="request">The http request message</param>
-        /// <param name="cancellationToken">A token that allows cancelling the http operation</param>
+        /// <param name="cancellationToken">A token that allows canceling the http operation</param>
         /// <returns>The outgoing http request message with the tracking ID header added</returns>
         protected override HttpRequestMessage ProcessRequest(HttpRequestMessage request, 
             CancellationToken cancellationToken)
@@ -45,7 +45,7 @@ namespace Microsoft.Azure
         /// Adds the tracking ID for this operation to the incoming response header
         /// </summary>
         /// <param name="response">The http response message</param>
-        /// <param name="cancellationToken">A token that allows cancelling the http operation</param>
+        /// <param name="cancellationToken">A token that allows canceling the http operation</param>
         /// <returns>The incoming http response message with the tracking ID header added</returns>
        protected override HttpResponseMessage ProcessResponse(HttpResponseMessage response, 
            CancellationToken cancellationToken)
