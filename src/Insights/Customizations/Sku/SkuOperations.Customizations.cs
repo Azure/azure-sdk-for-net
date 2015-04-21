@@ -50,8 +50,15 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("resourceId");
             }
 
-            // TODO: Remove all antares workarounds when their API is confirmed to be working
-            return await this.ListSkuDefinitionsInternalAsync(resourceId, apiVersion, cancellationToken);
+            if (AntaresSkuOperations.IsAntaresResourceType(resourceId))
+            {
+                // Antares does not currently support the new contract and has no API to get all valid SKUs so these are hardcoded for now.
+                return AntaresSkuOperations.ListAntaresSkus();
+            }
+            else
+            {
+                return await this.ListSkuDefinitionsInternalAsync(resourceId, apiVersion, cancellationToken);
+            }
         }
 
         /// <param name='resourceId'>
@@ -72,7 +79,14 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("resourceId");
             }
 
-            return this.GetCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
+            if (AntaresSkuOperations.IsAntaresResourceType(resourceId))
+            {
+                return AntaresSkuOperations.GetAntaresCurrentSku(this, resourceId, apiVersion, cancellationToken);
+            }
+            else
+            {
+                return this.GetCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
+            }
         }
 
         public Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken)
@@ -103,7 +117,15 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("Sku.Tier");
             }
 
-            return this.UpdateCurrentSkuInternalAsync(resourceId, parameters, apiVersion, cancellationToken);
+            // Confirm resourceId is supported
+            if (AntaresSkuOperations.IsAntaresResourceType(resourceId))
+            {
+                return AntaresSkuOperations.UpdateAntaresCurrentSkuAsync(this, resourceId, parameters, apiVersion, cancellationToken);
+            }
+            else
+            {
+                return this.UpdateCurrentSkuInternalAsync(resourceId, parameters, apiVersion, cancellationToken);
+            }
         }
     }
 }
