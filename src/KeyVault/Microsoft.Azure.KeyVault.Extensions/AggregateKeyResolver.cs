@@ -39,7 +39,7 @@ namespace Microsoft.Azure.KeyVault
 
         #region IKeyResolver
 
-        public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token = default( CancellationToken ) )
+        public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token )
         {
             foreach ( var resolver in _resolvers )
             {

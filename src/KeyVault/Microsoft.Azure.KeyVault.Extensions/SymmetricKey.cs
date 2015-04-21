@@ -144,10 +144,11 @@ namespace Microsoft.Azure.KeyVault
                         return AesKw256.AlgorithmName;
 
                     case KeySize384:
-                        // TODO
+                        // Default to longest allowed key length for wrap
                         return AesKw256.AlgorithmName;
 
                     case KeySize512:
+                        // Default to longest allowed key length for wrap
                         return AesKw256.AlgorithmName;
                 }
 
@@ -241,18 +242,18 @@ namespace Microsoft.Azure.KeyVault
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
 
-            using ( var encryptor = algo.CreateEncryptor( Key ) )
+            using ( var encryptor = algo.CreateEncryptor( Key, null ) )
             {
                 return new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
             }
         }
 
-        public async Task<byte[]> UnwrapKeyAsync( byte[] wrappedKey, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public async Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultKeyWrapAlgorithm;
 
-            if ( wrappedKey == null || wrappedKey.Length == 0 )
+            if ( encryptedKey == null || encryptedKey.Length == 0 )
                 throw new ArgumentNullException( "wrappedKey" );
 
             var algo = AlgorithmResolver.Default[algorithm] as KeyWrapAlgorithm;
@@ -260,9 +261,9 @@ namespace Microsoft.Azure.KeyVault
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
 
-            using ( var encryptor = algo.CreateDecryptor( Key ) )
+            using ( var encryptor = algo.CreateDecryptor( Key, null ) )
             {
-                return encryptor.TransformFinalBlock( wrappedKey, 0, wrappedKey.Length );
+                return encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
             }
         }
 
@@ -279,5 +280,16 @@ namespace Microsoft.Azure.KeyVault
 #pragma warning restore 1998
 
         #endregion
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            // Intentionally empty: IDisposable is the base for IKey
+        }
     }
 }

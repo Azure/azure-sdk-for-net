@@ -27,8 +27,12 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// </summary>        
         /// <returns>An initialize AES provider</returns>
         /// <remarks>Throws InvalidOperationException if the JsonWebKey is not an Octet key</remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2000:Dispose objects before losing scope" )]
         public static Aes ToAes( this JsonWebKey self )
         {
+            if ( self == null )
+                throw new ArgumentNullException( "self" );
+
             if ( !self.Kty.Equals( JsonWebKeyType.Octet ) )
                 throw new InvalidOperationException( "key is not an octet key" );
 
@@ -51,6 +55,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// <remarks>Throws InvalidOperationException if the JsonWebKey is not RSA key</remarks>
         public static RSACryptoServiceProvider ToRSA( this JsonWebKey self, bool includePrivateParameters = false )
         {
+            if ( self == null )
+                throw new ArgumentNullException( "self" );
+
             var rsaParameters = self.ToRSAParameters( includePrivateParameters );
             var rsaProvider   = new RSACryptoServiceProvider();
 
@@ -68,6 +75,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// <remarks>Throws InvalidOperationException if the JsonWebKey is not a RSA key</remarks>
         public static RSAParameters ToRSAParameters( this JsonWebKey self, bool includePrivateParameters = false )
         {
+            if ( self == null )
+                throw new ArgumentNullException( "self" );
+
             if ( !string.Equals( JsonWebKeyType.Rsa, self.Kty ) && !string.Equals( JsonWebKeyType.RsaHsm, self.Kty ) )
                 throw new InvalidOperationException( "Key is not a RSA key" );
 

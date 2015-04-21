@@ -71,7 +71,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         /// <param name="iv">The initialization vector</param>
         /// <param name="authenticationData">Authentication data</param>
         /// <returns>An ICryptoTranform for encrypting data</returns>
-        public abstract ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData = null );
+        public abstract ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData );
 
         /// <summary>
         /// Crea a decryptor for the specified key
@@ -80,6 +80,6 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         /// <param name="iv">The initialization vector</param>
         /// <param name="authenticationData">Authentication data</param>
         /// <returns>An ICryptoTransform for decrypting data</returns>
-        public abstract ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData = null );
+        public abstract ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData );
     }
 }

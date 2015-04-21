@@ -27,7 +27,7 @@ namespace Microsoft.Azure.KeyVault
     /// </summary>
     /// <typeparam name="K">The type of the key</typeparam>
     /// <typeparam name="V">The type of the value</typeparam>
-    internal class LRUCache<K, V> where K : class where V : class
+    internal class LRUCache<K, V> : IDisposable where K : class where V : class
     {
         private int                  _capacity;
         private Dictionary<K, V>     _cache = new Dictionary<K, V>();
@@ -53,6 +53,9 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="value">The value</param>
         public void Add( K key, V value )
         {
+            if ( _lock == null )
+                throw new ObjectDisposedException( "LRUCache" );
+
             if ( key == null )
                 throw new ArgumentNullException( "key" );
 
@@ -88,6 +91,9 @@ namespace Microsoft.Azure.KeyVault
         /// <returns>The value for the key or null</returns>
         public V Get( K key )
         {
+            if ( _lock == null )
+                throw new ObjectDisposedException( "LRUCache" );
+
             if ( key == null )
                 throw new ArgumentNullException( "key" );
 
@@ -127,6 +133,9 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="key">The key to remove</param>
         public void Remove( K key )
         {
+            if ( _lock == null )
+                throw new ObjectDisposedException( "LRUCache" );
+
             if ( key == null )
                 throw new ArgumentNullException( "key" );
 
@@ -151,6 +160,9 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         public void Reset()
         {
+            if ( _lock == null )
+                throw new ObjectDisposedException( "LRUCache" );
+
             try
             {
                 _lock.EnterWriteLock();
@@ -161,6 +173,24 @@ namespace Microsoft.Azure.KeyVault
             finally
             {
                 _lock.ExitWriteLock();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                if ( _lock != null )
+                {
+                    _lock.Dispose();
+                    _lock = null;
+                }
             }
         }
     }

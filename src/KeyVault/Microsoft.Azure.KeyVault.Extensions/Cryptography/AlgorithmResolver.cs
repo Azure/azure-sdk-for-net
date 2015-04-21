@@ -72,7 +72,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         public void AddAlgorithm( string algorithmName, Algorithm provider )
         {
             if ( string.IsNullOrWhiteSpace( algorithmName ) )
-                throw new ArgumentNullException( "algorithm" );
+                throw new ArgumentNullException( "algorithmName" );
 
             if ( provider == null )
                 throw new ArgumentNullException( "provider" );

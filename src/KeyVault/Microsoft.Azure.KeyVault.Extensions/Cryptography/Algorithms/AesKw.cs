@@ -26,22 +26,56 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         const int BlockSizeInBits  = 64;
         const int BlockSizeInBytes = BlockSizeInBits >> 3;
 
-        protected static readonly byte[]                   DefaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
-        protected static readonly RNGCryptoServiceProvider Rng       = new RNGCryptoServiceProvider();
+        static readonly byte[] _defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
+
+        protected static RNGCryptoServiceProvider Rng = new RNGCryptoServiceProvider();
 
         protected AesKw( string name ) : base( name )
         {
             
         }
 
-        public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv = null )
+        public ICryptoTransform CreateEncryptor( byte[] key )
         {
+            return CreateEncryptor( key, null );
+        }
+
+        public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv )
+        {
+            if ( key == null )
+                throw new ArgumentNullException( "key" );
+
+            if ( key.Length != 128 >> 3 && key.Length != 192 >> 3 && key.Length != 256 >> 3 )
+                throw new ArgumentException( "key length must be 128, 192 or 256 bits" );
+
+            if ( iv != null && iv.Length != 8 )
+                throw new ArgumentException( "iv length must be 64 bits" );
+
             return new AesKwEncryptor( key, iv ?? DefaultIv );
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv = null )
+        public ICryptoTransform CreateDecryptor( byte[] key )
         {
+            return CreateDecryptor( key, null );
+        }
+
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv)
+        {
+            if ( key == null )
+                throw new ArgumentNullException( "key" );
+
+            if ( key.Length != 128 >> 3 && key.Length != 192 >> 3 && key.Length != 256 >> 3 )
+                throw new ArgumentException( "key length must be 128, 192 or 256 bits" );
+
+            if ( iv != null && iv.Length != 8 )
+                throw new ArgumentException( "iv length must be 64 bits" );
+
             return new AesKwDecryptor( key, iv ?? DefaultIv );
+        }
+
+        private static byte[] DefaultIv
+        {
+            get { return (byte[])_defaultIv.Clone(); }
         }
 
         static byte[] GetBytes( UInt64 i )
@@ -56,7 +90,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             return temp;
         }
 
-        public class AesKwEncryptor : ICryptoTransform
+        class AesKwEncryptor : ICryptoTransform
         {
             private RijndaelManaged _aes;
             private byte[]          _iv;
@@ -219,7 +253,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             }
         }
 
-        public class AesKwDecryptor : ICryptoTransform
+        class AesKwDecryptor : ICryptoTransform
         {
             private RijndaelManaged _aes;
             private byte[]          _iv;
@@ -356,7 +390,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                     }
                 }
 
-                if ( a.SequenceEqual( DefaultIv ) )
+                if ( a.SequenceEqual( _iv ) )
                 {
                     var c = new byte[n << 3];
 

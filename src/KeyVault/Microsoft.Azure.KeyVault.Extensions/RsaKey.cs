@@ -16,6 +16,7 @@
 // governing permissions and limitations under the License.
 
 using System;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.KeyVault
             get
             {
                 if ( _csp == null )
-                    throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
+                    throw new ObjectDisposedException( string.Format( CultureInfo.InvariantCulture, "RsaKey {0} is disposed", Kid ) );
 
                 return _csp.PublicOnly; }
         }
@@ -249,7 +250,7 @@ namespace Microsoft.Azure.KeyVault
             }
         }
 
-        public async Task<byte[]> UnwrapKeyAsync( byte[] wrappedKey, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
+        public async Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -257,7 +258,7 @@ namespace Microsoft.Azure.KeyVault
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultKeyWrapAlgorithm;
 
-            if ( wrappedKey == null || wrappedKey.Length == 0 )
+            if ( encryptedKey == null || encryptedKey.Length == 0 )
                 throw new ArgumentNullException( "wrappedKey" );
 
             if ( _csp.PublicOnly )
@@ -270,7 +271,7 @@ namespace Microsoft.Azure.KeyVault
 
             using ( var encryptor = algo.CreateDecryptor( _csp ) )
             {
-                return encryptor.TransformFinalBlock( wrappedKey, 0, wrappedKey.Length );
+                return encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
             }
         }
 

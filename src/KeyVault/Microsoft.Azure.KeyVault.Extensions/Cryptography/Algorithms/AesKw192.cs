@@ -29,7 +29,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv = null )
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv )
         {
             if ( key == null )
                 throw new ArgumentNullException( "key" );
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             return base.CreateDecryptor( key, iv );
         }
 
-        public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv = null )
+        public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv )
         {
             if ( key == null )
                 throw new ArgumentNullException( "key" );

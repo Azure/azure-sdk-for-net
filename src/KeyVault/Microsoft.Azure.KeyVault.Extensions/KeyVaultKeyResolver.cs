@@ -24,29 +24,24 @@ namespace Microsoft.Azure.KeyVault
 {
     public class KeyVaultKeyResolver : IKeyResolver
     {
-        private readonly KeyVaultClient _client;
-        private readonly string         _name;
+        private readonly KeyVaultClient.AuthenticationCallback _authenticationCallback;
+        private readonly string                                _name;
 
-        public KeyVaultKeyResolver( KeyVaultClient.AuthenticationCallback cb )
-            : this( new KeyVaultClient( cb ) )
+        public KeyVaultKeyResolver( KeyVaultClient.AuthenticationCallback authenticationCallback )
+            : this( null, authenticationCallback )
         {
         }
 
-        public KeyVaultKeyResolver( KeyVaultClient client )
-            : this( string.Empty, client )
+        public KeyVaultKeyResolver( string vaultName, KeyVaultClient.AuthenticationCallback authenticationCallback )
         {
+            if ( authenticationCallback == null )
+                throw new ArgumentNullException( "authenticationCallback" );
+
+            _name                   = vaultName;
+            _authenticationCallback = authenticationCallback;
         }
 
-        public KeyVaultKeyResolver( string vaultName, KeyVaultClient client )
-        {
-            if ( client == null )
-                throw new ArgumentNullException( "client" );
-
-            _name   = vaultName;
-            _client = client;
-        }
-
-        public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token = default(CancellationToken) )
+        public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token )
         {
             if ( string.IsNullOrWhiteSpace( kid ) )
                 throw new ArgumentNullException( "kid" );
@@ -67,14 +62,17 @@ namespace Microsoft.Azure.KeyVault
 
         private Task<IKey> ResolveKeyFromKeyAsync( string kid, CancellationToken token )
         {
-            return _client.GetKeyAsync( kid, token )
+            // KeyVaultClient is not thread-safe
+            var client = new KeyVaultClient( _authenticationCallback );
+
+            return client.GetKeyAsync( kid, token )
                 .ContinueWith<IKey>( task =>
                 {
                     var keyBundle = task.Result;
 
                     if ( keyBundle != null )
                     {
-                        return new KeyVaultKey( _client, keyBundle );
+                        return new KeyVaultKey( _authenticationCallback, keyBundle );
                     }
 
                     return null;
@@ -83,7 +81,10 @@ namespace Microsoft.Azure.KeyVault
 
         private Task<IKey> ResolveKeyFromSecretAsync( string sid, CancellationToken token )
         {
-            return _client.GetSecretAsync( sid, token )
+            // KeyVaultClient is not thread-safe
+            var client = new KeyVaultClient( _authenticationCallback );
+
+            return client.GetSecretAsync( sid, token )
                 .ContinueWith<IKey>( task =>
                 {
                     var secret = task.Result;
@@ -100,19 +101,6 @@ namespace Microsoft.Azure.KeyVault
 
                     return null;
                 }, token );
-        }
-
-        /// <summary>
-        /// Converts a byte array to a Base64Url encoded string
-        /// </summary>
-        /// <param name="input">The byte array to convert</param>
-        /// <returns>The Base64Url encoded form of the input</returns>
-        private static string ToBase64UrlString( byte[] input )
-        {
-            if ( input == null )
-                throw new ArgumentNullException( "input" );
-
-            return Convert.ToBase64String( input ).TrimEnd( '=' ).Replace( '+', '-' ).Replace( '/', '_' );
         }
 
         /// <summary>

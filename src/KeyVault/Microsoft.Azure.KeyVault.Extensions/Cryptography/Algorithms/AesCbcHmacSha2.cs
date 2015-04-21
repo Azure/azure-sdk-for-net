@@ -114,7 +114,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             }
         }
 
-        protected class AesCbcHmacSha2Encryptor : IAuthenticatedCryptoTransform
+        class AesCbcHmacSha2Encryptor : IAuthenticatedCryptoTransform
         {
             readonly byte[]  _hmac_key;
 
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             ICryptoTransform _inner;
             byte[]           _tag;
 
-            public AesCbcHmacSha2Encryptor( string name, byte[] key, byte[] iv, byte[] associatedData )
+            internal AesCbcHmacSha2Encryptor( string name, byte[] key, byte[] iv, byte[] associatedData )
             {
                 // Split the key to get the AES key, the HMAC key and the HMAC object
                 byte[] aesKey;
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             }
         }
 
-        protected class AesCbcHmacSha2Decryptor : IAuthenticatedCryptoTransform
+        class AesCbcHmacSha2Decryptor : IAuthenticatedCryptoTransform
         {
             readonly byte[]  _hmac_key;
 
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             ICryptoTransform _inner;
             byte[]           _tag;
 
-            public AesCbcHmacSha2Decryptor( string name, byte[] key, byte[] iv, byte[] associatedData )
+            internal AesCbcHmacSha2Decryptor( string name, byte[] key, byte[] iv, byte[] associatedData )
             {
                 // Split the key to get the AES key, the HMAC key and the HMAC object
                 byte[] aesKey;

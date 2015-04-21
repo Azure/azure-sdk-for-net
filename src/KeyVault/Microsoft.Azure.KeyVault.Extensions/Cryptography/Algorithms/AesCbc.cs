@@ -35,9 +35,10 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 throw new CryptographicException( "No initialization vector" );
 
             // Create the AES provider
-            var aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = key.Length*8, Key = key, IV = iv };
-
-            return aes.CreateDecryptor();
+            using ( var aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = key.Length*8, Key = key, IV = iv } )
+            {
+                return aes.CreateDecryptor();
+            }
         }
 
         public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData )
@@ -49,9 +50,10 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 throw new CryptographicException( "No initialization vector" );
 
             // Create the AES provider
-            var aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = key.Length*8, Key = key, IV = iv };
-
-            return aes.CreateEncryptor();
+            using ( var aes = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7, KeySize = key.Length*8, Key = key, IV = iv } )
+            {
+                return aes.CreateEncryptor();
+            }
         }
     }
 

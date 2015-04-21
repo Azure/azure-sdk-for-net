@@ -25,10 +25,10 @@ namespace Microsoft.Azure.KeyVault
     /// <summary>
     /// A simple caching Key Resolver using a LRU cache
     /// </summary>
-    public class CachingKeyResolver : IKeyResolver
+    public class CachingKeyResolver : IKeyResolver, IDisposable
     {
-        private readonly LRUCache<string, IKey> _cache;
-        private readonly IKeyResolver           _inner;
+        private LRUCache<string, IKey> _cache;
+        private IKeyResolver           _inner;
 
         /// <summary>
         /// Constructor.
@@ -46,8 +46,14 @@ namespace Microsoft.Azure.KeyVault
 
         #region IKeyResolver
 
-        public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token = default( CancellationToken ) )
+        public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token )
         {
+            if ( _cache == null )
+                throw new ObjectDisposedException( "CachingKeyResolver" );
+
+            if ( string.IsNullOrWhiteSpace( kid ) )
+                throw new ArgumentNullException( "kid" );
+
             IKey result = _cache.Get( kid );
 
             if ( result == null )
@@ -64,5 +70,23 @@ namespace Microsoft.Azure.KeyVault
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                if ( _cache != null )
+                {
+                    _cache.Dispose();
+                    _cache = null;
+                }
+            }
+        }
     }
 }

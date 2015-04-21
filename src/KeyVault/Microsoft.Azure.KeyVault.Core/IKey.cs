@@ -24,7 +24,7 @@ namespace Microsoft.Azure.KeyVault.Core
     /// <summary>
     /// Interface for Keys
     /// </summary>
-    public interface IKey
+    public interface IKey : IDisposable
     {
         /// <summary>
         /// The default encryption algorithm for this key

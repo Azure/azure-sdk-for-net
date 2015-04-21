@@ -15,6 +15,7 @@
 // See the Apache License, Version 2.0 for the specific language
 // governing permissions and limitations under the License.
 
+using System;
 using System.Security.Cryptography;
 using Microsoft.Azure.KeyVault.WebKey;
 
@@ -30,6 +31,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         /// <returns>A WebKey representing the RSA object</returns>
         public static JsonWebKey ToJsonWebKey( this RSA self, bool includePrivateParameters = false )
         {
+            if ( self == null )
+                throw new ArgumentNullException( "self" );
+
             return ToJsonWebKey( self.ExportParameters( includePrivateParameters ) );
         }
 

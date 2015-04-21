@@ -16,6 +16,7 @@
 // governing permissions and limitations under the License.
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Core;
@@ -25,10 +26,10 @@ namespace Microsoft.Azure.KeyVault
 {
     internal class KeyVaultKey : IKey
     {
-        private readonly KeyVaultClient _client;
-        private readonly IKey           _implementation;
+        private readonly KeyVaultClient.AuthenticationCallback _authenticationCallback;
+        private          IKey                                  _implementation;
 
-        internal KeyVaultKey( KeyVaultClient client, KeyBundle keyBundle )
+        internal KeyVaultKey( KeyVaultClient.AuthenticationCallback authenticationCallback, KeyBundle keyBundle )
         {
             switch ( keyBundle.Key.Kty )
             {
@@ -42,74 +43,143 @@ namespace Microsoft.Azure.KeyVault
             }
 
             if ( _implementation == null )
-                throw new ArgumentException( string.Format( "The key type \"{0}\" is not supported", keyBundle.Key.Kty ) );
+                throw new ArgumentException( string.Format( CultureInfo.InvariantCulture, "The key type \"{0}\" is not supported", keyBundle.Key.Kty ) );
 
-            _client = client;
+            _authenticationCallback = authenticationCallback;
         }
 
         public string DefaultEncryptionAlgorithm
         {
-            get { return _implementation.DefaultEncryptionAlgorithm; }
+            get
+            {
+                if ( _implementation == null )
+                    throw new ObjectDisposedException( "KeyVaultKey" );
+
+                return _implementation.DefaultEncryptionAlgorithm;
+            }
         }
 
         public string DefaultKeyWrapAlgorithm
         {
-            get { return _implementation.DefaultKeyWrapAlgorithm; }
+            get
+            {
+                if ( _implementation == null )
+                    throw new ObjectDisposedException( "KeyVaultKey" );
+
+                return _implementation.DefaultKeyWrapAlgorithm;
+            }
         }
 
         public string DefaultSignatureAlgorithm
         {
-            get { return _implementation.DefaultSignatureAlgorithm; }
+            get
+            {
+                if ( _implementation == null )
+                    throw new ObjectDisposedException( "KeyVaultKey" );
+
+                return _implementation.DefaultSignatureAlgorithm;
+            }
         }
 
         public string Kid
         {
-            get { return _implementation.Kid; }
+            get
+            {
+                if ( _implementation == null )
+                    throw new ObjectDisposedException( "KeyVaultKey" );
+
+                return _implementation.Kid;
+            }
         }
 
         public Task<byte[]> DecryptAsync( byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultEncryptionAlgorithm;
 
             // Never local
-            return _client.DecryptAsync( _implementation.Kid, algorithm, ciphertext, token )
+            var client = new KeyVaultClient( _authenticationCallback );
+
+            return client.DecryptAsync( _implementation.Kid, algorithm, ciphertext, token )
                     .ContinueWith( result => result.Result.Result, token );
         }
 
         public Task<Tuple<byte[], byte[], string>> EncryptAsync( byte[] plaintext, byte[] iv, byte[] authenticationData, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
             return _implementation.EncryptAsync( plaintext, iv, authenticationData, algorithm, token );
         }
 
         public Task<Tuple<byte[], string>> WrapKeyAsync( byte[] plaintext, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
             return _implementation.WrapKeyAsync( plaintext, algorithm, token );
         }
 
         public Task<byte[]> UnwrapKeyAsync( byte[] ciphertext, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultKeyWrapAlgorithm;
 
             // Never local
-            return _client.UnwrapKeyAsync( _implementation.Kid, algorithm, ciphertext, token )
+            var client = new KeyVaultClient( _authenticationCallback );
+
+            return client.UnwrapKeyAsync( _implementation.Kid, algorithm, ciphertext, token )
                     .ContinueWith( result => result.Result.Result, token );
         }
 
         public Task<Tuple<byte[], string>> SignAsync( byte[] digest, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultSignatureAlgorithm;
 
             // Never local
-            return _client.SignAsync( _implementation.Kid, algorithm, digest, token )
+            var client = new KeyVaultClient( _authenticationCallback );
+
+            return client.SignAsync( _implementation.Kid, algorithm, digest, token )
                 .ContinueWith( result => new Tuple<byte[], string>( result.Result.Result, algorithm ), token );
         }
 
         public Task<bool> VerifyAsync( byte[] digest, byte[] signature, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
             return _implementation.VerifyAsync( digest, signature, algorithm, token );
+        }
+
+        public void Dispose()
+        {
+            if ( _implementation == null )
+                throw new ObjectDisposedException( "KeyVaultKey" );
+
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        private void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                if ( _implementation != null )
+                {
+                    _implementation.Dispose();
+                    _implementation = null;
+                }
+            }
         }
     }
 }
