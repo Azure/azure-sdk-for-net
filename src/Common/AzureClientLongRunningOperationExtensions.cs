@@ -63,7 +63,7 @@ namespace Microsoft.Azure
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
-                StringComparison.InvariantCultureIgnoreCase)))
+                StringComparison.OrdinalIgnoreCase)))
             {
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
 
@@ -111,7 +111,7 @@ namespace Microsoft.Azure
 
             // Check if operation failed
             if (AzureAsyncOperation.AzureAsyncOperationFailedStates.Any(
-                        s => s.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
+                        s => s.Equals(status, StringComparison.OrdinalIgnoreCase)))
             {
                 CloudException exception = new CloudException(Resources.LongRunningOperationFailed)
                 {
@@ -188,7 +188,7 @@ namespace Microsoft.Azure
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
-                StringComparison.InvariantCultureIgnoreCase)))
+                StringComparison.OrdinalIgnoreCase)))
             {
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
 
@@ -231,7 +231,7 @@ namespace Microsoft.Azure
             }
 
             if (AzureAsyncOperation.AzureAsyncOperationFailedStates.Any(
-                    s => s.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
+                    s => s.Equals(status, StringComparison.OrdinalIgnoreCase)))
             {
                 CloudException exception = new CloudException(Resources.LongRunningOperationFailed)
                 {
