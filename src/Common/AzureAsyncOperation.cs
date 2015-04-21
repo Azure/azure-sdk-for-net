@@ -20,10 +20,24 @@ namespace Microsoft.Azure
     /// </summary>
     public class AzureAsyncOperation
     {
+        /// <summary>
+        /// Successful terminal states for long running operations.
+        /// </summary>
         public static readonly string[] AzureAsyncOperationSuccessStates = {"Succeeded"};
         
+        /// <summary>
+        /// Failed terminal states for long running operations.
+        /// </summary>
         public static readonly string[] AzureAsyncOperationFailedStates = { "Failed", "Canceled" };
 
+        /// <summary>
+        /// Default delay in seconds for long running operations.
+        /// </summary>
+        public static int DefaultDelay = 30;
+
+        /// <summary>
+        /// Terminal states for long running operations.
+        /// </summary>
         public static IEnumerable<string> AzureAsyncOperationTerminalStates
         {
             get { return AzureAsyncOperationSuccessStates.Union(AzureAsyncOperationFailedStates); }
@@ -40,6 +54,12 @@ namespace Microsoft.Azure
         /// error information regarding the failure.
         /// </summary>
         public CloudError Error { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delay in seconds that should be used when checking 
+        /// for the status of the operation.  
+        /// </summary>
+        public int RetryAfter { get; set; }
 
         /// <summary>
         /// Deserialize the object

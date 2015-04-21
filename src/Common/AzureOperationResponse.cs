@@ -7,8 +7,7 @@ using System.Net.Http;
 namespace Microsoft.Azure
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// A standard service response including request ID.
     /// </summary>
     public class AzureOperationResponse<T> : HttpOperationResponse<T>
     {
@@ -19,9 +18,10 @@ namespace Microsoft.Azure
         public string RequestId { get; set; }
     }
 
+    //TODO: Add non-generic HttpOperationResponse to AutoRest
+
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// A standard service response including request ID.
     /// </summary>
     public class AzureOperationResponse
     {

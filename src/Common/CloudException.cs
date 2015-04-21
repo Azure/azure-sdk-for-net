@@ -3,13 +3,11 @@
 
 using Microsoft.Rest;
 using System;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure
 {
     /// <summary>
-    /// An exception generated from an http response error message returned from a Microsoft Azure service
+    /// An exception generated from an http response returned from a Microsoft Azure service
     /// </summary>
     public class CloudException : HttpOperationException<CloudError>
     {

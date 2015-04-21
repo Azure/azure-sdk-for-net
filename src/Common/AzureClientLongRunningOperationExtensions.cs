@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,23 +18,55 @@ namespace Microsoft.Azure
 {
     public static class AzureClientLongRunningOperationExtensions
     {
-        public static async Task<AzureOperationResponse<T>> GetCreateOrUpdateOperationResult<T>(this IAzureClient client, 
+        /// <summary>
+        /// Gets operation result for PUT operations.
+        /// </summary>
+        /// <typeparam name="T">Type of the resource</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="getOperationAction">Delegate for the get operation</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Response with created resource</returns>
+        public static async Task<AzureOperationResponse<T>> GetCreateOrUpdateOperationResultAsync<T>(this IAzureClient client, 
             AzureOperationResponse<T> response,
             Func<Task<AzureOperationResponse<T>>> getOperationAction,
             CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : ResourceBase
         {
-            Debug.Assert(response != null);
+            if (response == null)
+            {
+                throw new ArgumentNullException("response");
+            }
+            if (getOperationAction == null)
+            {
+                throw new ArgumentNullException("getOperationAction");
+            }
             Debug.Assert(response.Body != null);
 
             AzureOperationResponse<T> responseWithResource = response;
             AzureOperationResponse<AzureAsyncOperation> responseWithOperationStatus = null;
             string status = response.Body.ProvisioningState;
             CloudError cloudError = null;
+            int delayInSeconds = AzureAsyncOperation.DefaultDelay;
+
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            else
+            {
+                if (response.Response.Headers.Contains("Retry-After"))
+                {
+                    delayInSeconds = int.Parse(response.Response.Headers.GetValues("Retry-After").FirstOrDefault(),
+                        CultureInfo.InvariantCulture);
+                }
+            }
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
                 StringComparison.InvariantCultureIgnoreCase)))
             {
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+
                 // Check Azure-AsyncOperation header
                 if (response.Response.Headers.Contains("Azure-AsyncOperation"))
                 {
@@ -41,9 +74,10 @@ namespace Microsoft.Azure
                     responseWithResource = null;
 
                     string azureAsyncUrl = response.Response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    // TODO: Add wait time between polling attempts
-                    responseWithOperationStatus = await client.GetAsyncOperation(azureAsyncUrl, 
+                    responseWithOperationStatus = await client.GetLongRunningOperationStatusAsync(azureAsyncUrl, 
                         cancellationToken).ConfigureAwait(false);
+
+                    Debug.Assert(responseWithOperationStatus.Body != null);
 
                     status = responseWithOperationStatus.Body.Status;
                     cloudError = responseWithOperationStatus.Body.Error;
@@ -51,7 +85,6 @@ namespace Microsoft.Azure
                 else
                 {
                     // use get getOperationAction if Azure-AsyncOperation header is not present
-                    // TODO: Add wait time between polling attempts
                     responseWithResource = await getOperationAction().ConfigureAwait(false);
 
                     status = responseWithResource.Body.ProvisioningState;
@@ -61,8 +94,22 @@ namespace Microsoft.Azure
                         Message = Resources.LongRunningOperationFailed
                     };
                 }
+
+                // Update delay
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+                else
+                {
+                    if (responseWithOperationStatus != null && responseWithOperationStatus.Body.RetryAfter > 0)
+                    {
+                        delayInSeconds = responseWithOperationStatus.Body.RetryAfter;
+                    }
+                }
             }
 
+            // Check if operation failed
             if (AzureAsyncOperation.AzureAsyncOperationFailedStates.Any(
                         s => s.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
@@ -92,7 +139,14 @@ namespace Microsoft.Azure
             return responseWithResource;
         }
 
-        public static async Task<AzureOperationResponse> GetDeleteOperationResult(this IAzureClient client,
+        /// <summary>
+        /// Gets operation result for DELETE and POST operations.
+        /// </summary>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationResponse> GetPostOrDeleteOperationResultAsync(this IAzureClient client,
             AzureOperationResponse response,
             CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
@@ -102,42 +156,77 @@ namespace Microsoft.Azure
                          response.Response.StatusCode == HttpStatusCode.Accepted ||
                          response.Response.StatusCode == HttpStatusCode.NoContent);
 
-            AzureOperationResponse responseFromLocation = response;
-            AzureOperationResponse<AzureAsyncOperation> responseWithOperationStatus = null;
-            string status = response.Response.StatusCode == HttpStatusCode.Accepted ? "Deleting" : "Succeeded";
+            AzureOperationResponse operationResponse = response;
+            string status;
+            if (response.Response.StatusCode == HttpStatusCode.Accepted)
+            {
+                status = "InProgress";
+            }
+            else if (response.Response.StatusCode < HttpStatusCode.BadRequest)
+            {
+                status = "Succeeded";
+            }
+            else
+            {
+                status = "Failed";
+            }
             CloudError cloudError = null;
+            int delayInSeconds = AzureAsyncOperation.DefaultDelay;
+
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            else
+            {
+                if (response.Response.Headers.Contains("Retry-After"))
+                {
+                    delayInSeconds = int.Parse(response.Response.Headers.GetValues("Retry-After").FirstOrDefault(),
+                        CultureInfo.InvariantCulture);
+                }
+            }
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
                 StringComparison.InvariantCultureIgnoreCase)))
             {
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+
+                string statusUrl;
                 // Check Azure-AsyncOperation header
                 if (response.Response.Headers.Contains("Azure-AsyncOperation"))
                 {
-                    // Reset operationResponse
-                    responseFromLocation = null;
-
-                    string azureAsyncUrl = response.Response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    // TODO: Add wait time between polling attempts
-                    responseWithOperationStatus = await client.GetAsyncOperation(azureAsyncUrl,
-                        cancellationToken).ConfigureAwait(false);
-
-                    status = responseWithOperationStatus.Body.Status;
-                    cloudError = responseWithOperationStatus.Body.Error;
+                    statusUrl = response.Response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                 }
                 else
                 {
-                    string locationUrl = response.Response.Headers.GetValues("Location").FirstOrDefault();
-                    // use get getOperationAction if Azure-AsyncOperation header is not present
-                    // TODO: Add wait time between polling attempts
-                    responseFromLocation = await client.GetAsyncOperationFromLocation(locationUrl, cancellationToken).ConfigureAwait(false);
+                    Debug.Assert(response.Response.Headers.Contains("Location"));
+                    // use get Location header if Azure-AsyncOperation header is not present
+                    statusUrl = response.Response.Headers.GetValues("Location").FirstOrDefault();
+                }
 
-                    status = response.Response.StatusCode == HttpStatusCode.Accepted ? "Deleting" : "Succeeded";
-                    cloudError = new CloudError()
+                AzureOperationResponse<AzureAsyncOperation> responseWithOperationStatus =
+                    await client.GetLongRunningOperationStatusAsync(statusUrl, cancellationToken).ConfigureAwait(false);
+
+                status = responseWithOperationStatus.Body.Status;
+                cloudError = responseWithOperationStatus.Body.Error;
+                operationResponse = new AzureOperationResponse
+                {
+                    Request = responseWithOperationStatus.Request,
+                    Response = responseWithOperationStatus.Response
+                };
+
+                // Update delay
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+                else
+                {
+                    if (responseWithOperationStatus.Body.RetryAfter > 0)
                     {
-                        Code = status,
-                        Message = Resources.LongRunningOperationFailed
-                    };
+                        delayInSeconds = responseWithOperationStatus.Body.RetryAfter;
+                    }
                 }
             }
 
@@ -149,30 +238,31 @@ namespace Microsoft.Azure
                     Body = cloudError
                 };
 
-                // Azure terminal state is only possible from Azure-AsyncOperation
-                if (responseWithOperationStatus != null)
-                {
-                    exception.Request = responseWithOperationStatus.Request;
-                    exception.Response = responseWithOperationStatus.Response;
-                }
+                exception.Request = operationResponse.Request;
+                exception.Response = operationResponse.Response;
 
                 throw exception;
             }
 
-            // TODO: Response can be from responseWithOperationStatus or responseFromLocation. Handle! 
-
-            return responseFromLocation;
+            return operationResponse;
         }
 
-        public static async Task<AzureOperationResponse<AzureAsyncOperation>> GetAsyncOperation(
+        /// <summary>
+        /// Gets long running operation status from specified URL.
+        /// </summary>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="operationUrl">URL specified via Location or Azure-AsyncOperation header.</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns></returns>
+        public static async Task<AzureOperationResponse<AzureAsyncOperation>> GetLongRunningOperationStatusAsync(
             this IAzureClient client,
-            string operationStatusLink, 
+            string operationUrl, 
             CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
-            if (operationStatusLink == null)
+            if (operationUrl == null)
             {
-                throw new ArgumentNullException("operationStatusLink");
+                throw new ArgumentNullException("operationUrl");
             }
 
             // Tracing
@@ -182,13 +272,13 @@ namespace Microsoft.Azure
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                tracingParameters.Add("operationUrl", operationUrl);
                 ServiceClientTracing.Enter(invocationId, client, "GetLongRunningOperationStatusAsync", tracingParameters);
             }
 
             // Construct URL
             string url = "";
-            url = url + operationStatusLink;
+            url = url + operationUrl;
             url = url.Replace(" ", "%20");
 
             // Create HTTP transport objects
@@ -218,10 +308,9 @@ namespace Microsoft.Azure
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            AzureAsyncOperation resultModel = null;
+            AzureAsyncOperation resultModel = new AzureAsyncOperation();;
             if (!string.IsNullOrEmpty(responseContent))
             {
-                resultModel = new AzureAsyncOperation();
                 JToken responseDoc = null;
                 responseDoc = JToken.Parse(responseContent);
 
@@ -230,14 +319,47 @@ namespace Microsoft.Azure
                     resultModel.DeserializeJson(responseDoc);
                 }
             }
-
-            if (statusCode != HttpStatusCode.OK && resultModel == null)
+            else
             {
-                CloudError cloudError = new CloudError(responseContent);
-                CloudException ex = new CloudException(cloudError.Message);
+                if (statusCode == HttpStatusCode.Accepted)
+                {
+                    resultModel.Status = "InProgress";
+                }
+                else if (statusCode < HttpStatusCode.BadRequest)
+                {
+                    resultModel.Status = "Succeeded";
+                }
+                else
+                {
+                    resultModel.Status = "Failed";
+                    resultModel.Error = new CloudError
+                    {
+                        Message = Resources.LongRunningOperationFailed
+                    };
+                }
+            }
+
+            if (httpResponse.Headers.Contains("Retry-After"))
+            {
+                resultModel.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(),
+                    CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                resultModel.RetryAfter = client.LongRunningOperationRetryTimeout;
+            }
+
+            if (statusCode >= HttpStatusCode.BadRequest)
+            {
+                string errorMessage = Resources.LongRunningOperationFailed;
+                if (resultModel.Error != null && !string.IsNullOrWhiteSpace(resultModel.Error.Message))
+                {
+                    errorMessage = resultModel.Error.Message;
+                }
+                CloudException ex = new CloudException(errorMessage);
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
-                ex.Body = cloudError;
+                ex.Body = resultModel.Error;
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
@@ -250,85 +372,6 @@ namespace Microsoft.Azure
             result.Request = httpRequest;
             result.Response = httpResponse;
             result.Body = resultModel;
-
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        public static async Task<AzureOperationResponse> GetAsyncOperationFromLocation(
-            this IAzureClient client,
-            string locationUrl,
-            CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // Validate
-            if (locationUrl == null)
-            {
-                throw new ArgumentNullException("operationStatusLink");
-            }
-
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("operationStatusLink", locationUrl);
-                ServiceClientTracing.Enter(invocationId, client, "GetLongRunningOperationStatusAsync", tracingParameters);
-            }
-
-            // Construct URL
-            string url = "";
-            url = url + locationUrl;
-            url = url.Replace(" ", "%20");
-
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = HttpMethod.Get;
-            httpRequest.RequestUri = new Uri(url);
-
-            // Set Credentials
-            if (client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (statusCode != HttpStatusCode.OK && 
-                statusCode != HttpStatusCode.Accepted &&
-                statusCode != HttpStatusCode.NoContent)
-            {
-                CloudException ex = new CloudException(Resources.LongRunningOperationFailed);
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-
-            // Create Result
-            AzureOperationResponse result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
 
             if (shouldTrace)
             {
