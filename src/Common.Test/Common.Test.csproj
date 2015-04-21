@@ -42,7 +42,7 @@
     <Compile Include="CloudExceptionTests.cs" />
     <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />
     <Compile Include="Fakes\FakeServiceClient.cs" />
-    <Compile Include="Fakes\LROTestHandler.cs" />
+    <Compile Include="Fakes\PlaybackTestHandler.cs" />
     <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
     <Compile Include="LazyDictionaryTest.cs" />
     <Compile Include="LazyListTest.cs" />

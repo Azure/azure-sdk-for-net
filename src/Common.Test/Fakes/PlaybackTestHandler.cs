@@ -11,7 +11,10 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Common.Test.Fakes
 {
-    public class LROTestHandler : DelegatingHandler
+    /// <summary>
+    /// Plays back specified HTTP messages
+    /// </summary>
+    public class PlaybackTestHandler : DelegatingHandler
     {
         private readonly List<HttpResponseMessage> _responses;
 
@@ -19,14 +22,14 @@ namespace Microsoft.Azure.Common.Test.Fakes
 
         public List<HttpRequestMessage> Requests { get; private set; }
 
-        public LROTestHandler()
+        public PlaybackTestHandler()
         {
             _responses = new List<HttpResponseMessage>();
             Requests = new List<HttpRequestMessage>();
             _counter = 0;
         }
 
-        public LROTestHandler(IEnumerable<HttpResponseMessage> responses) :
+        public PlaybackTestHandler(IEnumerable<HttpResponseMessage> responses) :
             this()
         {
             _responses.AddRange(responses);

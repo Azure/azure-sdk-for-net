@@ -30,7 +30,6 @@
     <Compile Include="TokenCloudCredentials.cs" />
     <Compile Include="SubscriptionCloudCredentials.cs" />
     <Compile Include="AzureOperationResponse.cs" />
-    <Compile Include="OperationStatus.cs" />
     <Compile Include="AzureAsyncOperation.cs" />
     <Compile Include="ClientRequestTrackingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

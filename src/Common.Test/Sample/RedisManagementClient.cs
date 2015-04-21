@@ -1060,7 +1060,7 @@ namespace Microsoft.Azure.Management.Redis
 
             Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || response.Response.StatusCode == HttpStatusCode.Created);
 
-            return await this.Client.GetCreateOrUpdateOperationResult(response, 
+            return await this.Client.GetCreateOrUpdateOperationResultAsync(response, 
                 () => GetWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken),
                 cancellationToken);
         }
@@ -1195,9 +1195,11 @@ namespace Microsoft.Azure.Management.Redis
                 subscriptionId,
                 cancellationToken);
 
-            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || response.Response.StatusCode == HttpStatusCode.Created);
+            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || 
+                response.Response.StatusCode == HttpStatusCode.Accepted || 
+                response.Response.StatusCode == HttpStatusCode.Created);
 
-            return await this.Client.GetDeleteOperationResult(response, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
         }
 
         /// <summary>
@@ -1241,7 +1243,7 @@ namespace Microsoft.Azure.Management.Redis
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("subscriptionId", subscriptionId);
-                ServiceClientTracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
             }
 
             // Construct URL
