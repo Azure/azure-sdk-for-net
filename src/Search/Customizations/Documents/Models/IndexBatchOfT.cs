@@ -13,9 +13,7 @@
 // limitations under the License. 
 // 
 
-using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Search.Models
 {
@@ -25,33 +23,15 @@ namespace Microsoft.Azure.Search.Models
     /// <typeparam name="T">
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
-    public class IndexBatch<T> where T : class
+    public class IndexBatch<T> : IndexBatchBase<IndexAction<T>, T> where T : class
     {
-        // NOTE: We use IEnumerable so callers can stream each batch of documents if they want.
-        [JsonProperty("value")]
-        private IEnumerable<IndexAction<T>> _actions;
-
         /// <summary>
         /// Initializes a new instance of the IndexBatch class.
         /// </summary>
         /// <param name="actions">The index actions to include in the batch.</param>
-        public IndexBatch(IEnumerable<IndexAction<T>> actions)
+        public IndexBatch(IEnumerable<IndexAction<T>> actions) : base(actions)
         {
-            if (actions == null)
-            {
-                throw new ArgumentNullException("actions");
-            }
-
-            _actions = actions;
-        }
-
-        /// <summary>
-        /// Gets the sequence of actions in the batch.
-        /// </summary>
-        [JsonIgnore]
-        public IEnumerable<IndexAction<T>> Documents
-        {
-            get { return _actions; }
+            // Do nothing.
         }
     }
 }
