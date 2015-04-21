@@ -97,7 +97,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.AzureGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.AzureTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId}
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId},
+                        { AzureEnvironment.Endpoint.AzureCaboFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureCaboFileSystemEndpointSuffix}, //TODO: Update with production suffix when available
+                        { AzureEnvironment.Endpoint.AzureKonaCatalogEndpointSuffix, AzureEnvironmentConstants.AzureKonaCatalogEndpointSuffix} //TODO: Update with production suffix when available
                     }
                 }
             },
@@ -284,7 +286,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
             AzureKeyVaultDnsSuffix,
 
-            AzureKeyVaultServiceEndpointResourceId
+            AzureKeyVaultServiceEndpointResourceId,
+
+            AzureCaboFileSystemEndpointSuffix,
+
+            AzureKonaCatalogEndpointSuffix
         }
     }
 
@@ -316,6 +322,10 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public const string ChinaManagementPortalUrl = "http://go.microsoft.com/fwlink/?LinkId=301902";
 
         public const string AzureStorageEndpointSuffix = "core.windows.net";
+
+        public const string AzureCaboFileSystemEndpointSuffix = "caboaccountdogfood.net";
+
+        public const string AzureKonaCatalogEndpointSuffix = "www.kobotest02.osdinfra.net";
 
         public const string ChinaStorageEndpointSuffix = "core.chinacloudapi.cn";
 
