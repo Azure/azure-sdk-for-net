@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Rest;
+using System.Net.Http;
 
 namespace Microsoft.Azure
 {
@@ -16,5 +17,22 @@ namespace Microsoft.Azure
         /// made against the service.
         /// </summary>
         public string RequestId { get; set; }
+    }
+
+    /// <summary>
+    /// A standard service response including an HTTP status code and request
+    /// ID.
+    /// </summary>
+    public class AzureOperationResponse
+    {
+        /// <summary>
+        /// Gets information about the associated HTTP request.
+        /// </summary>
+        public HttpRequestMessage Request { get; set; }
+
+        /// <summary>
+        /// Gets information about the associated HTTP response.
+        /// </summary>
+        public HttpResponseMessage Response { get; set; }
     }
 }

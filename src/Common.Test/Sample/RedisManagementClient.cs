@@ -715,11 +715,20 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='subscriptionId'>
         /// Required.
         /// </param>
-        public static object BeginDelete(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
+        public static void BeginDelete(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
         {
-            return Task.Factory.StartNew((object s) =>
+            Task.Factory.StartNew((object s) =>
             {
                 return ((IRedisOperations)s).BeginDeleteAsync(resourceGroupName, name, subscriptionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        public static void Delete(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId)
+        {
+            Task.Factory.StartNew((object s) =>
+            {
+                return ((IRedisOperations)s).DeleteAsync(resourceGroupName, name, subscriptionId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -742,10 +751,15 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<object> BeginDeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task BeginDeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            AzureOperationResponse<object> result = await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
-            return result.Body;
+            AzureOperationResponse result = await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
+            return;
+        }
+        public static async Task DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            AzureOperationResponse result = await operations.DeleteWithOperationResponseAsync(resourceGroupName, name, subscriptionId, cancellationToken).ConfigureAwait(false);
+            return;
         }
 
         /// <summary>
@@ -837,7 +851,8 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Gets a redis cache (resource description).
@@ -1065,7 +1080,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string name, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (resourceGroupName == null)
@@ -1156,13 +1171,9 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             // Create Result
-            AzureOperationResponse<object> result = new AzureOperationResponse<object>();
+            AzureOperationResponse result = new AzureOperationResponse();
             result.Request = httpRequest;
             result.Response = httpResponse;
-
-            // Deserialize Response
-            object resultModel = default(object);
-            result.Body = resultModel;
 
             if (shouldTrace)
             {
@@ -1171,21 +1182,23 @@ namespace Microsoft.Azure.Management.Redis
             return result;
         }
 
-        //public async Task<AzureOperationResponse<object>> DeleteWithOperationResponseAsync(
-        //    string resourceGroupName, string name, string subscriptionId,
-        //    CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        //{
-        //    // Send Request
-        //    AzureOperationResponse<object> response = await BeginDeleteWithOperationResponseAsync(
-        //        resourceGroupName,
-        //        name,
-        //        subscriptionId,
-        //        cancellationToken);
+        public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(
+            string resourceGroupName, 
+            string name, 
+            string subscriptionId,
+            CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
+                resourceGroupName,
+                name,
+                subscriptionId,
+                cancellationToken);
 
-        //    Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || response.Response.StatusCode == HttpStatusCode.Created);
+            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || response.Response.StatusCode == HttpStatusCode.Created);
 
-        //    return await this.Client.GetDeleteOperationResult(response, cancellationToken);
-        //}
+            return await this.Client.GetDeleteOperationResult(response, cancellationToken);
+        }
 
         /// <summary>
         /// Gets a redis cache (resource description).
