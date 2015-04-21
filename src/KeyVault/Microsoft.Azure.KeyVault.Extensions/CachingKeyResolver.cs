@@ -16,42 +16,51 @@
 // governing permissions and limitations under the License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Core;
 
 namespace Microsoft.Azure.KeyVault
 {
-    public class AggregateKeyResolver : IKeyResolver
+    /// <summary>
+    /// A simple caching Key Resolver using a LRU cache
+    /// </summary>
+    public class CachingKeyResolver : IKeyResolver
     {
-        private readonly ConcurrentBag<IKeyResolver> _resolvers = new ConcurrentBag<IKeyResolver>();
+        private readonly LRUCache<string, IKey> _cache;
+        private readonly IKeyResolver           _inner;
 
-        public AggregateKeyResolver Add( IKeyResolver resolver )
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="capacity">The maximim capacity for the cache</param>
+        /// <param name="inner">The IKeyResolver to wrap</param>
+        public CachingKeyResolver( int capacity, IKeyResolver inner )
         {
-            if ( resolver == null )
-                throw new ArgumentNullException( "resolver" );
+            if ( inner == null )
+                throw new ArgumentNullException( "inner" );
 
-            _resolvers.Add( resolver );
-
-            return this;
+            _cache = new LRUCache<string, IKey>( capacity );
+            _inner = inner;
         }
 
         #region IKeyResolver
 
         public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token = default( CancellationToken ) )
         {
-            foreach ( var resolver in _resolvers )
-            {
-                IKey resolved = await resolver.ResolveKeyAsync( kid, token );
+            IKey result = _cache.Get( kid );
 
-                if ( resolved != null )
+            if ( result == null )
+            {
+                result = await _inner.ResolveKeyAsync( kid, token );
+
+                if ( result != null )
                 {
-                    return resolved;
+                    _cache.Add( kid, result );
                 }
             }
 
-            return null;
+            return result;
         }
 
         #endregion
