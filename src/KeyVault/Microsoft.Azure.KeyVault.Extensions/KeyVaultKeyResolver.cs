@@ -22,25 +22,78 @@ using Microsoft.Azure.KeyVault.Core;
 
 namespace Microsoft.Azure.KeyVault
 {
+    /// <summary>
+    /// Azure Key Vault KeyResolver. This class resolves Key Vault Key Identifiers and
+    /// Secret Identifiers to implementations of IKey. Secret Identifiers can only
+    /// be resolved if the Secret is a byte array with a length matching one of the AES
+    /// key lengths (128, 192, 256) and the content-type of the secret is application/octet-stream.
+    /// </summary>
     public class KeyVaultKeyResolver : IKeyResolver
     {
-        private readonly KeyVaultClient.AuthenticationCallback _authenticationCallback;
-        private readonly string                                _name;
+        private readonly KeyVaultClient _client;
+        private readonly string         _name;
 
+        /// <summary>
+        /// Creates a new Key Vault KeyResolver that uses a KeyVaultClient constructed
+        /// with the provided authentication callback.
+        /// </summary>
+        /// <param name="authenticationCallback">Key Vault authentication callback</param>
         public KeyVaultKeyResolver( KeyVaultClient.AuthenticationCallback authenticationCallback )
-            : this( null, authenticationCallback )
+            : this( new KeyVaultClient( authenticationCallback ) )
         {
         }
 
+        /// <summary>
+        /// Create a new Key Vault KeyResolver that uses the specified KeyVaultClient
+        /// </summary>
+        /// <param name="client">Key Vault client</param>
+        public KeyVaultKeyResolver( KeyVaultClient client )
+        {
+            if ( client == null )
+                throw new ArgumentNullException( "client" );
+
+            _name   = null;
+            _client = client;
+        }
+
+        /// <summary>
+        /// Creates a new Key Vault KeyResolver that uses a KeyVaultClient constructed
+        /// with the provided authentication callback and only resolves keys for the 
+        /// specified key vault
+        /// </summary>
+        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.net/ </param>
+        /// <param name="authenticationCallback">Key Vault authentication callback</param>
         public KeyVaultKeyResolver( string vaultName, KeyVaultClient.AuthenticationCallback authenticationCallback )
+            : this( vaultName, new KeyVaultClient( authenticationCallback ) )
         {
-            if ( authenticationCallback == null )
-                throw new ArgumentNullException( "authenticationCallback" );
-
-            _name                   = vaultName;
-            _authenticationCallback = authenticationCallback;
         }
 
+        /// <summary>
+        /// Creates a new Key Vault KeyResolver that uses the specified KeyVaultClient
+        /// and only resolves keys for the specified key vault
+        /// </summary>
+        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.net/ </param>
+        /// <param name="client">Key Vault client</param>
+        public KeyVaultKeyResolver( string vaultName, KeyVaultClient client )
+        {
+            if ( string.IsNullOrWhiteSpace( vaultName ) )
+                throw new ArgumentNullException( "vaultName" );
+
+            if ( client == null )
+                throw new ArgumentNullException( "client" );
+
+            _name   = NormalizeVaultName( vaultName );
+            _client = client;
+        }
+
+        #region IKeyResolver
+
+        /// <summary>
+        /// Provides an IKey implementation for the specified key or secret identifier.
+        /// </summary>
+        /// <param name="kid">The key or secret identifier to resolve</param>
+        /// <param name="token">Cancellation token</param>
+        /// <returns>The resolved IKey implementation or null</returns>
         public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token )
         {
             if ( string.IsNullOrWhiteSpace( kid ) )
@@ -60,19 +113,35 @@ namespace Microsoft.Azure.KeyVault
             return null;
         }
 
+        #endregion
+
+        private string NormalizeVaultName( string vaultName )
+        {
+            Uri vaultUri = new Uri( vaultName, UriKind.Absolute );
+
+            if ( vaultUri.Scheme != Uri.UriSchemeHttps )
+                throw new ArgumentException( "The vaultName must use the https scheme" );
+
+            if ( !vaultUri.Host.EndsWith( "vault.net") )
+                throw new ArgumentException( "The vaultName must end with vault.net" );
+
+            if ( !string.IsNullOrWhiteSpace( vaultUri.PathAndQuery) )
+                throw new ArgumentException( "The vaultName cannot contain a path or query string" );
+
+            return vaultUri.AbsoluteUri;
+        }
+
         private Task<IKey> ResolveKeyFromKeyAsync( string kid, CancellationToken token )
         {
-            // KeyVaultClient is not thread-safe
-            var client = new KeyVaultClient( _authenticationCallback );
-
-            return client.GetKeyAsync( kid, token )
+            // KeyVaultClient is thread-safe
+            return _client.GetKeyAsync( kid, token )
                 .ContinueWith<IKey>( task =>
                 {
                     var keyBundle = task.Result;
 
                     if ( keyBundle != null )
                     {
-                        return new KeyVaultKey( _authenticationCallback, keyBundle );
+                        return new KeyVaultKey( _client, keyBundle );
                     }
 
                     return null;
@@ -81,10 +150,8 @@ namespace Microsoft.Azure.KeyVault
 
         private Task<IKey> ResolveKeyFromSecretAsync( string sid, CancellationToken token )
         {
-            // KeyVaultClient is not thread-safe
-            var client = new KeyVaultClient( _authenticationCallback );
-
-            return client.GetSecretAsync( sid, token )
+            // KeyVaultClient is thread-safe
+            return _client.GetSecretAsync( sid, token )
                 .ContinueWith<IKey>( task =>
                 {
                     var secret = task.Result;

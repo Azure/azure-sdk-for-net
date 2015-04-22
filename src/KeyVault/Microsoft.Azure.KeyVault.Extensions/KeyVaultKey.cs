@@ -26,10 +26,10 @@ namespace Microsoft.Azure.KeyVault
 {
     internal class KeyVaultKey : IKey
     {
-        private readonly KeyVaultClient.AuthenticationCallback _authenticationCallback;
-        private          IKey                                  _implementation;
+        private readonly KeyVaultClient _client;
+        private          IKey           _implementation;
 
-        internal KeyVaultKey( KeyVaultClient.AuthenticationCallback authenticationCallback, KeyBundle keyBundle )
+        internal KeyVaultKey( KeyVaultClient client, KeyBundle keyBundle )
         {
             switch ( keyBundle.Key.Kty )
             {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.KeyVault
             if ( _implementation == null )
                 throw new ArgumentException( string.Format( CultureInfo.InvariantCulture, "The key type \"{0}\" is not supported", keyBundle.Key.Kty ) );
 
-            _authenticationCallback = authenticationCallback;
+            _client = client;
         }
 
         public string DefaultEncryptionAlgorithm
@@ -101,9 +101,7 @@ namespace Microsoft.Azure.KeyVault
                 algorithm = DefaultEncryptionAlgorithm;
 
             // Never local
-            var client = new KeyVaultClient( _authenticationCallback );
-
-            return client.DecryptAsync( _implementation.Kid, algorithm, ciphertext, token )
+            return _client.DecryptAsync( _implementation.Kid, algorithm, ciphertext, token )
                     .ContinueWith( result => result.Result.Result, token );
         }
 
@@ -132,9 +130,7 @@ namespace Microsoft.Azure.KeyVault
                 algorithm = DefaultKeyWrapAlgorithm;
 
             // Never local
-            var client = new KeyVaultClient( _authenticationCallback );
-
-            return client.UnwrapKeyAsync( _implementation.Kid, algorithm, ciphertext, token )
+            return _client.UnwrapKeyAsync( _implementation.Kid, algorithm, ciphertext, token )
                     .ContinueWith( result => result.Result.Result, token );
         }
 
@@ -147,9 +143,7 @@ namespace Microsoft.Azure.KeyVault
                 algorithm = DefaultSignatureAlgorithm;
 
             // Never local
-            var client = new KeyVaultClient( _authenticationCallback );
-
-            return client.SignAsync( _implementation.Kid, algorithm, digest, token )
+            return _client.SignAsync( _implementation.Kid, algorithm, digest, token )
                 .ContinueWith( result => new Tuple<byte[], string>( result.Result.Result, algorithm ), token );
         }
 
