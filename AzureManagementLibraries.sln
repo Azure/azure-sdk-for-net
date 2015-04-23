@@ -81,6 +81,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search.Test", "src\Search.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiManagementManagement", "src\ApiManagementManagement\ApiManagementManagement.csproj", "{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Core", "src\KeyVault\Microsoft.Azure.KeyVault.Core\KeyVault.Core.csproj", "{B419782D-CA57-40F9-9322-340A4E852E82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Extensions", "src\KeyVault\Microsoft.Azure.KeyVault.Extensions\KeyVault.Extensions.csproj", "{937E445A-5604-4998-A9F5-9BE1E39001A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -556,7 +560,6 @@ Global
 		{2C21CBE7-5D68-434A-BB20-463886BE5551}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{2C21CBE7-5D68-434A-BB20-463886BE5551}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
@@ -568,7 +571,6 @@ Global
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
 		{3B082B9B-96DD-4112-88E3-BE89BAE124C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B082B9B-96DD-4112-88E3-BE89BAE124C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B082B9B-96DD-4112-88E3-BE89BAE124C1}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -601,6 +603,34 @@ Global
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -638,6 +668,8 @@ Global
 		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{3B082B9B-96DD-4112-88E3-BE89BAE124C1} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{B419782D-CA57-40F9-9322-340A4E852E82} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{937E445A-5604-4998-A9F5-9BE1E39001A4} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
