@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Insights
             // if names are specified, filter the results to those metrics only
             if (filter.DimensionFilters != null)
             {
-                groups = groups.Where(g => filter.DimensionFilters.Select(df => ShoeboxHelper.TrimAndEscapeKey(df.Name)).Contains(g.Key));
+                groups = groups.Where(g => filter.DimensionFilters.Select(df => ShoeboxHelper.TrimAndEscapeKey(df.Name)).Contains(g.Key, StringComparer.OrdinalIgnoreCase));
             }
 
             // Construct MetricCollection (list of metrics) by taking each group and converting the entities in that group to MetricValue objects
@@ -265,10 +265,26 @@ namespace Microsoft.Azure.Insights
         private static MetricValue ResolveMetricEntity(DynamicTableEntity entity)
         {
             Dictionary<string, string> otherProperties = new Dictionary<string, string>();
-            MetricValue metricValue = new MetricValue()
+            MetricValue metricValue = new MetricValue();
+
+            EntityProperty timestamp = entity["TIMESTAMP"];
+            switch (timestamp.PropertyType)
             {
-                Timestamp = entity["TIMESTAMP"].DateTime ?? entity.Timestamp.UtcDateTime
-            };
+                case EdmType.DateTime:
+                    metricValue.Timestamp = timestamp.DateTime ?? entity.Timestamp.UtcDateTime;
+                    break;
+                case EdmType.String:
+                    DateTime value;
+                    if (DateTime.TryParse(timestamp.StringValue, out value))
+                    {
+                        metricValue.Timestamp = value;
+                    }
+
+                    break;
+                default:
+                    metricValue.Timestamp = entity.Timestamp.UtcDateTime;
+                    break;
+            }
 
             foreach (string key in entity.Properties.Keys)
             {
@@ -287,7 +303,7 @@ namespace Microsoft.Azure.Insights
                         metricValue.Total = entity[key].DoubleValue;
                         break;
                     case "Count":
-                        metricValue.Count = entity[key].Int32Value;
+                        metricValue.Count = entity[key].PropertyType == EdmType.Int64 ? entity[key].Int64Value : entity[key].Int32Value;
                         break;
                     case "Last":
                         metricValue.Last = entity[key].DoubleValue;
