@@ -21,29 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the patch certificate operation
+    /// The response model for the get dsc node report operation.
     /// </summary>
-    public partial class CertificatePatchProperties
+    public partial class DscNodeReportGetResponse : AzureOperationResponse
     {
-        private string _description;
+        private DscNodeReport _nodeReport;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the certificate.
+        /// Optional. Gets or sets a dsc node report.
         /// </summary>
-        public string Description
+        public DscNodeReport NodeReport
         {
-            get { return this._description; }
-            set { this._description = value; }
+            get { return this._nodeReport; }
+            set { this._nodeReport = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificatePatchProperties class.
+        /// Initializes a new instance of the DscNodeReportGetResponse class.
         /// </summary>
-        public CertificatePatchProperties()
+        public DscNodeReportGetResponse()
         {
         }
     }

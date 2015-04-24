@@ -79,6 +79,28 @@ namespace Microsoft.Azure.Management.Automation
         Task<DscConfigurationGetResponse> GetAsync(string resourceGroupName, string automationAccount, string configurationName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Retrieve the configuration script identified by configuration name.
+        /// (see http://aka.ms/azureautomationsdk/configurationoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='configurationName'>
+        /// The configuration name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get configuration operation.
+        /// </returns>
+        Task<DscConfigurationGetContentResponse> GetContentAsync(string resourceGroupName, string automationAccount, string configurationName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Retrieve a list of configurations.  (see
         /// http://aka.ms/azureautomationsdk/configurationoperations for more
         /// information)

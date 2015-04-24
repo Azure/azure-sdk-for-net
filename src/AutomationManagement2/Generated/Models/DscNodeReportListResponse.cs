@@ -20,31 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the patch certificate operation
+    /// The response model for the list dsc nodes operation.
     /// </summary>
-    public partial class CertificatePatchProperties
+    public partial class DscNodeReportListResponse : OperationResponseWithSkipToken
     {
-        private string _description;
+        private IList<DscNodeReport> _nodeReports;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the certificate.
+        /// Optional. Gets or sets a list of dsc node reports.
         /// </summary>
-        public string Description
+        public IList<DscNodeReport> NodeReports
         {
-            get { return this._description; }
-            set { this._description = value; }
+            get { return this._nodeReports; }
+            set { this._nodeReports = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificatePatchProperties class.
+        /// Initializes a new instance of the DscNodeReportListResponse class.
         /// </summary>
-        public CertificatePatchProperties()
+        public DscNodeReportListResponse()
         {
+            this.NodeReports = new LazyList<DscNodeReport>();
         }
     }
 }
