@@ -17,12 +17,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Microsoft.Azure.Insights
 {
+    /// <summary>
+    /// Thick client component for retrieving shoebox metrics
+    /// </summary>
     internal static class ShoeboxClient
     {
         internal static int MaxParallelRequestsByName = 4;
@@ -53,7 +57,22 @@ namespace Microsoft.Azure.Insights
             // TODO [davmc]: ShoeboxClient doesn't support dimensions
             if (filter.DimensionFilters != null && filter.DimensionFilters.Any(df => df.Dimensions != null))
             {
-                throw new ArgumentException("Shoebox client does not support dimensions", "filter");
+                if (TracingAdapter.IsEnabled)
+                {
+                    TracingAdapter.Information("InvocationId: {0}. ShoeboxClient encountered metrics with dimensions specified. These will be ignored.", invocationId);
+                }
+
+                // Remove dimensions from filter (The MetricFilter class has strict mutation rules used in parsing so the best way to modify it is to create a new one)
+                filter = new MetricFilter()
+                {
+                    TimeGrain = filter.TimeGrain,
+                    StartTime = filter.StartTime,
+                    EndTime = filter.EndTime,
+                    DimensionFilters = filter.DimensionFilters.Select(df => new MetricDimension()
+                    {
+                        Name = df.Name
+                    })
+                };
             }
 
             // If metrics are requested by name, get those metrics specifically, unless too many are requested.

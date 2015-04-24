@@ -22,6 +22,9 @@ using System.Xml;
 
 namespace Microsoft.Azure.Insights
 {
+    /// <summary>
+    /// Helper class for shoebox operations
+    /// </summary>
     internal static class ShoeboxHelper
     {
         private const int KeyLimit = 432;
