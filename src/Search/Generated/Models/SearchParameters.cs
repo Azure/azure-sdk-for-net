@@ -33,21 +33,6 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public partial class SearchParameters
     {
-        private IList<string> _facets;
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of facet expressions to apply to
-        /// the search query. Each facet expression contains a field name,
-        /// optionally followed by a comma-separated list of name:value pairs.
-        /// (see https://msdn.microsoft.com/library/azure/dn798927.aspx for
-        /// more information)
-        /// </summary>
-        public IList<string> Facets
-        {
-            get { return this._facets; }
-            set { this._facets = value; }
-        }
-        
         private string _filter;
         
         /// <summary>
@@ -233,7 +218,6 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public SearchParameters()
         {
-            this.Facets = new LazyList<string>();
             this.HighlightFields = new LazyList<string>();
             this.OrderBy = new LazyList<string>();
             this.ScoringParameters = new LazyList<string>();

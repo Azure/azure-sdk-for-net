@@ -667,6 +667,21 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                 }
                 
+                if (parameters.Properties.CustomProperties != null)
+                {
+                    if (parameters.Properties.CustomProperties is ILazyCollection == false || ((ILazyCollection)parameters.Properties.CustomProperties).IsInitialized)
+                    {
+                        JObject customPropertiesDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair2 in parameters.Properties.CustomProperties)
+                        {
+                            string customPropertiesKey = pair2.Key;
+                            string customPropertiesValue = pair2.Value;
+                            customPropertiesDictionary[customPropertiesKey] = customPropertiesValue;
+                        }
+                        propertiesValue["customProperties"] = customPropertiesDictionary;
+                    }
+                }
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -1001,6 +1016,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         }
                                     }
                                 }
+                                
+                                JToken customPropertiesSequenceElement = ((JToken)propertiesValue2["customProperties"]);
+                                if (customPropertiesSequenceElement != null && customPropertiesSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property2 in customPropertiesSequenceElement)
+                                    {
+                                        string customPropertiesKey2 = ((string)property2.Name);
+                                        string customPropertiesValue2 = ((string)property2.Value);
+                                        propertiesInstance.CustomProperties.Add(customPropertiesKey2, customPropertiesValue2);
+                                    }
+                                }
                             }
                             
                             ApiManagementError errorInstance = new ApiManagementError();
@@ -1023,10 +1049,10 @@ namespace Microsoft.Azure.Management.ApiManagement
                             JToken detailsSequenceElement = ((JToken)responseDoc["details"]);
                             if (detailsSequenceElement != null && detailsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in detailsSequenceElement)
+                                foreach (JProperty property3 in detailsSequenceElement)
                                 {
-                                    string detailsKey = ((string)property2.Name);
-                                    string detailsValue = ((string)property2.Value);
+                                    string detailsKey = ((string)property3.Name);
+                                    string detailsValue = ((string)property3.Value);
                                     errorInstance.Details.Add(detailsKey, detailsValue);
                                 }
                             }
@@ -3079,6 +3105,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         }
                                     }
                                 }
+                                
+                                JToken customPropertiesSequenceElement = ((JToken)propertiesValue["customProperties"]);
+                                if (customPropertiesSequenceElement != null && customPropertiesSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property2 in customPropertiesSequenceElement)
+                                    {
+                                        string customPropertiesKey = ((string)property2.Name);
+                                        string customPropertiesValue = ((string)property2.Value);
+                                        propertiesInstance.CustomProperties.Add(customPropertiesKey, customPropertiesValue);
+                                    }
+                                }
                             }
                         }
                         
@@ -3499,6 +3536,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         }
                                     }
                                 }
+                                
+                                JToken customPropertiesSequenceElement = ((JToken)propertiesValue["customProperties"]);
+                                if (customPropertiesSequenceElement != null && customPropertiesSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property2 in customPropertiesSequenceElement)
+                                    {
+                                        string customPropertiesKey = ((string)property2.Name);
+                                        string customPropertiesValue = ((string)property2.Value);
+                                        propertiesInstance.CustomProperties.Add(customPropertiesKey, customPropertiesValue);
+                                    }
+                                }
                             }
                             
                             ApiManagementError errorInstance = new ApiManagementError();
@@ -3521,10 +3569,10 @@ namespace Microsoft.Azure.Management.ApiManagement
                             JToken detailsSequenceElement = ((JToken)responseDoc["details"]);
                             if (detailsSequenceElement != null && detailsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in detailsSequenceElement)
+                                foreach (JProperty property3 in detailsSequenceElement)
                                 {
-                                    string detailsKey = ((string)property2.Name);
-                                    string detailsValue = ((string)property2.Value);
+                                    string detailsKey = ((string)property3.Name);
+                                    string detailsValue = ((string)property3.Value);
                                     errorInstance.Details.Add(detailsKey, detailsValue);
                                 }
                             }
@@ -4280,6 +4328,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                                         vpnconfigurationInstance2.Location = locationInstance4;
                                                     }
                                                 }
+                                            }
+                                        }
+                                        
+                                        JToken customPropertiesSequenceElement = ((JToken)propertiesValue["customProperties"]);
+                                        if (customPropertiesSequenceElement != null && customPropertiesSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in customPropertiesSequenceElement)
+                                            {
+                                                string customPropertiesKey = ((string)property2.Name);
+                                                string customPropertiesValue = ((string)property2.Value);
+                                                propertiesInstance.CustomProperties.Add(customPropertiesKey, customPropertiesValue);
                                             }
                                         }
                                     }

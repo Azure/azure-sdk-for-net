@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Search.Models
         private IDictionary<string, double> _weights;
         
         /// <summary>
-        /// Optional. Gets the dictionary of per-field weights to boost
+        /// Required. Gets the dictionary of per-field weights to boost
         /// document scoring. The keys are field names and the values are the
         /// weights for each field.
         /// </summary>
@@ -51,6 +51,20 @@ namespace Microsoft.Azure.Search.Models
         public TextWeights()
         {
             this.Weights = new LazyDictionary<string, double>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TextWeights class with required
+        /// arguments.
+        /// </summary>
+        public TextWeights(IDictionary<string, double> weights)
+            : this()
+        {
+            if (weights == null)
+            {
+                throw new ArgumentNullException("weights");
+            }
+            this.Weights = weights;
         }
     }
 }

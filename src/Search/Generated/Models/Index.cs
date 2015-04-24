@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Search.Models
         private IList<Field> _fields;
         
         /// <summary>
-        /// Optional. Gets or sets the fields of the index.
+        /// Required. Gets or sets the fields of the index.
         /// </summary>
         public IList<Field> Fields
         {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Search.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the index.  (see
+        /// Required. Gets or sets the name of the index.  (see
         /// https://msdn.microsoft.com/library/azure/dn857353.aspx for more
         /// information)
         /// </summary>
@@ -113,6 +113,25 @@ namespace Microsoft.Azure.Search.Models
             this.Fields = new LazyList<Field>();
             this.ScoringProfiles = new LazyList<ScoringProfile>();
             this.Suggesters = new LazyList<Suggester>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Index class with required
+        /// arguments.
+        /// </summary>
+        public Index(string name, IList<Field> fields)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (fields == null)
+            {
+                throw new ArgumentNullException("fields");
+            }
+            this.Name = name;
+            this.Fields = fields;
         }
     }
 }

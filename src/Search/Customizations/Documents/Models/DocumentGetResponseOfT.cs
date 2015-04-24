@@ -23,13 +23,8 @@ namespace Microsoft.Azure.Search.Models
     /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
     /// from the index.
     /// </typeparam>
-    public class DocumentGetResponse<T> : AzureOperationResponse where T : class
+    public class DocumentGetResponse<T> : DocumentGetResponseBase<T> where T : class
     {
-        /// <summary>
-        /// Gets the document that was retrieved from the index.
-        /// </summary>
-        public T Document { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the DocumentGetResponse class.
         /// </summary>
