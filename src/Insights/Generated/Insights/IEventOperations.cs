@@ -104,19 +104,5 @@ namespace Microsoft.Azure.Insights
         /// The List Events operation response.
         /// </returns>
         Task<EventDataListResponse> ListEventsNextAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The status count of events in a subscription.
-        /// </summary>
-        /// <param name='filterString'>
-        /// The filter string.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List event status count summary operation response.
-        /// </returns>
-        Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken);
     }
 }

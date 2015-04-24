@@ -47,6 +47,12 @@ namespace Microsoft.Azure.Insights
         /// </summary>
         [FilterParameter("caller")]
         public string Caller { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource type
+        /// </summary>
+        [FilterParameter("resourceType")]
+        public string ResourceType { get; set; }
     }
 
     /// <summary>
@@ -64,13 +70,13 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// The parameters to get the events for an event source
     /// </summary>
-    public class ListEventsForEventSourceParameters : ListEventsParameters
+    public class ListEventsForCategoryParameters : ListEventsParameters
     {
         /// <summary>
-        /// Gets or sets the event source
+        /// Gets or sets the event category
         /// </summary>
-        [FilterParameter("eventSource")]
-        public string EventSource { get; set; }
+        [FilterParameter("category")]
+        public string Category { get; set; }
     }
 
     /// <summary>
@@ -81,8 +87,8 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// Get or set the resource uri
         /// </summary>
-        [FilterParameter("resourceUri")]
-        public string ResourceUri { get; set; }
+        [FilterParameter("resourceId")]
+        public string ResourceId { get; set; }
     }
 
     /// <summary>

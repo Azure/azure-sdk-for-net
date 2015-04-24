@@ -215,43 +215,5 @@ namespace Microsoft.Azure.Insights
         {
             return operations.ListEventsNextAsync(nextLink, CancellationToken.None);
         }
-        
-        /// <summary>
-        /// The status count of events in a subscription.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='filterString'>
-        /// Required. The filter string.
-        /// </param>
-        /// <returns>
-        /// The List event status count summary operation response.
-        /// </returns>
-        public static EventStatusCountSummaryListResponse ListEventStatusCountSummaryItems(this IEventOperations operations, string filterString)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IEventOperations)s).ListEventStatusCountSummaryItemsAsync(filterString);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The status count of events in a subscription.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='filterString'>
-        /// Required. The filter string.
-        /// </param>
-        /// <returns>
-        /// The List event status count summary operation response.
-        /// </returns>
-        public static Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(this IEventOperations operations, string filterString)
-        {
-            return operations.ListEventStatusCountSummaryItemsAsync(filterString, CancellationToken.None);
-        }
     }
 }

@@ -15,11 +15,9 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Customizations\EventStatusCountSummaryListResponse.Customizations.cs" />
     <Compile Include="Customizations\IMetricOperations.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.ListEventsParameter.Customization.cs" />
-    <Compile Include="Customizations\InsightsClient.ListStatusCountSummaryItemsParameters.Customization.cs" />
     <Compile Include="Customizations\InsightsManagementClient.Customization.cs" />
     <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperations.Customization.cs" />
@@ -53,9 +51,6 @@
     <Compile Include="Generated\Management\Insights\Models\BackupLocationProfile.cs" />
     <Compile Include="Generated\Management\Insights\Models\Capacity.cs" />
     <Compile Include="Generated\Insights\Models\Dimension.cs" />
-    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItem.cs" />
-    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItemCollection.cs" />
-    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryListResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\CurrentSku.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseBackupOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
@@ -65,7 +60,6 @@
     <Compile Include="Generated\Management\Insights\Models\SkuDefinition.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetProperties.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetResponse.cs" />
-    <Compile Include="Generated\Insights\Models\StatusCount.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuListResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\SupportedScaleType.cs" />
