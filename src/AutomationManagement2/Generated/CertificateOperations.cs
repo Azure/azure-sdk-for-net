@@ -1320,8 +1320,6 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         propertiesValue["description"] = parameters.Properties.Description;
                     }
-                    
-                    propertiesValue["isExportable"] = parameters.Properties.IsExportable;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

@@ -21,29 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the patch certificate operation
+    /// The response model for the get configuration operation.
     /// </summary>
-    public partial class CertificatePatchProperties
+    public partial class DscConfigurationGetContentResponse : AzureOperationResponse
     {
-        private string _description;
+        private string _content;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the certificate.
+        /// Optional. Gets or sets a configuration content.
         /// </summary>
-        public string Description
+        public string Content
         {
-            get { return this._description; }
-            set { this._description = value; }
+            get { return this._content; }
+            set { this._content = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificatePatchProperties class.
+        /// Initializes a new instance of the
+        /// DscConfigurationGetContentResponse class.
         /// </summary>
-        public CertificatePatchProperties()
+        public DscConfigurationGetContentResponse()
         {
         }
     }

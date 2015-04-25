@@ -143,6 +143,62 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Retrieve the configuration script identified by configuration name.
+        /// (see http://aka.ms/azureautomationsdk/configurationoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The configuration name.
+        /// </param>
+        /// <returns>
+        /// The response model for the get configuration operation.
+        /// </returns>
+        public static DscConfigurationGetContentResponse GetContent(this IDscConfigurationOperations operations, string resourceGroupName, string automationAccount, string configurationName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDscConfigurationOperations)s).GetContentAsync(resourceGroupName, automationAccount, configurationName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve the configuration script identified by configuration name.
+        /// (see http://aka.ms/azureautomationsdk/configurationoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The configuration name.
+        /// </param>
+        /// <returns>
+        /// The response model for the get configuration operation.
+        /// </returns>
+        public static Task<DscConfigurationGetContentResponse> GetContentAsync(this IDscConfigurationOperations operations, string resourceGroupName, string automationAccount, string configurationName)
+        {
+            return operations.GetContentAsync(resourceGroupName, automationAccount, configurationName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve a list of configurations.  (see
         /// http://aka.ms/azureautomationsdk/configurationoperations for more
         /// information)

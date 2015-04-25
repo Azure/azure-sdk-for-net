@@ -234,6 +234,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._nodes; }
         }
         
+        private IDscNodeReportsOperations _nodeReports;
+        
+        /// <summary>
+        /// Service operation for node reports.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodereportoperations for more
+        /// information)
+        /// </summary>
+        public virtual IDscNodeReportsOperations NodeReports
+        {
+            get { return this._nodeReports; }
+        }
+        
         private IHybridRunbookWorkerGroupOperations _hybridRunbookWorkerGroups;
         
         /// <summary>
@@ -383,6 +395,7 @@ namespace Microsoft.Azure.Management.Automation
             this._configurations = new DscConfigurationOperations(this);
             this._nodeConfigurations = new DscNodeConfigurationOperations(this);
             this._nodes = new DscNodeOperations(this);
+            this._nodeReports = new DscNodeReportsOperations(this);
             this._hybridRunbookWorkerGroups = new HybridRunbookWorkerGroupOperations(this);
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
@@ -471,6 +484,7 @@ namespace Microsoft.Azure.Management.Automation
             this._configurations = new DscConfigurationOperations(this);
             this._nodeConfigurations = new DscNodeConfigurationOperations(this);
             this._nodes = new DscNodeOperations(this);
+            this._nodeReports = new DscNodeReportsOperations(this);
             this._hybridRunbookWorkerGroups = new HybridRunbookWorkerGroupOperations(this);
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
@@ -660,15 +674,15 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
                     if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NotFound)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -676,7 +690,7 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
