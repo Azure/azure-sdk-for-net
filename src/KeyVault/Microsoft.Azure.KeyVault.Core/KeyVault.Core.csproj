@@ -18,6 +18,7 @@
     <Compile Include="Generated\**\*.cs" />
     <Compile Include="IKey.cs" />
     <Compile Include="IKeyResolver.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.KeyVault.Core.nuspec" />

@@ -30,6 +30,7 @@
     <Compile Include="Models\Secret.cs" />
     <Compile Include="Models\SecretAttributes.cs" />
     <Compile Include="ObjectIdentifier.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnixEpoch.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="WebKey\JsonWebKey.cs" />

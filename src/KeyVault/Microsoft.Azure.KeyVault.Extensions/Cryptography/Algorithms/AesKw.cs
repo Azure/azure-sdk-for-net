@@ -390,7 +390,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                     }
                 }
 
-                if ( a.SequenceEqual( _iv ) )
+                if ( a.SequenceEqualConstantTime( _iv ) )
                 {
                     var c = new byte[n << 3];
 

@@ -191,7 +191,7 @@ namespace Microsoft.Azure.KeyVault
                 if ( authenticationData == null || authenticationTag == null )
                     throw new CryptographicException( "AuthenticatingCryptoTransform requires authenticationData and authenticationTag" );
 
-                if ( !authenticationTag.SequenceEqual( transform.Tag ) )
+                if ( !authenticationTag.SequenceEqualConstantTime( transform.Tag ) )
                     throw new CryptographicException( "Data is not authentic" );
 
                 return result;
