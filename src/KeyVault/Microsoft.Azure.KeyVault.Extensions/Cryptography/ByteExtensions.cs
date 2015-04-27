@@ -21,6 +21,25 @@ namespace Microsoft.Azure.KeyVault.Cryptography
 {
     internal static class ByteExtensions
     {
+        internal static bool SequenceEqualConstantTime( this byte[] self, byte[] other )
+        {
+            if ( self == null )
+                throw new ArgumentNullException( "self" );
+
+            if ( other == null )
+                throw new ArgumentNullException( "other" );
+
+            // Constant time comparison of two byte arrays
+            uint difference = (uint)self.Length ^ (uint)other.Length;
+
+            for ( var i = 0; i < self.Length && i < other.Length; i++ )
+            {
+                difference |= (uint)( self[i] ^ other[i] );
+            }
+
+            return difference == 0;
+        }
+
         internal static byte[] Or( this byte[] self, byte[] other )
         {
             return Or( self, other, 0 );
@@ -87,6 +106,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography
 
         internal static void Zero( this byte[] self )
         {
+            if ( self == null )
+                throw new ArgumentNullException( "self" );
+
             for ( var i = 0; i < self.Length; i++ )
             {
                 self[i] = 0;
