@@ -30,14 +30,14 @@
   </metadata>
   <files>
     <file src="KeyVault\Microsoft.Azure.KeyVault.Core\**\*.cs" target="src" />
-    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Core.dll" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Core.pdb" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Core.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.Azure.KeyVault.Core.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.KeyVault.Core.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.KeyVault.Core.xml" target="lib\net40" />
     <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Core.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Core.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Core.xml" target="lib\net45" />
+    <file src="..\binaries\portable\Microsoft.Azure.KeyVault.Core.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.KeyVault.Core.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.KeyVault.Core.xml" target="lib\portable-net45+wp8+wpa81+win" />
   </files>
 </package>
