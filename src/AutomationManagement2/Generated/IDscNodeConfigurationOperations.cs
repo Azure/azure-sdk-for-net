@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='nodeConfigurationName'>
-        /// The Dsc configuration compilation job id.
+        /// The Dsc node configuration name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

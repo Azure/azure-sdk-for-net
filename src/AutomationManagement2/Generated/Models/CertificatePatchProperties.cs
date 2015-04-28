@@ -40,17 +40,6 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._description = value; }
         }
         
-        private bool _isExportable;
-        
-        /// <summary>
-        /// Optional. Gets or sets the is exportable flag of the certificate.
-        /// </summary>
-        public bool IsExportable
-        {
-            get { return this._isExportable; }
-            set { this._isExportable = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the CertificatePatchProperties class.
         /// </summary>

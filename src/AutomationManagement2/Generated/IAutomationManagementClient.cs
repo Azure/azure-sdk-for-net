@@ -193,6 +193,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for node reports.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodereportoperations for more
+        /// information)
+        /// </summary>
+        IDscNodeReportsOperations NodeReports
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation hybrid runbook worker group.  (see
         /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
         /// for more information)

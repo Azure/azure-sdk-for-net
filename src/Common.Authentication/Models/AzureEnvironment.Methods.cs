@@ -117,9 +117,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.ActiveDirectory, AzureEnvironmentConstants.ChinaActiveDirectoryEndpoint },
                         { AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId, AzureEnvironmentConstants.ChinaServiceEndpoint },
                         { AzureEnvironment.Endpoint.StorageEndpointSuffix, AzureEnvironmentConstants.ChinaStorageEndpointSuffix },
-                        { AzureEnvironment.Endpoint.Gallery, null },
+                        { AzureEnvironment.Endpoint.Gallery, AzureEnvironmentConstants.ChinaGalleryEndpoint },
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.ChinaSqlDatabaseDnsSuffix },
-                        { AzureEnvironment.Endpoint.Graph, null },
+                        { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.ChinaGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
@@ -313,6 +313,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string GalleryEndpoint = "https://gallery.azure.com/";
 
+        public const string ChinaGalleryEndpoint = "https://gallery.chinacloudapi.cn/";
+
         public const string AzurePublishSettingsFileUrl = "http://go.microsoft.com/fwlink/?LinkID=301775";
 
         public const string ChinaPublishSettingsFileUrl = "http://go.microsoft.com/fwlink/?LinkID=301776";
@@ -338,6 +340,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public const string ChinaActiveDirectoryEndpoint = "https://login.chinacloudapi.cn/";
 
         public const string AzureGraphEndpoint = "https://graph.windows.net/";
+
+        public const string ChinaGraphEndpoint = "https://graph.chinacloudapi.cn/";
 
         public const string AzureTrafficManagerDnsSuffix = "trafficmanager.net";
 

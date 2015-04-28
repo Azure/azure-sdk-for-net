@@ -30,12 +30,15 @@ namespace SampleKeyVaultClientWebRole
     /// </summary>
     public class KeyVaultAccessor
     {
-        private static KeyVaultClient keyVaultClient;
-        private static X509Certificate2 clientAssertionCertPfx;
+        private static KeyVaultClient keyVaultClient;        
+        private static ClientAssertionCertificate assertionCert;
+
         static KeyVaultAccessor()
         {
             keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
-            clientAssertionCertPfx = CertificateHelper.FindCertificateByThumbprint(CloudConfigurationManager.GetSetting(Constants.KeyVaultAuthCertThumbprintSetting));
+            var clientAssertionCertPfx = CertificateHelper.FindCertificateByThumbprint(CloudConfigurationManager.GetSetting(Constants.KeyVaultAuthCertThumbprintSetting));
+            var client_id = CloudConfigurationManager.GetSetting(Constants.KeyVaultAuthClientIdSetting);            
+            assertionCert = new ClientAssertionCertificate(client_id, clientAssertionCertPfx);
         }
 
         /// <summary>
@@ -57,13 +60,9 @@ namespace SampleKeyVaultClientWebRole
         /// <param name="scope">Scope</param>
         /// <returns></returns>
         public static async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            var client_id = CloudConfigurationManager.GetSetting(Constants.KeyVaultAuthClientIdSetting);
-
-            var context = new AuthenticationContext(authority, null);
-            
-            var assertionCert = new ClientAssertionCertificate(client_id, clientAssertionCertPfx);
-
+        {            
+            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
+         
             var result = await context.AcquireTokenAsync(resource, assertionCert);
 
             return result.AccessToken;

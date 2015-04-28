@@ -956,7 +956,7 @@ namespace Microsoft.Azure.KeyVault
         #endregion
 
         #region Helper Methods
-        public async Task<T> Do<T>(Func<Task<T>> func)
+        private async Task<T> Do<T>(Func<Task<T>> func)
         {
             try
             {

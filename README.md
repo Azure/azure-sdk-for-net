@@ -1,9 +1,9 @@
 # Microsoft Azure SDK for .NET
 
-The Microsoft Azure SDK for .NET allows you to build applications 
+The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
-This repository contains the open source subset of the .NET SDK. For documentation of the 
+This repository contains the open source subset of the .NET SDK. For documentation of the
 complete SDK, please see the [Microsoft Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
 
 # Features
@@ -50,11 +50,17 @@ complete SDK, please see the [Microsoft Azure .NET Developer Center](http://www.
 
     > Available in the separate [Mobile Services repository](https://github.com/WindowsAzure/azure-mobile-services)
 
+- Key Vault (Preview)
+
+  - Key Vault REST client
+  - Key Vault Extensions
+  
+
 # Getting started
 
 The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://www.windowsazure.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes. 
+For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ## Target Frameworks
 
@@ -65,7 +71,7 @@ For the best development experience, developers should use the official Microsof
 As of 10/2013, SDK 2.2 supports targeting only .NET Framework 4.0 and newer.
 
 > Need support for previous versions of .NET such as 3.5? Version 2.1 of the Azure SDK for .NET supports this version and can still be used today.
- 
+
 ## Requirements
 
 - Microsoft Azure Subscription: To call Microsoft Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Sign up for a free trial or use your MSDN subscriber benefits.
@@ -94,7 +100,7 @@ In the root folder of Azure Sdk you will find two solutions:
 
 Any of them could be opened and built in the IDE of Visual Studio 2013.
 
-> Note: 
+> Note:
 > You will need to restore Nuget Packages locally before build. To do so go to "Tools\Nuget Package Manager\Manage Nuget Packages for Solution" menu item in VS IDE and press Restore button in the upper right corner of the window.
 
 #### Command prompt
@@ -111,7 +117,7 @@ We gladly accept community contributions.
 
 - Issues: Please report bugs using the Issues section of GitHub
 - Forums: Interact with the development teams on StackOverflow or the Azure Forums
-- Source Code Contributions: Please follow the [contribution guidelines for Microsoft Azure open source](http://windowsazure.github.io/guidelines.html) that details information on onboarding as a contributor 
+- Source Code Contributions: Please follow the [contribution guidelines for Microsoft Azure open source](http://windowsazure.github.io/guidelines.html) that details information on onboarding as a contributor
 
 For general suggestions about Azure please use our [UserVoice forum](http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting).
 
@@ -129,7 +135,7 @@ With the release of the 3.0.0 storage client library, you can find the latest st
 
 ### v2.0.1.4
 
-The latest version of the v2.1.x storage client library is available in the azure-sdk-for-net repo under the [`v2.1.0.4` tag](https://github.com/WindowsAzure/azure-sdk-for-net/releases/tag/v2.1.0.4). 
+The latest version of the v2.1.x storage client library is available in the azure-sdk-for-net repo under the [`v2.1.0.4` tag](https://github.com/WindowsAzure/azure-sdk-for-net/releases/tag/v2.1.0.4).
 
 ## NuGet package install
 
@@ -153,7 +159,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 ```
 
 To perform an operation on any  resource you will first instantiate
-a *client* which allows performing actions on it. The resource is known as an 
+a *client* which allows performing actions on it. The resource is known as an
 *entity*. To do so for Table you also have to authenticate your request:
 
 ```csharp
@@ -198,7 +204,7 @@ To get all of the management libraries setup in your project:
 
 ### Code Samples
 
-This code would result with a list of the regions. The location object provided in the result provides properties to define which assets are supported by each region. 
+This code would result with a list of the regions. The location object provided in the result provides properties to define which assets are supported by each region.
 
 ```csharp
 using (ManagementClient client = CloudContext.Clients.CreateManagementClient(Credentials))
@@ -217,7 +223,7 @@ using (ManagementClient client = CloudContext.Clients.CreateManagementClient(Cre
 }
 ```
 
-To create a storage account,The code below will create a storage account in the West US region. 
+To create a storage account,The code below will create a storage account in the West US region.
 
 ```csharp
 var storageAccountName = "mystorageaccount";
@@ -254,7 +260,7 @@ using (StorageManagementClient client =
 }
 ```
 
-The following code will create a new (empty) Cloud Service in the subscription. 
+The following code will create a new (empty) Cloud Service in the subscription.
 
 ```csharp
 var cloudServiceName = "MyCloudService";
@@ -271,7 +277,7 @@ using (ComputeManagementClient client =
 }
 ```
 
-Once a storage account has been created, the Windows Storage SDK can be used to upload .CSPKG files into the storage account. Then, the cloud service could be deployed. The code below demonstrates this functionality. 
+Once a storage account has been created, the Windows Storage SDK can be used to upload .CSPKG files into the storage account. Then, the cloud service could be deployed. The code below demonstrates this functionality.
 
 ```csharp
 var blobs = CloudStorageAccount.Parse(storageConnectionString).CreateCloudBlobClient();
