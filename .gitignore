@@ -130,3 +130,4 @@ build.out
 
 # Azure Project
 csx/
+AzureAuthentication.sln.GhostDoc.xml

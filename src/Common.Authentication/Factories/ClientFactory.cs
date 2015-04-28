@@ -48,6 +48,19 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             return client;
         }
 
+        public virtual TClient CreateClientWithSuffix<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        {
+            if (context == null)
+            {
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+            }
+
+            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
+            TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpoint(endpoint));
+
+            return client;
+        }
+
         public virtual TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             TClient client = CreateClient<TClient>(profile.Context, endpoint);
