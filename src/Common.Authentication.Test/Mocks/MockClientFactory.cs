@@ -47,6 +47,13 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             return CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
         }
 
+        public TClient CreateClientWithSuffix<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint)
+            where TClient : ServiceClient<TClient>
+        {
+            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
+            return CreateCustomClient<TClient>(creds, context.Environment.GetEndpoint(endpoint));
+        }
+
         public TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) 
             where TClient : ServiceClient<TClient>
         {
