@@ -32,18 +32,18 @@
         <dependency id="Microsoft.Azure.KeyVault.Core" version="0.9.1-preview" />
       </group>
       <group targetFramework="net45">
-        <dependency id="Microsoft.Azure.KeyVault" version="0.9.0-preview" />
-        <dependency id="Microsoft.Azure.KeyVault.Core" version="0.9.0-preview" />
+        <dependency id="Microsoft.Azure.KeyVault" version="0.9.1-preview" />
+        <dependency id="Microsoft.Azure.KeyVault.Core" version="0.9.1-preview" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="KeyVault\Microsoft.Azure.KeyVault.Extensions\**\*.cs" target="src" />
-    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Extensions.dll" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Extensions.pdb" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Extensions.xml" target="lib\net45" />
     <file src="..\binaries\net40\Microsoft.Azure.KeyVault.Extensions.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.KeyVault.Extensions.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.KeyVault.Extensions.xml" target="lib\net40" />
+    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Extensions.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Extensions.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.KeyVault.Extensions.xml" target="lib\net45" />
   </files>
 </package>
