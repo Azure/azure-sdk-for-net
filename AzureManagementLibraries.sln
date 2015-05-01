@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Core", "src\KeyVau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Extensions", "src\KeyVault\Microsoft.Azure.KeyVault.Extensions\KeyVault.Extensions.csproj", "{937E445A-5604-4998-A9F5-9BE1E39001A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeManagement2", "src\ComputeManagement2\ComputeManagement2.csproj", "{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -629,6 +631,22 @@ Global
 		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -668,6 +686,7 @@ Global
 		{C85D57A0-BFC7-4483-AAEF-9ABB9313873B} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{B419782D-CA57-40F9-9322-340A4E852E82} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{937E445A-5604-4998-A9F5-9BE1E39001A4} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
