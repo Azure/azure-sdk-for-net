@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomationManagement", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManagerManagement", "src\TrafficManagerManagement\TrafficManagerManagement.csproj", "{7B0B141D-483E-4F32-AF9B-EEE20A3C4B2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManagerManagement2", "src\TrafficManagerManagement2\TrafficManagerManagement2.csproj", "{802CEC71-2D1F-42D3-A798-3ABB7D6BA25A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement2", "src\WebSiteManagement2\WebSiteManagement2.csproj", "{F455DFDB-0869-43EE-9CD1-E040752BD033}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManagement2", "src\SqlManagement2\SqlManagement2.csproj", "{04B53727-16E6-4EF0-9116-04C7F1C33842}"
