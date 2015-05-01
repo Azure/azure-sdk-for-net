@@ -32,6 +32,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
     public partial interface IStreamAnalyticsManagementClient : IDisposable
     {
         /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The URI used as the base for all Service Management requests.
         /// </summary>
         Uri BaseUri
@@ -49,6 +57,22 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// allowed.
         /// </summary>
         SubscriptionCloudCredentials Credentials
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
         {
             get; set; 
         }

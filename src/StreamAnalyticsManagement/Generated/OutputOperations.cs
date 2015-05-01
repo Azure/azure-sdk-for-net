@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(outputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -266,11 +266,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Output.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -668,6 +668,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (derived6.Properties.Encoding != null)
                                     {
                                         propertiesValue7["encoding"] = derived6.Properties.Encoding;
+                                    }
+                                    
+                                    if (derived6.Properties.Format != null)
+                                    {
+                                        propertiesValue7["format"] = derived6.Properties.Format;
                                     }
                                 }
                                 
@@ -1058,6 +1063,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string encodingInstance2 = ((string)encodingValue2);
                                                 propertiesInstance7.Encoding = encodingInstance2;
                                             }
+                                            
+                                            JToken formatValue = propertiesValue14["format"];
+                                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                            {
+                                                string formatInstance = ((string)formatValue);
+                                                propertiesInstance7.Format = formatInstance;
+                                            }
                                         }
                                         
                                         JToken typeValue6 = serializationValue2["type"];
@@ -1095,7 +1107,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -1204,7 +1216,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1601,6 +1613,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string encodingInstance2 = ((string)encodingValue2);
                                                 propertiesInstance7.Encoding = encodingInstance2;
                                             }
+                                            
+                                            JToken formatValue = propertiesValue7["format"];
+                                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                            {
+                                                string formatInstance = ((string)formatValue);
+                                                propertiesInstance7.Format = formatInstance;
+                                            }
                                         }
                                         
                                         JToken typeValue6 = serializationValue["type"];
@@ -1638,7 +1657,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -1733,7 +1752,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1799,7 +1818,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1890,7 +1909,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2282,6 +2301,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string encodingInstance2 = ((string)encodingValue2);
                                                 propertiesInstance7.Encoding = encodingInstance2;
                                             }
+                                            
+                                            JToken formatValue = propertiesValue7["format"];
+                                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                            {
+                                                string formatInstance = ((string)formatValue);
+                                                propertiesInstance7.Format = formatInstance;
+                                            }
                                         }
                                         
                                         JToken typeValue6 = serializationValue["type"];
@@ -2319,7 +2345,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -2405,7 +2431,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/outputs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2802,6 +2828,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         string encodingInstance2 = ((string)encodingValue2);
                                                         propertiesInstance7.Encoding = encodingInstance2;
                                                     }
+                                                    
+                                                    JToken formatValue = propertiesValue7["format"];
+                                                    if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                    {
+                                                        string formatInstance = ((string)formatValue);
+                                                        propertiesInstance7.Format = formatInstance;
+                                                    }
                                                 }
                                                 
                                                 JToken typeValue6 = serializationValue["type"];
@@ -2848,7 +2881,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2952,7 +2985,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3240,6 +3273,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             if (derived6.Properties.Encoding != null)
                             {
                                 propertiesValue7["encoding"] = derived6.Properties.Encoding;
+                            }
+                            
+                            if (derived6.Properties.Format != null)
+                            {
+                                propertiesValue7["format"] = derived6.Properties.Format;
                             }
                         }
                         
@@ -3618,6 +3656,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 string encodingInstance2 = ((string)encodingValue2);
                                                 propertiesInstance7.Encoding = encodingInstance2;
                                             }
+                                            
+                                            JToken formatValue = propertiesValue14["format"];
+                                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                            {
+                                                string formatInstance = ((string)formatValue);
+                                                propertiesInstance7.Format = formatInstance;
+                                            }
                                         }
                                         
                                         JToken typeValue6 = serializationValue2["type"];
@@ -3655,7 +3700,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -3735,6 +3780,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 delayInSeconds = 10;
             }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3745,6 +3794,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 10;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
             
