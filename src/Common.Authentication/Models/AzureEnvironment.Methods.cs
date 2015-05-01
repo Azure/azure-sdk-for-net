@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId},
                         { AzureEnvironment.Endpoint.AzureCaboFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureCaboFileSystemEndpointSuffix}, //TODO: Update with production suffix when available
-                        { AzureEnvironment.Endpoint.AzureKonaCatalogEndpointSuffix, AzureEnvironmentConstants.AzureKonaCatalogEndpointSuffix} //TODO: Update with production suffix when available
+                        { AzureEnvironment.Endpoint.AzureKonaCatalogAndJobEndpointSuffix, AzureEnvironmentConstants.AzureKonaCatalogAndJobEndpointSuffix} //TODO: Update with production suffix when available
                     }
                 }
             },
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
             AzureCaboFileSystemEndpointSuffix,
 
-            AzureKonaCatalogEndpointSuffix
+            AzureKonaCatalogAndJobEndpointSuffix
         }
     }
 
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureCaboFileSystemEndpointSuffix = "caboaccountdogfood.net";
 
-        public const string AzureKonaCatalogEndpointSuffix = "www.kobotest02.osdinfra.net";
+        public const string AzureKonaCatalogAndJobEndpointSuffix = "kobotest02.osdinfra.net";
 
         public const string ChinaStorageEndpointSuffix = "core.chinacloudapi.cn";
 
