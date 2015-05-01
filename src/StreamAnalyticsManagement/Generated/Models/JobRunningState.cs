@@ -60,18 +60,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public const string Failed = "Failed";
         
         /// <summary>
-        /// Idle.
+        /// No input bytes have been seen since the job was created or in the
+        /// last 2 minutes. If a job is in the Idle state for a long period of
+        /// time, it is likely that the input exists but there are no raw
+        /// bytes to process.
         /// </summary>
         public const string Idle = "Idle";
         
         /// <summary>
-        /// Processing.
+        /// A nonzero amount of filtered input events has been successfully
+        /// consumed by the Stream Analytics job. If a job is stuck in the
+        /// Processing state without producing output, it is likely that the
+        /// processing time window is large or the query logic is complicated.
         /// </summary>
         public const string Processing = "Processing";
         
         /// <summary>
-        /// Degraded.
+        /// This state indicates that a Stream Analytics job is encountering
+        /// one of the following errors: input/output communication errors,
+        /// query errors, or retry-able run-time errors. To distinguish what
+        /// type of error(s) the job is encountering, view the operation logs.
         /// </summary>
         public const string Degraded = "Degraded";
+        
+        /// <summary>
+        /// Restarting.
+        /// </summary>
+        public const string Restarting = "Restarting";
     }
 }
