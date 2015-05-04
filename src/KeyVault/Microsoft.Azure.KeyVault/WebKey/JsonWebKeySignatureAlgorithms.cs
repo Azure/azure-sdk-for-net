@@ -18,7 +18,7 @@
 namespace Microsoft.Azure.KeyVault.WebKey
 {
     /// <summary>
-    /// Supported JsonWebKey Algorithms
+    /// Supported JsonWebKey algorithms
     /// </summary>
     public static class JsonWebKeySignatureAlgorithm
     {
