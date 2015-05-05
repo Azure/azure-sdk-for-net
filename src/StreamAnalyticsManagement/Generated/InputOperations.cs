@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(inputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Input.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -471,9 +471,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             propertiesValue2["container"] = derived2.Properties.Container;
                                         }
                                         
-                                        if (derived2.Properties.BlobName != null)
+                                        if (derived2.Properties.PathPattern != null)
                                         {
-                                            propertiesValue2["blobName"] = derived2.Properties.BlobName;
+                                            propertiesValue2["pathPattern"] = derived2.Properties.PathPattern;
+                                        }
+                                        
+                                        if (derived2.Properties.DateFormat != null)
+                                        {
+                                            propertiesValue2["dateFormat"] = derived2.Properties.DateFormat;
+                                        }
+                                        
+                                        if (derived2.Properties.TimeFormat != null)
+                                        {
+                                            propertiesValue2["timeFormat"] = derived2.Properties.TimeFormat;
                                         }
                                     }
                                     
@@ -537,6 +547,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         if (derived4.Properties.Encoding != null)
                                         {
                                             propertiesValue4["encoding"] = derived4.Properties.Encoding;
+                                        }
+                                        
+                                        if (derived4.Properties.Format != null)
+                                        {
+                                            propertiesValue4["format"] = derived4.Properties.Format;
                                         }
                                     }
                                     
@@ -608,11 +623,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         if (derived7.Properties.Container != null)
                                         {
                                             propertiesValue5["container"] = derived7.Properties.Container;
-                                        }
-                                        
-                                        if (derived7.Properties.BlobSerializationBoundary != null)
-                                        {
-                                            propertiesValue5["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
                                         }
                                         
                                         if (derived7.Properties.PathPattern != null)
@@ -737,6 +747,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         if (derived10.Properties.Encoding != null)
                                         {
                                             propertiesValue8["encoding"] = derived10.Properties.Encoding;
+                                        }
+                                        
+                                        if (derived10.Properties.Format != null)
+                                        {
+                                            propertiesValue8["format"] = derived10.Properties.Format;
                                         }
                                     }
                                     
@@ -874,11 +889,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance.Container = containerInstance;
                                                 }
                                                 
-                                                JToken blobNameValue = propertiesValue10["blobName"];
-                                                if (blobNameValue != null && blobNameValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue = propertiesValue10["pathPattern"];
+                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
                                                 {
-                                                    string blobNameInstance = ((string)blobNameValue);
-                                                    propertiesInstance.BlobName = blobNameInstance;
+                                                    string pathPatternInstance = ((string)pathPatternValue);
+                                                    propertiesInstance.PathPattern = pathPatternInstance;
+                                                }
+                                                
+                                                JToken dateFormatValue = propertiesValue10["dateFormat"];
+                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string dateFormatInstance = ((string)dateFormatValue);
+                                                    propertiesInstance.DateFormat = dateFormatInstance;
+                                                }
+                                                
+                                                JToken timeFormatValue = propertiesValue10["timeFormat"];
+                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string timeFormatInstance = ((string)timeFormatValue);
+                                                    propertiesInstance.TimeFormat = timeFormatInstance;
                                                 }
                                             }
                                             
@@ -958,6 +987,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 {
                                                     string encodingInstance2 = ((string)encodingValue2);
                                                     propertiesInstance3.Encoding = encodingInstance2;
+                                                }
+                                                
+                                                JToken formatValue = propertiesValue12["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    propertiesInstance3.Format = formatInstance;
                                                 }
                                             }
                                             
@@ -1040,32 +1076,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance5.Container = containerInstance2;
                                                 }
                                                 
-                                                JToken blobSerializationBoundaryValue = propertiesValue14["blobSerializationBoundary"];
-                                                if (blobSerializationBoundaryValue != null && blobSerializationBoundaryValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue2 = propertiesValue14["pathPattern"];
+                                                if (pathPatternValue2 != null && pathPatternValue2.Type != JTokenType.Null)
                                                 {
-                                                    string blobSerializationBoundaryInstance = ((string)blobSerializationBoundaryValue);
-                                                    propertiesInstance5.BlobSerializationBoundary = blobSerializationBoundaryInstance;
+                                                    string pathPatternInstance2 = ((string)pathPatternValue2);
+                                                    propertiesInstance5.PathPattern = pathPatternInstance2;
                                                 }
                                                 
-                                                JToken pathPatternValue = propertiesValue14["pathPattern"];
-                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
+                                                JToken dateFormatValue2 = propertiesValue14["dateFormat"];
+                                                if (dateFormatValue2 != null && dateFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string pathPatternInstance = ((string)pathPatternValue);
-                                                    propertiesInstance5.PathPattern = pathPatternInstance;
+                                                    string dateFormatInstance2 = ((string)dateFormatValue2);
+                                                    propertiesInstance5.DateFormat = dateFormatInstance2;
                                                 }
                                                 
-                                                JToken dateFormatValue = propertiesValue14["dateFormat"];
-                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                JToken timeFormatValue2 = propertiesValue14["timeFormat"];
+                                                if (timeFormatValue2 != null && timeFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string dateFormatInstance = ((string)dateFormatValue);
-                                                    propertiesInstance5.DateFormat = dateFormatInstance;
-                                                }
-                                                
-                                                JToken timeFormatValue = propertiesValue14["timeFormat"];
-                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
-                                                {
-                                                    string timeFormatInstance = ((string)timeFormatValue);
-                                                    propertiesInstance5.TimeFormat = timeFormatInstance;
+                                                    string timeFormatInstance2 = ((string)timeFormatValue2);
+                                                    propertiesInstance5.TimeFormat = timeFormatInstance2;
                                                 }
                                                 
                                                 JToken sourcePartitionCountValue = propertiesValue14["sourcePartitionCount"];
@@ -1207,6 +1236,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string encodingInstance4 = ((string)encodingValue4);
                                                     propertiesInstance8.Encoding = encodingInstance4;
                                                 }
+                                                
+                                                JToken formatValue2 = propertiesValue17["format"];
+                                                if (formatValue2 != null && formatValue2.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance2 = ((string)formatValue2);
+                                                    propertiesInstance8.Format = formatInstance2;
+                                                }
                                             }
                                             
                                             JToken typeValue10 = serializationValue4["type"];
@@ -1246,7 +1282,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -1355,7 +1391,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1498,11 +1534,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance.Container = containerInstance;
                                                 }
                                                 
-                                                JToken blobNameValue = propertiesValue2["blobName"];
-                                                if (blobNameValue != null && blobNameValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue = propertiesValue2["pathPattern"];
+                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
                                                 {
-                                                    string blobNameInstance = ((string)blobNameValue);
-                                                    propertiesInstance.BlobName = blobNameInstance;
+                                                    string pathPatternInstance = ((string)pathPatternValue);
+                                                    propertiesInstance.PathPattern = pathPatternInstance;
+                                                }
+                                                
+                                                JToken dateFormatValue = propertiesValue2["dateFormat"];
+                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string dateFormatInstance = ((string)dateFormatValue);
+                                                    propertiesInstance.DateFormat = dateFormatInstance;
+                                                }
+                                                
+                                                JToken timeFormatValue = propertiesValue2["timeFormat"];
+                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string timeFormatInstance = ((string)timeFormatValue);
+                                                    propertiesInstance.TimeFormat = timeFormatInstance;
                                                 }
                                             }
                                             
@@ -1582,6 +1632,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 {
                                                     string encodingInstance2 = ((string)encodingValue2);
                                                     propertiesInstance3.Encoding = encodingInstance2;
+                                                }
+                                                
+                                                JToken formatValue = propertiesValue4["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    propertiesInstance3.Format = formatInstance;
                                                 }
                                             }
                                             
@@ -1664,32 +1721,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance5.Container = containerInstance2;
                                                 }
                                                 
-                                                JToken blobSerializationBoundaryValue = propertiesValue6["blobSerializationBoundary"];
-                                                if (blobSerializationBoundaryValue != null && blobSerializationBoundaryValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue2 = propertiesValue6["pathPattern"];
+                                                if (pathPatternValue2 != null && pathPatternValue2.Type != JTokenType.Null)
                                                 {
-                                                    string blobSerializationBoundaryInstance = ((string)blobSerializationBoundaryValue);
-                                                    propertiesInstance5.BlobSerializationBoundary = blobSerializationBoundaryInstance;
+                                                    string pathPatternInstance2 = ((string)pathPatternValue2);
+                                                    propertiesInstance5.PathPattern = pathPatternInstance2;
                                                 }
                                                 
-                                                JToken pathPatternValue = propertiesValue6["pathPattern"];
-                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
+                                                JToken dateFormatValue2 = propertiesValue6["dateFormat"];
+                                                if (dateFormatValue2 != null && dateFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string pathPatternInstance = ((string)pathPatternValue);
-                                                    propertiesInstance5.PathPattern = pathPatternInstance;
+                                                    string dateFormatInstance2 = ((string)dateFormatValue2);
+                                                    propertiesInstance5.DateFormat = dateFormatInstance2;
                                                 }
                                                 
-                                                JToken dateFormatValue = propertiesValue6["dateFormat"];
-                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                JToken timeFormatValue2 = propertiesValue6["timeFormat"];
+                                                if (timeFormatValue2 != null && timeFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string dateFormatInstance = ((string)dateFormatValue);
-                                                    propertiesInstance5.DateFormat = dateFormatInstance;
-                                                }
-                                                
-                                                JToken timeFormatValue = propertiesValue6["timeFormat"];
-                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
-                                                {
-                                                    string timeFormatInstance = ((string)timeFormatValue);
-                                                    propertiesInstance5.TimeFormat = timeFormatInstance;
+                                                    string timeFormatInstance2 = ((string)timeFormatValue2);
+                                                    propertiesInstance5.TimeFormat = timeFormatInstance2;
                                                 }
                                                 
                                                 JToken sourcePartitionCountValue = propertiesValue6["sourcePartitionCount"];
@@ -1831,6 +1881,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string encodingInstance4 = ((string)encodingValue4);
                                                     propertiesInstance8.Encoding = encodingInstance4;
                                                 }
+                                                
+                                                JToken formatValue2 = propertiesValue9["format"];
+                                                if (formatValue2 != null && formatValue2.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance2 = ((string)formatValue2);
+                                                    propertiesInstance8.Format = formatInstance2;
+                                                }
                                             }
                                             
                                             JToken typeValue10 = serializationValue2["type"];
@@ -1870,7 +1927,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -1965,7 +2022,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2031,7 +2088,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2122,7 +2179,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2260,11 +2317,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance.Container = containerInstance;
                                                 }
                                                 
-                                                JToken blobNameValue = propertiesValue2["blobName"];
-                                                if (blobNameValue != null && blobNameValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue = propertiesValue2["pathPattern"];
+                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
                                                 {
-                                                    string blobNameInstance = ((string)blobNameValue);
-                                                    propertiesInstance.BlobName = blobNameInstance;
+                                                    string pathPatternInstance = ((string)pathPatternValue);
+                                                    propertiesInstance.PathPattern = pathPatternInstance;
+                                                }
+                                                
+                                                JToken dateFormatValue = propertiesValue2["dateFormat"];
+                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string dateFormatInstance = ((string)dateFormatValue);
+                                                    propertiesInstance.DateFormat = dateFormatInstance;
+                                                }
+                                                
+                                                JToken timeFormatValue = propertiesValue2["timeFormat"];
+                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string timeFormatInstance = ((string)timeFormatValue);
+                                                    propertiesInstance.TimeFormat = timeFormatInstance;
                                                 }
                                             }
                                             
@@ -2344,6 +2415,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 {
                                                     string encodingInstance2 = ((string)encodingValue2);
                                                     propertiesInstance3.Encoding = encodingInstance2;
+                                                }
+                                                
+                                                JToken formatValue = propertiesValue4["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    propertiesInstance3.Format = formatInstance;
                                                 }
                                             }
                                             
@@ -2426,32 +2504,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance5.Container = containerInstance2;
                                                 }
                                                 
-                                                JToken blobSerializationBoundaryValue = propertiesValue6["blobSerializationBoundary"];
-                                                if (blobSerializationBoundaryValue != null && blobSerializationBoundaryValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue2 = propertiesValue6["pathPattern"];
+                                                if (pathPatternValue2 != null && pathPatternValue2.Type != JTokenType.Null)
                                                 {
-                                                    string blobSerializationBoundaryInstance = ((string)blobSerializationBoundaryValue);
-                                                    propertiesInstance5.BlobSerializationBoundary = blobSerializationBoundaryInstance;
+                                                    string pathPatternInstance2 = ((string)pathPatternValue2);
+                                                    propertiesInstance5.PathPattern = pathPatternInstance2;
                                                 }
                                                 
-                                                JToken pathPatternValue = propertiesValue6["pathPattern"];
-                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
+                                                JToken dateFormatValue2 = propertiesValue6["dateFormat"];
+                                                if (dateFormatValue2 != null && dateFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string pathPatternInstance = ((string)pathPatternValue);
-                                                    propertiesInstance5.PathPattern = pathPatternInstance;
+                                                    string dateFormatInstance2 = ((string)dateFormatValue2);
+                                                    propertiesInstance5.DateFormat = dateFormatInstance2;
                                                 }
                                                 
-                                                JToken dateFormatValue = propertiesValue6["dateFormat"];
-                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                JToken timeFormatValue2 = propertiesValue6["timeFormat"];
+                                                if (timeFormatValue2 != null && timeFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string dateFormatInstance = ((string)dateFormatValue);
-                                                    propertiesInstance5.DateFormat = dateFormatInstance;
-                                                }
-                                                
-                                                JToken timeFormatValue = propertiesValue6["timeFormat"];
-                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
-                                                {
-                                                    string timeFormatInstance = ((string)timeFormatValue);
-                                                    propertiesInstance5.TimeFormat = timeFormatInstance;
+                                                    string timeFormatInstance2 = ((string)timeFormatValue2);
+                                                    propertiesInstance5.TimeFormat = timeFormatInstance2;
                                                 }
                                                 
                                                 JToken sourcePartitionCountValue = propertiesValue6["sourcePartitionCount"];
@@ -2593,6 +2664,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string encodingInstance4 = ((string)encodingValue4);
                                                     propertiesInstance8.Encoding = encodingInstance4;
                                                 }
+                                                
+                                                JToken formatValue2 = propertiesValue9["format"];
+                                                if (formatValue2 != null && formatValue2.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance2 = ((string)formatValue2);
+                                                    propertiesInstance8.Format = formatInstance2;
+                                                }
                                             }
                                             
                                             JToken typeValue10 = serializationValue2["type"];
@@ -2632,7 +2710,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -2718,7 +2796,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/inputs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2861,11 +2939,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             propertiesInstance.Container = containerInstance;
                                                         }
                                                         
-                                                        JToken blobNameValue = propertiesValue2["blobName"];
-                                                        if (blobNameValue != null && blobNameValue.Type != JTokenType.Null)
+                                                        JToken pathPatternValue = propertiesValue2["pathPattern"];
+                                                        if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
                                                         {
-                                                            string blobNameInstance = ((string)blobNameValue);
-                                                            propertiesInstance.BlobName = blobNameInstance;
+                                                            string pathPatternInstance = ((string)pathPatternValue);
+                                                            propertiesInstance.PathPattern = pathPatternInstance;
+                                                        }
+                                                        
+                                                        JToken dateFormatValue = propertiesValue2["dateFormat"];
+                                                        if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                        {
+                                                            string dateFormatInstance = ((string)dateFormatValue);
+                                                            propertiesInstance.DateFormat = dateFormatInstance;
+                                                        }
+                                                        
+                                                        JToken timeFormatValue = propertiesValue2["timeFormat"];
+                                                        if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
+                                                        {
+                                                            string timeFormatInstance = ((string)timeFormatValue);
+                                                            propertiesInstance.TimeFormat = timeFormatInstance;
                                                         }
                                                     }
                                                     
@@ -2945,6 +3037,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         {
                                                             string encodingInstance2 = ((string)encodingValue2);
                                                             propertiesInstance3.Encoding = encodingInstance2;
+                                                        }
+                                                        
+                                                        JToken formatValue = propertiesValue4["format"];
+                                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                        {
+                                                            string formatInstance = ((string)formatValue);
+                                                            propertiesInstance3.Format = formatInstance;
                                                         }
                                                     }
                                                     
@@ -3027,32 +3126,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             propertiesInstance5.Container = containerInstance2;
                                                         }
                                                         
-                                                        JToken blobSerializationBoundaryValue = propertiesValue6["blobSerializationBoundary"];
-                                                        if (blobSerializationBoundaryValue != null && blobSerializationBoundaryValue.Type != JTokenType.Null)
+                                                        JToken pathPatternValue2 = propertiesValue6["pathPattern"];
+                                                        if (pathPatternValue2 != null && pathPatternValue2.Type != JTokenType.Null)
                                                         {
-                                                            string blobSerializationBoundaryInstance = ((string)blobSerializationBoundaryValue);
-                                                            propertiesInstance5.BlobSerializationBoundary = blobSerializationBoundaryInstance;
+                                                            string pathPatternInstance2 = ((string)pathPatternValue2);
+                                                            propertiesInstance5.PathPattern = pathPatternInstance2;
                                                         }
                                                         
-                                                        JToken pathPatternValue = propertiesValue6["pathPattern"];
-                                                        if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
+                                                        JToken dateFormatValue2 = propertiesValue6["dateFormat"];
+                                                        if (dateFormatValue2 != null && dateFormatValue2.Type != JTokenType.Null)
                                                         {
-                                                            string pathPatternInstance = ((string)pathPatternValue);
-                                                            propertiesInstance5.PathPattern = pathPatternInstance;
+                                                            string dateFormatInstance2 = ((string)dateFormatValue2);
+                                                            propertiesInstance5.DateFormat = dateFormatInstance2;
                                                         }
                                                         
-                                                        JToken dateFormatValue = propertiesValue6["dateFormat"];
-                                                        if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                        JToken timeFormatValue2 = propertiesValue6["timeFormat"];
+                                                        if (timeFormatValue2 != null && timeFormatValue2.Type != JTokenType.Null)
                                                         {
-                                                            string dateFormatInstance = ((string)dateFormatValue);
-                                                            propertiesInstance5.DateFormat = dateFormatInstance;
-                                                        }
-                                                        
-                                                        JToken timeFormatValue = propertiesValue6["timeFormat"];
-                                                        if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
-                                                        {
-                                                            string timeFormatInstance = ((string)timeFormatValue);
-                                                            propertiesInstance5.TimeFormat = timeFormatInstance;
+                                                            string timeFormatInstance2 = ((string)timeFormatValue2);
+                                                            propertiesInstance5.TimeFormat = timeFormatInstance2;
                                                         }
                                                         
                                                         JToken sourcePartitionCountValue = propertiesValue6["sourcePartitionCount"];
@@ -3194,6 +3286,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             string encodingInstance4 = ((string)encodingValue4);
                                                             propertiesInstance8.Encoding = encodingInstance4;
                                                         }
+                                                        
+                                                        JToken formatValue2 = propertiesValue9["format"];
+                                                        if (formatValue2 != null && formatValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string formatInstance2 = ((string)formatValue2);
+                                                            propertiesInstance8.Format = formatInstance2;
+                                                        }
                                                     }
                                                     
                                                     JToken typeValue10 = serializationValue2["type"];
@@ -3242,7 +3341,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3346,7 +3445,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3436,9 +3535,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     propertiesValue2["container"] = derived2.Properties.Container;
                                 }
                                 
-                                if (derived2.Properties.BlobName != null)
+                                if (derived2.Properties.PathPattern != null)
                                 {
-                                    propertiesValue2["blobName"] = derived2.Properties.BlobName;
+                                    propertiesValue2["pathPattern"] = derived2.Properties.PathPattern;
+                                }
+                                
+                                if (derived2.Properties.DateFormat != null)
+                                {
+                                    propertiesValue2["dateFormat"] = derived2.Properties.DateFormat;
+                                }
+                                
+                                if (derived2.Properties.TimeFormat != null)
+                                {
+                                    propertiesValue2["timeFormat"] = derived2.Properties.TimeFormat;
                                 }
                             }
                             
@@ -3502,6 +3611,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (derived4.Properties.Encoding != null)
                                 {
                                     propertiesValue4["encoding"] = derived4.Properties.Encoding;
+                                }
+                                
+                                if (derived4.Properties.Format != null)
+                                {
+                                    propertiesValue4["format"] = derived4.Properties.Format;
                                 }
                             }
                             
@@ -3573,11 +3687,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (derived7.Properties.Container != null)
                                 {
                                     propertiesValue5["container"] = derived7.Properties.Container;
-                                }
-                                
-                                if (derived7.Properties.BlobSerializationBoundary != null)
-                                {
-                                    propertiesValue5["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
                                 }
                                 
                                 if (derived7.Properties.PathPattern != null)
@@ -3703,6 +3812,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     propertiesValue8["encoding"] = derived10.Properties.Encoding;
                                 }
+                                
+                                if (derived10.Properties.Format != null)
+                                {
+                                    propertiesValue8["format"] = derived10.Properties.Format;
+                                }
                             }
                             
                             if (derived10.Type != null)
@@ -3827,11 +3941,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance.Container = containerInstance;
                                                 }
                                                 
-                                                JToken blobNameValue = propertiesValue10["blobName"];
-                                                if (blobNameValue != null && blobNameValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue = propertiesValue10["pathPattern"];
+                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
                                                 {
-                                                    string blobNameInstance = ((string)blobNameValue);
-                                                    propertiesInstance.BlobName = blobNameInstance;
+                                                    string pathPatternInstance = ((string)pathPatternValue);
+                                                    propertiesInstance.PathPattern = pathPatternInstance;
+                                                }
+                                                
+                                                JToken dateFormatValue = propertiesValue10["dateFormat"];
+                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string dateFormatInstance = ((string)dateFormatValue);
+                                                    propertiesInstance.DateFormat = dateFormatInstance;
+                                                }
+                                                
+                                                JToken timeFormatValue = propertiesValue10["timeFormat"];
+                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
+                                                {
+                                                    string timeFormatInstance = ((string)timeFormatValue);
+                                                    propertiesInstance.TimeFormat = timeFormatInstance;
                                                 }
                                             }
                                             
@@ -3911,6 +4039,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 {
                                                     string encodingInstance2 = ((string)encodingValue2);
                                                     propertiesInstance3.Encoding = encodingInstance2;
+                                                }
+                                                
+                                                JToken formatValue = propertiesValue12["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    propertiesInstance3.Format = formatInstance;
                                                 }
                                             }
                                             
@@ -3993,32 +4128,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance5.Container = containerInstance2;
                                                 }
                                                 
-                                                JToken blobSerializationBoundaryValue = propertiesValue14["blobSerializationBoundary"];
-                                                if (blobSerializationBoundaryValue != null && blobSerializationBoundaryValue.Type != JTokenType.Null)
+                                                JToken pathPatternValue2 = propertiesValue14["pathPattern"];
+                                                if (pathPatternValue2 != null && pathPatternValue2.Type != JTokenType.Null)
                                                 {
-                                                    string blobSerializationBoundaryInstance = ((string)blobSerializationBoundaryValue);
-                                                    propertiesInstance5.BlobSerializationBoundary = blobSerializationBoundaryInstance;
+                                                    string pathPatternInstance2 = ((string)pathPatternValue2);
+                                                    propertiesInstance5.PathPattern = pathPatternInstance2;
                                                 }
                                                 
-                                                JToken pathPatternValue = propertiesValue14["pathPattern"];
-                                                if (pathPatternValue != null && pathPatternValue.Type != JTokenType.Null)
+                                                JToken dateFormatValue2 = propertiesValue14["dateFormat"];
+                                                if (dateFormatValue2 != null && dateFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string pathPatternInstance = ((string)pathPatternValue);
-                                                    propertiesInstance5.PathPattern = pathPatternInstance;
+                                                    string dateFormatInstance2 = ((string)dateFormatValue2);
+                                                    propertiesInstance5.DateFormat = dateFormatInstance2;
                                                 }
                                                 
-                                                JToken dateFormatValue = propertiesValue14["dateFormat"];
-                                                if (dateFormatValue != null && dateFormatValue.Type != JTokenType.Null)
+                                                JToken timeFormatValue2 = propertiesValue14["timeFormat"];
+                                                if (timeFormatValue2 != null && timeFormatValue2.Type != JTokenType.Null)
                                                 {
-                                                    string dateFormatInstance = ((string)dateFormatValue);
-                                                    propertiesInstance5.DateFormat = dateFormatInstance;
-                                                }
-                                                
-                                                JToken timeFormatValue = propertiesValue14["timeFormat"];
-                                                if (timeFormatValue != null && timeFormatValue.Type != JTokenType.Null)
-                                                {
-                                                    string timeFormatInstance = ((string)timeFormatValue);
-                                                    propertiesInstance5.TimeFormat = timeFormatInstance;
+                                                    string timeFormatInstance2 = ((string)timeFormatValue2);
+                                                    propertiesInstance5.TimeFormat = timeFormatInstance2;
                                                 }
                                                 
                                                 JToken sourcePartitionCountValue = propertiesValue14["sourcePartitionCount"];
@@ -4160,6 +4288,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string encodingInstance4 = ((string)encodingValue4);
                                                     propertiesInstance8.Encoding = encodingInstance4;
                                                 }
+                                                
+                                                JToken formatValue2 = propertiesValue17["format"];
+                                                if (formatValue2 != null && formatValue2.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance2 = ((string)formatValue2);
+                                                    propertiesInstance8.Format = formatInstance2;
+                                                }
                                             }
                                             
                                             JToken typeValue10 = serializationValue4["type"];
@@ -4199,7 +4334,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -4279,6 +4414,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 delayInSeconds = 10;
             }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4289,6 +4428,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 10;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
             

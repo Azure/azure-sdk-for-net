@@ -50,6 +50,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public JobGetParameters()
         {
+            this.PropertiesToExpand = "";
         }
         
         /// <summary>

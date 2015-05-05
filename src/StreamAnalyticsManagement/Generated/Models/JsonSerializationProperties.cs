@@ -40,6 +40,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._encoding = value; }
         }
         
+        private string _format;
+        
+        /// <summary>
+        /// Optional. Gets or sets the event format. Currently only applies to
+        /// serialization for outputs.
+        /// </summary>
+        public string Format
+        {
+            get { return this._format; }
+            set { this._format = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the JsonSerializationProperties class.
         /// </summary>

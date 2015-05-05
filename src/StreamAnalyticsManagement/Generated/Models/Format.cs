@@ -25,18 +25,20 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The blob serialization boundary.
+    /// The events out of order policy.
     /// </summary>
-    public static partial class BlobSerializationBoundary
+    public static partial class Format
     {
         /// <summary>
-        /// Blob Boundary.
+        /// Specifies that the event(s) will be formatted by having each JSON
+        /// object separated by a new line.
         /// </summary>
-        public const string BlobBoundary = "BlobBoundary";
+        public const string LineSeparated = "LineSeparated";
         
         /// <summary>
-        /// Block Boundary.
+        /// Specifies that the event(s) will be formatted as an array of JSON
+        /// objects.
         /// </summary>
-        public const string BlockBoundary = "BlockBoundary";
+        public const string Array = "Array";
     }
 }
