@@ -21,6 +21,7 @@ using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.Insights
 {
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Insights
     /// </summary>
     internal static class ShoeboxClient
     {
+        private static readonly string[] doubleUnderscore = { "__" };
         internal static int MaxParallelRequestsByName = 4;
 
         /// <summary>
@@ -119,31 +121,160 @@ namespace Microsoft.Azure.Insights
             // Get all the entities for the query
             IEnumerable<DynamicTableEntity> entities = await GetEntitiesAsync(tables, query, invocationId).ConfigureAwait(false);
 
-            // Group entities by (encoded) name
-            IEnumerable<IGrouping<string, DynamicTableEntity>> groups = entities.GroupBy(entity => entity.RowKey.Substring(entity.RowKey.LastIndexOf('_') + 1));
-
-            // if names are specified, filter the results to those metrics only
+            ICollection<string> dimensionFilterNames = null;
             if (filter.DimensionFilters != null)
             {
-                groups = groups.Where(g => filter.DimensionFilters.Select(df => ShoeboxHelper.TrimAndEscapeKey(df.Name)).Contains(g.Key, StringComparer.OrdinalIgnoreCase));
+                dimensionFilterNames = new HashSet<string>(filter.DimensionFilters.Select(df => ShoeboxHelper.TrimAndEscapeKey(df.Name)));
             }
 
-            // Construct MetricCollection (list of metrics) by taking each group and converting the entities in that group to MetricValue objects
+            var metricWraps = new Dictionary<string, MetricWrap>();
+            var metrics = new List<Metric>();
+
+            // Iterate over the instances to do conversion and aggregation when needed. 
+            foreach (var entity in entities)
+            {
+                string encodedName = GetMetricNameFromRowKeyByTimestampByMetricName(entity.RowKey);
+
+                // When there is filter, skip entities not included in the filter.
+                if (dimensionFilterNames != null && !dimensionFilterNames.Contains(encodedName, StringComparer.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                MetricWrap metricWrap;
+                if (!metricWraps.TryGetValue(encodedName, out metricWrap))
+                {
+                    metricWrap = new MetricWrap
+                    {
+                        Metric = new Metric()
+                        {
+                            Name = new LocalizableString()
+                            {
+                                Value = encodedName
+                            },
+                            StartTime = filter.StartTime,
+                            EndTime = filter.EndTime,
+                            TimeGrain = filter.TimeGrain,
+                            MetricValues = new List<MetricValue>()
+                        },
+                        InstanceMetrics = new List<MetricValue>(),
+                        GlobalMetrics = new List<DynamicTableEntity>()
+                    };
+                        
+                    metricWraps[encodedName] = metricWrap;
+                    metrics.Add(metricWrap.Metric);
+                }
+
+                // Skip aggregated entities
+                if (!IsInstanceMetric(entity.RowKey))
+                {
+                    // We ignore the aggergated metrics if there are instance metrics.
+                    if (metricWrap.InstanceMetrics.Count == 0)
+                    {
+                        metricWrap.GlobalMetrics.Add(entity);
+                    }
+                    
+                    continue;
+                }
+
+                MetricValue lastMetricValue = metricWrap.InstanceMetrics.LastOrDefault();
+                if (lastMetricValue == null)
+                {
+                    metricWrap.InstanceMetrics.Add(ResolveMetricEntity(entity));
+                }
+                else
+                {
+                    if (lastMetricValue.Timestamp.Ticks == GetTimestamp(entity))
+                    {
+                        Aggregate(lastMetricValue, entity);
+                    }
+                    else
+                    {
+                        metricWrap.InstanceMetrics.Add(ResolveMetricEntity(entity));
+                    }
+                }
+            }
+
+            foreach (var metricWrap in metricWraps.Values)
+            {
+                // Decide whether to return the aggregation of the instance metrics on the fly or the final value in the storage account
+                // If there are instance metrics, the aggregation on the fly is used.
+                Metric metric = metricWrap.Metric;
+                metric.Name.Value = FindMetricName(metric.Name.Value, dimensionFilterNames);
+                if (metricWrap.InstanceMetrics.Count > 0)
+                {
+                    foreach (var metricValue in metricWrap.InstanceMetrics)
+                    {
+                        metricValue.Average = metricValue.Total / metricValue.Count;
+                    }
+
+                    metric.MetricValues = metricWrap.InstanceMetrics;
+                }
+                else
+                {
+                    metric.MetricValues = metricWrap.GlobalMetrics.Select(me => ResolveMetricEntity(me)).ToList();
+                }
+            }
+
             return new MetricCollection()
             {
-                Value =
-                    groups.Select(g => new Metric()
-                    {
-                        Name = new LocalizableString()
-                        {
-                            Value = FindMetricName(g.Key, filter.DimensionFilters.Select(df => df.Name))
-                        },
-                        StartTime = filter.StartTime,
-                        EndTime = filter.EndTime,
-                        TimeGrain = filter.TimeGrain,
-                        MetricValues = g.Select(ResolveMetricEntity).ToList()
-                    }).ToList()
+                Value = metrics
             };
+        }
+
+        private static long GetTimestamp(DynamicTableEntity entity)
+        {
+            int index = entity.RowKey.IndexOf('_');
+            long reverseTimestamp = long.Parse(entity.RowKey.Substring(0, index));
+
+            return DateTime.MaxValue.Ticks - reverseTimestamp;
+        }
+
+        private static void Aggregate(MetricValue lastMetricValue, DynamicTableEntity e)
+        {
+            // Average will be calculated at the end
+            lastMetricValue.Count += e.Properties["Count"].Int32Value;
+
+            // It is impossible to calculate Last
+            lastMetricValue.Last = null;
+
+            double? max = e.Properties["Maximum"].DoubleValue;
+            if (lastMetricValue.Maximum < max)
+            {
+                lastMetricValue.Maximum = max;
+            }
+
+            double? min = e.Properties["Minimum"].DoubleValue;
+            if (lastMetricValue.Minimum > min)
+            {
+                lastMetricValue.Minimum = min;
+            }
+
+            lastMetricValue.Total += e.Properties["Total"].DoubleValue;
+        }
+
+        // Instance metrics have the rowKeys in the format Timestamp__EncodedMetricName__InstanceId. The way to detec is counting the double
+        // underscores.
+        private static bool IsInstanceMetric(string rowKey)
+        {
+            return rowKey.Split(doubleUnderscore, StringSplitOptions.None).Length > 2;
+        }
+
+        private static string GetMetricNameFromRowKeyByTimestampByMetricName(string rowKey)
+        {
+            if (string.IsNullOrWhiteSpace(rowKey))
+            {
+                return null;
+            }
+
+            string[] split = rowKey.Split(doubleUnderscore, StringSplitOptions.None);
+
+            if (split.Length < 2)
+            {
+                return null;
+            }
+
+            return split[1];
         }
 
         // This method tries to figure out the original name of the metric from the encoded name
@@ -158,8 +289,7 @@ namespace Microsoft.Azure.Insights
         // Note: Does not populate Metric fields unrelated to query (i.e. "display name", resourceUri, and properties)
         private static async Task<Metric> GetMetricAsync(string name, TableQuery query, MetricFilter filter, MetricLocation location, string invocationId)
         {
-            // The GetEnititesAsync function provides one task that will call all the queries in parallel
-            return new Metric()
+            Metric metric = new Metric()
             {
                 Name = new LocalizableString()
                 {
@@ -168,8 +298,63 @@ namespace Microsoft.Azure.Insights
                 StartTime = filter.StartTime,
                 EndTime = filter.EndTime,
                 TimeGrain = filter.TimeGrain,
-                MetricValues = (await GetEntitiesAsync(GetNdayTables(filter, location), query, invocationId).ConfigureAwait(false)).Select(ResolveMetricEntity).ToList()
+                MetricValues = new List<MetricValue>()
             };
+
+            var instanceMetrics = new List<MetricValue>();
+            var globalMetrics = new List<DynamicTableEntity>();
+
+            // The GetEnititesAsync function provides one task that will call all the queries in parallel
+            var entities = await GetEntitiesAsync(GetNdayTables(filter, location), query, invocationId).ConfigureAwait(false);
+
+            // Iterate over the instances to do conversion and aggregation when needed
+            foreach (var entity in entities)
+            {
+                // Skip aggregated entities
+                if (!IsInstanceMetric(entity.RowKey))
+                {
+                    // We ignore the aggergated metrics if there are instance metrics.
+                    if (instanceMetrics.Count == 0)
+                    {
+                        globalMetrics.Add(entity);
+                    }
+
+                    continue;
+                }
+
+                MetricValue lastMetricValue = instanceMetrics.LastOrDefault();
+                if (lastMetricValue == null)
+                {
+                    instanceMetrics.Add(ResolveMetricEntity(entity));
+                }
+                else
+                {
+                    if (lastMetricValue.Timestamp.Ticks == GetTimestamp(entity))
+                    {
+                        Aggregate(lastMetricValue, entity);
+                    }
+                    else
+                    {
+                        instanceMetrics.Add(ResolveMetricEntity(entity));
+                    }
+                }
+            }
+
+            if (instanceMetrics.Count > 0)
+            {
+                foreach (var metricValue in instanceMetrics)
+                {
+                    metricValue.Average = metricValue.Total / metricValue.Count;
+                }
+
+                metric.MetricValues = instanceMetrics;
+            }
+            else
+            {
+                metric.MetricValues = globalMetrics.Select(me => ResolveMetricEntity(me)).ToList();
+            }
+
+            return metric;
         }
 
         // Executes a table query, following continuation tokens and returns the resulting entities

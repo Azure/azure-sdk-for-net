@@ -22,6 +22,7 @@
     <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperationsExtensions.Customization.cs" />
+    <Compile Include="Customizations\Shoebox\MetricWrap.cs" />
     <Compile Include="Customizations\Shoebox\StorageConstants.cs" />
     <Compile Include="Customizations\Shoebox\EmptyMetricRetriever.cs" />
     <Compile Include="Customizations\Shoebox\FilterDimension.cs" />
