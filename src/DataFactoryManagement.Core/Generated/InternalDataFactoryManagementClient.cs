@@ -135,26 +135,6 @@ namespace Microsoft.Azure.Management.DataFactories
             get { return this._hubs; }
         }
         
-        private IInternalActivityTypeOperations _internalActivityTypes;
-        
-        /// <summary>
-        /// Operations for managing data factory ActivityTypes.
-        /// </summary>
-        public virtual IInternalActivityTypeOperations InternalActivityTypes
-        {
-            get { return this._internalActivityTypes; }
-        }
-        
-        private IInternalComputeTypeOperations _internalComputeTypes;
-        
-        /// <summary>
-        /// Operations for managing data factory ComputeTypes.
-        /// </summary>
-        public virtual IInternalComputeTypeOperations InternalComputeTypes
-        {
-            get { return this._internalComputeTypes; }
-        }
-        
         private IInternalLinkedServiceOperations _internalLinkedServices;
         
         /// <summary>
@@ -207,8 +187,6 @@ namespace Microsoft.Azure.Management.DataFactories
             this._dataSliceRuns = new DataSliceRunOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
-            this._internalActivityTypes = new InternalActivityTypeOperations(this);
-            this._internalComputeTypes = new InternalComputeTypeOperations(this);
             this._internalLinkedServices = new InternalLinkedServiceOperations(this);
             this._internalPipelines = new InternalPipelineOperations(this);
             this._internalTables = new InternalTableOperations(this);
@@ -293,8 +271,6 @@ namespace Microsoft.Azure.Management.DataFactories
             this._dataSliceRuns = new DataSliceRunOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
-            this._internalActivityTypes = new InternalActivityTypeOperations(this);
-            this._internalComputeTypes = new InternalComputeTypeOperations(this);
             this._internalLinkedServices = new InternalLinkedServiceOperations(this);
             this._internalPipelines = new InternalPipelineOperations(this);
             this._internalTables = new InternalTableOperations(this);
@@ -487,11 +463,11 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

@@ -110,22 +110,6 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Operations for managing data factory ActivityTypes.
-        /// </summary>
-        IInternalActivityTypeOperations InternalActivityTypes
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing data factory ComputeTypes.
-        /// </summary>
-        IInternalComputeTypeOperations InternalComputeTypes
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Operations for managing data factory internal linkedServices.
         /// </summary>
         IInternalLinkedServiceOperations InternalLinkedServices
