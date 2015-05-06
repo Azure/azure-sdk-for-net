@@ -576,6 +576,41 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     }
                                 }
                             }
+                            
+                            if (derived.Diagnostics != null)
+                            {
+                                JObject diagnosticsValue = new JObject();
+                                propertiesValue["diagnostics"] = diagnosticsValue;
+                                
+                                if (derived.Diagnostics.Conditions != null)
+                                {
+                                    if (derived.Diagnostics.Conditions is ILazyCollection == false || ((ILazyCollection)derived.Diagnostics.Conditions).IsInitialized)
+                                    {
+                                        JArray conditionsArray = new JArray();
+                                        foreach (DiagnosticCondition conditionsItem in derived.Diagnostics.Conditions)
+                                        {
+                                            JObject diagnosticConditionValue = new JObject();
+                                            conditionsArray.Add(diagnosticConditionValue);
+                                            
+                                            if (conditionsItem.Since != null)
+                                            {
+                                                diagnosticConditionValue["since"] = conditionsItem.Since.Value;
+                                            }
+                                            
+                                            if (conditionsItem.Code != null)
+                                            {
+                                                diagnosticConditionValue["code"] = conditionsItem.Code;
+                                            }
+                                            
+                                            if (conditionsItem.Message != null)
+                                            {
+                                                diagnosticConditionValue["message"] = conditionsItem.Message;
+                                            }
+                                        }
+                                        diagnosticsValue["conditions"] = conditionsArray;
+                                    }
+                                }
+                            }
                         }
                         if (parameters.Input.Properties is StreamInputProperties)
                         {
@@ -773,6 +808,41 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (derived11.Type != null)
                                     {
                                         serializationValue2["type"] = derived11.Type;
+                                    }
+                                }
+                            }
+                            
+                            if (derived6.Diagnostics != null)
+                            {
+                                JObject diagnosticsValue2 = new JObject();
+                                propertiesValue["diagnostics"] = diagnosticsValue2;
+                                
+                                if (derived6.Diagnostics.Conditions != null)
+                                {
+                                    if (derived6.Diagnostics.Conditions is ILazyCollection == false || ((ILazyCollection)derived6.Diagnostics.Conditions).IsInitialized)
+                                    {
+                                        JArray conditionsArray2 = new JArray();
+                                        foreach (DiagnosticCondition conditionsItem2 in derived6.Diagnostics.Conditions)
+                                        {
+                                            JObject diagnosticConditionValue2 = new JObject();
+                                            conditionsArray2.Add(diagnosticConditionValue2);
+                                            
+                                            if (conditionsItem2.Since != null)
+                                            {
+                                                diagnosticConditionValue2["since"] = conditionsItem2.Since.Value;
+                                            }
+                                            
+                                            if (conditionsItem2.Code != null)
+                                            {
+                                                diagnosticConditionValue2["code"] = conditionsItem2.Code;
+                                            }
+                                            
+                                            if (conditionsItem2.Message != null)
+                                            {
+                                                diagnosticConditionValue2["message"] = conditionsItem2.Message;
+                                            }
+                                        }
+                                        diagnosticsValue2["conditions"] = conditionsArray2;
                                     }
                                 }
                             }
@@ -1025,6 +1095,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                         }
                                     }
+                                    
+                                    JToken diagnosticsValue3 = propertiesValue9["diagnostics"];
+                                    if (diagnosticsValue3 != null && diagnosticsValue3.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance = new Diagnostics();
+                                        referenceInputPropertiesInstance.Diagnostics = diagnosticsInstance;
+                                        
+                                        JToken conditionsArray3 = diagnosticsValue3["conditions"];
+                                        if (conditionsArray3 != null && conditionsArray3.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue in ((JArray)conditionsArray3))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance = new DiagnosticCondition();
+                                                diagnosticsInstance.Conditions.Add(diagnosticConditionInstance);
+                                                
+                                                JToken sinceValue = conditionsValue["since"];
+                                                if (sinceValue != null && sinceValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance = ((DateTime)sinceValue);
+                                                    diagnosticConditionInstance.Since = sinceInstance;
+                                                }
+                                                
+                                                JToken codeValue = conditionsValue["code"];
+                                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance = ((string)codeValue);
+                                                    diagnosticConditionInstance.Code = codeInstance;
+                                                }
+                                                
+                                                JToken messageValue = conditionsValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    diagnosticConditionInstance.Message = messageInstance;
+                                                }
+                                            }
+                                        }
+                                    }
                                     inputInstance.Properties = referenceInputPropertiesInstance;
                                 }
                                 if (typeName == "Stream")
@@ -1271,6 +1379,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 avroSerializationInstance2.Type = typeInstance11;
                                             }
                                             streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken diagnosticsValue4 = propertiesValue9["diagnostics"];
+                                    if (diagnosticsValue4 != null && diagnosticsValue4.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance2 = new Diagnostics();
+                                        streamInputPropertiesInstance.Diagnostics = diagnosticsInstance2;
+                                        
+                                        JToken conditionsArray4 = diagnosticsValue4["conditions"];
+                                        if (conditionsArray4 != null && conditionsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue2 in ((JArray)conditionsArray4))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance2 = new DiagnosticCondition();
+                                                diagnosticsInstance2.Conditions.Add(diagnosticConditionInstance2);
+                                                
+                                                JToken sinceValue2 = conditionsValue2["since"];
+                                                if (sinceValue2 != null && sinceValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance2 = ((DateTime)sinceValue2);
+                                                    diagnosticConditionInstance2.Since = sinceInstance2;
+                                                }
+                                                
+                                                JToken codeValue2 = conditionsValue2["code"];
+                                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance2 = ((string)codeValue2);
+                                                    diagnosticConditionInstance2.Code = codeInstance2;
+                                                }
+                                                
+                                                JToken messageValue2 = conditionsValue2["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    diagnosticConditionInstance2.Message = messageInstance2;
+                                                }
+                                            }
                                         }
                                     }
                                     inputInstance.Properties = streamInputPropertiesInstance;
@@ -1670,6 +1816,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                         }
                                     }
+                                    
+                                    JToken diagnosticsValue = propertiesValue["diagnostics"];
+                                    if (diagnosticsValue != null && diagnosticsValue.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance = new Diagnostics();
+                                        referenceInputPropertiesInstance.Diagnostics = diagnosticsInstance;
+                                        
+                                        JToken conditionsArray = diagnosticsValue["conditions"];
+                                        if (conditionsArray != null && conditionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue in ((JArray)conditionsArray))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance = new DiagnosticCondition();
+                                                diagnosticsInstance.Conditions.Add(diagnosticConditionInstance);
+                                                
+                                                JToken sinceValue = conditionsValue["since"];
+                                                if (sinceValue != null && sinceValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance = ((DateTime)sinceValue);
+                                                    diagnosticConditionInstance.Since = sinceInstance;
+                                                }
+                                                
+                                                JToken codeValue = conditionsValue["code"];
+                                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance = ((string)codeValue);
+                                                    diagnosticConditionInstance.Code = codeInstance;
+                                                }
+                                                
+                                                JToken messageValue = conditionsValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    diagnosticConditionInstance.Message = messageInstance;
+                                                }
+                                            }
+                                        }
+                                    }
                                     inputInstance.Properties = referenceInputPropertiesInstance;
                                 }
                                 if (typeName == "Stream")
@@ -1916,6 +2100,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 avroSerializationInstance2.Type = typeInstance11;
                                             }
                                             streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken diagnosticsValue2 = propertiesValue["diagnostics"];
+                                    if (diagnosticsValue2 != null && diagnosticsValue2.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance2 = new Diagnostics();
+                                        streamInputPropertiesInstance.Diagnostics = diagnosticsInstance2;
+                                        
+                                        JToken conditionsArray2 = diagnosticsValue2["conditions"];
+                                        if (conditionsArray2 != null && conditionsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue2 in ((JArray)conditionsArray2))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance2 = new DiagnosticCondition();
+                                                diagnosticsInstance2.Conditions.Add(diagnosticConditionInstance2);
+                                                
+                                                JToken sinceValue2 = conditionsValue2["since"];
+                                                if (sinceValue2 != null && sinceValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance2 = ((DateTime)sinceValue2);
+                                                    diagnosticConditionInstance2.Since = sinceInstance2;
+                                                }
+                                                
+                                                JToken codeValue2 = conditionsValue2["code"];
+                                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance2 = ((string)codeValue2);
+                                                    diagnosticConditionInstance2.Code = codeInstance2;
+                                                }
+                                                
+                                                JToken messageValue2 = conditionsValue2["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    diagnosticConditionInstance2.Message = messageInstance2;
+                                                }
+                                            }
                                         }
                                     }
                                     inputInstance.Properties = streamInputPropertiesInstance;
@@ -2453,6 +2675,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                         }
                                     }
+                                    
+                                    JToken diagnosticsValue = propertiesValue["diagnostics"];
+                                    if (diagnosticsValue != null && diagnosticsValue.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance = new Diagnostics();
+                                        referenceInputPropertiesInstance.Diagnostics = diagnosticsInstance;
+                                        
+                                        JToken conditionsArray = diagnosticsValue["conditions"];
+                                        if (conditionsArray != null && conditionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue in ((JArray)conditionsArray))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance = new DiagnosticCondition();
+                                                diagnosticsInstance.Conditions.Add(diagnosticConditionInstance);
+                                                
+                                                JToken sinceValue = conditionsValue["since"];
+                                                if (sinceValue != null && sinceValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance = ((DateTime)sinceValue);
+                                                    diagnosticConditionInstance.Since = sinceInstance;
+                                                }
+                                                
+                                                JToken codeValue = conditionsValue["code"];
+                                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance = ((string)codeValue);
+                                                    diagnosticConditionInstance.Code = codeInstance;
+                                                }
+                                                
+                                                JToken messageValue = conditionsValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    diagnosticConditionInstance.Message = messageInstance;
+                                                }
+                                            }
+                                        }
+                                    }
                                     inputInstance.Properties = referenceInputPropertiesInstance;
                                 }
                                 if (typeName == "Stream")
@@ -2701,6 +2961,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                         }
                                     }
+                                    
+                                    JToken diagnosticsValue2 = propertiesValue["diagnostics"];
+                                    if (diagnosticsValue2 != null && diagnosticsValue2.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance2 = new Diagnostics();
+                                        streamInputPropertiesInstance.Diagnostics = diagnosticsInstance2;
+                                        
+                                        JToken conditionsArray2 = diagnosticsValue2["conditions"];
+                                        if (conditionsArray2 != null && conditionsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue2 in ((JArray)conditionsArray2))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance2 = new DiagnosticCondition();
+                                                diagnosticsInstance2.Conditions.Add(diagnosticConditionInstance2);
+                                                
+                                                JToken sinceValue2 = conditionsValue2["since"];
+                                                if (sinceValue2 != null && sinceValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance2 = ((DateTime)sinceValue2);
+                                                    diagnosticConditionInstance2.Since = sinceInstance2;
+                                                }
+                                                
+                                                JToken codeValue2 = conditionsValue2["code"];
+                                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance2 = ((string)codeValue2);
+                                                    diagnosticConditionInstance2.Code = codeInstance2;
+                                                }
+                                                
+                                                JToken messageValue2 = conditionsValue2["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    diagnosticConditionInstance2.Message = messageInstance2;
+                                                }
+                                            }
+                                        }
+                                    }
                                     inputInstance.Properties = streamInputPropertiesInstance;
                                 }
                             }
@@ -2753,13 +3051,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to list all the inputs in the
+        /// specified stream analytics job.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response of the input list operation.
         /// </returns>
-        public async Task<InputListResponse> ListInputInJobAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken)
+        public async Task<InputListResponse> ListInputInJobAsync(string resourceGroupName, string jobName, InputListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2769,6 +3071,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             if (jobName == null)
             {
                 throw new ArgumentNullException("jobName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.PropertiesToSelect == null)
+            {
+                throw new ArgumentNullException("parameters.PropertiesToSelect");
             }
             
             // Tracing
@@ -2780,6 +3090,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListInputInJobAsync", tracingParameters);
             }
             
@@ -2796,6 +3107,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/inputs";
             List<string> queryParameters = new List<string>();
+            queryParameters.Add("$select=" + Uri.EscapeDataString(parameters.PropertiesToSelect));
             queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
@@ -3075,6 +3387,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                 }
                                             }
+                                            
+                                            JToken diagnosticsValue = propertiesValue["diagnostics"];
+                                            if (diagnosticsValue != null && diagnosticsValue.Type != JTokenType.Null)
+                                            {
+                                                Diagnostics diagnosticsInstance = new Diagnostics();
+                                                referenceInputPropertiesInstance.Diagnostics = diagnosticsInstance;
+                                                
+                                                JToken conditionsArray = diagnosticsValue["conditions"];
+                                                if (conditionsArray != null && conditionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken conditionsValue in ((JArray)conditionsArray))
+                                                    {
+                                                        DiagnosticCondition diagnosticConditionInstance = new DiagnosticCondition();
+                                                        diagnosticsInstance.Conditions.Add(diagnosticConditionInstance);
+                                                        
+                                                        JToken sinceValue = conditionsValue["since"];
+                                                        if (sinceValue != null && sinceValue.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime sinceInstance = ((DateTime)sinceValue);
+                                                            diagnosticConditionInstance.Since = sinceInstance;
+                                                        }
+                                                        
+                                                        JToken codeValue = conditionsValue["code"];
+                                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string codeInstance = ((string)codeValue);
+                                                            diagnosticConditionInstance.Code = codeInstance;
+                                                        }
+                                                        
+                                                        JToken messageValue = conditionsValue["message"];
+                                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                        {
+                                                            string messageInstance = ((string)messageValue);
+                                                            diagnosticConditionInstance.Message = messageInstance;
+                                                        }
+                                                    }
+                                                }
+                                            }
                                             inputInstance.Properties = referenceInputPropertiesInstance;
                                         }
                                         if (typeName == "Stream")
@@ -3321,6 +3671,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         avroSerializationInstance2.Type = typeInstance11;
                                                     }
                                                     streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken diagnosticsValue2 = propertiesValue["diagnostics"];
+                                            if (diagnosticsValue2 != null && diagnosticsValue2.Type != JTokenType.Null)
+                                            {
+                                                Diagnostics diagnosticsInstance2 = new Diagnostics();
+                                                streamInputPropertiesInstance.Diagnostics = diagnosticsInstance2;
+                                                
+                                                JToken conditionsArray2 = diagnosticsValue2["conditions"];
+                                                if (conditionsArray2 != null && conditionsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken conditionsValue2 in ((JArray)conditionsArray2))
+                                                    {
+                                                        DiagnosticCondition diagnosticConditionInstance2 = new DiagnosticCondition();
+                                                        diagnosticsInstance2.Conditions.Add(diagnosticConditionInstance2);
+                                                        
+                                                        JToken sinceValue2 = conditionsValue2["since"];
+                                                        if (sinceValue2 != null && sinceValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime sinceInstance2 = ((DateTime)sinceValue2);
+                                                            diagnosticConditionInstance2.Since = sinceInstance2;
+                                                        }
+                                                        
+                                                        JToken codeValue2 = conditionsValue2["code"];
+                                                        if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string codeInstance2 = ((string)codeValue2);
+                                                            diagnosticConditionInstance2.Code = codeInstance2;
+                                                        }
+                                                        
+                                                        JToken messageValue2 = conditionsValue2["message"];
+                                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string messageInstance2 = ((string)messageValue2);
+                                                            diagnosticConditionInstance2.Message = messageInstance2;
+                                                        }
+                                                    }
                                                 }
                                             }
                                             inputInstance.Properties = streamInputPropertiesInstance;
@@ -3640,6 +4028,41 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             }
                         }
                     }
+                    
+                    if (derived.Diagnostics != null)
+                    {
+                        JObject diagnosticsValue = new JObject();
+                        propertiesValue["diagnostics"] = diagnosticsValue;
+                        
+                        if (derived.Diagnostics.Conditions != null)
+                        {
+                            if (derived.Diagnostics.Conditions is ILazyCollection == false || ((ILazyCollection)derived.Diagnostics.Conditions).IsInitialized)
+                            {
+                                JArray conditionsArray = new JArray();
+                                foreach (DiagnosticCondition conditionsItem in derived.Diagnostics.Conditions)
+                                {
+                                    JObject diagnosticConditionValue = new JObject();
+                                    conditionsArray.Add(diagnosticConditionValue);
+                                    
+                                    if (conditionsItem.Since != null)
+                                    {
+                                        diagnosticConditionValue["since"] = conditionsItem.Since.Value;
+                                    }
+                                    
+                                    if (conditionsItem.Code != null)
+                                    {
+                                        diagnosticConditionValue["code"] = conditionsItem.Code;
+                                    }
+                                    
+                                    if (conditionsItem.Message != null)
+                                    {
+                                        diagnosticConditionValue["message"] = conditionsItem.Message;
+                                    }
+                                }
+                                diagnosticsValue["conditions"] = conditionsArray;
+                            }
+                        }
+                    }
                 }
                 if (parameters.Properties is StreamInputProperties)
                 {
@@ -3837,6 +4260,41 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             if (derived11.Type != null)
                             {
                                 serializationValue2["type"] = derived11.Type;
+                            }
+                        }
+                    }
+                    
+                    if (derived6.Diagnostics != null)
+                    {
+                        JObject diagnosticsValue2 = new JObject();
+                        propertiesValue["diagnostics"] = diagnosticsValue2;
+                        
+                        if (derived6.Diagnostics.Conditions != null)
+                        {
+                            if (derived6.Diagnostics.Conditions is ILazyCollection == false || ((ILazyCollection)derived6.Diagnostics.Conditions).IsInitialized)
+                            {
+                                JArray conditionsArray2 = new JArray();
+                                foreach (DiagnosticCondition conditionsItem2 in derived6.Diagnostics.Conditions)
+                                {
+                                    JObject diagnosticConditionValue2 = new JObject();
+                                    conditionsArray2.Add(diagnosticConditionValue2);
+                                    
+                                    if (conditionsItem2.Since != null)
+                                    {
+                                        diagnosticConditionValue2["since"] = conditionsItem2.Since.Value;
+                                    }
+                                    
+                                    if (conditionsItem2.Code != null)
+                                    {
+                                        diagnosticConditionValue2["code"] = conditionsItem2.Code;
+                                    }
+                                    
+                                    if (conditionsItem2.Message != null)
+                                    {
+                                        diagnosticConditionValue2["message"] = conditionsItem2.Message;
+                                    }
+                                }
+                                diagnosticsValue2["conditions"] = conditionsArray2;
                             }
                         }
                     }
@@ -4075,6 +4533,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 avroSerializationInstance.Type = typeInstance5;
                                             }
                                             referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
+                                        }
+                                    }
+                                    
+                                    JToken diagnosticsValue3 = propertiesValue9["diagnostics"];
+                                    if (diagnosticsValue3 != null && diagnosticsValue3.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance = new Diagnostics();
+                                        referenceInputPropertiesInstance.Diagnostics = diagnosticsInstance;
+                                        
+                                        JToken conditionsArray3 = diagnosticsValue3["conditions"];
+                                        if (conditionsArray3 != null && conditionsArray3.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue in ((JArray)conditionsArray3))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance = new DiagnosticCondition();
+                                                diagnosticsInstance.Conditions.Add(diagnosticConditionInstance);
+                                                
+                                                JToken sinceValue = conditionsValue["since"];
+                                                if (sinceValue != null && sinceValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance = ((DateTime)sinceValue);
+                                                    diagnosticConditionInstance.Since = sinceInstance;
+                                                }
+                                                
+                                                JToken codeValue = conditionsValue["code"];
+                                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance = ((string)codeValue);
+                                                    diagnosticConditionInstance.Code = codeInstance;
+                                                }
+                                                
+                                                JToken messageValue = conditionsValue["message"];
+                                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance = ((string)messageValue);
+                                                    diagnosticConditionInstance.Message = messageInstance;
+                                                }
+                                            }
                                         }
                                     }
                                     result.Properties = referenceInputPropertiesInstance;
@@ -4323,6 +4819,44 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 avroSerializationInstance2.Type = typeInstance11;
                                             }
                                             streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken diagnosticsValue4 = propertiesValue9["diagnostics"];
+                                    if (diagnosticsValue4 != null && diagnosticsValue4.Type != JTokenType.Null)
+                                    {
+                                        Diagnostics diagnosticsInstance2 = new Diagnostics();
+                                        streamInputPropertiesInstance.Diagnostics = diagnosticsInstance2;
+                                        
+                                        JToken conditionsArray4 = diagnosticsValue4["conditions"];
+                                        if (conditionsArray4 != null && conditionsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken conditionsValue2 in ((JArray)conditionsArray4))
+                                            {
+                                                DiagnosticCondition diagnosticConditionInstance2 = new DiagnosticCondition();
+                                                diagnosticsInstance2.Conditions.Add(diagnosticConditionInstance2);
+                                                
+                                                JToken sinceValue2 = conditionsValue2["since"];
+                                                if (sinceValue2 != null && sinceValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime sinceInstance2 = ((DateTime)sinceValue2);
+                                                    diagnosticConditionInstance2.Since = sinceInstance2;
+                                                }
+                                                
+                                                JToken codeValue2 = conditionsValue2["code"];
+                                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string codeInstance2 = ((string)codeValue2);
+                                                    diagnosticConditionInstance2.Code = codeInstance2;
+                                                }
+                                                
+                                                JToken messageValue2 = conditionsValue2["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    diagnosticConditionInstance2.Message = messageInstance2;
+                                                }
+                                            }
                                         }
                                     }
                                     result.Properties = streamInputPropertiesInstance;

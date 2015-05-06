@@ -147,13 +147,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to list all the outputs in the specified
+        /// stream analytics job.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response of the output list operation.
         /// </returns>
-        Task<OutputListResponse> ListOutputInJobAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
+        Task<OutputListResponse> ListOutputInJobAsync(string resourceGroupName, string jobName, OutputListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update an output for a stream analytics job.
