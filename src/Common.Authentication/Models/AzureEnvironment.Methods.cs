@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.AzureTrafficManagerDnsSuffix },
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId},
-                        { AzureEnvironment.Endpoint.AzureCaboFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureCaboFileSystemEndpointSuffix}, //TODO: Update with production suffix when available
+                        { AzureEnvironment.Endpoint.AzureDataLakeFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeFileSystemEndpointSuffix}, //TODO: Update with production suffix when available
                         { AzureEnvironment.Endpoint.AzureKonaCatalogAndJobEndpointSuffix, AzureEnvironmentConstants.AzureKonaCatalogAndJobEndpointSuffix} //TODO: Update with production suffix when available
                     }
                 }
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
             AzureKeyVaultServiceEndpointResourceId,
 
-            AzureCaboFileSystemEndpointSuffix,
+            AzureDataLakeFileSystemEndpointSuffix,
 
             AzureKonaCatalogAndJobEndpointSuffix
         }
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureStorageEndpointSuffix = "core.windows.net";
 
-        public const string AzureCaboFileSystemEndpointSuffix = "caboaccountdogfood.net";
+        public const string AzureDataLakeFileSystemEndpointSuffix = "caboaccountdogfood.net";
 
         public const string AzureKonaCatalogAndJobEndpointSuffix = "kobotest02.osdinfra.net";
 
