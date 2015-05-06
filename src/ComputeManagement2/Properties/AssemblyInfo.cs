@@ -17,12 +17,11 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Stream Analytics Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Stream Analytics management operations.")]
+[assembly: AssemblyTitle("Microsoft Azure Compute Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Compute Resources.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("1.4.0.0")]
-
+[assembly: AssemblyVersion("5.0.0.0")]
+[assembly: AssemblyFileVersion("5.0.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

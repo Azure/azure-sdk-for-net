@@ -26,10 +26,10 @@ namespace Microsoft.Azure.KeyVault
     public static class KeyVaultClientExtensions
     {
         /// <summary>
-        /// Decrypts a single block of encrypted data
+        /// Decrypts a single block of encrypted data.
         /// </summary>
         /// <param name="keyBundle">The key to use for decryption</param>
-        /// <param name="algorithm">The encryption algorithm</param>
+        /// <param name="algorithm">The encryption algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="cipherText">The encrypted data</param>
         /// <returns></returns>
         public static async Task<KeyOperationResult> DecryptDataAsync( this KeyVaultClient client, KeyBundle keyBundle, string algorithm, byte[] cipherText )
@@ -41,10 +41,10 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Decrypts a single block of encrypted data
+        /// Decrypts a single block of encrypted data.
         /// </summary>
         /// <param name="key">The web key to use for decryption</param>
-        /// <param name="algorithm">The encryption algorithm</param>
+        /// <param name="algorithm">The encryption algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="cipherText">The encrypted data</param>
         /// <returns></returns>
         public static async Task<KeyOperationResult> DecryptDataAsync( this KeyVaultClient client, JsonWebKey key, string algorithm, byte[] cipherText )
@@ -57,10 +57,10 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts a single block of data. The amount of data that may be encrypted is determined
-        /// by the target key type and the encryption algorithm, e.g. RSA, RSA_OAEP
+        /// by the target key type and the encryption algorithm.
         /// </summary>
         /// <param name="keyBundle">The key bundle to use for encryption</param>
-        /// <param name="algorithm">The encryption algorithm</param>
+        /// <param name="algorithm">The encryption algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="plaintext">The plain text to encrypt</param>
         /// <returns></returns>
         public static async Task<KeyOperationResult> EncryptDataAsync( this KeyVaultClient client, KeyBundle keyBundle, string algorithm, byte[] plaintext )
@@ -73,10 +73,10 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts a single block of data. The amount of data that may be encrypted is determined
-        /// by the target key type and the encryption algorithm, e.g. RSA, RSA_OAEP
+        /// by the target key type and the encryption algorithm.
         /// </summary>
         /// <param name="key">The web key to use for encryption</param>
-        /// <param name="algorithm">The encryption algorithm</param>
+        /// <param name="algorithm">The encryption algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="plaintext">The plain text to encrypt</param>
         /// <returns></returns>
         public static async Task<KeyOperationResult> EncryptDataAsync( this KeyVaultClient client, JsonWebKey key, string algorithm, byte[] plaintext )
@@ -98,10 +98,10 @@ namespace Microsoft.Azure.KeyVault
        
 
         /// <summary>
-        /// Creates a signature from a digest using the specified key in the vault 
+        /// Creates a signature from a digest using the specified key in the vault.
         /// </summary>
-        /// <param name="keyBundle"> The key bundle of the signing key </param>
-        /// <param name="algorithm">The signing algorithm </param>
+        /// <param name="keyBundle">The key bundle of the signing key </param>
+        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="digest">The signing digest hash value </param>
         /// <returns> signature </returns>
         public static async Task<KeyOperationResult> SignAsync( this KeyVaultClient client, KeyBundle keyBundle, string algorithm, byte[] digest )
@@ -113,11 +113,11 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Creates a signature from a digest using the specified key in the vault 
+        /// Creates a signature from a digest using the specified key in the vault.
         /// </summary>
         /// <param name="key"> The web key of the signing key </param>
-        /// <param name="algorithm"> the signing algorithm </param>
-        /// <param name="digest"> the signing digest hash value </param>
+        /// <param name="algorithm"> The signing algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
+        /// <param name="digest"> The signing digest hash value </param>
         /// <returns> signature </returns>
         public static async Task<KeyOperationResult> SignAsync( this KeyVaultClient client, JsonWebKey key, string algorithm, byte[] digest )
         {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>        
         /// <param name="wrappingKey">The wrapping key</param>
         /// <param name="wrappedKey">The symmetric key to unwrap</param>
-        /// <param name="algorithm">The algorithm to use</param>
+        /// <param name="algorithm">The algorithm to use. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <returns>The unwrapped key</returns>
         public static async Task<KeyOperationResult> UnwrapKeyAsync( this KeyVaultClient client, KeyBundle wrappingKey, byte[] wrappedKey, string algorithm )
         {
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>        
         /// <param name="wrappingKey">The wrapping key</param>
         /// <param name="wrappedKey">The symmetric key to unwrap</param>
-        /// <param name="algorithm">The algorithm to use</param>
+        /// <param name="algorithm">The algorithm to use. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <returns>The unwrapped key</returns>
         public static async Task<KeyOperationResult> UnwrapKeyAsync( this KeyVaultClient client, JsonWebKey wrappingKey, byte[] wrappedKey, string algorithm )
         {
@@ -162,23 +162,23 @@ namespace Microsoft.Azure.KeyVault
 
         
         /// <summary>
-        /// Verifies a signature using the specified key
+        /// Verifies a signature using the specified key.
         /// </summary>        
         /// <param name="verifyKey">The verification key</param>
-        /// <param name="algorithm">The signing algorithm</param>
+        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="digest">The digest hash value</param>
         /// <param name="signature">The signature to verify</param>
-        /// <returns>true if verification succeeds, false if verification fails</returns>
+        /// <returns>True if verification succeeds, false if verification fails</returns>
         public static async Task<bool> VerifyAsync( this KeyVaultClient client, KeyBundle verifyKey, string algorithm, byte[] digest, byte[] signature )
         {
             return await client.VerifyAsync( verifyKey.Key, algorithm, digest, signature ).ConfigureAwait( false );
         }
 
         /// <summary>
-        /// Verifies a signature using the specified key
+        /// Verifies a signature using the specified key.
         /// </summary>        
         /// <param name="verifyKey">The verification key</param>
-        /// <param name="algorithm">The signing algorithm</param>
+        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="digest">The digest hash value</param>
         /// <param name="signature">The signature to verify</param>
         /// <returns>true if verification succeeds, false if verification fails</returns>
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>        
         /// <param name="wrappingKey">The wrapping key</param>
         /// <param name="key">The key to wrap</param>
-        /// <param name="algorithm">The algorithm to use</param>
+        /// <param name="algorithm">The algorithm to use. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <returns>The wrapped key</returns>
         public static async Task<KeyOperationResult> WrapKeyAsync( this KeyVaultClient client, KeyBundle wrappingKey, byte[] key, string algorithm )
         {
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>        
         /// <param name="wrappingKey">The wrapping key</param>
         /// <param name="key">The key to wrap</param>
-        /// <param name="algorithm">The algorithm to use</param>
+        /// <param name="algorithm">The algorithm to use. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <returns>The wrapped key</returns>
         public static async Task<KeyOperationResult> WrapKeyAsync( this KeyVaultClient client, JsonWebKey wrappingKey, byte[] key, string algorithm )
         {

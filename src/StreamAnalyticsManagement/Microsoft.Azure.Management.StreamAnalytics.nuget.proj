@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.StreamAnalytics
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.StreamAnalytics">
-      <PackageVersion>0.17.0-preview</PackageVersion>
+      <PackageVersion>1.4.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

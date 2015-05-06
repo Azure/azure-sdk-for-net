@@ -31,16 +31,17 @@ namespace Microsoft.Azure.KeyVault
 {
     /// <summary>
     /// Client class to perform cryptographic key operations and vault operations
-    /// against the Key Vault service.
+    /// against the Key Vault service. 
+    /// Thread safety: This class is thread-safe.
     /// </summary>
     public class KeyVaultClient
     {
         /// <summary>
         /// The authentication callback delegate which is to be implemented by the client code
         /// </summary>
-        /// <param name="authority"> the authority URL </param>
-        /// <param name="resource"> resource URL </param>
-        /// <param name="scope"> scope </param>
+        /// <param name="authority"> Identifier of the authority, a URL. </param>
+        /// <param name="resource"> Identifier of the target resource that is the recipient of the requested token, a URL. </param>
+        /// <param name="scope"> The scope of the authentication request. </param>
         /// <returns> access token </returns>
         public delegate Task<string> AuthenticationCallback(string authority, string resource, string scope);
 
@@ -85,12 +86,12 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts a single block of data. The amount of data that may be encrypted is determined
-        /// by the target key type and the encryption algorithm, e.g. RSA, RSA_OAEP
+        /// by the target key type and the encryption algorithm.
         /// </summary>
         /// <param name="vault">The URL of the vault</param>
         /// <param name="keyName">The name of the key</param>
         /// <param name="keyVersion">The version of the key (optional)</param>
-        /// <param name="algorithm">The algorithm</param>
+        /// <param name="algorithm">The algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm. </param>
         /// <param name="plainText">The plain text</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The encrypted text</returns>
@@ -119,10 +120,10 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts a single block of data. The amount of data that may be encrypted is determined
-        /// by the target key type and the encryption algorithm, e.g. RSA, RSA_OAEP
+        /// by the target key type and the encryption algorithm.
         /// </summary>        
         /// <param name="keyIdentifier">The full key identifier</param>
-        /// <param name="algorithm">The algorithm</param>
+        /// <param name="algorithm">The algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="plainText">The plain text</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The encrypted text</returns>
@@ -153,7 +154,7 @@ namespace Microsoft.Azure.KeyVault
         /// Decrypts a single block of encrypted data
         /// </summary>
         /// <param name="keyIdentifier">The full key identifier</param>
-        /// <param name="algorithm">The algorithm</param>
+        /// <param name="algorithm">The algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <param name="cipherText">The cipher text</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The decryption result</returns>
@@ -186,7 +187,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="vault">The URL of the vault</param>
         /// <param name="keyName">The name of the key</param>
         /// <param name="keyVersion">The version of the key (optional)</param>
-        /// <param name="algorithm">The signing algorithm </param>
+        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm. </param>
         /// <param name="digest">The digest value to sign</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The signature value</returns>
@@ -217,7 +218,7 @@ namespace Microsoft.Azure.KeyVault
         /// Creates a signature from a digest using the specified key in the vault
         /// </summary>
         /// <param name="keyIdentifier"> The global key identifier of the signing key </param>
-        /// <param name="algorithm">The signing algorithm </param>
+        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm. </param>
         /// <param name="digest">The digest value to sign</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The signature value</returns>
@@ -248,7 +249,7 @@ namespace Microsoft.Azure.KeyVault
         /// Verifies a signature using the specified key
         /// </summary>
         /// <param name="keyIdentifier"> The global key identifier of the key used for signing </param>
-        /// <param name="algorithm"> The signing/verification algorithm </param>
+        /// <param name="algorithm"> The signing/verification algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.</param>
         /// <param name="digest"> The digest used for signing </param>
         /// <param name="signature"> The signature to be verified </param>
         /// <param name="cancellationToken">Optional cancellation token</param>
@@ -285,7 +286,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="vault">The URL of the vault</param>
         /// <param name="keyName">The name of the key</param>
         /// <param name="keyVersion">The version of the key (optional)</param>
-        /// <param name="algorithm">The signing algorithm </param>
+        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm. </param>
         /// <param name="key"> The symmetric key </param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns> The wrapped symmetric key </returns>
@@ -316,7 +317,7 @@ namespace Microsoft.Azure.KeyVault
         /// Wraps a symmetric key using the specified key
         /// </summary>
         /// <param name="keyIdentifier"> The global key identifier of the key used for wrapping </param>
-        /// <param name="algorithm"> The wrap algorithm </param>
+        /// <param name="algorithm"> The wrap algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.</param>
         /// <param name="key"> The symmetric key </param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns> The wrapped symmetric key </returns>
@@ -349,7 +350,7 @@ namespace Microsoft.Azure.KeyVault
         ///     that has initially been used for wrapping the key.
         /// </summary>
         /// <param name="keyIdentifier"> The global key identifier of the wrapping/unwrapping key </param>
-        /// <param name="algorithm">The unwrap algorithm</param>
+        /// <param name="algorithm">The unwrap algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.</param>
         /// <param name="wrappedKey">The wrapped symmetric key</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The unwrapped symmetric key</returns>
@@ -386,10 +387,10 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vault">The URL for the vault in which the key is to be created.</param>
         /// <param name="keyName">The name for the key</param>
-        /// <param name="keyType">The type of key to create (one of the valid WebKeyTypes)</param>
-        /// <param name="keyAttributes">The attributes of the key</param>        
+        /// <param name="keyType">The type of key to create. For valid key types, see WebKeyTypes.</param>
+        /// <param name="keyAttributes">The attributes of the key. For more information on possible attributes, see KeyAttributes.</param>        
         /// <param name="keySize">Size of the key</param>
-        /// <param name="key_ops">JSON web key operations</param>        
+        /// <param name="key_ops">JSON web key operations. For more information, see JsonWebKeyOperation.</param>        
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>A key bundle containing the result of the create request</returns>
@@ -467,7 +468,7 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// List keys in the specified vault
         /// </summary>
-        /// <param name="vault">The URL for the vault containing the keys.</param>
+        /// <param name="vault">The URL for the vault containing the keys, e.g. https://myvault.vault.azure.net</param>
         /// <param name="maxresults">Maximum number of keys to return</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>A response message containing a list of keys in the vault along with a link to the next page of keys</returns>   
@@ -508,7 +509,7 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// List the versions of the specified key
         /// </summary>
-        /// <param name="vault">The URL for the vault containing the key</param>
+        /// <param name="vault">The URL for the vault containing the key, e.g. https://myvault.vault.azure.net</param>
         /// <param name="keyName">Name of the key</param>
         /// <param name="maxresults">Maximum number of keys to return</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
@@ -531,7 +532,7 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the next page of key version
+        /// List the next page of key versions
         /// </summary>
         /// <param name="nextLink">nextLink value from a previous call to GetKeyVersions or GetKeyVersionsNext</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
@@ -579,8 +580,8 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
         /// <param name="keyName">The key name</param>
-        /// <param name="keyOps">Json web key operations</param>
-        /// <param name="attributes">The new attributes for the key</param>
+        /// <param name="keyOps">Json web key operations. For more information on possible key operations, see JsonWebKeyOperation.</param>
+        /// <param name="attributes">The new attributes for the key. For more information on key attributes, see KeyAttributes.</param>
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         /// <returns> The updated key </returns>
         public async Task<KeyBundle> UpdateKeyAsync(string vault, string keyName, string[] keyOps = null, KeyAttributes attributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -600,8 +601,8 @@ namespace Microsoft.Azure.KeyVault
         /// Updates the Key Attributes associated with the specified key
         /// </summary>        
         /// <param name="keyIdentifier">The key identifier</param>
-        /// <param name="keyOps">Json web key operations</param>
-        /// <param name="attributes">The new attributes for the key</param>
+        /// <param name="keyOps">Json web key operations. For more information, see JsonWebKeyOperation.</param>
+        /// <param name="attributes">The new attributes for the key. For more information on key attributes, see KeyAttributes.</param>
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns> The updated key </returns>
@@ -761,9 +762,9 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="vault">The URL for the vault containing the secrets.</param>
         /// <param name="secretName">The name the secret in the given vault.</param>
         /// <param name="value">The value of the secret.</param>        
-        /// <param name="contentType">Type of the secret value</param>
+        /// <param name="contentType">Type of the secret value such as a password. </param>
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="secretAttributes">Attributes for the secret</param>     
+        /// <param name="secretAttributes">Attributes for the secret. For more information on possible attributes, see SecretAttributes.</param>     
         /// <param name="cancellationToken">Optional cancellation token</param> 
         /// <returns>A response message containing the updated secret</returns>
         public async Task<Secret> SetSecretAsync(string vault, string secretName, string value, Dictionary<string, string> tags = null, string contentType = null, SecretAttributes secretAttributes = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -793,9 +794,9 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
         /// <param name="secretName">The name of the secret</param>
-        /// <param name="contentType">Type of the secret value</param>
+        /// <param name="contentType">Type of the secret value such as password.</param>
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="secretAttributes">Attributes for the secret</param>      
+        /// <param name="secretAttributes">Attributes for the secret. For more information on possible attributes, see SecretAttributes.</param>      
         /// <param name="cancellationToken">Optional cancellation token</param>  
         /// <returns>A response message containing the updated secret</returns>
         public async Task<Secret> UpdateSecretAsync(string vault, string secretName, string contentType = null, SecretAttributes secretAttributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -820,9 +821,9 @@ namespace Microsoft.Azure.KeyVault
         /// Updates the attributes associated with the specified secret
         /// </summary>        
         /// <param name="secretIdentifier">The URL of the secret</param>
-        /// <param name="contentType">Type of the secret value</param>
+        /// <param name="contentType">Type of the secret value such as password.</param>
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="secretAttributes">Attributes for the secret</param>      
+        /// <param name="secretAttributes">Attributes for the secret. For more information on possible attributes, see SecretAttributes.</param>      
         /// <param name="cancellationToken">Optional cancellation token</param>  
         /// <returns>A response message containing the updated secret</returns>
         public async Task<Secret> UpdateSecretAsync(string secretIdentifier, string contentType = null, SecretAttributes secretAttributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -956,7 +957,7 @@ namespace Microsoft.Azure.KeyVault
         #endregion
 
         #region Helper Methods
-        private async Task<T> Do<T>(Func<Task<T>> func)
+        public async Task<T> Do<T>(Func<Task<T>> func)
         {
             try
             {

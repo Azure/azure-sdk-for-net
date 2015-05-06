@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Transformation.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/transformations/";
             url = url + Uri.EscapeDataString(transformationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -620,7 +620,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/transformations/";
             url = url + Uri.EscapeDataString(transformationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -738,7 +738,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -847,7 +847,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/transformations/";
             url = url + Uri.EscapeDataString(transformationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-01-preview");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -984,7 +984,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
-                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                     }
                     if (httpResponse.Headers.Contains("ETag"))
                     {

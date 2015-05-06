@@ -32,17 +32,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class BlobStreamInputDataSourceProperties
     {
-        private string _blobSerializationBoundary;
-        
-        /// <summary>
-        /// Optional. Gets or sets the blob serialization boundary.
-        /// </summary>
-        public string BlobSerializationBoundary
-        {
-            get { return this._blobSerializationBoundary; }
-            set { this._blobSerializationBoundary = value; }
-        }
-        
         private string _container;
         
         /// <summary>
@@ -57,7 +46,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _dateFormat;
         
         /// <summary>
-        /// Optional. Gets or sets the date format pattern.
+        /// Optional. Gets or sets the date format. Wherever {date} appears in
+        /// pathPattern, the value of this property is used as the date format
+        /// instead.
         /// </summary>
         public string DateFormat
         {
@@ -68,7 +59,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _pathPattern;
         
         /// <summary>
-        /// Optional. Gets or sets the blob path pattern.
+        /// Optional. Gets or sets the blob path pattern. Not a regular
+        /// expression. Value is a pattern against which blob names are
+        /// matched to determine whether to include data from the associated
+        /// blobs in the streaming job input.
         /// </summary>
         public string PathPattern
         {
@@ -102,7 +96,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _timeFormat;
         
         /// <summary>
-        /// Optional. Gets or sets the time format pattern.
+        /// Optional. Gets or sets the time format. Wherever {time} appears in
+        /// pathPattern, the value of this property is used as the time format
+        /// instead.
         /// </summary>
         public string TimeFormat
         {
