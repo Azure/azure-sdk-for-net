@@ -244,13 +244,6 @@ namespace Microsoft.Azure.Management.Sql
                             FirewallRule firewallRuleInstance = new FirewallRule();
                             result.FirewallRule = firewallRuleInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                firewallRuleInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
@@ -277,6 +270,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 firewallRuleInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                firewallRuleInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -634,13 +634,6 @@ namespace Microsoft.Azure.Management.Sql
                             FirewallRule firewallRuleInstance = new FirewallRule();
                             result.FirewallRule = firewallRuleInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                firewallRuleInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -667,6 +660,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 firewallRuleInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                firewallRuleInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -863,13 +863,6 @@ namespace Microsoft.Azure.Management.Sql
                                     FirewallRule firewallRuleInstance = new FirewallRule();
                                     result.FirewallRules.Add(firewallRuleInstance);
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        firewallRuleInstance.Name = nameInstance;
-                                    }
-                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -896,6 +889,13 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         string idInstance = ((string)idValue);
                                         firewallRuleInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        firewallRuleInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

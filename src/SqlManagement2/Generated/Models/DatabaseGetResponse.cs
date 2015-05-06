@@ -27,15 +27,15 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Database request.
+    /// Represents the response to a Get Azure Sql Database request.
     /// </summary>
     public partial class DatabaseGetResponse : AzureOperationResponse
     {
         private Database _database;
         
         /// <summary>
-        /// Optional. Gets or sets Database object that represents the Azure
-        /// Sql Database.
+        /// Optional. Gets or sets the Azure Sql Database object that
+        /// represents the Azure Sql Database.
         /// </summary>
         public Database Database
         {
