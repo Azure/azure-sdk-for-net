@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
@@ -28,19 +29,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents an Azure SQL Database secure connection policy.
     /// </summary>
-    public partial class DatabaseSecureConnectionPolicy : ResourceBase
+    public partial class DatabaseSecureConnectionPolicy : ResourceBaseExtended
     {
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the resource.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private DatabaseSecureConnectionPolicyProperties _properties;
         
         /// <summary>
@@ -58,6 +48,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public DatabaseSecureConnectionPolicy()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseSecureConnectionPolicy
+        /// class with required arguments.
+        /// </summary>
+        public DatabaseSecureConnectionPolicy(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

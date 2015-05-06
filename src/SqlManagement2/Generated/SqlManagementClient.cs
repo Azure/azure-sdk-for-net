@@ -128,6 +128,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._dataMasking; }
         }
         
+        private IElasticPoolOperations _elasticPools;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Elastic Pools.  Contains operations to: Create, Retrieve, Update,
+        /// and Delete.
+        /// </summary>
+        public virtual IElasticPoolOperations ElasticPools
+        {
+            get { return this._elasticPools; }
+        }
+        
         private IFirewallRuleOperations _firewallRules;
         
         /// <summary>
@@ -138,6 +150,17 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFirewallRuleOperations FirewallRules
         {
             get { return this._firewallRules; }
+        }
+        
+        private IRecommendedElasticPoolOperations _recommendedElasticPools;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL
+        /// Recommended Elastic Pools.  Contains operations to: Retrieve.
+        /// </summary>
+        public virtual IRecommendedElasticPoolOperations RecommendedElasticPools
+        {
+            get { return this._recommendedElasticPools; }
         }
         
         private ISecureConnectionPolicyOperations _secureConnection;
@@ -185,7 +208,9 @@ namespace Microsoft.Azure.Management.Sql
             this._auditingPolicy = new AuditingPolicyOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
+            this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
@@ -257,7 +282,9 @@ namespace Microsoft.Azure.Management.Sql
             this._auditingPolicy = new AuditingPolicyOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
+            this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
