@@ -317,14 +317,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to list all the inputs in the
+        /// specified stream analytics job.
+        /// </param>
         /// <returns>
         /// The response of the input list operation.
         /// </returns>
-        public static InputListResponse ListInputInJob(this IInputOperations operations, string resourceGroupName, string jobName)
+        public static InputListResponse ListInputInJob(this IInputOperations operations, string resourceGroupName, string jobName, InputListParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IInputOperations)s).ListInputInJobAsync(resourceGroupName, jobName);
+                return ((IInputOperations)s).ListInputInJobAsync(resourceGroupName, jobName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -342,12 +346,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to list all the inputs in the
+        /// specified stream analytics job.
+        /// </param>
         /// <returns>
         /// The response of the input list operation.
         /// </returns>
-        public static Task<InputListResponse> ListInputInJobAsync(this IInputOperations operations, string resourceGroupName, string jobName)
+        public static Task<InputListResponse> ListInputInJobAsync(this IInputOperations operations, string resourceGroupName, string jobName, InputListParameters parameters)
         {
-            return operations.ListInputInJobAsync(resourceGroupName, jobName, CancellationToken.None);
+            return operations.ListInputInJobAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
         }
         
         /// <summary>

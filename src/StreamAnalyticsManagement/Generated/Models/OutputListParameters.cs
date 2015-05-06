@@ -25,45 +25,44 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Parameters for a Stream Analytics job get operation.
+    /// Parameters for a Stream Analytics output list operation.
     /// </summary>
-    public partial class JobGetParameters
+    public partial class OutputListParameters
     {
-        private string _propertiesToExpand;
+        private string _propertiesToSelect;
         
         /// <summary>
-        /// Required. Gets or sets the properties to expand. Comma-separated
-        /// list of additional properties to include in the response, beyond
-        /// the default set returned when this parameter is absent. The
-        /// default set is all properties other than “inputs”,
-        /// “transformation”, and “outputs”.
+        /// Required. Gets or sets the properties to select. Comma-separated
+        /// list of structural properties to include in the response, or “*”
+        /// to include all properties. By default, all properties are returned
+        /// except diagnostics.
         /// </summary>
-        public string PropertiesToExpand
+        public string PropertiesToSelect
         {
-            get { return this._propertiesToExpand; }
-            set { this._propertiesToExpand = value; }
+            get { return this._propertiesToSelect; }
+            set { this._propertiesToSelect = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobGetParameters class.
+        /// Initializes a new instance of the OutputListParameters class.
         /// </summary>
-        public JobGetParameters()
+        public OutputListParameters()
         {
-            this.PropertiesToExpand = "";
+            this.PropertiesToSelect = "";
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobGetParameters class with
+        /// Initializes a new instance of the OutputListParameters class with
         /// required arguments.
         /// </summary>
-        public JobGetParameters(string propertiesToExpand)
+        public OutputListParameters(string propertiesToSelect)
             : this()
         {
-            if (propertiesToExpand == null)
+            if (propertiesToSelect == null)
             {
-                throw new ArgumentNullException("propertiesToExpand");
+                throw new ArgumentNullException("propertiesToSelect");
             }
-            this.PropertiesToExpand = propertiesToExpand;
+            this.PropertiesToSelect = propertiesToSelect;
         }
     }
 }
