@@ -15,8 +15,120 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\**\*.cs" />
-    <Compile Include="Models\ResourceIdentity.cs" />
+    <Compile Include="Generated\AuthorizationClient.cs" />
+    <Compile Include="Generated\AuthorizationClientExtensions.cs" />
+    <Compile Include="Generated\DeploymentOperationOperations.cs" />
+    <Compile Include="Generated\DeploymentOperationOperationsExtensions.cs" />
+    <Compile Include="Generated\DeploymentOperations.cs" />
+    <Compile Include="Generated\DeploymentOperationsExtensions.cs" />
+    <Compile Include="Generated\FeatureClient.cs" />
+    <Compile Include="Generated\FeatureClientExtensions.cs" />
+    <Compile Include="Generated\Features.cs" />
+    <Compile Include="Generated\FeaturesExtensions.cs" />
+    <Compile Include="Generated\IAuthorizationClient.cs" />
+    <Compile Include="Generated\IDeploymentOperationOperations.cs" />
+    <Compile Include="Generated\IDeploymentOperations.cs" />
+    <Compile Include="Generated\IFeatureClient.cs" />
+    <Compile Include="Generated\IFeatures.cs" />
+    <Compile Include="Generated\IManagementLockOperations.cs" />
+    <Compile Include="Generated\IProviderOperations.cs" />
+    <Compile Include="Generated\IResourceGroupOperations.cs" />
+    <Compile Include="Generated\IResourceManagementClient.cs" />
+    <Compile Include="Generated\IResourceOperations.cs" />
+    <Compile Include="Generated\ISubscriptionClient.cs" />
+    <Compile Include="Generated\ISubscriptionOperations.cs" />
+    <Compile Include="Generated\ITagOperations.cs" />
+    <Compile Include="Generated\ITenantOperations.cs" />
+    <Compile Include="Generated\ManagementLockOperations.cs" />
+    <Compile Include="Generated\ManagementLockOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\BasicDependency.cs" />
+    <Compile Include="Generated\Models\Dependency.cs" />
+    <Compile Include="Generated\Models\Deployment.cs" />
+    <Compile Include="Generated\Models\DeploymentExtended.cs" />
+    <Compile Include="Generated\Models\DeploymentGetResult.cs" />
+    <Compile Include="Generated\Models\DeploymentListParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentListResult.cs" />
+    <Compile Include="Generated\Models\DeploymentMode.cs" />
+    <Compile Include="Generated\Models\DeploymentOperation.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationProperties.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsCreateResult.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsGetResult.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsListParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsListResult.cs" />
+    <Compile Include="Generated\Models\DeploymentProperties.cs" />
+    <Compile Include="Generated\Models\DeploymentPropertiesExtended.cs" />
+    <Compile Include="Generated\Models\DeploymentValidateResponse.cs" />
+    <Compile Include="Generated\Models\FeatureOperationsListResult.cs" />
+    <Compile Include="Generated\Models\FeatureProperties.cs" />
+    <Compile Include="Generated\Models\FeatureResponse.cs" />
+    <Compile Include="Generated\Models\GenericResource.cs" />
+    <Compile Include="Generated\Models\GenericResourceExtended.cs" />
+    <Compile Include="Generated\Models\GetSubscriptionResult.cs" />
+    <Compile Include="Generated\Models\LockLevel.cs" />
+    <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
+    <Compile Include="Generated\Models\ManagementLockGetQueryParameter.cs" />
+    <Compile Include="Generated\Models\ManagementLockListResult.cs" />
+    <Compile Include="Generated\Models\ManagementLockObject.cs" />
+    <Compile Include="Generated\Models\ManagementLockProperties.cs" />
+    <Compile Include="Generated\Models\ManagementLockReturnResult.cs" />
+    <Compile Include="Generated\Models\ParametersLink.cs" />
+    <Compile Include="Generated\Models\Plan.cs" />
+    <Compile Include="Generated\Models\Provider.cs" />
+    <Compile Include="Generated\Models\ProviderGetResult.cs" />
+    <Compile Include="Generated\Models\ProviderListParameters.cs" />
+    <Compile Include="Generated\Models\ProviderListResult.cs" />
+    <Compile Include="Generated\Models\ProviderRegistionResult.cs" />
+    <Compile Include="Generated\Models\ProviderRegistrationState.cs" />
+    <Compile Include="Generated\Models\ProviderResourceType.cs" />
+    <Compile Include="Generated\Models\ProviderUnregistionResult.cs" />
+    <Compile Include="Generated\Models\ProvisioningState.cs" />
+    <Compile Include="Generated\Models\RegistrationState.cs" />
+    <Compile Include="Generated\Models\ResourceBase.cs" />
+    <Compile Include="Generated\Models\ResourceBaseExtended.cs" />
+    <Compile Include="Generated\Models\ResourceCreateOrUpdateResult.cs" />
+    <Compile Include="Generated\Models\ResourceExistsResult.cs" />
+    <Compile Include="Generated\Models\ResourceGetResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroup.cs" />
+    <Compile Include="Generated\Models\ResourceGroupCreateOrUpdateResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupExistsResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupExtended.cs" />
+    <Compile Include="Generated\Models\ResourceGroupGetResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupListParameters.cs" />
+    <Compile Include="Generated\Models\ResourceGroupListResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupPatchResult.cs" />
+    <Compile Include="Generated\Models\ResourceListParameters.cs" />
+    <Compile Include="Generated\Models\ResourceListResult.cs" />
+    <Compile Include="Generated\Models\ResourceManagementError.cs" />
+    <Compile Include="Generated\Models\ResourceManagementErrorWithDetails.cs" />
+    <Compile Include="Generated\Models\ResourcesMoveInfo.cs" />
+    <Compile Include="Generated\Models\Subscription.cs" />
+    <Compile Include="Generated\Models\SubscriptionListResult.cs" />
+    <Compile Include="Generated\Models\TagCount.cs" />
+    <Compile Include="Generated\Models\TagCreateResult.cs" />
+    <Compile Include="Generated\Models\TagCreateValueResult.cs" />
+    <Compile Include="Generated\Models\TagDetails.cs" />
+    <Compile Include="Generated\Models\TagsListResult.cs" />
+    <Compile Include="Generated\Models\TagValue.cs" />
+    <Compile Include="Generated\Models\TargetResource.cs" />
+    <Compile Include="Generated\Models\TemplateLink.cs" />
+    <Compile Include="Generated\Models\TenantIdDescription.cs" />
+    <Compile Include="Generated\Models\TenantListResult.cs" />
+    <Compile Include="Generated\ProviderOperations.cs" />
+    <Compile Include="Generated\ProviderOperationsExtensions.cs" />
+    <Compile Include="Generated\ResourceGroupOperations.cs" />
+    <Compile Include="Generated\ResourceGroupOperationsExtensions.cs" />
+    <Compile Include="Generated\ResourceManagementClient.cs" />
+    <Compile Include="Generated\ResourceManagementClientExtensions.cs" />
+    <Compile Include="Generated\ResourceOperations.cs" />
+    <Compile Include="Generated\ResourceOperationsExtensions.cs" />
+    <Compile Include="Generated\SubscriptionClient.cs" />
+    <Compile Include="Generated\SubscriptionClientExtensions.cs" />
+    <Compile Include="Generated\SubscriptionOperations.cs" />
+    <Compile Include="Generated\SubscriptionOperationsExtensions.cs" />
+    <Compile Include="Generated\TagOperations.cs" />
+    <Compile Include="Generated\TagOperationsExtensions.cs" />
+    <Compile Include="Generated\TenantOperations.cs" />
+    <Compile Include="Generated\TenantOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -29,8 +141,11 @@
       <HintPath>..\..\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.4\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />

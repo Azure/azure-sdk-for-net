@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{BE9D7270-27CB-45EB-BD26-FEA68087E835}</ProjectGuid>
+    <SDKTestProject>true</SDKTestProject>
+  </PropertyGroup>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\tools\Library.Settings.targets" />
+  <Import Project="$(SolutionDir)\tools\Test.Dependencies.target" Condition="Exists('$(SolutionDir)\tools\Test.Dependencies.target')" />
+  <ItemGroup>
+    <Compile Include="InMemoryTests\FeatureTests.InMemory.cs" />
+    <Compile Include="ScenarioTests\TagTests.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\ProviderTests.ScenarioTests.cs" />
+    <Compile Include="InMemoryTests\ProviderTests.InMemory.cs" />
+    <Compile Include="InMemoryTests\ResourceTests.InMemory.cs" />
+    <Compile Include="ScenarioTests\ResourceTests.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\ResourceGroupTests.ScenarioTests.cs" />
+    <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InMemoryTests\DeploymentTests.InMemory.cs" />
+    <Compile Include="InMemoryTests\ResourceGroupTests.InMemory.cs" />
+    <Compile Include="ScenarioTests\DeploymentTests.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\SubscriptionTests.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\TenantTests.ScenarioTests.cs" />
+    <Compile Include="SpecTestSupport.Resources\ResourcesManagementTestUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="SessionRecords\Features.Tests.LiveFeatureTests\RegisterFeature.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CreateDeploymentAndValidateProperties.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CreateDummyDeploymentProducesOperations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CreateDummyDeploymentTemplateWorks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CreateLargeWebDeploymentTemplateWorks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\ListDeploymentsWorksWithFilter.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\ValidateBadDeployment.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\ValidateGoodDeployment.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\ValidateGoodDeploymentWithInlineTemplate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderGetValidateMessage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderListValidateMessage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\VerifyProviderRegister.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\VerifyProviderUnregister.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderOperationsList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\CanCreateResourceGroup.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\CheckExistenceReturnsCorrectValue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\DeleteResourceGroupRemovesGroup.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\DeleteResourceGroupRemovesGroupResources.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\GetNonExistentResourceGroupPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\GetResourceGroupPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\GetResourceGroupSubscriptionPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CleanupAllResources.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CreatedAndDeleteResource.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CreatedAndListResource.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CreatedResourceIsAvailableInList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CreatedResourceIsAvailableInListFilteredByTagName.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CreatedResourceIsAvailableInListFilteredByTagNameAndValue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\CreateResourceWithPlan.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\GetNonExistentResourcePermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\GetResourcePermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveResourceTests\GetResourceSubscriptionPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\ListSubscriptions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\GetSubscriptionDetails.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveTagsTests\CreateListAndDeleteSubscriptionTag.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveTagsTests\CreateListAndDeleteSubscriptionTagValue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveTagsTests\CreateTagValueWithoutCreatingTag.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveTenantTests\ListTenants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hyak.xml" />
+    <None Include="ScenarioTests\good-website.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ResourceManagement\ResourceManagement.csproj">
+      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
+      <Name>ResourceManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
