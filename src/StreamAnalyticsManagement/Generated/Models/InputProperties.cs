@@ -30,6 +30,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public abstract partial class InputProperties
     {
+        private Diagnostics _diagnostics;
+        
+        /// <summary>
+        /// Optional. Gets conditions applicable to the Input, Output, or the
+        /// job overall, that warrant customer attention.
+        /// </summary>
+        public Diagnostics Diagnostics
+        {
+            get { return this._diagnostics; }
+            set { this._diagnostics = value; }
+        }
+        
         private string _etag;
         
         /// <summary>

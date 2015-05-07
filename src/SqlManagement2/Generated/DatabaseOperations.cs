@@ -73,8 +73,8 @@ namespace Microsoft.Azure.Management.Sql
         /// GetDatabaseOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
@@ -85,14 +85,14 @@ namespace Microsoft.Azure.Management.Sql
         /// (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
+        /// Required. The required parameters for creating or updating a
         /// database.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public async Task<DatabaseCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -120,10 +120,6 @@ namespace Microsoft.Azure.Management.Sql
             if (parameters.Properties == null)
             {
                 throw new ArgumentNullException("parameters.Properties");
-            }
-            if (parameters.Tags == null)
-            {
-                throw new ArgumentNullException("parameters.Tags");
             }
             
             // Tracing
@@ -218,6 +214,16 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["requestedServiceObjectiveId"] = parameters.Properties.RequestedServiceObjectiveId.Value.ToString();
                 }
                 
+                if (parameters.Properties.RequestedServiceObjectiveName != null)
+                {
+                    propertiesValue["requestedServiceObjectiveName"] = parameters.Properties.RequestedServiceObjectiveName;
+                }
+                
+                if (parameters.Properties.ElasticPoolName != null)
+                {
+                    propertiesValue["elasticPoolName"] = parameters.Properties.ElasticPoolName;
+                }
+                
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
@@ -305,13 +311,6 @@ namespace Microsoft.Azure.Management.Sql
                             Database databaseInstance = new Database();
                             result.Database = databaseInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                databaseInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
@@ -346,6 +345,13 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.DatabaseId = databaseIdInstance;
                                 }
                                 
+                                JToken earliestRestoreDateValue = propertiesValue2["earliestRestoreDate"];
+                                if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                    propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                }
+                                
                                 JToken editionValue = propertiesValue2["edition"];
                                 if (editionValue != null && editionValue.Type != JTokenType.Null)
                                 {
@@ -367,6 +373,13 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
                                 }
                                 
+                                JToken requestedServiceObjectiveNameValue = propertiesValue2["requestedServiceObjectiveName"];
+                                if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                    propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                }
+                                
                                 JToken serviceLevelObjectiveValue = propertiesValue2["serviceLevelObjective"];
                                 if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
                                 {
@@ -380,6 +393,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string statusInstance = ((string)statusValue);
                                     propertiesInstance.Status = statusInstance;
                                 }
+                                
+                                JToken elasticPoolNameValue = propertiesValue2["elasticPoolName"];
+                                if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                {
+                                    string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                    propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -387,6 +407,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 databaseInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -474,14 +501,14 @@ namespace Microsoft.Azure.Management.Sql
         /// (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
+        /// Required. The required parameters for creating or updating a
         /// database.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public async Task<DatabaseCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -545,15 +572,15 @@ namespace Microsoft.Azure.Management.Sql
         /// Deletes the Azure SQL Database with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Azure SQL Database Database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database to be retrieved.
+        /// Required. The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -716,7 +743,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database request.
         /// </returns>
         public async Task<DatabaseGetResponse> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
         {
@@ -840,13 +867,6 @@ namespace Microsoft.Azure.Management.Sql
                             Database databaseInstance = new Database();
                             result.Database = databaseInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                databaseInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -881,6 +901,13 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.DatabaseId = databaseIdInstance;
                                 }
                                 
+                                JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                    propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                }
+                                
                                 JToken editionValue = propertiesValue["edition"];
                                 if (editionValue != null && editionValue.Type != JTokenType.Null)
                                 {
@@ -902,6 +929,13 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
                                 }
                                 
+                                JToken requestedServiceObjectiveNameValue = propertiesValue["requestedServiceObjectiveName"];
+                                if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                    propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                }
+                                
                                 JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
                                 if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
                                 {
@@ -915,6 +949,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string statusInstance = ((string)statusValue);
                                     propertiesInstance.Status = statusInstance;
                                 }
+                                
+                                JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                {
+                                    string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                    propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -922,6 +963,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 databaseInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -998,7 +1046,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         public async Task<DatabaseListResponse> GetByIdAsync(string resourceGroupName, string serverName, string databaseId, CancellationToken cancellationToken)
         {
@@ -1132,13 +1180,6 @@ namespace Microsoft.Azure.Management.Sql
                                     Database databaseInstance = new Database();
                                     result.Databases.Add(databaseInstance);
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        databaseInstance.Name = nameInstance;
-                                    }
-                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -1173,6 +1214,13 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.DatabaseId = databaseIdInstance;
                                         }
                                         
+                                        JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                        if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                            propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                        }
+                                        
                                         JToken editionValue = propertiesValue["edition"];
                                         if (editionValue != null && editionValue.Type != JTokenType.Null)
                                         {
@@ -1194,6 +1242,13 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
                                         }
                                         
+                                        JToken requestedServiceObjectiveNameValue = propertiesValue["requestedServiceObjectiveName"];
+                                        if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                        {
+                                            string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                            propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                        }
+                                        
                                         JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
                                         if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
                                         {
@@ -1207,6 +1262,13 @@ namespace Microsoft.Azure.Management.Sql
                                             string statusInstance = ((string)statusValue);
                                             propertiesInstance.Status = statusInstance;
                                         }
+                                        
+                                        JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                        if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                        {
+                                            string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                            propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1214,6 +1276,13 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         string idInstance = ((string)idValue);
                                         databaseInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        databaseInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -1275,7 +1344,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets the status of a database create or update operation.
+        /// Gets the status of an Azure Sql Database create or update operation.
         /// </summary>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation
@@ -1284,7 +1353,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public async Task<DatabaseCreateOrUpdateResponse> GetDatabaseOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
@@ -1393,13 +1462,6 @@ namespace Microsoft.Azure.Management.Sql
                             Database databaseInstance = new Database();
                             result.Database = databaseInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                databaseInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -1434,6 +1496,13 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.DatabaseId = databaseIdInstance;
                                 }
                                 
+                                JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                    propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                }
+                                
                                 JToken editionValue = propertiesValue["edition"];
                                 if (editionValue != null && editionValue.Type != JTokenType.Null)
                                 {
@@ -1455,6 +1524,13 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
                                 }
                                 
+                                JToken requestedServiceObjectiveNameValue = propertiesValue["requestedServiceObjectiveName"];
+                                if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                    propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                }
+                                
                                 JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
                                 if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
                                 {
@@ -1468,6 +1544,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string statusInstance = ((string)statusValue);
                                     propertiesInstance.Status = statusInstance;
                                 }
+                                
+                                JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                {
+                                    string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                    propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -1475,6 +1558,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 databaseInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1542,21 +1632,21 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about an Azure SQL Database.
+        /// Returns information about Azure SQL Databases.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         public async Task<DatabaseListResponse> ListAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
         {
@@ -1679,13 +1769,6 @@ namespace Microsoft.Azure.Management.Sql
                                     Database databaseInstance = new Database();
                                     result.Databases.Add(databaseInstance);
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        databaseInstance.Name = nameInstance;
-                                    }
-                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -1720,6 +1803,13 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.DatabaseId = databaseIdInstance;
                                         }
                                         
+                                        JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                        if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                            propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                        }
+                                        
                                         JToken editionValue = propertiesValue["edition"];
                                         if (editionValue != null && editionValue.Type != JTokenType.Null)
                                         {
@@ -1741,6 +1831,13 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
                                         }
                                         
+                                        JToken requestedServiceObjectiveNameValue = propertiesValue["requestedServiceObjectiveName"];
+                                        if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                        {
+                                            string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                            propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                        }
+                                        
                                         JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
                                         if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
                                         {
@@ -1754,6 +1851,13 @@ namespace Microsoft.Azure.Management.Sql
                                             string statusInstance = ((string)statusValue);
                                             propertiesInstance.Status = statusInstance;
                                         }
+                                        
+                                        JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                        if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                        {
+                                            string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                            propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1761,6 +1865,13 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         string idInstance = ((string)idValue);
                                         databaseInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        databaseInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -1786,6 +1897,230 @@ namespace Microsoft.Azure.Management.Sql
                                             string tagsValue = ((string)property.Value);
                                             databaseInstance.Tags.Add(tagsKey, tagsValue);
                                         }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database usages.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database metrics
+        /// request.
+        /// </returns>
+        public async Task<DatabaseMetricListResponse> ListUsagesAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "ListUsagesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/usages";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseMetricListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseMetricListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    DatabaseMetric databaseMetricInstance = new DatabaseMetric();
+                                    result.Metrics.Add(databaseMetricInstance);
+                                    
+                                    JToken resourceNameValue = valueValue["resourceName"];
+                                    if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceNameInstance = ((string)resourceNameValue);
+                                        databaseMetricInstance.ResourceName = resourceNameInstance;
+                                    }
+                                    
+                                    JToken displayNameValue = valueValue["displayName"];
+                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                    {
+                                        string displayNameInstance = ((string)displayNameValue);
+                                        databaseMetricInstance.DisplayName = displayNameInstance;
+                                    }
+                                    
+                                    JToken currentValueValue = valueValue["currentValue"];
+                                    if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
+                                    {
+                                        double currentValueInstance = ((double)currentValueValue);
+                                        databaseMetricInstance.CurrentValue = currentValueInstance;
+                                    }
+                                    
+                                    JToken limitValue = valueValue["limit"];
+                                    if (limitValue != null && limitValue.Type != JTokenType.Null)
+                                    {
+                                        double limitInstance = ((double)limitValue);
+                                        databaseMetricInstance.Limit = limitInstance;
+                                    }
+                                    
+                                    JToken unitValue = valueValue["unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        string unitInstance = ((string)unitValue);
+                                        databaseMetricInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken nextResetTimeValue = valueValue["nextResetTime"];
+                                    if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime nextResetTimeInstance = ((DateTime)nextResetTimeValue);
+                                        databaseMetricInstance.NextResetTime = nextResetTimeInstance;
                                     }
                                 }
                             }

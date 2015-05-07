@@ -148,13 +148,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to list all the inputs in the specified
+        /// stream analytics job.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response of the input list operation.
         /// </returns>
-        Task<InputListResponse> ListInputInJobAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
+        Task<InputListResponse> ListInputInJobAsync(string resourceGroupName, string jobName, InputListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update an input for a stream analytics job.

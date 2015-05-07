@@ -226,5 +226,55 @@ namespace Microsoft.Azure.Management.Sql
         {
             return operations.ListAsync(resourceGroupName, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database Server usage.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IServerOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database Server metrics
+        /// request.
+        /// </returns>
+        public static ServerMetricListResponse ListUsages(this IServerOperations operations, string resourceGroupName, string serverName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IServerOperations)s).ListUsagesAsync(resourceGroupName, serverName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database Server usage.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IServerOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database Server metrics
+        /// request.
+        /// </returns>
+        public static Task<ServerMetricListResponse> ListUsagesAsync(this IServerOperations operations, string resourceGroupName, string serverName)
+        {
+            return operations.ListUsagesAsync(resourceGroupName, serverName, CancellationToken.None);
+        }
     }
 }

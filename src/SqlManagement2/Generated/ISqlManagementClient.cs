@@ -110,10 +110,29 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
+        /// Elastic Pools.  Contains operations to: Create, Retrieve, Update,
+        /// and Delete.
+        /// </summary>
+        IElasticPoolOperations ElasticPools
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
         /// Server Firewall Rules.  Contains operations to: Create, Retrieve,
         /// Update, and Delete firewall rules.
         /// </summary>
         IFirewallRuleOperations FirewallRules
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL
+        /// Recommended Elastic Pools.  Contains operations to: Retrieve.
+        /// </summary>
+        IRecommendedElasticPoolOperations RecommendedElasticPools
         {
             get; 
         }
