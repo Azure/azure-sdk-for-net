@@ -46,26 +46,14 @@ namespace Microsoft.Azure
             AzureOperationResponse<AzureAsyncOperation> responseWithOperationStatus = null;
             string status = response.Body.ProvisioningState;
             CloudError cloudError = null;
-            int delayInSeconds = AzureAsyncOperation.DefaultDelay;
-
-            if (client.LongRunningOperationInitialTimeout >= 0)
-            {
-                delayInSeconds = client.LongRunningOperationInitialTimeout;
-            }
-            else
-            {
-                if (response.Response.Headers.Contains("Retry-After"))
-                {
-                    delayInSeconds = int.Parse(response.Response.Headers.GetValues("Retry-After").FirstOrDefault(),
-                        CultureInfo.InvariantCulture);
-                }
-            }
+            int delayInSeconds = GetRetryAfter(client.LongRunningOperationInitialTimeout, response);
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
                 StringComparison.OrdinalIgnoreCase)))
             {
-                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                //TODO: Use platform agnostic TaskEx
+                await PlatformTask.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
 
                 // Check Azure-AsyncOperation header
                 if (response.Response.Headers.Contains("Azure-AsyncOperation"))
@@ -96,17 +84,7 @@ namespace Microsoft.Azure
                 }
 
                 // Update delay
-                if (client.LongRunningOperationRetryTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationRetryTimeout;
-                }
-                else
-                {
-                    if (responseWithOperationStatus != null && responseWithOperationStatus.Body.RetryAfter > 0)
-                    {
-                        delayInSeconds = responseWithOperationStatus.Body.RetryAfter;
-                    }
-                }
+                delayInSeconds = GetRetryAfter(client.LongRunningOperationRetryTimeout, responseWithOperationStatus);
             }
 
             // Check if operation failed
@@ -171,26 +149,13 @@ namespace Microsoft.Azure
                 status = "Failed";
             }
             CloudError cloudError = null;
-            int delayInSeconds = AzureAsyncOperation.DefaultDelay;
-
-            if (client.LongRunningOperationInitialTimeout >= 0)
-            {
-                delayInSeconds = client.LongRunningOperationInitialTimeout;
-            }
-            else
-            {
-                if (response.Response.Headers.Contains("Retry-After"))
-                {
-                    delayInSeconds = int.Parse(response.Response.Headers.GetValues("Retry-After").FirstOrDefault(),
-                        CultureInfo.InvariantCulture);
-                }
-            }
+            int delayInSeconds = GetRetryAfter(client.LongRunningOperationInitialTimeout, response);
 
             // Check provisioning state
             while (!AzureAsyncOperation.AzureAsyncOperationTerminalStates.Any(s => s.Equals(status,
                 StringComparison.OrdinalIgnoreCase)))
             {
-                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                await PlatformTask.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
 
                 string statusUrl;
                 // Check Azure-AsyncOperation header
@@ -217,17 +182,7 @@ namespace Microsoft.Azure
                 };
 
                 // Update delay
-                if (client.LongRunningOperationRetryTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationRetryTimeout;
-                }
-                else
-                {
-                    if (responseWithOperationStatus.Body.RetryAfter > 0)
-                    {
-                        delayInSeconds = responseWithOperationStatus.Body.RetryAfter;
-                    }
-                }
+                delayInSeconds = GetRetryAfter(client.LongRunningOperationRetryTimeout, responseWithOperationStatus);
             }
 
             if (AzureAsyncOperation.AzureAsyncOperationFailedStates.Any(
@@ -245,6 +200,27 @@ namespace Microsoft.Azure
             }
 
             return operationResponse;
+        }
+
+        /// <summary>
+        /// Returns timeout value from either response header or client timeout.
+        /// </summary>
+        /// <param name="clientTimeout">Client defined timeout.</param>
+        /// <param name="response">Http operation response</param>
+        /// <returns>Timeout in seconds.</returns>
+        private static int GetRetryAfter(int clientTimeout, HttpOperationResponse response)
+        {
+            if (clientTimeout >= 0)
+            {
+                return clientTimeout;
+            }
+            if (response != null && response.Response != null &&
+                response.Response.Headers.Contains("Retry-After"))
+            {
+                return int.Parse(response.Response.Headers.GetValues("Retry-After").FirstOrDefault(),
+                    CultureInfo.InvariantCulture);
+            }
+            return AzureAsyncOperation.DefaultDelay;
         }
 
         /// <summary>

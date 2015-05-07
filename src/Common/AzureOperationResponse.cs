@@ -18,21 +18,15 @@ namespace Microsoft.Azure
         public string RequestId { get; set; }
     }
 
-    //TODO: Add non-generic HttpOperationResponse to AutoRest
-
     /// <summary>
     /// A standard service response including request ID.
     /// </summary>
-    public class AzureOperationResponse
+    public class AzureOperationResponse : HttpOperationResponse
     {
         /// <summary>
-        /// Gets information about the associated HTTP request.
+        /// Gets or sets the value that uniquely identifies a request 
+        /// made against the service.
         /// </summary>
-        public HttpRequestMessage Request { get; set; }
-
-        /// <summary>
-        /// Gets information about the associated HTTP response.
-        /// </summary>
-        public HttpResponseMessage Response { get; set; }
+        public string RequestId { get; set; }
     }
 }

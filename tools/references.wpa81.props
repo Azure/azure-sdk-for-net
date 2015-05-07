@@ -18,7 +18,7 @@
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.6\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.7\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
