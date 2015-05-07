@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data slice runs.
     /// </summary>
-    internal partial class DataSliceRunOperations : IServiceOperations<DataPipelineManagementClient>, IDataSliceRunOperations
+    internal partial class DataSliceRunOperations : IServiceOperations<InternalDataFactoryManagementClient>, IDataSliceRunOperations
     {
         /// <summary>
         /// Initializes a new instance of the DataSliceRunOperations class.
@@ -46,18 +46,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DataSliceRunOperations(DataPipelineManagementClient client)
+        internal DataSliceRunOperations(InternalDataFactoryManagementClient client)
         {
             this._client = client;
         }
         
-        private DataPipelineManagementClient _client;
+        private InternalDataFactoryManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.DataFactories.DataPipelineManagementClient.
+        /// Microsoft.Azure.Management.DataFactories.InternalDataFactoryManagementClient.
         /// </summary>
-        public DataPipelineManagementClient Client
+        public InternalDataFactoryManagementClient Client
         {
             get { return this._client; }
         }
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(dataSliceRunId);
             url = url + "/logInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("startTime=" + Uri.EscapeDataString(dataSliceStartTime));
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

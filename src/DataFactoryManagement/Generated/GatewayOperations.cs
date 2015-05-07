@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data factory gateways.
     /// </summary>
-    internal partial class GatewayOperations : IServiceOperations<DataPipelineManagementClient>, IGatewayOperations
+    internal partial class GatewayOperations : IServiceOperations<InternalDataFactoryManagementClient>, IGatewayOperations
     {
         /// <summary>
         /// Initializes a new instance of the GatewayOperations class.
@@ -50,18 +50,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal GatewayOperations(DataPipelineManagementClient client)
+        internal GatewayOperations(InternalDataFactoryManagementClient client)
         {
             this._client = client;
         }
         
-        private DataPipelineManagementClient _client;
+        private InternalDataFactoryManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.DataFactories.DataPipelineManagementClient.
+        /// Microsoft.Azure.Management.DataFactories.InternalDataFactoryManagementClient.
         /// </summary>
-        public DataPipelineManagementClient Client
+        public InternalDataFactoryManagementClient Client
         {
             get { return this._client; }
         }
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 url = url + Uri.EscapeDataString(parameters.Gateway.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -498,7 +498,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "/gateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </returns>
         public async Task<GatewayCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, GatewayCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
-            DataPipelineManagementClient client = this.Client;
+            InternalDataFactoryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </returns>
         public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string dataFactoryName, string gatewayName, CancellationToken cancellationToken)
         {
-            DataPipelineManagementClient client = this.Client;
+            InternalDataFactoryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -823,7 +823,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "/gateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1065,7 +1065,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-01-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-extensibility");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1308,7 +1308,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/gateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1586,7 +1586,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/regeneratekey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1777,7 +1777,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/connectioninfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2006,7 +2006,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 url = url + Uri.EscapeDataString(parameters.Gateway.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

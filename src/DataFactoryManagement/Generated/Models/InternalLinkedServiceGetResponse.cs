@@ -21,52 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// The Get data factory linkedService operation response.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class InternalLinkedServiceGetResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private InternalLinkedService _linkedService;
         
         /// <summary>
-        /// String type.
+        /// Optional. The data factory linkedService instance.
         /// </summary>
-        public const string String = "String";
+        public InternalLinkedService LinkedService
+        {
+            get { return this._linkedService; }
+            set { this._linkedService = value; }
+        }
         
         /// <summary>
-        /// Int type.
+        /// Initializes a new instance of the InternalLinkedServiceGetResponse
+        /// class.
         /// </summary>
-        public const string Int = "Int";
-        
-        /// <summary>
-        /// Decimal type.
-        /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public InternalLinkedServiceGetResponse()
+        {
+        }
     }
 }

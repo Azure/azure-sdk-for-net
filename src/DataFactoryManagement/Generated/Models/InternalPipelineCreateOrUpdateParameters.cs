@@ -21,52 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// Parameters specifying the pipeline to be created or updated.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class InternalPipelineCreateOrUpdateParameters
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private InternalPipeline _pipeline;
         
         /// <summary>
-        /// String type.
+        /// Optional. The definition of the pipeline to be created or updated.
         /// </summary>
-        public const string String = "String";
+        public InternalPipeline Pipeline
+        {
+            get { return this._pipeline; }
+            set { this._pipeline = value; }
+        }
         
         /// <summary>
-        /// Int type.
+        /// Initializes a new instance of the
+        /// InternalPipelineCreateOrUpdateParameters class.
         /// </summary>
-        public const string Int = "Int";
-        
-        /// <summary>
-        /// Decimal type.
-        /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public InternalPipelineCreateOrUpdateParameters()
+        {
+        }
     }
 }

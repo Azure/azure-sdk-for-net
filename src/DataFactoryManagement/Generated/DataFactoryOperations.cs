@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data factories.
     /// </summary>
-    internal partial class DataFactoryOperations : IServiceOperations<DataPipelineManagementClient>, IDataFactoryOperations
+    internal partial class DataFactoryOperations : IServiceOperations<InternalDataFactoryManagementClient>, IDataFactoryOperations
     {
         /// <summary>
         /// Initializes a new instance of the DataFactoryOperations class.
@@ -49,18 +49,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DataFactoryOperations(DataPipelineManagementClient client)
+        internal DataFactoryOperations(InternalDataFactoryManagementClient client)
         {
             this._client = client;
         }
         
-        private DataPipelineManagementClient _client;
+        private InternalDataFactoryManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.DataFactories.DataPipelineManagementClient.
+        /// Microsoft.Azure.Management.DataFactories.InternalDataFactoryManagementClient.
         /// </summary>
-        public DataPipelineManagementClient Client
+        public InternalDataFactoryManagementClient Client
         {
             get { return this._client; }
         }
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 url = url + Uri.EscapeDataString(parameters.DataFactory.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </returns>
         public async Task<DataFactoryCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, DataFactoryCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
-            DataPipelineManagementClient client = this.Client;
+            InternalDataFactoryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -496,7 +496,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -655,7 +655,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -866,7 +866,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-01-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-extensibility");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1061,7 +1061,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

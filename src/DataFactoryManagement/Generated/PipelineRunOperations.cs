@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing pipeline runs.
     /// </summary>
-    internal partial class PipelineRunOperations : IServiceOperations<DataPipelineManagementClient>, IPipelineRunOperations
+    internal partial class PipelineRunOperations : IServiceOperations<InternalDataFactoryManagementClient>, IPipelineRunOperations
     {
         /// <summary>
         /// Initializes a new instance of the PipelineRunOperations class.
@@ -45,18 +45,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal PipelineRunOperations(DataPipelineManagementClient client)
+        internal PipelineRunOperations(InternalDataFactoryManagementClient client)
         {
             this._client = client;
         }
         
-        private DataPipelineManagementClient _client;
+        private InternalDataFactoryManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.DataFactories.DataPipelineManagementClient.
+        /// Microsoft.Azure.Management.DataFactories.InternalDataFactoryManagementClient.
         /// </summary>
-        public DataPipelineManagementClient Client
+        public InternalDataFactoryManagementClient Client
         {
             get { return this._client; }
         }
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 queryParameters.Add("status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString()));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

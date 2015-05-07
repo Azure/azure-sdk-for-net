@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data slices.
     /// </summary>
-    internal partial class DataSliceOperations : IServiceOperations<DataPipelineManagementClient>, IDataSliceOperations
+    internal partial class DataSliceOperations : IServiceOperations<InternalDataFactoryManagementClient>, IDataSliceOperations
     {
         /// <summary>
         /// Initializes a new instance of the DataSliceOperations class.
@@ -48,18 +48,18 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DataSliceOperations(DataPipelineManagementClient client)
+        internal DataSliceOperations(InternalDataFactoryManagementClient client)
         {
             this._client = client;
         }
         
-        private DataPipelineManagementClient _client;
+        private InternalDataFactoryManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.DataFactories.DataPipelineManagementClient.
+        /// Microsoft.Azure.Management.DataFactories.InternalDataFactoryManagementClient.
         /// </summary>
-        public DataPipelineManagementClient Client
+        public InternalDataFactoryManagementClient Client
         {
             get { return this._client; }
         }
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.DataFactories
             List<string> queryParameters = new List<string>();
             queryParameters.Add("start=" + Uri.EscapeDataString(dataSliceRangeStartTime));
             queryParameters.Add("end=" + Uri.EscapeDataString(dataSliceRangeEndTime));
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -623,7 +623,7 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

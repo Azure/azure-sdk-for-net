@@ -39,17 +39,18 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.DataFactories
 {
     /// <summary>
-    /// Operations for managing hubs.
+    /// Operations for managing data factory internal linkedServices.
     /// </summary>
-    internal partial class HubOperations : IServiceOperations<InternalDataFactoryManagementClient>, IHubOperations
+    internal partial class InternalLinkedServiceOperations : IServiceOperations<InternalDataFactoryManagementClient>, IInternalLinkedServiceOperations
     {
         /// <summary>
-        /// Initializes a new instance of the HubOperations class.
+        /// Initializes a new instance of the InternalLinkedServiceOperations
+        /// class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal HubOperations(InternalDataFactoryManagementClient client)
+        internal InternalLinkedServiceOperations(InternalDataFactoryManagementClient client)
         {
             this._client = client;
         }
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Create a new hub instance or update an existing instance.
+        /// Create or update a data factory linkedService.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -75,15 +76,16 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update a hub.
+        /// Required. The parameters required to create or update a data
+        /// factory linkedService.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update hub operation response.
+        /// The create or update data factory linkedService operation response.
         /// </returns>
-        public async Task<HubCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, HubCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, InternalLinkedServiceCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -114,13 +116,27 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Hub.Name != null && parameters.Hub.Name.Length > 260)
+            if (parameters.LinkedService != null)
             {
-                throw new ArgumentOutOfRangeException("parameters.Hub.Name");
-            }
-            if (Regex.IsMatch(parameters.Hub.Name, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Hub.Name");
+                if (parameters.LinkedService.Name != null && parameters.LinkedService.Name.Length > 260)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.LinkedService.Name");
+                }
+                if (Regex.IsMatch(parameters.LinkedService.Name, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.LinkedService.Name");
+                }
+                if (parameters.LinkedService.Properties != null)
+                {
+                    if (parameters.LinkedService.Properties.Type == null)
+                    {
+                        throw new ArgumentNullException("parameters.LinkedService.Properties.Type");
+                    }
+                    if (parameters.LinkedService.Properties.TypeProperties == null)
+                    {
+                        throw new ArgumentNullException("parameters.LinkedService.Properties.TypeProperties");
+                    }
+                }
             }
             
             // Tracing
@@ -147,10 +163,10 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/hubs/";
-            if (parameters.Hub != null && parameters.Hub.Name != null)
+            url = url + "/linkedservices/";
+            if (parameters.LinkedService != null && parameters.LinkedService.Name != null)
             {
-                url = url + Uri.EscapeDataString(parameters.Hub.Name);
+                url = url + Uri.EscapeDataString(parameters.LinkedService.Name);
             }
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-extensibility");
@@ -190,49 +206,43 @@ namespace Microsoft.Azure.Management.DataFactories
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject hubCreateOrUpdateParametersValue = new JObject();
-                requestDoc = hubCreateOrUpdateParametersValue;
+                JObject internalLinkedServiceCreateOrUpdateParametersValue = new JObject();
+                requestDoc = internalLinkedServiceCreateOrUpdateParametersValue;
                 
-                if (parameters.Hub != null)
+                if (parameters.LinkedService != null)
                 {
-                    if (parameters.Hub.Name != null)
+                    if (parameters.LinkedService.Name != null)
                     {
-                        hubCreateOrUpdateParametersValue["name"] = parameters.Hub.Name;
+                        internalLinkedServiceCreateOrUpdateParametersValue["name"] = parameters.LinkedService.Name;
                     }
                     
-                    if (parameters.Hub.Properties != null)
+                    if (parameters.LinkedService.Properties != null)
                     {
                         JObject propertiesValue = new JObject();
-                        hubCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                        if (parameters.Hub.Properties is HubProperties)
+                        internalLinkedServiceCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                        
+                        propertiesValue["type"] = parameters.LinkedService.Properties.Type;
+                        
+                        propertiesValue["typeProperties"] = JObject.Parse(parameters.LinkedService.Properties.TypeProperties);
+                        
+                        if (parameters.LinkedService.Properties.Description != null)
                         {
-                            propertiesValue["type"] = "Hub";
-                            HubProperties derived = ((HubProperties)parameters.Hub.Properties);
-                            
-                            if (derived.HubId != null)
-                            {
-                                propertiesValue["hubId"] = derived.HubId;
-                            }
-                            
-                            if (derived.ProvisioningState != null)
-                            {
-                                propertiesValue["provisioningState"] = derived.ProvisioningState;
-                            }
+                            propertiesValue["description"] = parameters.LinkedService.Properties.Description;
                         }
-                        if (parameters.Hub.Properties is InternalHubProperties)
+                        
+                        if (parameters.LinkedService.Properties.ProvisioningState != null)
                         {
-                            propertiesValue["type"] = "InternalHub";
-                            InternalHubProperties derived2 = ((InternalHubProperties)parameters.Hub.Properties);
-                            
-                            if (derived2.HubId != null)
-                            {
-                                propertiesValue["hubId"] = derived2.HubId;
-                            }
-                            
-                            if (derived2.ProvisioningState != null)
-                            {
-                                propertiesValue["provisioningState"] = derived2.ProvisioningState;
-                            }
+                            propertiesValue["provisioningState"] = parameters.LinkedService.Properties.ProvisioningState;
+                        }
+                        
+                        if (parameters.LinkedService.Properties.HubName != null)
+                        {
+                            propertiesValue["hubName"] = parameters.LinkedService.Properties.HubName;
+                        }
+                        
+                        if (parameters.LinkedService.Properties.ErrorMessage != null)
+                        {
+                            propertiesValue["errorMessage"] = parameters.LinkedService.Properties.ErrorMessage;
                         }
                     }
                 }
@@ -268,13 +278,13 @@ namespace Microsoft.Azure.Management.DataFactories
                     }
                     
                     // Create Result
-                    HubCreateOrUpdateResponse result = null;
+                    InternalLinkedServiceCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HubCreateOrUpdateResponse();
+                        result = new InternalLinkedServiceCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -283,57 +293,62 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Hub hubInstance = new Hub();
-                            result.Hub = hubInstance;
+                            InternalLinkedService linkedServiceInstance = new InternalLinkedService();
+                            result.LinkedService = linkedServiceInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                hubInstance.Name = nameInstance;
+                                linkedServiceInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue2["type"]);
-                                if (typeName == "Hub")
+                                InternalLinkedServiceProperties propertiesInstance = new InternalLinkedServiceProperties();
+                                linkedServiceInstance.Properties = propertiesInstance;
+                                
+                                JToken typeValue = propertiesValue2["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    HubProperties hubPropertiesInstance = new HubProperties();
-                                    
-                                    JToken hubIdValue = propertiesValue2["hubId"];
-                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance = ((string)hubIdValue);
-                                        hubPropertiesInstance.HubId = hubIdInstance;
-                                    }
-                                    
-                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    hubInstance.Properties = hubPropertiesInstance;
+                                    string typeInstance = ((string)typeValue);
+                                    propertiesInstance.Type = typeInstance;
                                 }
-                                if (typeName == "InternalHub")
+                                
+                                JToken typePropertiesValue = propertiesValue2["typeProperties"];
+                                if (typePropertiesValue != null && typePropertiesValue.Type != JTokenType.Null)
                                 {
-                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                    
-                                    JToken hubIdValue2 = propertiesValue2["hubId"];
-                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance2 = ((string)hubIdValue2);
-                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
-                                    }
-                                    
-                                    JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
-                                    }
-                                    hubInstance.Properties = internalHubPropertiesInstance;
+                                    string typePropertiesInstance = typePropertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                    propertiesInstance.TypeProperties = typePropertiesInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue2["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken hubNameValue = propertiesValue2["hubName"];
+                                if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
+                                {
+                                    string hubNameInstance = ((string)hubNameValue);
+                                    propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken errorMessageValue = propertiesValue2["errorMessage"];
+                                if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                {
+                                    string errorMessageInstance = ((string)errorMessageValue);
+                                    propertiesInstance.ErrorMessage = errorMessageInstance;
                                 }
                             }
                         }
@@ -370,7 +385,7 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Delete a hub instance.
+        /// Create or update a data factory linkedService with raw json content.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -378,16 +393,21 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='dataFactoryName'>
         /// Required. The name of the data factory.
         /// </param>
-        /// <param name='hubName'>
-        /// Required. The name of the hub.
+        /// <param name='linkedServiceName'>
+        /// Required. The name of the data factory table to be created or
+        /// updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to create or update a data
+        /// factory linkedService.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The create or update data factory linkedService operation response.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginDeleteAsync(string resourceGroupName, string dataFactoryName, string hubName, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceCreateOrUpdateResponse> BeginCreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string dataFactoryName, string linkedServiceName, LinkedServiceCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -414,17 +434,25 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (hubName == null)
+            if (linkedServiceName == null)
             {
-                throw new ArgumentNullException("hubName");
+                throw new ArgumentNullException("linkedServiceName");
             }
-            if (hubName != null && hubName.Length > 260)
+            if (linkedServiceName != null && linkedServiceName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("hubName");
+                throw new ArgumentOutOfRangeException("linkedServiceName");
             }
-            if (Regex.IsMatch(hubName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(linkedServiceName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("hubName");
+                throw new ArgumentOutOfRangeException("linkedServiceName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Content == null)
+            {
+                throw new ArgumentNullException("parameters.Content");
             }
             
             // Tracing
@@ -436,7 +464,264 @@ namespace Microsoft.Azure.Management.DataFactories
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("hubName", hubName);
+                tracingParameters.Add("linkedServiceName", linkedServiceName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateWithRawJsonContentAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/linkedservices/";
+            url = url + Uri.EscapeDataString(linkedServiceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-extensibility");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = parameters.Content;
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    InternalLinkedServiceCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new InternalLinkedServiceCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            InternalLinkedService linkedServiceInstance = new InternalLinkedService();
+                            result.LinkedService = linkedServiceInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                linkedServiceInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                InternalLinkedServiceProperties propertiesInstance = new InternalLinkedServiceProperties();
+                                linkedServiceInstance.Properties = propertiesInstance;
+                                
+                                JToken typeValue = propertiesValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    propertiesInstance.Type = typeInstance;
+                                }
+                                
+                                JToken typePropertiesValue = propertiesValue["typeProperties"];
+                                if (typePropertiesValue != null && typePropertiesValue.Type != JTokenType.Null)
+                                {
+                                    string typePropertiesInstance = typePropertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                    propertiesInstance.TypeProperties = typePropertiesInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken hubNameValue = propertiesValue["hubName"];
+                                if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
+                                {
+                                    string hubNameInstance = ((string)hubNameValue);
+                                    propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken errorMessageValue = propertiesValue["errorMessage"];
+                                if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                {
+                                    string errorMessageInstance = ((string)errorMessageValue);
+                                    propertiesInstance.ErrorMessage = errorMessageInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    result.Location = url;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Delete a data factory linkedService instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='linkedServiceName'>
+        /// Required. A unique data factory linkedService name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public async Task<LongRunningOperationResponse> BeginDeleteAsync(string resourceGroupName, string dataFactoryName, string linkedServiceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (dataFactoryName == null)
+            {
+                throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException("linkedServiceName");
+            }
+            if (linkedServiceName != null && linkedServiceName.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("linkedServiceName");
+            }
+            if (Regex.IsMatch(linkedServiceName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("linkedServiceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("dataFactoryName", dataFactoryName);
+                tracingParameters.Add("linkedServiceName", linkedServiceName);
                 TracingAdapter.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
             }
             
@@ -451,8 +736,8 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/hubs/";
-            url = url + Uri.EscapeDataString(hubName);
+            url = url + "/linkedservices/";
+            url = url + Uri.EscapeDataString(linkedServiceName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
@@ -530,6 +815,10 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.Conflict)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
@@ -563,7 +852,7 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Create a new hub instance or update an existing instance.
+        /// Create or update a data factory linkedService.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -572,15 +861,16 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update a hub.
+        /// Required. The parameters required to create or update a data
+        /// factory linkedService.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update hub operation response.
+        /// The create or update data factory linkedService operation response.
         /// </returns>
-        public async Task<HubCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, HubCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, InternalLinkedServiceCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             InternalDataFactoryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -596,13 +886,13 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            HubCreateOrUpdateResponse response = await client.Hubs.BeginCreateOrUpdateAsync(resourceGroupName, dataFactoryName, parameters, cancellationToken).ConfigureAwait(false);
+            InternalLinkedServiceCreateOrUpdateResponse response = await client.InternalLinkedServices.BeginCreateOrUpdateAsync(resourceGroupName, dataFactoryName, parameters, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HubCreateOrUpdateResponse result = await client.Hubs.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            InternalLinkedServiceCreateOrUpdateResponse result = await client.InternalLinkedServices.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 5;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
@@ -613,7 +903,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.Hubs.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+                result = await client.InternalLinkedServices.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 5;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
@@ -630,7 +920,7 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Create a new hub instance or update an existing instance.
+        /// Create or update a data factory linkedService with raw json content.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -638,279 +928,21 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='dataFactoryName'>
         /// Required. The name of the data factory.
         /// </param>
-        /// <param name='hubName'>
-        /// Required. The name of the data factory hub to be created or updated.
+        /// <param name='linkedServiceName'>
+        /// Required. The name of the data factory table to be created or
+        /// updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update a hub.
+        /// Required. The parameters required to create or update a data
+        /// factory linkedService.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update hub operation response.
+        /// The create or update data factory linkedService operation response.
         /// </returns>
-        public async Task<HubCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string dataFactoryName, string hubName, HubCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (dataFactoryName == null)
-            {
-                throw new ArgumentNullException("dataFactoryName");
-            }
-            if (dataFactoryName != null && dataFactoryName.Length > 63)
-            {
-                throw new ArgumentOutOfRangeException("dataFactoryName");
-            }
-            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
-            {
-                throw new ArgumentOutOfRangeException("dataFactoryName");
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException("hubName");
-            }
-            if (hubName != null && hubName.Length > 260)
-            {
-                throw new ArgumentOutOfRangeException("hubName");
-            }
-            if (Regex.IsMatch(hubName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
-            {
-                throw new ArgumentOutOfRangeException("hubName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Content == null)
-            {
-                throw new ArgumentNullException("parameters.Content");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("hubName", hubName);
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.DataFactory/datafactories/";
-            url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/hubs/";
-            url = url + Uri.EscapeDataString(hubName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-extensibility");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = parameters.Content;
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    HubCreateOrUpdateResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HubCreateOrUpdateResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            Hub hubInstance = new Hub();
-                            result.Hub = hubInstance;
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                hubInstance.Name = nameInstance;
-                            }
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                string typeName = ((string)propertiesValue["type"]);
-                                if (typeName == "Hub")
-                                {
-                                    HubProperties hubPropertiesInstance = new HubProperties();
-                                    
-                                    JToken hubIdValue = propertiesValue["hubId"];
-                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance = ((string)hubIdValue);
-                                        hubPropertiesInstance.HubId = hubIdInstance;
-                                    }
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    hubInstance.Properties = hubPropertiesInstance;
-                                }
-                                if (typeName == "InternalHub")
-                                {
-                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                    
-                                    JToken hubIdValue2 = propertiesValue["hubId"];
-                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance2 = ((string)hubIdValue2);
-                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
-                                    }
-                                    
-                                    JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
-                                    }
-                                    hubInstance.Properties = internalHubPropertiesInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    result.Location = url;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Delete a hub instance.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the data factory.
-        /// </param>
-        /// <param name='dataFactoryName'>
-        /// Required. The name of the data factory.
-        /// </param>
-        /// <param name='hubName'>
-        /// Required. The name of the hub.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response for long running operations.
-        /// </returns>
-        public async Task<LongRunningOperationResponse> DeleteAsync(string resourceGroupName, string dataFactoryName, string hubName, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string dataFactoryName, string linkedServiceName, LinkedServiceCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken)
         {
             InternalDataFactoryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -921,12 +953,80 @@ namespace Microsoft.Azure.Management.DataFactories
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("hubName", hubName);
+                tracingParameters.Add("linkedServiceName", linkedServiceName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            InternalLinkedServiceCreateOrUpdateResponse response = await client.InternalLinkedServices.BeginCreateOrUpdateWithRawJsonContentAsync(resourceGroupName, dataFactoryName, linkedServiceName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            InternalLinkedServiceCreateOrUpdateResponse result = await client.InternalLinkedServices.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.InternalLinkedServices.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Delete a data factory linkedService instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='linkedServiceName'>
+        /// Required. A unique data factory linkedService name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public async Task<LongRunningOperationResponse> DeleteAsync(string resourceGroupName, string dataFactoryName, string linkedServiceName, CancellationToken cancellationToken)
+        {
+            InternalDataFactoryManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("dataFactoryName", dataFactoryName);
+                tracingParameters.Add("linkedServiceName", linkedServiceName);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.Hubs.BeginDeleteAsync(resourceGroupName, dataFactoryName, hubName, cancellationToken).ConfigureAwait(false);
+            LongRunningOperationResponse response = await client.InternalLinkedServices.BeginDeleteAsync(resourceGroupName, dataFactoryName, linkedServiceName, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
@@ -968,24 +1068,24 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Gets a hub instance.
+        /// Gets a data factory linkedService instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
         /// </param>
         /// <param name='dataFactoryName'>
-        /// Required. The name of the data factory.
+        /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='hubName'>
-        /// Required. The name of the hub.
+        /// <param name='linkedServiceName'>
+        /// Required. A unique data factory linkedService name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The get hub operation response.
+        /// The Get data factory linkedService operation response.
         /// </returns>
-        public async Task<HubGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, string hubName, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, string linkedServiceName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1012,17 +1112,17 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (hubName == null)
+            if (linkedServiceName == null)
             {
-                throw new ArgumentNullException("hubName");
+                throw new ArgumentNullException("linkedServiceName");
             }
-            if (hubName != null && hubName.Length > 260)
+            if (linkedServiceName != null && linkedServiceName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("hubName");
+                throw new ArgumentOutOfRangeException("linkedServiceName");
             }
-            if (Regex.IsMatch(hubName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(linkedServiceName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("hubName");
+                throw new ArgumentOutOfRangeException("linkedServiceName");
             }
             
             // Tracing
@@ -1034,7 +1134,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("hubName", hubName);
+                tracingParameters.Add("linkedServiceName", linkedServiceName);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -1049,8 +1149,8 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/hubs/";
-            url = url + Uri.EscapeDataString(hubName);
+            url = url + "/linkedservices/";
+            url = url + Uri.EscapeDataString(linkedServiceName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
@@ -1112,13 +1212,13 @@ namespace Microsoft.Azure.Management.DataFactories
                     }
                     
                     // Create Result
-                    HubGetResponse result = null;
+                    InternalLinkedServiceGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HubGetResponse();
+                        result = new InternalLinkedServiceGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1127,57 +1227,62 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Hub hubInstance = new Hub();
-                            result.Hub = hubInstance;
+                            InternalLinkedService linkedServiceInstance = new InternalLinkedService();
+                            result.LinkedService = linkedServiceInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                hubInstance.Name = nameInstance;
+                                linkedServiceInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["type"]);
-                                if (typeName == "Hub")
+                                InternalLinkedServiceProperties propertiesInstance = new InternalLinkedServiceProperties();
+                                linkedServiceInstance.Properties = propertiesInstance;
+                                
+                                JToken typeValue = propertiesValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    HubProperties hubPropertiesInstance = new HubProperties();
-                                    
-                                    JToken hubIdValue = propertiesValue["hubId"];
-                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance = ((string)hubIdValue);
-                                        hubPropertiesInstance.HubId = hubIdInstance;
-                                    }
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    hubInstance.Properties = hubPropertiesInstance;
+                                    string typeInstance = ((string)typeValue);
+                                    propertiesInstance.Type = typeInstance;
                                 }
-                                if (typeName == "InternalHub")
+                                
+                                JToken typePropertiesValue = propertiesValue["typeProperties"];
+                                if (typePropertiesValue != null && typePropertiesValue.Type != JTokenType.Null)
                                 {
-                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                    
-                                    JToken hubIdValue2 = propertiesValue["hubId"];
-                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance2 = ((string)hubIdValue2);
-                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
-                                    }
-                                    
-                                    JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
-                                    }
-                                    hubInstance.Properties = internalHubPropertiesInstance;
+                                    string typePropertiesInstance = typePropertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                    propertiesInstance.TypeProperties = typePropertiesInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken hubNameValue = propertiesValue["hubName"];
+                                if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
+                                {
+                                    string hubNameInstance = ((string)hubNameValue);
+                                    propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken errorMessageValue = propertiesValue["errorMessage"];
+                                if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                {
+                                    string errorMessageInstance = ((string)errorMessageValue);
+                                    propertiesInstance.ErrorMessage = errorMessageInstance;
                                 }
                             }
                         }
@@ -1219,9 +1324,9 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update hub operation response.
+        /// The create or update data factory linkedService operation response.
         /// </returns>
-        public async Task<HubCreateOrUpdateResponse> GetCreateOrUpdateStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceCreateOrUpdateResponse> GetCreateOrUpdateStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -1288,13 +1393,13 @@ namespace Microsoft.Azure.Management.DataFactories
                     }
                     
                     // Create Result
-                    HubCreateOrUpdateResponse result = null;
+                    InternalLinkedServiceCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HubCreateOrUpdateResponse();
+                        result = new InternalLinkedServiceCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1303,57 +1408,62 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Hub hubInstance = new Hub();
-                            result.Hub = hubInstance;
+                            InternalLinkedService linkedServiceInstance = new InternalLinkedService();
+                            result.LinkedService = linkedServiceInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                hubInstance.Name = nameInstance;
+                                linkedServiceInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["type"]);
-                                if (typeName == "Hub")
+                                InternalLinkedServiceProperties propertiesInstance = new InternalLinkedServiceProperties();
+                                linkedServiceInstance.Properties = propertiesInstance;
+                                
+                                JToken typeValue = propertiesValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    HubProperties hubPropertiesInstance = new HubProperties();
-                                    
-                                    JToken hubIdValue = propertiesValue["hubId"];
-                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance = ((string)hubIdValue);
-                                        hubPropertiesInstance.HubId = hubIdInstance;
-                                    }
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    hubInstance.Properties = hubPropertiesInstance;
+                                    string typeInstance = ((string)typeValue);
+                                    propertiesInstance.Type = typeInstance;
                                 }
-                                if (typeName == "InternalHub")
+                                
+                                JToken typePropertiesValue = propertiesValue["typeProperties"];
+                                if (typePropertiesValue != null && typePropertiesValue.Type != JTokenType.Null)
                                 {
-                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                    
-                                    JToken hubIdValue2 = propertiesValue["hubId"];
-                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
-                                    {
-                                        string hubIdInstance2 = ((string)hubIdValue2);
-                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
-                                    }
-                                    
-                                    JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
-                                    }
-                                    hubInstance.Properties = internalHubPropertiesInstance;
+                                    string typePropertiesInstance = typePropertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                    propertiesInstance.TypeProperties = typePropertiesInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken hubNameValue = propertiesValue["hubName"];
+                                if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
+                                {
+                                    string hubNameInstance = ((string)hubNameValue);
+                                    propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken errorMessageValue = propertiesValue["errorMessage"];
+                                if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                {
+                                    string errorMessageInstance = ((string)errorMessageValue);
+                                    propertiesInstance.ErrorMessage = errorMessageInstance;
                                 }
                             }
                         }
@@ -1365,11 +1475,11 @@ namespace Microsoft.Azure.Management.DataFactories
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     result.Location = url;
-                    if (result.Hub != null && result.Hub.Properties != null && result.Hub.Properties.ProvisioningState == "Failed")
+                    if (result.LinkedService != null && result.LinkedService.Properties != null && result.LinkedService.Properties.ProvisioningState == "Failed")
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (result.Hub != null && result.Hub.Properties != null && result.Hub.Properties.ProvisioningState == "Succeeded")
+                    if (result.LinkedService != null && result.LinkedService.Properties != null && result.LinkedService.Properties.ProvisioningState == "Succeeded")
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1398,22 +1508,22 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Gets the first page of data factory hub instances with the link to
+        /// Gets the first page of linked service instances with the link to
         /// the next page.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
         /// </param>
         /// <param name='dataFactoryName'>
-        /// Required. The name of the data factory.
+        /// Required. A unique data factory instance name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list hub operation response.
+        /// The List data factory linkedServices operation response.
         /// </returns>
-        public async Task<HubListResponse> ListAsync(string resourceGroupName, string dataFactoryName, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1464,7 +1574,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/hubs";
+            url = url + "/linkedServices";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-extensibility");
             if (queryParameters.Count > 0)
@@ -1526,13 +1636,13 @@ namespace Microsoft.Azure.Management.DataFactories
                     }
                     
                     // Create Result
-                    HubListResponse result = null;
+                    InternalLinkedServiceListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HubListResponse();
+                        result = new InternalLinkedServiceListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1546,57 +1656,62 @@ namespace Microsoft.Azure.Management.DataFactories
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Hub hubInstance = new Hub();
-                                    result.Hubs.Add(hubInstance);
+                                    InternalLinkedService internalLinkedServiceInstance = new InternalLinkedService();
+                                    result.LinkedServices.Add(internalLinkedServiceInstance);
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        hubInstance.Name = nameInstance;
+                                        internalLinkedServiceInstance.Name = nameInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["type"]);
-                                        if (typeName == "Hub")
+                                        InternalLinkedServiceProperties propertiesInstance = new InternalLinkedServiceProperties();
+                                        internalLinkedServiceInstance.Properties = propertiesInstance;
+                                        
+                                        JToken typeValue = propertiesValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
-                                            HubProperties hubPropertiesInstance = new HubProperties();
-                                            
-                                            JToken hubIdValue = propertiesValue["hubId"];
-                                            if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                            {
-                                                string hubIdInstance = ((string)hubIdValue);
-                                                hubPropertiesInstance.HubId = hubIdInstance;
-                                            }
-                                            
-                                            JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                                hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                            }
-                                            hubInstance.Properties = hubPropertiesInstance;
+                                            string typeInstance = ((string)typeValue);
+                                            propertiesInstance.Type = typeInstance;
                                         }
-                                        if (typeName == "InternalHub")
+                                        
+                                        JToken typePropertiesValue = propertiesValue["typeProperties"];
+                                        if (typePropertiesValue != null && typePropertiesValue.Type != JTokenType.Null)
                                         {
-                                            InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                            
-                                            JToken hubIdValue2 = propertiesValue["hubId"];
-                                            if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
-                                            {
-                                                string hubIdInstance2 = ((string)hubIdValue2);
-                                                internalHubPropertiesInstance.HubId = hubIdInstance2;
-                                            }
-                                            
-                                            JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                                internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
-                                            }
-                                            hubInstance.Properties = internalHubPropertiesInstance;
+                                            string typePropertiesInstance = typePropertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                            propertiesInstance.TypeProperties = typePropertiesInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                        
+                                        JToken hubNameValue = propertiesValue["hubName"];
+                                        if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
+                                        {
+                                            string hubNameInstance = ((string)hubNameValue);
+                                            propertiesInstance.HubName = hubNameInstance;
+                                        }
+                                        
+                                        JToken errorMessageValue = propertiesValue["errorMessage"];
+                                        if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                        {
+                                            string errorMessageInstance = ((string)errorMessageValue);
+                                            propertiesInstance.ErrorMessage = errorMessageInstance;
                                         }
                                     }
                                 }
@@ -1641,19 +1756,19 @@ namespace Microsoft.Azure.Management.DataFactories
         }
         
         /// <summary>
-        /// Gets the next page of data factory hub instances with the link to
-        /// the next page.
+        /// Gets the next page of linked service instances with the link to the
+        /// next page.
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. The url to the next data factory hubs page.
+        /// Required. The url to the next linked services page.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list hub operation response.
+        /// The List data factory linkedServices operation response.
         /// </returns>
-        public async Task<HubListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        public async Task<InternalLinkedServiceListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
@@ -1719,13 +1834,13 @@ namespace Microsoft.Azure.Management.DataFactories
                     }
                     
                     // Create Result
-                    HubListResponse result = null;
+                    InternalLinkedServiceListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new HubListResponse();
+                        result = new InternalLinkedServiceListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1739,57 +1854,62 @@ namespace Microsoft.Azure.Management.DataFactories
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Hub hubInstance = new Hub();
-                                    result.Hubs.Add(hubInstance);
+                                    InternalLinkedService internalLinkedServiceInstance = new InternalLinkedService();
+                                    result.LinkedServices.Add(internalLinkedServiceInstance);
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        hubInstance.Name = nameInstance;
+                                        internalLinkedServiceInstance.Name = nameInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["type"]);
-                                        if (typeName == "Hub")
+                                        InternalLinkedServiceProperties propertiesInstance = new InternalLinkedServiceProperties();
+                                        internalLinkedServiceInstance.Properties = propertiesInstance;
+                                        
+                                        JToken typeValue = propertiesValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
-                                            HubProperties hubPropertiesInstance = new HubProperties();
-                                            
-                                            JToken hubIdValue = propertiesValue["hubId"];
-                                            if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                            {
-                                                string hubIdInstance = ((string)hubIdValue);
-                                                hubPropertiesInstance.HubId = hubIdInstance;
-                                            }
-                                            
-                                            JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                                hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                            }
-                                            hubInstance.Properties = hubPropertiesInstance;
+                                            string typeInstance = ((string)typeValue);
+                                            propertiesInstance.Type = typeInstance;
                                         }
-                                        if (typeName == "InternalHub")
+                                        
+                                        JToken typePropertiesValue = propertiesValue["typeProperties"];
+                                        if (typePropertiesValue != null && typePropertiesValue.Type != JTokenType.Null)
                                         {
-                                            InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                            
-                                            JToken hubIdValue2 = propertiesValue["hubId"];
-                                            if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
-                                            {
-                                                string hubIdInstance2 = ((string)hubIdValue2);
-                                                internalHubPropertiesInstance.HubId = hubIdInstance2;
-                                            }
-                                            
-                                            JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                                internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
-                                            }
-                                            hubInstance.Properties = internalHubPropertiesInstance;
+                                            string typePropertiesInstance = typePropertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                            propertiesInstance.TypeProperties = typePropertiesInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
+                                        }
+                                        
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                        
+                                        JToken hubNameValue = propertiesValue["hubName"];
+                                        if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
+                                        {
+                                            string hubNameInstance = ((string)hubNameValue);
+                                            propertiesInstance.HubName = hubNameInstance;
+                                        }
+                                        
+                                        JToken errorMessageValue = propertiesValue["errorMessage"];
+                                        if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                        {
+                                            string errorMessageInstance = ((string)errorMessageValue);
+                                            propertiesInstance.ErrorMessage = errorMessageInstance;
                                         }
                                     }
                                 }

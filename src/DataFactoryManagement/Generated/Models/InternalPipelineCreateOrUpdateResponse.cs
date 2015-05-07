@@ -21,52 +21,55 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// The create or update pipeline operation response.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class InternalPipelineCreateOrUpdateResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private string _location;
         
         /// <summary>
-        /// String type.
+        /// Optional. The location url for the get request.
         /// </summary>
-        public const string String = "String";
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private InternalPipeline _pipeline;
         
         /// <summary>
-        /// Int type.
+        /// Optional. The pipeline instance.
         /// </summary>
-        public const string Int = "Int";
+        public InternalPipeline Pipeline
+        {
+            get { return this._pipeline; }
+            set { this._pipeline = value; }
+        }
+        
+        private OperationStatus _status;
         
         /// <summary>
-        /// Decimal type.
+        /// Optional. Status of the operation.
         /// </summary>
-        public const string Decimal = "Decimal";
+        public OperationStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
         
         /// <summary>
-        /// Guid type.
+        /// Initializes a new instance of the
+        /// InternalPipelineCreateOrUpdateResponse class.
         /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public InternalPipelineCreateOrUpdateResponse()
+        {
+        }
     }
 }
