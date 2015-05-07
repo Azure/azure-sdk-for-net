@@ -74,7 +74,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(Scope)\*.csproj" Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' " />
+    <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>
   
@@ -122,7 +122,7 @@
              Condition=" '$(Scope)' == 'All' " />
     
     <MSBuild Projects="@(ManagementLibrariesProjects)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;$(_ExtraPropertyList)"
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
