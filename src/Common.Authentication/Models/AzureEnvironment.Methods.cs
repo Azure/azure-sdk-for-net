@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureDataLakeFileSystemEndpointSuffix = "caboaccountdogfood.net";
 
-        public const string AzureKonaCatalogAndJobEndpointSuffix = "kobotest02.osdinfra.net";
+        public const string AzureKonaCatalogAndJobEndpointSuffix = "konaaccountdogfood.net";
 
         public const string ChinaStorageEndpointSuffix = "core.chinacloudapi.cn";
 
