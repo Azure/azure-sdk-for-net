@@ -124,6 +124,30 @@ namespace Microsoft.Azure.Management.Sql
         Task<DatabaseListResponse> ListDatabasesAsync(string resourceGroupName, string serverName, string recommendedElasticPoolName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Returns information about Azure SQL Recommended Elastic Pools.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the Azure SQL Recommended
+        /// Serve belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server in which Azure SQL
+        /// Recommended Elastic Pools are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// The comma separated list of child objects that we want to expand on
+        /// in response.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Recommended Elastic
+        /// Pool request.
+        /// </returns>
+        Task<RecommendedElasticPoolListResponse> ListExpandedAsync(string resourceGroupName, string serverName, string expand, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Returns information about an recommended elastic pool metrics.
         /// </summary>
         /// <param name='resourceGroupName'>

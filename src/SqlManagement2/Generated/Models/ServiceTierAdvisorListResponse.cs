@@ -23,61 +23,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    public partial class ResourceBase
+    /// <summary>
+    /// Represents the response to a list service tier advisor request.
+    /// </summary>
+    public partial class ServiceTierAdvisorListResponse : AzureOperationResponse, IEnumerable<ServiceTierAdvisor>
     {
-        private string _id;
+        private IList<ServiceTierAdvisor> _serviceTierAdvisors;
         
         /// <summary>
-        /// Optional. Gets the ID of the resource.
+        /// Optional. Gets or sets the list of service tier advisors for
+        /// specified database.
         /// </summary>
-        public string Id
+        public IList<ServiceTierAdvisor> ServiceTierAdvisors
         {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _location;
-        
-        /// <summary>
-        /// Optional. Gets or sets the location of the resource.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of the resource.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._serviceTierAdvisors; }
+            set { this._serviceTierAdvisors = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
+        /// Initializes a new instance of the ServiceTierAdvisorListResponse
+        /// class.
         /// </summary>
-        public ResourceBase()
+        public ServiceTierAdvisorListResponse()
         {
-            this.Tags = new LazyDictionary<string, string>();
+            this.ServiceTierAdvisors = new LazyList<ServiceTierAdvisor>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of ServiceTierAdvisors.
+        /// </summary>
+        public IEnumerator<ServiceTierAdvisor> GetEnumerator()
+        {
+            return this.ServiceTierAdvisors.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of ServiceTierAdvisors.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

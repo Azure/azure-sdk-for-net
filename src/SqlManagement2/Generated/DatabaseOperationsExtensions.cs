@@ -374,6 +374,68 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Returns information about an Azure SQL Database.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be retrieved.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database request.
+        /// </returns>
+        public static DatabaseGetResponse GetExpanded(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, string expand)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseOperations)s).GetExpandedAsync(resourceGroupName, serverName, databaseName, expand);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns information about an Azure SQL Database.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be retrieved.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database request.
+        /// </returns>
+        public static Task<DatabaseGetResponse> GetExpandedAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, string expand)
+        {
+            return operations.GetExpandedAsync(resourceGroupName, serverName, databaseName, expand, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns information about Azure SQL Databases.
         /// </summary>
         /// <param name='operations'>
@@ -419,6 +481,62 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<DatabaseListResponse> ListAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName)
         {
             return operations.ListAsync(resourceGroupName, serverName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Databases.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database request.
+        /// </returns>
+        public static DatabaseListResponse ListExpanded(this IDatabaseOperations operations, string resourceGroupName, string serverName, string expand)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseOperations)s).ListExpandedAsync(resourceGroupName, serverName, expand);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Databases.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database request.
+        /// </returns>
+        public static Task<DatabaseListResponse> ListExpandedAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string expand)
+        {
+            return operations.ListExpandedAsync(resourceGroupName, serverName, expand, CancellationToken.None);
         }
         
         /// <summary>

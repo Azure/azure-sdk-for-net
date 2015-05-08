@@ -20,7 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
@@ -162,6 +165,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._serviceObjective = value; }
         }
         
+        private IList<ServiceTierAdvisor> _serviceTierAdvisors;
+        
+        /// <summary>
+        /// Optional. Gets the list of service tier advisors for this database.
+        /// Expanded property
+        /// </summary>
+        public IList<ServiceTierAdvisor> ServiceTierAdvisors
+        {
+            get { return this._serviceTierAdvisors; }
+            set { this._serviceTierAdvisors = value; }
+        }
+        
         private string _status;
         
         /// <summary>
@@ -173,11 +188,23 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._status = value; }
         }
         
+        private UpgradeHint _upgradeHint;
+        
+        /// <summary>
+        /// Optional. Gets the upgrade hint for this database.
+        /// </summary>
+        public UpgradeHint UpgradeHint
+        {
+            get { return this._upgradeHint; }
+            set { this._upgradeHint = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DatabaseProperties class.
         /// </summary>
         public DatabaseProperties()
         {
+            this.ServiceTierAdvisors = new LazyList<ServiceTierAdvisor>();
         }
     }
 }

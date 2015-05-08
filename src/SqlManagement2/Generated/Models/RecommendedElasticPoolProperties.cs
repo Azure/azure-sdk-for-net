@@ -20,7 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
@@ -64,6 +67,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._databaseEdition = value; }
         }
         
+        private IList<Database> _databases;
+        
+        /// <summary>
+        /// Optional. Gets the list of Azure Sql Databases in this pool.
+        /// Expanded property
+        /// </summary>
+        public IList<Database> Databases
+        {
+            get { return this._databases; }
+            set { this._databases = value; }
+        }
+        
         private double _dtu;
         
         /// <summary>
@@ -95,6 +110,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._maxObservedStorageMB; }
             set { this._maxObservedStorageMB = value; }
+        }
+        
+        private IList<RecommendedElasticPoolMetric> _metrics;
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of Azure Sql Databases housed in
+        /// the server. Expanded property
+        /// </summary>
+        public IList<RecommendedElasticPoolMetric> Metrics
+        {
+            get { return this._metrics; }
+            set { this._metrics = value; }
         }
         
         private DateTime _observationPeriodEnd;
@@ -136,6 +163,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public RecommendedElasticPoolProperties()
         {
+            this.Databases = new LazyList<Database>();
+            this.Metrics = new LazyList<RecommendedElasticPoolMetric>();
         }
     }
 }

@@ -265,6 +265,29 @@ namespace Microsoft.Azure.Management.Sql
         Task<DatabaseListResponse> ListDatabasesAsync(string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Returns information about metrics defined on a Azure SQL Database
+        /// Elastic Pool.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the Azure SQL Database
+        /// Serve belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server in which Azure SQL Database
+        /// Elastic Pools are hosted.
+        /// </param>
+        /// <param name='elasticPoolName'>
+        /// The name of the Azure SQL Elastic Pool for which to get the metrics.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents Azure SQL Database Elastic Pool metric definitions.
+        /// </returns>
+        Task<ElasticPoolMetricDefinitions> ListMetricDefinitionsAsync(string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Returns information about Azure SQL Database Elastic Pools.
         /// </summary>
         /// <param name='resourceGroupName'>

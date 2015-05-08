@@ -170,6 +170,31 @@ namespace Microsoft.Azure.Management.Sql
         Task<DatabaseCreateOrUpdateResponse> GetDatabaseOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Returns information about an Azure SQL Database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server on which the database is
+        /// hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to be retrieved.
+        /// </param>
+        /// <param name='expand'>
+        /// The comma separated list of child objects that we want to expand on
+        /// in response.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database request.
+        /// </returns>
+        Task<DatabaseGetResponse> GetExpandedAsync(string resourceGroupName, string serverName, string databaseName, string expand, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Returns information about Azure SQL Databases.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -186,6 +211,28 @@ namespace Microsoft.Azure.Management.Sql
         /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         Task<DatabaseListResponse> ListAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns information about Azure SQL Databases.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server in which the Azure SQL
+        /// Databases are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// The comma separated list of child objects that we want to expand on
+        /// in response.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database request.
+        /// </returns>
+        Task<DatabaseListResponse> ListExpandedAsync(string resourceGroupName, string serverName, string expand, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns information about Azure SQL Database usages.
