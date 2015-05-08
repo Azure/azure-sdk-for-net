@@ -71,10 +71,11 @@
     <FxTargetList Condition=" '$(FxTargetList)' == '' and ('$(Scope)' == '' or '$(Scope)' == 'all' or '$(Scope)' == 'Common') ">portable;net40;net45</FxTargetList>
     <!--If FxTargetList still has no value, it must be an individual maml package-->
     <FxTargetList Condition=" '$(FxTargetList)' == '' ">portable;net40;net45</FxTargetList>
+    <BuildSpecifiedLibrary Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' ">true</BuildSpecifiedLibrary>
   </PropertyGroup>
 
   <ItemGroup>
-    <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' " />
+    <SpecifiedLibrary Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>
   
@@ -121,24 +122,34 @@
              Targets="Build" 
              Condition=" '$(Scope)' == 'All' " />
     
-    <MSBuild Projects="@(ManagementLibrariesProjects)"
+    <MSBuild Projects="@(SpecifiedLibrary)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" />
+             Targets="Build"
+             Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
 
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
+
     <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean" />
+             Targets="Clean"  
+             Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' "/>
     <MSBuild Projects="$(AuthenticationSolution)"
              Properties="Configuration=Net45-$(Configuration);Platform=Any CPU"
-             Targets="Clean" />
+             Targets="Clean" 
+             Condition=" '$(Scope)' == 'Authentication' or '$(Scope)' == 'All' "/>
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean" />
+             Targets="Clean"
+             Condition=" '$(Scope)' == 'All' "/>
+    <MSBuild Projects="@(SpecifiedLibrary)"
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
+             Targets="Clean"
+             Condition=" '$(BuildSpecifiedLibrary)' == 'true' "/>
+    
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
@@ -146,7 +157,8 @@
   <Target Name="Test">
     <ItemGroup>
       <!--TODO: make sure this reliably includes all tests for common, authentication, and individual maml projects-->
-      <TestDlls Include=".\src\**\*.Tests\bin\**\*.Tests.dll"/>
+      <TestDlls Include=".\src\**\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
+      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
@@ -229,10 +241,14 @@
   </Target>
 
   <Target Name="RestoreNugetPackages">
-    <!--TODO: respect the 'scope', and do not always restore all of them-->
-    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
-    <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
-    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />
+    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"  
+          Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
+    <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"
+          Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'Authentication' " />
+    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" 
+          Condition=" '$(Scope)' == 'All' " />
+    <Exec Command="$(NuGetCommand) restore @(SpecifiedLibrary) $(NuGetRestoreConfigSwitch)"
+          Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
   </Target>
 
   <!--Smoke test the packages under the output dir-->
