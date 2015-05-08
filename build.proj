@@ -241,6 +241,9 @@
   </Target>
 
   <Target Name="RestoreNugetPackages">
+    <PropertyGroup>
+      <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryRoot)packages</NuGetRestoreConfigSwitch>
+    </PropertyGroup>
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"  
           Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
     <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"
