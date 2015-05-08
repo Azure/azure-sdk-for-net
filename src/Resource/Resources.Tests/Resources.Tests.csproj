@@ -3,9 +3,10 @@
   <PropertyGroup>
     <ProjectGuid>{BE9D7270-27CB-45EB-BD26-FEA68087E835}</ProjectGuid>
     <SDKTestProject>true</SDKTestProject>
+    <AssemblyName>Resource.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\tools\Library.Settings.targets" />
-  <Import Project="..\..\..\tools\Test.Dependencies.target" Condition="Exists('..\..\..\tools\Test.Dependencies.target')" />
+  <Import Project="..\..\..\tools\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="InMemoryTests\FeatureTests.InMemory.cs" />
     <Compile Include="ScenarioTests\TagTests.ScenarioTests.cs" />
