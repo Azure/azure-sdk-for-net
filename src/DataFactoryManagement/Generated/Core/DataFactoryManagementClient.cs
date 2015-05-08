@@ -115,6 +115,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._dataSliceRuns; }
         }
         
+        private IGatewayOperations _gateways;
+        
+        /// <summary>
+        /// Operations for managing data factory gateways.
+        /// </summary>
+        public virtual IGatewayOperations Gateways
+        {
+            get { return this._gateways; }
+        }
+        
         private IHubOperations _hubs;
         
         /// <summary>
@@ -174,6 +184,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._dataFactories = new DataFactoryOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
+            this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
             this._pipelines = new PipelineOperations(this);
@@ -254,6 +265,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._dataFactories = new DataFactoryOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
+            this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
             this._pipelines = new PipelineOperations(this);
@@ -445,11 +457,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

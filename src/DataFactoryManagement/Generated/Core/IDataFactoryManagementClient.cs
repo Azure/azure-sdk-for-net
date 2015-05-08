@@ -94,6 +94,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
+        /// Operations for managing data factory gateways.
+        /// </summary>
+        IGatewayOperations Gateways
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing hubs.
         /// </summary>
         IHubOperations Hubs
