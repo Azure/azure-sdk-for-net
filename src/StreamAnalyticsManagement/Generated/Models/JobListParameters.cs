@@ -25,8 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Parameters specifying the stream analytics job definition for a list
-    /// operation.
+    /// Parameters for a Stream Analytics job list operation.
     /// </summary>
     public partial class JobListParameters
     {
@@ -50,6 +49,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public JobListParameters()
         {
+            this.PropertiesToExpand = "";
         }
         
         /// <summary>

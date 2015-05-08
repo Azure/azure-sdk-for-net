@@ -25,15 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update database parameters properties.
+    /// Create or update Azure Sql Database parameters properties.
     /// </summary>
     public partial class DatabaseCreateOrUpdateProperties
     {
         private string _collation;
         
         /// <summary>
-        /// Optional. Gets or sets the collation of the database being created.
-        /// You cannot change change the collation of an existing database.
+        /// Optional. Gets or sets the collation of the Azure Sql Database
+        /// being created.  You cannot change change the collation of an
+        /// existing Azure Sql Database.
         /// </summary>
         public string Collation
         {
@@ -44,8 +45,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// Optional. Gets or sets the edition for the database being updated
-        /// or created.
+        /// Optional. Gets or sets the edition for the Azure Sql Database being
+        /// updated or created.
         /// </summary>
         public string Edition
         {
@@ -53,11 +54,23 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._edition = value; }
         }
         
+        private string _elasticPoolName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of the Elastic Pool to put the
+        /// Azure Sql Database in.
+        /// </summary>
+        public string ElasticPoolName
+        {
+            get { return this._elasticPoolName; }
+            set { this._elasticPoolName = value; }
+        }
+        
         private long? _maxSizeBytes;
         
         /// <summary>
-        /// Optional. Gets or sets the maximum size of the database being
-        /// created or updated in bytes.
+        /// Optional. Gets or sets the maximum size of the Azure Sql Database
+        /// being created or updated in bytes.
         /// </summary>
         public long? MaxSizeBytes
         {
@@ -69,12 +82,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Optional. Gets or sets the service objective to be applied to the
-        /// database being created or updated.
+        /// Azure Sql Database being created or updated.
         /// </summary>
         public System.Guid? RequestedServiceObjectiveId
         {
             get { return this._requestedServiceObjectiveId; }
             set { this._requestedServiceObjectiveId = value; }
+        }
+        
+        private string _requestedServiceObjectiveName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the service objective to be applied to the
+        /// Azure Sql Database being created or updated.
+        /// </summary>
+        public string RequestedServiceObjectiveName
+        {
+            get { return this._requestedServiceObjectiveName; }
+            set { this._requestedServiceObjectiveName = value; }
         }
         
         /// <summary>

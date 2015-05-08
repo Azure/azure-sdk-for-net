@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Sql
         /// GetDatabaseOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the server belongs.
+        /// The name of the Resource Group to which the Azure SQL Database
+        /// Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// The name of the Azure SQL Database Server on which the database is
@@ -53,13 +54,13 @@ namespace Microsoft.Azure.Management.Sql
         /// created).
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for createing or updating a database.
+        /// The required parameters for creating or updating a database.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         Task<DatabaseCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
@@ -79,13 +80,13 @@ namespace Microsoft.Azure.Management.Sql
         /// created).
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for createing or updating a database.
+        /// The required parameters for creating or updating a database.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         Task<DatabaseCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
@@ -93,14 +94,15 @@ namespace Microsoft.Azure.Management.Sql
         /// Deletes the Azure SQL Database with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the server belongs.
+        /// The name of the Resource Group to which the Azure SQL Database
+        /// Server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server on which the database is
-        /// hosted.
+        /// The name of the Azure SQL Database Server on which the Azure SQL
+        /// Database Database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Database to be retrieved.
+        /// The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -128,7 +130,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database request.
         /// </returns>
         Task<DatabaseGetResponse> GetAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
         
@@ -149,12 +151,12 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         Task<DatabaseListResponse> GetByIdAsync(string resourceGroupName, string serverName, string databaseId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the status of a database create or update operation.
+        /// Gets the status of an Azure Sql Database create or update operation.
         /// </summary>
         /// <param name='operationStatusLink'>
         /// Location value returned by the Begin operation
@@ -163,26 +165,48 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         Task<DatabaseCreateOrUpdateResponse> GetDatabaseOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns information about an Azure SQL Database.
+        /// Returns information about Azure SQL Databases.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server on which the database is
-        /// hosted.
+        /// The name of the Azure SQL Database Server in which the Azure SQL
+        /// Databases are hosted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         Task<DatabaseListResponse> ListAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database usages.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server in which the Azure SQL
+        /// Databases are hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database metrics
+        /// request.
+        /// </returns>
+        Task<DatabaseMetricListResponse> ListUsagesAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
     }
 }
