@@ -632,6 +632,66 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Returns information about metrics defined on a Azure SQL Database
+        /// Elastic Pool.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IElasticPoolOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Serve belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server in which Azure SQL
+        /// Database Elastic Pools are hosted.
+        /// </param>
+        /// <param name='elasticPoolName'>
+        /// Required. The name of the Azure SQL Elastic Pool for which to get
+        /// the metrics.
+        /// </param>
+        /// <returns>
+        /// Represents Azure SQL Database Elastic Pool metric definitions.
+        /// </returns>
+        public static ElasticPoolMetricDefinitions ListMetricDefinitions(this IElasticPoolOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IElasticPoolOperations)s).ListMetricDefinitionsAsync(resourceGroupName, serverName, elasticPoolName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns information about metrics defined on a Azure SQL Database
+        /// Elastic Pool.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IElasticPoolOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Serve belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server in which Azure SQL
+        /// Database Elastic Pools are hosted.
+        /// </param>
+        /// <param name='elasticPoolName'>
+        /// Required. The name of the Azure SQL Elastic Pool for which to get
+        /// the metrics.
+        /// </param>
+        /// <returns>
+        /// Represents Azure SQL Database Elastic Pool metric definitions.
+        /// </returns>
+        public static Task<ElasticPoolMetricDefinitions> ListMetricDefinitionsAsync(this IElasticPoolOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
+        {
+            return operations.ListMetricDefinitionsAsync(resourceGroupName, serverName, elasticPoolName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns information about Azure SQL Database Elastic Pools.
         /// </summary>
         /// <param name='operations'>

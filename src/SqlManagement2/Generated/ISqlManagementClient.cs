@@ -158,11 +158,38 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for Azure SQL Database Server Upgrade
+        /// </summary>
+        IServerUpgradeOperations ServerUpgrades
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// Service Objectives.   Contains operations to: Retrieve service
         /// objectives.
         /// </summary>
         IServiceObjectiveOperations ServiceObjectives
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on service tier
+        /// advisors.  Contains operations to: Retrieve.
+        /// </summary>
+        IServiceTierAdvisorOperations ServiceTierAdvisors
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations of Azure SQL Database Transparent
+        /// Data Encryption.  Contains operations to: Retrieve, and Update
+        /// Transparent Data Encryption.
+        /// </summary>
+        ITransparentDataEncryptionOperations TransparentDataEncryption
         {
             get; 
         }

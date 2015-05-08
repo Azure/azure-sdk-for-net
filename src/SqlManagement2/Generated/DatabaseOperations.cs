@@ -400,44 +400,356 @@ namespace Microsoft.Azure.Management.Sql
                                     string elasticPoolNameInstance = ((string)elasticPoolNameValue);
                                     propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
                                 }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                databaseInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                databaseInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                databaseInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                databaseInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
+                                
+                                JToken serviceTierAdvisorsArray = propertiesValue2["serviceTierAdvisors"];
+                                if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey2 = ((string)property.Name);
-                                    string tagsValue2 = ((string)property.Value);
-                                    databaseInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                    {
+                                        ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                        propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                        
+                                        JToken propertiesValue3 = serviceTierAdvisorsValue["properties"];
+                                        if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                        {
+                                            ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                            serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken observationPeriodStartValue = propertiesValue3["observationPeriodStart"];
+                                            if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                            }
+                                            
+                                            JToken observationPeriodEndValue = propertiesValue3["observationPeriodEnd"];
+                                            if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                            }
+                                            
+                                            JToken activeTimeRatioValue = propertiesValue3["activeTimeRatio"];
+                                            if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                            {
+                                                double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                            }
+                                            
+                                            JToken minDtuValue = propertiesValue3["minDtu"];
+                                            if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double minDtuInstance = ((double)minDtuValue);
+                                                propertiesInstance2.MinDtu = minDtuInstance;
+                                            }
+                                            
+                                            JToken avgDtuValue = propertiesValue3["avgDtu"];
+                                            if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double avgDtuInstance = ((double)avgDtuValue);
+                                                propertiesInstance2.AvgDtu = avgDtuInstance;
+                                            }
+                                            
+                                            JToken maxDtuValue = propertiesValue3["maxDtu"];
+                                            if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double maxDtuInstance = ((double)maxDtuValue);
+                                                propertiesInstance2.MaxDtu = maxDtuInstance;
+                                            }
+                                            
+                                            JToken maxSizeInGBValue = propertiesValue3["maxSizeInGB"];
+                                            if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                            {
+                                                double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                            }
+                                            
+                                            JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue3["serviceLevelObjectiveUsageMetrics"];
+                                            if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                {
+                                                    SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                    propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                    
+                                                    JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                    if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                        sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                    if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                        sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                    if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                        sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sloUsageMetricInstance.Id = idInstance;
+                                                    }
+                                                    
+                                                    JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance = ((string)nameValue);
+                                                        sloUsageMetricInstance.Name = nameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance = ((string)typeValue);
+                                                        sloUsageMetricInstance.Type = typeInstance;
+                                                    }
+                                                    
+                                                    JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance = ((string)locationValue);
+                                                        sloUsageMetricInstance.Location = locationInstance;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property in tagsSequenceElement)
+                                                        {
+                                                            string tagsKey2 = ((string)property.Name);
+                                                            string tagsValue2 = ((string)property.Value);
+                                                            sloUsageMetricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveValue = propertiesValue3["currentServiceLevelObjective"];
+                                            if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveIdValue = propertiesValue3["currentServiceLevelObjectiveId"];
+                                            if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue3["usageBasedRecommendationServiceLevelObjective"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue3["usageBasedRecommendationServiceLevelObjectiveId"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue3["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue3["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue3["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue3["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue3["overallRecommendationServiceLevelObjective"];
+                                            if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue3["overallRecommendationServiceLevelObjectiveId"];
+                                            if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken confidenceValue = propertiesValue3["confidence"];
+                                            if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                            {
+                                                double confidenceInstance = ((double)confidenceValue);
+                                                propertiesInstance2.Confidence = confidenceInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                        {
+                                            string idInstance2 = ((string)idValue2);
+                                            serviceTierAdvisorInstance.Id = idInstance2;
+                                        }
+                                        
+                                        JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            serviceTierAdvisorInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance2 = ((string)typeValue2);
+                                            serviceTierAdvisorInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            serviceTierAdvisorInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                        if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement2)
+                                            {
+                                                string tagsKey3 = ((string)property2.Name);
+                                                string tagsValue3 = ((string)property2.Value);
+                                                serviceTierAdvisorInstance.Tags.Add(tagsKey3, tagsValue3);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken upgradeHintValue = propertiesValue2["upgradeHint"];
+                                if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                {
+                                    UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                    propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                    
+                                    JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                    if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                    {
+                                        string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                        upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                    }
+                                    
+                                    JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                    if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                        upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                    }
+                                    
+                                    JToken idValue3 = upgradeHintValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    {
+                                        string idInstance3 = ((string)idValue3);
+                                        upgradeHintInstance.Id = idInstance3;
+                                    }
+                                    
+                                    JToken nameValue3 = upgradeHintValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance3 = ((string)nameValue3);
+                                        upgradeHintInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    JToken typeValue3 = upgradeHintValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance3 = ((string)typeValue3);
+                                        upgradeHintInstance.Type = typeInstance3;
+                                    }
+                                    
+                                    JToken locationValue3 = upgradeHintValue["location"];
+                                    if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance3 = ((string)locationValue3);
+                                        upgradeHintInstance.Location = locationInstance3;
+                                    }
+                                    
+                                    JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                    if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property3 in tagsSequenceElement3)
+                                        {
+                                            string tagsKey4 = ((string)property3.Name);
+                                            string tagsValue4 = ((string)property3.Value);
+                                            upgradeHintInstance.Tags.Add(tagsKey4, tagsValue4);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue4 = responseDoc["id"];
+                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            {
+                                string idInstance4 = ((string)idValue4);
+                                databaseInstance.Id = idInstance4;
+                            }
+                            
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                            {
+                                string nameInstance4 = ((string)nameValue4);
+                                databaseInstance.Name = nameInstance4;
+                            }
+                            
+                            JToken typeValue4 = responseDoc["type"];
+                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                            {
+                                string typeInstance4 = ((string)typeValue4);
+                                databaseInstance.Type = typeInstance4;
+                            }
+                            
+                            JToken locationValue4 = responseDoc["location"];
+                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                            {
+                                string locationInstance4 = ((string)locationValue4);
+                                databaseInstance.Location = locationInstance4;
+                            }
+                            
+                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property4 in tagsSequenceElement4)
+                                {
+                                    string tagsKey5 = ((string)property4.Name);
+                                    string tagsValue5 = ((string)property4.Value);
+                                    databaseInstance.Tags.Add(tagsKey5, tagsValue5);
                                 }
                             }
                         }
@@ -956,44 +1268,356 @@ namespace Microsoft.Azure.Management.Sql
                                     string elasticPoolNameInstance = ((string)elasticPoolNameValue);
                                     propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
                                 }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                databaseInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                databaseInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                databaseInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                databaseInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
+                                
+                                JToken serviceTierAdvisorsArray = propertiesValue["serviceTierAdvisors"];
+                                if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                    foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                    {
+                                        ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                        propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                        
+                                        JToken propertiesValue2 = serviceTierAdvisorsValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                            serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken observationPeriodStartValue = propertiesValue2["observationPeriodStart"];
+                                            if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                            }
+                                            
+                                            JToken observationPeriodEndValue = propertiesValue2["observationPeriodEnd"];
+                                            if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                            }
+                                            
+                                            JToken activeTimeRatioValue = propertiesValue2["activeTimeRatio"];
+                                            if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                            {
+                                                double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                            }
+                                            
+                                            JToken minDtuValue = propertiesValue2["minDtu"];
+                                            if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double minDtuInstance = ((double)minDtuValue);
+                                                propertiesInstance2.MinDtu = minDtuInstance;
+                                            }
+                                            
+                                            JToken avgDtuValue = propertiesValue2["avgDtu"];
+                                            if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double avgDtuInstance = ((double)avgDtuValue);
+                                                propertiesInstance2.AvgDtu = avgDtuInstance;
+                                            }
+                                            
+                                            JToken maxDtuValue = propertiesValue2["maxDtu"];
+                                            if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double maxDtuInstance = ((double)maxDtuValue);
+                                                propertiesInstance2.MaxDtu = maxDtuInstance;
+                                            }
+                                            
+                                            JToken maxSizeInGBValue = propertiesValue2["maxSizeInGB"];
+                                            if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                            {
+                                                double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                            }
+                                            
+                                            JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue2["serviceLevelObjectiveUsageMetrics"];
+                                            if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                {
+                                                    SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                    propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                    
+                                                    JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                    if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                        sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                    if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                        sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                    if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                        sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sloUsageMetricInstance.Id = idInstance;
+                                                    }
+                                                    
+                                                    JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance = ((string)nameValue);
+                                                        sloUsageMetricInstance.Name = nameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance = ((string)typeValue);
+                                                        sloUsageMetricInstance.Type = typeInstance;
+                                                    }
+                                                    
+                                                    JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance = ((string)locationValue);
+                                                        sloUsageMetricInstance.Location = locationInstance;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property in tagsSequenceElement)
+                                                        {
+                                                            string tagsKey = ((string)property.Name);
+                                                            string tagsValue = ((string)property.Value);
+                                                            sloUsageMetricInstance.Tags.Add(tagsKey, tagsValue);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveValue = propertiesValue2["currentServiceLevelObjective"];
+                                            if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveIdValue = propertiesValue2["currentServiceLevelObjectiveId"];
+                                            if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["usageBasedRecommendationServiceLevelObjective"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["usageBasedRecommendationServiceLevelObjectiveId"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue2["overallRecommendationServiceLevelObjective"];
+                                            if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue2["overallRecommendationServiceLevelObjectiveId"];
+                                            if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken confidenceValue = propertiesValue2["confidence"];
+                                            if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                            {
+                                                double confidenceInstance = ((double)confidenceValue);
+                                                propertiesInstance2.Confidence = confidenceInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                        {
+                                            string idInstance2 = ((string)idValue2);
+                                            serviceTierAdvisorInstance.Id = idInstance2;
+                                        }
+                                        
+                                        JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            serviceTierAdvisorInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance2 = ((string)typeValue2);
+                                            serviceTierAdvisorInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            serviceTierAdvisorInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                        if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement2)
+                                            {
+                                                string tagsKey2 = ((string)property2.Name);
+                                                string tagsValue2 = ((string)property2.Value);
+                                                serviceTierAdvisorInstance.Tags.Add(tagsKey2, tagsValue2);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken upgradeHintValue = propertiesValue["upgradeHint"];
+                                if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                {
+                                    UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                    propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                    
+                                    JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                    if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                    {
+                                        string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                        upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                    }
+                                    
+                                    JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                    if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                        upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                    }
+                                    
+                                    JToken idValue3 = upgradeHintValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    {
+                                        string idInstance3 = ((string)idValue3);
+                                        upgradeHintInstance.Id = idInstance3;
+                                    }
+                                    
+                                    JToken nameValue3 = upgradeHintValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance3 = ((string)nameValue3);
+                                        upgradeHintInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    JToken typeValue3 = upgradeHintValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance3 = ((string)typeValue3);
+                                        upgradeHintInstance.Type = typeInstance3;
+                                    }
+                                    
+                                    JToken locationValue3 = upgradeHintValue["location"];
+                                    if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance3 = ((string)locationValue3);
+                                        upgradeHintInstance.Location = locationInstance3;
+                                    }
+                                    
+                                    JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                    if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property3 in tagsSequenceElement3)
+                                        {
+                                            string tagsKey3 = ((string)property3.Name);
+                                            string tagsValue3 = ((string)property3.Value);
+                                            upgradeHintInstance.Tags.Add(tagsKey3, tagsValue3);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue4 = responseDoc["id"];
+                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            {
+                                string idInstance4 = ((string)idValue4);
+                                databaseInstance.Id = idInstance4;
+                            }
+                            
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                            {
+                                string nameInstance4 = ((string)nameValue4);
+                                databaseInstance.Name = nameInstance4;
+                            }
+                            
+                            JToken typeValue4 = responseDoc["type"];
+                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                            {
+                                string typeInstance4 = ((string)typeValue4);
+                                databaseInstance.Type = typeInstance4;
+                            }
+                            
+                            JToken locationValue4 = responseDoc["location"];
+                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                            {
+                                string locationInstance4 = ((string)locationValue4);
+                                databaseInstance.Location = locationInstance4;
+                            }
+                            
+                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property4 in tagsSequenceElement4)
+                                {
+                                    string tagsKey4 = ((string)property4.Name);
+                                    string tagsValue4 = ((string)property4.Value);
+                                    databaseInstance.Tags.Add(tagsKey4, tagsValue4);
                                 }
                             }
                         }
@@ -1269,44 +1893,356 @@ namespace Microsoft.Azure.Management.Sql
                                             string elasticPoolNameInstance = ((string)elasticPoolNameValue);
                                             propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
                                         }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        databaseInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        databaseInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        databaseInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        databaseInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
+                                        
+                                        JToken serviceTierAdvisorsArray = propertiesValue["serviceTierAdvisors"];
+                                        if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
                                         {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                            foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                            {
+                                                ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                                propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                                
+                                                JToken propertiesValue2 = serviceTierAdvisorsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                                    serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                                    
+                                                    JToken observationPeriodStartValue = propertiesValue2["observationPeriodStart"];
+                                                    if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                        propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                                    }
+                                                    
+                                                    JToken observationPeriodEndValue = propertiesValue2["observationPeriodEnd"];
+                                                    if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                        propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                                    }
+                                                    
+                                                    JToken activeTimeRatioValue = propertiesValue2["activeTimeRatio"];
+                                                    if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                        propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken minDtuValue = propertiesValue2["minDtu"];
+                                                    if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minDtuInstance = ((double)minDtuValue);
+                                                        propertiesInstance2.MinDtu = minDtuInstance;
+                                                    }
+                                                    
+                                                    JToken avgDtuValue = propertiesValue2["avgDtu"];
+                                                    if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double avgDtuInstance = ((double)avgDtuValue);
+                                                        propertiesInstance2.AvgDtu = avgDtuInstance;
+                                                    }
+                                                    
+                                                    JToken maxDtuValue = propertiesValue2["maxDtu"];
+                                                    if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double maxDtuInstance = ((double)maxDtuValue);
+                                                        propertiesInstance2.MaxDtu = maxDtuInstance;
+                                                    }
+                                                    
+                                                    JToken maxSizeInGBValue = propertiesValue2["maxSizeInGB"];
+                                                    if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                        propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue2["serviceLevelObjectiveUsageMetrics"];
+                                                    if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                        {
+                                                            SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                            propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                            
+                                                            JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                            if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                                sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                            }
+                                                            
+                                                            JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                            if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                            {
+                                                                Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                                sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                            }
+                                                            
+                                                            JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                            if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                            {
+                                                                double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                                sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                            }
+                                                            
+                                                            JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance = ((string)idValue);
+                                                                sloUsageMetricInstance.Id = idInstance;
+                                                            }
+                                                            
+                                                            JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance = ((string)nameValue);
+                                                                sloUsageMetricInstance.Name = nameInstance;
+                                                            }
+                                                            
+                                                            JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance = ((string)typeValue);
+                                                                sloUsageMetricInstance.Type = typeInstance;
+                                                            }
+                                                            
+                                                            JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                            {
+                                                                string locationInstance = ((string)locationValue);
+                                                                sloUsageMetricInstance.Location = locationInstance;
+                                                            }
+                                                            
+                                                            JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property in tagsSequenceElement)
+                                                                {
+                                                                    string tagsKey = ((string)property.Name);
+                                                                    string tagsValue = ((string)property.Value);
+                                                                    sloUsageMetricInstance.Tags.Add(tagsKey, tagsValue);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken currentServiceLevelObjectiveValue = propertiesValue2["currentServiceLevelObjective"];
+                                                    if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                        propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken currentServiceLevelObjectiveIdValue = propertiesValue2["currentServiceLevelObjectiveId"];
+                                                    if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["usageBasedRecommendationServiceLevelObjective"];
+                                                    if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["usageBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                                    if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                                    if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue2["overallRecommendationServiceLevelObjective"];
+                                                    if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue2["overallRecommendationServiceLevelObjectiveId"];
+                                                    if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken confidenceValue = propertiesValue2["confidence"];
+                                                    if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        double confidenceInstance = ((double)confidenceValue);
+                                                        propertiesInstance2.Confidence = confidenceInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    serviceTierAdvisorInstance.Id = idInstance2;
+                                                }
+                                                
+                                                JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    serviceTierAdvisorInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    serviceTierAdvisorInstance.Type = typeInstance2;
+                                                }
+                                                
+                                                JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                                if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance2 = ((string)locationValue2);
+                                                    serviceTierAdvisorInstance.Location = locationInstance2;
+                                                }
+                                                
+                                                JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                                if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in tagsSequenceElement2)
+                                                    {
+                                                        string tagsKey2 = ((string)property2.Name);
+                                                        string tagsValue2 = ((string)property2.Value);
+                                                        serviceTierAdvisorInstance.Tags.Add(tagsKey2, tagsValue2);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken upgradeHintValue = propertiesValue["upgradeHint"];
+                                        if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                        {
+                                            UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                            propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                            
+                                            JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                            if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                                upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                            if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                                upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken idValue3 = upgradeHintValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            {
+                                                string idInstance3 = ((string)idValue3);
+                                                upgradeHintInstance.Id = idInstance3;
+                                            }
+                                            
+                                            JToken nameValue3 = upgradeHintValue["name"];
+                                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance3 = ((string)nameValue3);
+                                                upgradeHintInstance.Name = nameInstance3;
+                                            }
+                                            
+                                            JToken typeValue3 = upgradeHintValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance3 = ((string)typeValue3);
+                                                upgradeHintInstance.Type = typeInstance3;
+                                            }
+                                            
+                                            JToken locationValue3 = upgradeHintValue["location"];
+                                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance3 = ((string)locationValue3);
+                                                upgradeHintInstance.Location = locationInstance3;
+                                            }
+                                            
+                                            JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                            if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property3 in tagsSequenceElement3)
+                                                {
+                                                    string tagsKey3 = ((string)property3.Name);
+                                                    string tagsValue3 = ((string)property3.Value);
+                                                    upgradeHintInstance.Tags.Add(tagsKey3, tagsValue3);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue4 = valueValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        databaseInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken nameValue4 = valueValue["name"];
+                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance4 = ((string)nameValue4);
+                                        databaseInstance.Name = nameInstance4;
+                                    }
+                                    
+                                    JToken typeValue4 = valueValue["type"];
+                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance4 = ((string)typeValue4);
+                                        databaseInstance.Type = typeInstance4;
+                                    }
+                                    
+                                    JToken locationValue4 = valueValue["location"];
+                                    if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance4 = ((string)locationValue4);
+                                        databaseInstance.Location = locationInstance4;
+                                    }
+                                    
+                                    JToken tagsSequenceElement4 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property4 in tagsSequenceElement4)
+                                        {
+                                            string tagsKey4 = ((string)property4.Name);
+                                            string tagsValue4 = ((string)property4.Value);
+                                            databaseInstance.Tags.Add(tagsKey4, tagsValue4);
                                         }
                                     }
                                 }
@@ -1551,44 +2487,356 @@ namespace Microsoft.Azure.Management.Sql
                                     string elasticPoolNameInstance = ((string)elasticPoolNameValue);
                                     propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
                                 }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                databaseInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                databaseInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                databaseInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                databaseInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
+                                
+                                JToken serviceTierAdvisorsArray = propertiesValue["serviceTierAdvisors"];
+                                if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                    foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                    {
+                                        ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                        propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                        
+                                        JToken propertiesValue2 = serviceTierAdvisorsValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                            serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken observationPeriodStartValue = propertiesValue2["observationPeriodStart"];
+                                            if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                            }
+                                            
+                                            JToken observationPeriodEndValue = propertiesValue2["observationPeriodEnd"];
+                                            if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                            }
+                                            
+                                            JToken activeTimeRatioValue = propertiesValue2["activeTimeRatio"];
+                                            if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                            {
+                                                double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                            }
+                                            
+                                            JToken minDtuValue = propertiesValue2["minDtu"];
+                                            if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double minDtuInstance = ((double)minDtuValue);
+                                                propertiesInstance2.MinDtu = minDtuInstance;
+                                            }
+                                            
+                                            JToken avgDtuValue = propertiesValue2["avgDtu"];
+                                            if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double avgDtuInstance = ((double)avgDtuValue);
+                                                propertiesInstance2.AvgDtu = avgDtuInstance;
+                                            }
+                                            
+                                            JToken maxDtuValue = propertiesValue2["maxDtu"];
+                                            if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double maxDtuInstance = ((double)maxDtuValue);
+                                                propertiesInstance2.MaxDtu = maxDtuInstance;
+                                            }
+                                            
+                                            JToken maxSizeInGBValue = propertiesValue2["maxSizeInGB"];
+                                            if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                            {
+                                                double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                            }
+                                            
+                                            JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue2["serviceLevelObjectiveUsageMetrics"];
+                                            if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                {
+                                                    SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                    propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                    
+                                                    JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                    if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                        sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                    if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                        sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                    if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                        sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sloUsageMetricInstance.Id = idInstance;
+                                                    }
+                                                    
+                                                    JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance = ((string)nameValue);
+                                                        sloUsageMetricInstance.Name = nameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance = ((string)typeValue);
+                                                        sloUsageMetricInstance.Type = typeInstance;
+                                                    }
+                                                    
+                                                    JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance = ((string)locationValue);
+                                                        sloUsageMetricInstance.Location = locationInstance;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property in tagsSequenceElement)
+                                                        {
+                                                            string tagsKey = ((string)property.Name);
+                                                            string tagsValue = ((string)property.Value);
+                                                            sloUsageMetricInstance.Tags.Add(tagsKey, tagsValue);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveValue = propertiesValue2["currentServiceLevelObjective"];
+                                            if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveIdValue = propertiesValue2["currentServiceLevelObjectiveId"];
+                                            if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["usageBasedRecommendationServiceLevelObjective"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["usageBasedRecommendationServiceLevelObjectiveId"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue2["overallRecommendationServiceLevelObjective"];
+                                            if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue2["overallRecommendationServiceLevelObjectiveId"];
+                                            if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken confidenceValue = propertiesValue2["confidence"];
+                                            if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                            {
+                                                double confidenceInstance = ((double)confidenceValue);
+                                                propertiesInstance2.Confidence = confidenceInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                        {
+                                            string idInstance2 = ((string)idValue2);
+                                            serviceTierAdvisorInstance.Id = idInstance2;
+                                        }
+                                        
+                                        JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            serviceTierAdvisorInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance2 = ((string)typeValue2);
+                                            serviceTierAdvisorInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            serviceTierAdvisorInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                        if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement2)
+                                            {
+                                                string tagsKey2 = ((string)property2.Name);
+                                                string tagsValue2 = ((string)property2.Value);
+                                                serviceTierAdvisorInstance.Tags.Add(tagsKey2, tagsValue2);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken upgradeHintValue = propertiesValue["upgradeHint"];
+                                if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                {
+                                    UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                    propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                    
+                                    JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                    if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                    {
+                                        string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                        upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                    }
+                                    
+                                    JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                    if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                        upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                    }
+                                    
+                                    JToken idValue3 = upgradeHintValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    {
+                                        string idInstance3 = ((string)idValue3);
+                                        upgradeHintInstance.Id = idInstance3;
+                                    }
+                                    
+                                    JToken nameValue3 = upgradeHintValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance3 = ((string)nameValue3);
+                                        upgradeHintInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    JToken typeValue3 = upgradeHintValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance3 = ((string)typeValue3);
+                                        upgradeHintInstance.Type = typeInstance3;
+                                    }
+                                    
+                                    JToken locationValue3 = upgradeHintValue["location"];
+                                    if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance3 = ((string)locationValue3);
+                                        upgradeHintInstance.Location = locationInstance3;
+                                    }
+                                    
+                                    JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                    if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property3 in tagsSequenceElement3)
+                                        {
+                                            string tagsKey3 = ((string)property3.Name);
+                                            string tagsValue3 = ((string)property3.Value);
+                                            upgradeHintInstance.Tags.Add(tagsKey3, tagsValue3);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue4 = responseDoc["id"];
+                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            {
+                                string idInstance4 = ((string)idValue4);
+                                databaseInstance.Id = idInstance4;
+                            }
+                            
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                            {
+                                string nameInstance4 = ((string)nameValue4);
+                                databaseInstance.Name = nameInstance4;
+                            }
+                            
+                            JToken typeValue4 = responseDoc["type"];
+                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                            {
+                                string typeInstance4 = ((string)typeValue4);
+                                databaseInstance.Type = typeInstance4;
+                            }
+                            
+                            JToken locationValue4 = responseDoc["location"];
+                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                            {
+                                string locationInstance4 = ((string)locationValue4);
+                                databaseInstance.Location = locationInstance4;
+                            }
+                            
+                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property4 in tagsSequenceElement4)
+                                {
+                                    string tagsKey4 = ((string)property4.Name);
+                                    string tagsValue4 = ((string)property4.Value);
+                                    databaseInstance.Tags.Add(tagsKey4, tagsValue4);
                                 }
                             }
                         }
@@ -1606,6 +2854,631 @@ namespace Microsoft.Azure.Management.Sql
                     if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns information about an Azure SQL Database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be retrieved.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database request.
+        /// </returns>
+        public async Task<DatabaseGetResponse> GetExpandedAsync(string resourceGroupName, string serverName, string databaseName, string expand, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (expand == null)
+            {
+                throw new ArgumentNullException("expand");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("expand", expand);
+                TracingAdapter.Enter(invocationId, this, "GetExpandedAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("$expand=" + Uri.EscapeDataString(expand));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Database databaseInstance = new Database();
+                            result.Database = databaseInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                DatabaseProperties propertiesInstance = new DatabaseProperties();
+                                databaseInstance.Properties = propertiesInstance;
+                                
+                                JToken collationValue = propertiesValue["collation"];
+                                if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                {
+                                    string collationInstance = ((string)collationValue);
+                                    propertiesInstance.Collation = collationInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
+                                }
+                                
+                                JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
+                                if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                {
+                                    string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
+                                    propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                }
+                                
+                                JToken databaseIdValue = propertiesValue["databaseId"];
+                                if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                {
+                                    string databaseIdInstance = ((string)databaseIdValue);
+                                    propertiesInstance.DatabaseId = databaseIdInstance;
+                                }
+                                
+                                JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                    propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                }
+                                
+                                JToken editionValue = propertiesValue["edition"];
+                                if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                {
+                                    string editionInstance = ((string)editionValue);
+                                    propertiesInstance.Edition = editionInstance;
+                                }
+                                
+                                JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                {
+                                    long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                    propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                }
+                                
+                                JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
+                                if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
+                                    propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
+                                }
+                                
+                                JToken requestedServiceObjectiveNameValue = propertiesValue["requestedServiceObjectiveName"];
+                                if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                    propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                }
+                                
+                                JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                {
+                                    string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                    propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
+                                }
+                                
+                                JToken statusValue = propertiesValue["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                {
+                                    string statusInstance = ((string)statusValue);
+                                    propertiesInstance.Status = statusInstance;
+                                }
+                                
+                                JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                {
+                                    string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                    propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                }
+                                
+                                JToken serviceTierAdvisorsArray = propertiesValue["serviceTierAdvisors"];
+                                if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                    {
+                                        ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                        propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                        
+                                        JToken propertiesValue2 = serviceTierAdvisorsValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                            serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken observationPeriodStartValue = propertiesValue2["observationPeriodStart"];
+                                            if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                            }
+                                            
+                                            JToken observationPeriodEndValue = propertiesValue2["observationPeriodEnd"];
+                                            if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                            }
+                                            
+                                            JToken activeTimeRatioValue = propertiesValue2["activeTimeRatio"];
+                                            if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                            {
+                                                double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                            }
+                                            
+                                            JToken minDtuValue = propertiesValue2["minDtu"];
+                                            if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double minDtuInstance = ((double)minDtuValue);
+                                                propertiesInstance2.MinDtu = minDtuInstance;
+                                            }
+                                            
+                                            JToken avgDtuValue = propertiesValue2["avgDtu"];
+                                            if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double avgDtuInstance = ((double)avgDtuValue);
+                                                propertiesInstance2.AvgDtu = avgDtuInstance;
+                                            }
+                                            
+                                            JToken maxDtuValue = propertiesValue2["maxDtu"];
+                                            if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                            {
+                                                double maxDtuInstance = ((double)maxDtuValue);
+                                                propertiesInstance2.MaxDtu = maxDtuInstance;
+                                            }
+                                            
+                                            JToken maxSizeInGBValue = propertiesValue2["maxSizeInGB"];
+                                            if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                            {
+                                                double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                            }
+                                            
+                                            JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue2["serviceLevelObjectiveUsageMetrics"];
+                                            if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                {
+                                                    SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                    propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                    
+                                                    JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                    if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                        sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                    if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                        sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                    if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                        sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sloUsageMetricInstance.Id = idInstance;
+                                                    }
+                                                    
+                                                    JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance = ((string)nameValue);
+                                                        sloUsageMetricInstance.Name = nameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance = ((string)typeValue);
+                                                        sloUsageMetricInstance.Type = typeInstance;
+                                                    }
+                                                    
+                                                    JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance = ((string)locationValue);
+                                                        sloUsageMetricInstance.Location = locationInstance;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property in tagsSequenceElement)
+                                                        {
+                                                            string tagsKey = ((string)property.Name);
+                                                            string tagsValue = ((string)property.Value);
+                                                            sloUsageMetricInstance.Tags.Add(tagsKey, tagsValue);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveValue = propertiesValue2["currentServiceLevelObjective"];
+                                            if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken currentServiceLevelObjectiveIdValue = propertiesValue2["currentServiceLevelObjectiveId"];
+                                            if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["usageBasedRecommendationServiceLevelObjective"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["usageBasedRecommendationServiceLevelObjectiveId"];
+                                            if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                            if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                            if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue2["overallRecommendationServiceLevelObjective"];
+                                            if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue2["overallRecommendationServiceLevelObjectiveId"];
+                                            if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken confidenceValue = propertiesValue2["confidence"];
+                                            if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                            {
+                                                double confidenceInstance = ((double)confidenceValue);
+                                                propertiesInstance2.Confidence = confidenceInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                        {
+                                            string idInstance2 = ((string)idValue2);
+                                            serviceTierAdvisorInstance.Id = idInstance2;
+                                        }
+                                        
+                                        JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            serviceTierAdvisorInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance2 = ((string)typeValue2);
+                                            serviceTierAdvisorInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            serviceTierAdvisorInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                        if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement2)
+                                            {
+                                                string tagsKey2 = ((string)property2.Name);
+                                                string tagsValue2 = ((string)property2.Value);
+                                                serviceTierAdvisorInstance.Tags.Add(tagsKey2, tagsValue2);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken upgradeHintValue = propertiesValue["upgradeHint"];
+                                if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                {
+                                    UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                    propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                    
+                                    JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                    if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                    {
+                                        string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                        upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                    }
+                                    
+                                    JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                    if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                        upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                    }
+                                    
+                                    JToken idValue3 = upgradeHintValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    {
+                                        string idInstance3 = ((string)idValue3);
+                                        upgradeHintInstance.Id = idInstance3;
+                                    }
+                                    
+                                    JToken nameValue3 = upgradeHintValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance3 = ((string)nameValue3);
+                                        upgradeHintInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    JToken typeValue3 = upgradeHintValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance3 = ((string)typeValue3);
+                                        upgradeHintInstance.Type = typeInstance3;
+                                    }
+                                    
+                                    JToken locationValue3 = upgradeHintValue["location"];
+                                    if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance3 = ((string)locationValue3);
+                                        upgradeHintInstance.Location = locationInstance3;
+                                    }
+                                    
+                                    JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                    if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property3 in tagsSequenceElement3)
+                                        {
+                                            string tagsKey3 = ((string)property3.Name);
+                                            string tagsValue3 = ((string)property3.Value);
+                                            upgradeHintInstance.Tags.Add(tagsKey3, tagsValue3);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue4 = responseDoc["id"];
+                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            {
+                                string idInstance4 = ((string)idValue4);
+                                databaseInstance.Id = idInstance4;
+                            }
+                            
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                            {
+                                string nameInstance4 = ((string)nameValue4);
+                                databaseInstance.Name = nameInstance4;
+                            }
+                            
+                            JToken typeValue4 = responseDoc["type"];
+                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                            {
+                                string typeInstance4 = ((string)typeValue4);
+                                databaseInstance.Type = typeInstance4;
+                            }
+                            
+                            JToken locationValue4 = responseDoc["location"];
+                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                            {
+                                string locationInstance4 = ((string)locationValue4);
+                                databaseInstance.Location = locationInstance4;
+                            }
+                            
+                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property4 in tagsSequenceElement4)
+                                {
+                                    string tagsKey4 = ((string)property4.Name);
+                                    string tagsValue4 = ((string)property4.Value);
+                                    databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -1858,44 +3731,979 @@ namespace Microsoft.Azure.Management.Sql
                                             string elasticPoolNameInstance = ((string)elasticPoolNameValue);
                                             propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
                                         }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        databaseInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        databaseInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        databaseInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        databaseInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
+                                        
+                                        JToken serviceTierAdvisorsArray = propertiesValue["serviceTierAdvisors"];
+                                        if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
                                         {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                            foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                            {
+                                                ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                                propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                                
+                                                JToken propertiesValue2 = serviceTierAdvisorsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                                    serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                                    
+                                                    JToken observationPeriodStartValue = propertiesValue2["observationPeriodStart"];
+                                                    if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                        propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                                    }
+                                                    
+                                                    JToken observationPeriodEndValue = propertiesValue2["observationPeriodEnd"];
+                                                    if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                        propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                                    }
+                                                    
+                                                    JToken activeTimeRatioValue = propertiesValue2["activeTimeRatio"];
+                                                    if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                        propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken minDtuValue = propertiesValue2["minDtu"];
+                                                    if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minDtuInstance = ((double)minDtuValue);
+                                                        propertiesInstance2.MinDtu = minDtuInstance;
+                                                    }
+                                                    
+                                                    JToken avgDtuValue = propertiesValue2["avgDtu"];
+                                                    if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double avgDtuInstance = ((double)avgDtuValue);
+                                                        propertiesInstance2.AvgDtu = avgDtuInstance;
+                                                    }
+                                                    
+                                                    JToken maxDtuValue = propertiesValue2["maxDtu"];
+                                                    if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double maxDtuInstance = ((double)maxDtuValue);
+                                                        propertiesInstance2.MaxDtu = maxDtuInstance;
+                                                    }
+                                                    
+                                                    JToken maxSizeInGBValue = propertiesValue2["maxSizeInGB"];
+                                                    if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                        propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue2["serviceLevelObjectiveUsageMetrics"];
+                                                    if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                        {
+                                                            SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                            propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                            
+                                                            JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                            if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                                sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                            }
+                                                            
+                                                            JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                            if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                            {
+                                                                Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                                sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                            }
+                                                            
+                                                            JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                            if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                            {
+                                                                double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                                sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                            }
+                                                            
+                                                            JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance = ((string)idValue);
+                                                                sloUsageMetricInstance.Id = idInstance;
+                                                            }
+                                                            
+                                                            JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance = ((string)nameValue);
+                                                                sloUsageMetricInstance.Name = nameInstance;
+                                                            }
+                                                            
+                                                            JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance = ((string)typeValue);
+                                                                sloUsageMetricInstance.Type = typeInstance;
+                                                            }
+                                                            
+                                                            JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                            {
+                                                                string locationInstance = ((string)locationValue);
+                                                                sloUsageMetricInstance.Location = locationInstance;
+                                                            }
+                                                            
+                                                            JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property in tagsSequenceElement)
+                                                                {
+                                                                    string tagsKey = ((string)property.Name);
+                                                                    string tagsValue = ((string)property.Value);
+                                                                    sloUsageMetricInstance.Tags.Add(tagsKey, tagsValue);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken currentServiceLevelObjectiveValue = propertiesValue2["currentServiceLevelObjective"];
+                                                    if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                        propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken currentServiceLevelObjectiveIdValue = propertiesValue2["currentServiceLevelObjectiveId"];
+                                                    if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["usageBasedRecommendationServiceLevelObjective"];
+                                                    if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["usageBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                                    if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                                    if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue2["overallRecommendationServiceLevelObjective"];
+                                                    if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue2["overallRecommendationServiceLevelObjectiveId"];
+                                                    if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken confidenceValue = propertiesValue2["confidence"];
+                                                    if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        double confidenceInstance = ((double)confidenceValue);
+                                                        propertiesInstance2.Confidence = confidenceInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    serviceTierAdvisorInstance.Id = idInstance2;
+                                                }
+                                                
+                                                JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    serviceTierAdvisorInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    serviceTierAdvisorInstance.Type = typeInstance2;
+                                                }
+                                                
+                                                JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                                if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance2 = ((string)locationValue2);
+                                                    serviceTierAdvisorInstance.Location = locationInstance2;
+                                                }
+                                                
+                                                JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                                if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in tagsSequenceElement2)
+                                                    {
+                                                        string tagsKey2 = ((string)property2.Name);
+                                                        string tagsValue2 = ((string)property2.Value);
+                                                        serviceTierAdvisorInstance.Tags.Add(tagsKey2, tagsValue2);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken upgradeHintValue = propertiesValue["upgradeHint"];
+                                        if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                        {
+                                            UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                            propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                            
+                                            JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                            if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                                upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                            if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                                upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken idValue3 = upgradeHintValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            {
+                                                string idInstance3 = ((string)idValue3);
+                                                upgradeHintInstance.Id = idInstance3;
+                                            }
+                                            
+                                            JToken nameValue3 = upgradeHintValue["name"];
+                                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance3 = ((string)nameValue3);
+                                                upgradeHintInstance.Name = nameInstance3;
+                                            }
+                                            
+                                            JToken typeValue3 = upgradeHintValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance3 = ((string)typeValue3);
+                                                upgradeHintInstance.Type = typeInstance3;
+                                            }
+                                            
+                                            JToken locationValue3 = upgradeHintValue["location"];
+                                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance3 = ((string)locationValue3);
+                                                upgradeHintInstance.Location = locationInstance3;
+                                            }
+                                            
+                                            JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                            if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property3 in tagsSequenceElement3)
+                                                {
+                                                    string tagsKey3 = ((string)property3.Name);
+                                                    string tagsValue3 = ((string)property3.Value);
+                                                    upgradeHintInstance.Tags.Add(tagsKey3, tagsValue3);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue4 = valueValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        databaseInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken nameValue4 = valueValue["name"];
+                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance4 = ((string)nameValue4);
+                                        databaseInstance.Name = nameInstance4;
+                                    }
+                                    
+                                    JToken typeValue4 = valueValue["type"];
+                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance4 = ((string)typeValue4);
+                                        databaseInstance.Type = typeInstance4;
+                                    }
+                                    
+                                    JToken locationValue4 = valueValue["location"];
+                                    if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance4 = ((string)locationValue4);
+                                        databaseInstance.Location = locationInstance4;
+                                    }
+                                    
+                                    JToken tagsSequenceElement4 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property4 in tagsSequenceElement4)
+                                        {
+                                            string tagsKey4 = ((string)property4.Name);
+                                            string tagsValue4 = ((string)property4.Value);
+                                            databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Databases.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database request.
+        /// </returns>
+        public async Task<DatabaseListResponse> ListExpandedAsync(string resourceGroupName, string serverName, string expand, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (expand == null)
+            {
+                throw new ArgumentNullException("expand");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("expand", expand);
+                TracingAdapter.Enter(invocationId, this, "ListExpandedAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("$expand=" + Uri.EscapeDataString(expand));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Database databaseInstance = new Database();
+                                    result.Databases.Add(databaseInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        DatabaseProperties propertiesInstance = new DatabaseProperties();
+                                        databaseInstance.Properties = propertiesInstance;
+                                        
+                                        JToken collationValue = propertiesValue["collation"];
+                                        if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                        {
+                                            string collationInstance = ((string)collationValue);
+                                            propertiesInstance.Collation = collationInstance;
+                                        }
+                                        
+                                        JToken creationDateValue = propertiesValue["creationDate"];
+                                        if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                            propertiesInstance.CreationDate = creationDateInstance;
+                                        }
+                                        
+                                        JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
+                                        if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                        {
+                                            string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
+                                            propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                        }
+                                        
+                                        JToken databaseIdValue = propertiesValue["databaseId"];
+                                        if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                        {
+                                            string databaseIdInstance = ((string)databaseIdValue);
+                                            propertiesInstance.DatabaseId = databaseIdInstance;
+                                        }
+                                        
+                                        JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                        if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                            propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                        }
+                                        
+                                        JToken editionValue = propertiesValue["edition"];
+                                        if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                        {
+                                            string editionInstance = ((string)editionValue);
+                                            propertiesInstance.Edition = editionInstance;
+                                        }
+                                        
+                                        JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                        if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                        {
+                                            long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                            propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                        }
+                                        
+                                        JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
+                                        if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
+                                        {
+                                            string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
+                                            propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
+                                        }
+                                        
+                                        JToken requestedServiceObjectiveNameValue = propertiesValue["requestedServiceObjectiveName"];
+                                        if (requestedServiceObjectiveNameValue != null && requestedServiceObjectiveNameValue.Type != JTokenType.Null)
+                                        {
+                                            string requestedServiceObjectiveNameInstance = ((string)requestedServiceObjectiveNameValue);
+                                            propertiesInstance.RequestedServiceObjectiveName = requestedServiceObjectiveNameInstance;
+                                        }
+                                        
+                                        JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                        if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                            propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            propertiesInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                        if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                        {
+                                            string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                            propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                        }
+                                        
+                                        JToken serviceTierAdvisorsArray = propertiesValue["serviceTierAdvisors"];
+                                        if (serviceTierAdvisorsArray != null && serviceTierAdvisorsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken serviceTierAdvisorsValue in ((JArray)serviceTierAdvisorsArray))
+                                            {
+                                                ServiceTierAdvisor serviceTierAdvisorInstance = new ServiceTierAdvisor();
+                                                propertiesInstance.ServiceTierAdvisors.Add(serviceTierAdvisorInstance);
+                                                
+                                                JToken propertiesValue2 = serviceTierAdvisorsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    ServiceTierAdvisorProperties propertiesInstance2 = new ServiceTierAdvisorProperties();
+                                                    serviceTierAdvisorInstance.Properties = propertiesInstance2;
+                                                    
+                                                    JToken observationPeriodStartValue = propertiesValue2["observationPeriodStart"];
+                                                    if (observationPeriodStartValue != null && observationPeriodStartValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime observationPeriodStartInstance = ((DateTime)observationPeriodStartValue);
+                                                        propertiesInstance2.ObservationPeriodStart = observationPeriodStartInstance;
+                                                    }
+                                                    
+                                                    JToken observationPeriodEndValue = propertiesValue2["observationPeriodEnd"];
+                                                    if (observationPeriodEndValue != null && observationPeriodEndValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime observationPeriodEndInstance = ((DateTime)observationPeriodEndValue);
+                                                        propertiesInstance2.ObservationPeriodEnd = observationPeriodEndInstance;
+                                                    }
+                                                    
+                                                    JToken activeTimeRatioValue = propertiesValue2["activeTimeRatio"];
+                                                    if (activeTimeRatioValue != null && activeTimeRatioValue.Type != JTokenType.Null)
+                                                    {
+                                                        double activeTimeRatioInstance = ((double)activeTimeRatioValue);
+                                                        propertiesInstance2.ActiveTimeRatio = activeTimeRatioInstance;
+                                                    }
+                                                    
+                                                    JToken minDtuValue = propertiesValue2["minDtu"];
+                                                    if (minDtuValue != null && minDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minDtuInstance = ((double)minDtuValue);
+                                                        propertiesInstance2.MinDtu = minDtuInstance;
+                                                    }
+                                                    
+                                                    JToken avgDtuValue = propertiesValue2["avgDtu"];
+                                                    if (avgDtuValue != null && avgDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double avgDtuInstance = ((double)avgDtuValue);
+                                                        propertiesInstance2.AvgDtu = avgDtuInstance;
+                                                    }
+                                                    
+                                                    JToken maxDtuValue = propertiesValue2["maxDtu"];
+                                                    if (maxDtuValue != null && maxDtuValue.Type != JTokenType.Null)
+                                                    {
+                                                        double maxDtuInstance = ((double)maxDtuValue);
+                                                        propertiesInstance2.MaxDtu = maxDtuInstance;
+                                                    }
+                                                    
+                                                    JToken maxSizeInGBValue = propertiesValue2["maxSizeInGB"];
+                                                    if (maxSizeInGBValue != null && maxSizeInGBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double maxSizeInGBInstance = ((double)maxSizeInGBValue);
+                                                        propertiesInstance2.MaxSizeInGB = maxSizeInGBInstance;
+                                                    }
+                                                    
+                                                    JToken serviceLevelObjectiveUsageMetricsArray = propertiesValue2["serviceLevelObjectiveUsageMetrics"];
+                                                    if (serviceLevelObjectiveUsageMetricsArray != null && serviceLevelObjectiveUsageMetricsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken serviceLevelObjectiveUsageMetricsValue in ((JArray)serviceLevelObjectiveUsageMetricsArray))
+                                                        {
+                                                            SloUsageMetric sloUsageMetricInstance = new SloUsageMetric();
+                                                            propertiesInstance2.ServiceLevelObjectiveUsageMetrics.Add(sloUsageMetricInstance);
+                                                            
+                                                            JToken serviceLevelObjectiveValue2 = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjective"];
+                                                            if (serviceLevelObjectiveValue2 != null && serviceLevelObjectiveValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string serviceLevelObjectiveInstance2 = ((string)serviceLevelObjectiveValue2);
+                                                                sloUsageMetricInstance.ServiceLevelObjective = serviceLevelObjectiveInstance2;
+                                                            }
+                                                            
+                                                            JToken serviceLevelObjectiveIdValue = serviceLevelObjectiveUsageMetricsValue["serviceLevelObjectiveId"];
+                                                            if (serviceLevelObjectiveIdValue != null && serviceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                            {
+                                                                Guid serviceLevelObjectiveIdInstance = Guid.Parse(((string)serviceLevelObjectiveIdValue));
+                                                                sloUsageMetricInstance.ServiceLevelObjectiveId = serviceLevelObjectiveIdInstance;
+                                                            }
+                                                            
+                                                            JToken inRangeTimeRatioValue = serviceLevelObjectiveUsageMetricsValue["inRangeTimeRatio"];
+                                                            if (inRangeTimeRatioValue != null && inRangeTimeRatioValue.Type != JTokenType.Null)
+                                                            {
+                                                                double inRangeTimeRatioInstance = ((double)inRangeTimeRatioValue);
+                                                                sloUsageMetricInstance.InRangeTimeRatio = inRangeTimeRatioInstance;
+                                                            }
+                                                            
+                                                            JToken idValue = serviceLevelObjectiveUsageMetricsValue["id"];
+                                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance = ((string)idValue);
+                                                                sloUsageMetricInstance.Id = idInstance;
+                                                            }
+                                                            
+                                                            JToken nameValue = serviceLevelObjectiveUsageMetricsValue["name"];
+                                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance = ((string)nameValue);
+                                                                sloUsageMetricInstance.Name = nameInstance;
+                                                            }
+                                                            
+                                                            JToken typeValue = serviceLevelObjectiveUsageMetricsValue["type"];
+                                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance = ((string)typeValue);
+                                                                sloUsageMetricInstance.Type = typeInstance;
+                                                            }
+                                                            
+                                                            JToken locationValue = serviceLevelObjectiveUsageMetricsValue["location"];
+                                                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                            {
+                                                                string locationInstance = ((string)locationValue);
+                                                                sloUsageMetricInstance.Location = locationInstance;
+                                                            }
+                                                            
+                                                            JToken tagsSequenceElement = ((JToken)serviceLevelObjectiveUsageMetricsValue["tags"]);
+                                                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property in tagsSequenceElement)
+                                                                {
+                                                                    string tagsKey = ((string)property.Name);
+                                                                    string tagsValue = ((string)property.Value);
+                                                                    sloUsageMetricInstance.Tags.Add(tagsKey, tagsValue);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken currentServiceLevelObjectiveValue = propertiesValue2["currentServiceLevelObjective"];
+                                                    if (currentServiceLevelObjectiveValue != null && currentServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string currentServiceLevelObjectiveInstance = ((string)currentServiceLevelObjectiveValue);
+                                                        propertiesInstance2.CurrentServiceLevelObjective = currentServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken currentServiceLevelObjectiveIdValue = propertiesValue2["currentServiceLevelObjectiveId"];
+                                                    if (currentServiceLevelObjectiveIdValue != null && currentServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid currentServiceLevelObjectiveIdInstance = Guid.Parse(((string)currentServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.CurrentServiceLevelObjectiveId = currentServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken usageBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["usageBasedRecommendationServiceLevelObjective"];
+                                                    if (usageBasedRecommendationServiceLevelObjectiveValue != null && usageBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string usageBasedRecommendationServiceLevelObjectiveInstance = ((string)usageBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.UsageBasedRecommendationServiceLevelObjective = usageBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken usageBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["usageBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (usageBasedRecommendationServiceLevelObjectiveIdValue != null && usageBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid usageBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)usageBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.UsageBasedRecommendationServiceLevelObjectiveId = usageBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken databaseSizeBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjective"];
+                                                    if (databaseSizeBasedRecommendationServiceLevelObjectiveValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string databaseSizeBasedRecommendationServiceLevelObjectiveInstance = ((string)databaseSizeBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjective = databaseSizeBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken databaseSizeBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["databaseSizeBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (databaseSizeBasedRecommendationServiceLevelObjectiveIdValue != null && databaseSizeBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)databaseSizeBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.DatabaseSizeBasedRecommendationServiceLevelObjectiveId = databaseSizeBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken disasterPlanBasedRecommendationServiceLevelObjectiveValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjective"];
+                                                    if (disasterPlanBasedRecommendationServiceLevelObjectiveValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string disasterPlanBasedRecommendationServiceLevelObjectiveInstance = ((string)disasterPlanBasedRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjective = disasterPlanBasedRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken disasterPlanBasedRecommendationServiceLevelObjectiveIdValue = propertiesValue2["disasterPlanBasedRecommendationServiceLevelObjectiveId"];
+                                                    if (disasterPlanBasedRecommendationServiceLevelObjectiveIdValue != null && disasterPlanBasedRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)disasterPlanBasedRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.DisasterPlanBasedRecommendationServiceLevelObjectiveId = disasterPlanBasedRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken overallRecommendationServiceLevelObjectiveValue = propertiesValue2["overallRecommendationServiceLevelObjective"];
+                                                    if (overallRecommendationServiceLevelObjectiveValue != null && overallRecommendationServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        string overallRecommendationServiceLevelObjectiveInstance = ((string)overallRecommendationServiceLevelObjectiveValue);
+                                                        propertiesInstance2.OverallRecommendationServiceLevelObjective = overallRecommendationServiceLevelObjectiveInstance;
+                                                    }
+                                                    
+                                                    JToken overallRecommendationServiceLevelObjectiveIdValue = propertiesValue2["overallRecommendationServiceLevelObjectiveId"];
+                                                    if (overallRecommendationServiceLevelObjectiveIdValue != null && overallRecommendationServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid overallRecommendationServiceLevelObjectiveIdInstance = Guid.Parse(((string)overallRecommendationServiceLevelObjectiveIdValue));
+                                                        propertiesInstance2.OverallRecommendationServiceLevelObjectiveId = overallRecommendationServiceLevelObjectiveIdInstance;
+                                                    }
+                                                    
+                                                    JToken confidenceValue = propertiesValue2["confidence"];
+                                                    if (confidenceValue != null && confidenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        double confidenceInstance = ((double)confidenceValue);
+                                                        propertiesInstance2.Confidence = confidenceInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken idValue2 = serviceTierAdvisorsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    serviceTierAdvisorInstance.Id = idInstance2;
+                                                }
+                                                
+                                                JToken nameValue2 = serviceTierAdvisorsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    serviceTierAdvisorInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken typeValue2 = serviceTierAdvisorsValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    serviceTierAdvisorInstance.Type = typeInstance2;
+                                                }
+                                                
+                                                JToken locationValue2 = serviceTierAdvisorsValue["location"];
+                                                if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance2 = ((string)locationValue2);
+                                                    serviceTierAdvisorInstance.Location = locationInstance2;
+                                                }
+                                                
+                                                JToken tagsSequenceElement2 = ((JToken)serviceTierAdvisorsValue["tags"]);
+                                                if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in tagsSequenceElement2)
+                                                    {
+                                                        string tagsKey2 = ((string)property2.Name);
+                                                        string tagsValue2 = ((string)property2.Value);
+                                                        serviceTierAdvisorInstance.Tags.Add(tagsKey2, tagsValue2);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken upgradeHintValue = propertiesValue["upgradeHint"];
+                                        if (upgradeHintValue != null && upgradeHintValue.Type != JTokenType.Null)
+                                        {
+                                            UpgradeHint upgradeHintInstance = new UpgradeHint();
+                                            propertiesInstance.UpgradeHint = upgradeHintInstance;
+                                            
+                                            JToken targetServiceLevelObjectiveValue = upgradeHintValue["targetServiceLevelObjective"];
+                                            if (targetServiceLevelObjectiveValue != null && targetServiceLevelObjectiveValue.Type != JTokenType.Null)
+                                            {
+                                                string targetServiceLevelObjectiveInstance = ((string)targetServiceLevelObjectiveValue);
+                                                upgradeHintInstance.TargetServiceLevelObjective = targetServiceLevelObjectiveInstance;
+                                            }
+                                            
+                                            JToken targetServiceLevelObjectiveIdValue = upgradeHintValue["targetServiceLevelObjectiveId"];
+                                            if (targetServiceLevelObjectiveIdValue != null && targetServiceLevelObjectiveIdValue.Type != JTokenType.Null)
+                                            {
+                                                Guid targetServiceLevelObjectiveIdInstance = Guid.Parse(((string)targetServiceLevelObjectiveIdValue));
+                                                upgradeHintInstance.TargetServiceLevelObjectiveId = targetServiceLevelObjectiveIdInstance;
+                                            }
+                                            
+                                            JToken idValue3 = upgradeHintValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            {
+                                                string idInstance3 = ((string)idValue3);
+                                                upgradeHintInstance.Id = idInstance3;
+                                            }
+                                            
+                                            JToken nameValue3 = upgradeHintValue["name"];
+                                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance3 = ((string)nameValue3);
+                                                upgradeHintInstance.Name = nameInstance3;
+                                            }
+                                            
+                                            JToken typeValue3 = upgradeHintValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance3 = ((string)typeValue3);
+                                                upgradeHintInstance.Type = typeInstance3;
+                                            }
+                                            
+                                            JToken locationValue3 = upgradeHintValue["location"];
+                                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance3 = ((string)locationValue3);
+                                                upgradeHintInstance.Location = locationInstance3;
+                                            }
+                                            
+                                            JToken tagsSequenceElement3 = ((JToken)upgradeHintValue["tags"]);
+                                            if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property3 in tagsSequenceElement3)
+                                                {
+                                                    string tagsKey3 = ((string)property3.Name);
+                                                    string tagsValue3 = ((string)property3.Value);
+                                                    upgradeHintInstance.Tags.Add(tagsKey3, tagsValue3);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue4 = valueValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        databaseInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken nameValue4 = valueValue["name"];
+                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance4 = ((string)nameValue4);
+                                        databaseInstance.Name = nameInstance4;
+                                    }
+                                    
+                                    JToken typeValue4 = valueValue["type"];
+                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance4 = ((string)typeValue4);
+                                        databaseInstance.Type = typeInstance4;
+                                    }
+                                    
+                                    JToken locationValue4 = valueValue["location"];
+                                    if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance4 = ((string)locationValue4);
+                                        databaseInstance.Location = locationInstance4;
+                                    }
+                                    
+                                    JToken tagsSequenceElement4 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property4 in tagsSequenceElement4)
+                                        {
+                                            string tagsKey4 = ((string)property4.Name);
+                                            string tagsValue4 = ((string)property4.Value);
+                                            databaseInstance.Tags.Add(tagsKey4, tagsValue4);
                                         }
                                     }
                                 }

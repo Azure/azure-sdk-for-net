@@ -275,6 +275,66 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Returns information about Azure SQL Recommended Elastic Pools.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IRecommendedElasticPoolOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Recommended Serve belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which Azure
+        /// SQL Recommended Elastic Pools are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Recommended Elastic
+        /// Pool request.
+        /// </returns>
+        public static RecommendedElasticPoolListResponse ListExpanded(this IRecommendedElasticPoolOperations operations, string resourceGroupName, string serverName, string expand)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecommendedElasticPoolOperations)s).ListExpandedAsync(resourceGroupName, serverName, expand);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Recommended Elastic Pools.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IRecommendedElasticPoolOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Recommended Serve belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which Azure
+        /// SQL Recommended Elastic Pools are hosted.
+        /// </param>
+        /// <param name='expand'>
+        /// Required. The comma separated list of child objects that we want to
+        /// expand on in response.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Recommended Elastic
+        /// Pool request.
+        /// </returns>
+        public static Task<RecommendedElasticPoolListResponse> ListExpandedAsync(this IRecommendedElasticPoolOperations operations, string resourceGroupName, string serverName, string expand)
+        {
+            return operations.ListExpandedAsync(resourceGroupName, serverName, expand, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns information about an recommended elastic pool metrics.
         /// </summary>
         /// <param name='operations'>

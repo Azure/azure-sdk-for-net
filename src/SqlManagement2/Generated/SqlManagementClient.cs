@@ -187,6 +187,16 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._servers; }
         }
         
+        private IServerUpgradeOperations _serverUpgrades;
+        
+        /// <summary>
+        /// Represents all the operations for Azure SQL Database Server Upgrade
+        /// </summary>
+        public virtual IServerUpgradeOperations ServerUpgrades
+        {
+            get { return this._serverUpgrades; }
+        }
+        
         private IServiceObjectiveOperations _serviceObjectives;
         
         /// <summary>
@@ -197,6 +207,29 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServiceObjectiveOperations ServiceObjectives
         {
             get { return this._serviceObjectives; }
+        }
+        
+        private IServiceTierAdvisorOperations _serviceTierAdvisors;
+        
+        /// <summary>
+        /// Represents all the operations for operating on service tier
+        /// advisors.  Contains operations to: Retrieve.
+        /// </summary>
+        public virtual IServiceTierAdvisorOperations ServiceTierAdvisors
+        {
+            get { return this._serviceTierAdvisors; }
+        }
+        
+        private ITransparentDataEncryptionOperations _transparentDataEncryption;
+        
+        /// <summary>
+        /// Represents all the operations of Azure SQL Database Transparent
+        /// Data Encryption.  Contains operations to: Retrieve, and Update
+        /// Transparent Data Encryption.
+        /// </summary>
+        public virtual ITransparentDataEncryptionOperations TransparentDataEncryption
+        {
+            get { return this._transparentDataEncryption; }
         }
         
         /// <summary>
@@ -213,7 +246,10 @@ namespace Microsoft.Azure.Management.Sql
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
+            this._serverUpgrades = new ServerUpgradeOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
+            this._serviceTierAdvisors = new ServiceTierAdvisorOperations(this);
+            this._transparentDataEncryption = new TransparentDataEncryptionOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -287,7 +323,10 @@ namespace Microsoft.Azure.Management.Sql
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
+            this._serverUpgrades = new ServerUpgradeOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
+            this._serviceTierAdvisors = new ServiceTierAdvisorOperations(this);
+            this._transparentDataEncryption = new TransparentDataEncryptionOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

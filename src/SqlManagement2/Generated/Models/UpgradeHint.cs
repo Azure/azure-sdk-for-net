@@ -20,61 +20,58 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    public partial class CreateUpdateBase
+    /// <summary>
+    /// Represents a Upgrade Hint.
+    /// </summary>
+    public partial class UpgradeHint : ResourceBaseExtended
     {
-        private string _location;
+        private string _targetServiceLevelObjective;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Optional. Gets or sets targetServiceLevelObjective for upgrade hint.
         /// </summary>
-        public string Location
+        public string TargetServiceLevelObjective
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._targetServiceLevelObjective; }
+            set { this._targetServiceLevelObjective = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private System.Guid? _targetServiceLevelObjectiveId;
         
         /// <summary>
-        /// Required. Gets or sets the tags associated with the request.
+        /// Optional. Gets or sets targetServiceLevelObjectiveId for upgrade
+        /// hint.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public System.Guid? TargetServiceLevelObjectiveId
         {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CreateUpdateBase class.
-        /// </summary>
-        public CreateUpdateBase()
-        {
-            this.Tags = new LazyDictionary<string, string>();
+            get { return this._targetServiceLevelObjectiveId; }
+            set { this._targetServiceLevelObjectiveId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CreateUpdateBase class with
-        /// required arguments.
+        /// Initializes a new instance of the UpgradeHint class.
         /// </summary>
-        public CreateUpdateBase(string location, IDictionary<string, string> tags)
+        public UpgradeHint()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UpgradeHint class with required
+        /// arguments.
+        /// </summary>
+        public UpgradeHint(string location)
             : this()
         {
             if (location == null)
             {
                 throw new ArgumentNullException("location");
             }
-            if (tags == null)
-            {
-                throw new ArgumentNullException("tags");
-            }
             this.Location = location;
-            this.Tags = tags;
         }
     }
 }
