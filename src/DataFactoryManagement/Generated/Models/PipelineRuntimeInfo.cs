@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.DataFactories.Core.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// Pipeline runtime information.

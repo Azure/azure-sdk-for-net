@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.DataFactories.Core.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// Parameters specifying the data factory linkedService raw json content

@@ -22,19 +22,19 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.DataFactories.Core.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// Parameters specifying the raw json content for creating or updating a
-    /// table.
+    /// pipeline.
     /// </summary>
-    public partial class TableCreateOrUpdateWithRawJsonContentParameters
+    public partial class PipelineCreateOrUpdateWithRawJsonContentParameters
     {
         private string _content;
         
         /// <summary>
         /// Required. The user specified raw json content for creating or
-        /// updating a table.
+        /// updating a pipeline.
         /// </summary>
         public string Content
         {
@@ -44,18 +44,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// TableCreateOrUpdateWithRawJsonContentParameters class.
+        /// PipelineCreateOrUpdateWithRawJsonContentParameters class.
         /// </summary>
-        public TableCreateOrUpdateWithRawJsonContentParameters()
+        public PipelineCreateOrUpdateWithRawJsonContentParameters()
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// TableCreateOrUpdateWithRawJsonContentParameters class with
+        /// PipelineCreateOrUpdateWithRawJsonContentParameters class with
         /// required arguments.
         /// </summary>
-        public TableCreateOrUpdateWithRawJsonContentParameters(string content)
+        public PipelineCreateOrUpdateWithRawJsonContentParameters(string content)
             : this()
         {
             if (content == null)

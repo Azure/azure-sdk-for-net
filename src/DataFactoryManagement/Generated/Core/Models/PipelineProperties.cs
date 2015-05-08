@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 using Microsoft.Azure.Management.DataFactories.Core.Models;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Core.Models
 {
