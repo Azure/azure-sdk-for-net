@@ -155,16 +155,22 @@
   </Target>
 
    <Target Name="Test">
+     <PropertyGroup>
+       <!--Get service name to use as test assemblies filter-->
+       <!--From 'ServiceManagement\Storage', get '\Storage' -->
+       <TestPartialName Condition=" '$(BuildSpecifiedLibrary)' == 'true' ">$(Scope.Substring($(Scope.IndexOf(`\`))))</TestPartialName>
+       <!--From '\Storage', get 'Storage'-->
+       <TestPartialName Condition=" '$(BuildSpecifiedLibrary)' == 'true' ">$(TestPartialName.Substring(1))</TestPartialName>
+     </PropertyGroup>
     <ItemGroup>
       <!--TODO: make sure this reliably includes all tests for common, authentication, and individual maml projects-->
       <TestDlls Include=".\src\**\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
-      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' != 'All' " />
+      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\*-$(Configuration)\*$(TestPartialName)*.Tests.dll" Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
     <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
         ContinueOnError="false"/>
-    <!--<xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\xunit.results.html" ContinueOnError="false" />-->
   </Target>
   
   <PropertyGroup>
