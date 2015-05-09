@@ -158,7 +158,7 @@
     <ItemGroup>
       <!--TODO: make sure this reliably includes all tests for common, authentication, and individual maml projects-->
       <TestDlls Include=".\src\**\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
-      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' != 'All' " />
+      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\**\$(Scope)*.Tests.dll" Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
