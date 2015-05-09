@@ -6,7 +6,7 @@
     <AssemblyName>Compute.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="..\..\..\..\tools\Test.Dependencies.target" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="ComputeOperationTests.cs" />
     <Compile Include="IntegrationTests.Compute.cs" />
@@ -146,7 +146,7 @@
       <Project>{77f0bec3-fbcd-43a4-af45-8a55846a6897}</Project>
       <Name>StorageManagement</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TestDependencies\TestDependencies.csproj">
+    <ProjectReference Include="$(LibrarySourceFolder)\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
     </ProjectReference>

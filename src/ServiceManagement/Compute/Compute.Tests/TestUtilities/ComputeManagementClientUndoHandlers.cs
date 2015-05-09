@@ -377,7 +377,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
         /// <param name="client">The IVirtualMachineOperations instance used for the operation</param>
         /// <param name="method">The name of the virtual machine method</param>
         /// <param name="parameters">The parameters passed to the operation</param>
-        /// <param name="undoAction">The undo action for the given operation, if any</param>
+        /// <param name="undoFunction">The undo action for the given operation, if any</param>
         /// <returns>True if an undo operation is found, otherwise false</returns>
         protected override bool DoLookup(IServiceOperations<ComputeManagementClient> client, string method, IDictionary<string, object> parameters, out Action undoFunction)
         {

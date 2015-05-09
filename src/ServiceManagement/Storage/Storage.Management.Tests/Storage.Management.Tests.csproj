@@ -32,7 +32,7 @@
       <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
       <Name>Management</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+    <ProjectReference Include="$(LibrarySourceFolder)\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
     </ProjectReference>

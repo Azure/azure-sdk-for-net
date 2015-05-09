@@ -10,6 +10,7 @@
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>fe5c26fd</NuGetPackageImportStamp>
+    <SDKTestProject>true</SDKTestProject>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
