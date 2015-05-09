@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\Tools\Test.Dependencies.target" Condition="Exists('..\..\Tools\Test.Dependencies.target')" />
   <PropertyGroup>
     <ProjectGuid>{3C768CCE-36A0-433E-8280-31979756CC07}</ProjectGuid>
     <RootNamespace>Compute2.Tests</RootNamespace>
     <AssemblyName>Compute2.Tests</AssemblyName>
   </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
-    <Compile Include="Generated\ComputeManagementClient.cs" />
     <Compile Include="Helpers\ApiConstants.cs" />
     <Compile Include="Helpers\ComputeManagementTestUtilities.cs" />
     <Compile Include="Helpers\Helpers.cs" />
@@ -31,7 +30,6 @@
     <Compile Include="ScenarioTests\OSProfileTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenerateCode.props" />
     <None Include="SessionRecords\Compute.Tests.AvailabilitySetTests\TestOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -109,22 +107,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hyak.xml">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Network2\Network2.Tests\Network2.Tests.csproj">
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Network\Network.Tests\Network.Tests.csproj">
       <Project>{7bc81d11-fb6a-411b-b5ca-3a3ec263b258}</Project>
       <Name>Network2.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Resources\Resources.Tests\Resources.Tests.csproj">
+    <ProjectReference Include="..\..\Network\NetworkManagement\NetworkManagement.csproj">
+      <Project>{4500a2d3-c087-4fbc-bebd-e630cd728788}</Project>
+      <Name>NetworkManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
+      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
+      <Name>ResourceManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Resource\Resources.Tests\Resources.Tests.csproj">
       <Project>{be9d7270-27cb-45eb-bd26-fea68087e835}</Project>
       <Name>Resources.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Storage2\Storage2.Tests\Storage2.Tests.csproj">
+    <ProjectReference Include="..\..\Storage\Storage.Tests\Storage.Tests.csproj">
       <Project>{d36d8f3a-574a-466f-b365-6397e6276ba9}</Project>
       <Name>Storage2.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
+      <Project>{a7f47b7f-319b-411f-bf33-f57899a430cb}</Project>
+      <Name>StorageManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ComputeManagement\ComputeManagement.csproj">
+      <Project>{4f41c7a2-7df6-4cc1-9f2d-66e8f05c2331}</Project>
+      <Name>ComputeManagement</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

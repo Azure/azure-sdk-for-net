@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ComputeManagement2\**\*.cs" target="src" />
+    <file src="ResourceManagement\Compute\ComputeManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.xml" target="lib\portable-net45+sl50+wp80+win" />

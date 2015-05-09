@@ -109,7 +109,7 @@ namespace Compute.Tests
 
                 return storageAccountOutput;
             }
-            catch(Exception ex)
+            catch
             {
                 var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rgName);
                 Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
@@ -173,7 +173,7 @@ namespace Compute.Tests
 
                 return getResponse.VirtualMachine;
             }
-            catch(Exception ex)
+            catch
             {
                 var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rgName);
                 Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
