@@ -6,7 +6,7 @@
     <AssemblyName>Management.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="..\..\..\..\tools\Test.Dependencies.target" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ManagementReproTests.cs" />

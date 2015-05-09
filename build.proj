@@ -55,6 +55,7 @@
     <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
     <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+    <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
     <AuthenticationSolution>AzureAuthentication.sln</AuthenticationSolution>
@@ -153,8 +154,7 @@
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
-  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" />
-  <Target Name="Test">
+   <Target Name="Test">
     <ItemGroup>
       <!--TODO: make sure this reliably includes all tests for common, authentication, and individual maml projects-->
       <TestDlls Include=".\src\**\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
@@ -162,7 +162,9 @@
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
-    <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\xunit.results.html" ContinueOnError="false" />
+    <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
+        ContinueOnError="false"/>
+    <!--<xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\xunit.results.html" ContinueOnError="false" />-->
   </Target>
   
   <PropertyGroup>
@@ -242,7 +244,7 @@
 
   <Target Name="RestoreNugetPackages">
     <PropertyGroup>
-      <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryRoot)packages</NuGetRestoreConfigSwitch>
+      <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"  
           Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
@@ -252,6 +254,7 @@
           Condition=" '$(Scope)' == 'All' " />
     <Exec Command="$(NuGetCommand) restore @(SpecifiedLibrary) $(NuGetRestoreConfigSwitch)"
           Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
+    <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
 
   <!--Smoke test the packages under the output dir-->
