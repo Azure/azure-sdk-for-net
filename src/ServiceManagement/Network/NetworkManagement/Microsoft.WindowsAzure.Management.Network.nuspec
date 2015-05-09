@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="NetworkManagement\**\*.cs" target="src" />
+    <file src="ServiceManagement\Network\NetworkManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Network.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Network.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Network.xml" target="lib\portable-net45+wp8+wpa81+win" />

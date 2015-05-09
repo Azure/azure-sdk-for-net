@@ -4,8 +4,8 @@
     <ProjectGuid>{BE9D7270-27CB-45EB-BD26-FEA68087E835}</ProjectGuid>
     <AssemblyName>Resource.Tests</AssemblyName>
   </PropertyGroup>
-  <Import Project="..\..\..\tools\Library.Settings.targets" />
-  <Import Project="..\..\..\tools\Test.Dependencies.target" />
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="InMemoryTests\FeatureTests.InMemory.cs" />
     <Compile Include="ScenarioTests\TagTests.ScenarioTests.cs" />
@@ -145,7 +145,7 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TestDependencies\TestDependencies.csproj">
+    <ProjectReference Include="$(LibrarySourceFolder)\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
     </ProjectReference>

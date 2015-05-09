@@ -1,0 +1,37 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/routetables/?detailLevel=MockDetailLevel",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">&lt;?xml version=\"1.0\" encoding=\"utf-8\"?gt;\r\n&lt;!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"&gt;\r\n&lt;html xmlns=\"http://www.w3.org/1999/xhtml\"&gt;\r\n  &lt;head&gt;\r\n    &lt;title&gt;Service&lt;/title&gt;\r\n    &lt;style&gt;BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; } #content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; } A:link { color: #336699; font-weight: bold; text-decoration: underline; } A:visited { color: #6699cc; font-weight: bold; text-decoration: underline; } A:active { color: #336699; font-weight: bold; text-decoration: underline; } .heading1 { background-color: #003366; border-bottom: #336699 6px solid; color: #ffffff; font-family: Tahoma; font-size: 26px; font-weight: normal;margin: 0em 0em 10px -20px; padding-bottom: 8px; padding-left: 30px;padding-top: 16px;} pre { font-size:small; background-color: #e5e5cc; padding: 5px; font-family: Courier New; margin-top: 0px; border: 1px #f0f0e0 solid; white-space: pre-wrap; white-space: -pre-wrap; word-wrap: break-word; } table { border-collapse: collapse; border-spacing: 0px; font-family: Verdana;} table th { border-right: 2px white solid; border-bottom: 2px white solid; font-weight: bold; background-color: #cecf9c;} table td { border-right: 2px white solid; border-bottom: 2px white solid; background-color: #e5e5cc;}&lt;/style&gt;\r\n  &lt;/head&gt;\r\n  &lt;body&gt;\r\n    &lt;div id=\"content\"&gt;\r\n      &lt;p class=\"heading1\"&gt;Service&lt;/p&gt;\r\n      &lt;p&gt;Endpoint not found.&lt;/p&gt;\r\n    &lt;/div&gt;\r\n  &lt;/body&gt;\r\n&lt;/html&gt;</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1799"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 11 Nov 2014 02:17:25 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5"
+  }
+}
