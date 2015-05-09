@@ -11,12 +11,12 @@
         Condition=" '$(Scope)' == 'Common' "/>
   <Import Project="$(LibrarySourceFolder)\Common.Authentication\*.nuget.proj"
         Condition=" '$(Scope)' == 'Authentication' "/>
-  <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj"
+  <!--TODO: Filter away the unwanted one-->
+  <Import Project="$(LibrarySourceFolder)\**\*.nuget.proj"
           Condition=" '$(Scope)' == 'All' "/>
+  <!--TODO: make sure keyvault works-->
   <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*.nuget.proj" 
-          Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' and '$(Scope)' != 'Authentication' " />
-  <Import Project="$(LibrarySourceFolder)\KeyVault\*\*.nuget.proj"
-         Condition=" '$(Scope)' == 'All' "/>		 
+          Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
