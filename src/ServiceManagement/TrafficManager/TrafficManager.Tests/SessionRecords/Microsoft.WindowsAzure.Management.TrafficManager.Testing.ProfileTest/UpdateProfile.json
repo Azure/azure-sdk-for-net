@@ -1,0 +1,434 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles",
+      "RequestMethod": "POST",
+      "RequestBody": "<Profile xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <DomainName>ATMTest773.trafficmanager.net</DomainName>\r\n  <Name>ATMTest8046</Name>\r\n</Profile>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "157"
+        ],
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f72f48417b081e37b9b437eeb2c9dc07"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:43 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/hostedservices/operations/isavailable/ATMTest9035",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseBody": "<AvailabilityResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Result>true</Result>\r\n  <Reason i:nil=\"true\" />\r\n</AvailabilityResponse>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "190"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "4efe46c5ae96110380d4f2424d00e843"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:44 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/locations",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Locations xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Location>\r\n    <Name>South Central US</Name>\r\n    <DisplayName>South Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Central US</Name>\r\n    <DisplayName>Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US 2</Name>\r\n    <DisplayName>East US 2</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US</Name>\r\n    <DisplayName>East US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>West US</Name>\r\n    <DisplayName>West US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>North Central US</Name>\r\n    <DisplayName>North Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>North Europe</Name>\r\n    <DisplayName>North Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>West Europe</Name>\r\n    <DisplayName>West Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East Asia</Name>\r\n    <DisplayName>East Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Southeast Asia</Name>\r\n    <DisplayName>Southeast Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Japan West</Name>\r\n    <DisplayName>Japan West</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Japan East</Name>\r\n    <DisplayName>Japan East</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Brazil South</Name>\r\n    <DisplayName>Brazil South</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n</Locations>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4155"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "0ed5ef64e51f166f950eb66e55ef5b22"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:44 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/hostedservices",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>ATMTest9035</ServiceName>\r\n  <Label>QVRNVGVzdDkwMzU=</Label>\r\n  <Description>ATMTest9035</Description>\r\n  <Location>South Central US</Location>\r\n  <ExtendedProperties />\r\n</CreateHostedService>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "281"
+        ],
+        "x-ms-version": [
+          "2015-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "c9a1b0c77fd313ed8f2d27b7dbb7a9cb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:46 GMT"
+        ],
+        "Location": [
+          "https://management.core.windows.net/subscriptions/279b0675-cf67-467f-98f0-67ae31eb540f/compute/ATMTest9035"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest8046/definitions",
+      "RequestMethod": "POST",
+      "RequestBody": "<Definition xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <DnsOptions>\r\n    <TimeToLiveInSeconds>30</TimeToLiveInSeconds>\r\n  </DnsOptions>\r\n  <Monitors>\r\n    <Monitor>\r\n      <IntervalInSeconds>30</IntervalInSeconds>\r\n      <TimeoutInSeconds>10</TimeoutInSeconds>\r\n      <ToleratedNumberOfFailures>3</ToleratedNumberOfFailures>\r\n      <Protocol>HTTP</Protocol>\r\n      <Port>80</Port>\r\n      <HttpOptions>\r\n        <Verb>GET</Verb>\r\n        <RelativePath>/randomFile.aspx</RelativePath>\r\n        <ExpectedStatusCode>200</ExpectedStatusCode>\r\n      </HttpOptions>\r\n    </Monitor>\r\n  </Monitors>\r\n  <Policy>\r\n    <LoadBalancingMethod>Performance</LoadBalancingMethod>\r\n    <Endpoints>\r\n      <Endpoint>\r\n        <DomainName>ATMTest9035.cloudapp.net</DomainName>\r\n        <Status>Enabled</Status>\r\n        <Type>CloudService</Type>\r\n      </Endpoint>\r\n    </Endpoints>\r\n  </Policy>\r\n</Definition>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "900"
+        ],
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<Definition xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Version>1</Version>\r\n</Definition>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "147"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "3f66fc6d70171c35b6f719736638d6d2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:48 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest8046",
+      "RequestMethod": "PUT",
+      "RequestBody": "<Profile xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Status>Disabled</Status>\r\n  <StatusDetails>\r\n    <EnabledVersion>1</EnabledVersion>\r\n  </StatusDetails>\r\n</Profile>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "179"
+        ],
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "8a1f52f32cab10beaee8fd475fb2105e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:48 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest8046",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<Profile xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DomainName>ATMTest773.trafficmanager.net</DomainName>\r\n  <Name>ATMTest8046</Name>\r\n  <Status>Disabled</Status>\r\n  <Definitions>\r\n    <Definition>\r\n      <Status>Disabled</Status>\r\n      <Version>1</Version>\r\n    </Definition>\r\n  </Definitions>\r\n</Profile>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "321"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "0fbfa35ed7e7199089aaf0473038d937"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:49 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest8046",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "b5492d63c12f134b8d9f376f9e86b0bf"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:49 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/hostedservices/ATMTest9035",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "f728affd26ea1f25bb9e464dffa98eba"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:51 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "UpdateProfile": [
+      "ATMTest773",
+      "ATMTest9035"
+    ],
+    "CreateTestProfile": [
+      "ATMTest8046"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "279b0675-cf67-467f-98f0-67ae31eb540f",
+    "UserId": "destanko@microsoft.com"
+  }
+}

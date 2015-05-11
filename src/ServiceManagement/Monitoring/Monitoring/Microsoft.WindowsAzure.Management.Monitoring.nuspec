@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Monitoring\**\*.cs" target="src" />
+    <file src="ServiceManagement\Monitoring\Monitoring\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Monitoring.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Monitoring.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Monitoring.xml" target="lib\portable-net45+wp8+wpa81+win" />

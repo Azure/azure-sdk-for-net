@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="StorSimple\**\*.cs" target="src" />
+    <file src="ServiceManagement\StorSimple\StorSimple\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.StorSimple.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.StorSimple.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.StorSimple.xml" target="lib\portable-net45+sl50+wp80+win" />

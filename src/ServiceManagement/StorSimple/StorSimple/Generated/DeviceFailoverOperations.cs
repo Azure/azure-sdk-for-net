@@ -231,7 +231,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                             XElement cloudTypeElement = dCGroupElement.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
                                             if (cloudTypeElement != null)
                                             {
-                                                CloudType cloudTypeInstance = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement.Value, true));
+                                                CloudType cloudTypeInstance = StorSimpleManagementClient.ParseCloudType(cloudTypeElement.Value);
                                                 dRDataContainerInstance.CloudType = cloudTypeInstance;
                                             }
                                             

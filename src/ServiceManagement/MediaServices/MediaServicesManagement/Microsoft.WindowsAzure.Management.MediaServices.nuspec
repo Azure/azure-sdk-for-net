@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="MediaServicesManagement\**\*.cs" target="src" />
+    <file src="ServiceManagement\MediaServices\MediaServicesManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.MediaServices.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.MediaServices.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.MediaServices.xml" target="lib\portable-net45+wp8+wpa81+win" />

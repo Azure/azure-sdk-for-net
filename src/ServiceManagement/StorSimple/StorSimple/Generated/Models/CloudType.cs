@@ -31,14 +31,40 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
     {
         None = 0,
         
+        Atmos = 1,
+        
         Azure = 2,
         
         S3 = 3,
         
+        Synaptic = 4,
+        
+        AtmosOnPrem = 5,
+        
+        ASPDeprecated = 6,
+        
+        Zetta = 7,
+        
+        RackSpace = 8,
+        
+        IIJ = 9,
+        
+        NIFTY = 10,
+        
         S3RRS = 11,
+        
+        DellDXDeprecated = 12,
         
         OpenStack = 13,
         
         HP = 14,
+        
+        Google = 15,
+        
+        Nirvanix = 16,
+        
+        AzureChina = 17,
+        
+        Max = 18,
     }
 }
