@@ -89,6 +89,17 @@ namespace Microsoft.Azure.Search
             {
                 throw new ArgumentNullException("index");
             }
+            if (index.CorsOptions != null)
+            {
+                if (index.CorsOptions.AllowedOrigins == null)
+                {
+                    throw new ArgumentNullException("index.CorsOptions.AllowedOrigins");
+                }
+            }
+            if (index.Fields == null)
+            {
+                throw new ArgumentNullException("index.Fields");
+            }
             if (index.Fields != null)
             {
                 foreach (Field fieldsParameterItem in index.Fields)
@@ -102,6 +113,10 @@ namespace Microsoft.Azure.Search
                         throw new ArgumentNullException("index.Fields.Type");
                     }
                 }
+            }
+            if (index.Name == null)
+            {
+                throw new ArgumentNullException("index.Name");
             }
             if (index.ScoringProfiles != null)
             {
@@ -121,6 +136,13 @@ namespace Microsoft.Azure.Search
                     {
                         throw new ArgumentNullException("index.ScoringProfiles.Name");
                     }
+                    if (scoringProfilesParameterItem.TextWeights != null)
+                    {
+                        if (scoringProfilesParameterItem.TextWeights.Weights == null)
+                        {
+                            throw new ArgumentNullException("index.ScoringProfiles.TextWeights.Weights");
+                        }
+                    }
                 }
             }
             if (index.Suggesters != null)
@@ -130,6 +152,10 @@ namespace Microsoft.Azure.Search
                     if (suggestersParameterItem.Name == null)
                     {
                         throw new ArgumentNullException("index.Suggesters.Name");
+                    }
+                    if (suggestersParameterItem.SourceFields == null)
+                    {
+                        throw new ArgumentNullException("index.Suggesters.SourceFields");
                     }
                 }
             }
@@ -189,10 +215,7 @@ namespace Microsoft.Azure.Search
                 JObject indexCreateOrUpdateParametersValue = new JObject();
                 requestDoc = indexCreateOrUpdateParametersValue;
                 
-                if (index.Name != null)
-                {
-                    indexCreateOrUpdateParametersValue["name"] = index.Name;
-                }
+                indexCreateOrUpdateParametersValue["name"] = index.Name;
                 
                 if (index.Fields != null)
                 {
@@ -879,6 +902,17 @@ namespace Microsoft.Azure.Search
             {
                 throw new ArgumentNullException("index");
             }
+            if (index.CorsOptions != null)
+            {
+                if (index.CorsOptions.AllowedOrigins == null)
+                {
+                    throw new ArgumentNullException("index.CorsOptions.AllowedOrigins");
+                }
+            }
+            if (index.Fields == null)
+            {
+                throw new ArgumentNullException("index.Fields");
+            }
             if (index.Fields != null)
             {
                 foreach (Field fieldsParameterItem in index.Fields)
@@ -892,6 +926,10 @@ namespace Microsoft.Azure.Search
                         throw new ArgumentNullException("index.Fields.Type");
                     }
                 }
+            }
+            if (index.Name == null)
+            {
+                throw new ArgumentNullException("index.Name");
             }
             if (index.ScoringProfiles != null)
             {
@@ -911,6 +949,13 @@ namespace Microsoft.Azure.Search
                     {
                         throw new ArgumentNullException("index.ScoringProfiles.Name");
                     }
+                    if (scoringProfilesParameterItem.TextWeights != null)
+                    {
+                        if (scoringProfilesParameterItem.TextWeights.Weights == null)
+                        {
+                            throw new ArgumentNullException("index.ScoringProfiles.TextWeights.Weights");
+                        }
+                    }
                 }
             }
             if (index.Suggesters != null)
@@ -920,6 +965,10 @@ namespace Microsoft.Azure.Search
                     if (suggestersParameterItem.Name == null)
                     {
                         throw new ArgumentNullException("index.Suggesters.Name");
+                    }
+                    if (suggestersParameterItem.SourceFields == null)
+                    {
+                        throw new ArgumentNullException("index.Suggesters.SourceFields");
                     }
                 }
             }
@@ -938,10 +987,7 @@ namespace Microsoft.Azure.Search
             // Construct URL
             string url = "";
             url = url + "/indexes/";
-            if (index.Name != null)
-            {
-                url = url + Uri.EscapeDataString(index.Name);
-            }
+            url = url + Uri.EscapeDataString(index.Name);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
@@ -984,10 +1030,7 @@ namespace Microsoft.Azure.Search
                 JObject indexCreateOrUpdateParametersValue = new JObject();
                 requestDoc = indexCreateOrUpdateParametersValue;
                 
-                if (index.Name != null)
-                {
-                    indexCreateOrUpdateParametersValue["name"] = index.Name;
-                }
+                indexCreateOrUpdateParametersValue["name"] = index.Name;
                 
                 if (index.Fields != null)
                 {

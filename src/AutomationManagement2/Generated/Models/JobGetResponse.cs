@@ -21,22 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.StreamAnalytics.Models
+namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The blob serialization boundary.
+    /// The response model for the get job operation.
     /// </summary>
-    public static partial class BlobSerializationBoundary
+    public partial class JobGetResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Blob Boundary.
-        /// </summary>
-        public const string BlobBoundary = "BlobBoundary";
+        private Job _job;
         
         /// <summary>
-        /// Block Boundary.
+        /// Optional. Gets or sets a job.
         /// </summary>
-        public const string BlockBoundary = "BlockBoundary";
+        public Job Job
+        {
+            get { return this._job; }
+            set { this._job = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobGetResponse class.
+        /// </summary>
+        public JobGetResponse()
+        {
+        }
     }
 }

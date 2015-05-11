@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Response for long running database operations.
+    /// Response for long running Azure Sql Database operations.
     /// </summary>
     public partial class DatabaseCreateOrUpdateResponse : AzureOperationResponse
     {

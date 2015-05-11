@@ -30,11 +30,10 @@ namespace Microsoft.Azure.Search
     {
         public SearchIndexClient GetClient(string indexName)
         {
-            // Argument checking is done by the SearchCredentials and SearchIndexClient constructors.
-            // Note that HttpClient can't be shared in case it has already been used (SearchIndexClient will attempt
-            // to set the Timeout property on it).
-            var credentials = new SearchCredentials(_client.Credentials.ApiKey);
-            return new SearchIndexClient(_client.SearchServiceName, indexName, credentials);
+            // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
+            // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).
+            Uri indexBaseUri = new Uri(_client.BaseUri, String.Format("indexes/{0}/", indexName));
+            return new SearchIndexClient(_client.Credentials, indexBaseUri);
         }
 
         public async Task<bool> ExistsAsync(string indexName, CancellationToken cancellationToken)

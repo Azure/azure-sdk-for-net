@@ -42,6 +42,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._auditingState = value; }
         }
         
+        private string _auditLogsTableName;
+        
+        /// <summary>
+        /// Optional. Gets the name of the table audit logs are written to in
+        /// the Azure SQL Database auditing policy.
+        /// </summary>
+        public string AuditLogsTableName
+        {
+            get { return this._auditLogsTableName; }
+            set { this._auditLogsTableName = value; }
+        }
+        
         private string _eventTypesToAudit;
         
         /// <summary>
@@ -52,6 +64,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._eventTypesToAudit; }
             set { this._eventTypesToAudit = value; }
+        }
+        
+        private string _retentionDays;
+        
+        /// <summary>
+        /// Optional. Gets the retention in days of the Azure SQL Database
+        /// auditing policy.
+        /// </summary>
+        public string RetentionDays
+        {
+            get { return this._retentionDays; }
+            set { this._retentionDays = value; }
         }
         
         private string _storageAccountKey;

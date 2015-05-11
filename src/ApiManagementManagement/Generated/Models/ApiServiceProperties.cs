@@ -67,6 +67,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._createdAtUtc = value; }
         }
         
+        private IDictionary<string, string> _customProperties;
+        
+        /// <summary>
+        /// Optional. Gets or sets CustomProperties of the Api Management
+        /// service.
+        /// </summary>
+        public IDictionary<string, string> CustomProperties
+        {
+            get { return this._customProperties; }
+            set { this._customProperties = value; }
+        }
+        
         private IList<HostnameConfiguration> _hostnameConfigurations;
         
         /// <summary>
@@ -192,6 +204,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public ApiServiceProperties()
         {
             this.AdditionalRegions = new LazyList<AdditionalRegion>();
+            this.CustomProperties = new LazyDictionary<string, string>();
             this.HostnameConfigurations = new LazyList<HostnameConfiguration>();
             this.StaticIPs = new LazyList<string>();
         }

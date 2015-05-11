@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken,
             Func<string, DocumentSuggestResponseFormat<TResult, TDoc>> deserialize)
             where TResponse : DocumentSuggestResponseBase<TResult, TDoc>, new()
-            where TResult : SuggestResult<TDoc>
+            where TResult : SuggestResultBase<TDoc>
             where TDoc : class
         {
             // Validate
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Search
         }
 
         private class DocumentSuggestResponseFormat<TResult, TDoc>
-            where TResult : SuggestResult<TDoc>
+            where TResult : SuggestResultBase<TDoc>
             where TDoc : class 
         {
             [JsonProperty("value")]

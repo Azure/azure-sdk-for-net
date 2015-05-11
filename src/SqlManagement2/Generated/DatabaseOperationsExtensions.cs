@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Sql
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
@@ -58,11 +58,11 @@ namespace Microsoft.Azure.Management.Sql
         /// (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
+        /// Required. The required parameters for creating or updating a
         /// database.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public static DatabaseCreateOrUpdateResponse BeginCreateOrUpdate(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
         {
@@ -82,8 +82,8 @@ namespace Microsoft.Azure.Management.Sql
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
@@ -94,11 +94,11 @@ namespace Microsoft.Azure.Management.Sql
         /// (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
+        /// Required. The required parameters for creating or updating a
         /// database.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public static Task<DatabaseCreateOrUpdateResponse> BeginCreateOrUpdateAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
         {
@@ -125,11 +125,11 @@ namespace Microsoft.Azure.Management.Sql
         /// (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
+        /// Required. The required parameters for creating or updating a
         /// database.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public static DatabaseCreateOrUpdateResponse CreateOrUpdate(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
         {
@@ -160,11 +160,11 @@ namespace Microsoft.Azure.Management.Sql
         /// (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
+        /// Required. The required parameters for creating or updating a
         /// database.
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public static Task<DatabaseCreateOrUpdateResponse> CreateOrUpdateAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseCreateOrUpdateParameters parameters)
         {
@@ -178,15 +178,15 @@ namespace Microsoft.Azure.Management.Sql
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Azure SQL Database Database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database to be retrieved.
+        /// Required. The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -208,15 +208,15 @@ namespace Microsoft.Azure.Management.Sql
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Azure SQL Database Database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database to be retrieved.
+        /// Required. The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database request.
         /// </returns>
         public static DatabaseGetResponse Get(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database request.
         /// </returns>
         public static Task<DatabaseGetResponse> GetAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The Id of the Azure SQL Database to be retrieved.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         public static DatabaseListResponse GetById(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseId)
         {
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The Id of the Azure SQL Database to be retrieved.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         public static Task<DatabaseListResponse> GetByIdAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseId)
         {
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets the status of a database create or update operation.
+        /// Gets the status of an Azure Sql Database create or update operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. Location value returned by the Begin operation
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public static DatabaseCreateOrUpdateResponse GetDatabaseOperationStatus(this IDatabaseOperations operations, string operationStatusLink)
         {
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets the status of a database create or update operation.
+        /// Gets the status of an Azure Sql Database create or update operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. Location value returned by the Begin operation
         /// </param>
         /// <returns>
-        /// Response for long running database operations.
+        /// Response for long running Azure Sql Database operations.
         /// </returns>
         public static Task<DatabaseCreateOrUpdateResponse> GetDatabaseOperationStatusAsync(this IDatabaseOperations operations, string operationStatusLink)
         {
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about an Azure SQL Database.
+        /// Returns information about Azure SQL Databases.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
@@ -384,11 +384,11 @@ namespace Microsoft.Azure.Management.Sql
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         public static DatabaseListResponse List(this IDatabaseOperations operations, string resourceGroupName, string serverName)
         {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about an Azure SQL Database.
+        /// Returns information about Azure SQL Databases.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
@@ -410,15 +410,71 @@ namespace Microsoft.Azure.Management.Sql
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a List Azure Sql Database request.
         /// </returns>
         public static Task<DatabaseListResponse> ListAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName)
         {
             return operations.ListAsync(resourceGroupName, serverName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database usages.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database metrics
+        /// request.
+        /// </returns>
+        public static DatabaseMetricListResponse ListUsages(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseOperations)s).ListUsagesAsync(resourceGroupName, serverName, databaseName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database usages.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Management.Sql.IDatabaseOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server in which the
+        /// Azure SQL Databases are hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database metrics
+        /// request.
+        /// </returns>
+        public static Task<DatabaseMetricListResponse> ListUsagesAsync(this IDatabaseOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return operations.ListUsagesAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
         }
     }
 }

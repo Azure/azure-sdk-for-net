@@ -20,8 +20,8 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Create or update server parameters.
     /// </summary>
-    public partial class ServerCreateOrUpdateParameters : CreateUpdateBase
+    public partial class ServerCreateOrUpdateParameters : ResourceBase
     {
         private ServerCreateOrUpdateProperties _properties;
         
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ServerCreateOrUpdateParameters
         /// class with required arguments.
         /// </summary>
-        public ServerCreateOrUpdateParameters(ServerCreateOrUpdateProperties properties, string location, IDictionary<string, string> tags)
+        public ServerCreateOrUpdateParameters(ServerCreateOrUpdateProperties properties, string location)
             : this()
         {
             if (properties == null)
@@ -65,13 +65,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             {
                 throw new ArgumentNullException("location");
             }
-            if (tags == null)
-            {
-                throw new ArgumentNullException("tags");
-            }
             this.Properties = properties;
             this.Location = location;
-            this.Tags = tags;
         }
     }
 }

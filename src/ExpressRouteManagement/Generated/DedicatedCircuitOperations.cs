@@ -170,6 +170,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 serviceProviderNameElement.Value = parameters.ServiceProviderName;
                 createDedicatedCircuitElement.Add(serviceProviderNameElement);
                 
+                XElement skuElement = new XElement(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                skuElement.Value = parameters.Sku.ToString();
+                createDedicatedCircuitElement.Add(skuElement);
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -497,9 +501,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 XElement updateDedicatedCircuitElement = new XElement(XName.Get("UpdateDedicatedCircuit", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(updateDedicatedCircuitElement);
                 
-                XElement bandwidthElement = new XElement(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));
-                bandwidthElement.Value = parameters.Bandwidth.ToString();
-                updateDedicatedCircuitElement.Add(bandwidthElement);
+                if (parameters.Bandwidth != null)
+                {
+                    XElement bandwidthElement = new XElement(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));
+                    bandwidthElement.Value = parameters.Bandwidth;
+                    updateDedicatedCircuitElement.Add(bandwidthElement);
+                }
+                
+                if (parameters.Sku != null)
+                {
+                    XElement skuElement = new XElement(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                    skuElement.Value = parameters.Sku;
+                    updateDedicatedCircuitElement.Add(skuElement);
+                }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -739,6 +753,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             {
                                 ProviderProvisioningState serviceProviderProvisioningStateInstance = ((ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true));
                                 dedicatedCircuitInstance.ServiceProviderProvisioningState = serviceProviderProvisioningStateInstance;
+                            }
+                            
+                            XElement skuElement = dedicatedCircuitElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                            if (skuElement != null)
+                            {
+                                CircuitSku skuInstance = ((CircuitSku)Enum.Parse(typeof(CircuitSku), skuElement.Value, true));
+                                dedicatedCircuitInstance.Sku = skuInstance;
                             }
                             
                             XElement statusElement = dedicatedCircuitElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
@@ -1127,6 +1148,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 {
                                     ProviderProvisioningState serviceProviderProvisioningStateInstance = ((ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true));
                                     dedicatedCircuitInstance.ServiceProviderProvisioningState = serviceProviderProvisioningStateInstance;
+                                }
+                                
+                                XElement skuElement = dedicatedCircuitsElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                                if (skuElement != null)
+                                {
+                                    CircuitSku skuInstance = ((CircuitSku)Enum.Parse(typeof(CircuitSku), skuElement.Value, true));
+                                    dedicatedCircuitInstance.Sku = skuInstance;
                                 }
                                 
                                 XElement statusElement = dedicatedCircuitsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));

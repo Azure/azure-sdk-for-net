@@ -16,7 +16,6 @@
 using System;
 using Microsoft.Azure.Search.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Search.Serialization
 {
@@ -46,7 +45,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(IndexAction<T>).IsAssignableFrom(objectType);
+            return typeof(IndexActionBase<T>).IsAssignableFrom(objectType);
         }
 
         public override object ReadJson(
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var action = (IndexAction<T>)value;
+            var action = (IndexActionBase<T>)value;
 
             var injectingWriter = new InjectingJsonWriter(writer);
             injectingWriter.OnStart = 

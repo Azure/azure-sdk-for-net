@@ -29,6 +29,30 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class BorderGatewayProtocolPeeringUpdateParameters
     {
+        private string _advertisedPublicPrefixes;
+        
+        /// <summary>
+        /// Optional. Specifies a comma separated list of public prefixes that
+        /// the customer would like to announce over the peering.
+        /// </summary>
+        public string AdvertisedPublicPrefixes
+        {
+            get { return this._advertisedPublicPrefixes; }
+            set { this._advertisedPublicPrefixes = value; }
+        }
+        
+        private uint _customerAutonomousSystemNumber;
+        
+        /// <summary>
+        /// Optional. Specifies the numeric identifier of the public autonomous
+        /// system (AS) in which the device of the customer is configured.
+        /// </summary>
+        public uint CustomerAutonomousSystemNumber
+        {
+            get { return this._customerAutonomousSystemNumber; }
+            set { this._customerAutonomousSystemNumber = value; }
+        }
+        
         private uint _peerAutonomousSystemNumber;
         
         /// <summary>
@@ -52,6 +76,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._primaryPeerSubnet; }
             set { this._primaryPeerSubnet = value; }
+        }
+        
+        private string _routingRegistryName;
+        
+        /// <summary>
+        /// Optional. Specifies the Routing Registry to look up to validate the
+        /// prefixes specified in AdvertisedPublicPrefixes
+        /// </summary>
+        public string RoutingRegistryName
+        {
+            get { return this._routingRegistryName; }
+            set { this._routingRegistryName = value; }
         }
         
         private string _secondaryPeerSubnet;

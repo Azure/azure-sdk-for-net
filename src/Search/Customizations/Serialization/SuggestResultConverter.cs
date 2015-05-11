@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// Type of the model class that encapsulates documents in a suggestion response.
     /// </typeparam>
     internal class SuggestResultConverter<TResult, TDoc> : JsonConverter
-        where TResult : SuggestResult<TDoc>, new()
+        where TResult : SuggestResultBase<TDoc>, new()
         where TDoc : class
     {
         public override bool CanRead

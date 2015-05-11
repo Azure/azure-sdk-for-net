@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -31,6 +32,33 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class VirtualMachineOSImageReplicateParameters
     {
+        private ComputeImageAttributes _computeImageAttributes;
+        
+        /// <summary>
+        /// Required. The compute image attributes. Metadata which is required
+        /// for this image to be useablein the Microsoft.Compute Provider.The
+        /// combination of values provided for Offer, Sku, and Verison must be
+        /// unique for a publisher.
+        /// </summary>
+        public ComputeImageAttributes ComputeImageAttributes
+        {
+            get { return this._computeImageAttributes; }
+            set { this._computeImageAttributes = value; }
+        }
+        
+        private MarketplaceImageAttributes _marketplaceImageAttributes;
+        
+        /// <summary>
+        /// Optional. The market place image attributes.Metadata which is
+        /// required for VM Marketplace sourced imagesto be useable in the
+        /// Microsoft.Compute Provider.
+        /// </summary>
+        public MarketplaceImageAttributes MarketplaceImageAttributes
+        {
+            get { return this._marketplaceImageAttributes; }
+            set { this._marketplaceImageAttributes = value; }
+        }
+        
         private IList<string> _targetLocations;
         
         /// <summary>
@@ -54,6 +82,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineOSImageReplicateParameters()
         {
             this.TargetLocations = new LazyList<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineOSImageReplicateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineOSImageReplicateParameters(ComputeImageAttributes computeImageAttributes)
+            : this()
+        {
+            if (computeImageAttributes == null)
+            {
+                throw new ArgumentNullException("computeImageAttributes");
+            }
+            this.ComputeImageAttributes = computeImageAttributes;
         }
     }
 }

@@ -75,6 +75,19 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._databaseId = value; }
         }
         
+        private DateTime _earliestRestoreDate;
+        
+        /// <summary>
+        /// Optional. Gets the recovery period starte date of the Azure SQL
+        /// Database. This records the start date and time when recovery is
+        /// available for this Azure SQL Database.
+        /// </summary>
+        public DateTime EarliestRestoreDate
+        {
+            get { return this._earliestRestoreDate; }
+            set { this._earliestRestoreDate = value; }
+        }
+        
         private string _edition;
         
         /// <summary>
@@ -85,6 +98,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._edition; }
             set { this._edition = value; }
+        }
+        
+        private string _elasticPoolName;
+        
+        /// <summary>
+        /// Optional. Gets the name of the Azure SQL Database Elastic Pool the
+        /// database is in.
+        /// </summary>
+        public string ElasticPoolName
+        {
+            get { return this._elasticPoolName; }
+            set { this._elasticPoolName = value; }
         }
         
         private long _maxSizeBytes;
@@ -110,6 +135,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._requestedServiceObjectiveId; }
             set { this._requestedServiceObjectiveId = value; }
+        }
+        
+        private string _requestedServiceObjectiveName;
+        
+        /// <summary>
+        /// Optional. Gets the name of the configured Service Level Objective
+        /// of the Azure SQL Database. This is the Service Level Objective
+        /// that is being applied to the Azure SQL Database.
+        /// </summary>
+        public string RequestedServiceObjectiveName
+        {
+            get { return this._requestedServiceObjectiveName; }
+            set { this._requestedServiceObjectiveName = value; }
         }
         
         private string _serviceObjective;

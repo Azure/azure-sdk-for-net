@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
@@ -28,23 +29,12 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents an Azure SQL Database.
     /// </summary>
-    public partial class Database : ResourceBase
+    public partial class Database : ResourceBaseExtended
     {
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the resource.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private DatabaseProperties _properties;
         
         /// <summary>
-        /// Optional. Represents the properties of the resource.
+        /// Optional. Gets or sets the properties representing the resource.
         /// </summary>
         public DatabaseProperties Properties
         {
@@ -57,6 +47,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public Database()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Database class with required
+        /// arguments.
+        /// </summary>
+        public Database(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

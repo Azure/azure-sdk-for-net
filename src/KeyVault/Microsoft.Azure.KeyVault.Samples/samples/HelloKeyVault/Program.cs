@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -32,6 +33,7 @@ namespace Sample.Microsoft.HelloKeyVault
     {
         static KeyVaultClient keyVaultClient;
         static InputValidator inputValidator;
+        static ClientCredential clientCredential;
 
         static void Main(string[] args)
         {
@@ -46,7 +48,11 @@ namespace Sample.Microsoft.HelloKeyVault
             TracingAdapter.AddTracingInterceptor(new ConsoleTracingInterceptor());
             TracingAdapter.IsEnabled = inputValidator.GetTracingEnabled();
 
-            keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
+            var clientId = ConfigurationManager.AppSettings["AuthClientId"];
+            var clientSecret = ConfigurationManager.AppSettings["AuthClientSecret"];
+            clientCredential = new ClientCredential(clientId, clientSecret);
+
+            keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken), GetHttpClient());
 
             // SECURITY: DO NOT USE IN PRODUCTION CODE; FOR TEST PURPOSES ONLY
             //ServicePointManager.ServerCertificateValidationCallback += ( sender, cert, chain, sslPolicyErrors ) => true;
@@ -610,15 +616,21 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <param name="scope"> scope </param>
         /// <returns> token </returns>
         public static async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            var clientId = ConfigurationManager.AppSettings["AuthClientId"];
-            var clientSecret = ConfigurationManager.AppSettings["AuthClientSecret"];
-
-            var clientCredential = new ClientCredential(clientId, clientSecret);
-            var context = new AuthenticationContext(authority, null);
+        {            
+            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
             var result = await context.AcquireTokenAsync(resource, clientCredential);
 
             return result.AccessToken;
+        }
+
+        /// <summary>
+        /// Create an HttpClient object that optionally includes logic to override the HOST header
+        /// field for advanced testing purposes.
+        /// </summary>
+        /// <returns>HttpClient instance to use for Key Vault service communication</returns>
+        private static HttpClient GetHttpClient()
+        {
+            return (HttpClientFactory.Create(new InjectHostHeaderHttpMessageHandler()));
         }
     }
 }
