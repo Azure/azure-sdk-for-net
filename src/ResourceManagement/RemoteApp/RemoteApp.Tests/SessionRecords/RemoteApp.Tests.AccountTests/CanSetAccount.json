@@ -1,0 +1,190 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/account?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvYWNjb3VudD9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"ContactEmail\": \"tstestadmin1@mohoro001.msolctp-int.com\",\r\n  \"Id\": \"007f5a5c-5964-468c-92e1-294a6dc68abf\",\r\n  \"IsDesktopEnabled\": false,\r\n  \"MaxPublishedAppsPerService\": 100,\r\n  \"MaxServices\": 2,\r\n  \"MaxUsersPerService\": 0,\r\n  \"OptIntoMarketingEmail\": true,\r\n  \"RdWebUrl\": \"https://clouddvtest15-iworkerui.cloudapp.net/\",\r\n  \"WorkspaceName\": \"Work Resources\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "322"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "a330913054e974d6847749700c475827"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 Feb 2015 18:59:35 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/account?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvYWNjb3VudD9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"ContactEmail\": \"tstestadmin1@mohoro001.msolctp-int.com\",\r\n  \"Id\": \"007f5a5c-5964-468c-92e1-294a6dc68abf\",\r\n  \"IsDesktopEnabled\": false,\r\n  \"MaxPublishedAppsPerService\": 100,\r\n  \"MaxServices\": 2,\r\n  \"MaxUsersPerService\": 0,\r\n  \"OptIntoMarketingEmail\": true,\r\n  \"RdWebUrl\": \"https://clouddvtest15-iworkerui.cloudapp.net/\",\r\n  \"WorkspaceName\": \"TestWorkspaceName\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "325"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "b70f7f0926ba7f60b6c4ba5bb8f52078"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 Feb 2015 18:59:39 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/account?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvYWNjb3VudD9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"WorkspaceName\": \"TestWorkspaceName\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "44"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "ffecd1801a4b70219377a9d0a02a5768"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 Feb 2015 18:59:37 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/account?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvYWNjb3VudD9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"WorkspaceName\": \"Work Resources\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "41"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "277ce56d577b769d80013bf21f822320"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 Feb 2015 18:59:40 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

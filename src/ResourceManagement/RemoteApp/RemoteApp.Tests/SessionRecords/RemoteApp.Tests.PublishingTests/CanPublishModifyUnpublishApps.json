@@ -1,0 +1,471 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"AdInfo\": null,\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"Created using AUX portal\",\r\n    \"DnsServers\": [],\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-02-01T10:26:19.152Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"simple\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"West US\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 1,\r\n    \"VnetName\": \"simplevnet-54e37997-fd0e-45f4-8d5b-182d84c9378c\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  },\r\n  {\r\n    \"AdInfo\": {\r\n      \"DomainName\": \"rdvmohoro.nttest.microsoft.com\",\r\n      \"OrganizationalUnit\": null,\r\n      \"ServiceAccountPassword\": \"*******\",\r\n      \"ServiceAccountUserName\": \"TestUser@service.com\"\r\n    },\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"BVTDesktop\",\r\n    \"DnsServers\": [],\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-02-01T10:38:30.215Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"testd112\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"bluerefresh.2014.08.21.vhd\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 0,\r\n    \"VnetName\": \"CloudVnet\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1128"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "902373841ad262099a0954367107377e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:32 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "[\r\n  {\r\n    \"AvailableToUsers\": true,\r\n    \"Name\": \"TestApp475\",\r\n    \"Status\": 0,\r\n    \"IconPngUris\": {},\r\n    \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "172"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"ApplicationAlias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n    \"ApplicationVirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\",\r\n    \"ErrorMessage\": null,\r\n    \"Success\": true\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "159"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "86d34bdd17cf6d30a90d1ebc163161a6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:35 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"AvailableToUsers\": true,\r\n  \"CommandLineArguments\": null,\r\n  \"IconPngUris\": [\r\n    {\r\n      \"Key\": 32,\r\n      \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default32.png?se=2015-02-01T11%3A08%3A47Z&sr=b&sp=r&sig=2hqYu9FZcXct0q8vx%2FU51rEiBooDzaRLapfMh9EMa2M%3D\"\r\n    }\r\n  ],\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default.ico?se=2015-02-01T11%3A08%3A47Z&sr=b&sp=r&sig=PMLBwUV938Ka19JG241XC637ProDcxMrCPs4RAVL9lw%3D\",\r\n  \"Name\": \"TestApp475\",\r\n  \"Status\": 0,\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "546"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "75305ec6e7f86782bba5b93ecdedf86f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:47 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"AvailableToUsers\": true,\r\n  \"CommandLineArguments\": null,\r\n  \"IconPngUris\": [\r\n    {\r\n      \"Key\": 32,\r\n      \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default32.png?se=2015-02-01T11%3A08%3A58Z&sr=b&sp=r&sig=D41AR5b%2F2hP4TKOmI4PlN3Nf4zKs8ar0GtuK1GVWjwA%3D\"\r\n    }\r\n  ],\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default.ico?se=2015-02-01T11%3A08%3A58Z&sr=b&sp=r&sig=9%2FgTI2a7hd0WFNiBBfio7LPk%2B3JdpFxCeOtLePR2clg%3D\",\r\n  \"Name\": \"TestApp475\",\r\n  \"Status\": 0,\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "550"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "922f505ab7d767d2b9a6fc1b44856793"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:58 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"AvailableToUsers\": true,\r\n  \"CommandLineArguments\": null,\r\n  \"IconPngUris\": [\r\n    {\r\n      \"Key\": 32,\r\n      \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/69e93375-54d4-4d12-a83c-300641595ab0.png?se=2015-02-01T11%3A09%3A10Z&sr=b&sp=r&sig=zBEP7JPMfOzIuBFMc9LF4ylBafbCjTSCJe14ZCJjKZU%3D\"\r\n    }\r\n  ],\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/80f39971-ba83-4981-9f82-ef66c7cb5945.ico?se=2015-02-01T11%3A09%3A10Z&sr=b&sp=r&sig=IxjRyKSspUu0zMXf5u0Gy21arAhXkOuhbs9RJZQteJ0%3D\",\r\n  \"Name\": \"TestApp475\",\r\n  \"Status\": 1,\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "600"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "2b44bbc63b3162638dc7c5de502bf50d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:39:10 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"AvailableToUsers\": true,\r\n  \"CommandLineArguments\": null,\r\n  \"IconPngUris\": [\r\n    {\r\n      \"Key\": 32,\r\n      \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/69e93375-54d4-4d12-a83c-300641595ab0.png?se=2015-02-01T11%3A09%3A24Z&sr=b&sp=r&sig=85J%2BgZzYnEVsj7reKjT5daFE%2FyKLUD%2BCPsCTA92B6wg%3D\"\r\n    }\r\n  ],\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/80f39971-ba83-4981-9f82-ef66c7cb5945.ico?se=2015-02-01T11%3A09%3A24Z&sr=b&sp=r&sig=0GDCECPLum71y7MHq5A3tpR%2FkJZEZxj3tBms3aPoo10%3D\",\r\n  \"Name\": \"ModTestApp1443\",\r\n  \"Status\": 3,\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "612"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "9f550ec7ed286d7a84c3793f0a8e0ad9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:39:23 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"AvailableToUsers\": true,\r\n  \"CommandLineArguments\": null,\r\n  \"IconPngUris\": [\r\n    {\r\n      \"Key\": 32,\r\n      \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/69e93375-54d4-4d12-a83c-300641595ab0.png?se=2015-02-01T11%3A09%3A35Z&sr=b&sp=r&sig=hOwibEPclBUymI4fXfvTPVLIqVsoO2htlYlVg3LZNBs%3D\"\r\n    }\r\n  ],\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/80f39971-ba83-4981-9f82-ef66c7cb5945.ico?se=2015-02-01T11%3A09%3A35Z&sr=b&sp=r&sig=YjovGv7s9klHhbllTca8PQF0v8rbqLtkbU5QvlDtWoY%3D\",\r\n  \"Name\": \"ModTestApp1443\",\r\n  \"Status\": 3,\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "604"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "07cdae3ae22b6090a465212579a2f315"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:39:35 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"AvailableToUsers\": true,\r\n  \"CommandLineArguments\": null,\r\n  \"IconPngUris\": [\r\n    {\r\n      \"Key\": 32,\r\n      \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/69e93375-54d4-4d12-a83c-300641595ab0.png?se=2015-02-01T11%3A09%3A47Z&sr=b&sp=r&sig=H5jSUTn4tk5M7PTJVDiapTaCyMGCCjfVPhp6VZBbqp8%3D\"\r\n    }\r\n  ],\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/80f39971-ba83-4981-9f82-ef66c7cb5945.ico?se=2015-02-01T11%3A09%3A47Z&sr=b&sp=r&sig=qVLC3tnYajcFtM4d9rGKdQMqEV5sstn0lrLPHYJ36XM%3D\",\r\n  \"Name\": \"ModTestApp1443\",\r\n  \"Status\": 1,\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "604"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "08becf14b21f60bc83bcc594b59763be"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:39:47 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications/13b28e54-ca9d-4c61-805a-69705fb73446?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucy8xM2IyOGU1NC1jYTlkLTRjNjEtODA1YS02OTcwNWZiNzM0NDY/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"AvailableToUsers\": true,\r\n  \"Alias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/80f39971-ba83-4981-9f82-ef66c7cb5945.ico?se=2015-02-01T11%3A09%3A10Z&sr=b&sp=r&sig=IxjRyKSspUu0zMXf5u0Gy21arAhXkOuhbs9RJZQteJ0%3D\",\r\n  \"Name\": \"ModTestApp1443\",\r\n  \"Status\": 1,\r\n  \"IconPngUris\": {\r\n    \"IconPngUris\": [\r\n      {\r\n        \"Key\": \"32\",\r\n        \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/69e93375-54d4-4d12-a83c-300641595ab0.png?se=2015-02-01T11%3A09%3A10Z&sr=b&sp=r&sig=zBEP7JPMfOzIuBFMc9LF4ylBafbCjTSCJe14ZCJjKZU%3D\"\r\n      }\r\n    ]\r\n  },\r\n  \"VirtualPath\": \"%systemroot%\\\\system32\\\\notepad.exe\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "678"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"ApplicationAlias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n  \"ApplicationVirtualPath\": null,\r\n  \"ErrorMessage\": null,\r\n  \"Success\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "124"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "3e323942bc8f6ff8aea88ac2f3620df2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:39:12 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2FwcGxpY2F0aW9ucz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "[\r\n  \"13b28e54-ca9d-4c61-805a-69705fb73446\"\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "46"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"ApplicationAlias\": \"13b28e54-ca9d-4c61-805a-69705fb73446\",\r\n    \"ApplicationVirtualPath\": null,\r\n    \"ErrorMessage\": null,\r\n    \"Success\": true\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "b6d5113ea3656467a8ace55bc3e25c99"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:39:49 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanPublishModifyUnpublishApps": [
+      "TestApp475",
+      "ModTestApp1443"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

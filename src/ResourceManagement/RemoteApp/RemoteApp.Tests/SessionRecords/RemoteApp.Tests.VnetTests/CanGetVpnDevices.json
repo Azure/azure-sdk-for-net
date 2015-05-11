@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets/cloudvnet/vpndevices?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHMvY2xvdWR2bmV0L3ZwbmRldmljZXM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Vendors\": [\r\n    {\r\n      \"Platforms\": [\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"ASA Software 8.3\"\r\n            }\r\n          ],\r\n          \"name\": \"ASA 5500 Series Adaptive Security Appliances\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"IOS XE 15.1\"\r\n            }\r\n          ],\r\n          \"name\": \"ASR 1000 Series Aggregation Services Routers\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"IOS XE 15.2\"\r\n            }\r\n          ],\r\n          \"name\": \"ASR 1000 Series Aggregation Services Routers - Dynamic Routing\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"IOS 15.0\"\r\n            }\r\n          ],\r\n          \"name\": \"ISR Series Integrated Services Routers\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"IOS 15.1\"\r\n            }\r\n          ],\r\n          \"name\": \"ISR Series Integrated Services Routers - Dynamic Routing\"\r\n        }\r\n      ],\r\n      \"name\": \"Cisco Systems, Inc.\"\r\n    },\r\n    {\r\n      \"Platforms\": [\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"JunOS 10.2\"\r\n            }\r\n          ],\r\n          \"name\": \"SRX Series Routers\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"JunOS 11.4\"\r\n            }\r\n          ],\r\n          \"name\": \"SRX Series Routers - Dynamic Routing\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"JunOS 10.4\"\r\n            }\r\n          ],\r\n          \"name\": \"J Series Routers\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"JunOS 11.4\"\r\n            }\r\n          ],\r\n          \"name\": \"J Series Routers - Dynamic Routing\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"ScreenOS 6.3\"\r\n            }\r\n          ],\r\n          \"name\": \"ISG Series Routers\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"ScreenOS 6.3\"\r\n            }\r\n          ],\r\n          \"name\": \"ISG Series Routers - Dynamic Routing\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"ScreenOS 6.2\"\r\n            }\r\n          ],\r\n          \"name\": \"SSG Series Routers\"\r\n        },\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"ScreenOS 6.2\"\r\n            }\r\n          ],\r\n          \"name\": \"SSG Series Routers - Dynamic Routing\"\r\n        }\r\n      ],\r\n      \"name\": \"Juniper Networks, Inc.\"\r\n    },\r\n    {\r\n      \"Platforms\": [\r\n        {\r\n          \"OsFamilies\": [\r\n            {\r\n              \"name\": \"Windows Server 2012\"\r\n            },\r\n            {\r\n              \"name\": \"Windows Server 2012 R2\"\r\n            }\r\n          ],\r\n          \"name\": \"RRAS\"\r\n        }\r\n      ],\r\n      \"name\": \"Microsoft Corporation\"\r\n    }\r\n  ],\r\n  \"version\": \"1.0\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1370"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "035af276d2786631869e81fd40c2ecd8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:41 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}
