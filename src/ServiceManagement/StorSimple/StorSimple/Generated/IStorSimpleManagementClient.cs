@@ -179,6 +179,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
+        /// Migration of Legacy Appliance
+        /// </summary>
+        IMigrationOperations MigrateLegacyAppliance
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// All Operations related to Crypto keys
         /// </summary>
         IResourceEncryptionKeyOperations ResourceEncryptionKeys

@@ -1,0 +1,1961 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "17daa975-6488-48e6-90e6-9b4e7739aa05"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfDeviceInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DeviceInfo>\r\n    <ACRCount>0</ACRCount>\r\n    <ActivationTime>2015-03-03T12:32:56.7671234Z</ActivationTime>\r\n    <ActiveController>Unknown</ActiveController>\r\n    <AvailableStorageInBytes>826136959488</AvailableStorageInBytes>\r\n    <CloudCredCount>0</CloudCredCount>\r\n    <Culture>en-US</Culture>\r\n    <CurrentController>Unknown</CurrentController>\r\n    <DataContainerCount>0</DataContainerCount>\r\n    <Description i:nil=\"true\" />\r\n    <DeviceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</DeviceId>\r\n    <DeviceSoftwareVersion>6.3.9600.17215</DeviceSoftwareVersion>\r\n    <FriendlyName>cismohit5</FriendlyName>\r\n    <IsConfigUpdated>true</IsConfigUpdated>\r\n    <IsVirtualApplianceInterimEntry>false</IsVirtualApplianceInterimEntry>\r\n    <Location i:nil=\"true\" />\r\n    <ModelDescription>100</ModelDescription>\r\n    <NNicCards>6</NNicCards>\r\n    <ProvisionedStorageInBytes>273374668288</ProvisionedStorageInBytes>\r\n    <SerialNumber>123456789</SerialNumber>\r\n    <Status>Online</Status>\r\n    <TargetIQN>iqn.1991-05.com.microsoft:storsimple100-123456789-target</TargetIQN>\r\n    <TimeZone>Pacific Standard Time</TimeZone>\r\n    <TotalStorageInBytes>1099511627776</TotalStorageInBytes>\r\n    <Type>Appliance</Type>\r\n    <UsingStorageInBytes>0</UsingStorageInBytes>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DeviceInfo>\r\n  <DeviceInfo>\r\n    <ACRCount>0</ACRCount>\r\n    <ActivationTime>2015-03-03T09:13:59.0480392Z</ActivationTime>\r\n    <ActiveController>Unknown</ActiveController>\r\n    <AvailableStorageInBytes>1058709438464</AvailableStorageInBytes>\r\n    <CloudCredCount>0</CloudCredCount>\r\n    <Culture>en-US</Culture>\r\n    <CurrentController>Unknown</CurrentController>\r\n    <DataContainerCount>0</DataContainerCount>\r\n    <Description i:nil=\"true\" />\r\n    <DeviceId>3825f272-1efb-4c14-b63f-22605ce3b925</DeviceId>\r\n    <DeviceSoftwareVersion>6.3.9600.17215</DeviceSoftwareVersion>\r\n    <FriendlyName>Avirupch_App7</FriendlyName>\r\n    <IsConfigUpdated>true</IsConfigUpdated>\r\n    <IsVirtualApplianceInterimEntry>false</IsVirtualApplianceInterimEntry>\r\n    <Location i:nil=\"true\" />\r\n    <ModelDescription>100</ModelDescription>\r\n    <NNicCards>6</NNicCards>\r\n    <ProvisionedStorageInBytes>40802189312</ProvisionedStorageInBytes>\r\n    <SerialNumber>123456789</SerialNumber>\r\n    <Status>Online</Status>\r\n    <TargetIQN>iqn.1991-05.com.microsoft:storsimple100-123456789-target</TargetIQN>\r\n    <TimeZone>Pacific Standard Time</TimeZone>\r\n    <TotalStorageInBytes>1099511627776</TotalStorageInBytes>\r\n    <Type>Appliance</Type>\r\n    <UsingStorageInBytes>0</UsingStorageInBytes>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DeviceInfo>\r\n</ArrayOfDeviceInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2426"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "17daa975-6488-48e6-90e6-9b4e7739aa05,17daa975-6488-48e6-90e6-9b4e7739aa05"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ff25ee33b52acaae867f1cd8d653933d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS8/YXBpLXZlcnNpb249MjAxNC0wMS0wMS4xLjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "7e5d0edc-5e22-48f4-a34a-f4c4fd8b626a"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServiceConfiguration_Base i:type=\"ServiceConfiguration\" xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AcrChangeList>\r\n    <Added />\r\n    <Deleted xmlns:d3p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n    <Updated>\r\n      <AccessControlRecord>\r\n        <InstanceId>08d8abd5-2ffe-4f95-9166-30b0a34afb08</InstanceId>\r\n        <Name>VDnewTestAcr4413</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator70</InitiatorName>\r\n        <VolumeCount>2</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>1fd9420b-f8b0-46ae-b074-7357a5b6321a</InstanceId>\r\n        <Name>VDnewTestAcr1653</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator13120</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>66e973f1-ccef-4bed-8379-6f908cd349da</InstanceId>\r\n        <Name>ACR169534049</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN2043115848</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>67841cef-cc94-4c69-97cf-b288c6c23f9d</InstanceId>\r\n        <Name>ACR728219756</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1142970643</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>68b14a22-5163-403d-98f1-72a362daae9f</InstanceId>\r\n        <Name>acr02</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>iqn02</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>6bc02200-b82e-4bde-8bf5-3723a3b9273f</InstanceId>\r\n        <Name>VDnewTestAcr8311</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator51490</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>79861c99-3d86-4518-a5d9-590a17ac8ca0</InstanceId>\r\n        <Name>acr01</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>iqn01</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>80e78757-6c42-4269-ba25-f6bde9e3b8e7</InstanceId>\r\n        <Name>ACR1306971649</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1789432718</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>8160243f-584e-4547-ac62-b9dbd3d4407e</InstanceId>\r\n        <Name>VDnewTestAcr5140</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator60180</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>868dc68c-7e99-40a2-aac6-c39e89377f26</InstanceId>\r\n        <Name>ACR1038401392</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN483907387</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>a00d6247-824a-4d5b-b8a6-bf825a6a6ce6</InstanceId>\r\n        <Name>VDnewTestAcr3575</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator48270</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>adc321c6-9d2f-4793-b04e-b5589eb7932c</InstanceId>\r\n        <Name>ACR1389135485</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1452094360</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>af97f39c-f2d9-430e-9014-93035bbf8f8c</InstanceId>\r\n        <Name>ACR562403230</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN26411177</InitiatorName>\r\n        <VolumeCount>2</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>c70ad59f-8b1f-4c2c-a3cd-5b13cce32fbe</InstanceId>\r\n        <Name>AcrName2288</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>InitiatorName4472</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>dddbd493-02df-43a1-807e-6349cbd5ac9f</InstanceId>\r\n        <Name>ACR1488696992</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1176138661</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>e1db3f48-30a3-4ece-a0b0-64f555ad001d</InstanceId>\r\n        <Name>ACR1525046519</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN2047598815</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>e221dea3-6b11-493f-8ff6-d09adb8c9c79</InstanceId>\r\n        <Name>VDnewTestAcr4856</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator70070</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>e8a6d732-7cdd-47f7-acda-ec2379223696</InstanceId>\r\n        <Name>ACR891376243</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1663983452</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>ea7f25f7-e1cb-4c49-8a08-6f896f8bd3b9</InstanceId>\r\n        <Name>ACR1782638411</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1571323296</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f4a93afe-e0a3-4fa7-993a-00241a8fe799</InstanceId>\r\n        <Name>ACR193038664</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1356862334</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f752e1da-a095-4607-8313-b37dfaf241cb</InstanceId>\r\n        <Name>ACR1063572540</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1763983391</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f75bca46-2b70-4659-8269-4050bd2777d1</InstanceId>\r\n        <Name>ACR1335984491</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1537096967</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f8b69a41-5dde-41fc-b2aa-0bb6791e58f8</InstanceId>\r\n        <Name>VDnewTestAcr9435</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>VDinitiator36720</InitiatorName>\r\n        <VolumeCount>2</VolumeCount>\r\n      </AccessControlRecord>\r\n    </Updated>\r\n  </AcrChangeList>\r\n  <CredentialChangeList>\r\n    <Added />\r\n    <Deleted xmlns:d3p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n    <Updated>\r\n      <StorageAccountCredential>\r\n        <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n        <Name>onesdksa</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <CloudType>Azure</CloudType>\r\n        <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n        <IsDefault>false</IsDefault>\r\n        <Location>West US</Location>\r\n        <Login>onesdksa</Login>\r\n        <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n        <UseSSL>true</UseSSL>\r\n        <VolumeCount>13</VolumeCount>\r\n      </StorageAccountCredential>\r\n    </Updated>\r\n  </CredentialChangeList>\r\n  <OperationInProgress>false</OperationInProgress>\r\n</ServiceConfiguration_Base>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "9895"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "7e5d0edc-5e22-48f4-a34a-f4c4fd8b626a,7e5d0edc-5e22-48f4-a34a-f4c4fd8b626a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "88d71561bf6bc074bcf4b5864fa6ee69"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/datacontainers?api-version=2014-01-01.2.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9kYXRhY29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjIuMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "<DataContainer_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\">\r\n  <Name>DCName6337</Name>\r\n  <OperationInProgress>Invalid</OperationInProgress>\r\n  <BandwidthRate>256</BandwidthRate>\r\n  <IsDefault>false</IsDefault>\r\n  <IsEncryptionEnabled>false</IsEncryptionEnabled>\r\n  <Owned>false</Owned>\r\n  <PrimaryStorageAccountCredential>\r\n    <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n    <Name>onesdksa</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <CloudType>Azure</CloudType>\r\n    <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n    <IsDefault>false</IsDefault>\r\n    <Location>West US</Location>\r\n    <Login>onesdksa</Login>\r\n    <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n    <UseSSL>true</UseSSL>\r\n    <VolumeCount>13</VolumeCount>\r\n    <PasswordEncryptionCertThumbprint p3:nil=\"true\" xmlns:p3=\"http://www.w3.org/2001/XMLSchema-instance\" />\r\n  </PrimaryStorageAccountCredential>\r\n  <VolumeCount>0</VolumeCount>\r\n</DataContainer_V2>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "1305"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">391f405b-bffd-4d61-863a-be89751afebc</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f6b32e950125cdf6b7f61ae5850105e2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:08 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/391f405b-bffd-4d61-863a-be89751afebc?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzM5MWY0MDViLWJmZmQtNGQ2MS04NjNhLWJlODk3NTFhZmViYz9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>391f405b-bffd-4d61-863a-be89751afebc</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC3</ErrorCode>\r\n      <Message>Create volume container 'DCName6337' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "563"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "474932b7-cdcb-437d-a9e7-d2f6315bd620,474932b7-cdcb-437d-a9e7-d2f6315bd620"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "bdca825e22f2c4018a64859b8b36e985"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:10 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/391f405b-bffd-4d61-863a-be89751afebc?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzM5MWY0MDViLWJmZmQtNGQ2MS04NjNhLWJlODk3NTFhZmViYz9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>391f405b-bffd-4d61-863a-be89751afebc</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ABF</ErrorCode>\r\n      <Message>Create volume container 'DCName6337' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Succeeded</Result>\r\n  <Status>Completed</Status>\r\n  <TaskResult>Succeeded</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "562"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "ca69d428-f146-4ac5-b67d-e60940436720,ca69d428-f146-4ac5-b67d-e60940436720"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a7844f11627ece89b0b60c08c434a36f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:16 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/datacontainers?dataContainerName=DCName6337&api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9kYXRhY29udGFpbmVycz9kYXRhQ29udGFpbmVyTmFtZT1EQ05hbWU2MzM3JmFwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<DataContainer_Base i:type=\"DataContainer\" xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <InstanceId>93c6113a-f0e3-4fdb-963c-7b4005916a05</InstanceId>\r\n  <Name>DCName6337</Name>\r\n  <OperationInProgress>None</OperationInProgress>\r\n  <BandwidthRate>256</BandwidthRate>\r\n  <EncryptionKey></EncryptionKey>\r\n  <IsDefault>false</IsDefault>\r\n  <IsEncryptionEnabled>false</IsEncryptionEnabled>\r\n  <Owned>true</Owned>\r\n  <PrimaryStorageAccountCredential>\r\n    <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n    <Name>onesdksa</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <GlobalId xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\">e5696c21-936d-4401-ab79-5fa4dd77ce90</GlobalId>\r\n    <CloudType>Azure</CloudType>\r\n    <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n    <IsDefault>false</IsDefault>\r\n    <Location>West US</Location>\r\n    <Login>onesdksa</Login>\r\n    <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n    <UseSSL>true</UseSSL>\r\n    <VolumeCount>13</VolumeCount>\r\n  </PrimaryStorageAccountCredential>\r\n  <VolumeCount>0</VolumeCount>\r\n</DataContainer_Base>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1412"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "690658a2256dc8ba8411e5db4774e7bb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:19 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/virtualdisks?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC92aXJ0dWFsZGlza3M/YXBpLXZlcnNpb249MjAxNC0wMS0wMS4xLjA=",
+      "RequestMethod": "POST",
+      "RequestBody": "<VirtualDisk xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\">\r\n  <Name>VD1Name9654</Name>\r\n  <OperationInProgress>Invalid</OperationInProgress>\r\n  <AccessType>ReadWrite</AccessType>\r\n  <AcrIdList />\r\n  <AcrList>\r\n    <AccessControlRecord>\r\n      <Name>VDnewTestAcr9146</Name>\r\n      <GlobalId p4:nil=\"true\" xmlns:p4=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n      <OperationInProgress>Invalid</OperationInProgress>\r\n      <InitiatorName>VDinitiator86350</InitiatorName>\r\n      <VolumeCount>0</VolumeCount>\r\n    </AccessControlRecord>\r\n  </AcrList>\r\n  <AppType>PrimaryVolume</AppType>\r\n  <DataContainer>\r\n    <InstanceId>93c6113a-f0e3-4fdb-963c-7b4005916a05</InstanceId>\r\n    <Name>DCName6337</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BandwidthRate>256</BandwidthRate>\r\n    <EncryptionKey></EncryptionKey>\r\n    <IsDefault>false</IsDefault>\r\n    <IsEncryptionEnabled>false</IsEncryptionEnabled>\r\n    <Owned>true</Owned>\r\n    <PrimaryStorageAccountCredential>\r\n      <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n      <Name>onesdksa</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <CloudType>Azure</CloudType>\r\n      <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n      <IsDefault>false</IsDefault>\r\n      <Location>West US</Location>\r\n      <Login>onesdksa</Login>\r\n      <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n      <UseSSL>true</UseSSL>\r\n      <VolumeCount>13</VolumeCount>\r\n      <PasswordEncryptionCertThumbprint p4:nil=\"true\" xmlns:p4=\"http://www.w3.org/2001/XMLSchema-instance\" />\r\n    </PrimaryStorageAccountCredential>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DataContainer>\r\n  <IsBackupEnabled>false</IsBackupEnabled>\r\n  <IsDefaultBackupEnabled>true</IsDefaultBackupEnabled>\r\n  <IsMonitoringEnabled>false</IsMonitoringEnabled>\r\n  <Online>true</Online>\r\n  <SizeInBytes>10737418240</SizeInBytes>\r\n</VirtualDisk>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "2320"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<guid xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">150fd407-8a48-451f-854c-3ed52a15fce4</guid>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "109"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "50638e0517a9c8a9a5f79d7991f773b1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:23 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/150fd407-8a48-451f-854c-3ed52a15fce4?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzE1MGZkNDA3LThhNDgtNDUxZi04NTRjLTNlZDUyYTE1ZmNlND9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>150fd407-8a48-451f-854c-3ed52a15fce4</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ABE</ErrorCode>\r\n      <Message>Create access control record 'VDnewTestAcr9146' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ACD</ErrorCode>\r\n      <Message>Create volume 'VD1Name9654' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC8</ErrorCode>\r\n      <Message>Create backup policy 'VD1Name9654_Default' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD7</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1159"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "218c4522-d137-40fe-a3c8-1278d703ccd3,218c4522-d137-40fe-a3c8-1278d703ccd3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c0943347b1ecc0c596aeb29c1fd35230"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:24 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/150fd407-8a48-451f-854c-3ed52a15fce4?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzE1MGZkNDA3LThhNDgtNDUxZi04NTRjLTNlZDUyYTE1ZmNlND9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>150fd407-8a48-451f-854c-3ed52a15fce4</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ABA</ErrorCode>\r\n      <Message>Create access control record 'VDnewTestAcr9146' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ACD</ErrorCode>\r\n      <Message>Create volume 'VD1Name9654' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC8</ErrorCode>\r\n      <Message>Create backup policy 'VD1Name9654_Default' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD7</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1158"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "d9d71e7e-edb4-4037-bc17-cef715c78975,d9d71e7e-edb4-4037-bc17-cef715c78975"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c8cc3d9c874acbb69a77d44dda0b06bc"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:31 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/150fd407-8a48-451f-854c-3ed52a15fce4?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzE1MGZkNDA3LThhNDgtNDUxZi04NTRjLTNlZDUyYTE1ZmNlND9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>150fd407-8a48-451f-854c-3ed52a15fce4</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ABA</ErrorCode>\r\n      <Message>Create access control record 'VDnewTestAcr9146' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC9</ErrorCode>\r\n      <Message>Create volume 'VD1Name9654' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC4</ErrorCode>\r\n      <Message>Create backup policy 'VD1Name9654_Default' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD7</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1156"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "844b1b4f-fb6b-4391-be38-46ef80dc3233,844b1b4f-fb6b-4391-be38-46ef80dc3233"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "28ce0f0a4865cbad86ee85c227e07637"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:38 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/150fd407-8a48-451f-854c-3ed52a15fce4?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzE1MGZkNDA3LThhNDgtNDUxZi04NTRjLTNlZDUyYTE1ZmNlND9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>150fd407-8a48-451f-854c-3ed52a15fce4</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061ABA</ErrorCode>\r\n      <Message>Create access control record 'VDnewTestAcr9146' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC9</ErrorCode>\r\n      <Message>Create volume 'VD1Name9654' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC4</ErrorCode>\r\n      <Message>Create backup policy 'VD1Name9654_Default' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD3</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Succeeded</Result>\r\n  <Status>Completed</Status>\r\n  <TaskResult>Succeeded</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1155"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "a1ac03c2-7b33-477d-b5fd-f5271b29973e,a1ac03c2-7b33-477d-b5fd-f5271b29973e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "1c59ab168635c55e8fdc1666b5e73418"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:45 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/virtualdisks?diskName=VD1Name9654&api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC92aXJ0dWFsZGlza3M/ZGlza05hbWU9VkQxTmFtZTk2NTQmYXBpLXZlcnNpb249MjAxNC0wMS0wMS4xLjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<VirtualDisk xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <InstanceId>SS-VOL-1e67a569-3c22-44a2-94a7-9bb385fd4f9c</InstanceId>\r\n  <Name>VD1Name9654</Name>\r\n  <OperationInProgress>None</OperationInProgress>\r\n  <AccessType>ReadWrite</AccessType>\r\n  <AcrIdList xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <d2p1:string>d785195b-b56f-44ad-8775-eb989eb1377b</d2p1:string>\r\n  </AcrIdList>\r\n  <AcrList>\r\n    <AccessControlRecord>\r\n      <InstanceId>9aad26e8-33b3-4ee2-9bc6-4ca9b26046ad</InstanceId>\r\n      <Name>VDnewTestAcr9146</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <GlobalId xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\">9aad26e8-33b3-4ee2-9bc6-4ca9b26046ad</GlobalId>\r\n      <InitiatorName>VDinitiator86350</InitiatorName>\r\n      <VolumeCount>1</VolumeCount>\r\n    </AccessControlRecord>\r\n  </AcrList>\r\n  <AppType>PrimaryVolume</AppType>\r\n  <DataContainer>\r\n    <InstanceId>93c6113a-f0e3-4fdb-963c-7b4005916a05</InstanceId>\r\n    <Name>DCName6337</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BandwidthRate>256</BandwidthRate>\r\n    <EncryptionKey></EncryptionKey>\r\n    <IsDefault>false</IsDefault>\r\n    <IsEncryptionEnabled>false</IsEncryptionEnabled>\r\n    <Owned>true</Owned>\r\n    <PrimaryStorageAccountCredential>\r\n      <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n      <Name>onesdksa</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <GlobalId xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\">e5696c21-936d-4401-ab79-5fa4dd77ce90</GlobalId>\r\n      <CloudType>Azure</CloudType>\r\n      <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n      <IsDefault>false</IsDefault>\r\n      <Location>West US</Location>\r\n      <Login>onesdksa</Login>\r\n      <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n      <UseSSL>true</UseSSL>\r\n      <VolumeCount>14</VolumeCount>\r\n    </PrimaryStorageAccountCredential>\r\n    <VolumeCount>1</VolumeCount>\r\n  </DataContainer>\r\n  <DataContainerId>93c6113a-f0e3-4fdb-963c-7b4005916a05</DataContainerId>\r\n  <IsBackupEnabled>false</IsBackupEnabled>\r\n  <IsDefaultBackupEnabled>false</IsDefaultBackupEnabled>\r\n  <IsMonitoringEnabled>false</IsMonitoringEnabled>\r\n  <Online>true</Online>\r\n  <SizeInBytes>10737418240</SizeInBytes>\r\n  <VSN>SS-VOL-1e67a569-3c22-44a2-94a7-9bb385fd4f9c</VSN>\r\n</VirtualDisk>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2521"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8e149b6589d5cf8a9d953c52a747da02"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:46 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/policies?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9wb2xpY2llcz9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "<AddBackupPolicyRequest xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\">\r\n  <Name>PolicyName2540</Name>\r\n  <Schedules>\r\n    <BackupScheduleBase>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <Recurrence>\r\n        <RecurrenceType>Daily</RecurrenceType>\r\n        <RecurrenceValue>5</RecurrenceValue>\r\n      </Recurrence>\r\n      <RetentionCount>5</RetentionCount>\r\n      <StartTime>2015-03-19T17:57:46+05:30</StartTime>\r\n      <Status>Enabled</Status>\r\n    </BackupScheduleBase>\r\n  </Schedules>\r\n  <VirtualDiskIds>\r\n    <string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">SS-VOL-1e67a569-3c22-44a2-94a7-9bb385fd4f9c</string>\r\n  </VirtualDiskIds>\r\n</AddBackupPolicyRequest>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "701"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">9ab14b43-8f84-4e8f-af07-e5c7fd35df68</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f37525a46408c39cb5757fdaf8b649c4"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:49 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/9ab14b43-8f84-4e8f-af07-e5c7fd35df68?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzlhYjE0YjQzLThmODQtNGU4Zi1hZjA3LWU1YzdmZDM1ZGY2OD9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>9ab14b43-8f84-4e8f-af07-e5c7fd35df68</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC8</ErrorCode>\r\n      <Message>Create backup policy 'PolicyName2540' on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD7</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "901ed458-6b1d-4f66-9a4c-2c4cfb339e7f,901ed458-6b1d-4f66-9a4c-2c4cfb339e7f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f89d78897fc5c6e6aed76e971adb601b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:50 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/9ab14b43-8f84-4e8f-af07-e5c7fd35df68?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzlhYjE0YjQzLThmODQtNGU4Zi1hZjA3LWU1YzdmZDM1ZGY2OD9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>9ab14b43-8f84-4e8f-af07-e5c7fd35df68</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC4</ErrorCode>\r\n      <Message>Create backup policy 'PolicyName2540' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD7</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "745"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "7875a1f8-a1b9-493c-b076-c24eeaaf90f5,7875a1f8-a1b9-493c-b076-c24eeaaf90f5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "7c289139e229c1be8f7dfae0bab9db22"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:27:58 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/9ab14b43-8f84-4e8f-af07-e5c7fd35df68?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzlhYjE0YjQzLThmODQtNGU4Zi1hZjA3LWU1YzdmZDM1ZGY2OD9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>9ab14b43-8f84-4e8f-af07-e5c7fd35df68</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AC4</ErrorCode>\r\n      <Message>Create backup policy 'PolicyName2540' on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AD3</ErrorCode>\r\n      <Message>Create schedule on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Succeeded</Result>\r\n  <Status>Completed</Status>\r\n  <TaskResult>Succeeded</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "4941016c-86aa-4776-a028-67c57a492be5,4941016c-86aa-4776-a028-67c57a492be5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "7aeb14219b28c927bedf305fa01f9e2b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/policies?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9wb2xpY2llcz9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfBackupPolicy xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <BackupPolicy>\r\n    <InstanceId>06072d5c-4d92-4bc8-828e-1072267c4ed5</InstanceId>\r\n    <Name>VD1Name9654_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>1b6d2b69-ee92-4674-b36f-4c7d78a07871</InstanceId>\r\n    <Name>VD1Name7578_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>45595121-c85a-4444-a18e-350379e8357f</InstanceId>\r\n    <Name>PolicyName1306</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-19T12:20:35.399Z</LastBackup>\r\n    <NextBackup>2015-03-24T12:20:20Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>6895e73c-0b3f-4142-b402-507b45e9bf92</InstanceId>\r\n    <Name>VDName8101_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>0</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>86660159-5d00-4a64-b3b9-a60bb5b80b07</InstanceId>\r\n    <Name>VD1Name585_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>0</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>9644bae2-6032-4241-b00d-c54ad661ed00</InstanceId>\r\n    <Name>PolicyName7269</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-19T12:25:00.602Z</LastBackup>\r\n    <NextBackup>2015-03-24T12:24:24Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>97bbefdc-d7f5-4b3e-bbee-cb16bf839f83</InstanceId>\r\n    <Name>VD1Name6919_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>a902f58a-caf1-4e4b-9898-533ecc13b570</InstanceId>\r\n    <Name>VD1Name411_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>0</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>b3434ab5-427f-4566-8d6a-2120e1e18cb9</InstanceId>\r\n    <Name>PolicyName2540</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-24T12:27:27Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>ee8d5eab-7b51-4a3e-a4e4-604645a76295</InstanceId>\r\n    <Name>VD1Name8777_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>fb3e5981-05fb-4587-8f40-ce883d5a7e7f</InstanceId>\r\n    <Name>VD1Name8225_Default</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n    <NextBackup>2015-03-20T05:30:30Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>0</VolumesCount>\r\n  </BackupPolicy>\r\n</ArrayOfBackupPolicy>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4635"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f0fc077e1a2ccca48454d1545d9c3f8e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:05 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/policies?policyName=PolicyName2540&api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9wb2xpY2llcz9wb2xpY3lOYW1lPVBvbGljeU5hbWUyNTQwJmFwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<BackupPolicyDetails xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <InstanceId>b3434ab5-427f-4566-8d6a-2120e1e18cb9</InstanceId>\r\n  <Name>PolicyName2540</Name>\r\n  <OperationInProgress>None</OperationInProgress>\r\n  <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n  <LastBackup>2010-01-01T00:00:00Z</LastBackup>\r\n  <NextBackup>2015-03-24T12:27:27Z</NextBackup>\r\n  <SSMHostName i:nil=\"true\" />\r\n  <SchedulesCount>1</SchedulesCount>\r\n  <VolumesCount>1</VolumesCount>\r\n  <Schedules>\r\n    <BackupScheduleResponse>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <Recurrence>\r\n        <RecurrenceType>Daily</RecurrenceType>\r\n        <RecurrenceValue>5</RecurrenceValue>\r\n      </Recurrence>\r\n      <RetentionCount>5</RetentionCount>\r\n      <StartTime>2015-03-19T12:27:46Z</StartTime>\r\n      <Status>Enabled</Status>\r\n      <Id>28230a61-2d73-4e8f-8bfa-ccfa07ca3e4a</Id>\r\n      <LastSuccessfulRun>2010-01-01T00:00:00Z</LastSuccessfulRun>\r\n    </BackupScheduleResponse>\r\n  </Schedules>\r\n  <VirtualDisks>\r\n    <VirtualDiskPolicyInfo>\r\n      <InstanceId>SS-VOL-1e67a569-3c22-44a2-94a7-9bb385fd4f9c</InstanceId>\r\n      <Name>VD1Name9654</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <AssociatedBackupPolicies xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n        <d4p1:string>VD1Name9654_Default</d4p1:string>\r\n        <d4p1:string>PolicyName2540</d4p1:string>\r\n      </AssociatedBackupPolicies>\r\n      <CloudType>Azure</CloudType>\r\n      <DataContainerId>93c6113a-f0e3-4fdb-963c-7b4005916a05</DataContainerId>\r\n      <DataContainerName>DCName6337</DataContainerName>\r\n    </VirtualDiskPolicyInfo>\r\n  </VirtualDisks>\r\n</BackupPolicyDetails>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1509"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0da352ac0c02ccef968055f6a3c995cd"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:07 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/policies/b3434ab5-427f-4566-8d6a-2120e1e18cb9?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9wb2xpY2llcy9iMzQzNGFiNS00MjdmLTQ1NjYtOGQ2YS0yMTIwZTFlMThjYjk/YXBpLXZlcnNpb249MjAxNC0wMS0wMS4xLjA=",
+      "RequestMethod": "POST",
+      "RequestBody": "<BackupNowRequest xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\">\r\n  <Type>CloudSnapshot</Type>\r\n</BackupNowRequest>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Content-Length": [
+          "120"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">378ada4d-f52d-488c-b0dc-df2163fb4da1</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5c0bcdb29e65cf189dbfd0ba14c1891c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:11 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/378ada4d-f52d-488c-b0dc-df2163fb4da1?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzM3OGFkYTRkLWY1MmQtNDg4Yy1iMGRjLWRmMjE2M2ZiNGRhMT9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>378ada4d-f52d-488c-b0dc-df2163fb4da1</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AEB</ErrorCode>\r\n      <Message>Create adhoc backup job on 'cismohit5' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "550"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "e840c833-8825-48a2-b8e9-d0907eb543f9,e840c833-8825-48a2-b8e9-d0907eb543f9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "efa57ba19cbac32e868e25ca87a608ac"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:12 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/378ada4d-f52d-488c-b0dc-df2163fb4da1?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzM3OGFkYTRkLWY1MmQtNDg4Yy1iMGRjLWRmMjE2M2ZiNGRhMT9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>378ada4d-f52d-488c-b0dc-df2163fb4da1</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AE7</ErrorCode>\r\n      <Message>Create adhoc backup job on 'cismohit5' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Succeeded</Result>\r\n  <Status>Completed</Status>\r\n  <TaskResult>Succeeded</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "549"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "35802da2-f36d-4280-88ae-bc0f8a27171f,35802da2-f36d-4280-88ae-bc0f8a27171f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "530bb7d184a7cf4bbe06a831770ddc0f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:19 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/backups?filterType=BackupPolicy&isAllSelected=True&api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9iYWNrdXBzP2ZpbHRlclR5cGU9QmFja3VwUG9saWN5JmlzQWxsU2VsZWN0ZWQ9VHJ1ZSZhcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<BackupSetsQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <BackupSetsList>\r\n    <BackupSetInfo>\r\n      <InstanceId>003b253a-6d7b-4c47-8c5a-15a0744fcd0d</InstanceId>\r\n      <Name>PolicyName7269</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <BackupJobCreationType>Adhoc</BackupJobCreationType>\r\n      <CloudType>Azure</CloudType>\r\n      <CreatedOn>2015-03-19T12:25:00.602Z</CreatedOn>\r\n      <SSMHostName i:nil=\"true\" />\r\n      <SizeInBytes>10737418240</SizeInBytes>\r\n      <Snapshots>\r\n        <Snapshot>\r\n          <DataContainerId>75a3fa75-9ad9-4749-abef-2f541af42e05</DataContainerId>\r\n          <Id>326d986b-308d-40a8-8369-3ef2f3645cdf_0000000000000000</Id>\r\n          <Name>VD1Name8777</Name>\r\n          <SizeInBytes>10737418240</SizeInBytes>\r\n          <VolumeId>SS-VOL-7712f997-8944-43c0-86a0-48dfcf511292</VolumeId>\r\n        </Snapshot>\r\n      </Snapshots>\r\n      <Type>CloudSnapshot</Type>\r\n    </BackupSetInfo>\r\n    <BackupSetInfo>\r\n      <InstanceId>c18b04ef-896e-477f-93a3-a48348c8335f</InstanceId>\r\n      <Name>PolicyName1306</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <BackupJobCreationType>Adhoc</BackupJobCreationType>\r\n      <CloudType>Azure</CloudType>\r\n      <CreatedOn>2015-03-19T12:20:35.399Z</CreatedOn>\r\n      <SSMHostName i:nil=\"true\" />\r\n      <SizeInBytes>10737418240</SizeInBytes>\r\n      <Snapshots>\r\n        <Snapshot>\r\n          <DataContainerId>fb77be6a-a592-4ea5-bc5a-6f861c80efa2</DataContainerId>\r\n          <Id>b5536596-7d76-47c9-ab21-30f5d8eaebcc_0000000000000000</Id>\r\n          <Name>VD1Name6919</Name>\r\n          <SizeInBytes>10737418240</SizeInBytes>\r\n          <VolumeId>SS-VOL-7acf27bd-0e4f-45fa-bd5d-f1f485922a02</VolumeId>\r\n        </Snapshot>\r\n      </Snapshots>\r\n      <Type>CloudSnapshot</Type>\r\n    </BackupSetInfo>\r\n  </BackupSetsList>\r\n  <TotalBackupSetCount>2</TotalBackupSetCount>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</BackupSetsQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1687"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b8e8e6f603facee8939c0dfef37eeec5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:20 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/clone?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9jbG9uZT9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "<CloneRequest_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\">\r\n  <BackupSetId>003b253a-6d7b-4c47-8c5a-15a0744fcd0d</BackupSetId>\r\n  <ReturnWorkflowId>true</ReturnWorkflowId>\r\n  <SourceSnapshot>\r\n    <DataContainerId>75a3fa75-9ad9-4749-abef-2f541af42e05</DataContainerId>\r\n    <Id>326d986b-308d-40a8-8369-3ef2f3645cdf_0000000000000000</Id>\r\n    <Name>VD1Name8777</Name>\r\n    <SizeInBytes>10737418240</SizeInBytes>\r\n    <VolumeId>SS-VOL-7712f997-8944-43c0-86a0-48dfcf511292</VolumeId>\r\n  </SourceSnapshot>\r\n  <TargetACRIdList />\r\n  <TargetACRList>\r\n    <AccessControlRecord>\r\n      <InstanceId>9aad26e8-33b3-4ee2-9bc6-4ca9b26046ad</InstanceId>\r\n      <Name>VDnewTestAcr9146</Name>\r\n      <GlobalId xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\">9aad26e8-33b3-4ee2-9bc6-4ca9b26046ad</GlobalId>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <InitiatorName>VDinitiator86350</InitiatorName>\r\n      <VolumeCount>1</VolumeCount>\r\n    </AccessControlRecord>\r\n  </TargetACRList>\r\n  <TargetDeviceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</TargetDeviceId>\r\n  <TargetVolName>VD1Name9654_Cloned</TargetVolName>\r\n</CloneRequest_V2>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1186"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "4f5a88fc-3b17-4783-b274-8eb0671bee0a"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">3d57a8b2-0147-4ec6-b705-aeee1d1537c3</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "4f5a88fc-3b17-4783-b274-8eb0671bee0a,4f5a88fc-3b17-4783-b274-8eb0671bee0a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b28a7473891ac28a969402b23bf2da97"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:23 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>0</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.8240893S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1784"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2870e3e61a34c4f0a7cf53d7fbefde70"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:26 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>0</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT5.1567551S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1784"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "1e9d5115b10acca188d2b69d3c177af0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:29 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>0</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT8.4239058S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1784"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "00faa369270dce54a69830ff0b9b4785"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>0</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT11.2034746S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1785"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4203dbe3e32ac8388439b6372e1061e9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>10737418240</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>10737418240</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>80</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT13.8271249S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1806"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d29d73a5f6e4c547a142d1d6d7db3036"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:38 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>10737418240</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>10737418240</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>80</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT16.6188689S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1806"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "204fd5691586c59bb14c1323f1c79816"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:40 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>10737418240</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>10737418240</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Invalid</Result>\r\n        <Status>InProgress</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>95</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT19.2165391S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1806"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "79df154fb423cc518b74f1264787d06f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:43 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=0ee59ae9-0293-46e2-ae56-bc308c8e5520&jobId=3d57a8b2-0147-4ec6-b705-aeee1d1537c3&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMCZqb2JJZD0zZDU3YThiMi0wMTQ3LTRlYzYtYjcwNS1hZWVlMWQxNTM3YzMmc2tpcD0wJnRvcD0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>1</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</InstanceId>\r\n      <Name>CloneWorkflowJob_3d57a8b2-0147-4ec6-b705-aeee1d1537c3</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>2015-03-19T12:25:00.602Z</BackupTimeStamp>\r\n      <BackupType>Invalid</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>10737418240</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>10737418240</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>false</IsJobCancellable>\r\n      <JobDetails>\r\n        <Error i:nil=\"true\" xmlns:d5p1=\"http://schemas.microsoft.com/wars\" />\r\n        <JobId>3d57a8b2-0147-4ec6-b705-aeee1d1537c3</JobId>\r\n        <JobSteps />\r\n        <Result>Succeeded</Result>\r\n        <Status>Completed</Status>\r\n        <TaskResult>Invalid</TaskResult>\r\n      </JobDetails>\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</InstanceId>\r\n        <Name>cismohit5</Name>\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name8777</Name>\r\n      </SourceVolume>\r\n      <Status>Completed</Status>\r\n      <TimeStats>\r\n        <Duration>PT21.1865176S</Duration>\r\n        <EndTimestamp>2015-03-19T12:28:45.43985Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-19T12:28:24.2533324Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>CloneWorkflow</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name>VD1Name9654_Cloned</Name>\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>-1</NextPageStartIdentifier>\r\n  <NextPageUri i:nil=\"true\" />\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1817"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f355688e-785b-406f-83fe-8108650de798,f355688e-785b-406f-83fe-8108650de798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "195c5cac94ecc60c9d5d1e6c77b98a88"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:45 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/virtualdisks?diskName=VD1Name9654_Cloned&api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC92aXJ0dWFsZGlza3M/ZGlza05hbWU9VkQxTmFtZTk2NTRfQ2xvbmVkJmFwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "06fdff48-4b32-4381-9380-f4b9ba728b72"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<VirtualDisk xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <InstanceId>BA-1503191228276496446-326d986b-308d-40a8-8369-3ef2f3645cdf</InstanceId>\r\n  <Name>VD1Name9654_Cloned</Name>\r\n  <OperationInProgress>None</OperationInProgress>\r\n  <AccessType>ReadWrite</AccessType>\r\n  <AcrIdList xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <d2p1:string>d785195b-b56f-44ad-8775-eb989eb1377b</d2p1:string>\r\n  </AcrIdList>\r\n  <AcrList>\r\n    <AccessControlRecord>\r\n      <InstanceId>9aad26e8-33b3-4ee2-9bc6-4ca9b26046ad</InstanceId>\r\n      <Name>VDnewTestAcr9146</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <GlobalId xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\">9aad26e8-33b3-4ee2-9bc6-4ca9b26046ad</GlobalId>\r\n      <InitiatorName>VDinitiator86350</InitiatorName>\r\n      <VolumeCount>2</VolumeCount>\r\n    </AccessControlRecord>\r\n  </AcrList>\r\n  <AppType>PrimaryVolume</AppType>\r\n  <DataContainer>\r\n    <InstanceId>75a3fa75-9ad9-4749-abef-2f541af42e05</InstanceId>\r\n    <Name>DCName5764</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BandwidthRate>256</BandwidthRate>\r\n    <EncryptionKey></EncryptionKey>\r\n    <IsDefault>false</IsDefault>\r\n    <IsEncryptionEnabled>false</IsEncryptionEnabled>\r\n    <Owned>true</Owned>\r\n    <PrimaryStorageAccountCredential>\r\n      <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n      <Name>onesdksa</Name>\r\n      <OperationInProgress>None</OperationInProgress>\r\n      <GlobalId xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\">e5696c21-936d-4401-ab79-5fa4dd77ce90</GlobalId>\r\n      <CloudType>Azure</CloudType>\r\n      <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n      <IsDefault>false</IsDefault>\r\n      <Location>West US</Location>\r\n      <Login>onesdksa</Login>\r\n      <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n      <UseSSL>true</UseSSL>\r\n      <VolumeCount>15</VolumeCount>\r\n    </PrimaryStorageAccountCredential>\r\n    <VolumeCount>2</VolumeCount>\r\n  </DataContainer>\r\n  <DataContainerId>75a3fa75-9ad9-4749-abef-2f541af42e05</DataContainerId>\r\n  <IsBackupEnabled>false</IsBackupEnabled>\r\n  <IsDefaultBackupEnabled>false</IsDefaultBackupEnabled>\r\n  <IsMonitoringEnabled>false</IsMonitoringEnabled>\r\n  <Online>true</Online>\r\n  <SizeInBytes>10737418240</SizeInBytes>\r\n  <VSN>BA-1503191228276496446-326d986b-308d-40a8-8369-3ef2f3645cdf</VSN>\r\n</VirtualDisk>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2560"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "06fdff48-4b32-4381-9380-f4b9ba728b72,06fdff48-4b32-4381-9380-f4b9ba728b72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "37ced2896338cc4ba3bcb1063fc1a2c6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 12:28:48 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CloneScenarioSingleDeviceTest": [
+      "DCName6337",
+      "VDnewTestAcr9146",
+      "VDinitiator8635",
+      "VD1Name9654",
+      "PolicyName2540"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "4576bc2e-58ca-4d0f-ab76-6f9b32d45c86"
+  }
+}
