@@ -25,7 +25,7 @@ using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights
 {
-    internal partial class MetricOperations
+    public partial class MetricOperations
     {
         public async Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {

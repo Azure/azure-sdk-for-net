@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// Operations for metric values.
     /// </summary>
-    internal partial class MetricOperations : IServiceOperations<InsightsClient>, IMetricOperations
+    public partial class MetricOperations : IServiceOperations<InsightsClient>, IMetricOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricOperations class.
