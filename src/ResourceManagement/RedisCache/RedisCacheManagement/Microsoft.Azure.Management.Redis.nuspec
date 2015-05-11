@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="RedisCacheManagement\**\*.cs" target="src" />
+    <file src="ResourceManagement\RedisCache\RedisCacheManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Redis.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Redis.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Redis.xml" target="lib\portable-net45+wp8+wpa81+win" />

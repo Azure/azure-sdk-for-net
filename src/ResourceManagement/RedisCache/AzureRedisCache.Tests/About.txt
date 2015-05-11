@@ -1,0 +1,4 @@
+﻿Note: this is a test project specifically for *AzureRedisCache.Specification*,
+not for any other project.
+(This naming convention was recommended in the Hydra getting started docs,
+and I haven't found any reason not to follow it yet.
