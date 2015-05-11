@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="WebSiteManagement2\**\*.cs" target="src" />
+    <file src="ResourceManagement\WebSite\WebSiteManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.xml" target="lib\portable-net45+wp8+wpa81+win" />
