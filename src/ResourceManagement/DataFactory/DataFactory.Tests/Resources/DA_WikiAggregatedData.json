@@ -1,0 +1,30 @@
+{
+    name: "DA_WikiAggregatedData",
+    properties:
+    {
+        structure:  
+        [ 
+            { name: "slicetimestamp", position: 0, type: "String" },
+            { name: "projectname", position: 1, type: "String" },
+            { name: "hits", position: 2, type: "Decimal" }
+        ],
+        location: 
+        {
+            type: "AzureSqlTableLocation",
+            tableName: "wikiaggregateddata",
+            linkedServiceName: "LinkedService-WikiAggregatedData"
+        },
+        availability: 
+        {
+            frequency: "Hour",
+            interval: 1
+        },
+        policy: 
+        {
+            validation:
+            {
+                minimumRows: 10
+            }
+        }
+    }
+}
