@@ -1,0 +1,53 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/billingusagesummaryallusers/2015/2?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL2JpbGxpbmd1c2FnZXN1bW1hcnlhbGx1c2Vycy8yMDE1LzI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "[\r\n  {\r\n    \"IncludedUsage\": 0,\r\n    \"OverageUsage\": 0,\r\n    \"TotalUsage\": 2.7333333333333334,\r\n    \"UserName\": \"yadavb@hotmail.com\",\r\n    \"WaivedUsage\": 0\r\n  }\r\n]",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "118"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "300219357ab36cc0b5196e83637fa249"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 22:06:01 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        }
+    ],
+    "Names": { },
+    "Variables": {
+        "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+    }
+}
+
