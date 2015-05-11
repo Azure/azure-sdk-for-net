@@ -26,26 +26,26 @@ using Microsoft.Azure.Management.Authorization.Models;
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
-    /// Role assignment create parameters.
+    /// Role definition create or update parameters.
     /// </summary>
-    public partial class RoleAssignmentCreateParameters
+    public partial class RoleDefinitionCreateOrUpdateParameters
     {
-        private RoleAssignmentProperties _properties;
+        private RoleDefinition _roleDefinition;
         
         /// <summary>
-        /// Optional. Gets or sets role assignment properties.
+        /// Optional. Gets or sets role definition properties.
         /// </summary>
-        public RoleAssignmentProperties Properties
+        public RoleDefinition RoleDefinition
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._roleDefinition; }
+            set { this._roleDefinition = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentCreateParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// RoleDefinitionCreateOrUpdateParameters class.
         /// </summary>
-        public RoleAssignmentCreateParameters()
+        public RoleDefinitionCreateOrUpdateParameters()
         {
         }
     }

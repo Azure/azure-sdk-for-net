@@ -21,31 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
-    /// Role assignment create parameters.
+    /// Role definition delete operation result.
     /// </summary>
-    public partial class RoleAssignmentCreateParameters
+    public partial class RoleDefinitionDeleteResult : AzureOperationResponse
     {
-        private RoleAssignmentProperties _properties;
+        private RoleDefinition _roleDefinition;
         
         /// <summary>
-        /// Optional. Gets or sets role assignment properties.
+        /// Optional. Gets or sets the role definition.
         /// </summary>
-        public RoleAssignmentProperties Properties
+        public RoleDefinition RoleDefinition
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._roleDefinition; }
+            set { this._roleDefinition = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentCreateParameters
-        /// class.
+        /// Initializes a new instance of the RoleDefinitionDeleteResult class.
         /// </summary>
-        public RoleAssignmentCreateParameters()
+        public RoleDefinitionDeleteResult()
         {
         }
     }

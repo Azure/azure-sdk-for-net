@@ -52,12 +52,12 @@ namespace Microsoft.Azure.Management.Authorization.Models
             set { this._name = value; }
         }
         
-        private RoleAssignmentProperties _properties;
+        private RoleAssignmentPropertiesWithScope _properties;
         
         /// <summary>
         /// Optional. Gets or sets role assignment properties.
         /// </summary>
-        public RoleAssignmentProperties Properties
+        public RoleAssignmentPropertiesWithScope Properties
         {
             get { return this._properties; }
             set { this._properties = value; }

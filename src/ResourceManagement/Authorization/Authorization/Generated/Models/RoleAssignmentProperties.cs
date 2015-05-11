@@ -51,17 +51,6 @@ namespace Microsoft.Azure.Management.Authorization.Models
             set { this._roleDefinitionId = value; }
         }
         
-        private string _scope;
-        
-        /// <summary>
-        /// Optional. Gets or sets role assignment scope.
-        /// </summary>
-        public string Scope
-        {
-            get { return this._scope; }
-            set { this._scope = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentProperties class.
         /// </summary>

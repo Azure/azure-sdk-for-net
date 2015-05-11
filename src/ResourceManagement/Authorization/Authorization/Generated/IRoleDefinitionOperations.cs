@@ -33,6 +33,37 @@ namespace Microsoft.Azure.Management.Authorization
     public partial interface IRoleDefinitionOperations
     {
         /// <summary>
+        /// Creates or updates a role definition.
+        /// </summary>
+        /// <param name='roleDefinitionId'>
+        /// Role definition id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Role definition.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role definition create or update operation result.
+        /// </returns>
+        Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(Guid roleDefinitionId, RoleDefinitionCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes the role definition.
+        /// </summary>
+        /// <param name='roleDefinitionId'>
+        /// Role definition id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Role definition delete operation result.
+        /// </returns>
+        Task<RoleDefinitionDeleteResult> DeleteAsync(string roleDefinitionId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get role definition by name (GUID).
         /// </summary>
         /// <param name='roleDefinitionName'>

@@ -26,26 +26,26 @@ using Microsoft.Azure.Management.Authorization.Models;
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
-    /// Role assignment create parameters.
+    /// Role assignment properties with scope.
     /// </summary>
-    public partial class RoleAssignmentCreateParameters
+    public partial class RoleAssignmentPropertiesWithScope : RoleAssignmentProperties
     {
-        private RoleAssignmentProperties _properties;
+        private string _scope;
         
         /// <summary>
-        /// Optional. Gets or sets role assignment properties.
+        /// Optional. Gets or sets role assignment scope.
         /// </summary>
-        public RoleAssignmentProperties Properties
+        public string Scope
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._scope; }
+            set { this._scope = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentCreateParameters
+        /// Initializes a new instance of the RoleAssignmentPropertiesWithScope
         /// class.
         /// </summary>
-        public RoleAssignmentCreateParameters()
+        public RoleAssignmentPropertiesWithScope()
         {
         }
     }
