@@ -65,8 +65,7 @@ namespace Microsoft.Azure.Common.Authentication
                 return new[] { "Microsoft.DataFactory" };
             }
 
-            if (typeof(T).FullName.EndsWith("DnsManagementClient")
-                || typeof(T).FullName.EndsWith("TrafficManagerManagementClient"))
+            if (typeof(T).FullName.EndsWith("DnsManagementClient"))
             {
                 return new[] { "Microsoft.Network" };
             }
