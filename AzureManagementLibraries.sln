@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement", "src\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkManagement", "src\NetworkManagement\NetworkManagement.csproj", "{7F032828-B8EC-4716-8BC4-AF2FA703B24B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkManagement2", "src\NetworkManagement2\NetworkManagement2.csproj", "{4500A2D3-C087-4FBC-BEBD-E630CD728788}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageManagement", "src\StorageManagement\StorageManagement.csproj", "{77F0BEC3-FBCD-43A4-AF45-8A55846A6897}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeManagement", "src\ComputeManagement\ComputeManagement.csproj", "{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}"
