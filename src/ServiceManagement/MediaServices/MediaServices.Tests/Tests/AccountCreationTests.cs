@@ -10,26 +10,10 @@ using Microsoft.Azure.Test;
 using System.Threading;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
+using Microsoft.WindowsAzure.Testing;
 
 namespace MediaServices.Tests.Tests
 {
-    public static class ManagementTestUtilities
-    {
-        /// <summary>
-        /// Returns a location meeting the specified constraints
-        /// </summary>
-        /// <param name="client">Management client to use to determine valid locations</param>
-        /// <param name="requiredServices">The services required in the location</param>
-        /// <returns>A location that contains the specified services</returns>
-        public static string GetDefaultLocation(this ManagementClient client, params string[] requiredServices)
-        {
-            return client.Locations.List().Locations.First(
-                l => (null == requiredServices || requiredServices.Length < 1) ||
-                requiredServices.All(s => l.AvailableServices.Contains(s))
-            ).Name;
-        }
-    }
-
     public class AccountCreationTests : TestBase
     {
         public MediaServicesManagementClient GetMediaServicesManagementClient()
