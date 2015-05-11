@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="StoreManagement\**\*.cs" target="src" />
+    <file src="ServiceManagement\Store\StoreManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Store.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Store.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Store.xml" target="lib\portable-net45+wp8+wpa81+win" />
