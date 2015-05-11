@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// Operations for metric definitions.
     /// </summary>
-    internal partial class MetricDefinitionOperations : IServiceOperations<InsightsClient>, IMetricDefinitionOperations
+    public partial class MetricDefinitionOperations : IServiceOperations<InsightsClient>, IMetricDefinitionOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricDefinitionOperations class.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Insights
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal MetricDefinitionOperations(InsightsClient client)
+        public MetricDefinitionOperations(InsightsClient client)
         {
             this._client = client;
         }
