@@ -16,7 +16,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Reference Include="Hyak.Common">
+  <Reference Include="Hyak.Common">
       <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
