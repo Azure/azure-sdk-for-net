@@ -1,0 +1,132 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "9fc5868a-9ffa-45a3-8886-30d0c6e9f490"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfDeviceInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DeviceInfo>\r\n    <ACRCount>0</ACRCount>\r\n    <ActivationTime>2015-03-03T12:32:56.7671234Z</ActivationTime>\r\n    <ActiveController>Unknown</ActiveController>\r\n    <AvailableStorageInBytes>1073742336</AvailableStorageInBytes>\r\n    <CloudCredCount>0</CloudCredCount>\r\n    <Culture>en-US</Culture>\r\n    <CurrentController>Unknown</CurrentController>\r\n    <DataContainerCount>0</DataContainerCount>\r\n    <Description i:nil=\"true\" />\r\n    <DeviceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</DeviceId>\r\n    <DeviceSoftwareVersion>6.3.9600.17215</DeviceSoftwareVersion>\r\n    <FriendlyName>cismohit5</FriendlyName>\r\n    <IsConfigUpdated>true</IsConfigUpdated>\r\n    <IsVirtualApplianceInterimEntry>false</IsVirtualApplianceInterimEntry>\r\n    <Location i:nil=\"true\" />\r\n    <ModelDescription>100</ModelDescription>\r\n    <NNicCards>6</NNicCards>\r\n    <ProvisionedStorageInBytes>1098437885440</ProvisionedStorageInBytes>\r\n    <SerialNumber>123456789</SerialNumber>\r\n    <Status>Online</Status>\r\n    <TargetIQN>iqn.1991-05.com.microsoft:storsimple100-123456789-target</TargetIQN>\r\n    <TimeZone>Pacific Standard Time</TimeZone>\r\n    <TotalStorageInBytes>1099511627776</TotalStorageInBytes>\r\n    <Type>Appliance</Type>\r\n    <UsingStorageInBytes>0</UsingStorageInBytes>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DeviceInfo>\r\n  <DeviceInfo>\r\n    <ACRCount>0</ACRCount>\r\n    <ActivationTime>2015-03-03T09:13:59.0480392Z</ActivationTime>\r\n    <ActiveController>Unknown</ActiveController>\r\n    <AvailableStorageInBytes>1090921693184</AvailableStorageInBytes>\r\n    <CloudCredCount>0</CloudCredCount>\r\n    <Culture>en-US</Culture>\r\n    <CurrentController>Unknown</CurrentController>\r\n    <DataContainerCount>0</DataContainerCount>\r\n    <Description i:nil=\"true\" />\r\n    <DeviceId>3825f272-1efb-4c14-b63f-22605ce3b925</DeviceId>\r\n    <DeviceSoftwareVersion>6.3.9600.17215</DeviceSoftwareVersion>\r\n    <FriendlyName>Avirupch_App7</FriendlyName>\r\n    <IsConfigUpdated>true</IsConfigUpdated>\r\n    <IsVirtualApplianceInterimEntry>false</IsVirtualApplianceInterimEntry>\r\n    <Location i:nil=\"true\" />\r\n    <ModelDescription>100</ModelDescription>\r\n    <NNicCards>6</NNicCards>\r\n    <ProvisionedStorageInBytes>8589934592</ProvisionedStorageInBytes>\r\n    <SerialNumber>123456789</SerialNumber>\r\n    <Status>Online</Status>\r\n    <TargetIQN>iqn.1991-05.com.microsoft:storsimple100-123456789-target</TargetIQN>\r\n    <TimeZone>Pacific Standard Time</TimeZone>\r\n    <TotalStorageInBytes>1099511627776</TotalStorageInBytes>\r\n    <Type>Appliance</Type>\r\n    <UsingStorageInBytes>0</UsingStorageInBytes>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DeviceInfo>\r\n</ArrayOfDeviceInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2424"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "9fc5868a-9ffa-45a3-8886-30d0c6e9f490,9fc5868a-9ffa-45a3-8886-30d0c6e9f490"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5d4d7526bc63c0d2876c2fbfe712d385"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 09:34:45 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/0ee59ae9-0293-46e2-ae56-bc308c8e5520/iscsiconnections?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzBlZTU5YWU5LTAyOTMtNDZlMi1hZTU2LWJjMzA4YzhlNTUyMC9pc2NzaWNvbm5lY3Rpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "8d35a3c9-7804-4916-b7f6-72e2ed8e4ad9"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfIscsiConnection xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" />",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "128"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "8d35a3c9-7804-4916-b7f6-72e2ed8e4ad9,8d35a3c9-7804-4916-b7f6-72e2ed8e4ad9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "80f765ac69a9c76bacc9e3de47dab7c7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 09:34:47 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4576bc2e-58ca-4d0f-ab76-6f9b32d45c86"
+  }
+}

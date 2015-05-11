@@ -227,6 +227,16 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             get { return this._iscsiConnection; }
         }
         
+        private IMigrationOperations _migrateLegacyAppliance;
+        
+        /// <summary>
+        /// Migration of Legacy Appliance
+        /// </summary>
+        public virtual IMigrationOperations MigrateLegacyAppliance
+        {
+            get { return this._migrateLegacyAppliance; }
+        }
+        
         private IResourceEncryptionKeyOperations _resourceEncryptionKeys;
         
         /// <summary>
@@ -283,6 +293,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             this._devices = new DeviceOperations(this);
             this._devicePublicKey = new DevicePublicKeyOperations(this);
             this._iscsiConnection = new IscsiConnectionDetailsOperations(this);
+            this._migrateLegacyAppliance = new MigrationOperations(this);
             this._resourceEncryptionKeys = new ResourceEncryptionKeyOperations(this);
             this._serviceConfig = new ServiceConfigurationOperations(this);
             this._virtualDevice = new VirtualDeviceOperations(this);
@@ -426,6 +437,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             this._devices = new DeviceOperations(this);
             this._devicePublicKey = new DevicePublicKeyOperations(this);
             this._iscsiConnection = new IscsiConnectionDetailsOperations(this);
+            this._migrateLegacyAppliance = new MigrationOperations(this);
             this._resourceEncryptionKeys = new ResourceEncryptionKeyOperations(this);
             this._serviceConfig = new ServiceConfigurationOperations(this);
             this._virtualDevice = new VirtualDeviceOperations(this);
@@ -583,6 +595,186 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type CloudType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static CloudType ParseCloudType(string value)
+        {
+            if ("None".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.None;
+            }
+            if ("Atmos".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Atmos;
+            }
+            if ("Azure".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Azure;
+            }
+            if ("S3".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.S3;
+            }
+            if ("Synaptic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Synaptic;
+            }
+            if ("AtmosOnPrem".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.AtmosOnPrem;
+            }
+            if ("ASP_Deprecated".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.ASPDeprecated;
+            }
+            if ("Zetta".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Zetta;
+            }
+            if ("RackSpace".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.RackSpace;
+            }
+            if ("IIJ".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.IIJ;
+            }
+            if ("NIFTY".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.NIFTY;
+            }
+            if ("S3_RRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.S3RRS;
+            }
+            if ("DellDX_Deprecated".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.DellDXDeprecated;
+            }
+            if ("OpenStack".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.OpenStack;
+            }
+            if ("HP".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.HP;
+            }
+            if ("Google".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Google;
+            }
+            if ("Nirvanix".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Nirvanix;
+            }
+            if ("Azure_China".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.AzureChina;
+            }
+            if ("Max".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CloudType.Max;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type CloudType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string CloudTypeToString(CloudType value)
+        {
+            if (value == CloudType.None)
+            {
+                return "None";
+            }
+            if (value == CloudType.Atmos)
+            {
+                return "Atmos";
+            }
+            if (value == CloudType.Azure)
+            {
+                return "Azure";
+            }
+            if (value == CloudType.S3)
+            {
+                return "S3";
+            }
+            if (value == CloudType.Synaptic)
+            {
+                return "Synaptic";
+            }
+            if (value == CloudType.AtmosOnPrem)
+            {
+                return "AtmosOnPrem";
+            }
+            if (value == CloudType.ASPDeprecated)
+            {
+                return "ASP_Deprecated";
+            }
+            if (value == CloudType.Zetta)
+            {
+                return "Zetta";
+            }
+            if (value == CloudType.RackSpace)
+            {
+                return "RackSpace";
+            }
+            if (value == CloudType.IIJ)
+            {
+                return "IIJ";
+            }
+            if (value == CloudType.NIFTY)
+            {
+                return "NIFTY";
+            }
+            if (value == CloudType.S3RRS)
+            {
+                return "S3_RRS";
+            }
+            if (value == CloudType.DellDXDeprecated)
+            {
+                return "DellDX_Deprecated";
+            }
+            if (value == CloudType.OpenStack)
+            {
+                return "OpenStack";
+            }
+            if (value == CloudType.HP)
+            {
+                return "HP";
+            }
+            if (value == CloudType.Google)
+            {
+                return "Google";
+            }
+            if (value == CloudType.Nirvanix)
+            {
+                return "Nirvanix";
+            }
+            if (value == CloudType.AzureChina)
+            {
+                return "Azure_China";
+            }
+            if (value == CloudType.Max)
+            {
+                return "Max";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>

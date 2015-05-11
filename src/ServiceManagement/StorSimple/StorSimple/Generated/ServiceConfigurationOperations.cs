@@ -383,7 +383,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                             storageAccountCredentialV2Element.Add(operationInProgressElement3);
                             
                             XElement cloudTypeElement = new XElement(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            cloudTypeElement.Value = addedItem2.CloudType.ToString();
+                            cloudTypeElement.Value = StorSimpleManagementClient.CloudTypeToString(addedItem2.CloudType);
                             storageAccountCredentialV2Element.Add(cloudTypeElement);
                             
                             XElement hostnameElement = new XElement(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
@@ -474,7 +474,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                             storageAccountCredentialV2Element2.Add(operationInProgressElement4);
                             
                             XElement cloudTypeElement2 = new XElement(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            cloudTypeElement2.Value = updatedItem2.CloudType.ToString();
+                            cloudTypeElement2.Value = StorSimpleManagementClient.CloudTypeToString(updatedItem2.CloudType);
                             storageAccountCredentialV2Element2.Add(cloudTypeElement2);
                             
                             XElement hostnameElement2 = new XElement(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
@@ -981,7 +981,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                         XElement cloudTypeElement = addedElement2.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
                                         if (cloudTypeElement != null)
                                         {
-                                            CloudType cloudTypeInstance = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement.Value, true));
+                                            CloudType cloudTypeInstance = StorSimpleManagementClient.ParseCloudType(cloudTypeElement.Value);
                                             storageAccountCredentialInstance.CloudType = cloudTypeInstance;
                                         }
                                         
@@ -1093,7 +1093,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                         XElement cloudTypeElement2 = updatedElement2.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
                                         if (cloudTypeElement2 != null)
                                         {
-                                            CloudType cloudTypeInstance2 = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement2.Value, true));
+                                            CloudType cloudTypeInstance2 = StorSimpleManagementClient.ParseCloudType(cloudTypeElement2.Value);
                                             storageAccountCredentialInstance2.CloudType = cloudTypeInstance2;
                                         }
                                         

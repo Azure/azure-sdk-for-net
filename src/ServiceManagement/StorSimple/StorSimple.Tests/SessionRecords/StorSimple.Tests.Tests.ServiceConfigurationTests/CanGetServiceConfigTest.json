@@ -1,0 +1,67 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS8/YXBpLXZlcnNpb249MjAxNC0wMS0wMS4xLjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "9005c3bb-c697-4ae0-87e8-7ec325b96168"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServiceConfiguration_Base i:type=\"ServiceConfiguration\" xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AcrChangeList>\r\n    <Added />\r\n    <Deleted xmlns:d3p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n    <Updated>\r\n      <AccessControlRecord>\r\n        <InstanceId>66e973f1-ccef-4bed-8379-6f908cd349da</InstanceId>\r\n        <Name>ACR169534049</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN2043115848</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>67841cef-cc94-4c69-97cf-b288c6c23f9d</InstanceId>\r\n        <Name>ACR728219756</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1142970643</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>68b14a22-5163-403d-98f1-72a362daae9f</InstanceId>\r\n        <Name>acr02</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>iqn02</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>79861c99-3d86-4518-a5d9-590a17ac8ca0</InstanceId>\r\n        <Name>acr01</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>iqn01</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>80e78757-6c42-4269-ba25-f6bde9e3b8e7</InstanceId>\r\n        <Name>ACR1306971649</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1789432718</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>868dc68c-7e99-40a2-aac6-c39e89377f26</InstanceId>\r\n        <Name>ACR1038401392</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN483907387</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>adc321c6-9d2f-4793-b04e-b5589eb7932c</InstanceId>\r\n        <Name>ACR1389135485</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1452094360</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>af97f39c-f2d9-430e-9014-93035bbf8f8c</InstanceId>\r\n        <Name>ACR562403230</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN26411177</InitiatorName>\r\n        <VolumeCount>2</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>c70ad59f-8b1f-4c2c-a3cd-5b13cce32fbe</InstanceId>\r\n        <Name>AcrName2288</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>InitiatorName4472</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>dddbd493-02df-43a1-807e-6349cbd5ac9f</InstanceId>\r\n        <Name>ACR1488696992</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1176138661</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>e1db3f48-30a3-4ece-a0b0-64f555ad001d</InstanceId>\r\n        <Name>ACR1525046519</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN2047598815</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>e8a6d732-7cdd-47f7-acda-ec2379223696</InstanceId>\r\n        <Name>ACR891376243</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1663983452</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>ea7f25f7-e1cb-4c49-8a08-6f896f8bd3b9</InstanceId>\r\n        <Name>ACR1782638411</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1571323296</InitiatorName>\r\n        <VolumeCount>1</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f4a93afe-e0a3-4fa7-993a-00241a8fe799</InstanceId>\r\n        <Name>ACR193038664</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1356862334</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f752e1da-a095-4607-8313-b37dfaf241cb</InstanceId>\r\n        <Name>ACR1063572540</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1763983391</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n      <AccessControlRecord>\r\n        <InstanceId>f75bca46-2b70-4659-8269-4050bd2777d1</InstanceId>\r\n        <Name>ACR1335984491</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <InitiatorName>IQN1537096967</InitiatorName>\r\n        <VolumeCount>0</VolumeCount>\r\n      </AccessControlRecord>\r\n    </Updated>\r\n  </AcrChangeList>\r\n  <CredentialChangeList>\r\n    <Added />\r\n    <Deleted xmlns:d3p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n    <Updated>\r\n      <StorageAccountCredential>\r\n        <InstanceId>e5696c21-936d-4401-ab79-5fa4dd77ce90</InstanceId>\r\n        <Name>onesdksa</Name>\r\n        <OperationInProgress>None</OperationInProgress>\r\n        <GlobalId i:nil=\"true\" xmlns=\"http://schemas.datacontract.org/2004/07/Microsoft.Internal.CiS.Service.Interface.Portal\" />\r\n        <CloudType>Azure</CloudType>\r\n        <Hostname>blob.core.test-cint.azure-test.net</Hostname>\r\n        <IsDefault>false</IsDefault>\r\n        <Location>West US</Location>\r\n        <Login>onesdksa</Login>\r\n        <Password>Obv2VWBlisrQCMQHiOOxQZkMfIhbWOFBmHlbMWHgfYGiyiCe21C9AsZsawAJXFu8nlKlilZ0zOFIQIOyvyTatSPB9tbV9KwxHYbLnaHlZWwza4IEgwuLtkncfskg8nd9WJ++uXcEYFFIze8UnZb27+lOt1ZqiMfocUzRGDQXT4/CBBk8Hj38Bp2ft8f3nSVz3Di2gtN7pCv4Im5dgLfOj6i3WFj4QDQEd2nCwo6p4ns+R5wGmfcHlQx+8Q2QhyLxWV5I9plBl2teZ2PpytrcMtxFSx2gdYpKmVtieuPoVlmzNeJBRZFwtSPvmzm/bcCPmzBH3yA8uBVUkvyjwGt54A==</Password>\r\n        <UseSSL>true</UseSSL>\r\n        <VolumeCount>9</VolumeCount>\r\n      </StorageAccountCredential>\r\n    </Updated>\r\n  </CredentialChangeList>\r\n  <OperationInProgress>false</OperationInProgress>\r\n</ServiceConfiguration_Base>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "7272"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "9005c3bb-c697-4ae0-87e8-7ec325b96168,9005c3bb-c697-4ae0-87e8-7ec325b96168"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "914d14209301c6c8ac713fc3033c119f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 09:36:18 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4576bc2e-58ca-4d0f-ab76-6f9b32d45c86"
+  }
+}

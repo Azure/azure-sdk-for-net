@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="TrafficManagerManagement\**\*.cs" target="src" />
+    <file src="ServiceManagement\TrafficManager\TrafficManagerManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.TrafficManager.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.TrafficManager.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.TrafficManager.xml" target="lib\portable-net45+wp8+wpa81+win" />

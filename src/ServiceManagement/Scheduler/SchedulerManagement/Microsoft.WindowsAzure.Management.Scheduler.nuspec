@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="SchedulerManagement\**\*.cs" target="src" />
+    <file src="ServiceManagement\Scheduler\SchedulerManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Scheduler.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Scheduler.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.Scheduler.xml" target="lib\portable-net45+wp8+wpa81+win" />
