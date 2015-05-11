@@ -25,8 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Parameters specifying the stream analytics job definition for a get
-    /// operation.
+    /// Parameters for a Stream Analytics job get operation.
     /// </summary>
     public partial class JobGetParameters
     {

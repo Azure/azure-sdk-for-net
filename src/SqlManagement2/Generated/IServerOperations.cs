@@ -104,5 +104,24 @@ namespace Microsoft.Azure.Management.Sql
         /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         Task<ServerListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns information about Azure SQL Database Server usage.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server in which the Azure SQL
+        /// Databases are hosted.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database Server metrics
+        /// request.
+        /// </returns>
+        Task<ServerMetricListResponse> ListUsagesAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
     }
 }

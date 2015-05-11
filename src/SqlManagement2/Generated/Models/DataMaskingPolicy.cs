@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
@@ -28,19 +29,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents an Azure SQL Database data masking policy.
     /// </summary>
-    public partial class DataMaskingPolicy : ResourceBase
+    public partial class DataMaskingPolicy : ResourceBaseExtended
     {
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the resource.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private DataMaskingPolicyProperties _properties;
         
         /// <summary>
@@ -57,6 +47,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public DataMaskingPolicy()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DataMaskingPolicy class with
+        /// required arguments.
+        /// </summary>
+        public DataMaskingPolicy(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

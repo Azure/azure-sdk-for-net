@@ -205,13 +205,6 @@ namespace Microsoft.Azure.Management.Sql
                             ServiceObjective serviceObjectiveInstance = new ServiceObjective();
                             result.ServiceObjective = serviceObjectiveInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                serviceObjectiveInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -259,6 +252,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 serviceObjectiveInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                serviceObjectiveInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -456,13 +456,6 @@ namespace Microsoft.Azure.Management.Sql
                                     ServiceObjective serviceObjectiveInstance = new ServiceObjective();
                                     result.ServiceObjectives.Add(serviceObjectiveInstance);
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        serviceObjectiveInstance.Name = nameInstance;
-                                    }
-                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -510,6 +503,13 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         string idInstance = ((string)idValue);
                                         serviceObjectiveInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        serviceObjectiveInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

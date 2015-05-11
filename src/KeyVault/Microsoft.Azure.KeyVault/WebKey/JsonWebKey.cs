@@ -280,7 +280,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
 
         /// <summary>
         /// Determines if the WebKey object is valid according to the rules for
-        /// each of the possible WebKeyTypes
+        /// each of the possible WebKeyTypes. For more information, see WebKeyTypes.
         /// </summary>
         /// <returns>true if the WebKey is valid</returns>
         public virtual bool IsValid()
