@@ -1,0 +1,188 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867?api-version=2014-04-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867/\",\r\n  \"tagName\": \"csmtg8867\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1128"
+        ],
+        "x-ms-request-id": [
+          "1fa843f4-960c-4b4d-b9b2-1349b8f4fb4a"
+        ],
+        "x-ms-correlation-request-id": [
+          "1fa843f4-960c-4b4d-b9b2-1349b8f4fb4a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140624T220501Z:1fa843f4-960c-4b4d-b9b2-1349b8f4fb4a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Jun 2014 22:05:01 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867/tagValues/csmtgv1438?api-version=2014-04-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867/tagValues/csmtgv1438\",\r\n  \"tagValue\": \"csmtgv1438\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1127"
+        ],
+        "x-ms-request-id": [
+          "e2cc5b0d-f22d-431e-95ef-4ab948852758"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2cc5b0d-f22d-431e-95ef-4ab948852758"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140624T220501Z:e2cc5b0d-f22d-431e-95ef-4ab948852758"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Jun 2014 22:05:01 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames?api-version=2014-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtn3616/\",\r\n      \"tagName\": \"csmtn3616\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtn3616/tagValues/\",\r\n          \"tagValue\": \"\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/department/\",\r\n      \"tagName\": \"department\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/department/tagValues/finance\",\r\n          \"tagValue\": \"finance\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/tagname/\",\r\n      \"tagName\": \"tagname\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/tagname/tagValues/tagvalue\",\r\n          \"tagValue\": \"tagvalue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867/\",\r\n      \"tagName\": \"csmtg8867\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867/tagValues/csmtgv1438\",\r\n          \"tagValue\": \"csmtgv1438\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31937"
+        ],
+        "x-ms-request-id": [
+          "021c39d6-b209-4104-8615-1c10ac2f956e"
+        ],
+        "x-ms-correlation-request-id": [
+          "021c39d6-b209-4104-8615-1c10ac2f956e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140624T220501Z:021c39d6-b209-4104-8615-1c10ac2f956e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Jun 2014 22:05:01 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867/tagValues/csmtgv1438?api-version=2014-04-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1126"
+        ],
+        "x-ms-request-id": [
+          "ddda88d4-ed3d-41be-a86a-eed37c8f99b7"
+        ],
+        "x-ms-correlation-request-id": [
+          "ddda88d4-ed3d-41be-a86a-eed37c8f99b7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140624T220501Z:ddda88d4-ed3d-41be-a86a-eed37c8f99b7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Jun 2014 22:05:01 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg8867?api-version=2014-04-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1125"
+        ],
+        "x-ms-request-id": [
+          "55c293c1-d23e-4f66-b206-32a82fdb45d0"
+        ],
+        "x-ms-correlation-request-id": [
+          "55c293c1-d23e-4f66-b206-32a82fdb45d0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140624T220501Z:55c293c1-d23e-4f66-b206-32a82fdb45d0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Jun 2014 22:05:01 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateListAndDeleteSubscriptionTagValue": [
+      "csmtg8867",
+      "csmtgv1438"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+  }
+}

@@ -150,15 +150,20 @@ namespace Microsoft.Azure.Management.Authorization
                 JToken requestDoc = null;
                 
                 JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                requestDoc = propertiesValue;
                 
-                if (parameters.RoleDefinitionId != null)
+                if (parameters.Properties != null)
                 {
-                    propertiesValue["roleDefinitionId"] = parameters.RoleDefinitionId;
+                    JObject propertiesValue2 = new JObject();
+                    propertiesValue["properties"] = propertiesValue2;
+                    
+                    if (parameters.Properties.RoleDefinitionId != null)
+                    {
+                        propertiesValue2["roleDefinitionId"] = parameters.Properties.RoleDefinitionId;
+                    }
+                    
+                    propertiesValue2["principalId"] = parameters.Properties.PrincipalId.ToString();
                 }
-                
-                propertiesValue["principalId"] = parameters.PrincipalId.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -230,31 +235,31 @@ namespace Microsoft.Azure.Management.Authorization
                                 roleAssignmentInstance.Type = typeInstance;
                             }
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken propertiesValue3 = responseDoc["properties"];
+                            if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                             {
-                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                 roleAssignmentInstance.Properties = propertiesInstance;
                                 
-                                JToken roleDefinitionIdValue = propertiesValue2["roleDefinitionId"];
+                                JToken scopeValue = propertiesValue3["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
+                                
+                                JToken roleDefinitionIdValue = propertiesValue3["roleDefinitionId"];
                                 if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
                                 {
                                     string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
                                     propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
                                 }
                                 
-                                JToken principalIdValue = propertiesValue2["principalId"];
+                                JToken principalIdValue = propertiesValue3["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
                                     Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                     propertiesInstance.PrincipalId = principalIdInstance;
-                                }
-                                
-                                JToken scopeValue = propertiesValue2["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
                                 }
                             }
                         }
@@ -370,15 +375,20 @@ namespace Microsoft.Azure.Management.Authorization
                 JToken requestDoc = null;
                 
                 JObject propertiesValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["properties"] = propertiesValue;
+                requestDoc = propertiesValue;
                 
-                if (parameters.RoleDefinitionId != null)
+                if (parameters.Properties != null)
                 {
-                    propertiesValue["roleDefinitionId"] = parameters.RoleDefinitionId;
+                    JObject propertiesValue2 = new JObject();
+                    propertiesValue["properties"] = propertiesValue2;
+                    
+                    if (parameters.Properties.RoleDefinitionId != null)
+                    {
+                        propertiesValue2["roleDefinitionId"] = parameters.Properties.RoleDefinitionId;
+                    }
+                    
+                    propertiesValue2["principalId"] = parameters.Properties.PrincipalId.ToString();
                 }
-                
-                propertiesValue["principalId"] = parameters.PrincipalId.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -450,31 +460,31 @@ namespace Microsoft.Azure.Management.Authorization
                                 roleAssignmentInstance.Type = typeInstance;
                             }
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken propertiesValue3 = responseDoc["properties"];
+                            if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                             {
-                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                 roleAssignmentInstance.Properties = propertiesInstance;
                                 
-                                JToken roleDefinitionIdValue = propertiesValue2["roleDefinitionId"];
+                                JToken scopeValue = propertiesValue3["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
+                                
+                                JToken roleDefinitionIdValue = propertiesValue3["roleDefinitionId"];
                                 if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
                                 {
                                     string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
                                     propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
                                 }
                                 
-                                JToken principalIdValue = propertiesValue2["principalId"];
+                                JToken principalIdValue = propertiesValue3["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
                                     Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                     propertiesInstance.PrincipalId = principalIdInstance;
-                                }
-                                
-                                JToken scopeValue = propertiesValue2["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
                                 }
                             }
                         }
@@ -653,8 +663,15 @@ namespace Microsoft.Azure.Management.Authorization
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                 roleAssignmentInstance.Properties = propertiesInstance;
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
                                 
                                 JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                 if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -668,13 +685,6 @@ namespace Microsoft.Azure.Management.Authorization
                                 {
                                     Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                     propertiesInstance.PrincipalId = principalIdInstance;
-                                }
-                                
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
                                 }
                             }
                         }
@@ -847,8 +857,15 @@ namespace Microsoft.Azure.Management.Authorization
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                 roleAssignmentInstance.Properties = propertiesInstance;
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
                                 
                                 JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                 if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -862,13 +879,6 @@ namespace Microsoft.Azure.Management.Authorization
                                 {
                                     Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                     propertiesInstance.PrincipalId = principalIdInstance;
-                                }
-                                
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
                                 }
                             }
                         }
@@ -1047,8 +1057,15 @@ namespace Microsoft.Azure.Management.Authorization
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                 roleAssignmentInstance.Properties = propertiesInstance;
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
                                 
                                 JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                 if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -1062,13 +1079,6 @@ namespace Microsoft.Azure.Management.Authorization
                                 {
                                     Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                     propertiesInstance.PrincipalId = principalIdInstance;
-                                }
-                                
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
                                 }
                             }
                         }
@@ -1241,8 +1251,15 @@ namespace Microsoft.Azure.Management.Authorization
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                 roleAssignmentInstance.Properties = propertiesInstance;
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
                                 
                                 JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                 if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -1256,13 +1273,6 @@ namespace Microsoft.Azure.Management.Authorization
                                 {
                                     Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                     propertiesInstance.PrincipalId = principalIdInstance;
-                                }
-                                
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
                                 }
                             }
                         }
@@ -1459,8 +1469,15 @@ namespace Microsoft.Azure.Management.Authorization
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                         roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
                                         
                                         JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                         if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -1474,13 +1491,6 @@ namespace Microsoft.Azure.Management.Authorization
                                         {
                                             Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                             propertiesInstance.PrincipalId = principalIdInstance;
-                                        }
-                                        
-                                        JToken scopeValue = propertiesValue["scope"];
-                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                        {
-                                            string scopeInstance = ((string)scopeValue);
-                                            propertiesInstance.Scope = scopeInstance;
                                         }
                                     }
                                 }
@@ -1720,8 +1730,15 @@ namespace Microsoft.Azure.Management.Authorization
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                         roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
                                         
                                         JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                         if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -1735,13 +1752,6 @@ namespace Microsoft.Azure.Management.Authorization
                                         {
                                             Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                             propertiesInstance.PrincipalId = principalIdInstance;
-                                        }
-                                        
-                                        JToken scopeValue = propertiesValue["scope"];
-                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                        {
-                                            string scopeInstance = ((string)scopeValue);
-                                            propertiesInstance.Scope = scopeInstance;
                                         }
                                     }
                                 }
@@ -1949,8 +1959,15 @@ namespace Microsoft.Azure.Management.Authorization
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                         roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
                                         
                                         JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                         if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -1964,13 +1981,6 @@ namespace Microsoft.Azure.Management.Authorization
                                         {
                                             Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                             propertiesInstance.PrincipalId = principalIdInstance;
-                                        }
-                                        
-                                        JToken scopeValue = propertiesValue["scope"];
-                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                        {
-                                            string scopeInstance = ((string)scopeValue);
-                                            propertiesInstance.Scope = scopeInstance;
                                         }
                                     }
                                 }
@@ -2174,8 +2184,15 @@ namespace Microsoft.Azure.Management.Authorization
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                        RoleAssignmentPropertiesWithScope propertiesInstance = new RoleAssignmentPropertiesWithScope();
                                         roleAssignmentInstance.Properties = propertiesInstance;
+                                        
+                                        JToken scopeValue = propertiesValue["scope"];
+                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                        {
+                                            string scopeInstance = ((string)scopeValue);
+                                            propertiesInstance.Scope = scopeInstance;
+                                        }
                                         
                                         JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
                                         if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
@@ -2189,13 +2206,6 @@ namespace Microsoft.Azure.Management.Authorization
                                         {
                                             Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
                                             propertiesInstance.PrincipalId = principalIdInstance;
-                                        }
-                                        
-                                        JToken scopeValue = propertiesValue["scope"];
-                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                        {
-                                            string scopeInstance = ((string)scopeValue);
-                                            propertiesInstance.Scope = scopeInstance;
                                         }
                                     }
                                 }

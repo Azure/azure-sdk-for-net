@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ApiManagementManagement\**\*.cs" target="src" />
+    <file src="ResourceManagement\ApiManagement\ApiManagementManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.ApiManagement.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.ApiManagement.xml" target="lib\portable-net45+wp8+wpa81+win" />

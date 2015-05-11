@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BatchManagement\**\*.cs" target="src" />
+    <file src="ResourceManagement\Batch\BatchManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Batch.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Batch.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.Batch.xml" target="lib\portable-net45+wp8+wpa81+win" />

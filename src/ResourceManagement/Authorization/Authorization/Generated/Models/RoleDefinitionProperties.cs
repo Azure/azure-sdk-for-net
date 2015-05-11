@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// </summary>
     public partial class RoleDefinitionProperties
     {
+        private IList<string> _assignableScopes;
+        
+        /// <summary>
+        /// Optional. Gets or sets role definition assignable scopes.
+        /// </summary>
+        public IList<string> AssignableScopes
+        {
+            get { return this._assignableScopes; }
+            set { this._assignableScopes = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -92,6 +103,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         public RoleDefinitionProperties()
         {
+            this.AssignableScopes = new LazyList<string>();
             this.Permissions = new LazyList<Permission>();
         }
     }

@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Authorization.Models;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
@@ -29,26 +30,15 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// </summary>
     public partial class RoleAssignmentCreateParameters
     {
-        private Guid _principalId;
+        private RoleAssignmentProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets principal Id.
+        /// Optional. Gets or sets role assignment properties.
         /// </summary>
-        public Guid PrincipalId
+        public RoleAssignmentProperties Properties
         {
-            get { return this._principalId; }
-            set { this._principalId = value; }
-        }
-        
-        private string _roleDefinitionId;
-        
-        /// <summary>
-        /// Optional. Gets or sets role definition id.
-        /// </summary>
-        public string RoleDefinitionId
-        {
-            get { return this._roleDefinitionId; }
-            set { this._roleDefinitionId = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
