@@ -2,10 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.KeyVault</RootNamespace>
     <AssemblyName>Microsoft.Azure.KeyVault</AssemblyName>
@@ -13,7 +11,7 @@
     <RestorePackages>true</RestorePackages>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Authentication\HttpBearerChallenge.cs" />
     <Compile Include="Authentication\HttpBearerChallengeCache.cs" />
@@ -49,12 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>$(SolutionDir)\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>$(SolutionDir)\packages\Microsoft.Azure.Common.2.0.4\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
 </Project>
