@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.7\lib\net40\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.7.2\lib\net40\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
