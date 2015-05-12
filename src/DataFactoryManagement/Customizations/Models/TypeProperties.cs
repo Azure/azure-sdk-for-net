@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using Microsoft.Azure.Management.DataFactories.Conversion;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
@@ -41,7 +42,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                 new JsonSerializerSettings()
                     {
                         Converters = Converters(), 
-                        NullValueHandling = NullValueHandling.Ignore
+                        NullValueHandling = NullValueHandling.Ignore, 
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
                     });
         }
 

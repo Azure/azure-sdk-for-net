@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                         ContractResolver = new CamelCasePropertyNamesContractResolver()
                     });
 
-            string typeName = value.GetType().Name;
+            string typeName = GetTypeName(value.GetType());
             obj.Add(DataFactoryConstants.KeyPolymorphicType, new JValue(typeName));
 
             writer.WriteToken(obj.CreateReader());
