@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.KeyVault</id>
+    <title>Microsoft Azure Key Vault Management Library</title>
+    <releaseNotes>Initial release</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides vault operation capabilities for Azure Key Vault.</summary>
+    <description>Provides vault capabilities for Azure Key Vault.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure key vault "key vault" REST HTTP client azureofficial windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.Azure.Management.KeyVault.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Management.KeyVault.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\KeyVaultManagement\KeyVaultManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.KeyVault.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.KeyVault.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.KeyVault.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.KeyVault.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.KeyVault.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.KeyVault.xml" target="lib\net40" />
+  </files>
+</package>
