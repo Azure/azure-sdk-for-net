@@ -230,9 +230,23 @@
 
   <Target Name="RestoreNugetPackages">
     <!--TODO: respect the 'scope', and do not always restore all of them-->
+    <PropertyGroup>
+      <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
+      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
+    </PropertyGroup>
+    
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+    <WriteLinesToFile
+      File="$(NuGetRestoreConfigFile)"
+      Lines="&lt;configuration&gt;&lt;/configuration&gt;"
+      Overwrite="true"
+      Encoding="Unicode"/>
+
+    <Exec Command="$(NuGetCommand) sources add -Name LocalFeed -Source &quot;$(MSBuildProjectDirectory)\tools\LocalFeed&quot; $(NuGetRestoreConfigSwitch)"/>
+    
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
-    <!--<Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
-    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />-->
+    
+    <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
 
   <!--Smoke test the packages under the output dir-->
