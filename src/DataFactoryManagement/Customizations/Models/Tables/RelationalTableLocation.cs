@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Relational Table location.
     /// </summary>
@@ -26,5 +25,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string TableName { get; set; }
     }
-#endif
 }

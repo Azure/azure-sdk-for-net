@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Linked Service for MySQL data source.
     /// </summary>
@@ -60,5 +59,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string Username { get; set; }
     }
-#endif
 }

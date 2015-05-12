@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Linked Service for Sybase data source.
     /// </summary>
@@ -32,6 +31,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         [AdfRequired]
         public string Database { get; set; }
+        
+        /// <summary>
+        /// Optional. The encryptedCredential for authentication.
+        /// </summary>]
+        public string EncryptedCredential { get; set; }
 
         /// <summary>
         /// Required. The on-premises gateway name.
@@ -60,5 +64,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string Username { get; set; }
     }
-#endif
 }

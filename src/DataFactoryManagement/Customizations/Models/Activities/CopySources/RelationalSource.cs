@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// A copy activity source for various relational databases.
     /// </summary>
@@ -26,5 +25,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string Query { get; set; }
     }
-#endif
 }
