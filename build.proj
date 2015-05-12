@@ -66,17 +66,18 @@
     <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
     <!--Set this true only if you want to test the code sign workflow locally-->
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
-    <!-- 'Common': only build common; 'All': Both common and servies; "Authentication": Azure Authentication; 'full path to a library project': build that project -->
+    <!-- 'Common': only build common; 'All': all projects; "Authentication": Azure Authentication; 'folder name': build individual projects underneath -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
-    <FxTargetList Condition=" '$(FxTargetList)' == '' and '$(Scope)' == 'Authentication' " >net45</FxTargetList>
-    <FxTargetList Condition=" '$(FxTargetList)' == '' and ('$(Scope)' == '' or '$(Scope)' == 'all' or '$(Scope)' == 'Common') ">portable;net40;net45</FxTargetList>
-    <!--If FxTargetList still has no value, it must be an individual maml package-->
-    <FxTargetList Condition=" '$(FxTargetList)' == '' ">portable;net40;net45</FxTargetList>
+    <FxTargetList>portable;net40;net45</FxTargetList>
     <BuildSpecifiedLibrary Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' ">true</BuildSpecifiedLibrary>
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecifiedLibrary Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
+    <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
+    <!--Exclude data plane projects which are managed by parnter service team individually-->
+    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" 
+                      Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
+                      Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>
   
@@ -107,49 +108,19 @@
     <CallTarget Targets="BuildMsBuildTask" />
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
     <!--The solution contains configurations for each platform such as Net40-Debug, Net45-Release, etc
-    So when invoke msbuild, feed the right configuration name-->
-    <MSBuild Projects="$(CommonSolution)"
+    So when invoke msbuild, feed the right configuration name-->   
+    <MSBuild Projects="@(LibrariesToBuild)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build"
-             Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
-    
-    <MSBuild Projects="$(AuthenticationSolution)"
-             Properties="Configuration=Net45-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build"
-             Condition=" '$(Scope)' == 'Authentication' or '$(Scope)' == 'All' " />
-
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" 
-             Condition=" '$(Scope)' == 'All' " />
-    
-    <MSBuild Projects="@(SpecifiedLibrary)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build"
-             Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
+             Targets="Build" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
 
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
-
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(LibrariesToBuild)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean"  
-             Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' "/>
-    <MSBuild Projects="$(AuthenticationSolution)"
-             Properties="Configuration=Net45-$(Configuration);Platform=Any CPU"
-             Targets="Clean" 
-             Condition=" '$(Scope)' == 'Authentication' or '$(Scope)' == 'All' "/>
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean"
-             Condition=" '$(Scope)' == 'All' "/>
-    <MSBuild Projects="@(SpecifiedLibrary)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean"
-             Condition=" '$(BuildSpecifiedLibrary)' == 'true' "/>
+             Targets="Clean"/>
     
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
@@ -251,14 +222,7 @@
     <PropertyGroup>
       <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
-    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"  
-          Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
-    <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"
-          Condition=" '$(Scope)' == 'Authentication' " />
-    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" 
-          Condition=" '$(Scope)' == 'All' " />
-    <Exec Command="$(NuGetCommand) restore @(SpecifiedLibrary) $(NuGetRestoreConfigSwitch)"
-          Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
+    <Exec Command="$(NuGetCommand) restore %(LibrariesToBuild.Identity) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
 

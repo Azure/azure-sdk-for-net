@@ -10,10 +10,6 @@
   <ItemGroup>
     <Compile Include="Customizations\WebSiteCloudException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
-  <ItemGroup>
     <Compile Include="RecordedDelegatingHandler.cs" />
     <Compile Include="ScenarioTests\HttpPayload.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="SiteRecoveryManagement\**\*.cs" target="src" />
+    <file src="ServiceManagement\SiteRecovery\SiteRecoveryManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.SiteRecovery.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.SiteRecovery.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.SiteRecovery.xml" target="lib\portable-net45+wp8+wpa81+win" />

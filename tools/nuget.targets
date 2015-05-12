@@ -5,16 +5,16 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <Import Project="$(LibrarySourceFolder)\Common\**\*.nuget.proj" 
-          Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Authentication' "/>
-  <!--TODO: Filter away the unwanted one-->
-  <Import Project="$(LibrarySourceFolder)\**\*.nuget.proj"
-          Condition=" '$(Scope)' == 'All' "/>
-  <!--TODO: make sure keyvault works-->
   <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*.nuget.proj" 
-          Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
+          Condition=" '$(Scope)' != 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\ResourceManagement\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\ServiceManagement\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Common\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
