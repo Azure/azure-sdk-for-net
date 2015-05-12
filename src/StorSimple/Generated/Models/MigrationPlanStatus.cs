@@ -25,46 +25,34 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// Status of the migration plan
     /// </summary>
-    public enum CloudType
+    public enum MigrationPlanStatus
     {
-        None = 0,
+        /// <summary>
+        /// Status is Invalid
+        /// </summary>
+        Invalid = 0,
         
-        Atmos = 1,
+        /// <summary>
+        /// Status indicates the estimation of migration plan has not yet
+        /// started
+        /// </summary>
+        NotStarted = 1,
         
-        Azure = 2,
+        /// <summary>
+        /// Status indicates the estimation of migration plan is in progress
+        /// </summary>
+        InProgress = 2,
         
-        S3 = 3,
+        /// <summary>
+        /// Status indicates the estimation of migration plan has failed
+        /// </summary>
+        Failed = 3,
         
-        Synaptic = 4,
-        
-        AtmosOnPrem = 5,
-        
-        ASPDeprecated = 6,
-        
-        Zetta = 7,
-        
-        RackSpace = 8,
-        
-        IIJ = 9,
-        
-        NIFTY = 10,
-        
-        S3RRS = 11,
-        
-        DellDXDeprecated = 12,
-        
-        OpenStack = 13,
-        
-        HP = 14,
-        
-        Google = 15,
-        
-        Nirvanix = 16,
-        
-        AzureChina = 17,
-        
-        Max = 18,
+        /// <summary>
+        /// Status indicates the estimation of migration plan has completed
+        /// </summary>
+        Completed = 4,
     }
 }

@@ -25,46 +25,30 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// Represents the migration status for a data container
     /// </summary>
-    public enum CloudType
+    public enum MigrationStatus
     {
-        None = 0,
+        /// <summary>
+        /// Status indicates the migration of the volume container has not yet
+        /// started
+        /// </summary>
+        NotStarted = 0,
         
-        Atmos = 1,
+        /// <summary>
+        /// Status indicates the migration of the volume container is in
+        /// progress
+        /// </summary>
+        InProgress = 1,
         
-        Azure = 2,
+        /// <summary>
+        /// Status indicates the backup volume container has failed
+        /// </summary>
+        Failed = 2,
         
-        S3 = 3,
-        
-        Synaptic = 4,
-        
-        AtmosOnPrem = 5,
-        
-        ASPDeprecated = 6,
-        
-        Zetta = 7,
-        
-        RackSpace = 8,
-        
-        IIJ = 9,
-        
-        NIFTY = 10,
-        
-        S3RRS = 11,
-        
-        DellDXDeprecated = 12,
-        
-        OpenStack = 13,
-        
-        HP = 14,
-        
-        Google = 15,
-        
-        Nirvanix = 16,
-        
-        AzureChina = 17,
-        
-        Max = 18,
+        /// <summary>
+        /// Status indicates the migration of volume container has completed
+        /// </summary>
+        Completed = 3,
     }
 }

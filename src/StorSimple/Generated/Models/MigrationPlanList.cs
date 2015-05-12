@@ -20,51 +20,37 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// The response body for get migration plan rest api.
     /// </summary>
-    public enum CloudType
+    public partial class MigrationPlanList : AzureOperationResponse
     {
-        None = 0,
+        private IList<MigrationPlan> _migrationPlans;
         
-        Atmos = 1,
+        /// <summary>
+        /// Optional. Gets or sets Migration plan for all data containers
+        /// specified in config imported
+        /// </summary>
+        public IList<MigrationPlan> MigrationPlans
+        {
+            get { return this._migrationPlans; }
+            set { this._migrationPlans = value; }
+        }
         
-        Azure = 2,
-        
-        S3 = 3,
-        
-        Synaptic = 4,
-        
-        AtmosOnPrem = 5,
-        
-        ASPDeprecated = 6,
-        
-        Zetta = 7,
-        
-        RackSpace = 8,
-        
-        IIJ = 9,
-        
-        NIFTY = 10,
-        
-        S3RRS = 11,
-        
-        DellDXDeprecated = 12,
-        
-        OpenStack = 13,
-        
-        HP = 14,
-        
-        Google = 15,
-        
-        Nirvanix = 16,
-        
-        AzureChina = 17,
-        
-        Max = 18,
+        /// <summary>
+        /// Initializes a new instance of the MigrationPlanList class.
+        /// </summary>
+        public MigrationPlanList()
+        {
+            this.MigrationPlans = new LazyList<MigrationPlan>();
+        }
     }
 }

@@ -25,46 +25,26 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
-    /// The cloud type.
+    /// Migration Operation represents various confirm operation that is
+    /// allowed on an imported volume container
     /// </summary>
-    public enum CloudType
+    public enum MigrationOperation
     {
-        None = 0,
+        /// <summary>
+        /// Represents a No operation
+        /// </summary>
+        Invalid = 0,
         
-        Atmos = 1,
+        /// <summary>
+        /// Commit associated the volume container to the target device
+        /// permanently
+        /// </summary>
+        Commit = 1,
         
-        Azure = 2,
-        
-        S3 = 3,
-        
-        Synaptic = 4,
-        
-        AtmosOnPrem = 5,
-        
-        ASPDeprecated = 6,
-        
-        Zetta = 7,
-        
-        RackSpace = 8,
-        
-        IIJ = 9,
-        
-        NIFTY = 10,
-        
-        S3RRS = 11,
-        
-        DellDXDeprecated = 12,
-        
-        OpenStack = 13,
-        
-        HP = 14,
-        
-        Google = 15,
-        
-        Nirvanix = 16,
-        
-        AzureChina = 17,
-        
-        Max = 18,
+        /// <summary>
+        /// Rollback cleans-up the changes done by migration and reverts the
+        /// volume container to a state prior to migration
+        /// </summary>
+        Rollback = 2,
     }
 }
