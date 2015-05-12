@@ -43,9 +43,9 @@ Supported Portable Library Platforms:
     </dependencies>
   </metadata>
   <files>
-    <file src="Common\**\*.cs" target="src\Common" />
-    <file src="Common\Properties\*.resx" target="src\Common\Properties" />
-    <file src="Common.NetFramework\**\*.cs" target="src\Common.NetFramework" />
+    <file src="Common\Common\**\*.cs" target="src\Common" />
+    <file src="Common\Common\Properties\*.resx" target="src\Common\Properties" />
+    <file src="Common\Common.NetFramework\**\*.cs" target="src\Common.NetFramework" />
     <file src="..\binaries\portable\Microsoft.Azure.Common.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Common.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Common.xml" target="lib\portable-net45+wp8+wpa81+win" />

@@ -5,11 +5,9 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <Import Project="$(LibrarySourceFolder)\Common\*.nuget.proj" 
+  <Import Project="$(LibrarySourceFolder)\Common\**\*.nuget.proj" 
           Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Configuration\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Common.Authentication\*.nuget.proj"
+  <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
         Condition=" '$(Scope)' == 'Authentication' "/>
   <!--TODO: Filter away the unwanted one-->
   <Import Project="$(LibrarySourceFolder)\**\*.nuget.proj"

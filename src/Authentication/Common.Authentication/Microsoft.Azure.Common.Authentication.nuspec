@@ -20,8 +20,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Common.Authentication\**\*.cs" target="src\Common.Authentication" />
-    <file src="Common.Authentication\Properties\*.resx" target="src\Common.Authentication\Properties" />
+    <file src="Authentication\Common.Authentication\**\*.cs" target="src\Common.Authentication" />
+    <file src="Authentication\Common.Authentication\Properties\*.resx" target="src\Common.Authentication\Properties" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.Authentication.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.Authentication.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.Authentication.xml" target="lib\net45" />
