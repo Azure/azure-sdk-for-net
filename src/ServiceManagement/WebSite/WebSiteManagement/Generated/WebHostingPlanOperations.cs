@@ -806,7 +806,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         XElement endTimeElement = dataElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (endTimeElement != null)
                                         {
-                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             dataInstance.EndTime = endTimeInstance;
                                         }
                                         
@@ -827,7 +827,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         XElement startTimeElement = dataElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (startTimeElement != null)
                                         {
-                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             dataInstance.StartTime = startTimeInstance;
                                         }
                                         
@@ -895,7 +895,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                                 XElement timeCreatedElement = valuesElement.Element(XName.Get("TimeCreated", "http://schemas.microsoft.com/windowsazure"));
                                                 if (timeCreatedElement != null)
                                                 {
-                                                    DateTime timeCreatedInstance = DateTime.Parse(timeCreatedElement.Value, CultureInfo.InvariantCulture);
+                                                    DateTime timeCreatedInstance = DateTime.Parse(timeCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                     metricSampleInstance.TimeCreated = timeCreatedInstance;
                                                 }
                                                 

@@ -496,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement createdElement = backupItemElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
                             if (createdElement != null && !string.IsNullOrEmpty(createdElement.Value))
                             {
-                                DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
+                                DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 backupItemInstance.Created = createdInstance;
                             }
                             
@@ -555,14 +555,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement lastRestoreTimeStampElement = backupItemElement.Element(XName.Get("LastRestoreTimeStamp", "http://schemas.microsoft.com/windowsazure"));
                             if (lastRestoreTimeStampElement != null && !string.IsNullOrEmpty(lastRestoreTimeStampElement.Value))
                             {
-                                DateTime lastRestoreTimeStampInstance = DateTime.Parse(lastRestoreTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                DateTime lastRestoreTimeStampInstance = DateTime.Parse(lastRestoreTimeStampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 backupItemInstance.LastRestoreTimeStamp = lastRestoreTimeStampInstance;
                             }
                             
                             XElement finishedTimeStampElement = backupItemElement.Element(XName.Get("FinishedTimeStamp", "http://schemas.microsoft.com/windowsazure"));
                             if (finishedTimeStampElement != null && !string.IsNullOrEmpty(finishedTimeStampElement.Value))
                             {
-                                DateTime finishedTimeStampInstance = DateTime.Parse(finishedTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                DateTime finishedTimeStampInstance = DateTime.Parse(finishedTimeStampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 backupItemInstance.FinishedTimeStamp = finishedTimeStampInstance;
                             }
                             
@@ -756,7 +756,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement createdTimeElement = operationElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (createdTimeElement != null)
                             {
-                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.CreatedTime = createdTimeInstance;
                             }
                             
@@ -888,7 +888,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement expirationTimeElement = operationElement.Element(XName.Get("ExpirationTime", "http://schemas.microsoft.com/windowsazure"));
                             if (expirationTimeElement != null)
                             {
-                                DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.ExpirationTime = expirationTimeInstance;
                             }
                             
@@ -927,7 +927,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement modifiedTimeElement = operationElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (modifiedTimeElement != null)
                             {
-                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.ModifiedTime = modifiedTimeInstance;
                             }
                             
@@ -1273,7 +1273,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement lastModifiedTimeUtcElement = siteElement2.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                             if (lastModifiedTimeUtcElement != null && !string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value))
                             {
-                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 webSiteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                             }
                             
@@ -2984,7 +2984,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement lastModifiedTimeUtcElement = siteElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                             if (lastModifiedTimeUtcElement != null && !string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value))
                             {
-                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 webSiteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                             }
                             
@@ -3277,7 +3277,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement lastExecutionTimeElement = backupScheduleElement.Element(XName.Get("LastExecutionTime", "http://schemas.microsoft.com/windowsazure"));
                                 if (lastExecutionTimeElement != null && !string.IsNullOrEmpty(lastExecutionTimeElement.Value))
                                 {
-                                    DateTime lastExecutionTimeInstance = DateTime.Parse(lastExecutionTimeElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime lastExecutionTimeInstance = DateTime.Parse(lastExecutionTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     backupScheduleInstance.LastExecutionTime = lastExecutionTimeInstance;
                                 }
                                 
@@ -3291,7 +3291,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement startTimeElement = backupScheduleElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                 if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                                 {
-                                    DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     backupScheduleInstance.StartTime = startTimeInstance;
                                 }
                             }
@@ -4084,7 +4084,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         XElement endTimeElement = dataElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (endTimeElement != null)
                                         {
-                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             dataInstance.EndTime = endTimeInstance;
                                         }
                                         
@@ -4105,7 +4105,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         XElement startTimeElement = dataElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                         if (startTimeElement != null)
                                         {
-                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             dataInstance.StartTime = startTimeInstance;
                                         }
                                         
@@ -4173,7 +4173,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                                 XElement timeCreatedElement = valuesElement.Element(XName.Get("TimeCreated", "http://schemas.microsoft.com/windowsazure"));
                                                 if (timeCreatedElement != null)
                                                 {
-                                                    DateTime timeCreatedInstance = DateTime.Parse(timeCreatedElement.Value, CultureInfo.InvariantCulture);
+                                                    DateTime timeCreatedInstance = DateTime.Parse(timeCreatedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                     metricSampleInstance.TimeCreated = timeCreatedInstance;
                                                 }
                                                 
@@ -5363,7 +5363,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     XElement nextResetTimeElement = usageMetricsElement.Element(XName.Get("NextResetTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (nextResetTimeElement != null)
                                     {
-                                        DateTime nextResetTimeInstance = DateTime.Parse(nextResetTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime nextResetTimeInstance = DateTime.Parse(nextResetTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         usageInstance.NextResetTime = nextResetTimeInstance;
                                     }
                                     
@@ -5730,7 +5730,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     XElement createdElement = backupItemsElement2.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
                                     if (createdElement != null && !string.IsNullOrEmpty(createdElement.Value))
                                     {
-                                        DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         backupItemInstance.Created = createdInstance;
                                     }
                                     
@@ -5789,14 +5789,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     XElement lastRestoreTimeStampElement = backupItemsElement2.Element(XName.Get("LastRestoreTimeStamp", "http://schemas.microsoft.com/windowsazure"));
                                     if (lastRestoreTimeStampElement != null && !string.IsNullOrEmpty(lastRestoreTimeStampElement.Value))
                                     {
-                                        DateTime lastRestoreTimeStampInstance = DateTime.Parse(lastRestoreTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime lastRestoreTimeStampInstance = DateTime.Parse(lastRestoreTimeStampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         backupItemInstance.LastRestoreTimeStamp = lastRestoreTimeStampInstance;
                                     }
                                     
                                     XElement finishedTimeStampElement = backupItemsElement2.Element(XName.Get("FinishedTimeStamp", "http://schemas.microsoft.com/windowsazure"));
                                     if (finishedTimeStampElement != null && !string.IsNullOrEmpty(finishedTimeStampElement.Value))
                                     {
-                                        DateTime finishedTimeStampInstance = DateTime.Parse(finishedTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime finishedTimeStampInstance = DateTime.Parse(finishedTimeStampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         backupItemInstance.FinishedTimeStamp = finishedTimeStampInstance;
                                     }
                                     
@@ -7149,7 +7149,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement lastModifiedTimeUtcElement = siteElement2.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                             if (lastModifiedTimeUtcElement != null && !string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value))
                             {
-                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 webSiteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                             }
                             

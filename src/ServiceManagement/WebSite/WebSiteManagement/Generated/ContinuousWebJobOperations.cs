@@ -828,16 +828,17 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject continuousWebJobSettingsUpdateParametersValue = new JObject();
+                requestDoc = continuousWebJobSettingsUpdateParametersValue;
+                
                 if (settings.IsSingleton != null)
                 {
-                    requestDoc = new JObject();
-                    requestDoc["IsSingleton"] = settings.IsSingleton.Value;
+                    continuousWebJobSettingsUpdateParametersValue["IsSingleton"] = settings.IsSingleton.Value;
                 }
                 
                 if (settings.ShutdownGraceTimeInSeconds != null)
                 {
-                    requestDoc = new JObject();
-                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
+                    continuousWebJobSettingsUpdateParametersValue["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

@@ -542,7 +542,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement createdTimeElement = operationElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (createdTimeElement != null)
                             {
-                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.CreatedTime = createdTimeInstance;
                             }
                             
@@ -674,7 +674,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement expirationTimeElement = operationElement.Element(XName.Get("ExpirationTime", "http://schemas.microsoft.com/windowsazure"));
                             if (expirationTimeElement != null)
                             {
-                                DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.ExpirationTime = expirationTimeInstance;
                             }
                             
@@ -713,7 +713,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement modifiedTimeElement = operationElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
                             if (modifiedTimeElement != null)
                             {
-                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 result.ModifiedTime = modifiedTimeInstance;
                             }
                             

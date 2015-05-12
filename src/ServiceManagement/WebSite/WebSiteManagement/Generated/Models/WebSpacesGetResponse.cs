@@ -54,13 +54,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._currentNumberOfWorkers = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? _currentWorkerSize;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? _currentWorkerSize;
         
         /// <summary>
         /// Optional. The current worker size. Possible values are Small,
         /// Medium, or Large.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? CurrentWorkerSize
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? CurrentWorkerSize
         {
             get { return this._currentWorkerSize; }
             set { this._currentWorkerSize = value; }
@@ -134,14 +134,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._subscription = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? _workerSize;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? _workerSize;
         
         /// <summary>
         /// Optional. The worker size. Possible values are Small, Medium, and
         /// Large. For JSON, the equivalents are 0 = Small, 1 = Medium, and 2
         /// = Large.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? WorkerSize
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? WorkerSize
         {
             get { return this._workerSize; }
             set { this._workerSize = value; }

@@ -1449,10 +1449,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject triggeredWebJobSettingsUpdateParametersValue = new JObject();
+                requestDoc = triggeredWebJobSettingsUpdateParametersValue;
+                
                 if (settings.ShutdownGraceTimeInSeconds != null)
                 {
-                    requestDoc = new JObject();
-                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
+                    triggeredWebJobSettingsUpdateParametersValue["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

@@ -206,7 +206,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -220,7 +220,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSpacesCreatePublishingUserResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -426,7 +426,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 }
                                 if (isNil2 == false)
                                 {
-                                    WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
+                                    WorkerSizeOptions currentWorkerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), currentWorkerSizeElement.Value, true));
                                     result.CurrentWorkerSize = currentWorkerSizeInstance;
                                 }
                             }
@@ -476,7 +476,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement workerSizeElement = webSpaceElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                             if (workerSizeElement != null && !string.IsNullOrEmpty(workerSizeElement.Value))
                             {
-                                WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
+                                WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement.Value, true));
                                 result.WorkerSize = workerSizeInstance;
                             }
                         }
@@ -788,7 +788,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     if (isNil2 == false)
                                     {
-                                        WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
+                                        WorkerSizeOptions currentWorkerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), currentWorkerSizeElement.Value, true));
                                         webSpaceInstance.CurrentWorkerSize = currentWorkerSizeInstance;
                                     }
                                 }
@@ -838,7 +838,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                                 if (workerSizeElement != null && !string.IsNullOrEmpty(workerSizeElement.Value))
                                 {
-                                    WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
+                                    WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement.Value, true));
                                     webSpaceInstance.WorkerSize = workerSizeInstance;
                                 }
                             }
@@ -1423,7 +1423,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement lastModifiedTimeUtcElement = sitesElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                                 if (lastModifiedTimeUtcElement != null && !string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value))
                                 {
-                                    DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     siteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                                 }
                                 
