@@ -163,7 +163,7 @@
     <ItemGroup>
       <!--TODO: make sure this reliably includes all tests for common, authentication, and individual maml projects-->
       <TestDlls Include=".\src\**\*.Tests\bin\**\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
-      <TestDlls Include=".\src\$(Scope)\*.Test\bin\*-$(Configuration)\*.Test.dll" Condition=" '$(Scope)' == 'Common' or  '$(Scope)' == 'Authentication' " />
+      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\*-$(Configuration)\*.Tests.dll" Condition=" '$(Scope)' == 'Common' or  '$(Scope)' == 'Authentication' " />
       <TestDlls Include=".\src\$(Scope)\*.Tests\bin\*$(Configuration)\*$(TestPartialName)*.Tests.dll" Condition=" '$(BuildSpecifiedLibrary)' == 'true' " />
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Common.Authentication.Test</RootNamespace>
-    <AssemblyName>Common.Authentication.Test</AssemblyName>
+    <AssemblyName>Common.Authentication.Tests</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>9fdcb6f4</NuGetPackageImportStamp>

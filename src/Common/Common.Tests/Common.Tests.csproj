@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.WindowsAzure.Common.Test</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Common.Test</AssemblyName>
+    <AssemblyName>Microsoft.WindowsAzure.Common.Tests</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
