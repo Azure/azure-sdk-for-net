@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.DataFactories.Models.Tables
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// An on-premises file system.
