@@ -150,7 +150,9 @@
   
   <PropertyGroup>
     <!--This property is used by build script at CI server. Do not remove it unless you will update CI as well -->
-    <CorporateScanPaths>$(LibrarySourceFolder)</CorporateScanPaths>
+    <!--TODO: research to include all library folders but exlude test folders with huge recorded json files.
+      For now we run subset of folders to avoid long build delay and avoid errors reported on recorded json files-->
+    <CorporateScanPaths>$(LibrarySourceFolder)\Common;$(LibrarySourceFolder)\Authentication</CorporateScanPaths>
   </PropertyGroup>
   <Target Name="SignBinariesForAFxTarget">
     <PropertyGroup>
