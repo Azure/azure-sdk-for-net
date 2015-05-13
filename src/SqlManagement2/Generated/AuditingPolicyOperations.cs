@@ -228,9 +228,19 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
                 }
                 
+                if (parameters.Properties.RetentionDays != null)
+                {
+                    propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                }
+                
                 if (parameters.Properties.UseServerDefault != null)
                 {
                     propertiesValue["useServerDefault"] = parameters.Properties.UseServerDefault;
+                }
+                
+                if (parameters.Properties.AuditLogsTableName != null)
+                {
+                    propertiesValue["auditLogsTableName"] = parameters.Properties.AuditLogsTableName;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -448,6 +458,16 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
                 }
                 
+                if (parameters.Properties.RetentionDays != null)
+                {
+                    propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                }
+                
+                if (parameters.Properties.AuditLogsTableName != null)
+                {
+                    propertiesValue["auditLogsTableName"] = parameters.Properties.AuditLogsTableName;
+                }
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -655,13 +675,6 @@ namespace Microsoft.Azure.Management.Sql
                             DatabaseAuditingPolicy auditingPolicyInstance = new DatabaseAuditingPolicy();
                             result.AuditingPolicy = auditingPolicyInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                auditingPolicyInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -724,11 +737,25 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
                                 }
                                 
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    string retentionDaysInstance = ((string)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
                                 JToken useServerDefaultValue = propertiesValue["useServerDefault"];
                                 if (useServerDefaultValue != null && useServerDefaultValue.Type != JTokenType.Null)
                                 {
                                     string useServerDefaultInstance = ((string)useServerDefaultValue);
                                     propertiesInstance.UseServerDefault = useServerDefaultInstance;
+                                }
+                                
+                                JToken auditLogsTableNameValue = propertiesValue["auditLogsTableName"];
+                                if (auditLogsTableNameValue != null && auditLogsTableNameValue.Type != JTokenType.Null)
+                                {
+                                    string auditLogsTableNameInstance = ((string)auditLogsTableNameValue);
+                                    propertiesInstance.AuditLogsTableName = auditLogsTableNameInstance;
                                 }
                             }
                             
@@ -737,6 +764,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 auditingPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                auditingPolicyInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -928,13 +962,6 @@ namespace Microsoft.Azure.Management.Sql
                             ServerAuditingPolicy auditingPolicyInstance = new ServerAuditingPolicy();
                             result.AuditingPolicy = auditingPolicyInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                auditingPolicyInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -996,6 +1023,20 @@ namespace Microsoft.Azure.Management.Sql
                                     string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
                                     propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
                                 }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    string retentionDaysInstance = ((string)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
+                                JToken auditLogsTableNameValue = propertiesValue["auditLogsTableName"];
+                                if (auditLogsTableNameValue != null && auditLogsTableNameValue.Type != JTokenType.Null)
+                                {
+                                    string auditLogsTableNameInstance = ((string)auditLogsTableNameValue);
+                                    propertiesInstance.AuditLogsTableName = auditLogsTableNameInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -1003,6 +1044,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 auditingPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                auditingPolicyInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];

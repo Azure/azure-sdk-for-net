@@ -31,6 +31,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
@@ -126,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + "/VirtualMachines/";
             url = url + Uri.EscapeDataString(virtualMachineId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -479,7 +480,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(protectionContainerId);
             url = url + "/VirtualMachines";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -803,7 +804,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public async Task<JobResponse> UpdateVmPropertiesAsync(string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<JobResponse> UpdateVmPropertiesAsync(string protectionContainerId, string virtualMachineId, VMProperties parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionContainerId == null)
@@ -852,7 +853,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + "/VirtualMachines/";
             url = url + Uri.EscapeDataString(virtualMachineId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-10");
+            queryParameters.Add("api-version=2015-04-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -892,35 +893,84 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement updateVmPropertiesInputElement = new XElement(XName.Get("UpdateVmPropertiesInput", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(updateVmPropertiesInputElement);
+                XElement vMPropertiesElement = new XElement(XName.Get("VMProperties", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(vMPropertiesElement);
                 
-                if (parameters.RecoveryAzureVmGivenName != null)
+                if (parameters.RecoveryAzureVMName != null)
                 {
-                    XElement recoveryAzureVmGivenNameElement = new XElement(XName.Get("RecoveryAzureVmGivenName", "http://schemas.microsoft.com/windowsazure"));
-                    recoveryAzureVmGivenNameElement.Value = parameters.RecoveryAzureVmGivenName;
-                    updateVmPropertiesInputElement.Add(recoveryAzureVmGivenNameElement);
+                    XElement recoveryAzureVMNameElement = new XElement(XName.Get("RecoveryAzureVMName", "http://schemas.microsoft.com/windowsazure"));
+                    recoveryAzureVMNameElement.Value = parameters.RecoveryAzureVMName;
+                    vMPropertiesElement.Add(recoveryAzureVMNameElement);
                 }
                 
-                if (parameters.RecoveryAzureVmSize != null)
+                if (parameters.RecoveryAzureVMSize != null)
                 {
-                    XElement recoveryAzureVmSizeElement = new XElement(XName.Get("RecoveryAzureVmSize", "http://schemas.microsoft.com/windowsazure"));
-                    recoveryAzureVmSizeElement.Value = parameters.RecoveryAzureVmSize;
-                    updateVmPropertiesInputElement.Add(recoveryAzureVmSizeElement);
+                    XElement recoveryAzureVMSizeElement = new XElement(XName.Get("RecoveryAzureVMSize", "http://schemas.microsoft.com/windowsazure"));
+                    recoveryAzureVMSizeElement.Value = parameters.RecoveryAzureVMSize;
+                    vMPropertiesElement.Add(recoveryAzureVMSizeElement);
                 }
                 
-                if (parameters.SelectedPrimaryNicId != null)
+                if (parameters.SelectedRecoveryAzureNetworkId != null)
                 {
-                    XElement selectedPrimaryNicIdElement = new XElement(XName.Get("SelectedPrimaryNicId", "http://schemas.microsoft.com/windowsazure"));
-                    selectedPrimaryNicIdElement.Value = parameters.SelectedPrimaryNicId;
-                    updateVmPropertiesInputElement.Add(selectedPrimaryNicIdElement);
+                    XElement selectedRecoveryAzureNetworkIdElement = new XElement(XName.Get("SelectedRecoveryAzureNetworkId", "http://schemas.microsoft.com/windowsazure"));
+                    selectedRecoveryAzureNetworkIdElement.Value = parameters.SelectedRecoveryAzureNetworkId;
+                    vMPropertiesElement.Add(selectedRecoveryAzureNetworkIdElement);
                 }
                 
-                if (parameters.RecoveryAzureNetworkId != null)
+                if (parameters.VMNics != null)
                 {
-                    XElement recoveryAzureNetworkIdElement = new XElement(XName.Get("RecoveryAzureNetworkId", "http://schemas.microsoft.com/windowsazure"));
-                    recoveryAzureNetworkIdElement.Value = parameters.RecoveryAzureNetworkId;
-                    updateVmPropertiesInputElement.Add(recoveryAzureNetworkIdElement);
+                    if (parameters.VMNics is ILazyCollection == false || ((ILazyCollection)parameters.VMNics).IsInitialized)
+                    {
+                        XElement vMNicsSequenceElement = new XElement(XName.Get("VMNics", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (VMNicDetails vMNicsItem in parameters.VMNics)
+                        {
+                            XElement vMNicDetailsElement = new XElement(XName.Get("VMNicDetails", "http://schemas.microsoft.com/windowsazure"));
+                            vMNicsSequenceElement.Add(vMNicDetailsElement);
+                            
+                            if (vMNicsItem.NicId != null)
+                            {
+                                XElement nicIdElement = new XElement(XName.Get("NicId", "http://schemas.microsoft.com/windowsazure"));
+                                nicIdElement.Value = vMNicsItem.NicId;
+                                vMNicDetailsElement.Add(nicIdElement);
+                            }
+                            
+                            if (vMNicsItem.VMSubnetName != null)
+                            {
+                                XElement vMSubnetNameElement = new XElement(XName.Get("VMSubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                vMSubnetNameElement.Value = vMNicsItem.VMSubnetName;
+                                vMNicDetailsElement.Add(vMSubnetNameElement);
+                            }
+                            
+                            if (vMNicsItem.VMNetworkName != null)
+                            {
+                                XElement vMNetworkNameElement = new XElement(XName.Get("VMNetworkName", "http://schemas.microsoft.com/windowsazure"));
+                                vMNetworkNameElement.Value = vMNicsItem.VMNetworkName;
+                                vMNicDetailsElement.Add(vMNetworkNameElement);
+                            }
+                            
+                            if (vMNicsItem.RecoveryVMNetworkId != null)
+                            {
+                                XElement recoveryVMNetworkIdElement = new XElement(XName.Get("RecoveryVMNetworkId", "http://schemas.microsoft.com/windowsazure"));
+                                recoveryVMNetworkIdElement.Value = vMNicsItem.RecoveryVMNetworkId;
+                                vMNicDetailsElement.Add(recoveryVMNetworkIdElement);
+                            }
+                            
+                            if (vMNicsItem.RecoveryVMSubnetName != null)
+                            {
+                                XElement recoveryVMSubnetNameElement = new XElement(XName.Get("RecoveryVMSubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                recoveryVMSubnetNameElement.Value = vMNicsItem.RecoveryVMSubnetName;
+                                vMNicDetailsElement.Add(recoveryVMSubnetNameElement);
+                            }
+                            
+                            if (vMNicsItem.ReplicaNicStaticIPAddress != null)
+                            {
+                                XElement replicaNicStaticIPAddressElement = new XElement(XName.Get("ReplicaNicStaticIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                replicaNicStaticIPAddressElement.Value = vMNicsItem.ReplicaNicStaticIPAddress;
+                                vMNicDetailsElement.Add(replicaNicStaticIPAddressElement);
+                            }
+                        }
+                        vMPropertiesElement.Add(vMNicsSequenceElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -979,14 +1029,14 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                             if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                             if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -1052,14 +1102,14 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (startTimeElement2 != null)
                                     {
-                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         taskInstance.StartTime = startTimeInstance2;
                                     }
                                     
                                     XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
                                     if (endTimeElement2 != null)
                                     {
-                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         taskInstance.EndTime = endTimeInstance2;
                                     }
                                     
@@ -1210,7 +1260,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                         XElement creationTimeUtcElement = providerErrorDetailsElement.Element(XName.Get("CreationTimeUtc", "http://schemas.microsoft.com/windowsazure"));
                                         if (creationTimeUtcElement != null)
                                         {
-                                            DateTime creationTimeUtcInstance = DateTime.Parse(creationTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                            DateTime creationTimeUtcInstance = DateTime.Parse(creationTimeUtcElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
                                         }
                                         

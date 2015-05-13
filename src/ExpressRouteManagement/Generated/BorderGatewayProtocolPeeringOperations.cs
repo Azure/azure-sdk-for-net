@@ -195,6 +195,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     createBgpPeeringElement.Add(advertisedPublicPrefixesElement);
                 }
                 
+                XElement customerAsnElement = new XElement(XName.Get("CustomerAsn", "http://schemas.microsoft.com/windowsazure"));
+                customerAsnElement.Value = parameters.CustomerAutonomousSystemNumber.ToString();
+                createBgpPeeringElement.Add(customerAsnElement);
+                
                 XElement peerAsnElement = new XElement(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
                 peerAsnElement.Value = parameters.PeerAutonomousSystemNumber.ToString();
                 createBgpPeeringElement.Add(peerAsnElement);
@@ -202,6 +206,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 XElement primaryPeerSubnetElement = new XElement(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
                 primaryPeerSubnetElement.Value = parameters.PrimaryPeerSubnet;
                 createBgpPeeringElement.Add(primaryPeerSubnetElement);
+                
+                if (parameters.RoutingRegistryName != null)
+                {
+                    XElement routingRegistryNameElement = new XElement(XName.Get("RoutingRegistryName", "http://schemas.microsoft.com/windowsazure"));
+                    routingRegistryNameElement.Value = parameters.RoutingRegistryName;
+                    createBgpPeeringElement.Add(routingRegistryNameElement);
+                }
                 
                 XElement secondaryPeerSubnetElement = new XElement(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
                 secondaryPeerSubnetElement.Value = parameters.SecondaryPeerSubnet;
@@ -578,6 +589,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 XElement updateBgpPeeringElement = new XElement(XName.Get("UpdateBgpPeering", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(updateBgpPeeringElement);
                 
+                if (parameters.AdvertisedPublicPrefixes != null)
+                {
+                    XElement advertisedPublicPrefixesElement = new XElement(XName.Get("AdvertisedPublicPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                    advertisedPublicPrefixesElement.Value = parameters.AdvertisedPublicPrefixes;
+                    updateBgpPeeringElement.Add(advertisedPublicPrefixesElement);
+                }
+                
+                XElement customerAsnElement = new XElement(XName.Get("CustomerAsn", "http://schemas.microsoft.com/windowsazure"));
+                customerAsnElement.Value = parameters.CustomerAutonomousSystemNumber.ToString();
+                updateBgpPeeringElement.Add(customerAsnElement);
+                
                 XElement peerAsnElement = new XElement(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
                 peerAsnElement.Value = parameters.PeerAutonomousSystemNumber.ToString();
                 updateBgpPeeringElement.Add(peerAsnElement);
@@ -587,6 +609,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XElement primaryPeerSubnetElement = new XElement(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
                     primaryPeerSubnetElement.Value = parameters.PrimaryPeerSubnet;
                     updateBgpPeeringElement.Add(primaryPeerSubnetElement);
+                }
+                
+                if (parameters.RoutingRegistryName != null)
+                {
+                    XElement routingRegistryNameElement = new XElement(XName.Get("RoutingRegistryName", "http://schemas.microsoft.com/windowsazure"));
+                    routingRegistryNameElement.Value = parameters.RoutingRegistryName;
+                    updateBgpPeeringElement.Add(routingRegistryNameElement);
                 }
                 
                 if (parameters.SecondaryPeerSubnet != null)
@@ -832,6 +861,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 bgpPeeringInstance.AzureAsn = azureAsnInstance;
                             }
                             
+                            XElement customerAsnElement = bgpPeeringElement.Element(XName.Get("CustomerAsn", "http://schemas.microsoft.com/windowsazure"));
+                            if (customerAsnElement != null)
+                            {
+                                uint customerAsnInstance = uint.Parse(customerAsnElement.Value, CultureInfo.InvariantCulture);
+                                bgpPeeringInstance.CustomerAutonomousSystemNumber = customerAsnInstance;
+                            }
+                            
                             XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
                             if (peerAsnElement != null)
                             {
@@ -851,6 +887,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             {
                                 string primaryPeerSubnetInstance = primaryPeerSubnetElement.Value;
                                 bgpPeeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
+                            }
+                            
+                            XElement routingRegistryNameElement = bgpPeeringElement.Element(XName.Get("RoutingRegistryName", "http://schemas.microsoft.com/windowsazure"));
+                            if (routingRegistryNameElement != null)
+                            {
+                                string routingRegistryNameInstance = routingRegistryNameElement.Value;
+                                bgpPeeringInstance.RoutingRegistryName = routingRegistryNameInstance;
                             }
                             
                             XElement secondaryAzurePortElement = bgpPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));

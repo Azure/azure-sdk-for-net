@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Search
     public static partial class DocumentOperationsExtensions
     {
         /// <summary>
-        /// Retrieves the next page of search results from the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
+        /// Retrieves the next page of search results from the Azure Search index. 
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Retrieves the next page of search results from the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
+        /// Retrieves the next page of search results from the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Retrieves the next page of search results from the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
+        /// Retrieves the next page of search results from the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -113,8 +113,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Retrieves the next page of search results from the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
+        /// Retrieves the next page of search results from the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents

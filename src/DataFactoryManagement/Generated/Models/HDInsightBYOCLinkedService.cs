@@ -41,6 +41,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._clusterUri = value; }
         }
         
+        private HCatalogProperties _hcatalog;
+        
+        /// <summary>
+        /// Optional. Hcatalog integration properties.
+        /// </summary>
+        public HCatalogProperties Hcatalog
+        {
+            get { return this._hcatalog; }
+            set { this._hcatalog = value; }
+        }
+        
         private string _linkedServiceName;
         
         /// <summary>

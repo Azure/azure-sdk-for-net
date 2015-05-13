@@ -29,7 +29,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Database request.
+    /// Represents the response to a List Azure Sql Database request.
     /// </summary>
     public partial class DatabaseListResponse : AzureOperationResponse, IEnumerable<Database>
     {

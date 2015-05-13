@@ -403,6 +403,10 @@ namespace Microsoft.Azure.Management.DataFactories
             cancellationToken.ThrowIfCancellationRequested();
             DataFactoryCreateOrUpdateResponse result = await client.DataFactories.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -410,6 +414,10 @@ namespace Microsoft.Azure.Management.DataFactories
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.DataFactories.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
             }
             
             if (shouldTrace)

@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        Task<JobResponse> DissociateAndDeleteAsync(string protectionProfileId, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> DissociateAndDeleteAsync(string protectionProfileId, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the protected Profile by Id.

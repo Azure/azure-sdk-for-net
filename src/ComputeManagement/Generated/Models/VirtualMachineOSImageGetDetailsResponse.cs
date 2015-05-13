@@ -32,6 +32,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class VirtualMachineOSImageGetDetailsResponse : VirtualMachineOSImageGetResponse
     {
+        private ComputeImageAttributes _computeImageAttributes;
+        
+        /// <summary>
+        /// Required. The compute image attributes. Metadata which is required
+        /// for this image to be useablein the Microsoft.Compute Provider.The
+        /// combination of values provided for Offer, Sku, and Verison must be
+        /// unique for a publisher.
+        /// </summary>
+        public ComputeImageAttributes ComputeImageAttributes
+        {
+            get { return this._computeImageAttributes; }
+            set { this._computeImageAttributes = value; }
+        }
+        
         private bool? _isCorrupted;
         
         /// <summary>
@@ -41,6 +55,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._isCorrupted; }
             set { this._isCorrupted = value; }
+        }
+        
+        private MarketplaceImageAttributes _marketplaceImageAttributes;
+        
+        /// <summary>
+        /// Optional. The market place image attributes.Metadata which is
+        /// required for VM Marketplace sourced imagesto be useable in the
+        /// Microsoft.Compute Provider.
+        /// </summary>
+        public MarketplaceImageAttributes MarketplaceImageAttributes
+        {
+            get { return this._marketplaceImageAttributes; }
+            set { this._marketplaceImageAttributes = value; }
         }
         
         private IList<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement> _replicationProgress;
@@ -61,6 +88,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineOSImageGetDetailsResponse()
         {
             this.ReplicationProgress = new LazyList<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineOSImageGetDetailsResponse class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineOSImageGetDetailsResponse(ComputeImageAttributes computeImageAttributes)
+            : this()
+        {
+            if (computeImageAttributes == null)
+            {
+                throw new ArgumentNullException("computeImageAttributes");
+            }
+            this.ComputeImageAttributes = computeImageAttributes;
         }
         
         /// <summary>

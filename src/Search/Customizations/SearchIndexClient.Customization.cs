@@ -14,13 +14,80 @@
 // 
 
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using Hyak.Common.Internals;
 
 namespace Microsoft.Azure.Search
 {
     public partial class SearchIndexClient
     {
         private const string ClientRequestIdHeaderName = "client-request-id";
+
+        /// <summary>
+        /// Initializes a new instance of the SearchIndexClient class.
+        /// </summary>
+        /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
+        /// <param name='indexName'>Required. The name of the Azure Search index.</param>
+        /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx" />
+        /// </param>
+        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials)
+            : this()
+        {
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException("searchServiceName");
+            }
+
+            if (indexName == null)
+            {
+                throw new ArgumentNullException("indexName");
+            }
+            
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            
+            this._credentials = credentials;
+            this._baseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchIndexClient class.
+        /// </summary>
+        /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
+        /// <param name='indexName'>Required. The name of the Azure Search index.</param>
+        /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx" />
+        /// </param>
+        /// <param name='httpClient'>The Http client</param>
+        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException("searchServiceName");
+            }
+            
+            if (indexName == null)
+            {
+                throw new ArgumentNullException("indexName");
+            }
+            
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            
+            this._credentials = credentials;
+            this._baseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+
+            this.Credentials.InitializeServiceClient(this);
+        }
 
         /// <inheritdoc />
         public void SetClientRequestId(Guid guid)
@@ -33,6 +100,11 @@ namespace Microsoft.Azure.Search
             }
 
             headers.Add(ClientRequestIdHeaderName, guid.ToString());
+        }
+
+        private static Uri BuildBaseUriForIndex(string searchServiceName, string indexName)
+        {
+            return TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
         }
     }
 }

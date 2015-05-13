@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields, 
             CancellationToken cancellationToken,
             Func<string, TDoc> deserialize)
-            where TResponse : DocumentGetResponse<TDoc>, new()
+            where TResponse : DocumentGetResponseBase<TDoc>, new()
             where TDoc : class
         {
             // Validate

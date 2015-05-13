@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Search
         }
 
         private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>()
-            where TSearchResult : SearchResult<TDoc>, new()
-            where TSuggestResult : SuggestResult<TDoc>, new()
+            where TSearchResult : SearchResultBase<TDoc>, new()
+            where TSuggestResult : SuggestResultBase<TDoc>, new()
             where TDoc : class
         {
             var settings =

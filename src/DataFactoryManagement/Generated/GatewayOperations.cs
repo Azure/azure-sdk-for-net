@@ -649,6 +649,10 @@ namespace Microsoft.Azure.Management.DataFactories
             cancellationToken.ThrowIfCancellationRequested();
             GatewayCreateOrUpdateResponse result = await client.Gateways.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -656,6 +660,10 @@ namespace Microsoft.Azure.Management.DataFactories
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.Gateways.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
             }
             
             if (shouldTrace)
@@ -709,6 +717,10 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 delayInSeconds = 30;
             }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
             while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -719,6 +731,10 @@ namespace Microsoft.Azure.Management.DataFactories
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 15;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
             

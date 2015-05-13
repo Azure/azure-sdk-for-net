@@ -199,6 +199,11 @@ namespace Microsoft.WindowsAzure.Management.Automation
                     }
                 }
                 
+                if (parameters.Properties.RunOn != null)
+                {
+                    propertiesValue["runOn"] = parameters.Properties.RunOn;
+                }
+                
                 if (parameters.Name != null)
                 {
                     jobCreateParametersValue["name"] = parameters.Name;
@@ -362,6 +367,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                         string nameInstance = ((string)nameValue);
                                         runbookInstance.Name = nameInstance;
                                     }
+                                }
+                                
+                                JToken runOnValue = propertiesValue2["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                             }
                         }
@@ -622,6 +634,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                         runbookInstance.Name = nameInstance;
                                     }
                                 }
+                                
+                                JToken runOnValue = propertiesValue["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
+                                }
                             }
                         }
                         
@@ -863,7 +882,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobId.ToString());
-            url = url + "/runbook";
+            url = url + "/runbookContent";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-12-08");
             if (queryParameters.Count > 0)
@@ -933,17 +952,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new JobGetRunbookContentResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            string contentInstance = ((string)responseDoc);
-                            result.Content = contentInstance;
-                        }
+                        result.Content = responseContent;
                         
                     }
                     result.StatusCode = statusCode;
@@ -1227,6 +1236,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                                 runbookInstance.Name = nameInstance;
                                             }
                                         }
+                                        
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1473,6 +1489,13 @@ namespace Microsoft.WindowsAzure.Management.Automation
                                                 string nameInstance = ((string)nameValue);
                                                 runbookInstance.Name = nameInstance;
                                             }
+                                        }
+                                        
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                     }
                                 }

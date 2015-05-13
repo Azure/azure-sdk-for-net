@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
-using Hyak.Common.Internals;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 
@@ -60,59 +59,14 @@ namespace Microsoft.Azure.Search
         private SearchCredentials _credentials;
         
         /// <summary>
-        /// Gets or sets the credentials used to authenticate to an Azure
-        /// Search service.  (see
+        /// Gets the credentials used to authenticate to an Azure Search
+        /// service.  (see
         /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
         /// information)
         /// </summary>
         public SearchCredentials Credentials
         {
             get { return this._credentials; }
-            set { this._credentials = value; }
-        }
-        
-        private string _indexName;
-        
-        /// <summary>
-        /// Gets or sets the name of the Azure Search index.
-        /// </summary>
-        public string IndexName
-        {
-            get { return this._indexName; }
-            set { this._indexName = value; }
-        }
-        
-        private int _longRunningOperationInitialTimeout;
-        
-        /// <summary>
-        /// Gets or sets the initial timeout for Long Running Operations.
-        /// </summary>
-        public int LongRunningOperationInitialTimeout
-        {
-            get { return this._longRunningOperationInitialTimeout; }
-            set { this._longRunningOperationInitialTimeout = value; }
-        }
-        
-        private int _longRunningOperationRetryTimeout;
-        
-        /// <summary>
-        /// Gets or sets the retry timeout for Long Running Operations.
-        /// </summary>
-        public int LongRunningOperationRetryTimeout
-        {
-            get { return this._longRunningOperationRetryTimeout; }
-            set { this._longRunningOperationRetryTimeout = value; }
-        }
-        
-        private string _searchServiceName;
-        
-        /// <summary>
-        /// Gets or sets the name of the Azure Search service.
-        /// </summary>
-        public string SearchServiceName
-        {
-            get { return this._searchServiceName; }
-            set { this._searchServiceName = value; }
         }
         
         private IDocumentOperations _documents;
@@ -131,46 +85,30 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
         /// </summary>
-        public SearchIndexClient()
+        private SearchIndexClient()
             : base()
         {
             this._documents = new DocumentOperations(this);
             this._apiVersion = "2015-02-28";
-            this._longRunningOperationInitialTimeout = -1;
-            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
         /// </summary>
-        /// <param name='searchServiceName'>
-        /// Required. Gets or sets the name of the Azure Search service.
-        /// </param>
-        /// <param name='indexName'>
-        /// Required. Gets or sets the name of the Azure Search index.
-        /// </param>
         /// <param name='credentials'>
-        /// Required. Gets or sets the credentials used to authenticate to an
-        /// Azure Search service.  (see
+        /// Required. Gets the credentials used to authenticate to an Azure
+        /// Search service.  (see
         /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
         /// information)
         /// </param>
         /// <param name='baseUri'>
-        /// Optional. Gets the URI used as the base for all cloud service
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials, Uri baseUri)
+        public SearchIndexClient(SearchCredentials credentials, Uri baseUri)
             : this()
         {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -179,48 +117,8 @@ namespace Microsoft.Azure.Search
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._searchServiceName = searchServiceName;
-            this._indexName = indexName;
             this._credentials = credentials;
             this._baseUri = baseUri;
-            
-            this.Credentials.InitializeServiceClient(this);
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the SearchIndexClient class.
-        /// </summary>
-        /// <param name='searchServiceName'>
-        /// Required. Gets or sets the name of the Azure Search service.
-        /// </param>
-        /// <param name='indexName'>
-        /// Required. Gets or sets the name of the Azure Search index.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets or sets the credentials used to authenticate to an
-        /// Azure Search service.  (see
-        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
-        /// information)
-        /// </param>
-        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials)
-            : this()
-        {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName");
-            }
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this._searchServiceName = searchServiceName;
-            this._indexName = indexName;
-            this._credentials = credentials;
-            this._baseUri = TypeConversion.TryParseUri("https://" + this.SearchServiceName + ".search.windows.net/indexes/" + this.IndexName + "/");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -231,49 +129,33 @@ namespace Microsoft.Azure.Search
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public SearchIndexClient(HttpClient httpClient)
+        private SearchIndexClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._documents = new DocumentOperations(this);
             this._apiVersion = "2015-02-28";
-            this._longRunningOperationInitialTimeout = -1;
-            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
         /// </summary>
-        /// <param name='searchServiceName'>
-        /// Required. Gets or sets the name of the Azure Search service.
-        /// </param>
-        /// <param name='indexName'>
-        /// Required. Gets or sets the name of the Azure Search index.
-        /// </param>
         /// <param name='credentials'>
-        /// Required. Gets or sets the credentials used to authenticate to an
-        /// Azure Search service.  (see
+        /// Required. Gets the credentials used to authenticate to an Azure
+        /// Search service.  (see
         /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
         /// information)
         /// </param>
         /// <param name='baseUri'>
-        /// Optional. Gets the URI used as the base for all cloud service
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public SearchIndexClient(SearchCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -282,51 +164,8 @@ namespace Microsoft.Azure.Search
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._searchServiceName = searchServiceName;
-            this._indexName = indexName;
             this._credentials = credentials;
             this._baseUri = baseUri;
-            
-            this.Credentials.InitializeServiceClient(this);
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the SearchIndexClient class.
-        /// </summary>
-        /// <param name='searchServiceName'>
-        /// Required. Gets or sets the name of the Azure Search service.
-        /// </param>
-        /// <param name='indexName'>
-        /// Required. Gets or sets the name of the Azure Search index.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets or sets the credentials used to authenticate to an
-        /// Azure Search service.  (see
-        /// https://msdn.microsoft.com/library/azure/dn798935.aspx for more
-        /// information)
-        /// </param>
-        /// <param name='httpClient'>
-        /// The Http client
-        /// </param>
-        public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials, HttpClient httpClient)
-            : this(httpClient)
-        {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName");
-            }
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this._searchServiceName = searchServiceName;
-            this._indexName = indexName;
-            this._credentials = credentials;
-            this._baseUri = TypeConversion.TryParseUri("https://" + this.SearchServiceName + ".search.windows.net/indexes/" + this.IndexName + "/");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -346,13 +185,9 @@ namespace Microsoft.Azure.Search
             {
                 SearchIndexClient clonedClient = ((SearchIndexClient)client);
                 
-                clonedClient._searchServiceName = this._searchServiceName;
-                clonedClient._indexName = this._indexName;
                 clonedClient._credentials = this._credentials;
-                clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;
-                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
-                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                clonedClient._baseUri = this._baseUri;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
@@ -414,6 +249,118 @@ namespace Microsoft.Azure.Search
             if (value == IndexActionType.Delete)
             {
                 return "delete";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type IndexerExecutionStatus.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static IndexerExecutionStatus ParseIndexerExecutionStatus(string value)
+        {
+            if ("transientFailure".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerExecutionStatus.TransientFailure;
+            }
+            if ("success".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerExecutionStatus.Success;
+            }
+            if ("inProgress".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerExecutionStatus.InProgress;
+            }
+            if ("reset".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerExecutionStatus.Reset;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type IndexerExecutionStatus to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string IndexerExecutionStatusToString(IndexerExecutionStatus value)
+        {
+            if (value == IndexerExecutionStatus.TransientFailure)
+            {
+                return "transientFailure";
+            }
+            if (value == IndexerExecutionStatus.Success)
+            {
+                return "success";
+            }
+            if (value == IndexerExecutionStatus.InProgress)
+            {
+                return "inProgress";
+            }
+            if (value == IndexerExecutionStatus.Reset)
+            {
+                return "reset";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type IndexerStatus.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static IndexerStatus ParseIndexerStatus(string value)
+        {
+            if ("unknown".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerStatus.Unknown;
+            }
+            if ("error".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerStatus.Error;
+            }
+            if ("running".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return IndexerStatus.Running;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type IndexerStatus to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string IndexerStatusToString(IndexerStatus value)
+        {
+            if (value == IndexerStatus.Unknown)
+            {
+                return "unknown";
+            }
+            if (value == IndexerStatus.Error)
+            {
+                return "error";
+            }
+            if (value == IndexerStatus.Running)
+            {
+                return "running";
             }
             throw new ArgumentOutOfRangeException("value");
         }

@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Search
     public static partial class DocumentOperationsExtensions
     {
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -90,8 +90,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -120,8 +120,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
@@ -154,8 +154,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -189,8 +189,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -232,8 +232,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -266,8 +266,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/> for more information)
+        /// Suggests query terms based on input text and matching documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798936.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents

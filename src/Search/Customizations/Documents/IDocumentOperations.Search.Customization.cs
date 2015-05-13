@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Search
     public partial interface IDocumentOperations
     {
         /// <summary>
-        /// Searches for documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
+        /// Searches for documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <param name="searchText">
         /// A full-text search query expression; See
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken);
 
         /// <summary>
-        /// Searches for documents in the Azure Search index.  (see
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/> for more information)
+        /// Searches for documents in the Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents

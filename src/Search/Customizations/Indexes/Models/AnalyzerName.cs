@@ -18,8 +18,8 @@ using System;
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
-    /// Defines the names of all text analyzers supported by Azure Search.  (see
-    /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx"/> for more information)
+    /// Defines the names of all text analyzers supported by Azure Search.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx"/>
     /// </summary>
     public sealed class AnalyzerName
     {

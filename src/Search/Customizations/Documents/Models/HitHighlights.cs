@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
-    /// Contains all the hit highlights for a document, organized as a collection of text fragements for each
+    /// Contains all the hit highlights for a document, organized as a collection of text fragments for each
     /// applicable field.
     /// </summary>
     public class HitHighlights : Dictionary<string, IList<string>>

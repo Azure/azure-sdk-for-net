@@ -17,11 +17,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Search.Models
 {
     public partial class SearchParameters
     {
+        private IList<string> _facets = new LazyList<string>();
+
+        /// <summary>
+        /// Gets or sets the list of facet expressions to apply to the search query. Each facet expression contains a
+        /// field name, optionally followed by a comma-separated list of name:value pairs.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
+        /// </summary>
+        public IList<string> Facets
+        {
+            get { return this._facets; }
+            set { this._facets = value; }
+        }
+        
         /// <summary>
         /// Converts the SearchParameters instance to a URL query string.
         /// </summary>
@@ -37,7 +51,7 @@ namespace Microsoft.Azure.Search.Models
 
             foreach (string facetExpr in Facets)
             {
-                yield return new QueryOption("facet", facetExpr);
+                yield return new QueryOption("facet", Uri.EscapeDataString(facetExpr));
             }
 
             if (Filter != null)

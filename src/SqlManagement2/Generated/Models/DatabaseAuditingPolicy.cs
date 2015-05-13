@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
@@ -28,19 +29,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents an Azure SQL Database auditing policy.
     /// </summary>
-    public partial class DatabaseAuditingPolicy : ResourceBase
+    public partial class DatabaseAuditingPolicy : ResourceBaseExtended
     {
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the resource.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private DatabaseAuditingPolicyProperties _properties;
         
         /// <summary>
@@ -57,6 +47,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public DatabaseAuditingPolicy()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseAuditingPolicy class with
+        /// required arguments.
+        /// </summary>
+        public DatabaseAuditingPolicy(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

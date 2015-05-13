@@ -29,10 +29,10 @@ namespace Microsoft.WindowsAzure.Management.Automation.Models
     /// </summary>
     public static partial class ScheduleFrequency
     {
-        public const string Onetime = "onetime";
+        public const string OneTime = "OneTime";
         
-        public const string Day = "day";
+        public const string Day = "Day";
         
-        public const string Hour = "hour";
+        public const string Hour = "Hour";
     }
 }

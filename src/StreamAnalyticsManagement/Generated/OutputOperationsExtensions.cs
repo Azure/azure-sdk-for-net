@@ -315,14 +315,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to list all the outputs in the
+        /// specified stream analytics job.
+        /// </param>
         /// <returns>
         /// The response of the output list operation.
         /// </returns>
-        public static OutputListResponse ListOutputInJob(this IOutputOperations operations, string resourceGroupName, string jobName)
+        public static OutputListResponse ListOutputInJob(this IOutputOperations operations, string resourceGroupName, string jobName, OutputListParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IOutputOperations)s).ListOutputInJobAsync(resourceGroupName, jobName);
+                return ((IOutputOperations)s).ListOutputInJobAsync(resourceGroupName, jobName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -340,12 +344,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to list all the outputs in the
+        /// specified stream analytics job.
+        /// </param>
         /// <returns>
         /// The response of the output list operation.
         /// </returns>
-        public static Task<OutputListResponse> ListOutputInJobAsync(this IOutputOperations operations, string resourceGroupName, string jobName)
+        public static Task<OutputListResponse> ListOutputInJobAsync(this IOutputOperations operations, string resourceGroupName, string jobName, OutputListParameters parameters)
         {
-            return operations.ListOutputInJobAsync(resourceGroupName, jobName, CancellationToken.None);
+            return operations.ListOutputInJobAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
         }
         
         /// <summary>

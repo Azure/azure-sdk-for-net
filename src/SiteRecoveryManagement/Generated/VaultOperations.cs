@@ -30,7 +30,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.RecoveryServices;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
@@ -278,6 +277,156 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
         }
         
         /// <summary>
+        /// Deletes a vault
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// Required. The name of the cloud service containing the job
+        /// collection.
+        /// </param>
+        /// <param name='vaultName'>
+        /// Required. The name of the vault to delete.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<RecoveryServicesOperationStatusResponse> BeginDeletingAsync(string cloudServiceName, string vaultName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException("cloudServiceName");
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException("vaultName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("cloudServiceName", cloudServiceName);
+                tracingParameters.Add("vaultName", vaultName);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(vaultName);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/xml");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RecoveryServicesOperationStatusResponse result = null;
+                    // Deserialize Response
+                    result = new RecoveryServicesOperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Creates a vault
         /// </summary>
         /// <param name='cloudServiceName'>
@@ -376,35 +525,32 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Creates a Cloud services
+        /// Deletes a vault
         /// </summary>
         /// <param name='cloudServiceName'>
         /// Required. The name of the cloud service containing the job
         /// collection.
         /// </param>
         /// <param name='vaultName'>
-        /// Required. The name of the vault to create.
+        /// Required. The name of the vault to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string cloudServiceName, string vaultName, CancellationToken cancellationToken)
+        public async Task<RecoveryServicesOperationStatusResponse> DeleteAsync(string cloudServiceName, string vaultName, CancellationToken cancellationToken)
         {
-            // Validate
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException("cloudServiceName");
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException("vaultName");
-            }
-            
-            // Tracing
+            RecoveryServicesManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -416,106 +562,63 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
-            // Construct URL
-            string url = "";
-            if (this.Client.Credentials.SubscriptionId != null)
+            cancellationToken.ThrowIfCancellationRequested();
+            RecoveryServicesOperationStatusResponse response = await client.Vaults.BeginDeletingAsync(cloudServiceName, vaultName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == RecoveryServicesOperationStatus.Succeeded)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                return response;
             }
-            url = url + "/cloudservices/";
-            url = url + Uri.EscapeDataString(cloudServiceName);
-            url = url + "/resources/";
-            url = url + "WAHyperVRecoveryManager";
-            url = url + "/~/";
-            url = url + "HyperVRecoveryManagerVault";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(vaultName);
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
+            cancellationToken.ThrowIfCancellationRequested();
+            RecoveryServicesOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 15;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            if (url[0] == '/')
+            while ((result.Status != RecoveryServicesOperationStatus.InProgress) == false)
             {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/xml");
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 10;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AzureOperationResponse result = null;
-                    // Deserialize Response
-                    result = new AzureOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (httpRequest != null)
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != RecoveryServicesOperationStatus.Succeeded)
+            {
+                if (result.Error != null)
                 {
-                    httpRequest.Dispose();
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
             }
+            
+            return result;
         }
     }
 }

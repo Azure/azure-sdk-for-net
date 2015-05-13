@@ -829,13 +829,6 @@ namespace Microsoft.Azure.Management.Sql
                             DataMaskingPolicy dataMaskingPolicyInstance = new DataMaskingPolicy();
                             result.DataMaskingPolicy = dataMaskingPolicyInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                dataMaskingPolicyInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -869,6 +862,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance = ((string)idValue);
                                 dataMaskingPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                dataMaskingPolicyInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1080,13 +1080,6 @@ namespace Microsoft.Azure.Management.Sql
                             DataMaskingRule dataMaskingRuleInstance = new DataMaskingRule();
                             result.DataMaskingRule = dataMaskingRuleInstance;
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                dataMaskingRuleInstance.Name = nameInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -1169,6 +1162,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 string idInstance2 = ((string)idValue2);
                                 dataMaskingRuleInstance.Id = idInstance2;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                dataMaskingRuleInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1376,13 +1376,6 @@ namespace Microsoft.Azure.Management.Sql
                                     DataMaskingRule dataMaskingRuleInstance = new DataMaskingRule();
                                     result.DataMaskingRules.Add(dataMaskingRuleInstance);
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        dataMaskingRuleInstance.Name = nameInstance;
-                                    }
-                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -1465,6 +1458,13 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         string idInstance2 = ((string)idValue2);
                                         dataMaskingRuleInstance.Id = idInstance2;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        dataMaskingRuleInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
