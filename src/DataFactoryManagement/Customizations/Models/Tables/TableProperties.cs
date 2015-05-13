@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class TableProperties : AdfResourceProperties<TableTypeProperties, GenericTable>
     {
         /// <summary>
-        /// The referenced data linkedService name.
+        /// Required. The referenced data linkedService name.
         /// </summary>
         public string LinkedServiceName { get; set; }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public IList<DataElement> Structure { get; set; }
 
         /// <summary>
-        /// Scheduler of the table.
+        /// Required. Scheduler of the table.
         /// </summary>
         public Availability Availability { get; set; }
 
@@ -66,30 +66,42 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string ErrorMessage { get; internal set; }
 
-        public TableProperties(TableTypeProperties typeProperties)
+        public TableProperties(TableTypeProperties typeProperties, Availability availability, string linkedServiceName)
             : base(typeProperties)
         {
+            this.Availability = availability;
+            this.LinkedServiceName = linkedServiceName;
         }
 
-        internal TableProperties(TableTypeProperties typeProperties, string typeName)
+        internal TableProperties(
+            TableTypeProperties typeProperties,
+            Availability availability,
+            string linkedServiceName,
+            string typeName)
             : base(typeProperties, typeName)
         {
+            this.Availability = availability;
+            this.LinkedServiceName = linkedServiceName;
         }
-
+        
         /// <summary>
         /// Initializes a new instance of TableProperties with CreateTime, 
         /// ProvisioningState and ErrorMessage for testing purposes.
         /// </summary>
         /// <param name="typeProperties">The type-specific properties for a Table.</param>
+        /// <param name="availability">Availability details for the Table.</param>
+        /// <param name="linkedServiceName">Name of the Linked Service where the Table's data exists.</param>
         /// <param name="createTime">The time the table was created.</param>
         /// <param name="provisioningState">The provisioning state.</param>
         /// <param name="errorMessage">The error message when provisioning failed.</param>
         internal TableProperties(
             TableTypeProperties typeProperties,
+            Availability availability,
+            string linkedServiceName,
             DateTime? createTime,
             string provisioningState,
             string errorMessage)
-            : this(typeProperties)
+            : this(typeProperties, availability, linkedServiceName)
         {
             this.CreateTime = createTime;
             this.ProvisioningState = provisioningState;

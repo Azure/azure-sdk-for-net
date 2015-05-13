@@ -73,7 +73,10 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             Table table = new Table()
             {
                 Name = internalTable.Name, 
-                Properties = new TableProperties(typeProperties, internalTable.Properties.Type)
+                Properties = new TableProperties(
+                    typeProperties, 
+                    internalTable.Properties.Availability, 
+                    internalTable.Properties.Type)
                     {
                         Availability = internalTable.Properties.Availability,
                         CreateTime = internalTable.Properties.CreateTime,
