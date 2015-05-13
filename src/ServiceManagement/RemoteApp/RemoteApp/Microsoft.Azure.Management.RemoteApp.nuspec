@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package>
   <metadata>
     <id>Microsoft.Azure.Management.RemoteApp</id>
@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ResourceManagement\RemoteApp\RemoteApp\Generated\**\*.cs" target="src" />
+    <file src="ServiceManagement\RemoteApp\RemoteApp\Generated\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.RemoteApp.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.RemoteApp.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.RemoteApp.xml" target="lib\portable-net45+sl50+wp80+win" />
