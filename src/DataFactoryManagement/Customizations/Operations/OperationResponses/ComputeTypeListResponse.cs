@@ -13,12 +13,13 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 using System.Collections.Generic;
 using System.Linq;
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// The List ComputeType operation response.
     /// </summary>
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         }
 
         internal ComputeTypeListResponse(
-            InternalComputeTypeListResponse internalResponse,
+            CoreRegistrationModel.ComputeTypeListResponse internalResponse,
             DataFactoryManagementClient client)
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
@@ -66,5 +67,6 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
                     .ToList();
         }
     }
-#endif
 }
+#endif
+

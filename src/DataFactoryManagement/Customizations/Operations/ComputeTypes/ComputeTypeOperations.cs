@@ -16,8 +16,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure.Management.DataFactories.Common.Models;
 using Microsoft.Azure.Management.DataFactories.Conversion;
-using Microsoft.Azure.Management.DataFactories.Models;
+using Microsoft.Azure.Management.DataFactories.Core;
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string computeTypeName,
             CancellationToken cancellationToken)
         {
-            return await this.Client.InternalClient.InternalComputeTypes.BeginDeleteAsync(
+            return await this.Client.InternalClient.ComputeTypes.BeginDeleteAsync(
                     resourceGroupName,
                     dataFactoryName,
                     computeTypeName,
@@ -58,13 +59,13 @@ namespace Microsoft.Azure.Management.DataFactories
             Ensure.IsNotNull(parameters, "parameters");
             Ensure.IsNotNull(parameters.ComputeType, "parameters.ComputeType");
 
-            InternalComputeType internalComputeType = this.Converter.ToCoreType(parameters.ComputeType);
+            Core.Registration.Models.ComputeType internalComputeType = this.Converter.ToCoreType(parameters.ComputeType);
 
-            InternalComputeTypeCreateOrUpdateResponse response =
-                await this.Client.InternalClient.InternalComputeTypes.CreateOrUpdateAsync(
+            Core.Registration.Models.ComputeTypeCreateOrUpdateResponse response =
+                await this.Client.InternalClient.ComputeTypes.CreateOrUpdateAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    new InternalComputeTypeCreateOrUpdateParameters(internalComputeType));
+                    new Core.Registration.Models.ComputeTypeCreateOrUpdateParameters(internalComputeType));
 
             return new ComputeTypeCreateOrUpdateResponse(response, this.Client);
         }
@@ -76,12 +77,17 @@ namespace Microsoft.Azure.Management.DataFactories
             ComputeTypeCreateOrUpdateWithRawJsonContentParameters parameters,
             CancellationToken cancellationToken)
         {
-            InternalComputeTypeCreateOrUpdateResponse response = 
-                await this.Client.InternalClient.InternalComputeTypes.CreateOrUpdateWithRawJsonContentAsync(
+            Ensure.IsNotNull(parameters, "parameters");
+
+            Core.Registration.Models.ComputeTypeCreateOrUpdateWithRawJsonContentParameters internalParameters =
+                new Core.Registration.Models.ComputeTypeCreateOrUpdateWithRawJsonContentParameters(parameters.Content);
+
+            Core.Registration.Models.ComputeTypeCreateOrUpdateResponse response = 
+                await this.Client.InternalClient.ComputeTypes.CreateOrUpdateWithRawJsonContentAsync(
                     resourceGroupName,
                     dataFactoryName,
                     computeTypeName,
-                    parameters,
+                    internalParameters,
                     cancellationToken);
 
             return new ComputeTypeCreateOrUpdateResponse(response, this.Client);
@@ -93,7 +99,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string computeTypeName,
             CancellationToken cancellationToken)
         {
-            return await this.Client.InternalClient.InternalComputeTypes.DeleteAsync(
+            return await this.Client.InternalClient.ComputeTypes.DeleteAsync(
                     resourceGroupName,
                     dataFactoryName,
                     computeTypeName,
@@ -106,11 +112,17 @@ namespace Microsoft.Azure.Management.DataFactories
             ComputeTypeGetParameters parameters,
             CancellationToken cancellationToken)
         {
-            InternalComputeTypeGetResponse response =
-                await this.Client.InternalClient.InternalComputeTypes.GetAsync(
+            Ensure.IsNotNull(parameters, "parameters");
+
+            Core.Registration.Models.ComputeTypeGetParameters internalParameters =
+                new Core.Registration.Models.ComputeTypeGetParameters(parameters.RegistrationScope,
+                    parameters.ComputeTypeName);
+
+            Core.Registration.Models.ComputeTypeGetResponse response =
+                await this.Client.InternalClient.ComputeTypes.GetAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    parameters,
+                    internalParameters,
                     cancellationToken);
 
             return new ComputeTypeGetResponse(response, this.Client);
@@ -122,11 +134,19 @@ namespace Microsoft.Azure.Management.DataFactories
             ComputeTypeListParameters parameters,
             CancellationToken cancellationToken)
         {
-            InternalComputeTypeListResponse response =
-                await this.Client.InternalClient.InternalComputeTypes.ListAsync(
+            Ensure.IsNotNull(parameters, "parameters");
+
+            Core.Registration.Models.ComputeTypeListParameters internalParameters =
+                new Core.Registration.Models.ComputeTypeListParameters(parameters.RegistrationScope)
+                {
+                    ComputeTypeName = parameters.ComputeTypeName
+                };
+
+            Core.Registration.Models.ComputeTypeListResponse response =
+                await this.Client.InternalClient.ComputeTypes.ListAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    parameters,
+                    internalParameters,
                     cancellationToken);
 
             return new ComputeTypeListResponse(response, this.Client);
@@ -137,8 +157,8 @@ namespace Microsoft.Azure.Management.DataFactories
             // Validate
             Ensure.IsNotNull(nextLink, "nextLink");
 
-            InternalComputeTypeListResponse response =
-                await this.Client.InternalClient.InternalComputeTypes.ListNextAsync(nextLink, cancellationToken);
+            Core.Registration.Models.ComputeTypeListResponse response =
+                await this.Client.InternalClient.ComputeTypes.ListNextAsync(nextLink, cancellationToken);
 
             return new ComputeTypeListResponse(response, this.Client);
         }

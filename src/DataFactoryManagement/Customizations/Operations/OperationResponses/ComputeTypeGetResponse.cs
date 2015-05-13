@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// The Get ComputeType operation response.
     /// </summary>
@@ -27,12 +29,12 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         public ComputeType ComputeType { get; set; }
 
         internal ComputeTypeGetResponse(
-            InternalComputeTypeGetResponse internalResponse,
+            CoreRegistrationModel.ComputeTypeGetResponse internalResponse,
             DataFactoryManagementClient client)
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.ComputeType = client.ComputeTypes.Converter.ToWrapperType(internalResponse.ComputeType);
         }
     }
-#endif
 }
+#endif

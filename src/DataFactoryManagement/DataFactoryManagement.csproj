@@ -136,6 +136,8 @@
     <Compile Include="Customizations\Models\Tables\TableProperties.cs" />
     <Compile Include="Customizations\Models\Tables\TableTypeProperties.cs" />
     <Compile Include="Customizations\Models\TypeProperties.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeGetParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeListParameters.cs" />
     <Compile Include="Customizations\Operations\ActivityTypes\ActivityTypeOperations.cs" />
     <Compile Include="Customizations\Operations\ActivityTypes\ActivityTypeOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\ActivityTypes\IActivityTypeOperations.cs" />
@@ -146,7 +148,11 @@
     <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.Conversion.cs" />
     <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.cs" />
     <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeCreateOrUpdateWithRawJsonContentParameters.cs" />
     <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeCreateOrUpdateParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeListParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeGetParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeCreateOrUpdateWithRawJsonContentParameters.cs" />
     <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeCreateOrUpdateParameters.cs" />
     <Compile Include="Customizations\Operations\OperationParameters\LinkedServiceCreateOrUpdateParameters.cs" />
     <Compile Include="Customizations\Operations\OperationParameters\LinkedServiceCreateOrUpdateWithRawJsonContentParameters.cs" />
@@ -196,24 +202,7 @@
       <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.4\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Customizations\Conversion\Conversion\" />
-    <Folder Include="Customizations\Models\Models\Activities\CopySinks\" />
-    <Folder Include="Customizations\Models\Models\Activities\CopySources\" />
-    <Folder Include="Customizations\Models\Models\Activities\CopyTranslators\" />
-    <Folder Include="Customizations\Models\Models\LinkedServices\" />
-    <Folder Include="Customizations\Models\Models\Pipelines\" />
-    <Folder Include="Customizations\Models\Models\Registration\" />
-    <Folder Include="Customizations\Models\Models\Tables\Partitions\" />
-    <Folder Include="Customizations\Models\Models\Tables\StorageFormats\" />
-    <Folder Include="Customizations\Operations\Operations\ActivityTypes\" />
-    <Folder Include="Customizations\Operations\Operations\ComputeTypes\" />
-    <Folder Include="Customizations\Operations\Operations\LinkedServices\" />
-    <Folder Include="Customizations\Operations\Operations\OperationParameters\" />
-    <Folder Include="Customizations\Operations\Operations\OperationResponses\" />
-    <Folder Include="Customizations\Operations\Operations\Pipelines\" />
-    <Folder Include="Customizations\Operations\Operations\Tables\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
