@@ -21,8 +21,10 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+#if ADF_INTERNAL
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
+#endif
 
-// TODO brgold: need to move this out of public nuget
 namespace Microsoft.Azure.Management.DataFactories.Core
 {
     public partial class DataFactoryManagementClient
@@ -190,7 +192,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeInternalLinkedServiceToJson(Models.LinkedService item)
+        internal static string SerializeInternalLinkedServiceToJson(Models.LinkedService item)
         {
             var createParams = new Models.LinkedServiceCreateOrUpdateParameters() { LinkedService = item };
 
@@ -208,7 +210,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeInternalTableToJson(Models.Table item)
+        internal static string SerializeInternalTableToJson(Models.Table item)
         {
             var createParams = new Models.TableCreateOrUpdateParameters() { Table = item };
 
@@ -226,7 +228,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeInternalPipelineToJson(Models.Pipeline item)
+        internal static string SerializeInternalPipelineToJson(Models.Pipeline item)
         {
             var createParams = new Models.PipelineCreateOrUpdateParameters() { Pipeline = item };
 
@@ -244,7 +246,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeGatewayToJson(Gateway item)
+        internal static string SerializeGatewayToJson(Gateway item)
         {
             var createParams = new GatewayCreateOrUpdateParameters() { Gateway = item };
 
@@ -262,7 +264,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeDataFactoryToJson(DataFactory item)
+        internal static string SerializeDataFactoryToJson(DataFactory item)
         {
             var createParams = new DataFactoryCreateOrUpdateParameters() { DataFactory = item };
 
@@ -280,7 +282,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeInternalActivityTypeToJson(Registration.Models.ActivityType item)
+        internal static string SerializeInternalActivityTypeToJson(Registration.Models.ActivityType item)
         {
             var createParams = new Registration.Models.ActivityTypeCreateOrUpdateParameters() { ActivityType = item };
 
@@ -298,7 +300,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        public static string SerializeInternalComputeTypeToJson(Registration.Models.ComputeType item)
+        internal static string SerializeInternalComputeTypeToJson(Registration.Models.ComputeType item)
         {
             var createParams = new Registration.Models.ComputeTypeCreateOrUpdateParameters() { ComputeType = item };
 
@@ -306,7 +308,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            client.InternalComputeTypes.CreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
+            client.ComputeTypes.CreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
             return handler.Json;
         }
 #endif
@@ -321,7 +323,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static Models.LinkedService DeserializeInternalLinkedServiceJson(string json)
+        internal static Models.LinkedService DeserializeInternalLinkedServiceJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
@@ -343,7 +345,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static Models.Table DeserializeInternalTableJson(string json)
+        internal static Models.Table DeserializeInternalTableJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
@@ -361,7 +363,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static Models.Pipeline DeserializeInternalPipelineJson(string json)
+        internal static Models.Pipeline DeserializeInternalPipelineJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
@@ -379,7 +381,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static Gateway DeserializeGatewayJson(string json)
+        internal static Gateway DeserializeGatewayJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
@@ -397,7 +399,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static DataFactory DeserializeDataFactoryJson(string json)
+        internal static DataFactory DeserializeDataFactoryJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
@@ -415,18 +417,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static InternalActivityType DeserializeInternalActivityTypeJson(string json)
+        internal static CoreRegistrationModel.ActivityType DeserializeInternalActivityTypeJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            ActivityTypeGetParameters getParameters = new ActivityTypeGetParameters(
-                RegistrationScope.DataFactory,
+            CoreRegistrationModel.ActivityTypeGetParameters getParameters = new CoreRegistrationModel.ActivityTypeGetParameters(
+                CoreRegistrationModel.RegistrationScope.DataFactory,
                 Guid.NewGuid().ToString("D"));
             
-            InternalActivityTypeGetResponse getResponse = client.InternalActivityTypes.Get(
+            CoreRegistrationModel.ActivityTypeGetResponse getResponse = client.ActivityTypes.Get(
                 resourceGroupName,
                 dataFactoryName,
                 getParameters);
@@ -440,18 +442,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        public static InternalComputeType DeserializeInternalComputeTypeJson(string json)
+        internal static CoreRegistrationModel.ComputeType DeserializeInternalComputeTypeJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            ComputeTypeGetParameters getParameters = new ComputeTypeGetParameters(
-                RegistrationScope.DataFactory,
+            CoreRegistrationModel.ComputeTypeGetParameters getParameters = new CoreRegistrationModel.ComputeTypeGetParameters(
+                CoreRegistrationModel.RegistrationScope.DataFactory,
                 Guid.NewGuid().ToString("D"));
 
-            InternalComputeTypeGetResponse getResponse = client.InternalComputeTypes.Get(
+            CoreRegistrationModel.ComputeTypeGetResponse getResponse = client.ComputeTypes.Get(
                 resourceGroupName,
                 dataFactoryName,
                 getParameters);
@@ -463,163 +465,3 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         #endregion JSON deserialization
     }
 }
-
-//namespace Microsoft.Azure.Management.DataFactories.Models
-//{
-//    // Use partial classes of various Hyak objects to link them to the JsonConverters that know how to des/ser them, so that
-//    // JSON.NET produces and parses correct json
-//    [JsonConverter(typeof(InternalLinkedServiceConverter))]
-//    public partial class InternalLinkedService { }
-
-//    [JsonConverter(typeof(InternalTableConverter))]
-//    public partial class InternalTable { }
-
-//    [JsonConverter(typeof(InternalPipelineConverter))]
-//    public partial class InternalPipeline { }
-
-//    [JsonConverter(typeof(GatewayConverter))]
-//    public partial class Gateway { }
-
-//    [JsonConverter(typeof(DataFactoryConverter))]
-//    public partial class DataFactory { }
-
-//    #region JSON converters
-
-//    /// <summary>
-//    /// Base class for JsonConverters that instruct JSON.NET to use the generated 
-//    /// Hyak des/ser code, so that JSON.NET produces and parses correct JSON.
-//    /// </summary>
-//    public abstract class CustomJsonConverter<T> : JsonConverter
-//    {
-//        #region JsonConverter overrides
-
-//        public override bool CanConvert(Type objectType)
-//        {
-//            return typeof(T).IsAssignableFrom(objectType);
-//        }
-
-//        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-//        {
-//            string json = JObject.Load(reader).ToString();
-//            return this.Deserialize(json);
-//        }
-
-//        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-//        {
-//            string json = this.Serialize((T)value);
-//            writer.WriteRaw(json);
-//        }
-
-//        #endregion JsonConverter overrides
-
-//        public abstract string Serialize(T item);
-
-//        public abstract T Deserialize(string json);
-//    }
-
-//    public class InternalLinkedServiceConverter : CustomJsonConverter<InternalLinkedService>
-//    {
-//        public override InternalLinkedService Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeInternalLinkedServiceJson(json);
-//        }
-
-//        public override string Serialize(InternalLinkedService item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeInternalLinkedServiceToJson(item);
-//        }
-//    }
-
-//    public class InternalTableConverter : CustomJsonConverter<InternalTable>
-//    {
-//        public override InternalTable Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeInternalTableJson(json);
-//        }
-
-//        public override string Serialize(InternalTable item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeInternalTableToJson(item);
-//        }
-//    }
-
-//    public class InternalPipelineConverter : CustomJsonConverter<InternalPipeline>
-//    {
-//        public override InternalPipeline Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeInternalPipelineJson(json);
-//        }
-
-//        public override string Serialize(InternalPipeline item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeInternalPipelineToJson(item);
-//        }
-//    }
-
-//    public class GatewayConverter : CustomJsonConverter<Gateway>
-//    {
-//        public override Gateway Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeGatewayJson(json);
-//        }
-
-//        public override string Serialize(Gateway item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeGatewayToJson(item);
-//        }
-//    }
-
-//    public class DataFactoryConverter : CustomJsonConverter<DataFactory>
-//    {
-//        public override DataFactory Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeDataFactoryJson(json);
-//        }
-
-//        public override string Serialize(DataFactory item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeDataFactoryToJson(item);
-//        }
-//    }
-
-//    #endregion JSON converters
-//}
-
-//namespace Microsoft.Azure.Management.DataFactories.Registration.Models
-//{
-//    [JsonConverter(typeof(InternalActivityTypeConverter))]
-//    public partial class InternalActivityType
-//    {
-//    }
-
-//    [JsonConverter(typeof(InternalComputeTypeConverter))]
-//    public partial class InternalComputeType
-//    {
-//    }
-
-//    public class InternalActivityTypeConverter : CustomJsonConverter<InternalActivityType>
-//    {
-//        public override InternalActivityType Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeInternalActivityTypeJson(json);
-//        }
-
-//        public override string Serialize(InternalActivityType item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeInternalActivityTypeToJson(item);
-//        }
-//    }
-
-//    public class InternalComputeTypeConverter : CustomJsonConverter<InternalComputeType>
-//    {
-//        public override InternalComputeType Deserialize(string json)
-//        {
-//            return InternalDataFactoryManagementClient.DeserializeInternalComputeTypeJson(json);
-//        }
-
-//        public override string Serialize(InternalComputeType item)
-//        {
-//            return InternalDataFactoryManagementClient.SerializeInternalComputeTypeToJson(item);
-//        }
-//    }
-//}

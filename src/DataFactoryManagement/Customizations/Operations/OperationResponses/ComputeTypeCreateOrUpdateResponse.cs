@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public class ComputeTypeCreateOrUpdateResponse : AzureOperationResponse
     {
         /// <summary>
@@ -29,7 +31,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         public OperationStatus Status { get; set; }
 
         internal ComputeTypeCreateOrUpdateResponse(
-            InternalComputeTypeCreateOrUpdateResponse internalResponse,
+            CoreRegistrationModel.ComputeTypeCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
@@ -37,5 +39,5 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             this.Status = internalResponse.Status;
         }
     }
-#endif
 }
+#endif

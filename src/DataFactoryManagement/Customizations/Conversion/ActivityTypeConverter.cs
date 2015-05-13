@@ -13,19 +13,20 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-#if ADF_INTERNAL
-    internal class ActivityTypeConverter : AdfRegisteredTypeConverter<InternalActivityType, ActivityType>
+    internal class ActivityTypeConverter : AdfRegisteredTypeConverter<CoreRegistrationModel.ActivityType, ActivityType>
     {
-        public override InternalActivityType ToCoreType(ActivityType wrappedObject)
+        public override CoreRegistrationModel.ActivityType ToCoreType(ActivityType wrappedObject)
         {
-            return new InternalActivityType()
+            return new CoreRegistrationModel.ActivityType()
                        {
                            Name = wrappedObject.Name,
-                           Properties = new InternalActivityTypeProperties()
+                           Properties = new CoreRegistrationModel.ActivityTypeProperties()
                                    {
                                        BaseType = wrappedObject.Properties.BaseType,
                                        Scope = wrappedObject.Properties.Scope,
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                        };
         }
 
-        public override ActivityType ToWrapperType(InternalActivityType coreObject)
+        public override ActivityType ToWrapperType(CoreRegistrationModel.ActivityType coreObject)
         {
             return new ActivityType()
                        {
@@ -48,5 +49,6 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                        };
         }
     }
-#endif
 }
+#endif
+

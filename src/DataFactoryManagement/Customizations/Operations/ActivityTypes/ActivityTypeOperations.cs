@@ -16,8 +16,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure.Management.DataFactories.Common.Models;
 using Microsoft.Azure.Management.DataFactories.Conversion;
-using Microsoft.Azure.Management.DataFactories.Models;
+using Microsoft.Azure.Management.DataFactories.Core;
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string activityTypeName,
             CancellationToken cancellationToken)
         {
-            return await this.Client.InternalClient.InternalActivityTypes.BeginDeleteAsync(
+            return await this.Client.InternalClient.ActivityTypes.BeginDeleteAsync(
                     resourceGroupName,
                     dataFactoryName,
                     activityTypeName,
@@ -98,13 +99,13 @@ namespace Microsoft.Azure.Management.DataFactories
             Ensure.IsNotNull(parameters, "parameters");
             Ensure.IsNotNull(parameters.ActivityType, "parameters.ActivityType");
 
-            InternalActivityType internalActivityType = this.Converter.ToCoreType(parameters.ActivityType);
+            Core.Registration.Models.ActivityType internalActivityType = this.Converter.ToCoreType(parameters.ActivityType);
 
-            InternalActivityTypeCreateOrUpdateResponse response =
-                await this.Client.InternalClient.InternalActivityTypes.CreateOrUpdateAsync(
+            Core.Registration.Models.ActivityTypeCreateOrUpdateResponse response =
+                await this.Client.InternalClient.ActivityTypes.CreateOrUpdateAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    new InternalActivityTypeCreateOrUpdateParameters(internalActivityType));
+                    new Core.Registration.Models.ActivityTypeCreateOrUpdateParameters(internalActivityType));
 
             return new ActivityTypeCreateOrUpdateResponse(response, this.Client);
         }
@@ -138,12 +139,17 @@ namespace Microsoft.Azure.Management.DataFactories
             ActivityTypeCreateOrUpdateWithRawJsonContentParameters parameters,
             CancellationToken cancellationToken)
         {
-            InternalActivityTypeCreateOrUpdateResponse response = 
-                await this.Client.InternalClient.InternalActivityTypes.CreateOrUpdateWithRawJsonContentAsync(
+            Ensure.IsNotNull(parameters, "parameters");
+
+            Core.Registration.Models.ActivityTypeCreateOrUpdateWithRawJsonContentParameters internalParameters =
+                new Core.Registration.Models.ActivityTypeCreateOrUpdateWithRawJsonContentParameters(parameters.Content);
+
+            Core.Registration.Models.ActivityTypeCreateOrUpdateResponse response = 
+                await this.Client.InternalClient.ActivityTypes.CreateOrUpdateWithRawJsonContentAsync(
                     resourceGroupName,
                     dataFactoryName,
                     activityTypeName,
-                    parameters,
+                    internalParameters,
                     cancellationToken);
 
             return new ActivityTypeCreateOrUpdateResponse(response, this.Client);
@@ -173,7 +179,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string activityTypeName,
             CancellationToken cancellationToken)
         {
-            return await this.Client.InternalClient.InternalActivityTypes.DeleteAsync(
+            return await this.Client.InternalClient.ActivityTypes.DeleteAsync(
                     resourceGroupName,
                     dataFactoryName,
                     activityTypeName,
@@ -205,11 +211,17 @@ namespace Microsoft.Azure.Management.DataFactories
             ActivityTypeGetParameters parameters,
             CancellationToken cancellationToken)
         {
-            InternalActivityTypeGetResponse response =
-                await this.Client.InternalClient.InternalActivityTypes.GetAsync(
+            Ensure.IsNotNull(parameters, "parameters");
+
+            Core.Registration.Models.ActivityTypeGetParameters internalParameters =
+                new Core.Registration.Models.ActivityTypeGetParameters(parameters.RegistrationScope,
+                    parameters.ActivityTypeName) {Resolved = parameters.Resolved};
+
+            Core.Registration.Models.ActivityTypeGetResponse response =
+                await this.Client.InternalClient.ActivityTypes.GetAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    parameters,
+                    internalParameters,
                     cancellationToken);
 
             return new ActivityTypeGetResponse(response, this.Client);
@@ -241,11 +253,21 @@ namespace Microsoft.Azure.Management.DataFactories
             ActivityTypeListParameters parameters,
             CancellationToken cancellationToken)
         {
-            InternalActivityTypeListResponse response =
-                await this.Client.InternalClient.InternalActivityTypes.ListAsync(
+            Ensure.IsNotNull(parameters, "parameters");
+
+            Core.Registration.Models.ActivityTypeListParameters internalParameters =
+                new Core.Registration.Models.ActivityTypeListParameters()
+                {
+                    RegistrationScope = parameters.RegistrationScope,
+                    ActivityTypeName = parameters.ActivityTypeName,
+                    Resolved = parameters.Resolved
+                };
+
+            Core.Registration.Models.ActivityTypeListResponse response =
+                await this.Client.InternalClient.ActivityTypes.ListAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    parameters,
+                    internalParameters,
                     cancellationToken);
 
             return new ActivityTypeListResponse(response, this.Client);
@@ -269,8 +291,8 @@ namespace Microsoft.Azure.Management.DataFactories
             // Validate
             Ensure.IsNotNull(nextLink, "nextLink");
 
-            InternalActivityTypeListResponse response =
-                await this.Client.InternalClient.InternalActivityTypes.ListNextAsync(nextLink, cancellationToken);
+            Core.Registration.Models.ActivityTypeListResponse response =
+                await this.Client.InternalClient.ActivityTypes.ListNextAsync(nextLink, cancellationToken);
 
             return new ActivityTypeListResponse(response, this.Client);
         }

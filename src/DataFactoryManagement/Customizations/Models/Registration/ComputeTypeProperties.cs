@@ -13,11 +13,12 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 using System.Collections.Generic;
+using Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public class ComputeTypeProperties : TypeProperties
     {
         /// <summary>
@@ -30,5 +31,5 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public IList<string> SupportedActivities { get; set; }
     }
-#endif
 }
+#endif
