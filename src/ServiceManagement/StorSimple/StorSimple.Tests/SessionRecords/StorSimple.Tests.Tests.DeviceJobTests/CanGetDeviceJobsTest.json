@@ -1,0 +1,374 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfDeviceInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DeviceInfo>\r\n    <ACRCount>0</ACRCount>\r\n    <ActivationTime>2015-03-03T12:32:56.7671234Z</ActivationTime>\r\n    <ActiveController>Unknown</ActiveController>\r\n    <AvailableStorageInBytes>729500195328</AvailableStorageInBytes>\r\n    <CloudCredCount>0</CloudCredCount>\r\n    <Culture>en-US</Culture>\r\n    <CurrentController>Unknown</CurrentController>\r\n    <DataContainerCount>0</DataContainerCount>\r\n    <Description i:nil=\"true\" />\r\n    <DeviceId>0ee59ae9-0293-46e2-ae56-bc308c8e5520</DeviceId>\r\n    <DeviceSoftwareVersion>6.3.9600.17215</DeviceSoftwareVersion>\r\n    <FriendlyName>cismohit5</FriendlyName>\r\n    <IsConfigUpdated>true</IsConfigUpdated>\r\n    <IsVirtualApplianceInterimEntry>false</IsVirtualApplianceInterimEntry>\r\n    <Location i:nil=\"true\" />\r\n    <ModelDescription>100</ModelDescription>\r\n    <NNicCards>6</NNicCards>\r\n    <ProvisionedStorageInBytes>370011432448</ProvisionedStorageInBytes>\r\n    <SerialNumber>123456789</SerialNumber>\r\n    <Status>Online</Status>\r\n    <TargetIQN>iqn.1991-05.com.microsoft:storsimple100-123456789-target</TargetIQN>\r\n    <TimeZone>Pacific Standard Time</TimeZone>\r\n    <TotalStorageInBytes>1099511627776</TotalStorageInBytes>\r\n    <Type>Appliance</Type>\r\n    <UsingStorageInBytes>0</UsingStorageInBytes>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DeviceInfo>\r\n  <DeviceInfo>\r\n    <ACRCount>0</ACRCount>\r\n    <ActivationTime>2015-03-03T09:13:59.0480392Z</ActivationTime>\r\n    <ActiveController>Unknown</ActiveController>\r\n    <AvailableStorageInBytes>940597837824</AvailableStorageInBytes>\r\n    <CloudCredCount>0</CloudCredCount>\r\n    <Culture>en-US</Culture>\r\n    <CurrentController>Unknown</CurrentController>\r\n    <DataContainerCount>0</DataContainerCount>\r\n    <Description i:nil=\"true\" />\r\n    <DeviceId>3825f272-1efb-4c14-b63f-22605ce3b925</DeviceId>\r\n    <DeviceSoftwareVersion>6.3.9600.17215</DeviceSoftwareVersion>\r\n    <FriendlyName>Avirupch_App7</FriendlyName>\r\n    <IsConfigUpdated>true</IsConfigUpdated>\r\n    <IsVirtualApplianceInterimEntry>false</IsVirtualApplianceInterimEntry>\r\n    <Location i:nil=\"true\" />\r\n    <ModelDescription>100</ModelDescription>\r\n    <NNicCards>6</NNicCards>\r\n    <ProvisionedStorageInBytes>158913789952</ProvisionedStorageInBytes>\r\n    <SerialNumber>123456789</SerialNumber>\r\n    <Status>Online</Status>\r\n    <TargetIQN>iqn.1991-05.com.microsoft:storsimple100-123456789-target</TargetIQN>\r\n    <TimeZone>Pacific Standard Time</TimeZone>\r\n    <TotalStorageInBytes>1099511627776</TotalStorageInBytes>\r\n    <Type>Appliance</Type>\r\n    <UsingStorageInBytes>0</UsingStorageInBytes>\r\n    <VolumeCount>0</VolumeCount>\r\n  </DeviceInfo>\r\n</ArrayOfDeviceInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2426"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00,726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "fb40cdc753af0876add2d6b06957a317"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 20 Mar 2015 09:28:26 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/3825f272-1efb-4c14-b63f-22605ce3b925/policies?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzM4MjVmMjcyLTFlZmItNGMxNC1iNjNmLTIyNjA1Y2UzYjkyNS9wb2xpY2llcz9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfBackupPolicy xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <BackupPolicy>\r\n    <InstanceId>37282730-fe7d-4127-8e15-0131d07b3332</InstanceId>\r\n    <Name>PolicyName2623</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-19T10:08:29Z</LastBackup>\r\n    <NextBackup>2015-03-24T10:08:08Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>613be8a5-881c-4520-b7c4-5808a2cab612</InstanceId>\r\n    <Name>BackupPolicy2005875064</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-09T12:23:20.658Z</LastBackup>\r\n    <NextBackup>2015-03-20T10:22:22Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>2</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>6e36b7ba-a056-4812-aa24-c9f2d8d6f3ca</InstanceId>\r\n    <Name>BackupPolicy1228876583</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-06T09:25:35.289Z</LastBackup>\r\n    <NextBackup>2015-03-20T09:25:25Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>2</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>b44711f0-c478-446f-94e0-131f74e97c44</InstanceId>\r\n    <Name>PolicyName9978</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-19T10:15:18Z</LastBackup>\r\n    <NextBackup>2015-03-24T10:14:14Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>c6a8eeb1-0933-4905-834f-5fb7fb399cac</InstanceId>\r\n    <Name>PolicyName69</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-19T09:49:20Z</LastBackup>\r\n    <NextBackup>2015-03-24T09:49:49Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>1</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n  <BackupPolicy>\r\n    <InstanceId>ec773f33-1c14-4ebd-be67-415ed8c71076</InstanceId>\r\n    <Name>BackupPolicy622148720</Name>\r\n    <OperationInProgress>None</OperationInProgress>\r\n    <BackupPolicyCreationType>BySaaS</BackupPolicyCreationType>\r\n    <LastBackup>2015-03-09T12:18:09.589Z</LastBackup>\r\n    <NextBackup>2015-03-20T10:17:17Z</NextBackup>\r\n    <SSMHostName i:nil=\"true\" />\r\n    <SchedulesCount>2</SchedulesCount>\r\n    <VolumesCount>1</VolumesCount>\r\n  </BackupPolicy>\r\n</ArrayOfBackupPolicy>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2603"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00,726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8cd07ba2356d095a984b1d18d2d32bc2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 20 Mar 2015 09:28:28 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devices/3825f272-1efb-4c14-b63f-22605ce3b925/policies/37282730-fe7d-4127-8e15-0131d07b3332?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2VzLzM4MjVmMjcyLTFlZmItNGMxNC1iNjNmLTIyNjA1Y2UzYjkyNS9wb2xpY2llcy8zNzI4MjczMC1mZTdkLTQxMjctOGUxNS0wMTMxZDA3YjMzMzI/YXBpLXZlcnNpb249MjAxNC0wMS0wMS4xLjA=",
+      "RequestMethod": "POST",
+      "RequestBody": "<BackupNowRequest xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\">\r\n  <Type>CloudSnapshot</Type>\r\n</BackupNowRequest>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Content-Length": [
+          "120"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">6827ab12-ac86-4edd-b665-076f67319935</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00,726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3710ab360c770adf840e942eaff79b39"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 20 Mar 2015 09:28:31 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/6827ab12-ac86-4edd-b665-076f67319935?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzY4MjdhYjEyLWFjODYtNGVkZC1iNjY1LTA3NmY2NzMxOTkzNT9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>6827ab12-ac86-4edd-b665-076f67319935</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AEB</ErrorCode>\r\n      <Message>Create adhoc backup job on 'Avirupch_App7' in progress</Message>\r\n      <Result>Invalid</Result>\r\n      <Status>InProgress</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Invalid</Result>\r\n  <Status>InProgress</Status>\r\n  <TaskResult>InProgress</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "554"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "b3d3d260-b3de-4ac2-b9b4-5b624f1a4459,b3d3d260-b3de-4ac2-b9b4-5b624f1a4459"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d90c449c99d50fc1b98fe1c1c869c137"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 20 Mar 2015 09:28:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/jobs/6827ab12-ac86-4edd-b665-076f67319935?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9qb2JzLzY4MjdhYjEyLWFjODYtNGVkZC1iNjY1LTA3NmY2NzMxOTkzNT9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobStatusInfo xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Error i:nil=\"true\" xmlns:d2p1=\"http://schemas.microsoft.com/wars\" />\r\n  <JobId>6827ab12-ac86-4edd-b665-076f67319935</JobId>\r\n  <JobSteps>\r\n    <JobStep>\r\n      <Detail></Detail>\r\n      <ErrorCode>SS_08061AE7</ErrorCode>\r\n      <Message>Create adhoc backup job on 'Avirupch_App7' succeeded</Message>\r\n      <Result>Succeeded</Result>\r\n      <Status>Completed</Status>\r\n    </JobStep>\r\n  </JobSteps>\r\n  <Result>Succeeded</Result>\r\n  <Status>Completed</Status>\r\n  <TaskResult>Succeeded</TaskResult>\r\n</JobStatusInfo>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "553"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "bda5937d-e69d-4deb-937a-68e97d22c1f7,bda5937d-e69d-4deb-937a-68e97d22c1f7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "deb954225ac605a790e9d1093ac762a8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 20 Mar 2015 09:28:39 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/devicejobs?api-version=2014-01-01.2.0&deviceId=3825f272-1efb-4c14-b63f-22605ce3b925&skip=0&top=10",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9kZXZpY2Vqb2JzP2FwaS12ZXJzaW9uPTIwMTQtMDEtMDEuMi4wJmRldmljZUlkPTM4MjVmMjcyLTFlZmItNGMxNC1iNjNmLTIyNjA1Y2UzYjkyNSZza2lwPTAmdG9wPTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<JobQueryResult_V2 xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Count>10</Count>\r\n  <DeviceJobList>\r\n    <JobDetails>\r\n      <InstanceId>2b95b0be-719c-450e-823a-6cb96a396184</InstanceId>\r\n      <Name>37282730-fe7d-4127-8e15-0131d07b3332_726b5089-2199-4499-9a21-b82277caee00</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>PolicyName2623</Name>\r\n      </Entity>\r\n      <ErrorDetails i:nil=\"true\" />\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>10</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Running</Status>\r\n      <TimeStats>\r\n        <Duration>PT6.9300394S</Duration>\r\n        <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T09:28:35.273Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>ManualBackup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>fbef5d43-2b06-4549-be46-da401cb1867f</InstanceId>\r\n      <Name>2ed9e927-9dee-487a-b91e-dfa38213a0bf</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy1228876583</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.412S</Duration>\r\n        <EndTimestamp>2015-03-20T09:25:36.741Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T09:25:34.329Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>b3e4c13b-835e-4400-aff9-633f8e94def9</InstanceId>\r\n      <Name>11d9c519-182b-450c-a267-97607ccdb7b2</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy2005875064</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.323S</Duration>\r\n        <EndTimestamp>2015-03-20T09:22:37.24Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T09:22:34.917Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>39b96d0d-8b66-41a3-91ae-2cfe744ae840</InstanceId>\r\n      <Name>adedf2a8-1247-4de7-b0b2-6442d1893c4d</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy622148720</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.364S</Duration>\r\n        <EndTimestamp>2015-03-20T09:17:27.327Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T09:17:24.962Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>1c431e13-c5dd-49b3-8063-7fb2ca73ba4d</InstanceId>\r\n      <Name>2ed9e927-9dee-487a-b91e-dfa38213a0bf</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy1228876583</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.409S</Duration>\r\n        <EndTimestamp>2015-03-20T08:25:36.074Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T08:25:33.664Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>49a045a7-177d-4758-9e1f-6188b59a3def</InstanceId>\r\n      <Name>11d9c519-182b-450c-a267-97607ccdb7b2</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy2005875064</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.414S</Duration>\r\n        <EndTimestamp>2015-03-20T08:22:37.096Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T08:22:34.682Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>94abafff-d87b-4d3d-9c26-63f0baf68554</InstanceId>\r\n      <Name>adedf2a8-1247-4de7-b0b2-6442d1893c4d</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy622148720</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.589S</Duration>\r\n        <EndTimestamp>2015-03-20T08:17:26.286Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T08:17:23.696Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>463a0cf1-af46-4da6-9b9f-e152bd8f7886</InstanceId>\r\n      <Name>2ed9e927-9dee-487a-b91e-dfa38213a0bf</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy1228876583</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT2.668S</Duration>\r\n        <EndTimestamp>2015-03-20T07:25:36.521Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T07:25:33.853Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>6534e289-2162-4dae-befb-509e6864e723</InstanceId>\r\n      <Name>11d9c519-182b-450c-a267-97607ccdb7b2</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy2005875064</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT4.3S</Duration>\r\n        <EndTimestamp>2015-03-20T07:22:39.564Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T07:22:35.263Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n    <JobDetails>\r\n      <InstanceId>6f4f316f-202b-45ba-b249-ef758166dd75</InstanceId>\r\n      <Name>adedf2a8-1247-4de7-b0b2-6442d1893c4d</Name>\r\n      <BackupPolicy i:nil=\"true\" />\r\n      <BackupTimeStamp>0001-01-01T00:00:00</BackupTimeStamp>\r\n      <BackupType>CloudSnapshot</BackupType>\r\n      <DataStats>\r\n        <CloudData>0</CloudData>\r\n        <ProcessedData>0</ProcessedData>\r\n        <Throughput>0</Throughput>\r\n        <TotalData>0</TotalData>\r\n      </DataStats>\r\n      <Device>\r\n        <InstanceId>3825f272-1efb-4c14-b63f-22605ce3b925</InstanceId>\r\n        <Name>Avirupch_App7</Name>\r\n      </Device>\r\n      <Entity>\r\n        <InstanceId></InstanceId>\r\n        <Name>BackupPolicy622148720</Name>\r\n      </Entity>\r\n      <ErrorDetails>\r\n        <ErrorInfo>\r\n          <ErrorCode>1074131966</ErrorCode>\r\n          <ErrorString>The volume container is already failed over to another device.</ErrorString>\r\n          <ErrorTitle></ErrorTitle>\r\n          <Recommendations xmlns:d6p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n            <d6p1:string>Please check the status for device failover job. In case the operation completed successfully delete this volume container. In case of failure re-run the failover job.</d6p1:string>\r\n          </Recommendations>\r\n        </ErrorInfo>\r\n      </ErrorDetails>\r\n      <HideProgressDetails>false</HideProgressDetails>\r\n      <IsInstantRestoreComplete>false</IsInstantRestoreComplete>\r\n      <IsJobCancellable>true</IsJobCancellable>\r\n      <JobDetails i:nil=\"true\" />\r\n      <Progress>100</Progress>\r\n      <SourceDevice>\r\n        <InstanceId i:nil=\"true\" />\r\n        <Name i:nil=\"true\" />\r\n      </SourceDevice>\r\n      <SourceEntity i:nil=\"true\" />\r\n      <SourceVolume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </SourceVolume>\r\n      <Status>Failed</Status>\r\n      <TimeStats>\r\n        <Duration>PT3.929S</Duration>\r\n        <EndTimestamp>2015-03-20T07:17:27.421Z</EndTimestamp>\r\n        <StartTimestamp>2015-03-20T07:17:23.491Z</StartTimestamp>\r\n      </TimeStats>\r\n      <Type>Backup</Type>\r\n      <Volume>\r\n        <InstanceId></InstanceId>\r\n        <Name i:nil=\"true\" />\r\n      </Volume>\r\n    </JobDetails>\r\n  </DeviceJobList>\r\n  <NextPageStartIdentifier>10</NextPageStartIdentifier>\r\n  <NextPageUri>https://sea-bvtd2-cis1-t56tl.cloudapp.net/portal/resources/7234856578800345617/api/devicejobs?api-version=2014-01-01.2.0&amp;deviceId=3825f272-1efb-4c14-b63f-22605ce3b925&amp;skip=10&amp;top=10</NextPageUri>\r\n</JobQueryResult_V2>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "17060"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "726b5089-2199-4499-9a21-b82277caee00,726b5089-2199-4499-9a21-b82277caee00"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "60ba91b0a22800018176324e378d83bd"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 20 Mar 2015 09:28:42 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4576bc2e-58ca-4d0f-ab76-6f9b32d45c86"
+  }
+}

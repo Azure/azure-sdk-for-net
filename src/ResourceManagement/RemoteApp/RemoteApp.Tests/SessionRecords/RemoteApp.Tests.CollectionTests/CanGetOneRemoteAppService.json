@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"AdInfo\": null,\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"Created using AUX portal\",\r\n    \"DnsServers\": [],\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-02-01T10:26:19.152Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"simple\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"West US\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 1,\r\n    \"VnetName\": \"simplevnet-54e37997-fd0e-45f4-8d5b-182d84c9378c\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  },\r\n  {\r\n    \"AdInfo\": {\r\n      \"DomainName\": \"rdvmohoro.nttest.microsoft.com\",\r\n      \"OrganizationalUnit\": null,\r\n      \"ServiceAccountPassword\": \"*******\",\r\n      \"ServiceAccountUserName\": \"TestUser@service.com\"\r\n    },\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"BVTDesktop\",\r\n    \"DnsServers\": [],\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-02-01T09:00:51.242Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"testd112\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"bluerefresh.2014.08.21.vhd\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 0,\r\n    \"VnetName\": \"CloudVnet\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1128"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "cb304987bdba690c9ba9ae78d5250160"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:17 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"AdInfo\": null,\r\n  \"BillingPlanName\": \"Standard\",\r\n  \"CustomRdpProperty\": null,\r\n  \"Description\": \"Created using AUX portal\",\r\n  \"DnsServers\": [],\r\n  \"LastErrorCode\": \"\",\r\n  \"LastModifiedTimeUtc\": \"2015-02-01T10:26:19.152Z\",\r\n  \"MaxSessions\": 10,\r\n  \"Mode\": 1,\r\n  \"Name\": \"simple\",\r\n  \"OfficeType\": 0,\r\n  \"ReadyForPublishing\": true,\r\n  \"Region\": \"West US\",\r\n  \"SessionWarningThreshold\": 8,\r\n  \"Status\": \"Active\",\r\n  \"SubnetName\": null,\r\n  \"TemplateImageName\": \"\",\r\n  \"TrialOnly\": false,\r\n  \"Type\": 1,\r\n  \"VnetName\": \"simplevnet-54e37997-fd0e-45f4-8d5b-182d84c9378c\",\r\n  \"WaitBeforeShutdownInMinutes\": 0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "502"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "1954138221d46970b44dd91485a75ea3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:20 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"AdInfo\": {\r\n    \"DomainName\": \"rdvmohoro.nttest.microsoft.com\",\r\n    \"OrganizationalUnit\": null,\r\n    \"ServiceAccountPassword\": \"*******\",\r\n    \"ServiceAccountUserName\": \"TestUser@service.com\"\r\n  },\r\n  \"BillingPlanName\": \"Standard\",\r\n  \"CustomRdpProperty\": null,\r\n  \"Description\": \"BVTDesktop\",\r\n  \"DnsServers\": [],\r\n  \"LastErrorCode\": \"\",\r\n  \"LastModifiedTimeUtc\": \"2015-02-01T09:00:51.242Z\",\r\n  \"MaxSessions\": 10,\r\n  \"Mode\": 1,\r\n  \"Name\": \"testd112\",\r\n  \"OfficeType\": 0,\r\n  \"ReadyForPublishing\": true,\r\n  \"Region\": \"\",\r\n  \"SessionWarningThreshold\": 8,\r\n  \"Status\": \"Active\",\r\n  \"SubnetName\": null,\r\n  \"TemplateImageName\": \"bluerefresh.2014.08.21.vhd\",\r\n  \"TrialOnly\": false,\r\n  \"Type\": 0,\r\n  \"VnetName\": \"CloudVnet\",\r\n  \"WaitBeforeShutdownInMinutes\": 0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "623"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "f5330a2e545a685fbc691a10d9b85536"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:21 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

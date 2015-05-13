@@ -74,7 +74,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="credential">Credential for key vault operations</param>
         /// <param name="handlers">Custom HTTP handlers</param>
-        internal KeyVaultClient(KeyVaultCredential credential, DelegatingHandler[] handlers)
+        public KeyVaultClient(KeyVaultCredential credential, DelegatingHandler[] handlers)
         {
             _internalClient = new KeyVaultInternalClient(credential);
             _internalClient = _internalClient.WithHandlers(handlers);
@@ -957,7 +957,7 @@ namespace Microsoft.Azure.KeyVault
         #endregion
 
         #region Helper Methods
-        public async Task<T> Do<T>(Func<Task<T>> func)
+        private async Task<T> Do<T>(Func<Task<T>> func)
         {
             try
             {

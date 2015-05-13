@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/RdfeProxy.svc/cb53d0c3-bd59-4721-89bc-06916a9147ef/cloudservices/RecoveryServices-YTOL3TYU5TMUILUMLBLJE7P7BYUPLJXZ5HAVZOFLBZIFNONCGTBQ-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/bvttestVault3/RecoveryPlans?api-version=2015-02-10",
+      "EncodedRequestUri": "L1JkZmVQcm94eS5zdmMvY2I1M2QwYzMtYmQ1OS00NzIxLTg5YmMtMDY5MTZhOTE0N2VmL2Nsb3Vkc2VydmljZXMvUmVjb3ZlcnlTZXJ2aWNlcy1ZVE9MM1RZVTVUTVVJTFVNTEJMSkU3UDdCWVVQTEpYWjVIQVZaT0ZMQlpJRk5PTkNHVEJRLXdlc3QtdXMvcmVzb3VyY2VzL1dBSHlwZXJWUmVjb3ZlcnlNYW5hZ2VyL34vSHlwZXJWUmVjb3ZlcnlNYW5hZ2VyVmF1bHQvYnZ0dGVzdFZhdWx0My9SZWNvdmVyeVBsYW5zP2FwaS12ZXJzaW9uPTIwMTUtMDItMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "68375656-54c9-40c0-a78f-247197b27716"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfRecoveryPlan xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\" />",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "125"
+        ],
+        "Content-Type": [
+          "text/html; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Last-Modified": [
+          "Tue, 10 Feb 2015 09:18:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "68375656-54c9-40c0-a78f-247197b27716 9:18 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Tue, 10 Feb 2015 09:18:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "cb53d0c3-bd59-4721-89bc-06916a9147ef"
+  }
+}
