@@ -1,0 +1,187 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets/hkutvnet1?includeKey=true&api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHMvaGt1dHZuZXQxP2luY2x1ZGVLZXk9dHJ1ZSZhcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"DnsServers\": [\r\n    \"10.0.0.1\"\r\n  ],\r\n  \"GatewayIp\": \"104.45.224.178\",\r\n  \"GatewaySubnet\": \"172.16.0.0/28\",\r\n  \"GatewayType\": 0,\r\n  \"LocalAddressSpaces\": [\r\n    \"11.0.0.0/16\"\r\n  ],\r\n  \"Name\": \"hkutvnet1\",\r\n  \"Region\": \"West US\",\r\n  \"ServiceName\": \"4a4f1906-4b3e-4c81-a446-f167c28341d2\",\r\n  \"SharedKey\": \"3CsqGbvm5VhNIi6D5EWiRz8jrhmyS2eW\",\r\n  \"State\": 2,\r\n  \"StateInfo\": \"Successfully created a gateway for the following virtual network: hkutvnet1\",\r\n  \"UpgradeInProgress\": false,\r\n  \"VnetAddressSpaces\": [\r\n    \"172.16.0.0/16\"\r\n  ],\r\n  \"VpnAddress\": \"13.0.0.1\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "470"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "1be5e6a61e196592bf8d469599c3c7b5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:46 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets/hkutvnet1?includeKey=true&api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHMvaGt1dHZuZXQxP2luY2x1ZGVLZXk9dHJ1ZSZhcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"DnsServers\": [\r\n    \"10.0.0.1\"\r\n  ],\r\n  \"GatewayIp\": \"104.45.224.178\",\r\n  \"GatewaySubnet\": \"172.16.0.0/28\",\r\n  \"GatewayType\": 0,\r\n  \"LocalAddressSpaces\": [\r\n    \"11.0.0.0/16\"\r\n  ],\r\n  \"Name\": \"hkutvnet1\",\r\n  \"Region\": \"West US\",\r\n  \"ServiceName\": \"4a4f1906-4b3e-4c81-a446-f167c28341d2\",\r\n  \"SharedKey\": \"tordO6uSGYfdBOBBHSkzR2LGyBoX6Uc8\",\r\n  \"State\": 2,\r\n  \"StateInfo\": \"Successfully created a gateway for the following virtual network: hkutvnet1\",\r\n  \"UpgradeInProgress\": false,\r\n  \"VnetAddressSpaces\": [\r\n    \"172.16.0.0/16\"\r\n  ],\r\n  \"VpnAddress\": \"13.0.0.1\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "470"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "450765b2703f6bad853537db0f4d04c2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:57 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets/hkutvnet1/resetsharedkey?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHMvaGt1dHZuZXQxL3Jlc2V0c2hhcmVka2V5P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-clouddv-tracking-id": [
+          "54f25e63-b4b3-6cc1-815a-63791d2cfcfa"
+        ],
+        "x-remoteapp-operation-tracking-id": [
+          "54f25e63-b4b3-6cc1-815a-63791d2cfcfa"
+        ],
+        "x-ms-request-id": [
+          "3d52c405dd03656b876ad8f27aa97afd"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:51 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets/operationStatus/54f25e63-b4b3-6cc1-815a-63791d2cfcfa?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHMvb3BlcmF0aW9uU3RhdHVzLzU0ZjI1ZTYzLWI0YjMtNmNjMS04MTVhLTYzNzkxZDJjZmNmYT9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Status\": 1\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "f2eea846f2c760898f787dc093738801"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:53 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

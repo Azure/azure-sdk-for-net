@@ -1,0 +1,316 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles",
+      "RequestMethod": "POST",
+      "RequestBody": "<Profile xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <DomainName>ATMTest3430.trafficmanager.net</DomainName>\r\n  <Name>ATMTest1333</Name>\r\n</Profile>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "158"
+        ],
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "50d0624e06cf1cad9041b5e490b6cca4"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:50:50 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest1333/definitions",
+      "RequestMethod": "POST",
+      "RequestBody": "<Definition xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <DnsOptions>\r\n    <TimeToLiveInSeconds>30</TimeToLiveInSeconds>\r\n  </DnsOptions>\r\n  <Monitors>\r\n    <Monitor>\r\n      <IntervalInSeconds>30</IntervalInSeconds>\r\n      <TimeoutInSeconds>10</TimeoutInSeconds>\r\n      <ToleratedNumberOfFailures>3</ToleratedNumberOfFailures>\r\n      <Protocol>HTTP</Protocol>\r\n      <Port>80</Port>\r\n      <HttpOptions>\r\n        <Verb>GET</Verb>\r\n        <RelativePath>/randomFile.aspx</RelativePath>\r\n        <ExpectedStatusCode>200</ExpectedStatusCode>\r\n      </HttpOptions>\r\n    </Monitor>\r\n  </Monitors>\r\n  <Policy>\r\n    <LoadBalancingMethod>Failover</LoadBalancingMethod>\r\n    <Endpoints>\r\n      <Endpoint>\r\n        <DomainName>www.office.com</DomainName>\r\n        <Status>Enabled</Status>\r\n        <Type>Any</Type>\r\n        <Weight>1</Weight>\r\n      </Endpoint>\r\n    </Endpoints>\r\n  </Policy>\r\n</Definition>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "906"
+        ],
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<Definition xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Version>1</Version>\r\n</Definition>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "147"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "fd4026e828ae1da394cd87da98d11f21"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:50:51 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest1333/definitions",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<Definitions xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Definition>\r\n    <DnsOptions>\r\n      <TimeToLiveInSeconds>30</TimeToLiveInSeconds>\r\n    </DnsOptions>\r\n    <Status>Enabled</Status>\r\n    <Version>1</Version>\r\n    <Monitors>\r\n      <Monitor>\r\n        <IntervalInSeconds>30</IntervalInSeconds>\r\n        <TimeoutInSeconds>10</TimeoutInSeconds>\r\n        <ToleratedNumberOfFailures>3</ToleratedNumberOfFailures>\r\n        <Protocol>HTTP</Protocol>\r\n        <Port>80</Port>\r\n        <HttpOptions>\r\n          <Verb>GET</Verb>\r\n          <RelativePath>/randomFile.aspx</RelativePath>\r\n          <ExpectedStatusCode>200</ExpectedStatusCode>\r\n        </HttpOptions>\r\n      </Monitor>\r\n    </Monitors>\r\n    <Policy>\r\n      <LoadBalancingMethod>Failover</LoadBalancingMethod>\r\n      <Endpoints>\r\n        <Endpoint>\r\n          <DomainName>www.office.com</DomainName>\r\n          <Status>Enabled</Status>\r\n          <Type>Any</Type>\r\n          <MonitorStatus>CheckingEndpoint</MonitorStatus>\r\n          <Weight>1</Weight>\r\n        </Endpoint>\r\n      </Endpoints>\r\n      <MonitorStatus>CheckingEndpoints</MonitorStatus>\r\n    </Policy>\r\n  </Definition>\r\n</Definitions>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "920"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "0db2ec2574e81d6a8de926713b2d9381"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:50:52 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest1333/definitions/1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<Definition xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DnsOptions>\r\n    <TimeToLiveInSeconds>30</TimeToLiveInSeconds>\r\n  </DnsOptions>\r\n  <Status>Enabled</Status>\r\n  <Version>1</Version>\r\n  <Monitors>\r\n    <Monitor>\r\n      <IntervalInSeconds>30</IntervalInSeconds>\r\n      <TimeoutInSeconds>10</TimeoutInSeconds>\r\n      <ToleratedNumberOfFailures>3</ToleratedNumberOfFailures>\r\n      <Protocol>HTTP</Protocol>\r\n      <Port>80</Port>\r\n      <HttpOptions>\r\n        <Verb>GET</Verb>\r\n        <RelativePath>/randomFile.aspx</RelativePath>\r\n        <ExpectedStatusCode>200</ExpectedStatusCode>\r\n      </HttpOptions>\r\n    </Monitor>\r\n  </Monitors>\r\n  <Policy>\r\n    <LoadBalancingMethod>Failover</LoadBalancingMethod>\r\n    <Endpoints>\r\n      <Endpoint>\r\n        <DomainName>www.office.com</DomainName>\r\n        <Status>Enabled</Status>\r\n        <Type>Any</Type>\r\n        <MonitorStatus>CheckingEndpoint</MonitorStatus>\r\n        <Weight>1</Weight>\r\n      </Endpoint>\r\n    </Endpoints>\r\n    <MonitorStatus>CheckingEndpoints</MonitorStatus>\r\n  </Policy>\r\n</Definition>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "893"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "a1783a14e17b1cb59f475b4054752330"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:50:53 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest1333",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<Profile xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DomainName>ATMTest3430.trafficmanager.net</DomainName>\r\n  <Name>ATMTest1333</Name>\r\n  <Status>Enabled</Status>\r\n  <StatusDetails>\r\n    <EnabledVersion>1</EnabledVersion>\r\n  </StatusDetails>\r\n  <Definitions>\r\n    <Definition>\r\n      <Status>Enabled</Status>\r\n      <Version>1</Version>\r\n    </Definition>\r\n  </Definitions>\r\n</Profile>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "385"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f627641e21601a04816e06c7c12acd46"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:50:53 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/profiles/ATMTest1333",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "8a758a9c0ba71d1c969b6ab74bdd280b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:50:54 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "testCreateDefinition": [
+      "ATMTest3430"
+    ],
+    "CreateTestProfile": [
+      "ATMTest1333"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "279b0675-cf67-467f-98f0-67ae31eb540f",
+    "UserId": "destanko@microsoft.com"
+  }
+}

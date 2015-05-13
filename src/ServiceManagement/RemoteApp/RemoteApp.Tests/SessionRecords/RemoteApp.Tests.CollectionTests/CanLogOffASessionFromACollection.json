@@ -1,0 +1,193 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/sessions/logoff?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3Nlc3Npb25zL2xvZ29mZj9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"UserUpn\": \"yadavb@hotmail.com\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "39"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-clouddv-tracking-id": [
+          "df0154fc-66c6-4483-8a12-941bf2edfabd"
+        ],
+        "x-remoteapp-operation-tracking-id": [
+          "df0154fc-66c6-4483-8a12-941bf2edfabd"
+        ],
+        "x-ms-request-id": [
+          "4a1a5a88988a6e608f58ade10b8d0a61"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 11:00:49 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/df0154fc-66c6-4483-8a12-941bf2edfabd?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy9kZjAxNTRmYy02NmM2LTQ0ODMtOGExMi05NDFiZjJlZGZhYmQ/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Description\": \"LogoffSessionCommand\",\r\n  \"ErrorDetails\": \"\",\r\n  \"Status\": \"Pending\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "75"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "dda66d570a136592b66f288bd7e1b79a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 11:00:51 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/df0154fc-66c6-4483-8a12-941bf2edfabd?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy9kZjAxNTRmYy02NmM2LTQ0ODMtOGExMi05NDFiZjJlZGZhYmQ/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Description\": \"LogoffSessionCommand\",\r\n  \"ErrorDetails\": \"Logoff request for user: yadavb@hotmail.com in RemoteApp Service: simple done with Result: Description: , Status: Success, Result: Success, Details: User: yadavb_000, Success.\",\r\n  \"Status\": \"Success\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "250"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "3aa52829125b6d1c82b6ca45fdf76d4d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 11:00:53 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/sessions?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3Nlc3Npb25zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "106d8665b24d6c1fa04bfedb9b8181a0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 11:01:34 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

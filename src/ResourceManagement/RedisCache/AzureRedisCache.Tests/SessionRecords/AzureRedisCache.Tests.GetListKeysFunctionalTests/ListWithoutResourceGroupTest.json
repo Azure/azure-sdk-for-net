@@ -1,0 +1,50 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/providers/Microsoft.Cache/Redis/?api-version=2014-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/redisruntimetestrg/providers/Microsoft.Cache/Redis/redisruntimetest004\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"redisruntimetest004\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"2.8\",\r\n        \"sku\": {\r\n          \"name\": \"Standard\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"maxMemoryPolicy\": null,\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"redisruntimetest004.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/redisruntimetestrg/providers/Microsoft.Cache/Redis/quotacheck\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"quotacheck\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"2.8\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"maxMemoryPolicy\": null,\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"quotacheck.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/redisruntimetestrg/providers/Microsoft.Cache/Redis/test004\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"test004\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"2.8\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"maxMemoryPolicy\": null,\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"test004.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"hydracache1\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"2.8\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"maxMemoryPolicy\": null,\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/redisruntimetestrg/providers/Microsoft.Cache/Redis/redisruntimetest006\",\r\n      \"location\": \"North Europe\",\r\n      \"name\": \"redisruntimetest006\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"2.8\",\r\n        \"sku\": {\r\n          \"name\": \"Standard\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"maxMemoryPolicy\": null,\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"redisruntimetest006.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "454a8469-023d-408d-bc97-e6830f09c17f",
+          "0ba4e12f-75f3-4c1f-874d-71f241f578fc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31721"
+        ],
+        "x-ms-request-id": [
+          "c3435e64-31c1-4e20-a37d-b273ca409646"
+        ],
+        "x-ms-correlation-request-id": [
+          "c3435e64-31c1-4e20-a37d-b273ca409646"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140902T222408Z:c3435e64-31c1-4e20-a37d-b273ca409646"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Sep 2014 22:24:07 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f435d8e1-f7a0-4f79-adf7-b1a564728140"
+  }
+}

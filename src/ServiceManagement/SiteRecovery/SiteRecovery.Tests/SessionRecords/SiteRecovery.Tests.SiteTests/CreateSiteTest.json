@@ -1,0 +1,138 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Sites?api-version=2015-04-10",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1NpdGVzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfSite xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Site>\r\n    <ID>cfbf7221-0ae9-4b17-8fda-b77b22aa968e</ID>\r\n    <Name>TestSite123_HyperVSite</Name>\r\n    <Type>HyperVSite</Type>\r\n  </Site>\r\n</ArrayOfSite>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "245"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-request-id": [
+          "e6e920d9b8cba287954485313da8c627"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:04:46 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Sites/Create?api-version=2015-04-10",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1NpdGVzL0NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA0LTEw",
+      "RequestMethod": "POST",
+      "RequestBody": "<SiteCreationInput xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>TestSite123_HyperVSite</Name>\r\n  <FabricType>HyperVSite</FabricType>\r\n</SiteCreationInput>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "169"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Job xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>a70604de-0ed7-4f7a-9748-1b2b980a8288</ID>\r\n  <ActivityId>896c1f50-07a3-48a0-aab2-9c85acfc9520</ActivityId>\r\n  <AllowedActions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n  <DisplayName i:nil=\"true\" />\r\n  <EndTime i:nil=\"true\" />\r\n  <Errors />\r\n  <Name i:nil=\"true\" />\r\n  <StartTime i:nil=\"true\" />\r\n  <State>NotStarted</State>\r\n  <StateDescription>NotStarted</StateDescription>\r\n  <TargetObjectId i:nil=\"true\" />\r\n  <TargetObjectName i:nil=\"true\" />\r\n  <TargetObjectType>ProtectionEntity</TargetObjectType>\r\n  <Tasks />\r\n</Job>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "606"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-request-id": [
+          "4119207859a0a8c6af2d503f4e2ec2da"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:04:47 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba"
+  }
+}

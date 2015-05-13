@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LegacyApplianceConfig Id ="6730785a-7c52-42cc-a85b-d3a2f2d5c3b9" Name="6730785a-7c52-42cc-a85b-d3a2f2d5c3b9" SerialNo="1" TotalCount="1" >
+  <VolumeContainers>
+    <VolumeContainer Name="OneSDKAzureCloud" Id="0664aa69-e70a-41a6-bcc7-b3391fc15317" BandwidthTempateId ="b0200b3c-502e-4fc7-acd7-7bd11d52cae2" 
+                     EncryptionKey ="" SecretEncryptionThumbPrint="AD977E631F28698120D7819F841EDA69386D4367">
+      <PrimaryBucket Name ="storsimple-0664aa69-e70a-41a6-bcc7-b3391fc15317" CredentialId = "611e6203-fe88-481c-adcd-b3f21dea9526"/>
+      <BackupBucket Name ="storsimple-0664aa69-e70a-41a6-bcc7-b3391fc15317-backup" CredentialId = "611e6203-fe88-481c-adcd-b3f21dea9526"/>
+    </VolumeContainer>
+  </VolumeContainers>
+  <Volumes>
+    <Volume Name="OneSDKDemoVOL" Id="eaa46a2f-b0aa-4f66-82db-3a9513e43267" ContainerId="0664aa69-e70a-41a6-bcc7-b3391fc15317" 
+            Attr="ReadWrite" BlockCount="107374182400" Online="true" VSN="SS-VOL-dc6d2232-c919-4b79-96f6-79d390d39b48" Type="PrimaryVolume">
+     <ACRId>7d1c7ad4-d62c-4c0c-a5b7-5be181ce400c</ACRId>
+    </Volume>  
+  </Volumes>
+  <ACRs>
+    <ACR Name ="Demo1-Host" Id="7d1c7ad4-d62c-4c0c-a5b7-5be181ce400c" InitiatorName="iqn.10.2.249.204.com.microsoft" />
+  </ACRs>
+  <SACs>
+    <SAC Name="OneSDKAzureCred" Login="aruntest" HostName="blob.core.windows.net" 
+         Password="iEEQyvHvopW4TtBb/CKaTG2Bswq9yf9iPkypygF2/fLTPUIy4D0eYsy6f+OnRA3a55fWQj6zvNVqmsWzL+dVf59wo4LNTFJfffsfH523cfyF58mIXt4/P6sTk9tSplVJ279YksQDXiIeu5gcB1QUeDQijKI+ebyyNgMj+9/nn+DZXTMtUXdS/ZSRtyCk+P9QeaMZWb08BYFGHQTk+FKJj8VuAKf1ExZmu5+/xelo2vUQ+pESRcXXfEx0eFW7GLRAXszbUQ9Eq0XrvnZ4WY49FZNR//PqvJEXOmd2WQF7luxMDLOSDbBEa+xgreIXqIW7YyrVdBKvRZ0dD4lYLvgQVA==" 
+         Location="" Id="611e6203-fe88-481c-adcd-b3f21dea9526" 
+         Provider="Azure" UseSSL="true" PasswordEncryptionCertThumbprint="AD977E631F28698120D7819F841EDA69386D4367" />
+  </SACs>
+  <BandwidthTemplates>
+    <BandwidthTemplate Name ="Default" Id="b0200b3c-502e-4fc7-acd7-7bd11d52cae2" CreatedFromTemplateId="0">
+      <BanbdwidthSchedule Days="Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"  
+                          Id="2c27b55c-914b-473a-8ee1-c170fc1d7f26" StartTime="00:00:00" StopTime="23:59:59" Rate="0">
+      </BanbdwidthSchedule>
+    </BandwidthTemplate>
+   </BandwidthTemplates>
+  <InBoundIScsiChap />
+  <OutBoundIScsiChap />
+  <VolumeContainerGroups>
+    <VolumeContainerGroup Name="OneSDKVG" Id="62daaf74-559c-4316-9164-dfa73effd81d">
+      <VolumeID>eaa46a2f-b0aa-4f66-82db-3a9513e43267</VolumeID>
+    </VolumeContainerGroup>
+  </VolumeContainerGroups>
+  <BackupPolicies>
+    <BackupPolicy Name="OneSDKBackupPolicy" Id="9c6c19b2-2aaf-41f6-8803-9e97c58b4af4" CreatedOn="2015-02-01T09:17:58.75897Z" 
+                  VirtualDiskGroupId="62daaf74-559c-4316-9164-dfa73effd81d" RetentionCount="10" LastRunTime="0001-01-01T00:00:00" Type="CloudSnapshot"/>
+  </BackupPolicies>
+</LegacyApplianceConfig>
+

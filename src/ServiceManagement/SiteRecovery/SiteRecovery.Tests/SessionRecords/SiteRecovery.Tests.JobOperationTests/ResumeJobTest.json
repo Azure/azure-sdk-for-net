@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/Jobs/53f78531-d168-4b54-9337-8560094cc7a1/Resume?api-version=2014-10-27",
+      "RequestMethod": "POST",
+      "RequestBody": "<ResumeJobRequest xmlns=\"http://schemas.microsoft.com/windowsazure\" />",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "63b8c606-66f0-409c-87e5-6321ab8520fd"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Error i:nil=\"true\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\" />",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 04 Aug 2014 17:48:16 GMT"
+        ]
+      },
+      "StatusCode": 500
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "947a55d7-75e9-4a36-b156-305c6270f018"
+  }
+}

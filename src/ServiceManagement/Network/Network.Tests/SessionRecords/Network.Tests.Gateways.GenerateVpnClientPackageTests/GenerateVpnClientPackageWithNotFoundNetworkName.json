@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/NotFoundNetworkName/gateway/vpnclientpackage",
+      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL05vdEZvdW5kTmV0d29ya05hbWUvZ2F0ZXdheS92cG5jbGllbnRwYWNrYWdl",
+      "RequestMethod": "POST",
+      "RequestBody": "<VpnClientParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ProcessorArchitecture>X86</ProcessorArchitecture>\r\n</VpnClientParameters>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "149"
+        ],
+        "x-ms-version": [
+          "2015-02-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>BadRequest</Code>\r\n  <Message>The specified virtual network name 'NotFoundNetworkName' is not valid or could not be found.</Message>\r\n</Error>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "251"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c293ebb3219a7cc88ee2be548557ffbf"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Feb 2015 09:48:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.187",
+          "(rd_rdfe_stable.150211-1556)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f771266f-1d85-498f-9280-ae4a6c3dae8b"
+  }
+}

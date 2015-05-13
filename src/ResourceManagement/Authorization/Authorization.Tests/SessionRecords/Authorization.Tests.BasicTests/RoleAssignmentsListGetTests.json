@@ -1,0 +1,274 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions?api-version=2014-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Contributor\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage everything except access to resources.\",\r\n        \"scope\": \"/\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"Microsoft.Authorization/*/Write\",\r\n              \"Microsoft.Authorization/*/Delete\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"b24988ac-6180-42a0-ab88-20f7382dd24c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Owner\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you manage everything, including access to resources.\",\r\n        \"scope\": \"/\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"8e3af657-a8ff-443c-a75c-2fe8c4bcb635\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"roleName\": \"Reader\",\r\n        \"type\": \"BuiltInRole\",\r\n        \"description\": \"Lets you view everything, but not make any changes.\",\r\n        \"scope\": \"/\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/read\"\r\n            ],\r\n            \"notActions\": []\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n      \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n      \"name\": \"acdd72a7-3385-48ef-bd42-f606fba81ae7\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1385"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:33dddd8f-f531-4c58-8656-b9a11b1f87c2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31996"
+        ],
+        "x-ms-correlation-request-id": [
+          "0f0e33d7-5d60-4ff7-8b9d-172c19f50071"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150121T004010Z:0f0e33d7-5d60-4ff7-8b9d-172c19f50071"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jan 2015 00:40:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8?api-version=2014-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"roleDefinitionId\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n    \"principalId\": \"c176d5d8-8fc4-4aae-9c4f-4931aa539744\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "254"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleDefinitionId\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n    \"principalId\": \"c176d5d8-8fc4-4aae-9c4f-4931aa539744\",\r\n    \"scope\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115\"\r\n  },\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\",\r\n  \"type\": \"Microsoft.Authorization/roleAssignments\",\r\n  \"name\": \"4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "532"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:2a01b6d3-2675-419f-9a46-da796668d934"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "43effcc6-12f6-4d76-989c-cca0498c9dd9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150121T004011Z:43effcc6-12f6-4d76-989c-cca0498c9dd9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jan 2015 00:40:10 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments?api-version=2014-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"roleDefinitionId\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n        \"principalId\": \"c176d5d8-8fc4-4aae-9c4f-4931aa539744\",\r\n        \"scope\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115\"\r\n      },\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\",\r\n      \"type\": \"Microsoft.Authorization/roleAssignments\",\r\n      \"name\": \"4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "544"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:2a8bf329-1a4b-43f9-94d6-c9f71f3c71a3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31995"
+        ],
+        "x-ms-correlation-request-id": [
+          "6865e7e5-c43b-4b26-9c2f-56cb1a7d3305"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150121T004011Z:6865e7e5-c43b-4b26-9c2f-56cb1a7d3305"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jan 2015 00:40:10 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8?api-version=2014-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleDefinitionId\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n    \"principalId\": \"c176d5d8-8fc4-4aae-9c4f-4931aa539744\",\r\n    \"scope\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115\"\r\n  },\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\",\r\n  \"type\": \"Microsoft.Authorization/roleAssignments\",\r\n  \"name\": \"4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "532"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:72d41660-f99b-43db-815c-cbf7f059219f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31994"
+        ],
+        "x-ms-correlation-request-id": [
+          "e887bcce-e31a-4714-9c6f-971b5e022d81"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150121T004012Z:e887bcce-e31a-4714-9c6f-971b5e022d81"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jan 2015 00:40:12 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8?api-version=2014-10-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"roleDefinitionId\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7\",\r\n    \"principalId\": \"c176d5d8-8fc4-4aae-9c4f-4931aa539744\",\r\n    \"scope\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115\"\r\n  },\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments/4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\",\r\n  \"type\": \"Microsoft.Authorization/roleAssignments\",\r\n  \"name\": \"4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "532"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:2d0ecff2-1002-4b38-a2c3-50324fed7a9e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "9cee91da-bad8-43af-90a0-314b2b4379c9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150121T004012Z:9cee91da-bad8-43af-90a0-314b2b4379c9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jan 2015 00:40:12 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115",
+    "AssignmentName": "4c182fd4-5be5-4ed3-b215-1b8fb9b4b4d8"
+  }
+}

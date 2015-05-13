@@ -1,0 +1,240 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/securityPrincipals?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3NlY3VyaXR5UHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"yadavb@hotmail.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  },\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"auxtm258@live.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "250"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "73e52b90b7056149925431d1dfc5e078"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:40:21 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/securityPrincipals?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3NlY3VyaXR5UHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"yadavb@hotmail.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  },\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"auxtm258@live.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  },\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"JohnDoe_Test@hotmail.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "381"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "333e6cae4c556a5aa98d25f0e1c1e92c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:40:25 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/securityPrincipals?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3NlY3VyaXR5UHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"yadavb@hotmail.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  },\r\n  {\r\n    \"Status\": 1,\r\n    \"User\": {\r\n      \"AadObjectId\": \"\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"auxtm258@live.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 1\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "250"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "e9ffd4db0ae46b32a8e3105a4cb6705c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:40:28 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/securityPrincipals?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3NlY3VyaXR5UHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "[\r\n  {\r\n    \"SecurityPrincipalType\": 0,\r\n    \"UserIdType\": 1,\r\n    \"Name\": \"johndoe_test@hotmail.com\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "109"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"FailedSecurityPrincipals\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "5901d0185426662493202555cacea7db"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:40:22 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/securityPrincipals?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvc2ltcGxlL3NlY3VyaXR5UHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "[\r\n  {\r\n    \"SecurityPrincipalType\": 0,\r\n    \"UserIdType\": 1,\r\n    \"Name\": \"johndoe_test@hotmail.com\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "109"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"FailedSecurityPrincipals\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "8c86f79eb8a16b78bdb9d25ca02117ed"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:40:26 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}
