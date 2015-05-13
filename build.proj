@@ -24,8 +24,8 @@
   Properties of interest:
   /p:Scope 
     'Common' : build Azure Common
-    '<Path to a project file>': build that specific package
-    'Authentication': build the Authentication package
+    'Subfolder under /src, with solution files, such as 'ResourceManagement\Compute'': build individual packages
+    'Authentication': build Authentication
     By default, it builds all.
 
   /P:CodeSign=True
@@ -66,10 +66,8 @@
     <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
     <!--Set this true only if you want to test the code sign workflow locally-->
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
-    <!-- 'Common': only build common; 'All': all projects; "Authentication": Azure Authentication; 'folder name': build individual projects underneath -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
-    <BuildSpecifiedLibrary Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'Authentication' and '$(Scope)' != 'All' ">true</BuildSpecifiedLibrary>
   </PropertyGroup>
 
   <ItemGroup>
@@ -132,13 +130,21 @@
        <TestPartialName>$([System.IO.Path]::GetFileName($(Scope)))</TestPartialName>
      </PropertyGroup>
     <ItemGroup>
-      <TestDlls Include=".\src\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
+      <!--TODO: improve inclue the logic to be more explicit -->
+      <TestDlls Include="@(LibrariesToBuild -> '.\src\**\*%(Filename).Tests\bin\net45-$(Configuration)\*%(Filename).Tests.dll')" Condition=" '$(Scope)' == 'All' " />
       <TestDlls Include=".\src\$(Scope)\*.Tests\bin\net45-$(Configuration)\*$(TestPartialName)*.Tests.dll" 
                 Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
+    <!--Assign to a temporary property so *wildcard include* used by transformation will apply -->
+    <PropertyGroup>
+      <_TestDLLs>@(TestDlls)</_TestDLLs>
+    </PropertyGroup>
+    <ItemGroup>
+      <FilteredTestDlls Include="$(_TestDLLs)"></FilteredTestDlls>
+    </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
-    <Message Text="%(TestDlls.Filename)" />
-    <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
+    <Message Text="%(FilteredTestDlls.Filename)" />
+    <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(FilteredTestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(FilteredTestDlls.Filename).html&quot;"
         ContinueOnError="false"/>
   </Target>
   

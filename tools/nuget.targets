@@ -5,7 +5,8 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*$(PackageName).nuget.proj" />
+  <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*$(PackageName).nuget.proj"
+          Condition=" '$(Scope)' != 'all' "/>
 
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\**\*.nuget.proj"
           Condition=" '$(Scope)' == 'all' "/>
