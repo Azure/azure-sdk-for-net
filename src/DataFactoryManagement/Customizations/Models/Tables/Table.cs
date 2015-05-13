@@ -29,5 +29,26 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Table properties.
         /// </summary>
         public TableProperties Properties { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the Table class.
+        /// </summary>
+        public Table()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Table class with required
+        /// arguments.
+        /// </summary>
+        public Table(string name, TableProperties properties)
+            : this()
+        {
+            Ensure.IsNotNull(name, "name");
+            Ensure.IsNotNull(properties, "properties");
+
+            this.Name = name;
+            this.Properties = properties;
+        }
     }
 }

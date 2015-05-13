@@ -13,19 +13,20 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-#if ADF_INTERNAL
-    internal class ComputeTypeConverter : AdfRegisteredTypeConverter<InternalComputeType, ComputeType>
+    internal class ComputeTypeConverter : AdfRegisteredTypeConverter<CoreRegistrationModel.ComputeType, ComputeType>
     {
-        public override InternalComputeType ToCoreType(ComputeType wrappedObject)
+        public override CoreRegistrationModel.ComputeType ToCoreType(ComputeType wrappedObject)
         {
-            return new InternalComputeType()
+            return new CoreRegistrationModel.ComputeType()
             {
                 Name = wrappedObject.Name,
-                Properties = new InternalComputeTypeProperties()
+                Properties = new CoreRegistrationModel.ComputeTypeProperties()
                 {
                     SupportedActivities = wrappedObject.Properties.SupportedActivities,
                     Transport = wrappedObject.Properties.Transport,
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             };
         }
 
-        public override ComputeType ToWrapperType(InternalComputeType coreObject)
+        public override ComputeType ToWrapperType(CoreRegistrationModel.ComputeType coreObject)
         {
             return new ComputeType()
             {
@@ -50,5 +51,5 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             };
         }
     }
-#endif
 }
+#endif

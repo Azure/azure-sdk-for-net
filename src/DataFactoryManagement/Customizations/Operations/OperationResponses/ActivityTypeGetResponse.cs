@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// The Get ActivityType operation response.
     /// </summary>
@@ -27,12 +29,12 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         public ActivityType ActivityType { get; set; }
 
         internal ActivityTypeGetResponse(
-            InternalActivityTypeGetResponse internalResponse,
+            CoreRegistrationModel.ActivityTypeGetResponse internalResponse,
             DataFactoryManagementClient client)
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.ActivityType = client.ActivityTypes.Converter.ToWrapperType(internalResponse.ActivityType);
         }
     }
-#endif
 }
+#endif

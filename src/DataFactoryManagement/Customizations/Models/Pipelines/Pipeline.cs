@@ -31,5 +31,26 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         [AdfRequired]
         public PipelineProperties Properties { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the Pipeline class.
+        /// </summary>
+        public Pipeline()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Pipeline class with required
+        /// arguments.
+        /// </summary>
+        public Pipeline(string name, PipelineProperties properties)
+            : this()
+        {
+            Ensure.IsNotNull(name, "name");
+            Ensure.IsNotNull(properties, "properties");
+
+            this.Name = name;
+            this.Properties = properties;
+        }
     }
 }
