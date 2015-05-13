@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.DataFactories.Common.Models;
 using Microsoft.Azure.Management.DataFactories.Core;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json.Linq;
