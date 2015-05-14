@@ -73,6 +73,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.LinkedServiceName = linkedServiceName;
         }
 
+        public TableProperties(
+            GenericTable typeProperties,
+            Availability availability,
+            string linkedServiceName,
+            string typeName)
+            : base(typeProperties, typeName)
+        {
+            this.Availability = availability;
+            this.LinkedServiceName = linkedServiceName;
+        }
+
         internal TableProperties(
             TableTypeProperties typeProperties,
             Availability availability,
