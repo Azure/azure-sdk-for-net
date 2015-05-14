@@ -21,7 +21,7 @@ Using Visual Studio:
 
 Using command line:
 
-  - Ensure "msbuild.exe" is under environment PATH. The earliest step is to run the shortcut pre-installed by Visual Studio.
+  - Ensure "msbuild.exe" is under environment pathes, which you can run the command file pre-installed by Visual Studio.
         *C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat*
   - Under repository root, there is a "build.proj", which you can build with. For example, to build a nuget package for compute management, run:
         *msbuild build.proj /t:build;package /p:scope=ResourceManagement\Compute*
