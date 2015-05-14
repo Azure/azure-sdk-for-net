@@ -20,53 +20,53 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Gallery
 {
-    public partial class DefinitionTemplates
+    /// <summary>
+    /// A gallery item artifact.
+    /// </summary>
+    public partial class Artifact
     {
-        private string _defaultDeploymentTemplateId;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets definition template file ID.
+        /// Optional. Gets or sets artifact name.
         /// </summary>
-        public string DefaultDeploymentTemplateId
+        public string Name
         {
-            get { return this._defaultDeploymentTemplateId; }
-            set { this._defaultDeploymentTemplateId = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private IDictionary<string, string> _deploymentTemplateFileUrls;
+        private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets deployment template file Url.
+        /// Optional. Gets or sets artifact type.
         /// </summary>
-        public IDictionary<string, string> DeploymentTemplateFileUrls
+        public string Type
         {
-            get { return this._deploymentTemplateFileUrls; }
-            set { this._deploymentTemplateFileUrls = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
-        private string _uiDefinitionFileUrl;
+        private string _uri;
         
         /// <summary>
-        /// Optional. Gets or sets UI definition file Url.
+        /// Optional. Gets or sets artifact Uri.
         /// </summary>
-        public string UiDefinitionFileUrl
+        public string Uri
         {
-            get { return this._uiDefinitionFileUrl; }
-            set { this._uiDefinitionFileUrl = value; }
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DefinitionTemplates class.
+        /// Initializes a new instance of the Artifact class.
         /// </summary>
-        public DefinitionTemplates()
+        public Artifact()
         {
-            this.DeploymentTemplateFileUrls = new LazyDictionary<string, string>();
         }
     }
 }
