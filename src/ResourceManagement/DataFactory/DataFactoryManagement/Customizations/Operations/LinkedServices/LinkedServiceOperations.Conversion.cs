@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data factory linkedServices.
     /// </summary>
-    public partial class LinkedServiceOperations 
+    internal partial class LinkedServiceOperations 
 #if ADF_INTERNAL
         : ITypeRegistrationOperations<LinkedService, LinkedServiceTypeProperties>
 #endif

@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// Operations for managing data factory ActivityTypes.
         /// </summary>
-        ActivityTypeOperations ActivityTypes { get; }
+        IActivityTypeOperations ActivityTypes { get; }
 
         /// <summary>
         /// Operations for managing data factory ComputeTypes.
         /// </summary>
-        ComputeTypeOperations ComputeTypes { get; }
+        IComputeTypeOperations ComputeTypes { get; }
 #endif
 
         /// <summary>
@@ -75,12 +75,12 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// Operations for managing data factory linkedServices.
         /// </summary>
-        LinkedServiceOperations LinkedServices { get; }
+        ILinkedServiceOperations LinkedServices { get; }
 
         /// <summary>
         /// Operations for managing pipelines.
         /// </summary>
-        PipelineOperations Pipelines { get; }
+        IPipelineOperations Pipelines { get; }
 
         /// <summary>
         /// Operations for managing pipeline runs.
@@ -90,6 +90,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// Operations for managing tables.
         /// </summary>
-        TableOperations Tables { get; }
+        ITableOperations Tables { get; }
     }
 }

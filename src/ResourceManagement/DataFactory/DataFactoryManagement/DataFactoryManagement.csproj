@@ -13,12 +13,24 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
+    <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\DataSliceRuns\IDataSliceRunOperations.cs" />
+    <Compile Include="Customizations\Operations\DataSlices\DataSliceOperations.cs" />
+    <Compile Include="Customizations\Operations\DataSlices\DataSliceOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\Gateways\GatewayOperations.cs" />
+    <Compile Include="Customizations\Operations\Gateways\GatewayOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\Gateways\IGatewayOperations.cs" />
     <Compile Include="Customizations\Operations\Hubs\HubOperations.cs" />
     <Compile Include="Customizations\Operations\Hubs\HubOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\Hubs\IHubOperations.cs" />
     <Compile Include="Customizations\Operations\PipelineRuns\IPipelineRunOperations.cs" />
     <Compile Include="Customizations\Operations\PipelineRuns\PipelineRunOperations.cs" />
     <Compile Include="Customizations\Operations\PipelineRuns\PipelineRunOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperations.cs" />
+    <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
+    <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Customizations\AdfResourceProperties.cs" />
     <Compile Include="Customizations\AdfTypeNameAttribute.cs" />

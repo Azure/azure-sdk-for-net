@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for registering activity types. 
     /// </summary>
-    public partial class PipelineOperations 
+    internal partial class PipelineOperations 
 #if ADF_INTERNAL
         : ITypeRegistrationOperations<Pipeline, ActivityTypeProperties>
 #endif

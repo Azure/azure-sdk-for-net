@@ -16,11 +16,9 @@
 using System;
 using System.Net.Http;
 using Hyak.Common;
-using Microsoft.Azure.Management.DataFactories.Core;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-
     /// <summary>
     /// Client for interacting with the Azure Data Factory service.
     /// </summary>
@@ -82,12 +80,12 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// Operations for managing data factory linkedServices.
         /// </summary>
-        public virtual LinkedServiceOperations LinkedServices { get; private set; }
+        public virtual ILinkedServiceOperations LinkedServices { get; private set; }
 
         /// <summary>
         /// Operations for managing pipelines.
         /// </summary>
-        public virtual PipelineOperations Pipelines { get; private set; }
+        public virtual IPipelineOperations Pipelines { get; private set; }
 
         /// <summary>
         /// Operations for managing pipeline runs.
@@ -97,7 +95,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// Operations for managing tables.
         /// </summary>
-        public virtual TableOperations Tables { get; private set; }
+        public virtual ITableOperations Tables { get; private set; }
 
         internal Core.DataFactoryManagementClient InternalClient { get; private set; }
 
@@ -259,10 +257,10 @@ namespace Microsoft.Azure.Management.DataFactories
             this.ActivityTypes = new ActivityTypeOperations(this);
             this.ComputeTypes = new ComputeTypeOperations(this);
 #endif
-            this.DataFactories = this.InternalClient.DataFactories;
-            this.DataSlices = this.InternalClient.DataSlices;
-            this.DataSliceRuns = this.InternalClient.DataSliceRuns;
-            this.Gateways = this.InternalClient.Gateways;
+            this.DataFactories = new DataFactoryOperations(this);
+            this.DataSlices = new DataSliceOperations(this);
+            this.DataSliceRuns = new DataSliceRunOperations(this);
+            this.Gateways = new GatewayOperations(this);
             this.Hubs = new HubOperations(this);
             this.LinkedServices = new LinkedServiceOperations(this);
             this.Pipelines = new PipelineOperations(this);

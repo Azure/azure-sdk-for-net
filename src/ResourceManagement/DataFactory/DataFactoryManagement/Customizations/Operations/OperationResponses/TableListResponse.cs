@@ -65,8 +65,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.Tables = internalResponse.Tables.Select(
-                    internalTable => client.Tables.Converter.ToWrapperType(internalTable))
-                    .ToList();
+                    internalTable => ((TableOperations)client.Tables).Converter.ToWrapperType(internalTable)).ToList();
         }
     }
 }

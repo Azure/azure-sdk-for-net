@@ -16,8 +16,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Common.Models;
+using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data factory linkedServices.
     /// </summary>
-    public partial class LinkedServiceOperations : IServiceOperations<DataFactoryManagementClient>, ILinkedServiceOperations
+    internal partial class LinkedServiceOperations : IServiceOperations<DataFactoryManagementClient>, ILinkedServiceOperations
     {
         public DataFactoryManagementClient Client { get; private set; }
 
@@ -215,11 +215,10 @@ namespace Microsoft.Azure.Management.DataFactories
             // Validate
             Ensure.IsNotNull(parameters, "parameters");
             Ensure.IsNotNull(parameters.LinkedService, "parameters.LinkedService");
-            this.Client.LinkedServices.ValidateObject(parameters.LinkedService);
+            this.ValidateObject(parameters.LinkedService);
 
             // Convert
-            Core.Models.LinkedService internalLinkedService =
-                this.Client.LinkedServices.Converter.ToCoreType(parameters.LinkedService);
+            Core.Models.LinkedService internalLinkedService = this.Converter.ToCoreType(parameters.LinkedService);
 
             return new Core.Models.LinkedServiceCreateOrUpdateParameters() { LinkedService = internalLinkedService };
         }

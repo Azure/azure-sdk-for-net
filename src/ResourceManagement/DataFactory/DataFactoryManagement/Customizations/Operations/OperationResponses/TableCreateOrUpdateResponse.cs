@@ -13,8 +13,6 @@
 // limitations under the License.
 //
 
-using Tresponse = Microsoft.Azure.Management.DataFactories.Core.Models.TableCreateOrUpdateResponse;
-
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -38,14 +36,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public Table Table { get; set; }
 
         internal TableCreateOrUpdateResponse(
-            Tresponse internalResponse,
+            Core.Models.TableCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Table, "internalResponse.Table");
 
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
-            this.Table = client.Tables.Converter.ToWrapperType(internalResponse.Table);
+            this.Table = ((TableOperations)client.Tables).Converter.ToWrapperType(internalResponse.Table);
             this.Location = internalResponse.Location;
             this.Status = internalResponse.Status;
         }

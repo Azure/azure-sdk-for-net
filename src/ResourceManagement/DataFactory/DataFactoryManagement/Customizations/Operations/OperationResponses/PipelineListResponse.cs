@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.Pipelines = internalResponse.Pipelines.Select(
-                    internalPipeline => client.Pipelines.Converter.ToWrapperType(internalPipeline))
+                    internalPipeline => ((PipelineOperations)client.Pipelines).Converter.ToWrapperType(internalPipeline))
                     .ToList();
         }
     }

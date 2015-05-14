@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing Tables.
     /// </summary>
-    public partial class TableOperations : IServiceOperations<DataFactoryManagementClient>, ITableOperations
+    internal partial class TableOperations : IServiceOperations<DataFactoryManagementClient>, ITableOperations
     {
         public DataFactoryManagementClient Client { get; private set; }
 
@@ -205,10 +205,10 @@ namespace Microsoft.Azure.Management.DataFactories
             // Validate
             Ensure.IsNotNull(parameters, "parameters");
             Ensure.IsNotNull(parameters.Table, "parameters.Table");
-            this.Client.Tables.ValidateObject(parameters.Table);
+            this.ValidateObject(parameters.Table);
 
             // Convert
-            Core.Models.Table internalTable = this.Client.Tables.Converter.ToCoreType(parameters.Table);
+            Core.Models.Table internalTable = this.Converter.ToCoreType(parameters.Table);
 
             return new Core.Models.TableCreateOrUpdateParameters() { Table = internalTable };
         }

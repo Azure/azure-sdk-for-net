@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing pipelines.
     /// </summary>
-    public partial class PipelineOperations : IServiceOperations<DataFactoryManagementClient>, IPipelineOperations
+    internal partial class PipelineOperations : IServiceOperations<DataFactoryManagementClient>, IPipelineOperations
     {
         public DataFactoryManagementClient Client { get; private set; }
 
@@ -251,11 +251,10 @@ namespace Microsoft.Azure.Management.DataFactories
             // Validate
             Ensure.IsNotNull(parameters, "parameters");
             Ensure.IsNotNull(parameters.Pipeline, "parameters.Pipeline");
-            this.Client.Pipelines.ValidateObject(parameters.Pipeline);
+            this.ValidateObject(parameters.Pipeline);
 
             // Convert
-            Core.Models.Pipeline internalPipeline =
-                this.Client.Pipelines.Converter.ToCoreType(parameters.Pipeline);
+            Core.Models.Pipeline internalPipeline = this.Converter.ToCoreType(parameters.Pipeline);
 
             return new Core.Models.PipelineCreateOrUpdateParameters() { Pipeline = internalPipeline };
         }

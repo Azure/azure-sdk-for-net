@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Ensure.IsNotNull(internalResponse.LinkedService, "internalResponse.LinkedService");
 
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
-            this.LinkedService = client.LinkedServices.Converter.ToWrapperType(internalResponse.LinkedService);
+            this.LinkedService =
+                ((LinkedServiceOperations)client.LinkedServices).Converter.ToWrapperType(internalResponse.LinkedService);
+
             this.Location = internalResponse.Location;
             this.Status = internalResponse.Status;
         }

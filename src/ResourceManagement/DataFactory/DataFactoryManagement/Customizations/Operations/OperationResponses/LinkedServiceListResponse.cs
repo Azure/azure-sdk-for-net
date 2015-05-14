@@ -63,7 +63,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.LinkedServices = internalResponse.LinkedServices.Select(
-                    internalLinkedService => client.LinkedServices.Converter.ToWrapperType(internalLinkedService))
+                    internalLinkedService =>
+                    ((LinkedServiceOperations)client.LinkedServices).Converter.ToWrapperType(internalLinkedService))
                     .ToList();
         }
     }

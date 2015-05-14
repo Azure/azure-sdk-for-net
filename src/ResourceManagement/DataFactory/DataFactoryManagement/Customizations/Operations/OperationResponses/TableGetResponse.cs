@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Ensure.IsNotNull(internalResponse.Table, "internalResponse.Table");
 
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
-            this.Table = client.Tables.Converter.ToWrapperType(internalResponse.Table);
+            this.Table = ((TableOperations)client.Tables).Converter.ToWrapperType(internalResponse.Table);
         }
     }
 }

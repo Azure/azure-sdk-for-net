@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for registering table types. 
     /// </summary>
-    public partial class TableOperations 
+    internal partial class TableOperations 
 #if ADF_INTERNAL
         : ITypeRegistrationOperations<Table, TableTypeProperties>
 #endif
