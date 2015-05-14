@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Gallery
             : base()
         {
             this._items = new ItemOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2015-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Gallery
             : base(httpClient)
         {
             this._items = new ItemOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2015-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
