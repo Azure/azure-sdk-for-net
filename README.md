@@ -3,36 +3,39 @@
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
-## Target Frameworks
+### Target Frameworks:
 
-- .NET Framework 4.0 and newer
-- .Net Portable Framework, using profile 102
-- Storage Libraries are available for Windows 8 for Windows Store development as well as Windows Phone 8
+    * .NET Framework 4.0 and newer.
+    * .NET Portable Framework, using profile 102
 
-### To Build
+### Prerequisites:
+    * Visual Studio 2013 RTM with update 2 at minimum
 
-#### Using Visual Studio
+### To build:
 
-- Have Visual Studio 2013 RTM with update 2 at minimum
-- Open any solution, and invoke "Build"
-- Most solution support 3 solution configurations, Net40, Net45, Portable. you can use "Configruation Manager"to switch and build. Most test projects only build for "net45", so to run them, switch to "net45"
+Using Visual Studio
 
-#### Using command line
-- Make "msbuild.exe" is at default path. The earliest step is to run the shortcut preinstalled by Visual Studio, such as "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat".
-- Switch to repository root, you should see a build file "build.proj"
-- Invoke related target for different activities
-  To build package: "msbuild build.proj /t:build;package /p:scope=ResourceManagement\Compute"
-  For all other flags, check out the top comment section inside "build.proj" 
+    * Open any solution, say, "src\ResourceManagement\Compute\Compute.sln".
+    * Invoke "build" command.
+    * Most solutions support 3 solution configurations, "Net40", "Net45", and "Portable". you can use "Configruation Manager" to switch and build.
 
-### To Run Tests
+Using command line
+    * Ensure "msbuild.exe" is under environment PATH. The earliest step is to run the shortcut pre-installed by Visual Studio, such as "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat".
+    * Switch to repository root, where the build file of "build.proj" stays.
+    * Invoke related target for different activities, such as build a nuget package for compute management.
+          msbuild build.proj /t:build;package /p:scope=ResourceManagement\Compute
+    * For all other supported flags, check out the top comment section inside "build.proj".
 
-#### Using Visual Studio
+### To run tests
 
-- Most test projects only build for "net45", so to run them, switch to "net45"
-- Build 
-- See the "Test Explorer" gets populated with tests. Go select and invoke 
+Using Visual Studio
 
-#### Using command line
-- Refer to "To Build" section to get envionment set up
-- Use "Test" target, such as "msbuild build.proj /t:test /p:scope=ResourceManagement\Compute". Likely, you need to build test proejct first, so invoke both "build;test" 
+    * Most test projects only build for "net45", so to run them, switch to solution configruation of "net45".
+    * Build.
+    * See the "Test Explorer" window gets populated with tests. Go select and invoke.
+
+Using command line
+    * Refer to "To build" section to get command windows set up.
+    * Use "Test" target. Likely, you need to build test project first, so put "build" target as well.
+        msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute".
 
