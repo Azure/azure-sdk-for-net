@@ -28,7 +28,7 @@ Using command line:
   - For other supported flags, check out the top comment section inside "build.proj".
    
 
-### To run tests
+### To run the tests:
 
 Using Visual Studio:
 
