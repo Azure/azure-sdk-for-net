@@ -40,13 +40,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string ProvisioningState { get; internal set; }
 
-        internal LinkedServiceProperties(LinkedServiceTypeProperties typeProperties, string typeName = null)
+        public LinkedServiceProperties(LinkedServiceTypeProperties typeProperties)
+            : base(typeProperties)
+        {
+        }
+
+        public LinkedServiceProperties(GenericLinkedService typeProperties, string typeName)
             : base(typeProperties, typeName)
         {
         }
 
-        public LinkedServiceProperties(LinkedServiceTypeProperties typeProperties)
-            : base(typeProperties)
+        internal LinkedServiceProperties(LinkedServiceTypeProperties typeProperties, string typeName = null)
+            : base(typeProperties, typeName)
         {
         }
 
