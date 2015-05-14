@@ -55,7 +55,7 @@
     <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
     <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
-    <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
+    <LibraryNugetPackageFolder>$(LibraryRoot)packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
     <AuthenticationSolution>AzureAuthentication.sln</AuthenticationSolution>
@@ -131,7 +131,7 @@
      </PropertyGroup>
     <ItemGroup>
       <!--TODO: improve inclue the logic to be more explicit -->
-      <TestDlls Include="@(LibrariesToBuild -> '.\src\**\*%(Filename).Tests\bin\net45-$(Configuration)\*%(Filename).Tests.dll')" Condition=" '$(Scope)' == 'All' " />
+      <TestDlls Include=".\src\**\*.Test\bin\net45-$(Configuration)\*.Test.dll" Condition=" '$(Scope)' == 'All' " />
       <TestDlls Include=".\src\$(Scope)\*.Tests\bin\net45-$(Configuration)\*$(TestPartialName)*.Tests.dll" 
                 Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
@@ -227,10 +227,23 @@
 
   <Target Name="RestoreNugetPackages">
     <PropertyGroup>
-      <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
+      <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
+      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
     </PropertyGroup>
+    
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+    <WriteLinesToFile
+      File="$(NuGetRestoreConfigFile)"
+      Lines="&lt;configuration&gt;&lt;/configuration&gt;"
+      Overwrite="true"
+      Encoding="Unicode"/>
+
+    <Exec Command="$(NuGetCommand) sources add -Name LocalFeed -Source &quot;$(MSBuildProjectDirectory)\tools\LocalFeed&quot; $(NuGetRestoreConfigSwitch)"/>
+    
     <Exec Command="$(NuGetCommand) restore %(LibrariesToBuild.Identity) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
+    
+    <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
 
   <!--Smoke test the packages under the output dir-->
