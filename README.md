@@ -23,9 +23,9 @@ Using command line:
 
   - Ensure "msbuild.exe" is under environment PATH. The earliest step is to run the shortcut pre-installed by Visual Studio.
         *C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat*
-  - Run "msbuild.exe" with the "(repository-root)\build.proj". For example, to build a nuget package for compute management.
-          *msbuild build.proj /t:build;package /p:scope=ResourceManagement\Compute*
-  - For all other supported flags, check out the top comment section inside "build.proj".
+  - Under repository root, there is a "build.proj", which you can build with. For example, to build a nuget package for compute management, run:
+        *msbuild build.proj /t:build;package /p:scope=ResourceManagement\Compute*
+  - For other supported flags, check out the top comment section inside "build.proj".
    
 
 ### To run tests
@@ -38,6 +38,6 @@ Using Visual Studio:
 
 Using command line:
 
-  - Refer to the "To build" section to get command windows set up.
-  - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put  in "build" target as well. 
-        msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute".
+  - Refer to the "To build" section to get the command window set up.
+  - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
+        *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
