@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Azure;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Rest.Serialization
@@ -17,6 +19,8 @@ namespace Microsoft.Rest.Serialization
     /// <typeparam name="T">The base type.</typeparam>
     public class ResourceJsonConverter : JsonConverter
     {
+        private const string PropertyNode = "property";
+
         /// <summary>
         /// Returns true if the object being serialized is assignable from the base type. False otherwise.
         /// </summary>
@@ -38,7 +42,26 @@ namespace Microsoft.Rest.Serialization
         public override object ReadJson(JsonReader reader,
             Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new NotSupportedException();
+            if (reader == null)
+            {
+                throw new ArgumentNullException("reader");
+            }
+            if (objectType == null)
+            {
+                throw new ArgumentNullException("objectType");
+            }
+            if (serializer == null)
+            {
+                throw new ArgumentNullException("serializer");
+            }
+
+            JsonSerializer newSerializer = GetSerializerWithoutCurrentConverter(serializer);
+
+            JObject resourceJObject = JObject.Load(reader);
+            Resource resource = resourceJObject.ToObject<Resource>();
+            JObject propertiesJObject = resourceJObject[PropertyNode] as JObject;
+            newSerializer.Populate(propertiesJObject.CreateReader(), resource);
+            return resource;
         }
 
         /// <summary>
@@ -64,12 +87,16 @@ namespace Microsoft.Rest.Serialization
                 throw new ArgumentNullException("serializer");
             }
 
-            // Getting contract to determine property bindings
-            var contract = (JsonObjectContract)serializer.ContractResolver.ResolveContract(value.GetType());
+            JsonSerializer newSerializer = GetSerializerWithoutCurrentConverter(serializer);
 
-            PropertyInfo[] properties = value.GetType().GetProperties();
-            // Getting all properties with public get method
-            foreach (var propertyInfo in properties.Where(p => p.GetGetMethod() != null))
+            JObject rootObject = JObject.FromObject(value, newSerializer);
+            JObject propertyObject = new JObject();
+            rootObject.Add(PropertyNode, propertyObject);
+
+            PropertyInfo[] propertyInfos = value.GetType().GetProperties()
+                .Where(p => typeof(Resource).GetProperty(p.Name) == null).ToArray();
+            // Getting all properties that do NOT exist in the Resource object
+            foreach (var propertyInfo in propertyInfos.Where(p => p.GetGetMethod() != null))
             {
                 // Get property name via reflection or from JsonProperty attribute
                 string propertyName = propertyInfo.Name;
@@ -78,27 +105,37 @@ namespace Microsoft.Rest.Serialization
                     propertyName = propertyInfo.GetCustomAttribute<JsonPropertyAttribute>().PropertyName;
                 }
 
-                // Skipping properties with null value if NullValueHandling is set to Ignore
-                if (serializer.NullValueHandling == NullValueHandling.Ignore &&
-                    propertyInfo.GetValue(value, null) == null)
+                if (rootObject.Property(propertyName) != null)
                 {
-                    continue;
-                }
-
-                // Skipping properties with JsonIgnore attribute, non-readable, and 
-                // ShouldSerialize returning false when set
-                if (!contract.Properties[propertyName].Ignored &&
-                    contract.Properties[propertyName].Readable &&
-                    (contract.Properties[propertyName].ShouldSerialize == null ||
-                    contract.Properties[propertyName].ShouldSerialize(propertyInfo.GetValue(value, null))))
-                {
-                    writer.WritePropertyName(propertyName);
-                    serializer.Serialize(
-                        writer,
-                        propertyInfo.GetValue(value, null));
+                    propertyObject.Add(rootObject.Property(propertyName));
+                    rootObject.Property(propertyName).Remove();
                 }
             }
-            writer.WriteEndObject();
+
+            rootObject.WriteTo(writer);
+        }
+
+        /// <summary>
+        /// Gets a JsonSerializer without current converter.
+        /// </summary>
+        /// <param name="serializer">JsonSerializer</param>
+        /// <returns></returns>
+        protected JsonSerializer GetSerializerWithoutCurrentConverter(JsonSerializer serializer)
+        {
+            JsonSerializer newSerializer = new JsonSerializer();
+            PropertyInfo[] properties = typeof(JsonSerializer).GetProperties();
+            foreach (var property in properties.Where(p => p.GetSetMethod() != null))
+            {
+                property.SetValue(newSerializer, property.GetValue(serializer, null), null);
+            }
+            foreach (var converter in serializer.Converters)
+            {
+                if (converter != this)
+                {
+                    newSerializer.Converters.Add(converter);
+                }
+            }
+            return newSerializer;
         }
     }
 #if !NET45

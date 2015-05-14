@@ -41,7 +41,31 @@ namespace Microsoft.Azure
         /// <summary>
         /// Optional. Gets or sets the Id of the resource.
         /// </summary>
-        [JsonProperty("size")]
+        [JsonProperty("id")]
         public string ChildId { get; set; }
+    }
+
+    /// <summary>
+    /// Information for resource.
+    /// </summary>
+    public partial class SampleResourceChild1 : SampleResourceChild
+    {
+        /// <summary>
+        /// Optional. Gets or sets the Id of the resource.
+        /// </summary>
+        [JsonProperty("name1")]
+        public string ChildName1 { get; set; }
+    }
+
+    /// <summary>
+    /// Information for resource.
+    /// </summary>
+    public partial class SampleResourceChild2 : SampleResourceChild
+    {
+        /// <summary>
+        /// Optional. Gets or sets the Id of the resource.
+        /// </summary>
+        [JsonProperty("name2")]
+        public string ChildName2 { get; set; }
     }
 }

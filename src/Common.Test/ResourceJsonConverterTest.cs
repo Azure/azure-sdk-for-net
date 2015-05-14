@@ -16,6 +16,44 @@ namespace Microsoft.Azure.Common.Test
             var sampleResource = new SampleResource()
             {
                 Size = "3",
+                Child = new SampleResourceChild1()
+                {
+                    ChildId = "child",
+                    ChildName1 = "name1"
+                },
+                Location = "EastUS"
+            };
+            sampleResource.Tags = new Dictionary<string, string>();
+            sampleResource.Tags["tag1"] = "value1";
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            serializeSettings.Converters.Add(new ResourceJsonConverter());
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SampleResourceChild>("dType"));
+            string json = JsonConvert.SerializeObject(sampleResource, serializeSettings);
+            
+            var deserializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            deserializeSettings.Converters.Add(new ResourceJsonConverter());
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SampleResourceChild>("dType"));
+            var deserializedResource = JsonConvert.DeserializeObject<SampleResource>(json, deserializeSettings);
+        }
+
+        [Fact]
+        public void TestResourceSerializationWithPolymorphism()
+        {
+            var sampleResource = new SampleResource()
+            {
+                Size = "3",
                 Child = new SampleResourceChild()
                 {
                     ChildId = "child"
@@ -23,8 +61,14 @@ namespace Microsoft.Azure.Common.Test
                 Location = "EastUS"
             };
             sampleResource.Tags["tag1"] = "value1";
-            var serializeSettings = new JsonSerializerSettings();
-            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Resource>("dType"));
             serializeSettings.Converters.Add(new ResourceJsonConverter());
             string json = JsonConvert.SerializeObject(sampleResource, Formatting.Indented);
         }
