@@ -772,6 +772,10 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
                     
                     if (shouldTrace)
                     {

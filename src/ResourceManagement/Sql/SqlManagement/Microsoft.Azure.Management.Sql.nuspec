@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.Sql</id>
-    <title>Microsoft Azure SQL Database Management Library</title>
+    <title>Microsoft Azure SQL Management Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
-    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides Microsoft Azure SQL Database management operations for Microsoft Azure.</summary>
-    <description>Provides Microsoft Azure SQL Database management operations for Microsoft Azure</description>
+    <summary>Provides Microsoft Azure SQL management operations for Microsoft Azure.</summary>
+    <description>Provides Microsoft Azure SQL management operations for Microsoft Azure</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure sql database "SQL database" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
