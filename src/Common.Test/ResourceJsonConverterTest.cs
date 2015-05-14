@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Common.Test
             deserializeSettings.Converters.Add(new ResourceJsonConverter());
             deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SampleResourceChild>("dType"));
             var deserializedResource = JsonConvert.DeserializeObject<SampleResource>(json, deserializeSettings);
+            var jsonoverProcessed = JsonConvert.SerializeObject(deserializedResource, serializeSettings);
+
+            Assert.Equal(json, jsonoverProcessed);
         }
 
         [Fact]

@@ -58,9 +58,10 @@ namespace Microsoft.Rest.Serialization
             JsonSerializer newSerializer = GetSerializerWithoutCurrentConverter(serializer);
 
             JObject resourceJObject = JObject.Load(reader);
-            Resource resource = resourceJObject.ToObject<Resource>();
+            var resource = resourceJObject.ToObject(objectType, newSerializer);
             JObject propertiesJObject = resourceJObject[PropertyNode] as JObject;
             newSerializer.Populate(propertiesJObject.CreateReader(), resource);
+            
             return resource;
         }
 
