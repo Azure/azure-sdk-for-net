@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5CF6CC47-222C-4510-9123-1F9CC35B6E50}</ProjectGuid>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.DataFactories</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.DataFactories</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>0be9922d</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Customizations\AdfResourceProperties.cs" />
+    <Compile Include="Customizations\AdfTypeNameAttribute.cs" />
+    <Compile Include="Customizations\Conversion\ActivityTypeConverter.cs" />
+    <Compile Include="Customizations\Conversion\AdfRegisteredTypeConverter.cs" />
+    <Compile Include="Customizations\Conversion\ComputeTypeConverter.cs" />
+    <Compile Include="Customizations\Conversion\ConversionCommon.cs" />
+    <Compile Include="Customizations\Conversion\CoreRegistrationConverter.cs" />
+    <Compile Include="Customizations\Conversion\CoreTypeConverter.cs" />
+    <Compile Include="Customizations\Conversion\ITypeRegistrationOperations.cs" />
+    <Compile Include="Customizations\Conversion\JObjectExtensions.cs" />
+    <Compile Include="Customizations\Conversion\LinkedServiceConverter.cs" />
+    <Compile Include="Customizations\Conversion\PipelineConverter.cs" />
+    <Compile Include="Customizations\Conversion\PolymorphicTypeConverter.cs" />
+    <Compile Include="Customizations\Conversion\TableConverter.cs" />
+    <Compile Include="Customizations\Conversion\TypePropertiesConverter.cs" />
+    <Compile Include="Customizations\DataFactoryConstants.cs" />
+    <Compile Include="Customizations\DataFactoryManagementClient.cs" />
+    <Compile Include="Customizations\DataFactoryUtilities.cs" />
+    <Compile Include="Customizations\Ensure.cs" />
+    <Compile Include="Customizations\IDataFactoryManagementClient.cs" />
+    <Compile Include="Customizations\JsonConverters.cs" />
+    <Compile Include="Customizations\Models\Activities\Activity.cs" />
+    <Compile Include="Customizations\Models\Activities\ActivityTypeProperties.cs" />
+    <Compile Include="Customizations\Models\Activities\AzureMLBatchScoringActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\CopyActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\CopyLocation.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\AzureQueueSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\AzureSearchIndexSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\AzureTableSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\BlobSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\CopySink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\DocumentDbCollectionSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\OracleSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\PropertySink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\ServiceBusSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\SqlSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\StoredProcedureParameter.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\StoredProcedureParameterType.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\AzureTableSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\BlobSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\CopySource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\DocumentDbCollectionSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\FileSystemSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\MdsSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\OracleSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\RelationalSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\SqlSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopyTranslators\CopyTranslator.cs" />
+    <Compile Include="Customizations\Models\Activities\CopyTranslators\DataInsightTranslator.cs" />
+    <Compile Include="Customizations\Models\Activities\CopyTranslators\TabularTranslator.cs" />
+    <Compile Include="Customizations\Models\Activities\CustomActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\DotNetActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\GenericActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\HDInsightActivityBase.cs" />
+    <Compile Include="Customizations\Models\Activities\HDInsightHiveActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\HDInsightMapReduceActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\HDInsightPigActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\HDInsightStreamingActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\NullActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\StoredProcedureActivity.cs" />
+    <Compile Include="Customizations\Models\AdfRequiredAttribute.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureBatchLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureMLLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureSearchIndexLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureServiceBusLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureSqlLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureStorageLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\CustomLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\DocumentDbLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\GenericLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\HCatalogProperties.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\HDInsightBYOCLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\HDInsightOnDemandLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\LinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\LinkedServiceProperties.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\LinkedServiceTypeProperties.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\MdsLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesDb2LinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesFileSystemLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesMySqlLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesOracleLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesPostgreSqlLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesSqlLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesSybaseLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesTeradataLinkedService.cs" />
+    <Compile Include="Customizations\Models\Pipelines\Pipeline.cs" />
+    <Compile Include="Customizations\Models\Pipelines\PipelineProperties.cs" />
+    <Compile Include="Customizations\Models\Registration\ActivityType.cs" />
+    <Compile Include="Customizations\Models\Registration\ActivityTypeProperties.cs" />
+    <Compile Include="Customizations\Models\Registration\AdfSchemaProperty.cs" />
+    <Compile Include="Customizations\Models\Registration\AdfSchemaPropertyType.cs" />
+    <Compile Include="Customizations\Models\Registration\AdfTypeSchema.cs" />
+    <Compile Include="Customizations\Models\Registration\ComputeType.cs" />
+    <Compile Include="Customizations\Models\Registration\ComputeTypeProperties.cs" />
+    <Compile Include="Customizations\Models\Registration\TypeProperties.cs" />
+    <Compile Include="Customizations\Models\Tables\AzureBlobLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\AzureQueueLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\AzureSearchIndexLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\AzureSqlTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\AzureTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\CustomTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\DocumentDbCollectionLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\GenericTable.cs" />
+    <Compile Include="Customizations\Models\Tables\MdsTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\OnPremisesFileSystemLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\OnPremisesOracleTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\OnPremisesSqlServerTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\Partitions\DateTimePartitionValue.cs" />
+    <Compile Include="Customizations\Models\Tables\Partitions\Partition.cs" />
+    <Compile Include="Customizations\Models\Tables\Partitions\PartitionColumn.cs" />
+    <Compile Include="Customizations\Models\Tables\Partitions\PartitionValue.cs" />
+    <Compile Include="Customizations\Models\Tables\RelationalTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\StorageFormats\AvroFormat.cs" />
+    <Compile Include="Customizations\Models\Tables\StorageFormats\BondFormat.cs" />
+    <Compile Include="Customizations\Models\Tables\StorageFormats\JsonFormat.cs" />
+    <Compile Include="Customizations\Models\Tables\StorageFormats\StorageFormat.cs" />
+    <Compile Include="Customizations\Models\Tables\StorageFormats\TextFormat.cs" />
+    <Compile Include="Customizations\Models\Tables\Table.cs" />
+    <Compile Include="Customizations\Models\Tables\TableProperties.cs" />
+    <Compile Include="Customizations\Models\Tables\TableTypeProperties.cs" />
+    <Compile Include="Customizations\Models\TypeProperties.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeGetParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeListParameters.cs" />
+    <Compile Include="Customizations\Operations\ActivityTypes\ActivityTypeOperations.cs" />
+    <Compile Include="Customizations\Operations\ActivityTypes\ActivityTypeOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\ActivityTypes\IActivityTypeOperations.cs" />
+    <Compile Include="Customizations\Operations\ComputeTypes\ComputeTypeOperations.cs" />
+    <Compile Include="Customizations\Operations\ComputeTypes\ComputeTypeOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\ComputeTypes\IComputeTypeOperations.cs" />
+    <Compile Include="Customizations\Operations\LinkedServices\ILinkedServiceOperations.cs" />
+    <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.Conversion.cs" />
+    <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.cs" />
+    <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeCreateOrUpdateParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeListParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeGetParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\ComputeTypeCreateOrUpdateParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\LinkedServiceCreateOrUpdateParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\LinkedServiceCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\PipelineCreateOrUpdateParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\PipelineCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\TableCreateOrUpdateParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationParameters\TableCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\ActivityTypeCreateOrUpdateResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\ActivityTypeGetResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\ActivityTypeListResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\ComputeTypeCreateOrUpdateResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\ComputeTypeGetResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\ComputeTypeListResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\LinkedServiceCreateOrUpdateResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\LinkedServiceGetResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\LinkedServiceListResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\PipelineCreateOrUpdateResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\PipelineGetResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\PipelineListResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\TableCreateOrUpdateResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\TableGetResponse.cs" />
+    <Compile Include="Customizations\Operations\OperationResponses\TableListResponse.cs" />
+    <Compile Include="Customizations\Operations\Pipelines\IPipelineOperations.cs" />
+    <Compile Include="Customizations\Operations\Pipelines\PipelineOperations.Conversion.cs" />
+    <Compile Include="Customizations\Operations\Pipelines\PipelineOperations.cs" />
+    <Compile Include="Customizations\Operations\Pipelines\PipelineOperationsExtensions.cs" />
+    <Compile Include="Customizations\Operations\Tables\ITableOperations.cs" />
+    <Compile Include="Customizations\Operations\Tables\TableOperations.Conversion.cs" />
+    <Compile Include="Customizations\Operations\Tables\TableOperations.cs" />
+    <Compile Include="Customizations\Operations\Tables\TableOperationsExtensions.cs" />
+    <Compile Include="Customizations\DataFactoryManagementClient.Customization.cs" />
+    <Compile Include="Generated\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.DataFactories.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Microsoft.Azure.Management.DataFactories.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.0.4\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}</ProjectGuid>
+    <RootNamespace>KeyVault.Tests</RootNamespace>
+    <AssemblyName>KeyVault.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="KeyVaultOperationsTest.cs" />
+    <Compile Include="KeyVaultTestFixture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TestConfigurationManager.cs" />
+    <Compile Include="TestHttpMessageHandler.cs" />
+    <Compile Include="TestKeyVaultCredential.cs" />
+    <Compile Include="WebKeySerializationTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultBackupRestoreTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultCreateGetDeleteKeyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultCreateHsmKeyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultEncryptDecryptRsa15Test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultEncryptDecryptRsaOaepTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultEncryptDecryptWithDifferentKeyVersions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultEncryptDecryptWithOlderKeyVersion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultGetSecretVersionTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultImportSoftKeyFromCertificateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultImportSoftKeyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultListKeysTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultListKeyVersionsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultListSecretsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultListSecretVersionsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultSecretCreateUpdateDeleteTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultSignVerifyRS256Test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultSignVerifyRS384Test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultSignVerifyRS512Test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultTestSecretExtendedAttributes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultUpdateKeyAttributesTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultUpdateKeyAttributesWithNoChangeTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultWrapUnwrapRsa15Test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\KeyVault.Tests.KeyVaultOperationsTest\KeyVaultWrapUnwrapRsaOaepTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Key.byok" />
+    <None Include="Resources\localhost.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.Azure.Graph.RBAC">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Graph.RBAC.1.7.0-preview\lib\net40\Microsoft.Azure.Graph.RBAC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ResourceManagement\KeyVaultManagement\KeyVaultManagement\KeyVaultManagement.csproj">
+      <Project>{92ade435-b835-447d-8b5b-1f4a52f8df39}</Project>
+      <Name>KeyVaultManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ResourceManagement\Resource\ResourceManagement\ResourceManagement.csproj">
+      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
+      <Name>ResourceManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault\KeyVault.csproj">
+      <Project>{bec7dbf7-a3b1-4088-bdff-c1c2a0fd6f56}</Project>
+      <Name>KeyVault</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

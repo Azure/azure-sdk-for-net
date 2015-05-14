@@ -5,18 +5,17 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <Import Project="$(LibrarySourceFolder)\Common\*.nuget.proj" 
-          Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Configuration\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Common.Authentication\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Authentication' "/>
-  <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj"
-          Condition=" '$(Scope)' == 'All' "/>
-  <Import Project="$(LibrarySourceFolder)\$(Scope)\*.nuget.proj" 
-          Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' and '$(Scope)' != 'Authentication' " />
-  <Import Project="$(LibrarySourceFolder)\KeyVault\*\*.nuget.proj"
-         Condition=" '$(Scope)' == 'All' "/>		 
+  <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*$(PackageName).nuget.proj"
+          Condition=" '$(Scope)' != 'all' "/>
+
+  <Import Project="$(LibrarySourceFolder)\ResourceManagement\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\ServiceManagement\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Common\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>

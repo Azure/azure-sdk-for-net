@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8B6B5914-EB02-4EDE-8908-63070EACE557}</ProjectGuid>
+    <RootNamespace>Authorization.Tests</RootNamespace>
+    <AssemblyName>Authorization.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Graph\GraphManagementClient.cs" />
+    <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\BasicTests.cs" />
+    <Compile Include="Tests\Permissions.ScenarioTests.cs" />
+    <Compile Include="Tests\TestFixtureData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentAtScopeAndAboveTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentByIdTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListByFilterTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListForScopeTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentsCreateDeleteTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentsListGetTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsByIdTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsListGetTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.PermissionsTests\GetNonExistentResourceGroupPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.PermissionsTests\GetNonExistentResourcePermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.PermissionsTests\GetResourceGroupPermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.PermissionsTests\GetResourcePermissions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Authorization.Tests.TestExecutionContext\.ctor.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Resources\Resources.Tests\Resources.Tests.csproj">
+      <Project>{be9d7270-27cb-45eb-bd26-fea68087e835}</Project>
+      <Name>Resources.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
+      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
+      <Name>ResourceManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authorization\Authorization.csproj">
+      <Project>{896e03e5-5357-4753-8c78-621336c28aa8}</Project>
+      <Name>Authorization</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,912 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/credentials?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvY3JlZGVudGlhbHM/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/credentials?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4c3c1dcb2a22cc448dadd4fcc1f827c1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:11 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3M/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "88d0deaa0b57cf9ebd569c9130cd63d2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:12 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzP2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "076ab87c9f89cf22aa56b7b9ba9e0554"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:13 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/variables?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvdmFyaWFibGVzP2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/variables?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8452806fe9f6cfd8b61196ca7194bee3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:14 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"runbookType\": \"Script\",\r\n    \"draft\": {\r\n      \"inEdit\": false,\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\"\r\n    }\r\n  },\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "313"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635644587760800000\\\"\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"logVerbose\": false,\r\n    \"logProgress\": false,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-12T11:06:16.08-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:16.08-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-location": [
+          "https://oaasgatewaycurrent.cloudapp.net/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08"
+        ],
+        "ocp-location": [
+          "https://oaasgatewaycurrent.cloudapp.net/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3b9abbfa2244c6e292802d9dd4fb7158"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:15 GMT"
+        ],
+        "ETag": [
+          "\"635644587760800000\""
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "Workflow TestFasterWorkflow {\r\n                get-date\r\n            }",
+      "RequestHeaders": {
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Content-Length": [
+          "70"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "ocp-automation-operationresultid": [
+          "eb49566d-4e6d-45ec-9e74-ed094a4fe532,eb49566d-4e6d-45ec-9e74-ed094a4fe532"
+        ],
+        "x-ms-location": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/eb49566d-4e6d-45ec-9e74-ed094a4fe532?api-version=2014-12-08"
+        ],
+        "ocp-location": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/eb49566d-4e6d-45ec-9e74-ed094a4fe532?api-version=2014-12-08"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0fd45fedf779c061aa5b919077c1d6e0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:16 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "Workflow TestFasterWorkflow {\r\n                get-date\r\n                start-sleep -s 10\r\n            }",
+      "RequestHeaders": {
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Content-Length": [
+          "105"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "ocp-automation-operationresultid": [
+          "da0a0239-7af3-405c-b154-3b02efb7eedb,da0a0239-7af3-405c-b154-3b02efb7eedb"
+        ],
+        "x-ms-location": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/da0a0239-7af3-405c-b154-3b02efb7eedb?api-version=2014-12-08"
+        ],
+        "ocp-location": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content/operationResults/da0a0239-7af3-405c-b154-3b02efb7eedb?api-version=2014-12-08"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "55f3a557b10dca58bd05ee179a548329"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:25 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow\",\r\n  \"location\": \"East US\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635644587760800000\\\"\",\r\n  \"properties\": {\r\n    \"runbookType\": \"Script\",\r\n    \"description\": null,\r\n    \"logProgress\": false,\r\n    \"logVerbose\": false,\r\n    \"creationTime\": \"2015-04-12T11:06:16.08-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:16.08-07:00\",\r\n    \"state\": \"New\",\r\n    \"jobCount\": 0,\r\n    \"parameters\": {},\r\n    \"serviceManagementTags\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "585"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f913a08c2e3ac44bbd4438a54a571a82"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:18 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow\",\r\n  \"location\": \"East US\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635644587806600000\\\"\",\r\n  \"properties\": {\r\n    \"runbookType\": \"Script\",\r\n    \"description\": null,\r\n    \"logProgress\": false,\r\n    \"logVerbose\": false,\r\n    \"creationTime\": \"2015-04-12T11:06:16.08-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:20.66-07:00\",\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"parameters\": {},\r\n    \"serviceManagementTags\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "591"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "53b3b5b6f3bdcb1c9cdd85f10cac52d2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:21 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow\",\r\n  \"location\": \"East US\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635644587834330000\\\"\",\r\n  \"properties\": {\r\n    \"runbookType\": \"Script\",\r\n    \"description\": \"description of runbook\",\r\n    \"logProgress\": true,\r\n    \"logVerbose\": false,\r\n    \"creationTime\": \"2015-04-12T11:06:16.08-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:23.433-07:00\",\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"parameters\": {},\r\n    \"serviceManagementTags\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "611"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "69b7dc7d66f8c221ac0b5a9aac717234"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:24 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">{\"code\":\"NotFound\",\"message\":\"Runbook not found.\"}</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "127"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/publish?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L3B1Ymxpc2g/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/publish?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "ocp-automation-operationresultid": [
+          "439eb40f-f3f9-4029-875e-18f60df8c96a,439eb40f-f3f9-4029-875e-18f60df8c96a"
+        ],
+        "x-ms-location": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/439eb40f-f3f9-4029-875e-18f60df8c96a?api-version=2014-12-08"
+        ],
+        "ocp-location": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/publish/operationResults/439eb40f-f3f9-4029-875e-18f60df8c96a?api-version=2014-12-08"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "457cd600d2dbcefe970421d455bfeec7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:20 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true\r\n  },\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "173"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow\",\r\n  \"name\": \"TestFasterWorkflow\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccount/Runbook\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"etag\": \"\\\"635644587834330000\\\"\",\r\n  \"properties\": {\r\n    \"description\": \"description of runbook\",\r\n    \"logVerbose\": false,\r\n    \"logProgress\": true,\r\n    \"runbookType\": \"Script\",\r\n    \"parameters\": {},\r\n    \"state\": \"Published\",\r\n    \"jobCount\": 0,\r\n    \"provisioningState\": null,\r\n    \"serviceManagementTags\": null,\r\n    \"creationTime\": \"2015-04-12T11:06:16.08-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:23.433-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "658"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3ebe9f262864c746b13ed5d8bc730b78"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:23 GMT"
+        ],
+        "ETag": [
+          "\"635644587834330000\""
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow/draft/content?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93L2RyYWZ0L2NvbnRlbnQ/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "Workflow TestFasterWorkflow {\r\n                get-date\r\n                start-sleep -s 10\r\n            }",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "105"
+        ],
+        "Content-Type": [
+          "text/powershell"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e27836559f0acb00b1e63fad89a6fcf0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:27 GMT"
+        ],
+        "ETag": [
+          "\"635644587864170000\""
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks/TestFasterWorkflow?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3MvVGVzdEZhc3RlcldvcmtmbG93P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a8aeee8276f2c28ea879b6b79a6c1579"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:28 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "2310a662-9154-4254-a8e1-34286f3bf56a"
+  }
+}

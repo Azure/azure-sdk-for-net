@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"DnsServers\": [],\r\n    \"GatewayIp\": null,\r\n    \"GatewaySubnet\": \"192.168.0.0/28\",\r\n    \"GatewayType\": 0,\r\n    \"LocalAddressSpaces\": [],\r\n    \"Name\": \"cloudvnet\",\r\n    \"Region\": \"West US\",\r\n    \"ServiceName\": \"0ed47204-7cdc-45d4-b9fa-08cee693ad28\",\r\n    \"SharedKey\": null,\r\n    \"State\": 3,\r\n    \"StateInfo\": null,\r\n    \"UpgradeInProgress\": false,\r\n    \"VnetAddressSpaces\": [\r\n      \"192.168.0.0/22\"\r\n    ],\r\n    \"VpnAddress\": null\r\n  },\r\n  {\r\n    \"DnsServers\": [\r\n      \"10.0.0.1\"\r\n    ],\r\n    \"GatewayIp\": \"104.45.224.178\",\r\n    \"GatewaySubnet\": \"172.16.0.0/28\",\r\n    \"GatewayType\": 0,\r\n    \"LocalAddressSpaces\": [\r\n      \"11.0.0.0/16\"\r\n    ],\r\n    \"Name\": \"hkutvnet1\",\r\n    \"Region\": \"West US\",\r\n    \"ServiceName\": \"4a4f1906-4b3e-4c81-a446-f167c28341d2\",\r\n    \"SharedKey\": null,\r\n    \"State\": 2,\r\n    \"StateInfo\": \"Successfully created a gateway for the following virtual network: hkutvnet1\",\r\n    \"UpgradeInProgress\": false,\r\n    \"VnetAddressSpaces\": [\r\n      \"172.16.0.0/16\"\r\n    ],\r\n    \"VpnAddress\": \"13.0.0.1\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "770"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "a0d36b546d2262b4afc781aa922aac67"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:32 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

@@ -1,0 +1,15 @@
+﻿{
+  "name": "outputtest",
+  "properties": {
+    "datasource": {
+      "type": "Microsoft.Sql/Server/Database",
+      "properties": {
+        "server": "$EncryptedStringForTesting",
+        "database": "$EncryptedStringForTesting",
+        "user": "$EncryptedStringForTesting",
+        "password": "$EncryptedStringForTesting",
+        "table": "StateInfo"
+      }
+    }
+  }
+}
