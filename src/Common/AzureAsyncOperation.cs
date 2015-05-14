@@ -61,25 +61,5 @@ namespace Microsoft.Azure
         /// </summary>
         public int RetryAfter { get; set; }
 
-        /// <summary>
-        /// Deserialize the object
-        /// </summary>
-        public virtual void DeserializeJson(JToken inputObject)
-        {
-            if (inputObject != null && inputObject.Type != JTokenType.Null)
-            {
-                JToken statusValue = inputObject["status"];
-                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                {
-                    this.Status = ((string)statusValue);
-                }
-                JToken errorValue = inputObject["error"];
-                if (errorValue != null && errorValue.Type != JTokenType.Null)
-                {
-                    this.Error = new CloudError();
-                    this.Error.DeserializeJson(errorValue);
-                }
-            }
-        }
-    }
+     }
 }

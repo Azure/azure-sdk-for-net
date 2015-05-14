@@ -12,7 +12,7 @@ namespace Microsoft.Azure
     /// <summary>
     /// Information for resource.
     /// </summary>
-    public partial class Resource
+    public abstract class Resource
     {
         /// <summary>
         /// Optional. Gets or sets the ID of the resource.
@@ -35,6 +35,7 @@ namespace Microsoft.Azure
         /// <summary>
         /// Optional. Gets or sets the provisioning state of the resource.
         /// </summary>
+        [JsonProperty("provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>

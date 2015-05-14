@@ -36,7 +36,7 @@ namespace Microsoft.Azure
     /// <summary>
     /// Information for resource.
     /// </summary>
-    public partial class SampleResourceChild
+    public abstract class SampleResourceChild
     {
         /// <summary>
         /// Optional. Gets or sets the Id of the resource.

@@ -49,10 +49,38 @@ namespace Microsoft.Azure.Management.Redis.Models
 
     public partial class RedisResource : Resource
     {
+        private string _hostName;
+
         /// <summary>
         /// Optional.
         /// </summary>
-        public RedisReadableProperties Properties { get; set; }
+        public string HostName
+        {
+            get { return this._hostName; }
+            set { this._hostName = value; }
+        }
+
+        private int? _port;
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? Port
+        {
+            get { return this._port; }
+            set { this._port = value; }
+        }
+
+        private int? _sslPort;
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? SslPort
+        {
+            get { return this._sslPort; }
+            set { this._sslPort = value; }
+        }
     }
 
     public partial class RedisProperties
@@ -448,7 +476,7 @@ namespace Microsoft.Azure.Management.Redis
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
-            SerializationSettings.Converters.Add(new ResourceJsonConverter());
+            DeserializationSettings.Converters.Add(new ResourceJsonConverter());
         }    
     }
 
