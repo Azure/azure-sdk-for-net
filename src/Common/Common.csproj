@@ -25,7 +25,8 @@
     <Compile Include="AzureClientLongRunningOperationExtensions.cs" />
     <Compile Include="CloudError.cs" />
     <Compile Include="CloudException.cs" />
-    <Compile Include="ResourceBase.cs" />
+    <Compile Include="Resource.cs" />
+    <Compile Include="ResourceJsonConverter.cs" />
     <Compile Include="TokenCloudCredentials.cs" />
     <Compile Include="SubscriptionCloudCredentials.cs" />
     <Compile Include="AzureOperationResponse.cs" />

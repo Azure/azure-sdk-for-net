@@ -5,7 +5,7 @@
     Microsoft.Azure.Common.Dependencies
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Common.Dependencies">
-      <PackageVersion>3.0.0</PackageVersion>
+      <PackageVersion>3.0.1</PackageVersion>
       <SkipSymbolSourcePackage>true</SkipSymbolSourcePackage>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>

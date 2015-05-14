@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         }
     }
 
-    public partial class RedisResource : ResourceBase
+    public partial class RedisResource : Resource
     {
         private RedisReadableProperties _properties;
 
