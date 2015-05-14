@@ -263,10 +263,10 @@ namespace Microsoft.Azure.Management.DataFactories
             this.DataSlices = this.InternalClient.DataSlices;
             this.DataSliceRuns = this.InternalClient.DataSliceRuns;
             this.Gateways = this.InternalClient.Gateways;
-            this.Hubs = this.InternalClient.Hubs;
+            this.Hubs = new HubOperations(this);
             this.LinkedServices = new LinkedServiceOperations(this);
             this.Pipelines = new PipelineOperations(this);
-            this.PipelineRuns = this.InternalClient.PipelineRuns;
+            this.PipelineRuns = new PipelineRunOperations(this);
             this.Tables = new TableOperations(this);
             this.HttpClient.Timeout = this.InternalClient.HttpClient.Timeout;
             this.Credentials = this.InternalClient.Credentials;
