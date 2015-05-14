@@ -52,13 +52,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public IList<ActivityOutput> Outputs { get; set; }
 
-        internal Activity(ActivityTypeProperties typeProperties, string typeName = null)
+        public Activity(ActivityTypeProperties typeProperties)
+            : base(typeProperties)
+        {
+        }
+
+        public Activity(GenericActivity typeProperties, string typeName)
             : base(typeProperties, typeName)
         {
         }
 
-        public Activity(ActivityTypeProperties typeProperties)
-            : base(typeProperties)
+        internal Activity(ActivityTypeProperties typeProperties, string typeName = null)
+            : base(typeProperties, typeName)
         {
         }
     }

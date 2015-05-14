@@ -13,6 +13,9 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -20,5 +23,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public sealed class CustomTableLocation : TableTypeProperties
     {
+        public CustomTableLocation()
+        {
+        }
+
+        public CustomTableLocation(IDictionary<string, JToken> serviceExtraProperties)
+        {
+            this.ServiceExtraProperties = serviceExtraProperties;
+        }
     }
 }
