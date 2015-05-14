@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             DataFactoryManagementClient client)
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
-            this.ComputeType = client.ComputeTypes.Converter.ToWrapperType(internalResponse.ComputeType);
+            this.ComputeType = ((ComputeTypeOperations)client.ComputeTypes).Converter.ToWrapperType(internalResponse.ComputeType);
         }
     }
 }

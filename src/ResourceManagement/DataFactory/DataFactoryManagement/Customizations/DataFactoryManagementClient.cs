@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <summary>
         /// Operations for managing data factory ActivityTypes.
         /// </summary>
-        public virtual ActivityTypeOperations ActivityTypes { get; private set; }
+        public virtual IActivityTypeOperations ActivityTypes { get; private set; }
         
         /// <summary>
         /// Operations for managing data factory ComputeTypes.
         /// </summary>
-        public virtual ComputeTypeOperations ComputeTypes { get; private set; }
+        public virtual IComputeTypeOperations ComputeTypes { get; private set; }
 #endif
 
         /// <summary>

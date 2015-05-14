@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.ActivityTypes = internalResponse.ActivityTypes.Select(
-                    internalActivityType => client.ActivityTypes.Converter.ToWrapperType(internalActivityType))
+                    internalActivityType => ((ActivityTypeOperations)client.ActivityTypes).Converter.ToWrapperType(internalActivityType))
                     .ToList();
         }
     }
