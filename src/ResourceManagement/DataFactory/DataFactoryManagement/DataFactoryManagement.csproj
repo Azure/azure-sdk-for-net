@@ -162,7 +162,7 @@
     <Compile Include="Customizations\Operations\ComputeTypes\ComputeTypeOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\ComputeTypes\IComputeTypeOperations.cs" />
     <Compile Include="Customizations\Operations\LinkedServices\ILinkedServiceOperations.cs" />
-    <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.Conversion.cs" />
+    <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.Registration.cs" />
     <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperations.cs" />
     <Compile Include="Customizations\Operations\LinkedServices\LinkedServiceOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\OperationParameters\ActivityTypeCreateOrUpdateWithRawJsonContentParameters.cs" />
@@ -193,11 +193,11 @@
     <Compile Include="Customizations\Operations\OperationResponses\TableGetResponse.cs" />
     <Compile Include="Customizations\Operations\OperationResponses\TableListResponse.cs" />
     <Compile Include="Customizations\Operations\Pipelines\IPipelineOperations.cs" />
-    <Compile Include="Customizations\Operations\Pipelines\PipelineOperations.Conversion.cs" />
+    <Compile Include="Customizations\Operations\Pipelines\PipelineOperations.Registration.cs" />
     <Compile Include="Customizations\Operations\Pipelines\PipelineOperations.cs" />
     <Compile Include="Customizations\Operations\Pipelines\PipelineOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\Tables\ITableOperations.cs" />
-    <Compile Include="Customizations\Operations\Tables\TableOperations.Conversion.cs" />
+    <Compile Include="Customizations\Operations\Tables\TableOperations.Registration.cs" />
     <Compile Include="Customizations\Operations\Tables\TableOperations.cs" />
     <Compile Include="Customizations\Operations\Tables\TableOperationsExtensions.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Customization.cs" />

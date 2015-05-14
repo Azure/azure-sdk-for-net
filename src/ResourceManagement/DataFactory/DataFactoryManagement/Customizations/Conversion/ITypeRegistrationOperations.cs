@@ -17,7 +17,8 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-    internal interface ITypeRegistrationOperations<TWrapper, TExtensible> where TExtensible : TypeProperties
+#if ADF_INTERNAL
+    public interface ITypeRegistrationOperations<TWrapper, TExtensible> where TExtensible : TypeProperties
     {
         void RegisterType<T>() where T : TExtensible;
 
@@ -25,4 +26,5 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         void ValidateObject(TWrapper value);
     }
+#endif
 }

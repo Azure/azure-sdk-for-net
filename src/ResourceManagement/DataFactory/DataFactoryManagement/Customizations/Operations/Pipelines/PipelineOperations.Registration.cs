@@ -19,30 +19,27 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories
 {
     /// <summary>
-    /// Operations for managing data factory linkedServices.
+    /// Operations for registering activity types. 
     /// </summary>
-    internal partial class LinkedServiceOperations 
-#if ADF_INTERNAL
-        : ITypeRegistrationOperations<LinkedService, LinkedServiceTypeProperties>
-#endif
+    internal partial class PipelineOperations 
     {
-        internal LinkedServiceConverter Converter { get; set; }
+        internal PipelineConverter Converter { get; set; }
 
 #if ADF_INTERNAL
-        public void RegisterType<T>() where T : LinkedServiceTypeProperties
+        public void RegisterType<T>() where T : ActivityTypeProperties
         {
             this.Converter.RegisterType<T>();
         }
 
-        public bool TypeIsRegistered<T>() where T : LinkedServiceTypeProperties
+        public bool TypeIsRegistered<T>() where T : ActivityTypeProperties
         {
             return this.Converter.TypeIsRegistered<T>();
         }
 #endif
 
-        public void ValidateObject(LinkedService linkedService)
+        public void ValidateObject(Pipeline pipeline)
         {
-            this.Converter.ValidateWrappedObject(linkedService);
+            this.Converter.ValidateWrappedObject(pipeline);
         }
     }
 }

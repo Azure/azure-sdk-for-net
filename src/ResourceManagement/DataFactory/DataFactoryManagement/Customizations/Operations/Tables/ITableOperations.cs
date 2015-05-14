@@ -16,6 +16,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactories.Common.Models;
+using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -24,6 +25,9 @@ namespace Microsoft.Azure.Management.DataFactories
     /// Operations for managing tables.
     /// </summary>
     public interface ITableOperations
+#if ADF_INTERNAL
+        : ITypeRegistrationOperations<Table, TableTypeProperties>
+#endif
     {
         /// <summary>
         /// Create a new table instance or update an existing instance.

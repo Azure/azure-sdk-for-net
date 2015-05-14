@@ -17,6 +17,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactories.Common.Models;
+using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -25,6 +26,9 @@ namespace Microsoft.Azure.Management.DataFactories
     /// Operations for managing pipelines.
     /// </summary>
     public interface IPipelineOperations
+#if ADF_INTERNAL
+        : ITypeRegistrationOperations<Pipeline, ActivityTypeProperties>
+#endif
     {
         /// <summary>
         /// Create or update a pipeline instance.

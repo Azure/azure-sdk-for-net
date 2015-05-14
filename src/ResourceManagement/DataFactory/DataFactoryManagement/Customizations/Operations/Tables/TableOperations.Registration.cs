@@ -22,9 +22,6 @@ namespace Microsoft.Azure.Management.DataFactories
     /// Operations for registering table types. 
     /// </summary>
     internal partial class TableOperations 
-#if ADF_INTERNAL
-        : ITypeRegistrationOperations<Table, TableTypeProperties>
-#endif
     {
         internal TableConverter Converter { get; set; }
 

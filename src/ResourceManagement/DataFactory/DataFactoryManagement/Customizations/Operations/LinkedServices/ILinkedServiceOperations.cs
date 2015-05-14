@@ -16,6 +16,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactories.Common.Models;
+using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -24,6 +25,9 @@ namespace Microsoft.Azure.Management.DataFactories
     /// Operations for managing data factory linkedServices.
     /// </summary>
     public interface ILinkedServiceOperations
+#if ADF_INTERNAL
+        : ITypeRegistrationOperations<LinkedService, LinkedServiceTypeProperties>
+#endif
     {
         /// <summary>
         /// Create or update a data factory linkedService.
