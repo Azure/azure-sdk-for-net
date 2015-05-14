@@ -11,8 +11,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\BasicDelegatingHandler.cs" />
     <Compile Include="ScenarioTests\PipelineTests.cs" />
-    <Compile Include="ScenarioTests\SqlCopyPipelineTests.cs" />
-    <Compile Include="ScenarioTests\TableTests.cs" />
     <Compile Include="ScenarioTests\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -28,9 +26,6 @@
     <None Include="Resources\DP_Wikisamplev2json.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\linkedService.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\LinkedService_CuratedWikiData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -43,28 +38,7 @@
     <None Include="Resources\LinkedService_WikipediaClickEvents.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\SqlStoredProcedureParameters\LinkedService_SqlAzure.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\SqlStoredProcedureParameters\Pipeline_Copy.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\SqlStoredProcedureParameters\Table_SinkTable.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\SqlStoredProcedureParameters\Table_SourceTable.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\table.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\DataFactories.DataPipeline.Test.ScenarioTests.PipelineTests\WikipediaPipelineTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\DataFactories.DataPipeline.Test.ScenarioTests.SqlCopyPipelineTests\SqlCopyPipelineTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\DataFactories.DataPipeline.Test.ScenarioTests.TableTests\TestCreateTable.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

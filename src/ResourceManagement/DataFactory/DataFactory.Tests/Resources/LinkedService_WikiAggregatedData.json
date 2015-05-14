@@ -1,8 +1,9 @@
 {
-    name: "LinkedService-WikiAggregatedData",
-    properties:
-    {
-        type: "AzureSqlLinkedService",
-        connectionString: "$EncryptedString$SqlEncryptedConnectionString"
+    "name": "LinkedService-WikiAggregatedData",
+    "properties": {
+        "type": "AzureSqlLinkedService",
+        "typeProperties": { 
+            "connectionString": "Server=tcp:**********,1433;Database=mdpwikisamplev2;User ID=**********;Password=**********;Trusted_Connection=False;Encrypt=True;Connection Timeout=30"
+        }        
     }
 }

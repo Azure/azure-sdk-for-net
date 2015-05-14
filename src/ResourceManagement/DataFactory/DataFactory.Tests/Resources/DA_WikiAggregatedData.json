@@ -2,18 +2,16 @@
     name: "DA_WikiAggregatedData",
     properties:
     {
-        structure:  
-        [ 
+        type: "AzureSqlTableLocation",
+        typeProperties: {
+            tableName: "wikiaggregateddata"
+        },
+        linkedServiceName: "LinkedService-WikiAggregatedData",
+        structure: [
             { name: "slicetimestamp", position: 0, type: "String" },
             { name: "projectname", position: 1, type: "String" },
             { name: "hits", position: 2, type: "Decimal" }
         ],
-        location: 
-        {
-            type: "AzureSqlTableLocation",
-            tableName: "wikiaggregateddata",
-            linkedServiceName: "LinkedService-WikiAggregatedData"
-        },
         availability: 
         {
             frequency: "Hour",

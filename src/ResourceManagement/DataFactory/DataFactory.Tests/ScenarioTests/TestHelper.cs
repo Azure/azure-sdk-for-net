@@ -12,12 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Management.DataFactories;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.WindowsAzure.Management;
-using Microsoft.Azure.Test;
 using System.Linq;
 using System.Net.Http;
+using Microsoft.Azure.Management.DataFactories.Core;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
+using Microsoft.WindowsAzure.Management;
 
 namespace DataFactories.DataPipeline.Test.ScenarioTests
 {
@@ -33,10 +33,10 @@ namespace DataFactories.DataPipeline.Test.ScenarioTests
             return TestBase.GetServiceClient<ResourceManagementClient>(factory).WithHandler(handler);
         }
 
-        public static DataPipelineManagementClient GetDataPipelineManagementClient(DelegatingHandler handler)
+        public static DataFactoryManagementClient GetDataFactoryManagementClient(DelegatingHandler handler)
         {
             CSMTestEnvironmentFactory factory = new CSMTestEnvironmentFactory();
-            return TestBase.GetServiceClient<DataPipelineManagementClient>(factory).WithHandler(handler); 
+            return TestBase.GetServiceClient<DataFactoryManagementClient>(factory).WithHandler(handler); 
         }
 
         public static string GetDefaultLocation()
