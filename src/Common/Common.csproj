@@ -4,6 +4,7 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
     <ProjectGuid>{856A1D19-C3BF-439A-BEBF-E822A332BC12}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -25,7 +26,8 @@
     <Compile Include="AzureClientLongRunningOperationExtensions.cs" />
     <Compile Include="CloudError.cs" />
     <Compile Include="CloudException.cs" />
-    <Compile Include="ResourceBase.cs" />
+    <Compile Include="Resource.cs" />
+    <Compile Include="ResourceJsonConverter.cs" />
     <Compile Include="TokenCloudCredentials.cs" />
     <Compile Include="SubscriptionCloudCredentials.cs" />
     <Compile Include="AzureOperationResponse.cs" />

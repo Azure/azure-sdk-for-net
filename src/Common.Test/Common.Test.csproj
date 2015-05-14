@@ -44,11 +44,12 @@
     <Compile Include="Fakes\FakeServiceClient.cs" />
     <Compile Include="Fakes\PlaybackTestHandler.cs" />
     <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
-    <Compile Include="LazyDictionaryTest.cs" />
-    <Compile Include="LazyListTest.cs" />
     <Compile Include="LongRunningOperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceJsonConverterTest.cs" />
     <Compile Include="Sample\RedisManagementClient.cs" />
+    <Compile Include="Sample\SampleResource2.cs" />
+    <Compile Include="Sample\SampleResource.cs" />
     <Compile Include="TokenCloudCredentialsTest.cs" />
   </ItemGroup>
   <ItemGroup>

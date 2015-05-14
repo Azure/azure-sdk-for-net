@@ -30,7 +30,7 @@ namespace Microsoft.Azure
         public static async Task<AzureOperationResponse<T>> GetCreateOrUpdateOperationResultAsync<T>(this IAzureClient client, 
             AzureOperationResponse<T> response,
             Func<Task<AzureOperationResponse<T>>> getOperationAction,
-            CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : ResourceBase
+            CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Resource
         {
             if (response == null)
             {
