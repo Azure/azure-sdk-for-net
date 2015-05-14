@@ -3,7 +3,6 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.Dns</id>
     <title>Microsoft Azure Dns Management Library</title>
-    <releaseNotes>Dns Service / CSM-compatible preview library</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,10 +10,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for Dns services.</summary>
-    <description>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. 
-CSM/Resource Groups-compatible library.
-Provides management capabilities for Dns services.</description>
+    <summary>Provides management capabilities for DNS zones, record sets and records.</summary>
+    <description>Provides management capabilities for DNS zones, record sets and records.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Dns management "Dns" "Dns management" REST HTTP client windowsazureofficial</tags>
     <references>

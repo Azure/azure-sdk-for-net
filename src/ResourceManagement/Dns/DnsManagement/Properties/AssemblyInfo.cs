@@ -18,7 +18,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Dns Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Dns management functions for managing the Microsoft Azure Dns service.")]
+[assembly: AssemblyDescription("Provides management capabilities for DNS zones, record sets and records.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.3.0.0")]
