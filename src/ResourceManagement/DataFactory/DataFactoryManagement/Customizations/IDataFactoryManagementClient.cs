@@ -14,7 +14,6 @@
 //
 
 using System;
-using Microsoft.Azure.Management.DataFactories.Core;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
