@@ -64,6 +64,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                         wrapperTypeName,
                         typeName));
             }
+
+            this.TypeMap.Add(typeName, type);
         }
 
         public bool TypeIsRegistered<T>() where T : TExtensibleTypeProperties
@@ -105,22 +107,25 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         #endregion
 
-        protected virtual TExtensibleTypeProperties DeserializeTypeProperties(string typeName, string json)
+        protected virtual TExtensibleTypeProperties DeserializeTypeProperties(
+            string typeName,
+            string json,
+            out Type type)
         {
             TExtensibleTypeProperties typeProperties;
-            Type type;
             if (this.TryGetRegisteredType(typeName, out type))
             {
                 typeProperties = (TExtensibleTypeProperties)TypeProperties.DeserializeObject(json, type);
             }
             else
             {
-                Dictionary<string, JToken> serviceExtraProperties = 
+                Dictionary<string, JToken> serviceExtraProperties =
                     JsonConvert.DeserializeObject<Dictionary<string, JToken>>(
                         json,
                         ConversionCommon.DefaultSerializerSettings);
 
                 typeProperties = new TGenericTypeProperties() { ServiceExtraProperties = serviceExtraProperties };
+                type = typeof(TGenericTypeProperties);
             }
 
             return typeProperties;

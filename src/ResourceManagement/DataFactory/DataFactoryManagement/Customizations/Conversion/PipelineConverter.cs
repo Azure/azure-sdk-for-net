@@ -148,19 +148,22 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             Ensure.IsNotNull(internalActivity.Type, "internalActivity.Type");
             Ensure.IsNotNull(internalActivity.TypeProperties, "internalActivity.TypeProperties");
 
+            Type type;
             ActivityTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalActivity.Type,
-                internalActivity.TypeProperties);
+                internalActivity.TypeProperties, 
+                out type);
 
-            return new Activity(typeProperties, internalActivity.Type)
-                       {
-                           Name = internalActivity.Name,
-                           Description = internalActivity.Description,
-                           Inputs = internalActivity.Inputs,
-                           Outputs = internalActivity.Outputs,
-                           LinkedServiceName = internalActivity.LinkedServiceName,
-                           Policy = internalActivity.Policy
-                       };
+            string typeName = type == typeof(GenericActivity) ? internalActivity.Type : type.Name;
+            return new Activity(typeProperties, typeName)
+                                    {
+                                        Name = internalActivity.Name,
+                                        Description = internalActivity.Description,
+                                        Inputs = internalActivity.Inputs,
+                                        Outputs = internalActivity.Outputs,
+                                        LinkedServiceName = internalActivity.LinkedServiceName,
+                                        Policy = internalActivity.Policy,
+                                    };
         }
 
         private void ValidateActivity(Activity activity)

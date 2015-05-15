@@ -66,31 +66,31 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 return null;
             }
 
+            Type type;
             TableTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalTable.Properties.Type,
-                internalTable.Properties.TypeProperties);
+                internalTable.Properties.TypeProperties,
+                out type);
 
-            Table table = new Table()
-            {
-                Name = internalTable.Name, 
-                Properties = new TableProperties(
-                    typeProperties, 
-                    internalTable.Properties.Availability, 
-                    internalTable.Properties.Type)
-                    {
-                        Availability = internalTable.Properties.Availability,
-                        CreateTime = internalTable.Properties.CreateTime,
-                        Description = internalTable.Properties.Description,
-                        ErrorMessage = internalTable.Properties.ErrorMessage,
-                        LinkedServiceName = internalTable.Properties.LinkedServiceName,
-                        Policy = internalTable.Properties.Policy,
-                        ProvisioningState = internalTable.Properties.ProvisioningState,
-                        Published = internalTable.Properties.Published,
-                        Structure = internalTable.Properties.Structure
-                    }
-            };
+            string typeName = type == typeof(GenericTable) ? internalTable.Properties.Type : type.Name;
+            TableProperties properties = new TableProperties(
+                typeProperties,
+                internalTable.Properties.Availability,
+                internalTable.Properties.LinkedServiceName,
+                typeName)
+                     {
+                         Availability = internalTable.Properties.Availability,
+                         CreateTime = internalTable.Properties.CreateTime,
+                         Description = internalTable.Properties.Description,
+                         ErrorMessage = internalTable.Properties.ErrorMessage,
+                         LinkedServiceName = internalTable.Properties.LinkedServiceName,
+                         Policy = internalTable.Properties.Policy,
+                         ProvisioningState = internalTable.Properties.ProvisioningState,
+                         Published = internalTable.Properties.Published,
+                         Structure = internalTable.Properties.Structure
+                     };
 
-            return table;
+            return new Table() { Name = internalTable.Name, Properties = properties };
         }
 
         /// <summary>

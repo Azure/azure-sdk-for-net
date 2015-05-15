@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         /// <summary> 
         /// Convert <paramref name="internalLinkedService"/> to a <see cref="LinkedService"/> instance.
         /// </summary>
-        /// <param name="internalLinkedService">The <see cref="InternalLinkedService"/> instance to convert.</param>
+        /// <param name="internalLinkedService">The <see cref="internalLinkedService"/> instance to convert.</param>
         /// <returns>A <see cref="LinkedService"/> instance equivalent to <paramref name="internalLinkedService"/>.</returns>
         public override LinkedService ToWrapperType(Core.Models.LinkedService internalLinkedService)
         {
@@ -63,24 +63,21 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 return null;
             }
 
+            Type type;
             LinkedServiceTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalLinkedService.Properties.Type,
-                internalLinkedService.Properties.TypeProperties);
+                internalLinkedService.Properties.TypeProperties, out type);
 
-            LinkedService linkedService = new LinkedService()
-            {
-                Name = internalLinkedService.Name,
-                Properties = new LinkedServiceProperties(typeProperties, internalLinkedService.Properties.Type)
-                    {
-                        // TODO brgold: Scope, Version? 
-                        Description = internalLinkedService.Properties.Description,
-                        ErrorMessage = internalLinkedService.Properties.ErrorMessage,
-                        HubName = internalLinkedService.Properties.HubName,
-                        ProvisioningState = internalLinkedService.Properties.ProvisioningState
-                    }
-            };
+            string typeName = type == typeof(GenericLinkedService) ? internalLinkedService.Properties.Type : type.Name;
+            LinkedServiceProperties properties = new LinkedServiceProperties(typeProperties, typeName)
+                         {
+                             Description = internalLinkedService.Properties.Description,
+                             ErrorMessage = internalLinkedService.Properties.ErrorMessage,
+                             HubName = internalLinkedService.Properties.HubName,
+                             ProvisioningState = internalLinkedService.Properties.ProvisioningState
+                         };
 
-            return linkedService;
+            return new LinkedService() { Name = internalLinkedService.Name, Properties = properties };
         }
 
         /// <summary>
