@@ -16,13 +16,12 @@ namespace Microsoft.Rest.Serialization
     /// <summary>
     /// JsonConverter that provides custom serialization for resource-based objects.
     /// </summary>
-    /// <typeparam name="T">The base type.</typeparam>
     public class ResourceJsonConverter : JsonConverter
     {
-        private const string PropertyNode = "property";
+        private const string PropertiesNode = "properties";
 
         /// <summary>
-        /// Returns true if the object being serialized is assignable from the base type. False otherwise.
+        /// Returns true if the object being serialized is assignable from the Resource type. False otherwise.
         /// </summary>
         /// <param name="objectType">The type of the object to check.</param>
         /// <returns>True if the object being serialized is assignable from the base type. False otherwise.</returns>
@@ -32,7 +31,7 @@ namespace Microsoft.Rest.Serialization
         }
 
         /// <summary>
-        /// Throws NotSupportedException.
+        /// Deserializes an object from a JSON string and flattens out Properties.
         /// </summary>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="objectType">The type of the object.</param>
@@ -58,15 +57,18 @@ namespace Microsoft.Rest.Serialization
             JsonSerializer newSerializer = GetSerializerWithoutCurrentConverter(serializer);
 
             JObject resourceJObject = JObject.Load(reader);
-            Resource resource = resourceJObject.ToObject<Resource>();
-            JObject propertiesJObject = resourceJObject[PropertyNode] as JObject;
-            newSerializer.Populate(propertiesJObject.CreateReader(), resource);
+            var resource = resourceJObject.ToObject(objectType, newSerializer);
+            JObject propertiesJObject = resourceJObject[PropertiesNode] as JObject;
+            if (propertiesJObject != null)
+            {
+                newSerializer.Populate(propertiesJObject.CreateReader(), resource);
+            }
+            
             return resource;
         }
 
         /// <summary>
-        /// Serializes an object into a JSON string based on discriminator
-        /// field and object name. If JsonObject attribute is available, its value is used instead.
+        /// Serializes an object into a JSON string adding Properties. 
         /// </summary>
         /// <param name="writer">The JSON writer.</param>
         /// <param name="value">The value to serialize.</param>
@@ -91,7 +93,7 @@ namespace Microsoft.Rest.Serialization
 
             JObject rootObject = JObject.FromObject(value, newSerializer);
             JObject propertyObject = new JObject();
-            rootObject.Add(PropertyNode, propertyObject);
+            rootObject.Add(PropertiesNode, propertyObject);
 
             PropertyInfo[] propertyInfos = value.GetType().GetProperties()
                 .Where(p => typeof(Resource).GetProperty(p.Name) == null).ToArray();
@@ -138,26 +140,4 @@ namespace Microsoft.Rest.Serialization
             return newSerializer;
         }
     }
-#if !NET45
-    public static class AttributeExtensions
-    {
-        public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo memberInfo) where T : class
-        {
-            if (memberInfo == null)
-            {
-                return Enumerable.Empty<T>();
-            }
-            return memberInfo.GetCustomAttributes(typeof(T), true).Select(a => a as T);
-        }
-
-        public static T GetCustomAttribute<T>(this MemberInfo memberInfo) where T : class
-        {
-            if (memberInfo == null)
-            {
-                return null;
-            }
-            return memberInfo.GetCustomAttributes(typeof(T), true).First() as T;
-        }
-    }
-#endif
 }
