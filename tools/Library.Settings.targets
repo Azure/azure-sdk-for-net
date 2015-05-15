@@ -3,6 +3,7 @@
 
   <PropertyGroup>
     <LibraryRoot>$(MsBuildThisFileDirectory)..</LibraryRoot>
+    <LibrarySourceFolder>$(LibraryRoot)\src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
@@ -126,12 +127,11 @@
   <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
-      <NuSpecSyncScript>$(LibraryRoot)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	 
-      <ProductSourceFolder Condition="$(ProductSourceFolder) == ''">$(LibraryRoot)$(ProductSourceFolderPath)</ProductSourceFolder>
+      <NuSpecSyncScript>$(LibraryToolsFolder)\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	 
     </PropertyGroup>
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(LibrarySourceFolder)&apos; }&quot;" />
   </Target>
   
   <!-- 

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Common.Properties;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure
 {
@@ -30,7 +31,7 @@ namespace Microsoft.Azure
         public static async Task<AzureOperationResponse<T>> GetCreateOrUpdateOperationResultAsync<T>(this IAzureClient client, 
             AzureOperationResponse<T> response,
             Func<Task<AzureOperationResponse<T>>> getOperationAction,
-            CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : ResourceBase
+            CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Resource
         {
             if (response == null)
             {
@@ -284,16 +285,10 @@ namespace Microsoft.Azure
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            AzureAsyncOperation resultModel = new AzureAsyncOperation();;
+            AzureAsyncOperation resultModel = new AzureAsyncOperation();
             if (!string.IsNullOrEmpty(responseContent))
             {
-                JToken responseDoc = null;
-                responseDoc = JToken.Parse(responseContent);
-
-                if (responseDoc != null)
-                {
-                    resultModel.DeserializeJson(responseDoc);
-                }
+                resultModel = JsonConvert.DeserializeObject<AzureAsyncOperation>(responseContent, client.DeserializationSettings);
             }
             else
             {

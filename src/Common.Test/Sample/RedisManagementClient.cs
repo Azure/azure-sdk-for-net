@@ -15,7 +15,9 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Rest.TransientFaultHandling;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Redis.Models
@@ -43,75 +45,41 @@ namespace Microsoft.Azure.Management.Redis.Models
             get { return this._properties; }
             set { this._properties = value; }
         }
-
-        /// <summary>
-        /// Initializes a new instance of the RedisCreateOrUpdateParameters
-        /// class.
-        /// </summary>
-        public RedisCreateOrUpdateParameters()
-        {
-        }
-
-        /// <summary>
-        /// Serialize the object
-        /// </summary>
-        /// <returns>
-        /// Returns the json model for the type RedisCreateOrUpdateParameters
-        /// </returns>
-        public virtual JToken SerializeJson(JToken outputObject)
-        {
-            if (outputObject == null)
-            {
-                outputObject = new JObject();
-            }
-            if (this.Location != null)
-            {
-                outputObject["Location"] = this.Location;
-            }
-            if (this.Properties != null)
-            {
-                outputObject["Properties"] = this.Properties.SerializeJson(null);
-            }
-            return outputObject;
-        }
     }
 
-    public partial class RedisResource : ResourceBase
+    public partial class RedisResource : Resource
     {
-        private RedisReadableProperties _properties;
+        private string _hostName;
 
         /// <summary>
         /// Optional.
         /// </summary>
-        public RedisReadableProperties Properties
+        public string HostName
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._hostName; }
+            set { this._hostName = value; }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the RedisResource class.
-        /// </summary>
-        public RedisResource()
-        {
-        }
+        private int? _port;
 
         /// <summary>
-        /// Deserialize the object
+        /// Optional.
         /// </summary>
-        public virtual void DeserializeJson(JToken inputObject)
+        public int? Port
         {
-            if (inputObject != null && inputObject.Type != JTokenType.Null)
-            {
-                base.DeserializeJson(inputObject);
-                JToken propertiesValue = inputObject["properties"];
-                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                {
-                    RedisReadableProperties redisReadableProperties = new RedisReadableProperties();
-                    redisReadableProperties.DeserializeJson(propertiesValue);
-                    this.Properties = redisReadableProperties;
-                }
-            }
+            get { return this._port; }
+            set { this._port = value; }
+        }
+
+        private int? _sslPort;
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? SslPort
+        {
+            get { return this._sslPort; }
+            set { this._sslPort = value; }
         }
     }
 
@@ -160,44 +128,6 @@ namespace Microsoft.Azure.Management.Redis.Models
             get { return this._sku; }
             set { this._sku = value; }
         }
-
-        /// <summary>
-        /// Initializes a new instance of the RedisProperties class.
-        /// </summary>
-        public RedisProperties()
-        {
-        }
-
-        /// <summary>
-        /// Serialize the object
-        /// </summary>
-        /// <returns>
-        /// Returns the json model for the type RedisProperties
-        /// </returns>
-        public virtual JToken SerializeJson(JToken outputObject)
-        {
-            if (outputObject == null)
-            {
-                outputObject = new JObject();
-            }
-            if (this.EnableNonSslPort != null)
-            {
-                outputObject["EnableNonSslPort"] = this.EnableNonSslPort.Value;
-            }
-            if (this.MaxMemoryPolicy != null)
-            {
-                outputObject["MaxMemoryPolicy"] = this.MaxMemoryPolicy;
-            }
-            if (this.RedisVersion != null)
-            {
-                outputObject["RedisVersion"] = this.RedisVersion;
-            }
-            if (this.Sku != null)
-            {
-                outputObject["Sku"] = this.Sku.SerializeJson(null);
-            }
-            return outputObject;
-        }
     }
 
     public partial class RedisReadableProperties
@@ -245,43 +175,6 @@ namespace Microsoft.Azure.Management.Redis.Models
             get { return this._sslPort; }
             set { this._sslPort = value; }
         }
-
-        /// <summary>
-        /// Initializes a new instance of the RedisReadableProperties class.
-        /// </summary>
-        public RedisReadableProperties()
-        {
-        }
-
-        /// <summary>
-        /// Deserialize the object
-        /// </summary>
-        public virtual void DeserializeJson(JToken inputObject)
-        {
-            if (inputObject != null && inputObject.Type != JTokenType.Null)
-            {
-                JToken hostNameValue = inputObject["HostName"];
-                if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
-                {
-                    this.HostName = ((string)hostNameValue);
-                }
-                JToken portValue = inputObject["Port"];
-                if (portValue != null && portValue.Type != JTokenType.Null)
-                {
-                    this.Port = ((int)portValue);
-                }
-                JToken provisioningStateValue = inputObject["ProvisioningState"];
-                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                {
-                    this.ProvisioningState = ((string)provisioningStateValue);
-                }
-                JToken sslPortValue = inputObject["SslPort"];
-                if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
-                {
-                    this.SslPort = ((int)sslPortValue);
-                }
-            }
-        }
     }
 
     public partial class Sku
@@ -317,40 +210,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             get { return this._name; }
             set { this._name = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Sku class.
-        /// </summary>
-        public Sku()
-        {
-        }
-
-        /// <summary>
-        /// Serialize the object
-        /// </summary>
-        /// <returns>
-        /// Returns the json model for the type Sku
-        /// </returns>
-        public virtual JToken SerializeJson(JToken outputObject)
-        {
-            if (outputObject == null)
-            {
-                outputObject = new JObject();
-            }
-            if (this.Capacity != null)
-            {
-                outputObject["Capacity"] = this.Capacity.Value;
-            }
-            if (this.Family != null)
-            {
-                outputObject["Family"] = this.Family;
-            }
-            if (this.Name != null)
-            {
-                outputObject["Name"] = this.Name;
-            }
-            return outputObject;
         }
     }
 }
@@ -423,6 +282,16 @@ namespace Microsoft.Azure.Management.Redis
             set { this._baseUri = value; }
         }
 
+        /// <summary>
+        /// Gets or sets json serialization settings.
+        /// </summary>
+        public JsonSerializerSettings SerializationSettings { get; private set; }
+
+        /// <summary>
+        /// Gets or sets json deserialization settings.
+        /// </summary>
+        public JsonSerializerSettings DeserializationSettings { get; private set; }        
+
         private SubscriptionCloudCredentials _credentials;
 
         public SubscriptionCloudCredentials Credentials
@@ -466,6 +335,7 @@ namespace Microsoft.Azure.Management.Redis
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+            this.Initialize();
         }
 
         /// <summary>
@@ -484,6 +354,7 @@ namespace Microsoft.Azure.Management.Redis
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+            this.Initialize();
         }
 
         /// <summary>
@@ -505,6 +376,7 @@ namespace Microsoft.Azure.Management.Redis
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+            this.Initialize();
         }
 
         /// <summary>
@@ -584,6 +456,28 @@ namespace Microsoft.Azure.Management.Redis
                 this.Credentials.InitializeServiceClient(this);
             }
         }
+
+        /// <summary>
+        /// Initializes client properties.
+        /// </summary>
+        private void Initialize()
+        {
+            SerializationSettings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            SerializationSettings.Converters.Add(new ResourceJsonConverter());
+            DeserializationSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            DeserializationSettings.Converters.Add(new ResourceJsonConverter());
+        }    
     }
 
     public static partial class RedisOperationsExtensions
@@ -985,9 +879,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             // Serialize Request
-            string requestContent = null;
-            JToken requestDoc = parameters.SerializeJson(null);
-            requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+            string requestContent = JsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
             httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
             httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
@@ -1028,16 +920,7 @@ namespace Microsoft.Azure.Management.Redis
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
             {
-                RedisResource resultModel = new RedisResource();
-                JToken responseDoc = null;
-                if (string.IsNullOrEmpty(responseContent) == false)
-                {
-                    responseDoc = JToken.Parse(responseContent);
-                }
-                if (responseDoc != null)
-                {
-                    resultModel.DeserializeJson(responseDoc);
-                }
+                RedisResource resultModel = JsonConvert.DeserializeObject<RedisResource>(responseContent, this.Client.DeserializationSettings);
                 result.Body = resultModel;
             }
 
@@ -1315,16 +1198,7 @@ namespace Microsoft.Azure.Management.Redis
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                RedisResource resultModel = new RedisResource();
-                JToken responseDoc = null;
-                if (string.IsNullOrEmpty(responseContent) == false)
-                {
-                    responseDoc = JToken.Parse(responseContent);
-                }
-                if (responseDoc != null)
-                {
-                    resultModel.DeserializeJson(responseDoc);
-                }
+                RedisResource resultModel = JsonConvert.DeserializeObject<RedisResource>(responseContent, this.Client.DeserializationSettings);
                 result.Body = resultModel;
             }
 
