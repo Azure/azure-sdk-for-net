@@ -60,6 +60,15 @@ namespace Microsoft.Azure.Management.KeyVault
         }
 
         /// <summary>
+        /// Application ID of the client making request on behalf of a principal
+        /// </summary>
+        public Guid? ApplicationId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Permissions to keys
         /// </summary>
         public string[] PermissionsToKeys
