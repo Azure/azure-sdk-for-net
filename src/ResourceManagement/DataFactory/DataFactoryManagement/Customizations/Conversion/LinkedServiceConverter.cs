@@ -23,11 +23,12 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         CoreTypeConverter<Core.Models.LinkedService, LinkedService, LinkedServiceTypeProperties, GenericLinkedService>
     {
         /// <summary> 
-        /// Convert <paramref name="linkedService"/> to an <see cref="InternalLinkedService"/> instance.
+        /// Convert <paramref name="linkedService"/> to an <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.LinkedService"/> instance.
         /// This method should be called only after type is validated, otherwise type-specific logic will break
         /// </summary>
-        /// <param name="linkedService">The <see cref="InternalLinkedService"/> instance to convert.</param>
-        /// <returns>An <see cref="InternalLinkedService"/> instance equivalent to <paramref name="linkedService"/>.</returns>
+        /// <param name="linkedService">The <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> instance to convert.</param>
+        /// <returns>An <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.LinkedService"/> 
+        /// instance equivalent to <paramref name="linkedService"/>.</returns>
         public override Core.Models.LinkedService ToCoreType(LinkedService linkedService)
         {
             Ensure.IsNotNull(linkedService, "linkedService");
@@ -52,9 +53,12 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         }
 
         /// <summary> 
-        /// Convert <paramref name="internalLinkedService"/> to a <see cref="LinkedService"/> instance.
+        /// Convert <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.LinkedService"/> 
+        /// to a <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> instance.
         /// </summary>
-        /// <param name="internalLinkedService">The <see cref="internalLinkedService"/> instance to convert.</param>
+        /// <param name="internalLinkedService">
+        /// The <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.LinkedService"/> 
+        /// instance to convert.</param>
         /// <returns>A <see cref="LinkedService"/> instance equivalent to <paramref name="internalLinkedService"/>.</returns>
         public override LinkedService ToWrapperType(Core.Models.LinkedService internalLinkedService)
         {

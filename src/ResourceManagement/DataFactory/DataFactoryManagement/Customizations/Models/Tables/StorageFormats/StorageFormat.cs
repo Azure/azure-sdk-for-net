@@ -30,10 +30,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string Deserializer { get; set; }
 
+
+#if ADF_INTERNAL
         /// <summary>
         /// Compression.
         /// </summary>
-#if ADF_INTERNAL
         public string Compression { get; set; }
 
         /// <summary>

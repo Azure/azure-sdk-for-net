@@ -81,12 +81,12 @@ namespace Microsoft.Azure.Management.DataFactories
             } 
         }
 
-        /// <summary>
-        /// Crawls the current call stack and retrieves the name of the first "foreign" method.
-        /// A method is considered foreign if it's not part of this class.
-        /// </summary>
-        /// <param name="stackFramesToSkip">The stack frames to skip.</param>
-        /// <returns>The name of the first foreign method on the call stack.</returns>
+        ///// <summary>
+        ///// Crawls the current call stack and retrieves the name of the first "foreign" method.
+        ///// A method is considered foreign if it's not part of this class.
+        ///// </summary>
+        ///// <param name="stackFramesToSkip">The stack frames to skip.</param>
+        ///// <returns>The name of the first foreign method on the call stack.</returns>
         //private static string GetFirstForeignMethodOnStack(int stackFramesToSkip = 2)
         //{
         //    string ret = string.Empty;
