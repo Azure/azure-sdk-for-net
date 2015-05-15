@@ -1,0 +1,45 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/routetables/MockRouteTableName?detailLevel=full",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>ResourceNotFound</Code>\r\n  <Message>The Route Table MockRouteTableName does not exist.</Message>\r\n</Error>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "215"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "b09307945f24324d841b330c1e9fa9ed"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 11 Nov 2014 02:28:11 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5"
+  }
+}

@@ -1,0 +1,13 @@
+﻿{
+  "location": "West US",
+  "tags": {},
+  "properties": {
+    "sku": {
+      "name": "standard"
+    },
+    "eventsOutOfOrderPolicy": "drop",
+    "eventsOutOfOrderMaxDelayInSeconds": 0,
+    "inputs": [],
+    "outputs": []
+  }
+}

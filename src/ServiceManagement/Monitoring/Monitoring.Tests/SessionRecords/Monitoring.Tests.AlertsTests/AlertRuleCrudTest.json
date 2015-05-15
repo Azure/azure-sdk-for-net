@@ -1,0 +1,852 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/locations",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Locations xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Location>\r\n    <Name>South Central US</Name>\r\n    <DisplayName>South Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Central US</Name>\r\n    <DisplayName>Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US 2</Name>\r\n    <DisplayName>East US 2</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US</Name>\r\n    <DisplayName>East US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>West US</Name>\r\n    <DisplayName>West US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>North Europe</Name>\r\n    <DisplayName>North Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>West Europe</Name>\r\n    <DisplayName>West Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East Asia</Name>\r\n    <DisplayName>East Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Southeast Asia</Name>\r\n    <DisplayName>Southeast Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n</Locations>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "24847afb8c40c99f9d7bd55b252a543b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:18 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/locations",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Locations xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Location>\r\n    <Name>South Central US</Name>\r\n    <DisplayName>South Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Central US</Name>\r\n    <DisplayName>Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US 2</Name>\r\n    <DisplayName>East US 2</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US</Name>\r\n    <DisplayName>East US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>West US</Name>\r\n    <DisplayName>West US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>North Europe</Name>\r\n    <DisplayName>North Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>West Europe</Name>\r\n    <DisplayName>West Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>East Asia</Name>\r\n    <DisplayName>East Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n  <Location>\r\n    <Name>Southeast Asia</Name>\r\n    <DisplayName>Southeast Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n  </Location>\r\n</Locations>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "4ef7ed870126c7e3be0ca38a31461746"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:21 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/hostedservices",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>cs430</ServiceName>\r\n  <Label>Y3M0MzA=</Label>\r\n  <Location>West US</Location>\r\n  <ExtendedProperties />\r\n</CreateHostedService>",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "17f646b24293ceadbbcb53fb29846fab"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:19 GMT"
+        ],
+        "Location": [
+          "https://management.core.windows.net:8443/subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/compute/cs430"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/storageservices",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateStorageServiceInput xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>storage3878</ServiceName>\r\n  <Label>c3RvcmFnZTM4Nzg=</Label>\r\n  <Description p2:nil=\"true\" xmlns:p2=\"http://www.w3.org/2001/XMLSchema-instance\" />\r\n  <Location>West US</Location>\r\n  <GeoReplicationEnabled>false</GeoReplicationEnabled>\r\n  <ExtendedProperties />\r\n</CreateStorageServiceInput>",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "2d7b17c05d26cdeb8bde2ddfddba74b6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:23 GMT"
+        ],
+        "Location": [
+          "https://management.core.windows.net:8443/subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/storage/storage3878"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/operations/2d7b17c05d26cdeb8bde2ddfddba74b6",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2d7b17c0-5d26-cdeb-8bde-2ddfddba74b6</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "f8df5a18237bc454ac8de2e8d0efbe96"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:23 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/operations/2d7b17c05d26cdeb8bde2ddfddba74b6",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2d7b17c0-5d26-cdeb-8bde-2ddfddba74b6</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "8dd200386462cc109e8854d993102bb3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:54 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/storageservices/storage3878",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net:8443/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/storageservices/storage3878</Url>\r\n  <ServiceName>storage3878</ServiceName>\r\n  <StorageServiceProperties>\r\n    <Description i:nil=\"true\" />\r\n    <Location>West US</Location>\r\n    <Label>c3RvcmFnZTM4Nzg=</Label>\r\n    <Status>Created</Status>\r\n    <Endpoints>\r\n      <Endpoint>http://storage3878.blob.core.windows.net/</Endpoint>\r\n      <Endpoint>http://storage3878.queue.core.windows.net/</Endpoint>\r\n      <Endpoint>http://storage3878.table.core.windows.net/</Endpoint>\r\n    </Endpoints>\r\n    <GeoReplicationEnabled>false</GeoReplicationEnabled>\r\n    <GeoPrimaryRegion>West US</GeoPrimaryRegion>\r\n    <GeoSecondaryRegion />\r\n    <CreationTime>2014-08-07T13:04:23Z</CreationTime>\r\n  </StorageServiceProperties>\r\n  <ExtendedProperties>\r\n    <ExtendedProperty>\r\n      <Name>ResourceGroup</Name>\r\n      <Value>Default-Storage-WestUS</Value>\r\n    </ExtendedProperty>\r\n    <ExtendedProperty>\r\n      <Name>ResourceLocation</Name>\r\n      <Value>West US</Value>\r\n    </ExtendedProperty>\r\n  </ExtendedProperties>\r\n  <Capabilities>\r\n    <Capability>PersistentVMRole</Capability>\r\n  </Capabilities>\r\n</StorageService>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "72977614364dc98b80f2bfd16b48123e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:55 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/storageservices/storage3878/keys",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net:8443/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/storageservices/storage3878</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>lt54rebYnPoc4wmM804qwO30OXkz4XkMWx3yluJjUhbuk3B37j5F15mFVQlfjfEU/7AgJDB7mwsuOWrlt3oELQ==</Primary>\r\n    <Secondary>vkRnljAV/cHuAATCxk05Gckjp71uajC998tR624/CURjbwnaw5GlbbGrvWZeuNCeXoxplAEejdPActY/8JE2dw==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "c6bd3dd10cf0c883bd940765ea4d0a6d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:04:56 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/hostedservices/cs430/deploymentslots/Production",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateDeployment xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>deployment8621</Name>\r\n  <PackageUrl>http://storage3878.blob.core.windows.net/deployments/SMNetTestAppProject.cspkg</PackageUrl>\r\n  <Label>bGFiZWwx</Label>\r\n  <Configuration>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxTZXJ2aWNlQ29uZmlndXJhdGlvbiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiBzZXJ2aWNlTmFtZT0ibXlub2Rlc2VydmljZTAzIiBvc0ZhbWlseT0iMiIgb3NWZXJzaW9uPSIqIiB4bWxucz0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9TZXJ2aWNlSG9zdGluZy8yMDA4LzEwL1NlcnZpY2VDb25maWd1cmF0aW9uIj4NCiAgPFJvbGUgbmFtZT0iV2ViUm9sZTEiPg0KICAgIDxDb25maWd1cmF0aW9uU2V0dGluZ3MgLz4NCiAgICA8SW5zdGFuY2VzIGNvdW50PSIxIiAvPg0KICAgIDxDZXJ0aWZpY2F0ZXMgLz4NCiAgPC9Sb2xlPg0KPC9TZXJ2aWNlQ29uZmlndXJhdGlvbj4=</Configuration>\r\n  <StartDeployment>true</StartDeployment>\r\n  <ExtendedProperties />\r\n</CreateDeployment>",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/2.0.0.0"
+        ],
+        "client-tracking-id": [
+          "10"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "d4bd01d72161ce8d9fdb425192880c69"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:05:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/operations/d4bd01d72161ce8d9fdb425192880c69",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/2.0.0.0"
+        ],
+        "client-tracking-id": [
+          "10"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d4bd01d7-2161-ce8d-9fdb-425192880c69</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "dad3128702e2cc9e9b0529742ed1774c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:05:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/operations/d4bd01d72161ce8d9fdb425192880c69",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/2.0.0.0"
+        ],
+        "client-tracking-id": [
+          "10"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d4bd01d7-2161-ce8d-9fdb-425192880c69</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "e12c84dec961c9e7be6b130034dc2eaa"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:05:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/hostedservices/cs430?embed-detail=true",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "<HostedService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net:8443/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/hostedservices/cs430</Url>\r\n  <ServiceName>cs430</ServiceName>\r\n  <HostedServiceProperties>\r\n    <Description i:nil=\"true\" />\r\n    <Location>West US</Location>\r\n    <Label>Y3M0MzA=</Label>\r\n    <Status>Created</Status>\r\n    <DateCreated>2014-08-07T13:04:19Z</DateCreated>\r\n    <DateLastModified>2014-08-07T13:05:12Z</DateLastModified>\r\n    <ExtendedProperties>\r\n      <ExtendedProperty>\r\n        <Name>ResourceGroup</Name>\r\n        <Value>cs430</Value>\r\n      </ExtendedProperty>\r\n      <ExtendedProperty>\r\n        <Name>ResourceLocation</Name>\r\n        <Value>West US</Value>\r\n      </ExtendedProperty>\r\n    </ExtendedProperties>\r\n  </HostedServiceProperties>\r\n  <Deployments>\r\n    <Deployment>\r\n      <Name>deployment8621</Name>\r\n      <DeploymentSlot>Production</DeploymentSlot>\r\n      <PrivateID>cb7d2764f03c46d4bbc4c50209fbf292</PrivateID>\r\n      <Status>Running</Status>\r\n      <Label>bGFiZWwx</Label>\r\n      <Url>http://cs430.cloudapp.net/</Url>\r\n      <Configuration>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPFNlcnZpY2VDb25maWd1cmF0aW9uIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHNlcnZpY2VOYW1lPSJteW5vZGVzZXJ2aWNlMDMiIG9zRmFtaWx5PSIyIiBvc1ZlcnNpb249IioiIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL1NlcnZpY2VIb3N0aW5nLzIwMDgvMTAvU2VydmljZUNvbmZpZ3VyYXRpb24iPgogIDxSb2xlIG5hbWU9IldlYlJvbGUxIj4KICAgIDxDb25maWd1cmF0aW9uU2V0dGluZ3MgLz4KICAgIDxJbnN0YW5jZXMgY291bnQ9IjEiIC8+CiAgICA8Q2VydGlmaWNhdGVzIC8+CiAgPC9Sb2xlPgo8L1NlcnZpY2VDb25maWd1cmF0aW9uPg==</Configuration>\r\n      <RoleInstanceList>\r\n        <RoleInstance>\r\n          <RoleName>WebRole1</RoleName>\r\n          <InstanceName>WebRole1_IN_0</InstanceName>\r\n          <InstanceStatus>CreatingVM</InstanceStatus>\r\n          <InstanceUpgradeDomain>0</InstanceUpgradeDomain>\r\n          <InstanceFaultDomain>0</InstanceFaultDomain>\r\n          <InstanceSize>ExtraSmall</InstanceSize>\r\n          <InstanceStateDetails />\r\n          <IpAddress>100.76.6.61</IpAddress>\r\n          <InstanceEndpoints>\r\n            <InstanceEndpoint>\r\n              <Name>Endpoint1</Name>\r\n              <Vip>104.40.72.130</Vip>\r\n              <PublicPort>80</PublicPort>\r\n              <LocalPort>80</LocalPort>\r\n              <Protocol>http</Protocol>\r\n            </InstanceEndpoint>\r\n          </InstanceEndpoints>\r\n          <PowerState>Starting</PowerState>\r\n        </RoleInstance>\r\n      </RoleInstanceList>\r\n      <UpgradeDomainCount>1</UpgradeDomainCount>\r\n      <RoleList>\r\n        <Role>\r\n          <RoleName>WebRole1</RoleName>\r\n          <OsVersion>WA-GUEST-OS-2.27_201405-01</OsVersion>\r\n          <ConfigurationSets>\r\n            <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n              <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n              <InputEndpoints>\r\n                <InputEndpoint>\r\n                  <Port>80</Port>\r\n                  <Protocol>http</Protocol>\r\n                  <Vip>104.40.72.130</Vip>\r\n                </InputEndpoint>\r\n              </InputEndpoints>\r\n              <SubnetNames />\r\n            </ConfigurationSet>\r\n          </ConfigurationSets>\r\n        </Role>\r\n      </RoleList>\r\n      <SdkVersion>2.0.6493.2</SdkVersion>\r\n      <Locked>false</Locked>\r\n      <RollbackAllowed>false</RollbackAllowed>\r\n      <CreatedTime>2014-08-07T13:05:02Z</CreatedTime>\r\n      <LastModifiedTime>2014-08-07T13:05:35Z</LastModifiedTime>\r\n      <ExtendedProperties />\r\n      <VirtualIPs>\r\n        <VirtualIP>\r\n          <Address>104.40.72.130</Address>\r\n          <IsDnsProgrammed>true</IsDnsProgrammed>\r\n          <Name>mynodeservice03ContractContract</Name>\r\n        </VirtualIP>\r\n      </VirtualIPs>\r\n      <LoadBalancers />\r\n    </Deployment>\r\n  </Deployments>\r\n</HostedService>",
+      "ResponseHeaders": {
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "bb3b950f05b0ce82b0f8a344813dfdb7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:05:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"Id\": \"0BAD8744-80DB-4AE6-865A-267BC2CE859C\",\r\n  \"Name\": \"rule4261\",\r\n  \"Description\": \"rule description\",\r\n  \"IsEnabled\": false,\r\n  \"Condition\": {\r\n    \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n    \"DataSource\": {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n      \"ResourceId\": \"/hostedservices/cs430/deployments/deployment8621/roles/WebRole1\",\r\n      \"MetricNamespace\": \"\",\r\n      \"MetricName\": \"Percentage CPU\"\r\n    },\r\n    \"Operator\": \"GreaterThanOrEqual\",\r\n    \"Threshold\": 80.0,\r\n    \"WindowSize\": \"PT5M\"\r\n  },\r\n  \"Actions\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\",\r\n      \"SendToServiceOwners\": false,\r\n      \"CustomEmails\": []\r\n    }\r\n  ],\r\n  \"LastUpdatedTime\": \"0001-01-01T00:00:00\"\r\n}",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "e45080739667c98fbf573b98c334a625"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"Id\": \"0BAD8744-80DB-4AE6-865A-267BC2CE859C\",\r\n  \"Name\": \"rule4261\",\r\n  \"Description\": \"updated description\",\r\n  \"IsEnabled\": false,\r\n  \"Condition\": {\r\n    \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n    \"DataSource\": {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n      \"ResourceId\": \"/hostedservices/cs430/deployments/deployment8621/roles/WebRole1\",\r\n      \"MetricNamespace\": \"\",\r\n      \"MetricName\": \"Percentage CPU\"\r\n    },\r\n    \"Operator\": \"GreaterThanOrEqual\",\r\n    \"Threshold\": 60.0,\r\n    \"WindowSize\": \"PT5M\"\r\n  },\r\n  \"Actions\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\",\r\n      \"SendToServiceOwners\": false,\r\n      \"CustomEmails\": []\r\n    }\r\n  ],\r\n  \"LastUpdatedTime\": \"0001-01-01T00:00:00\"\r\n}",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "119aeed65fb0c37ca7fd7121de39abc5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:19 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"0BAD8744-80DB-4AE6-865A-267BC2CE859C\",\r\n  \"Name\": \"rule4261\",\r\n  \"Description\": \"rule description\",\r\n  \"Condition\": {\r\n    \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n    \"DataSource\": {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n      \"ResourceId\": \"/hostedservices/cs430/deployments/deployment8621/roles/WebRole1\",\r\n      \"MetricNamespace\": \"\",\r\n      \"MetricName\": \"Percentage CPU\"\r\n    },\r\n    \"Operator\": \"GreaterThanOrEqual\",\r\n    \"Threshold\": 80.0,\r\n    \"WindowSize\": \"PT5M\"\r\n  },\r\n  \"Actions\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\"\r\n    }\r\n  ],\r\n  \"LastUpdatedTime\": \"2014-08-07T13:06:00.6841739Z\"\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "0886ef33f72ec599bd7979852f0dc0f1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:06 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"0BAD8744-80DB-4AE6-865A-267BC2CE859C\",\r\n  \"Name\": \"rule4261\",\r\n  \"Description\": \"updated description\",\r\n  \"Condition\": {\r\n    \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n    \"DataSource\": {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n      \"ResourceId\": \"/hostedservices/cs430/deployments/deployment8621/roles/WebRole1\",\r\n      \"MetricNamespace\": \"\",\r\n      \"MetricName\": \"Percentage CPU\"\r\n    },\r\n    \"Operator\": \"GreaterThanOrEqual\",\r\n    \"Threshold\": 60.0,\r\n    \"WindowSize\": \"PT5M\"\r\n  },\r\n  \"Actions\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\"\r\n    }\r\n  ],\r\n  \"LastUpdatedTime\": \"2014-08-07T13:06:18.3058746Z\"\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "7ecb5d044f4fcad0b69041b943052407"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:20 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">{\"Code\":\"RuleDoesNotExist\",\"Message\":\"Could not find alert rule.\"}</string>",
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C/alertincidents?$filter=IsActive%20eq%20true",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Value\": []\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "0f41ef74bfbcccc28f39f9362a9cc605"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:06 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Value\": [\r\n    {\r\n      \"Id\": \"YW5keXByb2R2bTA4MDQ=-YW5keWNwdXJ1bGUtOTc4YzZiYTYtNTljYy00YmY2LWIyMTUtMTdhMzVhZTllYWVl\",\r\n      \"Name\": \"andycpurule\",\r\n      \"Description\": \"\",\r\n      \"IsEnabled\": true,\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/andyprodvm0804/deployments/andyprodvm0804/roles/andyprodvm0804\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Threshold\": 50.0,\r\n        \"WindowSize\": \"PT30M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\",\r\n          \"CustomEmails\": [\r\n            \"andyshen@microsoft.com\"\r\n          ]\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-08-05T18:00:25.3140322Z\"\r\n    },\r\n    {\r\n      \"Id\": \"0BAD8744-80DB-4AE6-865A-267BC2CE859C\",\r\n      \"Name\": \"rule4261\",\r\n      \"Description\": \"rule description\",\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/cs430/deployments/deployment8621/roles/WebRole1\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Operator\": \"GreaterThanOrEqual\",\r\n        \"Threshold\": 80.0,\r\n        \"WindowSize\": \"PT5M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\"\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-08-07T13:06:00.6841739Z\"\r\n    },\r\n    {\r\n      \"Id\": \"2694d138-7d9b-4eb2-9da6-6774beab5f81\",\r\n      \"Name\": \"Orcale VM CPU Alert\",\r\n      \"Description\": \"\",\r\n      \"IsEnabled\": true,\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/OracleVMTest/deployments/OracleVMTest/roles/OracleVMTest\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Threshold\": 50.0,\r\n        \"WindowSize\": \"PT5M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\"\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-07-23T05:31:43.0845716Z\"\r\n    },\r\n    {\r\n      \"Id\": \"978c6ba6-59cc-4bf6-b215-17a35ae9eaee\",\r\n      \"Name\": \"andycpurule\",\r\n      \"Description\": \"\",\r\n      \"IsEnabled\": true,\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/andyprodvm0804/deployments/andyprodvm0804/roles/andyprodvm0804\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Threshold\": 50.0,\r\n        \"WindowSize\": \"PT30M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\",\r\n          \"CustomEmails\": [\r\n            \"andyshen@microsoft.com\"\r\n          ]\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-08-05T17:31:25.4441074Z\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "ec819390940ac1ab9aa710a81eda735a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:09 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Value\": [\r\n    {\r\n      \"Id\": \"YW5keXByb2R2bTA4MDQ=-YW5keWNwdXJ1bGUtOTc4YzZiYTYtNTljYy00YmY2LWIyMTUtMTdhMzVhZTllYWVl\",\r\n      \"Name\": \"andycpurule\",\r\n      \"Description\": \"\",\r\n      \"IsEnabled\": true,\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/andyprodvm0804/deployments/andyprodvm0804/roles/andyprodvm0804\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Threshold\": 50.0,\r\n        \"WindowSize\": \"PT30M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\",\r\n          \"CustomEmails\": [\r\n            \"andyshen@microsoft.com\"\r\n          ]\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-08-05T18:00:25.3140322Z\"\r\n    },\r\n    {\r\n      \"Id\": \"2694d138-7d9b-4eb2-9da6-6774beab5f81\",\r\n      \"Name\": \"Orcale VM CPU Alert\",\r\n      \"Description\": \"\",\r\n      \"IsEnabled\": true,\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/OracleVMTest/deployments/OracleVMTest/roles/OracleVMTest\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Threshold\": 50.0,\r\n        \"WindowSize\": \"PT5M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\"\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-07-23T05:31:43.0845716Z\"\r\n    },\r\n    {\r\n      \"Id\": \"978c6ba6-59cc-4bf6-b215-17a35ae9eaee\",\r\n      \"Name\": \"andycpurule\",\r\n      \"Description\": \"\",\r\n      \"IsEnabled\": true,\r\n      \"Condition\": {\r\n        \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition\",\r\n        \"DataSource\": {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource\",\r\n          \"ResourceId\": \"/hostedservices/andyprodvm0804/deployments/andyprodvm0804/roles/andyprodvm0804\",\r\n          \"MetricNamespace\": \"\",\r\n          \"MetricName\": \"Percentage CPU\"\r\n        },\r\n        \"Threshold\": 50.0,\r\n        \"WindowSize\": \"PT30M\"\r\n      },\r\n      \"Actions\": [\r\n        {\r\n          \"odata.type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction\",\r\n          \"CustomEmails\": [\r\n            \"andyshen@microsoft.com\"\r\n          ]\r\n        }\r\n      ],\r\n      \"LastUpdatedTime\": \"2014-08-05T17:31:25.4441074Z\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "60070e15f1dbc127a42956406fdd22c0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:28 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/services/monitoring/alertrules/0BAD8744-80DB-4AE6-865A-267BC2CE859C",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "x-ms-request-id": [
+          "f4226b9926e4ce3e80197276eb1e6632"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 07 Aug 2014 13:06:25 GMT"
+        ],
+        "Server": [
+          "1.0.6198.110",
+          "(rd_rdfe_stable.140729-1337)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "AlertRuleCrudTest": [
+      "cs430",
+      "rule4261"
+    ],
+    "ProvisionHostedService": [
+      "storage3878",
+      "deployment8621"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "1a66ce04-b633-4a0b-b2bc-a912ec8986a6"
+  }
+}

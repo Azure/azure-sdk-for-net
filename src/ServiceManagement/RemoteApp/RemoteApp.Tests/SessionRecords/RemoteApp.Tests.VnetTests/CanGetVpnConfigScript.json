@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/vnets/cloudvnet/vpnscript?vendor=Cisco%20Systems%2C%20Inc.&platform=ASA%205500%20Series%20Adaptive%20Security%20Appliances&osFamily=ASA%20Software%208.3&api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdm5ldHMvY2xvdWR2bmV0L3ZwbnNjcmlwdD92ZW5kb3I9Q2lzY28lMjBTeXN0ZW1zJTJDJTIwSW5jLiZwbGF0Zm9ybT1BU0ElMjA1NTAwJTIwU2VyaWVzJTIwQWRhcHRpdmUlMjBTZWN1cml0eSUyMEFwcGxpYW5jZXMmb3NGYW1pbHk9QVNBJTIwU29mdHdhcmUlMjA4LjMmYXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"! Microsoft Corporation\\u000d\\u000a! Windows Azure Virtual Network\\u000d\\u000a\\u000d\\u000a! This configuration template applies to Cisco ASA 5500 Series Adaptive Security Appliances running ASA Software 8.3.\\u000d\\u000a! It configures an IPSec VPN tunnel connecting your on-premise VPN device with the Azure gateway.\\u000d\\u000a\\u000d\\u000a! ---------------------------------------------------------------------------------------------------------------------\\u000d\\u000a! ACL and NAT rules\\u000d\\u000a! \\u000d\\u000a! Proper ACL and NAT rules are needed for permitting cross-premise network traffic.\\u000d\\u000a! You should also allow inbound UDP\\/ESP traffic for the interface which will be used for the IPSec tunnel.\\u000d\\u000aobject-group network azure-networks\\u000d\\u000a network-object <SP_AzureVnetNetworkIpRange> <SP_AzureVnetNetworkSubnetMask>\\u000d\\u000a exit\\u000d\\u000aobject-group network onprem-networks\\u000d\\u000a network-object <SP_OnPremiseNetworkIpRange> <SP_OnPremiseNetworkSubnetMask>\\u000d\\u000a exit\\u000d\\u000aaccess-list azure-vpn-acl extended permit ip object-group onprem-networks object-group azure-networks\\u000d\\u000anat (inside,outside) source static onprem-networks onprem-networks destination static azure-networks azure-networks\\u000d\\u000a\\u000d\\u000a! ---------------------------------------------------------------------------------------------------------------------\\u000d\\u000a! Internet Key Exchange (IKE) configuration\\u000d\\u000a! \\u000d\\u000a! This section specifies the authentication, encryption, hashing, Diffie-Hellman, and lifetime parameters for the Phase\\u000d\\u000a! 1 negotiation and the main mode security association. We have picked an arbitrary policy # \\\"10\\\" as an example. If\\u000d\\u000a! that happens to conflict with an existing policy, you may choose to use a different policy #.\\u000d\\u000acrypto isakmp enable outside\\u000d\\u000acrypto isakmp policy 10\\u000d\\u000a authentication pre-share\\u000d\\u000a encryption aes-256\\u000d\\u000a hash sha\\u000d\\u000a group 2\\u000d\\u000a lifetime 28800\\u000d\\u000a exit\\u000d\\u000a\\u000d\\u000a! ---------------------------------------------------------------------------------------------------------------------\\u000d\\u000a! IPSec configuration\\u000d\\u000a! \\u000d\\u000a! This section specifies encryption, authentication, and lifetime properties for the Phase 2 negotiation and the quick\\u000d\\u000a! mode security association. \\u000d\\u000acrypto ipsec transform-set azure-ipsec-proposal-set esp-aes-256 esp-sha-hmac\\u000d\\u000acrypto ipsec security-association lifetime seconds 3600\\u000d\\u000acrypto ipsec security-association lifetime kilobytes 102400000\\u000d\\u000a\\u000d\\u000a! ---------------------------------------------------------------------------------------------------------------------\\u000d\\u000a! Crypto map configuration\\u000d\\u000a!\\u000d\\u000a! This section defines a crypto map that binds the cross-premise network traffic to the\\u000d\\u000a! IPSec transform set and remote peer. We have picked an arbitrary ID # \\\"10\\\" as an example. If\\u000d\\u000a! that happens to conflict with an existing crypto map, you may choose to use a different ID #.\\u000d\\u000acrypto map azure-crypto-map 10 match address azure-vpn-acl\\u000d\\u000acrypto map azure-crypto-map 10 set peer <SP_AzureGatewayIpAddress>\\u000d\\u000acrypto map azure-crypto-map 10 set transform-set azure-ipsec-proposal-set\\u000d\\u000acrypto map azure-crypto-map interface outside\\u000d\\u000a\\u000d\\u000a! ---------------------------------------------------------------------------------------------------------------------\\u000d\\u000a! Tunnel configuration\\u000d\\u000a!\\u000d\\u000a! This section defines an IPSec site-to-site tunnel connecting to the Azure gateway and specifies the pre-shared key\\u000d\\u000a! value used for Phase 1 authentication.  \\u000d\\u000atunnel-group <SP_AzureGatewayIpAddress> type ipsec-l2l\\u000d\\u000atunnel-group <SP_AzureGatewayIpAddress> ipsec-attributes\\u000d\\u000a pre-shared-key <SP_PresharedKey>\\u000d\\u000a exit\\u000d\\u000a\\u000d\\u000a! ---------------------------------------------------------------------------------------------------------------------\\u000d\\u000a! TCPMSS clamping\\u000d\\u000a!\\u000d\\u000a! Adjust the TCPMSS value properly to avoid fragmentation\\u000d\\u000asysopt connection tcpmss 1350\\u000d\\u000aexit\\u000d\\u000a\\u000d\\u000a\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4363"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "03fb68aff0706932af0f79d4b377973f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:02 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

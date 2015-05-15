@@ -1,0 +1,33 @@
+﻿<NetworkConfiguration
+  xmlns="http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <VirtualNetworkConfiguration>
+    <Dns>
+      <DnsServers />
+    </Dns>
+    <LocalNetworkSites>
+      <LocalNetworkSite name="localNetworkSiteName">
+        <AddressSpace>
+          <!-- A customer can define multiple address prefixes in this section. -->
+          <AddressPrefix>10.1.0.0/16</AddressPrefix>
+        </AddressSpace>
+        <!-- VPNGatewayAddress specifies the public IP address of the customer VPN gateway device. -->
+        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>
+      </LocalNetworkSite>
+    </LocalNetworkSites>
+    <VirtualNetworkSites>
+      <VirtualNetworkSite name="virtualNetworkSiteName" Location="North Central US">
+        <AddressSpace>
+          <!-- A customer can define multiple address prefixes in this section. -->
+          <AddressPrefix>192.168.0.0/24</AddressPrefix>
+        </AddressSpace>
+        <Subnets>
+          <Subnet name="SubnetName">
+            <AddressPrefix>192.168.0.0/28</AddressPrefix>
+          </Subnet>
+        </Subnets>
+        <DnsServersRef/>
+      </VirtualNetworkSite>
+    </VirtualNetworkSites>
+  </VirtualNetworkConfiguration>
+</NetworkConfiguration>

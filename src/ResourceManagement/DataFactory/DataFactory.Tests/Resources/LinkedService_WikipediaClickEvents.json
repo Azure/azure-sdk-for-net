@@ -1,0 +1,9 @@
+{
+    "name": "LinkedService-WikipediaClickEvents",
+    "properties": {
+        "type": "AzureStorageLinkedService",
+        "typeProperties": { 
+            "connectionString": "DefaultEndpointsProtocol=https;AccountName=**********;AccountKey=**********"
+        }        
+    }
+}

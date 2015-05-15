@@ -1,0 +1,295 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/providers/Microsoft.Web?api-version=2014-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/providers/Microsoft.Web\",\r\n  \"namespace\": \"Microsoft.Web\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"certificates\",\r\n      \"locations\": [\r\n        \"\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-06-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"serverFarms\",\r\n      \"locations\": [\r\n        \"\",\r\n        \"North Europe\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-06-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"sites\",\r\n      \"locations\": [\r\n        \"\",\r\n        \"North Europe\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-06-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "559"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31999"
+        ],
+        "x-ms-request-id": [
+          "1ce9e348-4b9b-41a6-b360-0c5e0720ab96"
+        ],
+        "x-ms-correlation-request-id": [
+          "1ce9e348-4b9b-41a6-b360-0c5e0720ab96"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20141003T204216Z:1ce9e348-4b9b-41a6-b360-0c5e0720ab96"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 03 Oct 2014 20:42:16 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourcegroups/csmrg4753?api-version=2014-04-01-preview",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "49"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753\",\r\n  \"name\": \"csmrg4753\",\r\n  \"location\": \"northeurope\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "186"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "32c261c7-81d4-4bef-b4fb-62fd80cfe621"
+        ],
+        "x-ms-correlation-request-id": [
+          "32c261c7-81d4-4bef-b4fb-62fd80cfe621"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20141003T204216Z:32c261c7-81d4-4bef-b4fb-62fd80cfe621"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 03 Oct 2014 20:42:16 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverFarms/csmwhp4357?api-version=2014-06-01",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Shared\",\r\n    \"numberOfWorkers\": 0,\r\n    \"workerSize\": \"Small\"\r\n  },\r\n  \"name\": \"csmwhp4357\",\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "175"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverfarms/csmwhp4357\",\r\n  \"name\": \"csmwhp4357\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"csmwhp4357\",\r\n    \"sku\": \"Shared\",\r\n    \"workerSize\": 0,\r\n    \"numberOfWorkers\": 0,\r\n    \"currentWorkerSize\": 0,\r\n    \"currentNumberOfWorkers\": 0,\r\n    \"status\": 0,\r\n    \"webSpace\": \"csmrg4753-NorthEuropewebspace\",\r\n    \"adminSiteName\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "432"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c2e2173d-f9bc-4b13-82d2-7f1a4eccefec"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "a09fa08d-7563-41b5-8951-0e57a0ae41c6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20141003T204219Z:a09fa08d-7563-41b5-8951-0e57a0ae41c6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 03 Oct 2014 20:42:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverFarms/csmwhp1965?api-version=2014-06-01",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": \"Basic\",\r\n    \"numberOfWorkers\": 1,\r\n    \"workerSize\": \"Small\"\r\n  },\r\n  \"name\": \"csmwhp1965\",\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "174"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverfarms/csmwhp1965\",\r\n  \"name\": \"csmwhp1965\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"csmwhp1965\",\r\n    \"sku\": \"Basic\",\r\n    \"workerSize\": 0,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": 0,\r\n    \"webSpace\": \"csmrg4753-NorthEuropewebspace\",\r\n    \"adminSiteName\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "431"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f8e5e785-3110-4418-a773-a9a44e5b2d26"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a057845-9325-4c1d-860f-716b4be13119"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20141003T204226Z:8a057845-9325-4c1d-860f-716b4be13119"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 03 Oct 2014 20:42:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverFarms?api-version=2014-06-01",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverfarms/csmwhp1965\",\r\n      \"name\": \"csmwhp1965\",\r\n      \"type\": \"Microsoft.Web/serverfarms\",\r\n      \"location\": \"North Europe\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"name\": \"csmwhp1965\",\r\n        \"sku\": \"Basic\",\r\n        \"workerSize\": 0,\r\n        \"numberOfWorkers\": 1,\r\n        \"currentWorkerSize\": 0,\r\n        \"currentNumberOfWorkers\": 1,\r\n        \"status\": 0,\r\n        \"webSpace\": \"csmrg4753-NorthEuropewebspace\",\r\n        \"adminSiteName\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/17d59322-0778-4e62-a43a-d5acef7bc6fd/resourceGroups/csmrg4753/providers/Microsoft.Web/serverfarms/csmwhp4357\",\r\n      \"name\": \"csmwhp4357\",\r\n      \"type\": \"Microsoft.Web/serverfarms\",\r\n      \"location\": \"North Europe\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"name\": \"csmwhp4357\",\r\n        \"sku\": \"Shared\",\r\n        \"workerSize\": 0,\r\n        \"numberOfWorkers\": 0,\r\n        \"currentWorkerSize\": 0,\r\n        \"currentNumberOfWorkers\": 0,\r\n        \"status\": 0,\r\n        \"webSpace\": \"csmrg4753-NorthEuropewebspace\",\r\n        \"adminSiteName\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "876"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "46d6968d-1212-42ed-a856-e1eda6096999"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31998"
+        ],
+        "x-ms-correlation-request-id": [
+          "c02f155d-b77f-4fcb-8ad0-13fa54635a98"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20141003T204226Z:c02f155d-b77f-4fcb-8ad0-13fa54635a98"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 03 Oct 2014 20:42:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateAndVerifyListOfWebHostingPlan": [
+      "csmwhp4357",
+      "csmwhp1965",
+      "csmrg4753"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "17d59322-0778-4e62-a43a-d5acef7bc6fd",
+    "UserId": "admin@aad167.ccsctp.net"
+  }
+}

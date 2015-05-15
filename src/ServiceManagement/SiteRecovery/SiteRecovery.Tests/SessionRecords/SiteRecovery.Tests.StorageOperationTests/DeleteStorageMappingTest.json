@@ -1,0 +1,265 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Servers?api-version=2015-04-10",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1NlcnZlcnM/YXBpLXZlcnNpb249MjAxNS0wNC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServer xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Server>\r\n    <ID>4c83e038-7abd-428b-9138-81065e2bb559</ID>\r\n    <Name>HRM-04-020.dratest.nttest.microsoft.com</Name>\r\n    <Connected>true</Connected>\r\n    <LastHeartbeat>2015-04-10T05:07:04.7512187Z</LastHeartbeat>\r\n    <ProviderVersion>3.5.721.0</ProviderVersion>\r\n    <ServerVersion>3.2.7768.0</ServerVersion>\r\n    <FabricObjectID>4c83e038-7abd-428b-9138-81065e2bb559</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <Type>VMM</Type>\r\n  </Server>\r\n  <Server>\r\n    <ID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ID>\r\n    <Name>HRM-04-019.dratest.nttest.microsoft.com</Name>\r\n    <Connected>true</Connected>\r\n    <LastHeartbeat>2015-04-10T05:07:09.1440687Z</LastHeartbeat>\r\n    <ProviderVersion>3.5.721.0</ProviderVersion>\r\n    <ServerVersion>3.2.7768.0</ServerVersion>\r\n    <FabricObjectID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <Type>VMM</Type>\r\n  </Server>\r\n</ArrayOfServer>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "929"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-request-id": [
+          "4164178a2489ac3993b1651505f66d4a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:08:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Storages?api-version=2015-04-10&ServerId=4c83e038-7abd-428b-9138-81065e2bb559",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1N0b3JhZ2VzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMTAmU2VydmVySWQ9NGM4M2UwMzgtN2FiZC00MjhiLTkxMzgtODEwNjVlMmJiNTU5",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfStorage xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Storage>\r\n    <ID>1e8fbef4-e213-4d1b-97e3-f9aa44b45f92</ID>\r\n    <Name>phase2RecoveryStorageClassification</Name>\r\n    <FabricObjectID>1e8fbef4-e213-4d1b-97e3-f9aa44b45f92</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>Classification</Type>\r\n    <StoragePools i:nil=\"true\" />\r\n  </Storage>\r\n</ArrayOfStorage>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "456"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-request-id": [
+          "351e5f63d327aa94b6d394e7d9a5c4cf"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:08:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Storages?api-version=2015-04-10&ServerId=8ec64e79-fb97-4837-a6b1-1968f3fcc63f",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1N0b3JhZ2VzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMTAmU2VydmVySWQ9OGVjNjRlNzktZmI5Ny00ODM3LWE2YjEtMTk2OGYzZmNjNjNm",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfStorage xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Storage>\r\n    <ID>43f43297-5e06-4284-a2a9-9fc54914b520</ID>\r\n    <Name>phase2PrimaryStorageClassification</Name>\r\n    <FabricObjectID>43f43297-5e06-4284-a2a9-9fc54914b520</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>Classification</Type>\r\n    <StoragePools i:nil=\"true\" />\r\n  </Storage>\r\n</ArrayOfStorage>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "455"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-request-id": [
+          "2ca89005c899ac1cb3ab00b07d25c115"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:08:34 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/StorageMappings?api-version=2015-04-10",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1N0b3JhZ2VNYXBwaW5ncz9hcGktdmVyc2lvbj0yMDE1LTA0LTEw",
+      "RequestMethod": "DELETE",
+      "RequestBody": "<StorageMappingInput xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <PrimaryServerId>4c83e038-7abd-428b-9138-81065e2bb559</PrimaryServerId>\r\n  <PrimaryStorageId>1e8fbef4-e213-4d1b-97e3-f9aa44b45f92</PrimaryStorageId>\r\n  <RecoveryServerId>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</RecoveryServerId>\r\n  <RecoveryStorageId>43f43297-5e06-4284-a2a9-9fc54914b520</RecoveryStorageId>\r\n</StorageMappingInput>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "403"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Agent-Authentication": [
+          ""
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Job xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>5de7dc07-8f80-4316-90f9-fd2e1a914f31</ID>\r\n  <ActivityId>eca9bf81-8f80-449c-805e-0c891a2d198c</ActivityId>\r\n  <AllowedActions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <d2p1:string>Cancel</d2p1:string>\r\n    <d2p1:string>Restart</d2p1:string>\r\n  </AllowedActions>\r\n  <DisplayName>Remove classification mapping</DisplayName>\r\n  <EndTime i:nil=\"true\" />\r\n  <Errors />\r\n  <Name>ClassificationUnpairing</Name>\r\n  <StartTime>2015-04-10T05:08:36.6282543Z</StartTime>\r\n  <State>InProgress</State>\r\n  <StateDescription>InProgress</StateDescription>\r\n  <TargetObjectId>1e8fbef4-e213-4d1b-97e3-f9aa44b45f92</TargetObjectId>\r\n  <TargetObjectName>phase2RecoveryStorageClassification</TargetObjectName>\r\n  <TargetObjectType>Storage</TargetObjectType>\r\n  <Tasks>\r\n    <Task>\r\n      <ID>UnpairClassificationsPreflightChecksTask</ID>\r\n      <Name>Prerequisites check for unmapping classifications</Name>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <ChildJobId i:nil=\"true\" />\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Name i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;ChildJobId i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;State i:nil=\"true\" /&gt;\r\n  &lt;StateDescription i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <State>NotStarted</State>\r\n      <StateDescription>NotStarted</StateDescription>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>UnpairClassificationsTask</ID>\r\n      <Name>Unmapping classifications</Name>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <ChildJobId i:nil=\"true\" />\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Name i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;ChildJobId i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;State i:nil=\"true\" /&gt;\r\n  &lt;StateDescription i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <State>NotStarted</State>\r\n      <StateDescription>NotStarted</StateDescription>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n  </Tasks>\r\n</Job>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2866"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "eca9bf81-8f80-449c-805e-0c891a2d198c"
+        ],
+        "x-ms-request-id": [
+          "ec0895fc83d5a7b290ea575c83afbb7d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:08:36 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba"
+  }
+}

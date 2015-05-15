@@ -1,0 +1,23 @@
+{
+    name: "DA_CuratedWikiData",
+    properties: {
+        type: "AzureBlobLocation",
+        typeProperties: {
+            folderPath: "wikidatagateway/wikisampledataout/runtime={Slice}",
+            partitionedBy: 
+			[
+				{ name: "Slice", value: { type: "DateTime", date: "SliceStart", format: "yyyyMMddHH" } }
+			]
+        },
+        linkedServiceName: "LinkedService-CuratedWikiData",   
+        structure: [
+            { name: "slicetimestamp", position: 0, type: "String" },
+            { name: "projectname", position: 1, type: "String" },
+            { name: "pageviews", position: 2, type: "Decimal" }
+        ],
+        availability: {
+            frequency: "Hour",
+            interval: 1
+        }
+    }
+}
