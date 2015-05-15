@@ -1,0 +1,94 @@
+﻿// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+namespace Network.Tests.Routes
+{
+    using System.Net;
+    using Xunit;
+
+    public class GetRouteTableForSubnetTests
+    {
+        [Fact]
+        [Trait("Feature", "Routes")]
+        public void GetRouteTableForSubnetWithNonExistantVnetName()
+        {
+            using (NetworkTestClient networkTestClient = new NetworkTestClient())
+            {
+                networkTestClient.EnsureNoNetworkConfigurationExists();
+
+                try
+                {
+                    networkTestClient.Routes.GetRouteTableForSubnet("NonExistingVnetName", NetworkTestConstants.WideVNetSubnetName);
+                    Assert.True(false, "GetRouteTableForSubnet should have thrown a CloudException when the vnetName didn't exist.");
+                }
+                catch (Hyak.Common.CloudException e)
+                {
+                    Assert.Equal("ResourceNotFound", e.Error.Code);
+                    Assert.Equal("The virtual network NonExistingVnetName does not exist.", e.Error.Message);
+                    Assert.NotNull(e.Response);
+                    Assert.Equal("Not Found", e.Response.ReasonPhrase);
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Feature", "Routes")]
+        public void GetRouteTableForSubnetWithNonExistantSubnetName()
+        {
+            using (NetworkTestClient networkTestClient = new NetworkTestClient())
+            {
+                networkTestClient.EnsureWideVNetNetworkConfigurationExists();
+
+                try
+                {
+                    networkTestClient.Routes.GetRouteTableForSubnet(NetworkTestConstants.VirtualNetworkSiteName, "NonExistantSubnetName");
+                    Assert.True(false, "GetRouteTableForSubnet should have thrown a CloudException when the subnetName didn't exist.");
+                }
+                catch (Hyak.Common.CloudException e)
+                {
+                    Assert.Equal("ResourceNotFound", e.Error.Code);
+                    Assert.Equal("Subnet name NonExistantSubnetName was not found in Virtual Network virtualNetworkSiteName.", e.Error.Message);
+                    Assert.NotNull(e.Response);
+                    Assert.Equal("Not Found", e.Response.ReasonPhrase);
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Feature", "Routes")]
+        public void GetRouteTableForSubnetWhenNoRouteTableExists()
+        {
+            using (NetworkTestClient networkTestClient = new NetworkTestClient())
+            {
+                networkTestClient.EnsureWideVNetNetworkConfigurationExists();
+
+                try
+                {
+                    networkTestClient.Routes.GetRouteTableForSubnet(NetworkTestConstants.VirtualNetworkSiteName, NetworkTestConstants.WideVNetSubnetName);
+                    Assert.True(false, "GetRouteTableForSubnet should have thrown a CloudException when the subnetName didn't exist.");
+                }
+                catch (Hyak.Common.CloudException e)
+                {
+                    Assert.Equal("ResourceNotFound", e.Error.Code);
+                    Assert.Equal("The virtual network name virtualNetworkSiteName and subnet SubnetName does not have any Route Table associated.", e.Error.Message);
+                    Assert.NotNull(e.Response);
+                    Assert.Equal("Not Found", e.Response.ReasonPhrase);
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
+            }
+        }
+    }
+}

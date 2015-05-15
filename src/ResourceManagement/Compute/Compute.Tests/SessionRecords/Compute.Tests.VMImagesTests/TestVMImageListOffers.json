@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"$type\": \"Microsoft.WindowsAzure.PlatformImageRepository.ArtifactService.API.Consumption.VMImageOffer, PIR.ArtifactService\",\r\n    \"location\": \"westus\",\r\n    \"name\": \"WindowsServer2012\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "391"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-SourceFiles": [
+          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVycw==?="
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Access-Control-Allow-Headers": [
+          "Content-Type"
+        ],
+        "Access-Control-Allow-Methods": [
+          "GET, POST, PUT, DELETE, OPTIONS"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 11 Apr 2015 00:27:07 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "84fffc2f-5d77-449a-bc7f-58c363f2a6b9"
+  }
+}

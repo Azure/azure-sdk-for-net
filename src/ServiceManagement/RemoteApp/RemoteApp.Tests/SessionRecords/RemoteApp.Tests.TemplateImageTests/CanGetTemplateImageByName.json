@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/templateImages?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdGVtcGxhdGVJbWFnZXM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Id\": \"3e0be916-fe2e-49c6-98c5-01e8db1d854c\",\r\n    \"Name\": \"bluerefresh.2014.08.21.vhd\",\r\n    \"NumberOfLinkedCollections\": 1,\r\n    \"OfficeType\": 0,\r\n    \"PathOnClient\": \"C:\\\\faketestpath\\\\BlueRefresh.2014.08.21.vhd\",\r\n    \"RegionList\": [\r\n      \"West US\"\r\n    ],\r\n    \"Sas\": null,\r\n    \"SasExpiry\": \"1900-01-01T00:00:00Z\",\r\n    \"Size\": 42949673472,\r\n    \"Status\": 8,\r\n    \"TrialOnly\": false,\r\n    \"Type\": 0,\r\n    \"UploadCompleteTime\": \"2015-01-29T22:34:34.691Z\",\r\n    \"UploadSetupTime\": \"2015-01-29T22:20:34.124Z\",\r\n    \"UploadStartTime\": \"2015-01-29T22:33:23.941Z\",\r\n    \"Uri\": \"https://cdvwu220542040rdcm.blob.core.windows.net/goldimages/3e0be916-fe2e-49c6-98c5-01e8db1d854c.vhd\"\r\n  },\r\n  {\r\n    \"Id\": \"ad072bd3082149369c449ba5832401ae__Windows-Server-Remote-Desktop-Session-Host-on-Windows-Server-2012-R2-20150128-0500\",\r\n    \"Name\": \"Windows Server Remote Desktop Session Host on Windows Server 2012 R2\",\r\n    \"NumberOfLinkedCollections\": 0,\r\n    \"OfficeType\": 0,\r\n    \"PathOnClient\": \"\",\r\n    \"RegionList\": [\r\n      \"East Asia\",\r\n      \"Southeast Asia\",\r\n      \"Brazil South\",\r\n      \"North Europe\",\r\n      \"West Europe\",\r\n      \"Japan East\",\r\n      \"Japan West\",\r\n      \"Central US\",\r\n      \"East US\",\r\n      \"East US 2\",\r\n      \"North Central US\",\r\n      \"South Central US\",\r\n      \"West US\"\r\n    ],\r\n    \"Sas\": \"\",\r\n    \"SasExpiry\": \"1899-12-31T16:00:00-08:00\",\r\n    \"Size\": 0,\r\n    \"Status\": 8,\r\n    \"TrialOnly\": false,\r\n    \"Type\": 1,\r\n    \"UploadCompleteTime\": \"2015-01-28T05:33:11.651Z\",\r\n    \"UploadSetupTime\": \"2015-01-28T05:33:11.651Z\",\r\n    \"UploadStartTime\": \"1899-12-31T16:00:00-08:00\",\r\n    \"Uri\": \"\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1284"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "d63a87966ac4667387354e0e06782fff"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:43 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/templateImages/bluerefresh.2014.08.21.vhd?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdGVtcGxhdGVJbWFnZXMvYmx1ZXJlZnJlc2guMjAxNC4wOC4yMS52aGQ/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"3e0be916-fe2e-49c6-98c5-01e8db1d854c\",\r\n  \"Name\": \"bluerefresh.2014.08.21.vhd\",\r\n  \"NumberOfLinkedCollections\": 1,\r\n  \"OfficeType\": 0,\r\n  \"PathOnClient\": \"C:\\\\faketestpath\\\\BlueRefresh.2014.08.21.vhd\",\r\n  \"RegionList\": [\r\n    \"West US\"\r\n  ],\r\n  \"Sas\": null,\r\n  \"SasExpiry\": \"1900-01-01T00:00:00Z\",\r\n  \"Size\": 42949673472,\r\n  \"Status\": 8,\r\n  \"TrialOnly\": false,\r\n  \"Type\": 0,\r\n  \"UploadCompleteTime\": \"2015-01-29T22:34:34.691Z\",\r\n  \"UploadSetupTime\": \"2015-01-29T22:20:34.124Z\",\r\n  \"UploadStartTime\": \"2015-01-29T22:33:23.941Z\",\r\n  \"Uri\": \"https://cdvwu220542040rdcm.blob.core.windows.net/goldimages/3e0be916-fe2e-49c6-98c5-01e8db1d854c.vhd\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "568"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "2f669746bb6862d7a8c6925b790f8d88"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:45 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/templateImages/Windows%20Server%20Remote%20Desktop%20Session%20Host%20on%20Windows%20Server%202012%20R2?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvdGVtcGxhdGVJbWFnZXMvV2luZG93cyUyMFNlcnZlciUyMFJlbW90ZSUyMERlc2t0b3AlMjBTZXNzaW9uJTIwSG9zdCUyMG9uJTIwV2luZG93cyUyMFNlcnZlciUyMDIwMTIlMjBSMj9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"ad072bd3082149369c449ba5832401ae__Windows-Server-Remote-Desktop-Session-Host-on-Windows-Server-2012-R2-20150128-0500\",\r\n  \"Name\": \"Windows Server Remote Desktop Session Host on Windows Server 2012 R2\",\r\n  \"NumberOfLinkedCollections\": 0,\r\n  \"OfficeType\": 0,\r\n  \"PathOnClient\": \"\",\r\n  \"RegionList\": [\r\n    \"East Asia\",\r\n    \"Southeast Asia\",\r\n    \"Brazil South\",\r\n    \"North Europe\",\r\n    \"West Europe\",\r\n    \"Japan East\",\r\n    \"Japan West\",\r\n    \"Central US\",\r\n    \"East US\",\r\n    \"East US 2\",\r\n    \"North Central US\",\r\n    \"South Central US\",\r\n    \"West US\"\r\n  ],\r\n  \"Sas\": \"\",\r\n  \"SasExpiry\": \"1899-12-31T16:00:00-08:00\",\r\n  \"Size\": 0,\r\n  \"Status\": 8,\r\n  \"TrialOnly\": false,\r\n  \"Type\": 1,\r\n  \"UploadCompleteTime\": \"2015-01-28T05:33:11.651Z\",\r\n  \"UploadSetupTime\": \"2015-01-28T05:33:11.651Z\",\r\n  \"UploadStartTime\": \"1899-12-31T16:00:00-08:00\",\r\n  \"Uri\": \"\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "713"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "ed560ba7bbcb639a937f03bc206b6ef2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:47 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

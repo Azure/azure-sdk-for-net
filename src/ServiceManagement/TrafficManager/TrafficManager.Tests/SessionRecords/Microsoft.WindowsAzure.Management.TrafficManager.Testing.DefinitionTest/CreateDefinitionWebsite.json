@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/ef4b4745-ba82-4a18-b724-b373df5890e2/services/WebSpaces/eastuswebspace/ServerFarms",
+      "RequestMethod": "POST",
+      "RequestBody": "<ServerFarm xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>DefaultServerFarm</Name>\r\n  <NumberOfWorkers>2</NumberOfWorkers>\r\n  <SKU>Free</SKU>\r\n  <WorkerSize>Medium</WorkerSize>\r\n</ServerFarm>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "205"
+        ],
+        "x-ms-version": [
+          "2014-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.WebSites.WebSiteManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>NotFound</Code>\r\n  <Message>Cannot find WebSpace with name eastuswebspace.</Message>\r\n  <ExtendedCode>51004</ExtendedCode>\r\n  <MessageTemplate>Cannot find {0} with name {1}.</MessageTemplate>\r\n  <Parameters xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>WebSpace</a:string>\r\n    <a:string>eastuswebspace</a:string>\r\n  </Parameters>\r\n  <InnerErrors i:nil=\"true\" />\r\n</Error>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Tue, 14 Oct 2014 15:10:32 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

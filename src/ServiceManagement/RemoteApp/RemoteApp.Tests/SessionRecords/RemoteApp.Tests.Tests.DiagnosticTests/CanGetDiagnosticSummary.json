@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/diagnostics/summary?userUpn=&StartTime=2015-02-03T21:40:20.8130567Z&EndTime=2015-02-03T22:40:20.8130567Z&api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvZGlhZ25vc3RpY3Mvc3VtbWFyeT91c2VyVXBuPSZTdGFydFRpbWU9MjAxNS0wMi0wM1QyMSUzQTQwJTNBMjAuODEzMDU2N1omRW5kVGltZT0yMDE1LTAyLTAzVDIyJTNBNDAlM0EyMC44MTMwNTY3WiZhcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"ClientVersion\": \"Win32#6.2=5\",\r\n    \"DescriptionID\": \"Success.\",\r\n    \"DescriptionVerb\": \"\",\r\n    \"Details\": null,\r\n    \"RoleInstance\": \"oneuktip0002\",\r\n    \"ScenarioName\": \"RDPConnection\",\r\n    \"TimeStamp\": \"2015-02-03T22:33:22Z\",\r\n    \"TransactionID\": \"403f2017-6d12-47f7-99dd-29b382db0000\",\r\n    \"UserName\": \"2xNgqWKQUKIgIP4bE8ZFt85IFAriBhjshD6jnREoQbw=\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "308"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "34ef7014d8676f0d8d64ddac48e2ad2a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 03 Feb 2015 22:52:32 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

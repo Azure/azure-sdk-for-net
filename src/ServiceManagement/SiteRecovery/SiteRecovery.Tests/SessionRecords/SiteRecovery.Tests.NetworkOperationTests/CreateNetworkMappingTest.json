@@ -1,0 +1,265 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Servers?api-version=2015-04-10",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1NlcnZlcnM/YXBpLXZlcnNpb249MjAxNS0wNC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServer xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Server>\r\n    <ID>4c83e038-7abd-428b-9138-81065e2bb559</ID>\r\n    <Name>HRM-04-020.dratest.nttest.microsoft.com</Name>\r\n    <Connected>true</Connected>\r\n    <LastHeartbeat>2015-04-10T05:04:04.7555231Z</LastHeartbeat>\r\n    <ProviderVersion>3.5.721.0</ProviderVersion>\r\n    <ServerVersion>3.2.7768.0</ServerVersion>\r\n    <FabricObjectID>4c83e038-7abd-428b-9138-81065e2bb559</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <Type>VMM</Type>\r\n  </Server>\r\n  <Server>\r\n    <ID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ID>\r\n    <Name>HRM-04-019.dratest.nttest.microsoft.com</Name>\r\n    <Connected>true</Connected>\r\n    <LastHeartbeat>2015-04-10T05:04:09.1599625Z</LastHeartbeat>\r\n    <ProviderVersion>3.5.721.0</ProviderVersion>\r\n    <ServerVersion>3.2.7768.0</ServerVersion>\r\n    <FabricObjectID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <Type>VMM</Type>\r\n  </Server>\r\n</ArrayOfServer>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "929"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-request-id": [
+          "4a164150b41bac3482f5356b20ea5a84"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:05:29 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Networks?api-version=2015-04-10&ServerId=4c83e038-7abd-428b-9138-81065e2bb559",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L05ldHdvcmtzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMTAmU2VydmVySWQ9NGM4M2UwMzgtN2FiZC00MjhiLTkxMzgtODEwNjVlMmJiNTU5",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfNetwork xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Network>\r\n    <ID>07a3a84b-09aa-4c16-888c-05003ce0ce68</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>07a3a84b-09aa-4c16-888c-05003ce0ce68</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>0bfe50a1-d9b1-40f2-833f-26b439d4dbf2</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>0bfe50a1-d9b1-40f2-833f-26b439d4dbf2</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>1150f0e0-c650-4c6d-8f33-c5c34820f842</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>1150f0e0-c650-4c6d-8f33-c5c34820f842</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>16311c00-412d-4e2b-a0c1-4d321e9cdf16</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>16311c00-412d-4e2b-a0c1-4d321e9cdf16</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>1c21226b-bd16-4773-89de-0eaa0e3c4a57</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>1c21226b-bd16-4773-89de-0eaa0e3c4a57</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>20aef8b8-1aaa-4883-bc76-8cbff394c895</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>20aef8b8-1aaa-4883-bc76-8cbff394c895</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>4339223c-837f-4bf8-950e-37b73f91904b</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>4339223c-837f-4bf8-950e-37b73f91904b</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>433be1c6-e6dc-40f9-8756-98631d6be02a</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>433be1c6-e6dc-40f9-8756-98631d6be02a</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>5cdfefe6-72d1-46fe-9186-e5aea8825c95</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>5cdfefe6-72d1-46fe-9186-e5aea8825c95</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>877ae131-97fc-4c24-95a4-2be490711b8f</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>877ae131-97fc-4c24-95a4-2be490711b8f</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>98fc0093-6482-47a6-84bb-cf3e676f154b</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>98fc0093-6482-47a6-84bb-cf3e676f154b</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>a9f09f63-1593-480f-a21e-62cab95d85ef</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>a9f09f63-1593-480f-a21e-62cab95d85ef</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>b3e3c52c-bbab-4b81-9fa7-68785e027917</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>b3e3c52c-bbab-4b81-9fa7-68785e027917</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>b6057ba0-7d00-4790-b070-aa7d1df9dca3</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>b6057ba0-7d00-4790-b070-aa7d1df9dca3</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>e4ff3b6c-4d7b-441f-9b66-388659e01356</ID>\r\n    <Name>phase2RecoveryVMNetwork</Name>\r\n    <FabricObjectID>e4ff3b6c-4d7b-441f-9b66-388659e01356</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>4c83e038-7abd-428b-9138-81065e2bb559</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n</ArrayOfNetwork>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4830"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-request-id": [
+          "dd3f78c5d37eac039cc365c3cbaf9fb1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:05:31 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Networks?api-version=2015-04-10&ServerId=8ec64e79-fb97-4837-a6b1-1968f3fcc63f",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L05ldHdvcmtzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMTAmU2VydmVySWQ9OGVjNjRlNzktZmI5Ny00ODM3LWE2YjEtMTk2OGYzZmNjNjNm",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfNetwork xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Network>\r\n    <ID>01e8d3e3-1347-40b5-a49a-547b50b68567</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>01e8d3e3-1347-40b5-a49a-547b50b68567</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>24d9d468-a2c0-4d56-8073-e10b63ca0985</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>24d9d468-a2c0-4d56-8073-e10b63ca0985</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>5519e113-951a-4e82-92ac-3171b6bb77e8</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>5519e113-951a-4e82-92ac-3171b6bb77e8</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>5dd38b2c-fa07-44ca-9e7f-0aa362a0122d</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>5dd38b2c-fa07-44ca-9e7f-0aa362a0122d</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>73dcdbb1-0bee-4972-ae25-a5921569f8f3</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>73dcdbb1-0bee-4972-ae25-a5921569f8f3</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>99d3ba5f-107a-4567-ade9-011b0c5def5e</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>99d3ba5f-107a-4567-ade9-011b0c5def5e</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>a13d12c3-5813-439e-b1ef-333106f6b21e</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>a13d12c3-5813-439e-b1ef-333106f6b21e</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>a77fd0e0-56b1-4471-89e5-cdfbadc190c9</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>a77fd0e0-56b1-4471-89e5-cdfbadc190c9</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>cfbba1ba-addc-4aa6-9507-ced0de3e6364</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>cfbba1ba-addc-4aa6-9507-ced0de3e6364</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>d068eba9-2ed6-4f40-b7f6-ec4fada9e702</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>d068eba9-2ed6-4f40-b7f6-ec4fada9e702</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>d495e97b-cc0d-4fe9-a5ad-f9be4749261a</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>d495e97b-cc0d-4fe9-a5ad-f9be4749261a</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>d9a8c524-8c30-474e-ae55-bd273882d850</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>d9a8c524-8c30-474e-ae55-bd273882d850</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>deea00ef-2249-4d42-8876-06d4289eeba7</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>deea00ef-2249-4d42-8876-06d4289eeba7</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>f8126d72-efbc-4e5a-8657-2368ec7c21d9</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>f8126d72-efbc-4e5a-8657-2368ec7c21d9</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n  <Network>\r\n    <ID>f8338e53-b5d8-42e0-a8c3-f1f53fd3fa4c</ID>\r\n    <Name>phase2PrimaryVMNetwork</Name>\r\n    <FabricObjectID>f8338e53-b5d8-42e0-a8c3-f1f53fd3fa4c</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <ServerID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ServerID>\r\n    <Type>NoIsolation</Type>\r\n    <VmNetworkSubnetList i:nil=\"true\" />\r\n  </Network>\r\n</ArrayOfNetwork>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4815"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-request-id": [
+          "caf9080ec5d9ac2686236db7da37ffca"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:05:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/NetworkMappings?api-version=2015-04-10",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L05ldHdvcmtNYXBwaW5ncz9hcGktdmVyc2lvbj0yMDE1LTA0LTEw",
+      "RequestMethod": "POST",
+      "RequestBody": "<NetworkMappingInput xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <NetworkTargetType>SCVMM</NetworkTargetType>\r\n  <CreateNetworkMappingInput>&lt;CreateNetworkMappingInput xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;PrimaryServerId&gt;4c83e038-7abd-428b-9138-81065e2bb559&lt;/PrimaryServerId&gt;\r\n  &lt;PrimaryNetworkId&gt;07a3a84b-09aa-4c16-888c-05003ce0ce68&lt;/PrimaryNetworkId&gt;\r\n  &lt;RecoveryServerId&gt;8ec64e79-fb97-4837-a6b1-1968f3fcc63f&lt;/RecoveryServerId&gt;\r\n  &lt;RecoveryNetworkId&gt;01e8d3e3-1347-40b5-a49a-547b50b68567&lt;/RecoveryNetworkId&gt;\r\n&lt;/CreateNetworkMappingInput&gt;</CreateNetworkMappingInput>\r\n</NetworkMappingInput>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "729"
+        ],
+        "Accept": [
+          "application/xml"
+        ],
+        "Agent-Authentication": [
+          ""
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Job xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>54784510-298c-4cbd-bf50-2397ae6fbf20</ID>\r\n  <ActivityId>896c1f50-07a3-48a0-aab2-9c85acfc9520</ActivityId>\r\n  <AllowedActions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n  <DisplayName i:nil=\"true\" />\r\n  <EndTime i:nil=\"true\" />\r\n  <Errors />\r\n  <Name i:nil=\"true\" />\r\n  <StartTime i:nil=\"true\" />\r\n  <State>NotStarted</State>\r\n  <StateDescription>NotStarted</StateDescription>\r\n  <TargetObjectId i:nil=\"true\" />\r\n  <TargetObjectName i:nil=\"true\" />\r\n  <TargetObjectType>ProtectionEntity</TargetObjectType>\r\n  <Tasks />\r\n</Job>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "606"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+        ],
+        "x-ms-request-id": [
+          "5f18e8b9f277afb5a02e8aa06712ec69"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:05:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba"
+  }
+}

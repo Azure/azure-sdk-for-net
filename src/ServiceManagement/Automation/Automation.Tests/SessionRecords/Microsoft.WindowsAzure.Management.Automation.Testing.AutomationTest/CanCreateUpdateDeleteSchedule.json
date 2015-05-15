@@ -1,0 +1,576 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/credentials?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvY3JlZGVudGlhbHM/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/credentials?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "62ca786235fbcd48af51e3153c69e20c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvcnVuYm9va3M/YXBpLXZlcnNpb249MjAxNC0xMi0wOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/runbooks?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b8f7628ffb84c70888f9c08ccf7b9456"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzP2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a7d6c7a616e6cf77bf0f1929ac417003"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:34 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/variables?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvdmFyaWFibGVzP2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "ocp-referer": [
+          "https://management.rdfetest.dnsdemo4.com/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/variables?api-version=2014-12-08"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0dfac1771497c7bfae48a665f62b5082"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU1MjM0P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"hourlySche5234\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-04-12T11:36:35.4874273-07:00\",\r\n    \"expiryTime\": \"2015-04-17T11:36:35.4874273-07:00\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "213"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"hourlySche5234\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"startTime\": \"2015-04-12T11:36:00-07:00\",\r\n    \"expiryTime\": \"2015-04-17T11:36:00-07:00\",\r\n    \"isEnabled\": true,\r\n    \"nextRun\": \"2015-04-12T11:36:00-07:00\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2015-04-12T11:06:36.82-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:36.82-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "323"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-location": [
+          "https://oaasgatewaycurrent.cloudapp.net/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08"
+        ],
+        "ocp-location": [
+          "https://oaasgatewaycurrent.cloudapp.net/subscriptions/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4ce00c0acbceccafb16d7257d6fc50ff"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:37 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU1MjM0P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"hourlySche5234\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"startTime\": \"2015-04-12T11:36:00-07:00\",\r\n    \"expiryTime\": \"2015-04-17T11:36:00-07:00\",\r\n    \"isEnabled\": true,\r\n    \"nextRun\": \"2015-04-12T11:36:00-07:00\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2015-04-12T11:06:36.82-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:36.82-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "323"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b762178a7065ca0db5bd179beaa75150"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:38 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU1MjM0P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"hourlySche5234\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"startTime\": \"2015-04-12T11:36:00-07:00\",\r\n    \"expiryTime\": \"2015-04-17T11:36:00-07:00\",\r\n    \"isEnabled\": false,\r\n    \"nextRun\": \"2015-04-12T11:36:00-07:00\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2015-04-12T11:06:36.82-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:39.447-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "338"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2e5e0d48b94dc009801c74828461e9e1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:40 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU1MjM0P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">{\"code\":\"NotFound\",\"message\":\"Schedule not found.\"}</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "128"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:43 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU1MjM0P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"name\": \"hourlySche5234\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"isEnabled\": false\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "120"
+        ],
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"hourlySche5234\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"startTime\": \"2015-04-12T11:36:00-07:00\",\r\n    \"expiryTime\": \"2015-04-17T11:36:00-07:00\",\r\n    \"isEnabled\": false,\r\n    \"nextRun\": \"2015-04-12T11:36:00-07:00\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2015-04-12T11:06:36.82-07:00\",\r\n    \"lastModifiedTime\": \"2015-04-12T11:06:36.82-07:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "337"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "188888ef9c48cbe7b4105233b187c2b1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:39 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/2310a662-9154-4254-a8e1-34286f3bf56a/cloudservices/OaaSCS/resources/automation/~/automationAccounts/TestAutomationAccount/schedules/hourlySche5234?api-version=2014-12-08",
+      "EncodedRequestUri": "LzIzMTBhNjYyLTkxNTQtNDI1NC1hOGUxLTM0Mjg2ZjNiZjU2YS9jbG91ZHNlcnZpY2VzL09hYVNDUy9yZXNvdXJjZXMvYXV0b21hdGlvbi9+L2F1dG9tYXRpb25BY2NvdW50cy9UZXN0QXV0b21hdGlvbkFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU1MjM0P2FwaS12ZXJzaW9uPTIwMTQtMTItMDg=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json"
+        ],
+        "x-ms-version": [
+          "2013-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains,max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f7e5943ee722c525af38f6e812ff0445"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 18:06:42 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET,ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateUpdateDeleteSchedule": [
+      "hourlySche5234"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "2310a662-9154-4254-a8e1-34286f3bf56a"
+  }
+}
