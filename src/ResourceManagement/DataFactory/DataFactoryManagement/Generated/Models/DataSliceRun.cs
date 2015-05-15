@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class DataSliceRun
     {
+        private IDictionary<string, string> _activityInputProperties;
+        
+        /// <summary>
+        /// Optional. Container for all the input properties for the Activity
+        /// </summary>
+        public IDictionary<string, string> ActivityInputProperties
+        {
+            get { return this._activityInputProperties; }
+            set { this._activityInputProperties = value; }
+        }
+        
         private string _activityName;
         
         /// <summary>
@@ -272,6 +283,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public DataSliceRun()
         {
+            this.ActivityInputProperties = new LazyDictionary<string, string>();
             this.InputRunRecordReferences = new LazyList<RunRecordReference>();
             this.OutputRunRecordReferences = new LazyList<RunRecordReference>();
             this.Properties = new LazyDictionary<string, string>();
