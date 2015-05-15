@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataSliceRunId);
             url = url + "/logInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-extensibility");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("startTime=" + Uri.EscapeDataString(dataSliceStartTime));
-            queryParameters.Add("api-version=2015-extensibility");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -541,13 +541,24 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceRunInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken activityinputpropertiesSequenceElement = ((JToken)valueValue["activityinputproperties"]);
+                                    if (activityinputpropertiesSequenceElement != null && activityinputpropertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in activityinputpropertiesSequenceElement)
+                                        {
+                                            string activityinputpropertiesKey = ((string)property.Name);
+                                            string activityinputpropertiesValue = ((string)property.Value);
+                                            dataSliceRunInstance.ActivityInputProperties.Add(activityinputpropertiesKey, activityinputpropertiesValue);
+                                        }
+                                    }
+                                    
                                     JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                     if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in propertiesSequenceElement)
+                                        foreach (JProperty property2 in propertiesSequenceElement)
                                         {
-                                            string propertiesKey = ((string)property.Name);
-                                            string propertiesValue = ((string)property.Value);
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
                                             dataSliceRunInstance.Properties.Add(propertiesKey, propertiesValue);
                                         }
                                     }
@@ -937,13 +948,24 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceRunInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken activityinputpropertiesSequenceElement = ((JToken)valueValue["activityinputproperties"]);
+                                    if (activityinputpropertiesSequenceElement != null && activityinputpropertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in activityinputpropertiesSequenceElement)
+                                        {
+                                            string activityinputpropertiesKey = ((string)property.Name);
+                                            string activityinputpropertiesValue = ((string)property.Value);
+                                            dataSliceRunInstance.ActivityInputProperties.Add(activityinputpropertiesKey, activityinputpropertiesValue);
+                                        }
+                                    }
+                                    
                                     JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                     if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in propertiesSequenceElement)
+                                        foreach (JProperty property2 in propertiesSequenceElement)
                                         {
-                                            string propertiesKey = ((string)property.Name);
-                                            string propertiesValue = ((string)property.Value);
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
                                             dataSliceRunInstance.Properties.Add(propertiesKey, propertiesValue);
                                         }
                                     }

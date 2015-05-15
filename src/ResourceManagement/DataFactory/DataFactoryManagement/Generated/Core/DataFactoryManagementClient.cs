@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-extensibility");
+                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
