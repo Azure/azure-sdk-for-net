@@ -48,5 +48,16 @@ namespace Microsoft.Azure
         /// </summary>
         [JsonProperty("tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ArgumentNullException("Location");
+            }
+        }
     }
 }
