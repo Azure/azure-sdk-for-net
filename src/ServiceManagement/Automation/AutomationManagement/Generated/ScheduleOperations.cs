@@ -1048,7 +1048,7 @@ namespace Microsoft.WindowsAzure.Management.Automation
             
             // Construct URL
             string url = "";
-            url = url + Uri.EscapeDataString(nextLink);
+            url = url + nextLink;
             url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
