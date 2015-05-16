@@ -130,6 +130,7 @@ namespace DataFactory.Tests.UnitTests
             Assert.True(linkedService.Properties.TypeProperties is GenericLinkedService);
         }
 
+#if ADF_INTERNAL
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -185,6 +186,7 @@ namespace DataFactory.Tests.UnitTests
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
         }
+#endif
 
         #endregion Tests
 
@@ -245,7 +247,7 @@ namespace DataFactory.Tests.UnitTests
         private void TestLinkedServiceValidation(string json)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
-            this.Client.LinkedServices.ValidateObject(linkedService);
+            this.Operations.ValidateObject(linkedService);
         }
 
         private LinkedService ConvertToWrapper(string json)

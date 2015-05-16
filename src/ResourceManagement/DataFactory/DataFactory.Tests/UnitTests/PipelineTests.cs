@@ -172,7 +172,7 @@ namespace DataFactory.Tests.UnitTests
         private void TestPipelineValidation(string json)
         {
             Pipeline pipeline = this.ConvertToWrapper(json);
-            this.Client.Pipelines.ValidateObject(pipeline);
+            this.Operations.ValidateObject(pipeline);
         }
 
         private Pipeline ConvertToWrapper(string json)

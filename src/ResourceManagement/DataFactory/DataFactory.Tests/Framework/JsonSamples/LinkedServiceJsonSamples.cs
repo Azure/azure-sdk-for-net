@@ -56,9 +56,9 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""AzureServiceBusLinkedService"",
         typeProperties:
         {
-            Endpoint: ""sb://azuredatafactory.servicebus.windows.net/"",
-            SharedAccessKeyName : ""RootManageSharedAccessKey"",
-            SharedAccessKey : ""FTTa0PM8="",
+            endpoint: ""sb://azuredatafactory.servicebus.windows.net/"",
+            sharedAccessKeyName : ""RootManageSharedAccessKey"",
+            sharedAccessKey : ""FTTa0PM8="",
             activityQueueName: ""test1"",
             statusQueueName:  ""status1"",
             transportProtocolVersion: ""1.0-preview"",

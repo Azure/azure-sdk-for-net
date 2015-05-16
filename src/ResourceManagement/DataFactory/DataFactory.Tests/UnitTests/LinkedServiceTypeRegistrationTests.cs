@@ -14,14 +14,13 @@
 // limitations under the License.
 // 
 
+#if ADF_INTERNAL
 using System;
 using System.Globalization;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
-
-//#if ADF_INTERNAL
 namespace DataFactory.Tests.UnitTests
 {
     public class LinkedServiceTypeRegistrationTests : UnitTestBase
@@ -64,4 +63,4 @@ namespace DataFactory.Tests.UnitTests
         }
     }
 }
-//#endif
+#endif
