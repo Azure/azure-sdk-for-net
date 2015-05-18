@@ -135,16 +135,9 @@
       <TestDlls Include=".\src\$(Scope)\*.Tests\bin\net45-$(Configuration)\*$(TestPartialName)*.Tests.dll" 
                 Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
-    <!--Assign to a temporary property so *wildcard include* used by transformation will apply -->
-    <PropertyGroup>
-      <_TestDLLs>@(TestDlls)</_TestDLLs>
-    </PropertyGroup>
-    <ItemGroup>
-      <FilteredTestDlls Include="$(_TestDLLs)"></FilteredTestDlls>
-    </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
-    <Message Text="%(FilteredTestDlls.Filename)" />
-    <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(FilteredTestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(FilteredTestDlls.Filename).html&quot;"
+    <Message Text="%(TestDlls.Filename)" />
+    <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
         ContinueOnError="false"/>
   </Target>
   
