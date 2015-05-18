@@ -15,20 +15,17 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    /// <summary>
-    /// HCatalog properties.
-    /// </summary>
-    public class HCatalogProperties
+    public class HDInsightSchemaGenerationProperties
     {
         /// <summary>
-        /// The name of Azure SQL linked service.
+        /// The type of schema generation: All, Input, Output.
         /// </summary>
-        public string LinkedServiceName { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// Flag to indicate to recover partitions.
+        /// How to recover partitions. None, Recover, CurrentSlice
         /// </summary>
-        public bool RecoverPartitions { get; set; }
+        public string PartitionGeneration { get; set; }
 
         /// <summary>
         /// Flag to indicate if alter schema should be performed.

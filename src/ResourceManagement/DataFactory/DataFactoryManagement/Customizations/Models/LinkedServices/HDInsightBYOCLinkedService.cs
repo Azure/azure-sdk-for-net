@@ -44,9 +44,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string UserName { get; set; }
 
         /// <summary>
-        /// HCatalog integration properties.
+        /// The name of Azure SQL linked service.
         /// </summary>
-        public HCatalogProperties Hcatalog { get; set; }
+        public string HcatalogLinkedService { get; set; }
+
+        /// <summary>
+        /// Schema generation properties
+        /// </summary>
+        public HDInsightSchemaGenerationProperties SchemaGeneration { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the HDInsightBYOCLinkedService class.
