@@ -26,6 +26,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     {
         public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
 
+        protected TypeProperties()
+        {
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
+        }
+
         internal static TypeProperties DeserializeObject(string json, Type type)
         {
             return (TypeProperties)JsonConvert.DeserializeObject(

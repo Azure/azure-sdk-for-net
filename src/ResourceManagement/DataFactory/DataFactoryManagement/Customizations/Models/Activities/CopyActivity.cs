@@ -36,5 +36,20 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Copy activity translator. If not specified, tabular translator is used.
         /// </summary>
         public CopyTranslator Translator { get; set; }
+
+        public CopyActivity()
+        {
+        }
+
+        public CopyActivity(CopySource source, CopySink sink, CopyTranslator translator = null)
+            : this()
+        {
+            Ensure.IsNotNull(source, "source");
+            Ensure.IsNotNull(sink, "sink");
+
+            this.Source = source;
+            this.Sink = sink;
+            this.Translator = translator;
+        }
     }
 }

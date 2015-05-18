@@ -78,5 +78,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The name of the Hub that this pipeline belongs to.
         /// </summary>
         public string HubName { get; set; }
+
+        public PipelineProperties()
+        {
+        }
+
+        public PipelineProperties(IList<Activity> activities)
+            : this()
+        {
+            Ensure.IsNotNull(activities, "activities");
+            this.Activities = activities;
+        }
     }
 }

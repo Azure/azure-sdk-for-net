@@ -29,5 +29,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// resolved at each slice execution time.
         /// </summary>
         public IDictionary<string, string> WebServiceParameters { get; set; }
+
+        public AzureMLBatchScoringActivity()
+        {
+        }
+
+        public AzureMLBatchScoringActivity(IDictionary<string, string> webServiceParameters)
+            : this()
+        {
+            this.WebServiceParameters = webServiceParameters;
+        }
     }
 }

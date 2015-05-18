@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public MdsLinkedService(string endpoint, string certificateBody, string certificatePassword)
             : this()
         {
-            Ensure.IsNotNull(endpoint, "endPoint");
-            Ensure.IsNotNull(certificateBody, "certificateBody");
-            Ensure.IsNotNull(certificatePassword, "certificatePassword");
+            Ensure.IsNotNullOrEmpty(endpoint, "endPoint");
+            Ensure.IsNotNullOrEmpty(certificateBody, "certificateBody");
+            Ensure.IsNotNullOrEmpty(certificatePassword, "certificatePassword");
 
             this.Endpoint = endpoint;
             this.CertificateBody = certificateBody;

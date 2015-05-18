@@ -66,7 +66,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string ErrorMessage { get; internal set; }
 
-        public TableProperties(TableTypeProperties typeProperties, Availability availability, string linkedServiceName)
+        public TableProperties()
+        {
+        }
+
+        public TableProperties(
+            TableTypeProperties typeProperties, 
+            Availability availability, 
+            string linkedServiceName)
             : base(typeProperties)
         {
             this.Availability = availability;

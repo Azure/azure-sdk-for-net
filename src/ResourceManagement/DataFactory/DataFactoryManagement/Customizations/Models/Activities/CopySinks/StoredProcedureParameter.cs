@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public StoredProcedureParameter(string value)
             : this()
         {
-            Ensure.IsNotNull(value, "value");
+            Ensure.IsNotNullOrEmpty(value, "value");
             this.Value = value;
         }
     }

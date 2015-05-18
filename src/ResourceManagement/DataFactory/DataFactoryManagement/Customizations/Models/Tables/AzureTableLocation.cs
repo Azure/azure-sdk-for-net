@@ -25,5 +25,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         [AdfRequired]
         public string TableName { get; set; }
+
+        public AzureTableLocation()
+        {
+        }
+
+        public AzureTableLocation(string tableName)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
+        }
     }
 }

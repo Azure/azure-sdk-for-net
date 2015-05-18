@@ -24,5 +24,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The pipeline instance.
         /// </summary>
         public Pipeline Pipeline { get; set; }
+
+        public PipelineCreateOrUpdateParameters()
+        {
+        }
+
+        public PipelineCreateOrUpdateParameters(Pipeline pipeline)
+            : this()
+        {
+            Ensure.IsNotNull(pipeline, "pipeline");
+            this.Pipeline = pipeline;
+        }
     }
 }

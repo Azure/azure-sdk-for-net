@@ -26,5 +26,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// created or updated.
         /// </summary>
         public LinkedService LinkedService { get; set; }
+
+        public LinkedServiceCreateOrUpdateParameters()
+        {
+        }
+
+        public LinkedServiceCreateOrUpdateParameters(LinkedService linkedService)
+            : this()
+        {
+            Ensure.IsNotNull(linkedService, "linkedService");
+            this.LinkedService = linkedService;
+        }
     }
 }

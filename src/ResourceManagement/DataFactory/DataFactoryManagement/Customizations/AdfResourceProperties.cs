@@ -44,9 +44,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             }
         }
 
+        protected AdfResourceProperties()
+        {
+        }
+
         protected AdfResourceProperties(
             TExtensibleTypeProperties properties,
             string typeName = null)
+            : this()
         {
             this.typeProperties = properties;
 

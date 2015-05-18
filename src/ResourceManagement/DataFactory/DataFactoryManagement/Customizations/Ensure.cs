@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataFactories
         {
             if (string.IsNullOrEmpty(value))
             {
-                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null", name);
+                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null or empty", name);
                 throw new ArgumentNullException(name, msg);
             }
         }

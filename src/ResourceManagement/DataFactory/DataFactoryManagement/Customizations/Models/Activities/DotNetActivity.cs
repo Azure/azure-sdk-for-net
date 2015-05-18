@@ -51,5 +51,26 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// to consume and interpret the content defined.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties { get; set; }
+
+        public DotNetActivity()
+        {
+        }
+
+        public DotNetActivity(
+            string assemblyName, 
+            string entryPoint, 
+            string packageFile,
+            string packageLinkedService = null)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(assemblyName, "assemblyName");
+            Ensure.IsNotNullOrEmpty(entryPoint, "entryPoint");
+            Ensure.IsNotNullOrEmpty(packageFile, "packageFile");
+
+            this.AssemblyName = assemblyName;
+            this.EntryPoint = entryPoint;
+            this.PackageFile = packageFile;
+            this.PackageLinkedService = packageLinkedService;
+        }
     }
 }
