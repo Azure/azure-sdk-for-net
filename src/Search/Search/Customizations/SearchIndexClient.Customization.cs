@@ -102,6 +102,16 @@ namespace Microsoft.Azure.Search
             headers.Add(ClientRequestIdHeaderName, guid.ToString());
         }
 
+        /// <summary>
+        /// Reserved for internal use only.
+        /// </summary>
+        /// <param name="handler">Delegating handler</param>
+        /// <returns>A SearchServiceClient instance</returns>
+        public override SearchIndexClient WithHandler(DelegatingHandler handler)
+        {
+            return (SearchIndexClient)WithHandler(new SearchIndexClient(), handler);
+        }
+
         private static Uri BuildBaseUriForIndex(string searchServiceName, string indexName)
         {
             return TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
