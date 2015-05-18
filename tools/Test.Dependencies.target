@@ -9,6 +9,33 @@
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
+  <Choose> 
+    <When Condition=" '$(AssemblyName)' != 'Storage.Tests' ">
+      <ItemGroup>
+        <Reference Include="Microsoft.WindowsAzure.Management.Storage">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.Storage.5.1.1\lib\net40\Microsoft.WindowsAzure.Management.Storage.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition=" '$(AssemblyName)' != 'Resource.Tests' ">
+      <ItemGroup >
+        <Reference Include="Microsoft.Azure.ResourceManager">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Resources.2.18.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition=" '$(AssemblyName)' != 'Management.Tests' ">
+      <ItemGroup>
+        <Reference Include="Microsoft.WindowsAzure.Management">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.4.1.1\lib\net40\Microsoft.WindowsAzure.Management.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Reference Include="Hyak.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>

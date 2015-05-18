@@ -1,21 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManagerManagement", "TrafficManagerManagement\TrafficManagerManagement.csproj", "{7B0B141D-483E-4F32-AF9B-EEE20A3C4B2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManager.Tests", "TrafficManager.Tests\TrafficManager.Tests.csproj", "{779C466E-5DF8-46D7-82E5-20BFFEF31C77}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management", "..\Management\Management\Management.csproj", "{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement", "..\WebSite\WebSiteManagement\WebSiteManagement.csproj", "{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeManagement", "..\Compute\ComputeManagement\ComputeManagement.csproj", "{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.Tests", "..\Management\Management.Tests\Management.Tests.csproj", "{8036AF51-11B3-4C2A-B588-70F4C9FB562B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,38 +47,6 @@ Global
 		{779C466E-5DF8-46D7-82E5-20BFFEF31C77}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{779C466E-5DF8-46D7-82E5-20BFFEF31C77}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{779C466E-5DF8-46D7-82E5-20BFFEF31C77}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{8036AF51-11B3-4C2A-B588-70F4C9FB562B}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
