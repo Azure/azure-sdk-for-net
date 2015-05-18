@@ -16,6 +16,7 @@
     <Compile Include="ApplicationGateways\TestOperations\StartApplicationGateway.cs" />
     <Compile Include="ApplicationGateways\TestOperations\StopApplicationGateway.cs" />
     <Compile Include="ApplicationGatewayTestClient.cs" />
+    <Compile Include="ComputeManagementTestUtilities.cs" />
     <Compile Include="Gateways\CreateGatewayTests.cs" />
     <Compile Include="Gateways\GenerateVpnClientPackageTests.cs" />
     <Compile Include="Gateways\GetDiagnosticsTests.cs" />
@@ -39,6 +40,7 @@
     <Compile Include="Gateways\TestOperations\SetIPsecParameters.cs" />
     <Compile Include="Gateways\TestOperations\SetSharedKey.cs" />
     <Compile Include="GatewayTestClient.cs" />
+    <Compile Include="ManagementTestUtilities.cs" />
     <Compile Include="NetworkSecurityGroupIntegrationTests.cs" />
     <Compile Include="NetworkTestBase.cs" />
     <Compile Include="NetworkTestConstants.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="Routes\TestOperations\RemoveRouteTableFromSubnet.cs" />
     <Compile Include="Routes\TestOperations\SetRoute.cs" />
     <Compile Include="RouteTestClient.cs" />
+    <Compile Include="StorageTestUtilities.cs" />
     <Compile Include="TestOperation.cs" />
     <Compile Include="Networks\GetConfigurationTests.cs" />
     <Compile Include="Networks\ListTests.cs" />
@@ -83,6 +86,7 @@
     <None Include="OneWebOneWorker.cspkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="SessionRecords\Network.Tests.ApplicationGateways.SetupApplicationGatewayTests\CreateApplicationGateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -534,37 +538,18 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Management.Compute">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.Compute.12.2.0-preview\lib\net40\Microsoft.WindowsAzure.Management.Compute.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Compute\Compute.Tests\Compute.Tests.csproj">
-      <Project>{defdbed3-88e9-422a-8d2b-9eaeb47581a4}</Project>
-      <Name>Compute.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Compute\ComputeManagement\ComputeManagement.csproj">
-      <Project>{7e8328ec-e439-4cf2-b375-16eb2edaf34d}</Project>
-      <Name>ComputeManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management.Tests\Management.Tests.csproj">
-      <Project>{8036af51-11b3-4c2a-b588-70f4c9fb562b}</Project>
-      <Name>Management.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management\Management.csproj">
-      <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
-      <Name>Management</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
-      <Project>{77f0bec3-fbcd-43a4-af45-8a55846a6897}</Project>
-      <Name>StorageManagement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetworkManagement\NetworkManagement.csproj">
       <Project>{7f032828-b8ec-4716-8bc4-af2fa703b24b}</Project>
       <Name>NetworkManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Storage\Storage.Management.Tests\Storage.Management.Tests.csproj">
-      <Project>{45aa601d-3ad1-449a-9427-0dff3339333b}</Project>
-      <Name>Storage.Management.Tests</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

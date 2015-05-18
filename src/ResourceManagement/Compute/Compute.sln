@@ -1,25 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeManagement", "ComputeManagement\ComputeManagement.csproj", "{4F41C7A2-7DF6-4CC1-9F2D-66E8F05C2331}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compute.Tests", "Compute.Tests\Compute.Tests.csproj", "{3C768CCE-36A0-433E-8280-31979756CC07}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage.Tests", "..\Storage\Storage.Tests\Storage.Tests.csproj", "{D36D8F3A-574A-466F-B365-6397E6276BA9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network.Tests", "..\Network\Network.Tests\Network.Tests.csproj", "{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources.Tests", "..\Resource\Resources.Tests\Resources.Tests.csproj", "{BE9D7270-27CB-45EB-BD26-FEA68087E835}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "..\Resource\ResourceManagement\ResourceManagement.csproj", "{165EF660-235B-45AF-83CB-0D32BEF4C1A2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageManagement", "..\Storage\StorageManagement\StorageManagement.csproj", "{A7F47B7F-319B-411F-BF33-F57899A430CB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkManagement", "..\Network\NetworkManagement\NetworkManagement.csproj", "{4500A2D3-C087-4FBC-BEBD-E630CD728788}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,54 +47,6 @@ Global
 		{3C768CCE-36A0-433E-8280-31979756CC07}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{3C768CCE-36A0-433E-8280-31979756CC07}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{3C768CCE-36A0-433E-8280-31979756CC07}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{D36D8F3A-574A-466F-B365-6397E6276BA9}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{BE9D7270-27CB-45EB-BD26-FEA68087E835}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{A7F47B7F-319B-411F-BF33-F57899A430CB}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

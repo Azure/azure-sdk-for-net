@@ -18,6 +18,9 @@
     <Compile Include="HostedServiceOperationTests.cs" />
     <Compile Include="TestUtilities\ComputeManagementClientUndoHandlers.cs" />
     <Compile Include="TestUtilities\ComputeManagementTestUtilities.cs" />
+    <Compile Include="TestUtilities\ManagementTestUtilities.cs" />
+    <Compile Include="TestUtilities\StorageTestUtilities.cs" />
+    <Compile Include="TestUtilities\TestLogTracingInterceptor.cs" />
     <Compile Include="TestUtilities\UndoContextDiscoveryExtensions.cs" />
     <Compile Include="VirtualMachineDiskTests.cs" />
     <Compile Include="VirtualMachineReproTests.cs" />
@@ -130,22 +133,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Management\Management.Tests\Management.Tests.csproj">
-      <Project>{8036af51-11b3-4c2a-b588-70f4c9fb562b}</Project>
-      <Name>Management.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management\Management.csproj">
-      <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
-      <Name>Management</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Storage\Storage.Management.Tests\Storage.Management.Tests.csproj">
-      <Project>{45aa601d-3ad1-449a-9427-0dff3339333b}</Project>
-      <Name>Storage.Management.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
-      <Project>{77f0bec3-fbcd-43a4-af45-8a55846a6897}</Project>
-      <Name>StorageManagement</Name>
-    </ProjectReference>
     <ProjectReference Include="$(LibrarySourceFolder)\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>

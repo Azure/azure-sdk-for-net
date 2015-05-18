@@ -131,7 +131,7 @@
      </PropertyGroup>
     <ItemGroup>
       <!--TODO: improve inclue the logic to be more explicit -->
-      <TestDlls Include="@(LibrariesToBuild -> '.\src\**\*%(Filename).Tests\bin\net45-$(Configuration)\*%(Filename).Tests.dll')" Condition=" '$(Scope)' == 'All' " />
+      <TestDlls Include=".\src\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
       <TestDlls Include=".\src\$(Scope)\*.Tests\bin\net45-$(Configuration)\*$(TestPartialName)*.Tests.dll" 
                 Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
