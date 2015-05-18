@@ -21,8 +21,6 @@
     <Compile Include="Utilities\UndoContextDiscoveryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="SessionRecords\Microsoft.Azure.Management.Search.Tests.AdminKeyTests\CanListAdminKeys.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
