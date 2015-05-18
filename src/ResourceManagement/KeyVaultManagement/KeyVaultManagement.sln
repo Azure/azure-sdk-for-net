@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVaultManagement", "KeyVaultManagement\KeyVaultManagement.csproj", "{92ADE435-B835-447D-8B5B-1F4A52F8DF39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Management.Tests", "KeyVaultManagement.Tests\KeyVaultManagement.Tests.csproj", "{030623AB-8A12-44B3-8CB3-2356152F9C9F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "..\Resource\ResourceManagement\ResourceManagement.csproj", "{165EF660-235B-45AF-83CB-0D32BEF4C1A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVaultManagement.Tests", "KeyVaultManagement.Tests\KeyVaultManagement.Tests.csproj", "{030623AB-8A12-44B3-8CB3-2356152F9C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,14 +47,6 @@ Global
 		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -114,6 +114,7 @@ UpgradeLog*.XML
 
 # NuGet
 packages
+packages/repositories.config
 
 # Mac development
 .DS_Store
