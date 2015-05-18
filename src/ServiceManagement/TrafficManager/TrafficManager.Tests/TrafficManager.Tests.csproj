@@ -11,10 +11,12 @@
     <Compile Include="Customizations\TrafficManagerCloudException.cs" />
     <Compile Include="IntegrationTest\DefinitionTest.cs" />
     <Compile Include="IntegrationTest\ProfileTest.cs" />
+    <Compile Include="ManagementTestUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestSupport\TrafficManagerTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionAny.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -54,25 +56,17 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Management.Compute">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.Compute.12.2.0-preview\lib\net40\Microsoft.WindowsAzure.Management.Compute.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Management.WebSites">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.WebSites.4.4.2-prerelease\lib\net40\Microsoft.WindowsAzure.Management.WebSites.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Compute\ComputeManagement\ComputeManagement.csproj">
-      <Project>{7e8328ec-e439-4cf2-b375-16eb2edaf34d}</Project>
-      <Name>ComputeManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management.Tests\Management.Tests.csproj">
-      <Project>{8036af51-11b3-4c2a-b588-70f4c9fb562b}</Project>
-      <Name>Management.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management\Management.csproj">
-      <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
-      <Name>Management</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WebSite\WebSiteManagement\WebSiteManagement.csproj">
-      <Project>{2a2c36db-a965-4a4b-9e06-5a86b6b9b5db}</Project>
-      <Name>WebSiteManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\TrafficManagerManagement\TrafficManagerManagement.csproj">
       <Project>{7b0b141d-483e-4f32-af9b-eee20a3c4b2c}</Project>
