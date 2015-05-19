@@ -42,7 +42,18 @@ namespace Microsoft.WindowsAzure.Management.Automation.Models
             get { return this._jobStreams; }
             set { this._jobStreams = value; }
         }
-                
+        
+        private string _nextLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the next link uri of the job streams.
+        /// </summary>
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the JobStreamListResponse class.
         /// </summary>

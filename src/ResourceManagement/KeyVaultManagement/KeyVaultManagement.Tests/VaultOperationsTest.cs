@@ -131,6 +131,97 @@ namespace KeyVault.Management.Tests
             }
         }
 
+        [Fact]
+        public void KeyVaultManagementVaultTestCompoundIdentityAccessControlPolicy()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var testBase = new KeyVaultTestBase();
+                var client = testBase.client;
+
+                string rgName = TestUtilities.GenerateName("sdktestrg");
+                testBase.resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = testBase.location });
+
+                string vaultName = TestUtilities.GenerateName("sdktestvault");
+                var tenantIdGuid = Guid.Parse(testBase.tenantId);
+                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var applicationIdGuid = Guid.Parse(testBase.applicationId);
+                var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
+                var accPol = new AccessPolicyEntry
+                {
+                    TenantId = tenantIdGuid,
+                    ObjectId = objectIdGuid,
+                    ApplicationId = applicationIdGuid,
+                    PermissionsToKeys = new string[] { "all" },
+                    PermissionsToSecrets = null
+                };
+                var createResponse = client.Vaults.CreateOrUpdate(
+                    resourceGroupName: rgName,
+                    vaultName: vaultName,
+                    parameters: new VaultCreateOrUpdateParameters
+                    {
+                        Location = testBase.location,
+                        Tags = tags,
+                        Properties = new VaultProperties
+                        {
+                            EnabledForDeployment = true,
+                            Sku = new Sku { Family = "A", Name = "Standard" },
+                            TenantId = tenantIdGuid,
+                            VaultUri = "",
+                            AccessPolicies = new[]
+                              {
+                                  accPol
+                              }
+                        }
+                    }
+                    );
+
+                ValidateVaultGetResponse(createResponse,
+                    vaultName,
+                    rgName,
+                    testBase.subscriptionId,
+                    tenantIdGuid,
+                    testBase.location,
+                    "A",
+                    "Standard",
+                    true,
+                    new[] { accPol },
+                    tags);
+
+                // Get
+                var getResponse = client.Vaults.Get(
+                   resourceGroupName: rgName,
+                   vaultName: vaultName);
+
+                ValidateVaultGetResponse(getResponse,
+                    vaultName,
+                    rgName,
+                    testBase.subscriptionId,
+                    tenantIdGuid,
+                    testBase.location,
+                    "A",
+                    "Standard",
+                    true,
+                    new[] { accPol },
+                    tags);
+                
+
+                // Delete
+                var deleteResponse = client.Vaults.Delete(
+                    resourceGroupName: rgName,
+                    vaultName: vaultName);
+
+                Assert.Throws<CloudException>(() =>
+                {
+                    client.Vaults.Get(
+                        resourceGroupName: rgName,
+                        vaultName: vaultName);
+                });
+            }
+        }
+
         private void ValidateVaultGetResponse(
             VaultGetResponse response,
             string expectedVaultName,
@@ -183,6 +274,8 @@ namespace KeyVault.Management.Tests
                 var match = expectedCopy.Where(e =>
                     e.TenantId == a.TenantId &&
                     e.ObjectId == a.ObjectId &&
+                    ((!e.ApplicationId.HasValue && !a.ApplicationId.HasValue) ||
+                     (e.ApplicationId.Value == e.ApplicationId.Value)) &&
                     Enumerable.SequenceEqual(e.PermissionsToSecrets, a.PermissionsToSecrets) &&
                     Enumerable.SequenceEqual(a.PermissionsToKeys, a.PermissionsToKeys)
                     ).FirstOrDefault();
@@ -196,6 +289,7 @@ namespace KeyVault.Management.Tests
 
             return true;
         }
+        
 
         [Fact]
         public void KeyVaultManagementListVaults()

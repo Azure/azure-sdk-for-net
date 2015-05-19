@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Azure.Graph.RBAC;
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.Resources;
@@ -13,9 +14,11 @@ namespace KeyVault.Management.Tests
         private const string ObjectIdKey = "ObjectId";
         private const string LocationKey = "location";
         private const string SubIdKey = "SubId";
+        private const string ApplicationIdKey = "ApplicationId";
 
         public string tenantId { get; set; }
         public string objectId { get; set; }
+        public string applicationId { get; set; }
         public string location { get; set; }
         public string subscriptionId { get; set; }
 
@@ -27,24 +30,25 @@ namespace KeyVault.Management.Tests
             var testEnv = testFactory.GetTestEnvironment();
             this.client = GetServiceClient<KeyVaultManagementClient>(testFactory);
             this.resourcesClient = GetServiceClient<ResourceManagementClient>(testFactory);
-
             
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 this.tenantId = testEnv.AuthorizationContext.TenatId;
                 this.subscriptionId = testEnv.SubscriptionId;
-                
                 var graphClient = GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
                 this.objectId = graphClient.User.Get(testEnv.AuthorizationContext.UserId).User.ObjectId;
+                this.applicationId = Guid.NewGuid().ToString();                
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
                 HttpMockServer.Variables[ObjectIdKey] = objectId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;
+                HttpMockServer.Variables[ApplicationIdKey] = applicationId;
             }
             else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 tenantId = HttpMockServer.Variables[TenantIdKey];
                 objectId = HttpMockServer.Variables[ObjectIdKey];
                 subscriptionId = HttpMockServer.Variables[SubIdKey];
+                applicationId = HttpMockServer.Variables[ApplicationIdKey];
             }
 
             var providers = resourcesClient.Providers.Get("Microsoft.KeyVault");
