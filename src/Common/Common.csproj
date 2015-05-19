@@ -15,8 +15,6 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <None Include="Microsoft.Azure.Common.Dependencies.nuget.proj" />
-    <None Include="Microsoft.Azure.Common.Dependencies.nuspec" />
     <None Include="Microsoft.Azure.Common.nuget.proj" />
     <None Include="Microsoft.Azure.Common.nuspec" />
     <None Include="packages.config" />
@@ -26,6 +24,8 @@
     <Compile Include="AzureClientLongRunningOperationExtensions.cs" />
     <Compile Include="CloudError.cs" />
     <Compile Include="CloudException.cs" />
+    <Compile Include="OData\FilterString.cs" />
+    <Compile Include="OData\UrlExpressionVisitor.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ResourceJsonConverter.cs" />
     <Compile Include="TokenCloudCredentials.cs" />
