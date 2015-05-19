@@ -18,7 +18,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customizations\ApiManagementClient.Customization.cs" />
+    <Compile Include="Customizations\ApiManagementClient.cs" />
     <Compile Include="Customizations\IApiManagementClient.cs" />
     <Compile Include="Customizations\IPolicyOperations.cs" />
     <Compile Include="Customizations\PolicyOperations.cs" />
