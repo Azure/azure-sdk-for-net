@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
     using System;
     using System.IO;
     using System.Net;
-    using System.Reflection;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
     using Xunit;

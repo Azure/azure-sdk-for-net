@@ -15,11 +15,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
 {
     using System;
     using global::ApiManagement.Tests;
-    using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Test;
     using Microsoft.WindowsAzure.Management;
-    using Microsoft.WindowsAzure.Management.Models;
 
     public class SmapiTestsFixture : TestsFixture
     {

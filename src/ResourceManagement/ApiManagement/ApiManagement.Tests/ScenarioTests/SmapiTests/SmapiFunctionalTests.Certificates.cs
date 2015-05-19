@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
     using System;
     using System.IO;
     using System.Net;
-    using System.Security;
     using System.Security.Cryptography.X509Certificates;
     using Microsoft.Azure.Management.ApiManagement.SmapiModels;
     using Microsoft.Azure.Test;

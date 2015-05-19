@@ -19,19 +19,13 @@ namespace ApiManagement.Tests
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Text;
     using System.Xml.Linq;
-    using FakeItEasy.ExtensionSyntax;
-    using Microsoft.Azure;
     using Microsoft.Azure.Management.ApiManagement;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Azure.Test;
-    using Microsoft.Azure.Test.HttpRecorder;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.WindowsAzure.Management;
-    using Newtonsoft.Json;
 
     public static class ApiManagementHelper
     {

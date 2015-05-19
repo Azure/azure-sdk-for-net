@@ -14,14 +14,11 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
-    using System;
     using System.Net;
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
-    using Microsoft.WindowsAzure.Management.Storage;
     using Microsoft.WindowsAzure.Management.Storage.Models;
-    using Microsoft.WindowsAzure.Testing;
     using Xunit;
 
     public partial class ResourceProviderFunctionalTests

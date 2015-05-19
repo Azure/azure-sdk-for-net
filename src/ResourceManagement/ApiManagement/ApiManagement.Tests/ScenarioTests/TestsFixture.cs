@@ -15,7 +15,6 @@
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
 {
     using System;
-    using System.Runtime.InteropServices;
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Test;
 

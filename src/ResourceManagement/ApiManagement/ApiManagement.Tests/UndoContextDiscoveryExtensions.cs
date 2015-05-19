@@ -29,7 +29,7 @@ namespace ApiManagement.Tests
         /// <returns>AN undo handler for Api Management service operations</returns>
         public static OperationUndoHandler CreateApiManagementUndoHandler()
         {
-            return new ResourceProviderUndoHandler();
+            return new ApiManagementResourceProviderUndoHandler();
         }
     }
 }

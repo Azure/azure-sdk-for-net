@@ -14,7 +14,6 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
-    using System;
     using System.Net;
     using Microsoft.Azure.Test;
     using Xunit;
