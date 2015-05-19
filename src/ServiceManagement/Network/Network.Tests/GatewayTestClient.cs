@@ -19,6 +19,7 @@ namespace Network.Tests
     using Gateways.TestOperations;
     using Microsoft.WindowsAzure.Management.Network;
     using Microsoft.WindowsAzure.Management.Network.Models;
+    using Microsoft.Azure;
 
     public class GatewayTestClient
     {
@@ -33,13 +34,18 @@ namespace Network.Tests
 
         public void EnsureNoGatewayExists()
         {
+            EnsureNoGatewayExists(NetworkTestConstants.VirtualNetworkSiteName);
+        }
+
+        public void EnsureNoGatewayExists(string virtualNetworkSiteName)
+        {
             string configuration = testClient.GetNetworkConfigurationSafe();
             if (testClient.IsEmptyConfiguration(configuration) == false)
             {
                 bool gatewayDoesntExist = false;
                 while (gatewayDoesntExist == false)
                 {
-                    GatewayGetResponse getGatewayResponse = GetGateway(NetworkTestConstants.VirtualNetworkSiteName);
+                    GatewayGetResponse getGatewayResponse = GetGateway(virtualNetworkSiteName);
                     switch (getGatewayResponse.State)
                     {
                         case GatewayProvisioningEventStates.NotProvisioned:
@@ -52,7 +58,7 @@ namespace Network.Tests
                             break;
 
                         case GatewayProvisioningEventStates.Provisioned:
-                            DeleteGateway(NetworkTestConstants.VirtualNetworkSiteName);
+                            DeleteGateway(virtualNetworkSiteName);
                             break;
                     }
                 }
@@ -204,6 +210,127 @@ namespace Network.Tests
         public GatewayGetOperationStatusResponse ResetGateway(string virtualNetworkSiteName, ResetGatewayParameters parameters)
         {
             return gatewayClient.Reset(virtualNetworkSiteName, parameters);
+        }
+
+        // Brooklyn Co-existance new APIs
+        public GatewayGetOperationStatusResponse CreateVirtualNetworkGateway(string virtualNetworkSiteName, VirtualNetworkGatewayCreateParameters parameters)
+        {
+            return gatewayClient.CreateVirtualNetworkGateway(virtualNetworkSiteName, parameters);
+        }
+
+        public GatewayGetOperationStatusResponse ResizeVirtualNetworkGateway(string gatewayId, ResizeGatewayParameters parameters)
+        {
+            return gatewayClient.ResizeVirtualNetworkGateway(gatewayId, parameters);
+        }
+
+        public GatewayGetOperationStatusResponse ResetVirtualNetworkGateway(string gatewayId, ResetGatewayParameters parameters)
+        {
+            return gatewayClient.ResetVirtualNetworkGateway(gatewayId, parameters);
+        }
+
+        public VirtualNetworkGatewayGetResponse GetVirtualNetworkGateway(string gatewayId)
+        {
+            return gatewayClient.GetVirtualNetworkGateway(gatewayId);
+        }
+
+        public ListVirtualNetworkGatewaysResponse ListVirtualNetworkGateways()
+        {
+            return gatewayClient.ListVirtualNetworkGateways();
+        }
+
+        public GatewayGetOperationStatusResponse DeleteVirtualNetworkGateway(string gatewayId)
+        {
+            return gatewayClient.DeleteVirtualNetworkGateway(gatewayId);
+        }
+
+        public LocalNetworkGatewayCreateResponse CreateLocalNetworkGateway(LocalNetworkGatewayCreateParameters parameters)
+        {
+            return gatewayClient.CreateLocalNetworkGateway(parameters);
+        }
+
+        public AzureOperationResponse UpdateLocalNetworkGateway(string gatewayId, UpdateLocalNetworkGatewayParameters parameters)
+        {
+            return gatewayClient.UpdateLocalNetworkGateway(gatewayId, parameters);
+        }
+
+        public LocalNetworkGatewayGetResponse GetLocalNetworkGateway(string gatewayId)
+        {
+            return gatewayClient.GetLocalNetworkGateway(gatewayId);
+        }
+
+        public ListLocalNetworkGatewaysResponse ListLocalNetworkGateways()
+        {
+            return gatewayClient.ListLocalNetworkGateways();
+        }
+
+        public AzureOperationResponse DeleteLocalNetworkGateway(string gatewayId)
+        {
+            return gatewayClient.DeleteLocalNetworkGateway(gatewayId);
+        }
+
+        public GatewayGetOperationStatusResponse CreateGatewayConnection(GatewayConnectionCreateParameters parameters)
+        {
+            return gatewayClient.CreateGatewayConnection(parameters);
+        }
+
+        public GatewayGetOperationStatusResponse UpdateGatewayConnection(string gatewayId, string connectedentityId, UpdateGatewayConnectionParameters parameters)
+        {
+            return gatewayClient.UpdateGatewayConnection(gatewayId, connectedentityId, parameters);
+        }
+
+        public GatewayConnectionGetResponse GetGatewayConnection(string gatewayId, string connectedentityId)
+        {
+            return gatewayClient.GetGatewayConnection(gatewayId, connectedentityId);
+        }
+
+        public GatewayListGatewayConnectionsResponse ListGatewayConnections()
+        {
+            return gatewayClient.ListGatewayConnections();
+        }
+
+        public GatewayGetOperationStatusResponse DeleteGatewayConnection(string gatewayId, string connectedentityId)
+        {
+            return gatewayClient.DeleteGatewayConnection(gatewayId, connectedentityId);
+        }
+
+        public GatewayGetSharedKeyResponse GetSharedKeyV2(string gatewayId, string connectedentityId)
+        {
+            return gatewayClient.GetSharedKeyV2(gatewayId, connectedentityId);
+        }
+
+        public GatewayGetOperationStatusResponse ResetSharedKeyV2(string gatewayId, string connectedentityId, GatewayResetSharedKeyParameters parameters)
+        {
+            return gatewayClient.ResetSharedKeyV2(gatewayId, connectedentityId, parameters);
+        }
+
+        public GatewayGetOperationStatusResponse SetSharedKeyV2(string gatewayId, string connectedentityId, GatewaySetSharedKeyParameters parameters)
+        {
+            return gatewayClient.SetSharedKeyV2(gatewayId, connectedentityId, parameters);
+        }
+
+        public GatewayGetIPsecParametersResponse GetIPsecParametersV2(string gatewayId, string connectedentityId)
+        {
+            return gatewayClient.GetIPsecParametersV2(gatewayId, connectedentityId);
+        }
+
+        public GatewayGetOperationStatusResponse SetIPsecParametersV2(string gatewayId, string connectedentityId, GatewaySetIPsecParametersParameters parameters)
+        {
+            return gatewayClient.SetIPsecParametersV2(gatewayId, connectedentityId, parameters);
+        }
+
+        public GatewayGetOperationStatusResponse StartDiagnosticsV2(string gatewayId, StartGatewayPublicDiagnosticsParameters parameters)
+        {
+            return gatewayClient.StartDiagnosticsV2(gatewayId, parameters);
+        }
+
+        public GatewayOperationResponse StopDiagnosticsV2(string gatewayId, StopGatewayPublicDiagnosticsParameters parameters)
+        {
+            return gatewayClient.StopDiagnosticsV2(gatewayId, parameters);
+        }
+
+        public GatewayDiagnosticsStatus GetDiagnosticsV2(string gatewayId)
+        {
+            return gatewayClient.GetDiagnosticsV2(gatewayId);
         }
     }
 }

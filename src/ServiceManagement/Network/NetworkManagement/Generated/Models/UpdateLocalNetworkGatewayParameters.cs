@@ -20,29 +20,32 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResetGatewayParameters
+    public partial class UpdateLocalNetworkGatewayParameters
     {
-        private UpdateGatewayOperation _operation;
+        private IList<string> _addressSpace;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Address space of local network gateway
         /// </summary>
-        public UpdateGatewayOperation Operation
+        public IList<string> AddressSpace
         {
-            get { return this._operation; }
-            set { this._operation = value; }
+            get { return this._addressSpace; }
+            set { this._addressSpace = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResetGatewayParameters class.
+        /// Initializes a new instance of the
+        /// UpdateLocalNetworkGatewayParameters class.
         /// </summary>
-        public ResetGatewayParameters()
+        public UpdateLocalNetworkGatewayParameters()
         {
+            this.AddressSpace = new LazyList<string>();
         }
     }
 }

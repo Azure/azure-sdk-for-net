@@ -21,28 +21,17 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResetGatewayParameters
+    public static partial class GatewayConnectionType
     {
-        private UpdateGatewayOperation _operation;
+        public const string IPsec = "IPsec";
         
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public UpdateGatewayOperation Operation
-        {
-            get { return this._operation; }
-            set { this._operation = value; }
-        }
+        public const string Vnet2Vnet = "Vnet2Vnet";
         
-        /// <summary>
-        /// Initializes a new instance of the ResetGatewayParameters class.
-        /// </summary>
-        public ResetGatewayParameters()
-        {
-        }
+        public const string Dedicated = "Dedicated";
+        
+        public const string VPNClient = "VPNClient";
     }
 }

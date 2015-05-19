@@ -5,6 +5,7 @@
     <RootNamespace>Network.Tests</RootNamespace>
     <AssemblyName>Network.Tests</AssemblyName>
     <NuGetPackageImportStamp>07734221</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
@@ -39,6 +40,12 @@
     <Compile Include="Gateways\TestOperations\SetDefaultSites.cs" />
     <Compile Include="Gateways\TestOperations\SetIPsecParameters.cs" />
     <Compile Include="Gateways\TestOperations\SetSharedKey.cs" />
+    <Compile Include="Gateways\DiagnosticsV2Tests.cs" />
+    <Compile Include="Gateways\IPsecParametersV2Tests.cs" />
+    <Compile Include="Gateways\LocalNetworkGatewayTests.cs" />
+    <Compile Include="Gateways\SharedKeyV2Tests.cs" />
+    <Compile Include="Gateways\VirtualNetworkGatewayConnectionTests.cs" />
+    <Compile Include="Gateways\VirtualNetworkGatewayTests.cs" />
     <Compile Include="GatewayTestClient.cs" />
     <Compile Include="ManagementTestUtilities.cs" />
     <Compile Include="NetworkSecurityGroupIntegrationTests.cs" />
@@ -106,6 +113,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TestData\SimpleNetworkConfiguration.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\CoexistenceFeatureNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -531,6 +541,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.Routes.SetRouteTests\SetRouteWithNullRouteNameInParameters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayConnectionTests\VirtualNetworkGatewayConnectionAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.SharedKeyV2Tests\SharedKeyV2APIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.LocallNetworkGatewayTests\LocalNetworkGatewayAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.IPsecParametersV2Tests\IPsecParametersV2APIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.DiagnosticsV2Tests\DiagnosticsV2APIsTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
