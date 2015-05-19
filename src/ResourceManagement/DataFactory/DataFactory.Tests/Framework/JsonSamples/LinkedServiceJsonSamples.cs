@@ -192,6 +192,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+#if ADF_INTERNAL
         [JsonSample("ExtraProperties")]
         public const string ExtraPropertiesLinkedService = @"
 {
@@ -211,6 +212,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+#endif
 
         [JsonSample]
         public const string HDInsightBYOCWithHCatalogLinkedService = @"

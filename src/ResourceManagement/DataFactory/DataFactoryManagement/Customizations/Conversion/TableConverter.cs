@@ -18,7 +18,11 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
+#if ADF_INTERNAL
     internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties, GenericTable>
+#else
+    internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties>
+#endif
     {
         /// <summary> 
         /// Convert <paramref name="table"/> to an <see cref="Core.Models.Table"/> instance.
@@ -72,12 +76,19 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 internalTable.Properties.TypeProperties,
                 out type);
 
+#if ADF_INTERNAL
             string typeName = type == typeof(GenericTable) ? internalTable.Properties.Type : type.Name;
             TableProperties properties = new TableProperties(
                 typeProperties,
                 internalTable.Properties.Availability,
                 internalTable.Properties.LinkedServiceName,
                 typeName)
+#else
+            TableProperties properties = new TableProperties(
+                typeProperties,
+                internalTable.Properties.Availability,
+                internalTable.Properties.LinkedServiceName)
+#endif
                      {
                          Availability = internalTable.Properties.Availability,
                          CreateTime = internalTable.Properties.CreateTime,

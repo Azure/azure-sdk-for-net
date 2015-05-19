@@ -20,7 +20,11 @@ using Core = Microsoft.Azure.Management.DataFactories.Core.Models;
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
    internal class LinkedServiceConverter :
+#if ADF_INTERNAL
         CoreTypeConverter<Core.Models.LinkedService, LinkedService, LinkedServiceTypeProperties, GenericLinkedService>
+#else
+        CoreTypeConverter<Core.Models.LinkedService, LinkedService, LinkedServiceTypeProperties>
+#endif
     {
         /// <summary> 
         /// Convert <paramref name="linkedService"/> to an <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.LinkedService"/> instance.
@@ -72,8 +76,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 internalLinkedService.Properties.Type,
                 internalLinkedService.Properties.TypeProperties, out type);
 
+
+#if ADF_INTERNAL
             string typeName = type == typeof(GenericLinkedService) ? internalLinkedService.Properties.Type : type.Name;
             LinkedServiceProperties properties = new LinkedServiceProperties(typeProperties, typeName)
+#else
+            LinkedServiceProperties properties = new LinkedServiceProperties(typeProperties)
+#endif
                          {
                              Description = internalLinkedService.Properties.Description,
                              ErrorMessage = internalLinkedService.Properties.ErrorMessage,

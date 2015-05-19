@@ -18,6 +18,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class PipelineJsonSamples
     {
+#if ADF_INTERNAL
         [JsonSample]
         public const string ActivityTypePipeline = @"
 {
@@ -49,6 +50,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+#endif
 
         [JsonSample(propertyBagKeys: new string[] 
             { 
@@ -72,7 +74,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 typeProperties:
                 {
                     script: ""SELECT 1"",
-                    storageAccounts:
+                    storageLinkedServices:
                     [
                         ""SA1"",
                         ""SA2""
@@ -521,6 +523,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 ";
 #endif
 
+#if ADF_INTERNAL
         [JsonSample]
         public const string NullPipeline = @"
 {
@@ -567,6 +570,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+#endif
 
         [JsonSample]
         public const string PipelineOptionalHubName = @"
@@ -746,6 +750,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+#if ADF_INTERNAL
         [JsonSample("ExtraProperties")]
         public const string ExtraPropertiesPipeline = @"
 {
@@ -789,6 +794,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         ]
     }
 }";
+#endif
 
         [JsonSample(propertyBagKeys: new string[] 
             { 

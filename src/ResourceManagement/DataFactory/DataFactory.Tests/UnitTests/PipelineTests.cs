@@ -90,6 +90,7 @@ namespace DataFactory.Tests.UnitTests
             Assert.Contains("is required", ex.Message);
         }
 
+#if ADF_INTERNAL
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -145,6 +146,7 @@ namespace DataFactory.Tests.UnitTests
             Pipeline pipeline = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
+#endif
 
         private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
         {

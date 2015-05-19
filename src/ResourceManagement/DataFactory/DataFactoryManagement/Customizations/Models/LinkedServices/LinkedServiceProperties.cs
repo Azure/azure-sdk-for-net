@@ -18,7 +18,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Data factory linkedService properties.
     /// </summary>
+#if ADF_INTERNAL
     public class LinkedServiceProperties : AdfResourceProperties<LinkedServiceTypeProperties, GenericLinkedService>
+#else
+    public class LinkedServiceProperties : AdfResourceProperties<LinkedServiceTypeProperties>
+#endif
     {
         /// <summary>
         /// Optional. Data factory linkedService description.
@@ -45,15 +49,19 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
         }
 
+#if ADF_INTERNAL
         public LinkedServiceProperties(GenericLinkedService typeProperties, string typeName)
             : base(typeProperties, typeName)
         {
         }
+#endif
 
+#if ADF_INTERNAL
         internal LinkedServiceProperties(LinkedServiceTypeProperties typeProperties, string typeName = null)
             : base(typeProperties, typeName)
         {
         }
+#endif
 
         /// <summary>
         /// Initializes a new instance of the LinkedServiceProperties with ProvisioningState and ErrorMessage

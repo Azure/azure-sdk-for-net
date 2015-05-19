@@ -25,10 +25,16 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-    internal abstract class CoreTypeConverter<TCore, TWrapper, TExtensibleTypeProperties, TGenericTypeProperties> :
+    internal abstract class CoreTypeConverter<TCore, TWrapper, TExtensibleTypeProperties
+#if ADF_INTERNAL
+        , TGenericTypeProperties
+#endif
+        > :
         PolymorphicTypeConverter<TExtensibleTypeProperties>
         where TExtensibleTypeProperties : TypeProperties
+#if ADF_INTERNAL
         where TGenericTypeProperties : TExtensibleTypeProperties, new()
+#endif
     {
         protected IDictionary<string, Type> TypeMap { get; private set; }
 
@@ -119,6 +125,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             }
             else
             {
+#if ADF_INTERNAL
                 Dictionary<string, JToken> serviceExtraProperties =
                     JsonConvert.DeserializeObject<Dictionary<string, JToken>>(
                         json,
@@ -126,6 +133,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
                 typeProperties = new TGenericTypeProperties() { ServiceExtraProperties = serviceExtraProperties };
                 type = typeof(TGenericTypeProperties);
+#else
+                throw new InvalidOperationException(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "There is no type with the name '{0}' to deserialize to",
+                        typeName));
+#endif
             }
 
             return typeProperties;

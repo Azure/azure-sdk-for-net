@@ -18,9 +18,15 @@ using System.Globalization;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
+#if ADF_INTERNAL
     public abstract class AdfResourceProperties<TExtensibleTypeProperties, TGenericTypeProperties> 
+#else
+    public abstract class AdfResourceProperties<TExtensibleTypeProperties> 
+#endif
         where TExtensibleTypeProperties : TypeProperties 
+#if ADF_INTERNAL
         where TGenericTypeProperties : TExtensibleTypeProperties
+#endif
     {
         /// <summary>
         /// The type of the resource. May be the name of a built-in ADF type or 
@@ -53,19 +59,31 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
         }
 
-        protected AdfResourceProperties(
-            TExtensibleTypeProperties properties,
-            string typeName = null)
+#if ADF_INTERNAL
+        protected AdfResourceProperties(TExtensibleTypeProperties properties, string typeName = null)
+#else
+        protected AdfResourceProperties(TExtensibleTypeProperties properties)
+#endif
             : this()
         {
+#if ADF_INTERNAL
             this.SetTypeProperties(properties, typeName);
+#else
+            this.SetTypeProperties(properties);
+#endif
+
         }
 
+#if ADF_INTERNAL
         private void SetTypeProperties(TExtensibleTypeProperties properties, string typeName = null)
+#else
+        private void SetTypeProperties(TExtensibleTypeProperties properties)
+#endif
         {
             this.typeProperties = properties;
 
             Type type = properties.GetType();
+#if ADF_INTERNAL
             Type genericTypePropertiesType = typeof(TGenericTypeProperties);
             if (type == genericTypePropertiesType)
             {
@@ -83,9 +101,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             }
             else
             {
+#endif
                 this.Type = type.Name;
+#if ADF_INTERNAL
             }
-
+#endif
         }
     }
 }

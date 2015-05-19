@@ -18,6 +18,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class TableJsonSamples
     {
+#if ADF_INTERNAL
         [JsonSample]
         public const string CustomTable = @"
 {
@@ -41,6 +42,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+#endif
 
         [JsonSample]
         public const string HDISTable = @"
@@ -189,6 +191,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
         [JsonSample]
         public const string ExternalTable = @"
 {
@@ -199,8 +202,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
-            blobPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time"",
-            blobName: ""TestBlobName""            
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time"",
+            fileName: ""TestBlobName""            
         },
         availability:
         {
@@ -236,8 +239,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {                
-            blobPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time"",
-            blobName: ""TestBlobName""            
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time"",
+            fileName: ""TestBlobName""            
         },
         availability:
         {

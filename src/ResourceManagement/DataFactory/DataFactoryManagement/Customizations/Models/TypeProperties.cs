@@ -24,11 +24,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 {
     public abstract class TypeProperties
     {
+#if ADF_INTERNAL
         public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+#endif
 
         protected TypeProperties()
         {
+#if ADF_INTERNAL
             this.ServiceExtraProperties = new Dictionary<string, JToken>();
+#endif
         }
 
         internal static TypeProperties DeserializeObject(string json, Type type)

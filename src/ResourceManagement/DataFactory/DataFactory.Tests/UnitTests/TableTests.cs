@@ -91,6 +91,7 @@ namespace DataFactory.Tests.UnitTests
             this.TestTableJsonSamples(samples);
         }
 
+#if ADF_INTERNAL
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -115,6 +116,7 @@ namespace DataFactory.Tests.UnitTests
             Table table = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericTable>(table.Properties.TypeProperties);
         }
+#endif
 
         private void TestTableJsonSamples(IEnumerable<JsonSampleInfo> samples)
         {

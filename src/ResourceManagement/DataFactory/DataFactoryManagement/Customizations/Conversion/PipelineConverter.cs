@@ -22,7 +22,11 @@ using Core = Microsoft.Azure.Management.DataFactories.Core.Models;
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
     internal class PipelineConverter :
+#if ADF_INTERNAL
         CoreTypeConverter<Core.Models.Pipeline, Pipeline, ActivityTypeProperties, GenericActivity>
+#else
+        CoreTypeConverter<Core.Models.Pipeline, Pipeline, ActivityTypeProperties>
+#endif
     {
         /// <summary> 
         /// Convert <paramref name="pipeline"/> to a <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.Pipeline"/> instance.
@@ -161,16 +165,20 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 internalActivity.TypeProperties, 
                 out type);
 
+#if ADF_INTERNAL
             string typeName = type == typeof(GenericActivity) ? internalActivity.Type : type.Name;
             return new Activity(typeProperties, typeName)
-                                    {
-                                        Name = internalActivity.Name,
-                                        Description = internalActivity.Description,
-                                        Inputs = internalActivity.Inputs,
-                                        Outputs = internalActivity.Outputs,
-                                        LinkedServiceName = internalActivity.LinkedServiceName,
-                                        Policy = internalActivity.Policy,
-                                    };
+#else
+            return new Activity(typeProperties)
+#endif
+                       {
+                           Name = internalActivity.Name,
+                           Description = internalActivity.Description,
+                           Inputs = internalActivity.Inputs,
+                           Outputs = internalActivity.Outputs,
+                           LinkedServiceName = internalActivity.LinkedServiceName,
+                           Policy = internalActivity.Policy
+                       };
         }
 
         private void ValidateActivity(Activity activity)
