@@ -16,8 +16,12 @@ namespace ApiManagement.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net;
+    using System.Text;
+    using System.Xml.Linq;
+    using FakeItEasy.ExtensionSyntax;
     using Microsoft.Azure;
     using Microsoft.Azure.Management.ApiManagement;
     using Microsoft.Azure.Management.ApiManagement.Models;
@@ -27,6 +31,7 @@ namespace ApiManagement.Tests
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.WindowsAzure.Management;
+    using Newtonsoft.Json;
 
     public static class ApiManagementHelper
     {
@@ -47,19 +52,21 @@ namespace ApiManagement.Tests
 
         public static void RefreshAccessToken(this ApiManagementClient apiManagementClient)
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                // if it's playback then do nothing
-                return;
-            }
+            //if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            //{
+            //    // if it's playback then do nothing
+            //    return;
+            //}
 
-            var testEnvironment = new CSMTestEnvironmentFactory().GetTestEnvironment();
-            var context = new AuthenticationContext(new Uri(testEnvironment.Endpoints.AADAuthUri, testEnvironment.Tenant).AbsoluteUri);
+            //var testEnvironment = new CSMTestEnvironmentFactory().GetTestEnvironment();
+            ////var context = TokenCloudCredentialsHelper.GetToken(testEnvironment.Endpoints.AADAuthUri.ToString(), testEnvironment.Tenant, testEnvironment.ClientId, (string)null, (string)null);
+            //var context = new AuthenticationContext(new Uri(testEnvironment.Endpoints.AADAuthUri, testEnvironment.Tenant).AbsoluteUri);
 
-            var result = context.AcquireToken("https://management.core.windows.net/", testEnvironment.ClientId, new Uri("urn:ietf:wg:oauth:2.0:oob"), PromptBehavior.Auto);
-            var newToken = context.AcquireTokenByRefreshToken(result.RefreshToken, testEnvironment.ClientId, "https://management.core.windows.net/");
+            //var result = context.AcquireToken("https://management.core.windows.net/", testEnvironment.ClientId, new Uri("urn:ietf:wg:oauth:2.0:oob"), PromptBehavior.Auto);
+            //var newToken = context.AcquireTokenByRefreshToken(result.RefreshToken, testEnvironment.ClientId, "https://management.core.windows.net/");
 
-            ((TokenCloudCredentials) apiManagementClient.Credentials).Token = newToken.AccessToken;
+            ////context.TokenCache.ReadItems().Where(item => item.)
+            //((TokenCloudCredentials) apiManagementClient.Credentials).Token = newToken.AccessToken;
         }
 
         private static void ThrowIfTrue(bool condition, string message)
@@ -140,12 +147,12 @@ namespace ApiManagement.Tests
 
         public static void TryCreateApiService(
             this ApiManagementClient client,
-            string resourceGroupName, 
-            string apiServiceName, 
-            string location, 
+            string resourceGroupName,
+            string apiServiceName,
+            string location,
             SkuType skuType = SkuType.Developer)
         {
-            client.ApiManagement.CreateOrUpdate(
+            client.ResourceProvider.CreateOrUpdate(
                 resourceGroupName,
                 apiServiceName,
                 new ApiServiceCreateOrUpdateParameters
@@ -164,8 +171,16 @@ namespace ApiManagement.Tests
                     }
                 });
 
-            var response = client.ApiManagement.Get(resourceGroupName, apiServiceName);
+            var response = client.ResourceProvider.Get(resourceGroupName, apiServiceName);
             ThrowIfTrue(!response.Value.Name.Equals(apiServiceName), string.Format("ApiService name is not equal to {0}", apiServiceName));
+        }
+
+        public static Stream ToStream(this XDocument doc)
+        {
+            var stream = new MemoryStream();
+            doc.Save(stream);
+            stream.Position = 0;
+            return stream;
         }
     }
 }

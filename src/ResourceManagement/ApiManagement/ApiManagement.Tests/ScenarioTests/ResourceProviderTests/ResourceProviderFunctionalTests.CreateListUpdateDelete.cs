@@ -64,11 +64,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         PublisherEmail = "publisher@live.com",
                         PublisherName = "publisher"
                     });
-                var createResponse = this.ApiManagementClient.ApiManagement.CreateOrUpdate(resourceGroupName, serviceName, createServiceParameters);
+                var createResponse = this.ApiManagementClient.ResourceProvider.CreateOrUpdate(resourceGroupName, serviceName, createServiceParameters);
                 Assert.NotNull(createResponse);
                 Assert.Equal(HttpStatusCode.OK, createResponse.StatusCode);
 
-                var getResponse = this.ApiManagementClient.ApiManagement.Get(resourceGroupName, serviceName);
+                var getResponse = this.ApiManagementClient.ResourceProvider.Get(resourceGroupName, serviceName);
                 Assert.NotNull(getResponse);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);
@@ -83,14 +83,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 this.ApiManagementClient.RefreshAccessToken();
 
                 // list all services
-                var listResponse = this.ApiManagementClient.ApiManagement.List(null);
+                var listResponse = this.ApiManagementClient.ResourceProvider.List(null);
                 Assert.NotNull(listResponse);
                 Assert.NotNull(listResponse.Value);
                 Assert.True(listResponse.Value.Count >= 2);
                 Assert.True(listResponse.Value.Any(service => service.Name == serviceName));
 
                 // list services only within new group
-                listResponse = this.ApiManagementClient.ApiManagement.List(resourceGroupName);
+                listResponse = this.ApiManagementClient.ResourceProvider.List(resourceGroupName);
                 Assert.NotNull(listResponse);
                 Assert.NotNull(listResponse.Value);
 
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                     }
                 };
 
-                var updateResponse = this.ApiManagementClient.ApiManagement.CreateOrUpdate(resourceGroupName, serviceName,
+                var updateResponse = this.ApiManagementClient.ResourceProvider.CreateOrUpdate(resourceGroupName, serviceName,
                     updateRequest);
                 Assert.NotNull(updateResponse);
                 Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.Equal(1, updateResponse.Value.Tags.Count(keyValue => keyValue.Key == "tag1" && keyValue.Value == "tag1 value"));
                 Assert.Equal(1, updateResponse.Value.Tags.Count(keyValue => keyValue.Key == "tag2" && keyValue.Value == "tag2 value"));
 
-                getResponse = this.ApiManagementClient.ApiManagement.Get(resourceGroupName, serviceName);
+                getResponse = this.ApiManagementClient.ResourceProvider.Get(resourceGroupName, serviceName);
                 Assert.NotNull(getResponse);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);
@@ -153,13 +153,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 ApiManagementHelper.RefreshAccessToken(this.ApiManagementClient);
 
-                var deleteResponse = this.ApiManagementClient.ApiManagement.Delete(resourceGroupName, serviceName);
+                var deleteResponse = this.ApiManagementClient.ResourceProvider.Delete(resourceGroupName, serviceName);
                 Assert.NotNull(deleteResponse);
                 Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
 
                 try
                 {
-                    this.ApiManagementClient.ApiManagement.Get(resourceGroupName, serviceName);
+                    this.ApiManagementClient.ResourceProvider.Get(resourceGroupName, serviceName);
                     Assert.True(false, "The code should not have been executed");
                 }
                 catch (CloudException ex)
