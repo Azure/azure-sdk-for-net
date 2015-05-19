@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// How to recover partitions. None, Recover, CurrentSlice
         /// </summary>
-        public string PartitionGeneration { get; set; }
+        public string InputPartition{ get; set; }
 
         /// <summary>
         /// Flag to indicate if alter schema should be performed.

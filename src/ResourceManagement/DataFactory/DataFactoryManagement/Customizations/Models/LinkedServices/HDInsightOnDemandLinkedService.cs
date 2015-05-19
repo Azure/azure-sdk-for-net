@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// The name of Azure SQL linked service.
         /// </summary>
-        public string HcatalogLinkedService { get; set; }
+        public string HcatalogLinkedServiceName { get; set; }
 
         /// <summary>
         /// Schema generation properties
