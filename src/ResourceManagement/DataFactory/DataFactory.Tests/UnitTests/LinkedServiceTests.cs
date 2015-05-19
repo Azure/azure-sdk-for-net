@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
@@ -90,7 +89,7 @@ namespace DataFactory.Tests.UnitTests
 
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(invalidJson));
-            Assert.True(ex.Message.Contains("is required"));
+            Assert.Contains("is required", ex.Message);
         }
 
         [Fact]
@@ -127,7 +126,7 @@ namespace DataFactory.Tests.UnitTests
             // If a linked service type has not been locally registered, 
             // typeProperties should be deserialized to a GenericLinkedServiceInstance
             LinkedService linkedService = this.ConvertToWrapper(unregisteredTypeJson);
-            Assert.True(linkedService.Properties.TypeProperties is GenericLinkedService);
+            Assert.IsType<GenericLinkedService>(linkedService.Properties.TypeProperties);
         }
 
 #if ADF_INTERNAL
@@ -222,7 +221,7 @@ namespace DataFactory.Tests.UnitTests
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalLinkedServiceToJson(actual);
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
-            Assert.False(actualJson.Contains("ServiceExtraProperties"));
+            Assert.DoesNotContain("ServiceExtraProperties", actualJson);
 
             return linkedService;
         }
@@ -230,13 +229,7 @@ namespace DataFactory.Tests.UnitTests
         private void TestLinkedServiceJson(string json)
         {
             LinkedService linkedService = this.ConvertAndTestJson(json);
-
-            Assert.False(
-                linkedService.Properties.TypeProperties is GenericLinkedService,
-                string.Format(
-                    CultureInfo.InvariantCulture,
-                    "No type with the name '{0}' was found to deserialize to.",
-                    linkedService.Properties.Type));
+            Assert.IsNotType<GenericLinkedService>(linkedService.Properties.TypeProperties);
         }
 
         private void TestLinkedServiceCustomJson(string json)

@@ -87,7 +87,7 @@ namespace DataFactory.Tests.UnitTests
 
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestPipelineValidation(invalidJson));
-            Assert.True(ex.Message.Contains("is required"));
+            Assert.Contains("is required", ex.Message);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace DataFactory.Tests.UnitTests
                     .Where(s => s.Version != null && s.Version.Equals("ExtraProperties"))
                     .ToList();
 
-            Assert.True(samples.Any());
+            Assert.NotEmpty(samples);
             this.TestPipelineJsonSamples(samples);
         }
 
@@ -143,7 +143,7 @@ namespace DataFactory.Tests.UnitTests
             // If an activity type has not been locally registered, 
             // typeProperties should be deserialized to a CustomActivity
             Pipeline pipeline = this.ConvertToWrapper(unregisteredTypeJson);
-            Assert.True(pipeline.Properties.Activities[0].TypeProperties is GenericActivity);
+            Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
 
         private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
@@ -166,7 +166,7 @@ namespace DataFactory.Tests.UnitTests
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalPipelineToJson(actual);
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
-            Assert.False(actualJson.Contains("ServiceExtraProperties"));
+            Assert.DoesNotContain("ServiceExtraProperties", actualJson);
         }
 
         private void TestPipelineValidation(string json)

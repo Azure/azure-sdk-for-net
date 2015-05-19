@@ -76,7 +76,7 @@ namespace DataFactory.Tests.UnitTests
 
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestTableValidation(invalidJson));
-            Assert.True(ex.Message.Contains("is required"));
+            Assert.Contains("is required", ex.Message);
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace DataFactory.Tests.UnitTests
             // If a table type has not been locally registered, 
             // typeProperties should be deserialized to a GenericTableInstance
             Table table = this.ConvertToWrapper(unregisteredTypeJson);
-            Assert.True(table.Properties.TypeProperties is GenericTable);
+            Assert.IsType<GenericTable>(table.Properties.TypeProperties);
         }
 
         private void TestTableJsonSamples(IEnumerable<JsonSampleInfo> samples)
