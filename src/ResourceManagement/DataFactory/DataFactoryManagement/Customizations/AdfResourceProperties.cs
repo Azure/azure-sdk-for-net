@@ -20,12 +20,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 {
 #if ADF_INTERNAL
     public abstract class AdfResourceProperties<TExtensibleTypeProperties, TGenericTypeProperties> 
+        where TExtensibleTypeProperties : TypeProperties 
+        where TGenericTypeProperties : TExtensibleTypeProperties
 #else
     public abstract class AdfResourceProperties<TExtensibleTypeProperties> 
-#endif
         where TExtensibleTypeProperties : TypeProperties 
-#if ADF_INTERNAL
-        where TGenericTypeProperties : TExtensibleTypeProperties
 #endif
     {
         /// <summary>
