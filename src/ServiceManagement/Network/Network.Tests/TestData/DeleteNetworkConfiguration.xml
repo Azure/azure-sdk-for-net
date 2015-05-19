@@ -1,0 +1,6 @@
+﻿<NetworkConfiguration
+ xmlns="http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <VirtualNetworkConfiguration>
+  </VirtualNetworkConfiguration>
+</NetworkConfiguration>

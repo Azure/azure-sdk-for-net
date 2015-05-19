@@ -87,7 +87,6 @@ publish
 # Others
 [Bb]in
 [Oo]bj
-sql
 TestResults
 [Tt]est[Rr]esult*
 *.Cache
@@ -130,4 +129,3 @@ build.out
 
 # Azure Project
 csx/
-AzureAuthentication.sln.GhostDoc.xml

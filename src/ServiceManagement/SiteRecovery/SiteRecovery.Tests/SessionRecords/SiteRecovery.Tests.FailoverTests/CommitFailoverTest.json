@@ -1,0 +1,158 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers?api-version=2014-10-27",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "c6c17828-f1e0-49fe-babf-d695a7ae6904"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceResource>\r\n    <ID>9b9bee9f-1136-4c76-9252-cc03d4eec261_f817b587-4c0a-4627-84f6-6ccba410896e</ID>\r\n    <Name>SecCloud</Name>\r\n    <ConfigurationStatus>Paired</ConfigurationStatus>\r\n    <ReplicationProviderSettings>&lt;ArrayOfKeyValueOfstringstring xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplica&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplicaAzure&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n&lt;/ArrayOfKeyValueOfstringstring&gt;</ReplicationProviderSettings>\r\n    <ServerId>9b9bee9f-1136-4c76-9252-cc03d4eec261</ServerId>\r\n  </ServiceResource>\r\n  <ServiceResource>\r\n    <ID>f28525b5-18e7-41de-be02-2c6e873f6aed_9d8d4c76-2301-49be-9ecb-98acb5c5ed64</ID>\r\n    <Name>PriCloud</Name>\r\n    <ConfigurationStatus>Paired</ConfigurationStatus>\r\n    <ReplicationProviderSettings>&lt;ArrayOfKeyValueOfstringstring xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplica&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplicaAzure&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n&lt;/ArrayOfKeyValueOfstringstring&gt;</ReplicationProviderSettings>\r\n    <ServerId>f28525b5-18e7-41de-be02-2c6e873f6aed</ServerId>\r\n  </ServiceResource>\r\n</ArrayOfServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c6c17828-f1e0-49fe-babf-d695a7ae6904 8:08 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 01 Sep 2014 08:08:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers/9b9bee9f-1136-4c76-9252-cc03d4eec261_f817b587-4c0a-4627-84f6-6ccba410896e/ProtectionEntities?api-version=2014-10-27",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "c6c17828-f1e0-49fe-babf-d695a7ae6904"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceResource>\r\n    <ID>7eaf7b45-041f-447a-9aad-bfee7a82e723</ID>\r\n    <Name>PriCloudVM1</Name>\r\n    <CanCommit>true</CanCommit>\r\n    <CanFailover>false</CanFailover>\r\n    <CanReverseReplicate>true</CanReverseReplicate>\r\n    <FabricObjectId>ceb46c25-eaea-4a95-b86f-f2ef353f1807</FabricObjectId>\r\n    <IsRelationshipReversed>false</IsRelationshipReversed>\r\n    <Protected>false</Protected>\r\n    <ProtectionContainerId>f28525b5-18e7-41de-be02-2c6e873f6aed_9d8d4c76-2301-49be-9ecb-98acb5c5ed64</ProtectionContainerId>\r\n    <ProtectionStateDescription>Failed Over (Unplanned - Reverse Pending)</ProtectionStateDescription>\r\n    <ReplicationHealth>Normal</ReplicationHealth>\r\n    <ReplicationProvider>HyperVReplica</ReplicationProvider>\r\n    <ServerId>f28525b5-18e7-41de-be02-2c6e873f6aed</ServerId>\r\n    <TestFailoverStateDescription>None</TestFailoverStateDescription>\r\n    <Type>VirtualMachine</Type>\r\n    <ReplicationProviderSettings i:nil=\"true\" />\r\n  </ServiceResource>\r\n</ArrayOfServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c6c17828-f1e0-49fe-babf-d695a7ae6904 8:08 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 01 Sep 2014 08:08:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers/f28525b5-18e7-41de-be02-2c6e873f6aed_9d8d4c76-2301-49be-9ecb-98acb5c5ed64/ProtectionEntities/7eaf7b45-041f-447a-9aad-bfee7a82e723/CommitFailover?api-version=2014-10-27",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Agent-Authentication": [
+          "{\"NotBeforeTimestamp\":\"\\/Date(1409555289537)\\/\",\"NotAfterTimestamp\":\"\\/Date(1409576889537)\\/\",\"ClientRequestId\":\"c6c17828-f1e0-49fe-babf-d695a7ae6904\",\"HashFunction\":\"HMACSHA256\",\"Hmac\":\"3nh0Qoe896VrWoM8P21QLVLpdoIAE80kuICb4pDkGHo=\",\"Version\":{\"Major\":1,\"Minor\":2,\"Build\":-1,\"Revision\":-1,\"MajorRevision\":-1,\"MinorRevision\":-1},\"PropertyBag\":{}}"
+        ],
+        "x-ms-client-request-id": [
+          "c6c17828-f1e0-49fe-babf-d695a7ae6904"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ID>c1b17fbf-bbcd-44bd-afe2-abee5a70e110</ID>\r\n  <ActivityId>c6c17828-f1e0-49fe-babf-d695a7ae6904</ActivityId>\r\n  <AllowedActions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <d2p1:string>Cancel</d2p1:string>\r\n  </AllowedActions>\r\n  <Completed>false</Completed>\r\n  <EndTimestamp>2014-09-01T08:08:13.2977818Z</EndTimestamp>\r\n  <Errors />\r\n  <JobDisplayName>Commit</JobDisplayName>\r\n  <Jobs xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" />\r\n  <StartTimestamp>2014-09-01T08:08:12.0267339Z</StartTimestamp>\r\n  <State>InProgress</State>\r\n  <Tasks>\r\n    <Task>\r\n      <ID>0c8d06be-0a19-4904-af0f-b6f82db66c63</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Prerequisite check</TaskDisplayName>\r\n      <TaskName>VmCommitPrerequisitesCheck</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>74a9df53-e154-4fa1-b007-9b357beec5dc</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Commit</TaskDisplayName>\r\n      <TaskName>VmCommit</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n  </Tasks>\r\n</ServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c6c17828-f1e0-49fe-babf-d695a7ae6904 8:08 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 01 Sep 2014 08:08:12 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "947a55d7-75e9-4a36-b156-305c6270f018"
+  }
+}

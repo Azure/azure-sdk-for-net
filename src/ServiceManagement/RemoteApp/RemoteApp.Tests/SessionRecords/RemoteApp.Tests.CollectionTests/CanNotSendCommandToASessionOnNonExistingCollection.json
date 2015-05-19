@@ -1,0 +1,125 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/mycoll/sessions/logoff?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvbXljb2xsL3Nlc3Npb25zL2xvZ29mZj9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"UserUpn\": \"some@test.com\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "34"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">{\"Code\":\"CollectionDoesNotExist\",\"Message\":\"Collection 'mycoll' does not exist\",\"ActivityId\":\"758e72ee-aa41-4018-b718-cc1e148e7249\",\"errorClass\":0}</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "224"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:24 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/mycoll/sessions/disconnect?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvbXljb2xsL3Nlc3Npb25zL2Rpc2Nvbm5lY3Q/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"UserUpn\": \"some@test.com\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "34"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">{\"Code\":\"CollectionDoesNotExist\",\"Message\":\"Collection 'mycoll' does not exist\",\"ActivityId\":\"4ee0982b-2264-458d-a2db-76f76b71a856\",\"errorClass\":0}</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "224"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/mycoll/sessions/sendMessage?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvbXljb2xsL3Nlc3Npb25zL3NlbmRNZXNzYWdlP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"UserUpn\": \"some1@test.com\",\r\n  \"Message\": \"Hey there!\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "63"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">{\"Code\":\"CollectionDoesNotExist\",\"Message\":\"Collection 'mycoll' does not exist\",\"ActivityId\":\"ead30ece-c6c9-470a-ab28-89e57251a6a9\",\"errorClass\":0}</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "224"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:36:29 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

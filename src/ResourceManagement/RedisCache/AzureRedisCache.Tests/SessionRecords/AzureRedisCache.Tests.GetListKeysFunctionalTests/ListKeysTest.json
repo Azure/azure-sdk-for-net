@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1/listKeys?api-version=2014-04-01-preview",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"wnhtuKx3NtJFkgyjl6cuBUsOYsGGoARw2woAJ1B1VPM=\",\r\n  \"secondaryKey\": \"GBcpPU0v4Ftd9i1WAItaOhhP4RGFwsJOAKEG27cmsw8=\"\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b746e5bd-0380-493d-b6c5-93298e0dab8e"
+        ],
+        "x-rp-server-mvid": [
+          "ada78035-ec7d-467d-993c-7ac34724eb72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "657d30a4-bf7c-4ddf-b57a-a0cff7c02edc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140902T222405Z:657d30a4-bf7c-4ddf-b57a-a0cff7c02edc"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Sep 2014 22:24:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f435d8e1-f7a0-4f79-adf7-b1a564728140"
+  }
+}

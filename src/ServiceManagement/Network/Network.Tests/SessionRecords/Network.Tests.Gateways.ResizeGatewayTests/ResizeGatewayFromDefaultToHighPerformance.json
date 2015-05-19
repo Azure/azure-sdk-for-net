@@ -1,0 +1,1488 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/media",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<NetworkConfiguration xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns />\r\n    <LocalNetworkSites>\r\n      <LocalNetworkSite name=\"localNetworkSiteName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>10.1.0.0/16</AddressPrefix>\r\n        </AddressSpace>\r\n        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>\r\n      </LocalNetworkSite>\r\n    </LocalNetworkSites>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" AffinityGroup=\"affinityGroupName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.0.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"FrontEndSubnet\">\r\n            <AddressPrefix>192.168.0.0/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"BackEndSubnet\">\r\n            <AddressPrefix>192.168.0.32/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"GatewaySubnet\">\r\n            <AddressPrefix>192.168.0.48/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <Gateway>\r\n          <ConnectionsToLocalNetwork>\r\n            <LocalNetworkSiteRef name=\"localNetworkSiteName\">\r\n              <Connection type=\"IPsec\" />\r\n            </LocalNetworkSiteRef>\r\n          </ConnectionsToLocalNetwork>\r\n        </Gateway>\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1588"
+        ],
+        "Content-Type": [
+          "text/plain"
+        ],
+        "x-ms-request-id": [
+          "5ed7e831a11f61ce80d3a48b7003d061"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:11:07 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/media",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<NetworkConfiguration xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns />\r\n    <LocalNetworkSites>\r\n      <LocalNetworkSite name=\"localNetworkSiteName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>10.1.0.0/16</AddressPrefix>\r\n        </AddressSpace>\r\n        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>\r\n      </LocalNetworkSite>\r\n    </LocalNetworkSites>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" AffinityGroup=\"affinityGroupName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.0.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"FrontEndSubnet\">\r\n            <AddressPrefix>192.168.0.0/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"BackEndSubnet\">\r\n            <AddressPrefix>192.168.0.32/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"GatewaySubnet\">\r\n            <AddressPrefix>192.168.0.48/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <Gateway>\r\n          <ConnectionsToLocalNetwork>\r\n            <LocalNetworkSiteRef name=\"localNetworkSiteName\">\r\n              <Connection type=\"IPsec\" />\r\n            </LocalNetworkSiteRef>\r\n          </ConnectionsToLocalNetwork>\r\n        </Gateway>\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1588"
+        ],
+        "Content-Type": [
+          "text/plain"
+        ],
+        "x-ms-request-id": [
+          "1c701a0ccf8c6c22af1ac5b2c2e1e5eb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:11:08 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/virtualNetworkSiteName/gateway",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Gateway xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <GatewayType>StaticRouting</GatewayType>\r\n  <LastEvent>\r\n    <Id>23004</Id>\r\n    <Message>Successfully deleted the gateway for the following virtual network: virtualNetworkSiteName</Message>\r\n    <Timestamp>2014-11-11T17:06:17.5361789Z</Timestamp>\r\n  </LastEvent>\r\n  <State>NotProvisioned</State>\r\n  <GatewaySize>Default</GatewaySize>\r\n</Gateway>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "421"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "51ff24b3930f6b02b5195f64828f0a16"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:11:11 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/virtualNetworkSiteName/gateway",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Gateway xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <GatewayType>StaticRouting</GatewayType>\r\n  <LastEvent>\r\n    <Id>23002</Id>\r\n    <Message>Successfully created a gateway for the following virtual network: virtualNetworkSiteName</Message>\r\n    <Timestamp>2014-11-13T17:24:10.241694Z</Timestamp>\r\n  </LastEvent>\r\n  <State>Provisioned</State>\r\n  <VIPAddress>168.62.84.206</VIPAddress>\r\n  <GatewaySize>Default</GatewaySize>\r\n</Gateway>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "453"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "28af9cbb99a569ce9ba599832cf6f84e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:24:38 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/virtualNetworkSiteName/gateway",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <GatewaySize>Default</GatewaySize>\r\n  <gatewayType>StaticRouting</gatewayType>\r\n</CreateGatewayParameters>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "185"
+        ],
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "210"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "524712c5bbbd6cbe9e578d8c4175643e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:11:16 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "45c2f24014e86f2585bcab0883d17833"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:11:16 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "fd0a16a3f0d16280b7790879805fe55a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:11:46 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "277f37342afe62e48c2b26722706a12b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:12:17 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "8fec866cd8e968fdb04a5de5c07a25a0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:12:48 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "ba1bea6d019c66d9a6f8bf84b5add81d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:13:19 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "b867fbfb36346828b567ee70054fb2c5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:13:50 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "a11bf0331cb46b43afdeab9d6f1ab0db"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:14:21 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "fa1b28f2fc3b62d4bde6af8ecf9d9bcb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:14:52 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "15e0ae4472d0645caf50a4ad3f3df401"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:15:23 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "3bb6e41c19476185af0cad2c15d74397"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:15:53 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "55344b1911706ba28ed102017790da6a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:16:24 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "b1dc59a228726b048e2e2e957919832c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:16:54 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "1c07220bc1fa653197a870af3bb0e8da"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:17:25 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "0e1cdc542a056bd6a0cbae61a153b890"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:17:56 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "a3f5814bca21628bbcb59a2b92595d38"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:18:27 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "a152ce27dbcb6ced95231292b3fd9aff"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:18:58 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "d01e1cd09a7569df9eb39471274eef1d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:19:28 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "3a09a0568e096f38a19ba46e68d84c0a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:19:59 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "f0bde805b00c6dc69ff85cdad9cdf0b1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:20:29 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "ca021805d3d46ddbbaedc62e630e3b5b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:21:00 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "a00f2bf134fb601d9848062b8a8b9cd0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:21:31 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "32d7b06d15ce62448a6dc47b7d181256"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:22:02 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "19f003010f3f63de8bef8e3485b7339d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:22:33 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "ad6c9035f000672caf5055ec924f5153"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:23:03 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "d6adf4c970446b149c4490a5f00bd1e8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:23:35 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "58e87d77069b636c8540d06d377ae28d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:24:05 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/524712c5-bbbd-6cbe-9e57-8d8c4175643e",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "4"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>524712c5-bbbd-6cbe-9e57-8d8c4175643e</ID>\r\n  <OperationCompletedTime>2014-11-13T17:24:10.376949</OperationCompletedTime>\r\n  <OperationName>CreateGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:11:14.8973263</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "437"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "d05d96ef96476653b14f12f59a8e05c6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:24:35 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/virtualNetworkSiteName/gateway",
+      "RequestMethod": "PATCH",
+      "RequestBody": "<UpdateGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <GatewaySize>HighPerformance</GatewaySize>\r\n  <Operation>Resize</Operation>\r\n</UpdateGatewayParameters>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "182"
+        ],
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "34"
+        ]
+      },
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>BadRequest</Code>\r\n  <Message>The current operation or request is invalid against Static-Routing gateway.</Message>\r\n</Error>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "234"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "8d92da7d20d866b8a2d7111ee79e528e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:24:40 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/virtualNetworkSiteName/gateway",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "36"
+        ]
+      },
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>fd966648-966f-6cd4-a516-c741a15ce5d8</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "210"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "fd966648966f6cd4a516c741a15ce5d8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:24:42 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/fd966648-966f-6cd4-a516-c741a15ce5d8",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "36"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>fd966648-966f-6cd4-a516-c741a15ce5d8</ID>\r\n  <OperationName>DeleteGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:24:42.0719225</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "d252873e26706d10885bd329bf010033"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:24:43 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/fd966648-966f-6cd4-a516-c741a15ce5d8",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "36"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>fd966648-966f-6cd4-a516-c741a15ce5d8</ID>\r\n  <OperationName>DeleteGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:24:42.0719225</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "327"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "75fb2702f91963198de6a36e2bb03c10"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:25:14 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5/services/networking/operation/fd966648-966f-6cd4-a516-c741a15ce5d8",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ],
+        "client-tracking-id": [
+          "36"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>fd966648-966f-6cd4-a516-c741a15ce5d8</ID>\r\n  <OperationCompletedTime>2014-11-13T17:25:18.8630426</OperationCompletedTime>\r\n  <OperationName>DeleteGateway</OperationName>\r\n  <OperationStartedTime>2014-11-13T17:24:42.0719225</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "438"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "b0493e73568b6019becc371152a65d7a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Nov 2014 17:25:44 GMT"
+        ],
+        "Server": [
+          "1.0.6196.867",
+          "(rd_rdfe.141105-1800)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "929bbb81-2cbc-42c1-8804-9a4fe2cfe7e5"
+  }
+}

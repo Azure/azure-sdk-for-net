@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/account?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvYWNjb3VudD9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"ContactEmail\": \"tstestadmin1@mohoro001.msolctp-int.com\",\r\n  \"Id\": \"f0265076-f310-41b4-a9ad-f38b5123747e\",\r\n  \"IsDesktopEnabled\": false,\r\n  \"MaxPublishedAppsPerService\": 100,\r\n  \"MaxServices\": 5,\r\n  \"MaxUsersPerService\": 0,\r\n  \"OptIntoMarketingEmail\": true,\r\n  \"RdWebUrl\": \"https://clouddvtest15-iworkerui.cloudapp.net/\",\r\n  \"SubscriptionId\": \"30da001a-1a9e-48a1-8b77-e5abcfe38bdc\",\r\n  \"WorkspaceName\": \"Work Resources\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "378"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "db1936e6bbc26d3298f66aab27b52f18"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:40:07 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}
