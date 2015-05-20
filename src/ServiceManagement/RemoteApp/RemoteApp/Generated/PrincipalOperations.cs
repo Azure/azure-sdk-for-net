@@ -30,11 +30,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RemoteApp principal operations.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient.
         /// </summary>
         public RemoteAppManagementClient Client
         {

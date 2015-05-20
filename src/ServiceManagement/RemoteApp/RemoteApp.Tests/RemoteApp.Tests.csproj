@@ -12,6 +12,7 @@
     <Compile Include="Tests\ActiveDirectoryTests.cs" />
     <Compile Include="Tests\RemoteAppPrincipalTests.cs" />
     <Compile Include="Tests\RemoteAppPublishingTests.cs" />
+    <Compile Include="Tests\RemoteAppTestBase.cs" />
     <Compile Include="Tests\TemplateImageTests.cs" />
     <Compile Include="Tests\RemoteAppServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

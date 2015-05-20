@@ -6,8 +6,8 @@
     <ProjectGuid>{29F1C6AD-41C7-428C-8024-88E97033CE1A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Azure.Management.RemoteApp</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Management.RemoteApp</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.Management.RemoteApp</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.RemoteApp</AssemblyName>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>83805083</NuGetPackageImportStamp>
   </PropertyGroup>
@@ -17,11 +17,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.RemoteApp.nuget.proj">
+    <None Include="Microsoft.WindowsAzure.Management.RemoteApp.nuget.proj">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Microsoft.Azure.Management.RemoteApp.nuspec">
+    <None Include="Microsoft.WindowsAzure.Management.RemoteApp.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
