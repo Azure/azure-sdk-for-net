@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
@@ -23,10 +24,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public sealed class CustomTableLocation : TableTypeProperties
     {
-#if !ADF_INTERNAL
-        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
-#endif
-
         public CustomTableLocation()
         {
         }
@@ -37,3 +34,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
     }
 }
+#endif

@@ -21,8 +21,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 {
     public sealed class GenericTable : TableTypeProperties
     {
-        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
-
         public GenericTable()
         {
         }
