@@ -171,8 +171,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the authorization server.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Authorizations server operation response details.
         /// </returns>
         public static AuthorizationServerGetResponse Get(this IAuthorizationServersOperations operations, string resourceGroupName, string serviceName, string authsid)
         {
@@ -200,8 +199,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the authorization server.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Authorizations server operation response details.
         /// </returns>
         public static Task<AuthorizationServerGetResponse> GetAsync(this IAuthorizationServersOperations operations, string resourceGroupName, string serviceName, string authsid)
         {
@@ -225,8 +223,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Authorization Servers operation response details.
         /// </returns>
         public static AuthorizationServerListResponse List(this IAuthorizationServersOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -254,8 +251,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Authorization Servers operation response details.
         /// </returns>
         public static Task<AuthorizationServerListResponse> ListAsync(this IAuthorizationServersOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -274,8 +270,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Authorization Servers operation response details.
         /// </returns>
         public static AuthorizationServerListResponse ListNext(this IAuthorizationServersOperations operations, string nextLink)
         {
@@ -298,8 +293,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Authorization Servers operation response details.
         /// </returns>
         public static Task<AuthorizationServerListResponse> ListNextAsync(this IAuthorizationServersOperations operations, string nextLink)
         {

@@ -26,6 +26,9 @@ using Hyak.Common;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Operation parameters details.
+    /// </summary>
     public partial class ParameterContract
     {
         private string _defaultValue;

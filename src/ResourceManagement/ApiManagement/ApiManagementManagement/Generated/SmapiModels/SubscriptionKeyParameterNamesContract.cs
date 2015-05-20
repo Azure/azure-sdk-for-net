@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Subscription key parameter names details.
+    /// </summary>
     public partial class SubscriptionKeyParameterNamesContract
     {
         private string _header;

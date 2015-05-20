@@ -61,8 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// XmlConvert.ToString(new TimeSpan(hours, minutes, secconds))
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Report records operation response details.
         /// </returns>
         public static ReportListResponse List(this IReportsOperations operations, string resourceGroupName, string serviceName, ReportsAggregation aggregation, QueryParameters query, string interval)
         {
@@ -101,8 +100,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// XmlConvert.ToString(new TimeSpan(hours, minutes, secconds))
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Report records operation response details.
         /// </returns>
         public static Task<ReportListResponse> ListAsync(this IReportsOperations operations, string resourceGroupName, string serviceName, ReportsAggregation aggregation, QueryParameters query, string interval)
         {
@@ -121,8 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Report records operation response details.
         /// </returns>
         public static ReportListResponse ListNext(this IReportsOperations operations, string nextLink)
         {
@@ -145,8 +142,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Report records operation response details.
         /// </returns>
         public static Task<ReportListResponse> ListNextAsync(this IReportsOperations operations, string nextLink)
         {

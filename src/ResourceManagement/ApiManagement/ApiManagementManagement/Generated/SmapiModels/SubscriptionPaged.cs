@@ -27,12 +27,15 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Paged Subsctions list representation.
+    /// </summary>
     public partial class SubscriptionPaged : Paged
     {
         private IList<SubscriptionContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets page values.
         /// </summary>
         public IList<SubscriptionContract> Values
         {

@@ -25,6 +25,9 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Subscription details.
+    /// </summary>
     public partial class SubscriptionContract
     {
         private DateTime _createdDate;

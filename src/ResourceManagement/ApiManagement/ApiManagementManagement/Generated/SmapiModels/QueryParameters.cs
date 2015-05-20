@@ -24,12 +24,15 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Query parameters.
+    /// </summary>
     public partial class QueryParameters
     {
         private string _filter;
         
         /// <summary>
-        /// Optional.
+        /// Optional. OData filter. (e.g. name eq 'contoso')
         /// </summary>
         public string Filter
         {
@@ -40,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private int? _skip;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Skip specified number of records.
         /// </summary>
         public int? Skip
         {
@@ -51,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private int? _top;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Query for only top specified records.
         /// </summary>
         public int? Top
         {

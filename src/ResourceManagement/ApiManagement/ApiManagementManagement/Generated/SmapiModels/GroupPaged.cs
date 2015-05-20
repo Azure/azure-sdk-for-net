@@ -27,12 +27,15 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Paged Group list representation.
+    /// </summary>
     public partial class GroupPaged : Paged
     {
         private IList<GroupContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets page values.
         /// </summary>
         public IList<GroupContract> Values
         {

@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Policy scope.
+    /// </summary>
     public enum PolicyScopeContract
     {
         /// <summary>

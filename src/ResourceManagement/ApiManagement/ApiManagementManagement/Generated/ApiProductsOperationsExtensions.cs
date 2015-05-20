@@ -53,8 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static ProductListResponse List(this IApiProductsOperations operations, string resourceGroupName, string serviceName, string aid, QueryParameters query)
         {
@@ -85,8 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static Task<ProductListResponse> ListAsync(this IApiProductsOperations operations, string resourceGroupName, string serviceName, string aid, QueryParameters query)
         {
@@ -105,8 +103,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static ProductListResponse ListNext(this IApiProductsOperations operations, string nextLink)
         {
@@ -129,8 +126,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static Task<ProductListResponse> ListNextAsync(this IApiProductsOperations operations, string nextLink)
         {

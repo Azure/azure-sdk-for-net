@@ -27,12 +27,15 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Paged Report records list representation.
+    /// </summary>
     public partial class ReportPaged : Paged
     {
         private IList<ReportRecordContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets page values.
         /// </summary>
         public IList<ReportRecordContract> Values
         {

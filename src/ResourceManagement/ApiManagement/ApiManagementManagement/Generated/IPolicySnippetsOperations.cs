@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List policy snippets operation response details.
         /// </returns>
         Task<PolicySnippetListResponse> ListAsync(string resourceGroupName, string serviceName, PolicyScopeContract scope, CancellationToken cancellationToken);
     }

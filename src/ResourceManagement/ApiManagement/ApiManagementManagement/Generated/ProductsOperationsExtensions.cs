@@ -177,8 +177,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the product.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Product operation response details.
         /// </returns>
         public static ProductGetResponse Get(this IProductsOperations operations, string resourceGroupName, string serviceName, string pid)
         {
@@ -206,8 +205,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the product.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Product operation response details.
         /// </returns>
         public static Task<ProductGetResponse> GetAsync(this IProductsOperations operations, string resourceGroupName, string serviceName, string pid)
         {
@@ -231,8 +229,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static ProductListResponse List(this IProductsOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -260,8 +257,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static Task<ProductListResponse> ListAsync(this IProductsOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -280,8 +276,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static ProductListResponse ListNext(this IProductsOperations operations, string nextLink)
         {
@@ -304,8 +299,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Products operation response details.
         /// </returns>
         public static Task<ProductListResponse> ListNextAsync(this IProductsOperations operations, string nextLink)
         {

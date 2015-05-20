@@ -114,8 +114,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static UserListResponse List(this IGroupUsersOperations operations, string resourceGroupName, string serviceName, string gid, QueryParameters query)
         {
@@ -146,8 +145,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static Task<UserListResponse> ListAsync(this IGroupUsersOperations operations, string resourceGroupName, string serviceName, string gid, QueryParameters query)
         {
@@ -166,8 +164,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static UserListResponse ListNext(this IGroupUsersOperations operations, string nextLink)
         {
@@ -190,8 +187,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static Task<UserListResponse> ListNextAsync(this IGroupUsersOperations operations, string nextLink)
         {

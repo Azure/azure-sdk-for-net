@@ -556,8 +556,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Authorizations server operation response details.
         /// </returns>
         public async Task<AuthorizationServerGetResponse> GetAsync(string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken)
         {
@@ -876,8 +875,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Authorization Servers operation response details.
         /// </returns>
         public async Task<AuthorizationServerListResponse> ListAsync(string resourceGroupName, string serviceName, QueryParameters query, CancellationToken cancellationToken)
         {
@@ -1223,8 +1221,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Authorization Servers operation response details.
         /// </returns>
         public async Task<AuthorizationServerListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {

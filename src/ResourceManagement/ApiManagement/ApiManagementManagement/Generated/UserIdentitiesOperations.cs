@@ -76,8 +76,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List User Identities operation response details.
         /// </returns>
         public async Task<UserIdentityListResponse> ListAsync(string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken)
         {

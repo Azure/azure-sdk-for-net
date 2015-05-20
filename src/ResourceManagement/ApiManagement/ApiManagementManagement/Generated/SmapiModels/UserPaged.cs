@@ -27,12 +27,15 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Paged Users list representation.
+    /// </summary>
     public partial class UserPaged : Paged
     {
         private IList<UserContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets page values.
         /// </summary>
         public IList<UserContract> Values
         {

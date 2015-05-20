@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// User identity.
+    /// User identity details.
     /// </summary>
     public partial class UserIdentityContract
     {

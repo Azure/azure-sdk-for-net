@@ -73,8 +73,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Regions operation response details.
         /// </returns>
         public async Task<RegionListResponse> ListAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken)
         {

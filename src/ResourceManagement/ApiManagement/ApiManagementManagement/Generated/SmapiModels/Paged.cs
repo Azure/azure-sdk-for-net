@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private string _nextLink;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets next page link if any.
         /// </summary>
         public string NextLink
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private long _totalCount;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets total records count number.
         /// </summary>
         public long TotalCount
         {

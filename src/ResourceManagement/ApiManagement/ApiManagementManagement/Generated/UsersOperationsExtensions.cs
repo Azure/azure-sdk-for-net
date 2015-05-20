@@ -177,8 +177,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the user.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Generate SSO Url operations response details.
         /// </returns>
         public static GenerateSsoUrlResponse GenerateSsoUrl(this IUsersOperations operations, string resourceGroupName, string serviceName, string uid)
         {
@@ -206,8 +205,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the user.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Generate SSO Url operations response details.
         /// </returns>
         public static Task<GenerateSsoUrlResponse> GenerateSsoUrlAsync(this IUsersOperations operations, string resourceGroupName, string serviceName, string uid)
         {
@@ -231,8 +229,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the user.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get User operation response details.
         /// </returns>
         public static UserGetResponse Get(this IUsersOperations operations, string resourceGroupName, string serviceName, string uid)
         {
@@ -260,8 +257,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the user.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get User operation response details.
         /// </returns>
         public static Task<UserGetResponse> GetAsync(this IUsersOperations operations, string resourceGroupName, string serviceName, string uid)
         {
@@ -285,8 +281,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static UserListResponse List(this IUsersOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -314,8 +309,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static Task<UserListResponse> ListAsync(this IUsersOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -334,8 +328,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static UserListResponse ListNext(this IUsersOperations operations, string nextLink)
         {
@@ -358,8 +351,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public static Task<UserListResponse> ListNextAsync(this IUsersOperations operations, string nextLink)
         {

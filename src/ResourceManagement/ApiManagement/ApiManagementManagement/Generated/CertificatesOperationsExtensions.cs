@@ -177,8 +177,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the certificate.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Certificate operation response details.
         /// </returns>
         public static CertificateGetResponse Get(this ICertificatesOperations operations, string resourceGroupName, string serviceName, string certificateId)
         {
@@ -206,8 +205,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the certificate.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Certificate operation response details.
         /// </returns>
         public static Task<CertificateGetResponse> GetAsync(this ICertificatesOperations operations, string resourceGroupName, string serviceName, string certificateId)
         {
@@ -228,8 +226,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Certificates operation response details.
         /// </returns>
         public static CertificateListResponse List(this ICertificatesOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -254,8 +251,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Certificates operation response details.
         /// </returns>
         public static Task<CertificateListResponse> ListAsync(this ICertificatesOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -274,8 +270,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Certificates operation response details.
         /// </returns>
         public static CertificateListResponse ListNext(this ICertificatesOperations operations, string nextLink)
         {
@@ -298,8 +293,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Certificates operation response details.
         /// </returns>
         public static Task<CertificateListResponse> ListNextAsync(this ICertificatesOperations operations, string nextLink)
         {

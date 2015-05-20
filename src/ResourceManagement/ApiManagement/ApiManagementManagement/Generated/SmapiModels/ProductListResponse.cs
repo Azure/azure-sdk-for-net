@@ -27,15 +27,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List Products operation response details.
     /// </summary>
     public partial class ProductListResponse : AzureOperationResponse
     {
         private ProductPaged _result;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets ot sets result of List Products operation.
         /// </summary>
         public ProductPaged Result
         {

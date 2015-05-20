@@ -27,6 +27,9 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Operation response details.
+    /// </summary>
     public partial class ResponseContract
     {
         private string _description;

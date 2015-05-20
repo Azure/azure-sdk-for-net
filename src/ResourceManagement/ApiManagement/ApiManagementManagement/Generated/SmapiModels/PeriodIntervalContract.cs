@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Time period interval.
+    /// </summary>
     public enum PeriodIntervalContract
     {
         /// <summary>

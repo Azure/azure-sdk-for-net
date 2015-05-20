@@ -27,15 +27,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List Users operation response details.
     /// </summary>
     public partial class UserListResponse : AzureOperationResponse
     {
         private UserPaged _result;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets ot sets result of List Users operation.
         /// </summary>
         public UserPaged Result
         {

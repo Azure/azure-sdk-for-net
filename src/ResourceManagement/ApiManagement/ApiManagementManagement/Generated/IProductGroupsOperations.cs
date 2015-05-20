@@ -73,8 +73,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Groups operation response details.
         /// </returns>
         Task<GroupListResponse> ListAsync(string resourceGroupName, string serviceName, string pid, QueryParameters query, CancellationToken cancellationToken);
         
@@ -88,8 +87,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Groups operation response details.
         /// </returns>
         Task<GroupListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         

@@ -464,8 +464,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Generate SSO Url operations response details.
         /// </returns>
         public async Task<GenerateSsoUrlResponse> GenerateSsoUrlAsync(string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken)
         {
@@ -641,8 +640,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get User operation response details.
         /// </returns>
         public async Task<UserGetResponse> GetAsync(string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken)
         {
@@ -890,8 +888,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public async Task<UserListResponse> ListAsync(string resourceGroupName, string serviceName, QueryParameters query, CancellationToken cancellationToken)
         {
@@ -1166,8 +1163,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Users operation response details.
         /// </returns>
         public async Task<UserListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {

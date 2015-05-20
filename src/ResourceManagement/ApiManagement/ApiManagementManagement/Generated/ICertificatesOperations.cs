@@ -100,8 +100,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Certificate operation response details.
         /// </returns>
         Task<CertificateGetResponse> GetAsync(string resourceGroupName, string serviceName, string certificateId, CancellationToken cancellationToken);
         
@@ -115,8 +114,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Certificates operation response details.
         /// </returns>
         Task<CertificateListResponse> ListAsync(string resourceGroupName, string serviceName, QueryParameters query, CancellationToken cancellationToken);
         
@@ -130,8 +128,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Certificates operation response details.
         /// </returns>
         Task<CertificateListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }

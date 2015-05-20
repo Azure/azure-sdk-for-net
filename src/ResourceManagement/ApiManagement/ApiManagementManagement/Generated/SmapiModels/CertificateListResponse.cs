@@ -27,15 +27,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List Certificates operation response details.
     /// </summary>
     public partial class CertificateListResponse : AzureOperationResponse
     {
         private CertificatePaged _result;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets ot sets result of List Certificates operation.
         /// </summary>
         public CertificatePaged Result
         {

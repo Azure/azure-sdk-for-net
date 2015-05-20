@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private byte[] _content;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets response content bytes.
         /// </summary>
         public byte[] Content
         {

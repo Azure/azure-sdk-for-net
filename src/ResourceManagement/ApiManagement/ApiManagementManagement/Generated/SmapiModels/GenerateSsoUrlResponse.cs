@@ -26,8 +26,7 @@ using Microsoft.Azure;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Generate SSO Url operations response details.
     /// </summary>
     public partial class GenerateSsoUrlResponse : AzureOperationResponse
     {

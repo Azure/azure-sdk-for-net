@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private OAuth2AuthorizationServerContract _oAuth2AuthorizationServerContract;
         
         /// <summary>
-        /// Required.
+        /// Required. Gets or sets OAuth2 Authorization Server details.
         /// </summary>
         public OAuth2AuthorizationServerContract OAuth2AuthorizationServerContract
         {

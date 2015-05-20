@@ -25,6 +25,9 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// API Authentication Settings.
+    /// </summary>
     public partial class AuthenticationSettingsContract
     {
         private OAuth2AuthenticationSettingsContract _oAuth2;

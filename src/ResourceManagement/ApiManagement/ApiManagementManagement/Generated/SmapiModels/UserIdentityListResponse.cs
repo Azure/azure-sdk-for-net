@@ -29,15 +29,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List User Identities operation response details.
     /// </summary>
     public partial class UserIdentityListResponse : AzureOperationResponse, IEnumerable<UserIdentityContract>
     {
         private IList<UserIdentityContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets result of the List User Identities operation.
         /// </summary>
         public IList<UserIdentityContract> Values
         {

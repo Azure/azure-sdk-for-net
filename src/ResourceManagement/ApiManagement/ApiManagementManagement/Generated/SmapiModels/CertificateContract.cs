@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// Certificate details
+    /// Certificate details.
     /// </summary>
     public partial class CertificateContract
     {

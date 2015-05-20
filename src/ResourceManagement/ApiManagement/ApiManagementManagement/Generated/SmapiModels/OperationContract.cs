@@ -27,6 +27,9 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Api Operation details.
+    /// </summary>
     public partial class OperationContract
     {
         private string _description;

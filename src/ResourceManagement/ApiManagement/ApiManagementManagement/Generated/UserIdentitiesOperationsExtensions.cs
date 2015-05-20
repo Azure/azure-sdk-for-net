@@ -50,8 +50,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the user.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List User Identities operation response details.
         /// </returns>
         public static UserIdentityListResponse List(this IUserIdentitiesOperations operations, string resourceGroupName, string serviceName, string uid)
         {
@@ -79,8 +78,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the user.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List User Identities operation response details.
         /// </returns>
         public static Task<UserIdentityListResponse> ListAsync(this IUserIdentitiesOperations operations, string resourceGroupName, string serviceName, string uid)
         {

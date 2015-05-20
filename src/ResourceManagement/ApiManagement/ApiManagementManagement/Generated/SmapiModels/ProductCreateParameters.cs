@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private ProductContract _productContract;
         
         /// <summary>
-        /// Required.
+        /// Required. Gets or sets product details.
         /// </summary>
         public ProductContract ProductContract
         {

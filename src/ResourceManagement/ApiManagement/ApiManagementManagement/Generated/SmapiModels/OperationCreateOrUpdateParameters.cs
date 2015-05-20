@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private OperationContract _operationContract;
         
         /// <summary>
-        /// Required.
+        /// Required. Gets or sets operation details.
         /// </summary>
         public OperationContract OperationContract
         {

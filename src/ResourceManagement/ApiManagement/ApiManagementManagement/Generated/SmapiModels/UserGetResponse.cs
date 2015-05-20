@@ -27,8 +27,7 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Get User operation response details.
     /// </summary>
     public partial class UserGetResponse : AzureOperationResponse
     {

@@ -107,8 +107,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Operation operation response details.
         /// </returns>
         Task<OperationGetResponse> GetAsync(string resourceGroupName, string serviceName, string aid, string oid, CancellationToken cancellationToken);
         
@@ -128,8 +127,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Operations operation response details.
         /// </returns>
         Task<OperationListResponse> ListAsync(string resourceGroupName, string serviceName, string aid, QueryParameters query, CancellationToken cancellationToken);
         
@@ -143,8 +141,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Operations operation response details.
         /// </returns>
         Task<OperationListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         

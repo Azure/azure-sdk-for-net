@@ -171,8 +171,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the group.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Group operation response details.
         /// </returns>
         public static GroupGetResponse Get(this IGroupsOperations operations, string resourceGroupName, string serviceName, string gid)
         {
@@ -200,8 +199,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the group.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Group operation response details.
         /// </returns>
         public static Task<GroupGetResponse> GetAsync(this IGroupsOperations operations, string resourceGroupName, string serviceName, string gid)
         {
@@ -225,8 +223,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Groups operation response details.
         /// </returns>
         public static GroupListResponse List(this IGroupsOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -254,8 +251,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Groups operation response details.
         /// </returns>
         public static Task<GroupListResponse> ListAsync(this IGroupsOperations operations, string resourceGroupName, string serviceName, QueryParameters query)
         {
@@ -274,8 +270,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Groups operation response details.
         /// </returns>
         public static GroupListResponse ListNext(this IGroupsOperations operations, string nextLink)
         {
@@ -298,8 +293,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Groups operation response details.
         /// </returns>
         public static Task<GroupListResponse> ListNextAsync(this IGroupsOperations operations, string nextLink)
         {

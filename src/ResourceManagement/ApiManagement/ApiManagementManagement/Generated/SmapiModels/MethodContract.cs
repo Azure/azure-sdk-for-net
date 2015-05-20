@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// HTTP method.
+    /// </summary>
     public enum MethodContract
     {
         /// <summary>

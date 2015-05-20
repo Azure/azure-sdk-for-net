@@ -47,8 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Regions operation response details.
         /// </returns>
         public static RegionListResponse List(this IRegionsOperations operations, string resourceGroupName, string serviceName)
         {
@@ -73,8 +72,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Regions operation response details.
         /// </returns>
         public static Task<RegionListResponse> ListAsync(this IRegionsOperations operations, string resourceGroupName, string serviceName)
         {

@@ -50,8 +50,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Polisy scope.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List policy snippets operation response details.
         /// </returns>
         public static PolicySnippetListResponse List(this IPolicySnippetsOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract scope)
         {
@@ -79,8 +78,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Polisy scope.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List policy snippets operation response details.
         /// </returns>
         public static Task<PolicySnippetListResponse> ListAsync(this IPolicySnippetsOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract scope)
         {

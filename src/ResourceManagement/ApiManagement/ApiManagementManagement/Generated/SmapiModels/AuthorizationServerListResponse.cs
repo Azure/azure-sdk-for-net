@@ -27,15 +27,15 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List Authorization Servers operation response details.
     /// </summary>
     public partial class AuthorizationServerListResponse : AzureOperationResponse
     {
         private AuthorizationServerPaged _result;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets result of a List Authorization Servers
+        /// operation.
         /// </summary>
         public AuthorizationServerPaged Result
         {

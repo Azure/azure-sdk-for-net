@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private ApiContract _apiContract;
         
         /// <summary>
-        /// Required.
+        /// Required. Gets or sets ApiContract.
         /// </summary>
         public ApiContract ApiContract
         {

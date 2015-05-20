@@ -27,12 +27,15 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Paged OAuth2 Authorization Servers list representation.
+    /// </summary>
     public partial class AuthorizationServerPaged : Paged
     {
         private IList<OAuth2AuthorizationServerContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets page values.
         /// </summary>
         public IList<OAuth2AuthorizationServerContract> Values
         {

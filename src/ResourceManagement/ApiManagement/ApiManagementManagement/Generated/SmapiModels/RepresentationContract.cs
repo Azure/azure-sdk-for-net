@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Operation request/response representation details.
+    /// </summary>
     public partial class RepresentationContract
     {
         private string _contentType;

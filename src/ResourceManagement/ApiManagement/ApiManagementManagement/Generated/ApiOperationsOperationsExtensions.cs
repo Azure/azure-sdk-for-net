@@ -188,8 +188,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the operation within the API.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Operation operation response details.
         /// </returns>
         public static OperationGetResponse Get(this IApiOperationsOperations operations, string resourceGroupName, string serviceName, string aid, string oid)
         {
@@ -220,8 +219,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Identifier of the operation within the API.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Get Operation operation response details.
         /// </returns>
         public static Task<OperationGetResponse> GetAsync(this IApiOperationsOperations operations, string resourceGroupName, string serviceName, string aid, string oid)
         {
@@ -248,8 +246,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Operations operation response details.
         /// </returns>
         public static OperationListResponse List(this IApiOperationsOperations operations, string resourceGroupName, string serviceName, string aid, QueryParameters query)
         {
@@ -280,8 +277,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Operations operation response details.
         /// </returns>
         public static Task<OperationListResponse> ListAsync(this IApiOperationsOperations operations, string resourceGroupName, string serviceName, string aid, QueryParameters query)
         {
@@ -300,8 +296,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Operations operation response details.
         /// </returns>
         public static OperationListResponse ListNext(this IApiOperationsOperations operations, string nextLink)
         {
@@ -324,8 +319,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Operations operation response details.
         /// </returns>
         public static Task<OperationListResponse> ListNextAsync(this IApiOperationsOperations operations, string nextLink)
         {

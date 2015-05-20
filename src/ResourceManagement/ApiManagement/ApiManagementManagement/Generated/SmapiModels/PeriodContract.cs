@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// Time period of predefined units
+    /// Time period of predefined units.
     /// </summary>
     public partial class PeriodContract
     {

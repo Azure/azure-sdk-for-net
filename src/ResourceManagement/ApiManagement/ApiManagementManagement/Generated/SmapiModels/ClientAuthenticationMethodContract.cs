@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// Client authentication method
+    /// Client authentication method.
     /// </summary>
     public enum ClientAuthenticationMethodContract
     {

@@ -29,15 +29,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List Regions operation response details.
     /// </summary>
     public partial class RegionListResponse : AzureOperationResponse, IEnumerable<RegionContract>
     {
         private IList<RegionContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets ot sets result of List Regions operation.
         /// </summary>
         public IList<RegionContract> Values
         {

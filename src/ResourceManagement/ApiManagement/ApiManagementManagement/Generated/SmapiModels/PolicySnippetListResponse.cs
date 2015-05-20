@@ -29,15 +29,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List policy snippets operation response details.
     /// </summary>
     public partial class PolicySnippetListResponse : AzureOperationResponse, IEnumerable<PolicySnippetContract>
     {
         private IList<PolicySnippetContract> _values;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets ot sets result of List policy snippets operation.
         /// </summary>
         public IList<PolicySnippetContract> Values
         {

@@ -24,10 +24,19 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Protocol supported for API.
+    /// </summary>
     public enum ApiProtocolContract
     {
+        /// <summary>
+        /// HTTP scheme will be supported for API.
+        /// </summary>
         Http = 1,
         
+        /// <summary>
+        /// HTTPS scheme will be supported for API.
+        /// </summary>
         Https = 2,
     }
 }

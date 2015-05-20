@@ -27,15 +27,14 @@ using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// List Report records operation response details.
     /// </summary>
     public partial class ReportListResponse : AzureOperationResponse
     {
         private ReportPaged _result;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets ot sets result of List Reports records operation.
         /// </summary>
         public ReportPaged Result
         {

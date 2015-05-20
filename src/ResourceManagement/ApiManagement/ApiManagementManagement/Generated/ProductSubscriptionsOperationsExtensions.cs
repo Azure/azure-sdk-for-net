@@ -53,8 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Subscriptions operation response details.
         /// </returns>
         public static SubscriptionListResponse List(this IProductSubscriptionsOperations operations, string resourceGroupName, string serviceName, string pid, QueryParameters query)
         {
@@ -85,8 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Optional.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Subscriptions operation response details.
         /// </returns>
         public static Task<SubscriptionListResponse> ListAsync(this IProductSubscriptionsOperations operations, string resourceGroupName, string serviceName, string pid, QueryParameters query)
         {
@@ -105,8 +103,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Subscriptions operation response details.
         /// </returns>
         public static SubscriptionListResponse ListNext(this IProductSubscriptionsOperations operations, string nextLink)
         {
@@ -129,8 +126,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// List Subscriptions operation response details.
         /// </returns>
         public static Task<SubscriptionListResponse> ListNextAsync(this IProductSubscriptionsOperations operations, string nextLink)
         {

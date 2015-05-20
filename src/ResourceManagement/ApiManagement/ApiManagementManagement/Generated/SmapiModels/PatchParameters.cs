@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         private string _rawJson;
         
         /// <summary>
-        /// Required.
+        /// Required. Gets or sets json value.
         /// </summary>
         public string RawJson
         {

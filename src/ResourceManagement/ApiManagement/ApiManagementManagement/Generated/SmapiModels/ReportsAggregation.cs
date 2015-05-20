@@ -24,20 +24,44 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// Report aggregation.
+    /// </summary>
     public enum ReportsAggregation
     {
+        /// <summary>
+        /// Aggregate by Api.
+        /// </summary>
         ByApi = 0,
         
+        /// <summary>
+        /// Aggregate by Geo.
+        /// </summary>
         ByGeo = 1,
         
+        /// <summary>
+        /// Aggregate by operation.
+        /// </summary>
         ByOperation = 2,
         
+        /// <summary>
+        /// Aggregate by product.
+        /// </summary>
         ByProduct = 3,
         
+        /// <summary>
+        /// Aggregate by subscription.
+        /// </summary>
         BySubscription = 4,
         
+        /// <summary>
+        /// Aggregate by time.
+        /// </summary>
         ByTime = 5,
         
+        /// <summary>
+        /// Aggregate by user.
+        /// </summary>
         ByUser = 6,
     }
 }

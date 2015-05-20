@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
+    /// <summary>
+    /// API OAuth2 Authentication settings details.
+    /// </summary>
     public partial class OAuth2AuthenticationSettingsContract
     {
         private string _authorizationServerId;
