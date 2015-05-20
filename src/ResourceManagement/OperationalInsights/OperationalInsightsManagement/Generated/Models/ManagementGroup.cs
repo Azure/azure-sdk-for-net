@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private ManagementGroupProperties _properties;
         
         /// <summary>
-        /// Optional. Properties of the management group.
+        /// Optional. Gets or sets the properties of the management group.
         /// </summary>
         public ManagementGroupProperties Properties
         {

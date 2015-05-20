@@ -29,10 +29,19 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// </summary>
     public static partial class SkuNameEnum
     {
+        /// <summary>
+        /// Free tier
+        /// </summary>
         public const string Free = "Free";
         
+        /// <summary>
+        /// Standard tier
+        /// </summary>
         public const string Standard = "Standard";
         
+        /// <summary>
+        /// Premium tier
+        /// </summary>
         public const string Premium = "Premium";
     }
 }

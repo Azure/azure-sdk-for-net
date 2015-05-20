@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private Workspace _workspace;
         
         /// <summary>
-        /// Optional. The definition of the workspace to be created or updated.
+        /// Optional. Gets or sets the definition of the workspace to be
+        /// created or updated.
         /// </summary>
         public Workspace Workspace
         {

@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location url for the get long running operation
-        /// request.
+        /// Optional. Gets or sets the location url for the get long running
+        /// operation request.
         /// </summary>
         public string Location
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private OperationStatus _status;
         
         /// <summary>
-        /// Optional. Status of the operation.
+        /// Optional. Gets or sets the status of the operation.
         /// </summary>
         public OperationStatus Status
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private Workspace _workspace;
         
         /// <summary>
-        /// Optional. The workspace instance.
+        /// Optional. Gets or sets the workspace instance.
         /// </summary>
         public Workspace Workspace
         {

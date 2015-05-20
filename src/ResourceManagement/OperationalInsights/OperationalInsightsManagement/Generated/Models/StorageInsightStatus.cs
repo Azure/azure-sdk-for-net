@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _state;
         
         /// <summary>
-        /// Optional. The state of the storage insight connection to the
-        /// workspace
+        /// Optional. Gets or sets the state of the storage insight connection
+        /// to the workspace
         /// </summary>
         public string State
         {

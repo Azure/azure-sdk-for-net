@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _localizedValue;
         
         /// <summary>
-        /// Optional. The localized name of the metric.
+        /// Optional. Gets or sets the localized name of the metric.
         /// </summary>
         public string LocalizedValue
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _value;
         
         /// <summary>
-        /// Optional. The system name of the metric.
+        /// Optional. Gets or sets the system name of the metric.
         /// </summary>
         public string Value
         {

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _accountName;
         
         /// <summary>
-        /// Optional. The name of the account.
+        /// Optional. Gets or sets the name of the account.
         /// </summary>
         public string AccountName
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private System.Guid? _customerId;
         
         /// <summary>
-        /// Optional. The unique ID of the account.
+        /// Optional. Gets or sets the unique ID of the account.
         /// </summary>
         public System.Guid? CustomerId
         {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The Azure region that the account was created in.
+        /// Optional. Gets or sets the Azure region that the account was
+        /// created in.
         /// </summary>
         public string Location
         {
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _workspaceName;
         
         /// <summary>
-        /// Optional. The DNS valid workspace name associated with the account.
+        /// Optional. Gets or sets the DNS valid workspace name associated with
+        /// the account.
         /// </summary>
         public string WorkspaceName
         {

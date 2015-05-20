@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private double _currentValue;
         
         /// <summary>
-        /// Optional. The current value of the metric.
+        /// Optional. Gets or sets the current value of the metric.
         /// </summary>
         public double CurrentValue
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private double _limit;
         
         /// <summary>
-        /// Optional. The quota limit for the metric.
+        /// Optional. Gets or sets the quota limit for the metric.
         /// </summary>
         public double Limit
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private MetricName _name;
         
         /// <summary>
-        /// Optional. The name of the metric.
+        /// Optional. Gets or sets the name of the metric.
         /// </summary>
         public MetricName Name
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private System.DateTime? _nextResetTime;
         
         /// <summary>
-        /// Optional. The time that the metric's value will reset.
+        /// Optional. Gets or sets the time that the metric's value will reset.
         /// </summary>
         public System.DateTime? NextResetTime
         {
@@ -77,8 +77,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _quotaPeriod;
         
         /// <summary>
-        /// Optional. The quota period that determines the length of time
-        /// between value resets.
+        /// Optional. Gets or sets the quota period that determines the length
+        /// of time between value resets.
         /// </summary>
         public string QuotaPeriod
         {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _unit;
         
         /// <summary>
-        /// Optional. The units used for the metric.
+        /// Optional. Gets or sets the units used for the metric.
         /// </summary>
         public string Unit
         {

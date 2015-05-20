@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
             if (parameters.StorageInsight != null)
             {
-                if (parameters.StorageInsight.Location == null)
+                if (parameters.StorageInsight.Name == null)
                 {
-                    throw new ArgumentNullException("parameters.StorageInsight.Location");
+                    throw new ArgumentNullException("parameters.StorageInsight.Name");
                 }
                 if (parameters.StorageInsight.Properties == null)
                 {
@@ -250,28 +250,31 @@ namespace Microsoft.Azure.Management.OperationalInsights
                         storageInsightCreateOrUpdateParametersValue["id"] = parameters.StorageInsight.Id;
                     }
                     
-                    if (parameters.StorageInsight.Name != null)
-                    {
-                        storageInsightCreateOrUpdateParametersValue["name"] = parameters.StorageInsight.Name;
-                    }
+                    storageInsightCreateOrUpdateParametersValue["name"] = parameters.StorageInsight.Name;
                     
                     if (parameters.StorageInsight.Type != null)
                     {
                         storageInsightCreateOrUpdateParametersValue["type"] = parameters.StorageInsight.Type;
                     }
                     
-                    storageInsightCreateOrUpdateParametersValue["location"] = parameters.StorageInsight.Location;
+                    if (parameters.StorageInsight.Location != null)
+                    {
+                        storageInsightCreateOrUpdateParametersValue["location"] = parameters.StorageInsight.Location;
+                    }
                     
                     if (parameters.StorageInsight.Tags != null)
                     {
-                        JObject tagsDictionary = new JObject();
-                        foreach (KeyValuePair<string, string> pair in parameters.StorageInsight.Tags)
+                        if (parameters.StorageInsight.Tags is ILazyCollection == false || ((ILazyCollection)parameters.StorageInsight.Tags).IsInitialized)
                         {
-                            string tagsKey = pair.Key;
-                            string tagsValue = pair.Value;
-                            tagsDictionary[tagsKey] = tagsValue;
+                            JObject tagsDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair in parameters.StorageInsight.Tags)
+                            {
+                                string tagsKey = pair.Key;
+                                string tagsValue = pair.Value;
+                                tagsDictionary[tagsKey] = tagsValue;
+                            }
+                            storageInsightCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                         }
-                        storageInsightCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                     }
                 }
                 
@@ -1027,7 +1030,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     StorageInsight storageInsightInstance = new StorageInsight();
-                                    result.StorageInsight.Add(storageInsightInstance);
+                                    result.StorageInsights.Add(storageInsightInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -1275,7 +1278,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     StorageInsight storageInsightInstance = new StorageInsight();
-                                    result.StorageInsight.Add(storageInsightInstance);
+                                    result.StorageInsights.Add(storageInsightInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)

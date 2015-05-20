@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<Account> _accounts;
         
         /// <summary>
-        /// Optional. List of accounts that a new workspace can attach to.
+        /// Optional. Gets or sets a list of accounts that a new workspace can
+        /// attach to.
         /// </summary>
         public IList<Account> Accounts
         {

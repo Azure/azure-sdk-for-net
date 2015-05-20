@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private System.Guid? _customerId;
         
         /// <summary>
-        /// Optional. The ID associated with the workspace.  Setting this value
-        /// at creation time allows the workspace being created to be linked
-        /// to an existing workspace.
+        /// Optional. Gets or sets the ID associated with the workspace.
+        /// Setting this value at creation time allows the workspace being
+        /// created to be linked to an existing workspace.
         /// </summary>
         public System.Guid? CustomerId
         {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _portalUrl;
         
         /// <summary>
-        /// Optional. The URL of the Operational Insights portal for this
-        /// workspace.  This value is set on the service side and read-only on
-        /// the client side.
+        /// Optional. Gets or sets the URL of the Operational Insights portal
+        /// for this workspace.  This value is set on the service side and
+        /// read-only on the client side.
         /// </summary>
         public string PortalUrl
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. The provisioning state of the workspace.
+        /// Optional. Gets or sets the provisioning state of the workspace.
         /// </summary>
         public string ProvisioningState
         {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private Sku _sku;
         
         /// <summary>
-        /// Optional. The SKU of the workspace.
+        /// Optional. Gets or sets the SKU of the workspace.
         /// </summary>
         public Sku Sku
         {
@@ -81,10 +81,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _source;
         
         /// <summary>
-        /// Optional. Source defines where the workspace was created. 'Azure'
-        /// implies it was created in Azure.  'External' implies it was
-        /// created via the Operational Insights Portal. This value is set on
-        /// the service side and read-only on the client side.
+        /// Optional. Gets or set the source of the workspace.  Source defines
+        /// where the workspace was created. 'Azure' implies it was created in
+        /// Azure.  'External' implies it was created via the Operational
+        /// Insights Portal. This value is set on the service side and
+        /// read-only on the client side.
         /// </summary>
         public string Source
         {

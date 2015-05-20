@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _name;
         
         /// <summary>
-        /// Required. Name of the SKU.
+        /// Required. Gets or sets the name of the SKU.
         /// </summary>
         public string Name
         {

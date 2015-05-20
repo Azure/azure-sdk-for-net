@@ -20,8 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
+using Hyak.Common;
 using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
@@ -29,12 +30,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// <summary>
     /// The top level Workspace resource container.
     /// </summary>
-    public partial class Workspace : ResourceBaseExtended
+    public partial class Workspace
     {
         private string _eTag;
         
         /// <summary>
-        /// Optional. ETag of the workspace.
+        /// Optional. Gets or sets the ETag of the workspace.
         /// </summary>
         public string ETag
         {
@@ -42,10 +43,43 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._eTag = value; }
         }
         
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the ID of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Required. Gets or sets the location of the resource.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. Gets or sets the name of the resource.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
         private WorkspaceProperties _properties;
         
         /// <summary>
-        /// Optional. Properties of the workspace.
+        /// Optional. Gets or sets the properties of the workspace.
         /// </summary>
         public WorkspaceProperties Properties
         {
@@ -53,24 +87,52 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._properties = value; }
         }
         
+        private IDictionary<string, string> _tags;
+        
+        /// <summary>
+        /// Optional. Gets or sets the tags attached to the resource.
+        /// </summary>
+        public IDictionary<string, string> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the resource.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Workspace class.
         /// </summary>
         public Workspace()
         {
+            this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>
         /// Initializes a new instance of the Workspace class with required
         /// arguments.
         /// </summary>
-        public Workspace(string location)
+        public Workspace(string name, string location)
             : this()
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
             if (location == null)
             {
                 throw new ArgumentNullException("location");
             }
+            this.Name = name;
             this.Location = location;
         }
     }

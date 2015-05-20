@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _nextLink;
         
         /// <summary>
-        /// Optional. The link (url) to the next page of results.
+        /// Optional. Gets or sets the link (url) to the next page of results.
         /// </summary>
         public string NextLink
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<Workspace> _workspaces;
         
         /// <summary>
-        /// Optional. List of workspace instances.
+        /// Optional. Gets or sets a list of workspace instances.
         /// </summary>
         public IList<Workspace> Workspaces
         {

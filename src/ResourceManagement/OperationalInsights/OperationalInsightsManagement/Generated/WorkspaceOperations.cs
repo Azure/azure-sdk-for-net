@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.OperationalInsights;
 using Microsoft.Azure.Management.OperationalInsights.Models;
@@ -94,6 +95,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 if (parameters.Workspace.Location == null)
                 {
                     throw new ArgumentNullException("parameters.Workspace.Location");
+                }
+                if (parameters.Workspace.Name == null)
+                {
+                    throw new ArgumentNullException("parameters.Workspace.Name");
                 }
                 if (parameters.Workspace.Properties != null)
                 {
@@ -220,10 +225,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                         workspaceCreateOrUpdateParametersValue["id"] = parameters.Workspace.Id;
                     }
                     
-                    if (parameters.Workspace.Name != null)
-                    {
-                        workspaceCreateOrUpdateParametersValue["name"] = parameters.Workspace.Name;
-                    }
+                    workspaceCreateOrUpdateParametersValue["name"] = parameters.Workspace.Name;
                     
                     if (parameters.Workspace.Type != null)
                     {
@@ -234,14 +236,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
                     
                     if (parameters.Workspace.Tags != null)
                     {
-                        JObject tagsDictionary = new JObject();
-                        foreach (KeyValuePair<string, string> pair in parameters.Workspace.Tags)
+                        if (parameters.Workspace.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Workspace.Tags).IsInitialized)
                         {
-                            string tagsKey = pair.Key;
-                            string tagsValue = pair.Value;
-                            tagsDictionary[tagsKey] = tagsValue;
+                            JObject tagsDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair in parameters.Workspace.Tags)
+                            {
+                                string tagsKey = pair.Key;
+                                string tagsValue = pair.Value;
+                                tagsDictionary[tagsKey] = tagsValue;
+                            }
+                            workspaceCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                         }
-                        workspaceCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                     }
                 }
                 

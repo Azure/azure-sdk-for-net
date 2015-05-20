@@ -13,7 +13,8 @@
     <Compile Include="Helpers\UndoContextDiscoveryExtensions.cs" />
     <Compile Include="Helpers\WorkspaceUndoHandler.cs" />
     <Compile Include="OperationTests\BasicDelegatingHandler.cs" />
-    <Compile Include="OperationTests\WorkspaceCrudTest.cs" />
+    <Compile Include="OperationTests\StorageInsightOperationsTest.cs" />
+    <Compile Include="OperationTests\WorkspaceOperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -28,5 +29,19 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.StorageInsightOperationsTest\CanCreateUpdateDeleteStorageInsight.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.StorageInsightOperationsTest\StorageInsightCreateFailsWithoutWorkspace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.WorkspaceOperationsTest\CanCreateListDeleteWorkspace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.WorkspaceOperationsTest\CanPerformWorkspaceActions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

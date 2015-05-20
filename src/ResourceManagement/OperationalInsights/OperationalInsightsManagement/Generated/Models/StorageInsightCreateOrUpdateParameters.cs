@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private StorageInsight _storageInsight;
         
         /// <summary>
-        /// Optional. The definition of the storage insight to be created or
-        /// updated.
+        /// Optional. Gets or sets the definition of the storage insight to be
+        /// created or updated.
         /// </summary>
         public StorageInsight StorageInsight
         {

@@ -30,32 +30,32 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     public static partial class EntityStatus
     {
         /// <summary>
-        /// Creating.
+        /// Resource is being created.
         /// </summary>
         public const string Creating = "Creating";
         
         /// <summary>
-        /// Succeeded.
+        /// Resource creation succeeded.
         /// </summary>
         public const string Succeeded = "Succeeded";
         
         /// <summary>
-        /// Failed.
+        /// Resource creation failed.
         /// </summary>
         public const string Failed = "Failed";
         
         /// <summary>
-        /// Canceled.
+        /// Resource creation was canceled.
         /// </summary>
         public const string Canceled = "Canceled";
         
         /// <summary>
-        /// Deleting.
+        /// Resource is being deleted.
         /// </summary>
         public const string Deleting = "Deleting";
         
         /// <summary>
-        /// Provisioning Account.
+        /// Resource is provisioning the account.
         /// </summary>
         public const string ProvisioningAccount = "ProvisioningAccount";
     }

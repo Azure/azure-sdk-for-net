@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private System.DateTime? _created;
         
         /// <summary>
-        /// Optional. The datetime that the management group was created.
+        /// Optional. Gets or sets the datetime that the management group was
+        /// created.
         /// </summary>
         public System.DateTime? Created
         {
@@ -43,7 +44,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private System.DateTime? _dataReceived;
         
         /// <summary>
-        /// Optional. The last datetime that the management group received data.
+        /// Optional. Gets or sets the last datetime that the management group
+        /// received data.
         /// </summary>
         public System.DateTime? DataReceived
         {
@@ -54,7 +56,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private System.Guid? _id;
         
         /// <summary>
-        /// Optional. The unique ID of the management group.
+        /// Optional. Gets or sets the unique ID of the management group.
         /// </summary>
         public System.Guid? Id
         {
@@ -65,7 +67,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private bool _isGateway;
         
         /// <summary>
-        /// Optional. True if the management group is a gateway.
+        /// Optional. Gets or sets a value indicating whether the management
+        /// group is a gateway.
         /// </summary>
         public bool IsGateway
         {
@@ -76,7 +79,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the management group.
+        /// Optional. Gets or sets the name of the management group.
         /// </summary>
         public string Name
         {
@@ -87,7 +90,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private int _serverCount;
         
         /// <summary>
-        /// Optional. The number of servers connected to the management group.
+        /// Optional. Gets or sets the number of servers connected to the
+        /// management group.
         /// </summary>
         public int ServerCount
         {
@@ -98,8 +102,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _sku;
         
         /// <summary>
-        /// Optional. The SKU of System Center that is managing the management
-        /// group.
+        /// Optional. Gets or sets the SKU of System Center that is managing
+        /// the management group.
         /// </summary>
         public string Sku
         {
@@ -110,8 +114,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _version;
         
         /// <summary>
-        /// Optional. The version of System Center that is managing the
-        /// management group.
+        /// Optional. Gets or sets the version of System Center that is
+        /// managing the management group.
         /// </summary>
         public string Version
         {

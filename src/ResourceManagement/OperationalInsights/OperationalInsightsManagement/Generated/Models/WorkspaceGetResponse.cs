@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private Workspace _workspace;
         
         /// <summary>
-        /// Optional. The workspace instance.
+        /// Optional. Gets or sets the workspace instance.
         /// </summary>
         public Workspace Workspace
         {

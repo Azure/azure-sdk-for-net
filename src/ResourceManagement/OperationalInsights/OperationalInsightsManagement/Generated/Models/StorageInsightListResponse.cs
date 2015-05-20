@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _nextLink;
         
         /// <summary>
-        /// Optional. The link (url) to the next page of results.
+        /// Optional. Gets or sets the link (url) to the next page of results.
         /// </summary>
         public string NextLink
         {
@@ -44,15 +44,15 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._nextLink = value; }
         }
         
-        private IList<StorageInsight> _storageInsight;
+        private IList<StorageInsight> _storageInsights;
         
         /// <summary>
-        /// Optional. List of storage insight instances.
+        /// Optional. Gets or sets a list of storage insight instances.
         /// </summary>
-        public IList<StorageInsight> StorageInsight
+        public IList<StorageInsight> StorageInsights
         {
-            get { return this._storageInsight; }
-            set { this._storageInsight = value; }
+            get { return this._storageInsights; }
+            set { this._storageInsights = value; }
         }
         
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         public StorageInsightListResponse()
         {
-            this.StorageInsight = new LazyList<StorageInsight>();
+            this.StorageInsights = new LazyList<StorageInsight>();
         }
     }
 }

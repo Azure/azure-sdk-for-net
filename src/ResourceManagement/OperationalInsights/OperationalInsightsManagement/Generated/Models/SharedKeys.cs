@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _primarySharedKey;
         
         /// <summary>
-        /// Optional. Primary shared key of a workspace.
+        /// Optional. Gets or sets the primary shared key of a workspace.
         /// </summary>
         public string PrimarySharedKey
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _secondarySharedKey;
         
         /// <summary>
-        /// Optional. Secondary shared key of a workspace.
+        /// Optional. Gets or sets the secondary shared key of a workspace.
         /// </summary>
         public string SecondarySharedKey
         {

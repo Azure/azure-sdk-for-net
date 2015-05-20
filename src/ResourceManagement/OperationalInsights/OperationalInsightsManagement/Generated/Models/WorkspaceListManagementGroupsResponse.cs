@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<ManagementGroup> _managementGroups;
         
         /// <summary>
-        /// Optional. List of management groups attached to the workspace.
+        /// Optional. Gets or sets a list of management groups attached to the
+        /// workspace.
         /// </summary>
         public IList<ManagementGroup> ManagementGroups
         {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _nextLink;
         
         /// <summary>
-        /// Optional. The link (url) to the next page of results.
+        /// Optional. Gets or sets the link (url) to the next page of results.
         /// </summary>
         public string NextLink
         {

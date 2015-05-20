@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Azure Resource Manager ID of the storage account resource.
+        /// Optional. Gets or sets the Azure Resource Manager ID of the storage
+        /// account resource.
         /// </summary>
         public string Id
         {
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _key;
         
         /// <summary>
-        /// Optional. The storage account key.
+        /// Optional. Gets or sets the storage account key.
         /// </summary>
         public string Key
         {

@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<string> _containers;
         
         /// <summary>
-        /// Optional. The names of the blob containers that the workspace
-        /// should read
+        /// Optional. Gets or sets the names of the blob containers that the
+        /// workspace should read
         /// </summary>
         public IList<string> Containers
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private StorageInsightStatus _status;
         
         /// <summary>
-        /// Optional. The status of the storage insight
+        /// Optional. Gets or sets the status of the storage insight
         /// </summary>
         public StorageInsightStatus Status
         {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private StorageAccount _storageAccount;
         
         /// <summary>
-        /// Required. The storage account connection details
+        /// Required. Gets or sets the storage account connection details
         /// </summary>
         public StorageAccount StorageAccount
         {
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<string> _tables;
         
         /// <summary>
-        /// Optional. The names of the Azure tables that the workspace should
-        /// read
+        /// Optional. Gets or sets the names of the Azure tables that the
+        /// workspace should read
         /// </summary>
         public IList<string> Tables
         {

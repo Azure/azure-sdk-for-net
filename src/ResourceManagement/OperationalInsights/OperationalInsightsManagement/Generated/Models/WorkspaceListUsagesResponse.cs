@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<UsageMetric> _usageMetrics;
         
         /// <summary>
-        /// Optional. List of usage metrics for a workspace.
+        /// Optional. Gets or sets a list of usage metrics for a workspace.
         /// </summary>
         public IList<UsageMetric> UsageMetrics
         {

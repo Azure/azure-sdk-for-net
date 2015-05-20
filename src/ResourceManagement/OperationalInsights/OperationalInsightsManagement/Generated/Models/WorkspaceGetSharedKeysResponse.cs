@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private SharedKeys _keys;
         
         /// <summary>
-        /// Optional. A workspace's shared keys.
+        /// Optional. Gets or sets a workspace's shared keys.
         /// </summary>
         public SharedKeys Keys
         {
