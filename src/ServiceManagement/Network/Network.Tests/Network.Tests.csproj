@@ -5,7 +5,6 @@
     <RootNamespace>Network.Tests</RootNamespace>
     <AssemblyName>Network.Tests</AssemblyName>
     <NuGetPackageImportStamp>07734221</NuGetPackageImportStamp>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
