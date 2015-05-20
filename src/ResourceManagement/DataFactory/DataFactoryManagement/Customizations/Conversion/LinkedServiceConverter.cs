@@ -66,16 +66,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         /// <returns>A <see cref="LinkedService"/> instance equivalent to <paramref name="internalLinkedService"/>.</returns>
         public override LinkedService ToWrapperType(Core.Models.LinkedService internalLinkedService)
         {
-            if (internalLinkedService.Properties == null)
-            {
-                return null;
-            }
+            Ensure.IsNotNull(internalLinkedService, "internalLinkedService");
+            Ensure.IsNotNull(internalLinkedService.Properties, "internalLinkedService.Properties");
 
             Type type;
             LinkedServiceTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalLinkedService.Properties.Type,
                 internalLinkedService.Properties.TypeProperties, out type);
-
 
 #if ADF_INTERNAL
             string typeName = type == typeof(GenericLinkedService) ? internalLinkedService.Properties.Type : type.Name;

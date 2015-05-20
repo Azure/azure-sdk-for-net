@@ -121,7 +121,15 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             TExtensibleTypeProperties typeProperties;
             if (this.TryGetRegisteredType(typeName, out type))
             {
-                typeProperties = (TExtensibleTypeProperties)TypeProperties.DeserializeObject(json, type);
+                if (string.IsNullOrEmpty(json))
+                {
+                    // No typeProperties exist to deserialize, just initialize a default instance
+                    typeProperties = (TExtensibleTypeProperties)Activator.CreateInstance(type);
+                }
+                else
+                {
+                    typeProperties = (TExtensibleTypeProperties)TypeProperties.DeserializeObject(json, type);
+                }
             }
             else
             {

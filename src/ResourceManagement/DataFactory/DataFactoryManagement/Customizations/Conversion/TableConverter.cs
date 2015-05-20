@@ -65,10 +65,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         /// <returns>A <see cref="Table"/> instance equivalent to <paramref name="internalTable"/>.</returns>
         public override Table ToWrapperType(Core.Models.Table internalTable)
         {
-            if (internalTable.Properties == null)
-            {
-                return null;
-            }
+            Ensure.IsNotNull(internalTable, "internalTable");
+            Ensure.IsNotNull(internalTable.Properties, "internalTable.Properties");
 
             Type type;
             TableTypeProperties typeProperties = this.DeserializeTypeProperties(

@@ -157,7 +157,6 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         {
             Ensure.IsNotNull(internalActivity, "internalActivity");
             Ensure.IsNotNull(internalActivity.Type, "internalActivity.Type");
-            Ensure.IsNotNull(internalActivity.TypeProperties, "internalActivity.TypeProperties");
 
             Type type;
             ActivityTypeProperties typeProperties = this.DeserializeTypeProperties(
