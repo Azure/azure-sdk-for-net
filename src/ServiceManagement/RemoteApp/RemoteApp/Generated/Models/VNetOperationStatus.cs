@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RemoteApp.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
     /// Possible values that the network can be in after an operation.

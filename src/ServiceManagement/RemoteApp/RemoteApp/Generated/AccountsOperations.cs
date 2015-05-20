@@ -30,11 +30,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// Operations related to RemoteApp account.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient.
         /// </summary>
         public RemoteAppManagementClient Client
         {
@@ -829,12 +829,14 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject accountDetailsParameterValue = new JObject();
+                requestDoc = accountDetailsParameterValue;
+                
                 if (accountInfo.AccountInfo != null)
                 {
                     if (accountInfo.AccountInfo.EndUserFeedName != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["WorkspaceName"] = accountInfo.AccountInfo.EndUserFeedName;
+                        accountDetailsParameterValue["WorkspaceName"] = accountInfo.AccountInfo.EndUserFeedName;
                     }
                 }
                 

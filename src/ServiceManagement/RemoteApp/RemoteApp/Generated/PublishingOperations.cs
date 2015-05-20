@@ -31,11 +31,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// Operations related to publishing.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient.
         /// </summary>
         public RemoteAppManagementClient Client
         {
@@ -640,34 +640,36 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject applicationDetailsParameterValue = new JObject();
+                requestDoc = applicationDetailsParameterValue;
+                
                 if (applicationDetails.Details != null)
                 {
-                    requestDoc = new JObject();
-                    requestDoc["AvailableToUsers"] = applicationDetails.Details.AvailableToUsers;
+                    applicationDetailsParameterValue["AvailableToUsers"] = applicationDetails.Details.AvailableToUsers;
                     
                     if (applicationDetails.Details.Alias != null)
                     {
-                        requestDoc["Alias"] = applicationDetails.Details.Alias;
+                        applicationDetailsParameterValue["Alias"] = applicationDetails.Details.Alias;
                     }
                     
                     if (applicationDetails.Details.CommandLineArguments != null)
                     {
-                        requestDoc["CommandLineArguments"] = applicationDetails.Details.CommandLineArguments;
+                        applicationDetailsParameterValue["CommandLineArguments"] = applicationDetails.Details.CommandLineArguments;
                     }
                     
                     if (applicationDetails.Details.IconUri != null)
                     {
-                        requestDoc["IconUri"] = applicationDetails.Details.IconUri;
+                        applicationDetailsParameterValue["IconUri"] = applicationDetails.Details.IconUri;
                     }
                     
-                    requestDoc["Name"] = applicationDetails.Details.Name;
+                    applicationDetailsParameterValue["Name"] = applicationDetails.Details.Name;
                     
-                    requestDoc["Status"] = ((int)applicationDetails.Details.Status);
+                    applicationDetailsParameterValue["Status"] = ((int)applicationDetails.Details.Status);
                     
                     if (applicationDetails.Details.IconPngUris != null)
                     {
                         JObject iconPngUrisValue = new JObject();
-                        requestDoc["IconPngUris"] = iconPngUrisValue;
+                        applicationDetailsParameterValue["IconPngUris"] = iconPngUrisValue;
                         
                         if (applicationDetails.Details.IconPngUris.IconPngUris != null)
                         {
@@ -690,7 +692,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                     
                     if (applicationDetails.Details.VirtualPath != null)
                     {
-                        requestDoc["VirtualPath"] = applicationDetails.Details.VirtualPath;
+                        applicationDetailsParameterValue["VirtualPath"] = applicationDetails.Details.VirtualPath;
                     }
                 }
                 
