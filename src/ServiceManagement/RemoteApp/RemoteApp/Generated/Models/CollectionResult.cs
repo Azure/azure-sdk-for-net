@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
     /// The response for the GetServiceList operation.

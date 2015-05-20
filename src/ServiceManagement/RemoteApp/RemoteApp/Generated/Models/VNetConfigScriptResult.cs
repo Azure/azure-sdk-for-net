@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.RemoteApp.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
     /// Script that can be used to set up a VPN device.

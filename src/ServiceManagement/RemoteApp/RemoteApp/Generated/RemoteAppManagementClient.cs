@@ -24,9 +24,9 @@ using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RmoteApp management client

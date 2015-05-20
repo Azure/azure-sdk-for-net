@@ -12,15 +12,14 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace RemoteApp.Tests
@@ -79,7 +78,7 @@ namespace RemoteApp.Tests
             AssertNotNullOrEmpty(RemoteAppVnet.Region);
             AssertNotNullOrEmpty(RemoteAppVnet.Name);
             AssertNotNullOrEmpty(RemoteAppVnet.VnetAddressSpaces);
-            if (!string.Equals(RemoteAppVnet.Name, "cloudvnet", StringComparison.InvariantCultureIgnoreCase))
+            if (!string.Equals(RemoteAppVnet.Name, "cloudvnet", StringComparison.OrdinalIgnoreCase))
             {
                 AssertNotNullOrEmpty(RemoteAppVnet.LocalAddressSpaces);
                 AssertNotNullOrEmpty(RemoteAppVnet.DnsServers);
