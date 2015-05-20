@@ -843,5 +843,46 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string StoredProcedureActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Run a SQL stored procedure activity."",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""StoredProcedureActivity"",
+                name: ""MyProcActivity"",
+                typeProperties:
+                {
+                    storedProcedureName: ""StoredProcName"", 
+                    storedProcedureParameters: {
+                        ""param1"": ""value1"",
+                        ""param2"": ""value2"",
+                        ""param3"": ""value3"",
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""ProcessedBlob""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
     }
 }
