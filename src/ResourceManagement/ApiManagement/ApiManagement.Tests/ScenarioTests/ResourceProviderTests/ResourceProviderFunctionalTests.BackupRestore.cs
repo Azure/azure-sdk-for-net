@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
+    using Microsoft.WindowsAzure.Management.Storage;
     using Microsoft.WindowsAzure.Management.Storage.Models;
     using Xunit;
 
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 TryCreateApiService();
 
                 // create storage account with blob container for the API Management backup
-                var storageManagementClient = this.GetStorageManagementClient();
+                var storageManagementClient = GetServiceClient<StorageManagementClient>();
 
                 var storageAccountName = TestUtilities.GenerateName("hydraapimstorage");
                 Assert.True(

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 
     public partial class OperationContract
     {
-        private static readonly Regex OperationIdPathRegex = new Regex(@"/apis/(?<aid>.+)/operations/(?<oid>.+)", RegexOptions.Compiled);
+        private static readonly Regex OperationIdPathRegex = new Regex(@"/apis/(?<aid>.+)/operations/(?<oid>.+)");
 
         public string ApiId
         {
