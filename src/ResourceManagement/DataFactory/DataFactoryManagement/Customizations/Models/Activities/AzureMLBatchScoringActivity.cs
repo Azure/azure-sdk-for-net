@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 
         public AzureMLBatchScoringActivity()
         {
+            this.WebServiceParameters = new Dictionary<string, string>();
         }
 
         public AzureMLBatchScoringActivity(IDictionary<string, string> webServiceParameters)
