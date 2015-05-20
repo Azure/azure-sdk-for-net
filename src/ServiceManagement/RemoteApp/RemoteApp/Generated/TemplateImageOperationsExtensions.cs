@@ -24,10 +24,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RmoteApp management client
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// Required. The template image name.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// Required. The template image name.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='region'>
         /// Required. Azure datacenter region.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='region'>
         /// Required. Azure datacenter region.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// Required. Name of the template image.
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// Required. Name of the template image.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <returns>
         /// Definition for result of GetUploadScript operation.
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <returns>
         /// Definition for result of GetUploadScript operation.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <returns>
         /// Operation response for TemplateImageOperations.List.
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <returns>
         /// Operation response for TemplateImageOperations.List.
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='imageDetails'>
         /// Required. Details for the template image to be created or updated.
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.ITemplateImageOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
         /// </param>
         /// <param name='imageDetails'>
         /// Required. Details for the template image to be created or updated.

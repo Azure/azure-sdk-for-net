@@ -30,11 +30,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RemoteApp collection operations.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient.
         /// </summary>
         public RemoteAppManagementClient Client
         {
@@ -667,8 +667,10 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                requestDoc = new JObject();
-                requestDoc["UserUpn"] = sessionParameter.UserUpn;
+                JObject sessionCommandParameterValue = new JObject();
+                requestDoc = sessionCommandParameterValue;
+                
+                sessionCommandParameterValue["UserUpn"] = sessionParameter.UserUpn;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -2274,8 +2276,10 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                requestDoc = new JObject();
-                requestDoc["UserUpn"] = sessionParameter.UserUpn;
+                JObject sessionCommandParameterValue = new JObject();
+                requestDoc = sessionCommandParameterValue;
+                
+                sessionCommandParameterValue["UserUpn"] = sessionParameter.UserUpn;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -2615,10 +2619,12 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                requestDoc = new JObject();
-                requestDoc["UserUpn"] = sessionMessageParameter.UserUpn;
+                JObject sessionSendMessageCommandParameterValue = new JObject();
+                requestDoc = sessionSendMessageCommandParameterValue;
                 
-                requestDoc["Message"] = sessionMessageParameter.Message;
+                sessionSendMessageCommandParameterValue["UserUpn"] = sessionMessageParameter.UserUpn;
+                
+                sessionSendMessageCommandParameterValue["Message"] = sessionMessageParameter.Message;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
