@@ -14,7 +14,6 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
-    using System;
     using System.Net;
     using Microsoft.Azure.Test;
     using Xunit;
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
 
-                var response = apiManagementClient.ApiManagement.GetSsoToken(ResourceGroupName, ApiManagementServiceName);
+                var response = apiManagementClient.ResourceProvider.GetSsoToken(ResourceGroupName, ApiManagementServiceName);
 
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);

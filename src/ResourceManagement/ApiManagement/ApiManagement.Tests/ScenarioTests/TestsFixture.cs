@@ -15,7 +15,6 @@
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
 {
     using System;
-    using System.Runtime.InteropServices;
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Test;
 
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
             Cleanup();
         }
 
-        private void Cleanup()
+        protected void Cleanup()
         {
             UndoContext.Current.UndoAll();
         }
