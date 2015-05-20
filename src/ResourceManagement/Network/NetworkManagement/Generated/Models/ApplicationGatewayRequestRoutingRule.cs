@@ -66,15 +66,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._httpListener = value; }
         }
         
-        private string _type;
+        private string _ruleType;
         
         /// <summary>
         /// Optional. Gets or sets the rule type
         /// </summary>
-        public string Type
+        public string RuleType
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._ruleType; }
+            set { this._ruleType = value; }
         }
         
         /// <summary>

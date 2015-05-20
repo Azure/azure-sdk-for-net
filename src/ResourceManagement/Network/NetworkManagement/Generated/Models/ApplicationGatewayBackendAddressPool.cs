@@ -43,6 +43,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._backendAddresses = value; }
         }
         
+        private IList<ResourceId> _backendIpConfigurations;
+        
+        /// <summary>
+        /// Optional. Gets or sets backendIpConfiguration of application
+        /// gateway
+        /// </summary>
+        public IList<ResourceId> BackendIpConfigurations
+        {
+            get { return this._backendIpConfigurations; }
+            set { this._backendIpConfigurations = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendAddressPool class.
@@ -50,6 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayBackendAddressPool()
         {
             this.BackendAddresses = new LazyList<ApplicationGatewayBackendAddress>();
+            this.BackendIpConfigurations = new LazyList<ResourceId>();
         }
     }
 }

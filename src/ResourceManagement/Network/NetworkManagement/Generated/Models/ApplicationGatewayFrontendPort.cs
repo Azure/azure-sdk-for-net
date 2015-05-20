@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class ApplicationGatewayFrontendPort : ChildResource
     {
-        private uint _port;
+        private int _port;
         
         /// <summary>
         /// Optional. Gets or sets the frontend port
         /// </summary>
-        public uint Port
+        public int Port
         {
             get { return this._port; }
             set { this._port = value; }

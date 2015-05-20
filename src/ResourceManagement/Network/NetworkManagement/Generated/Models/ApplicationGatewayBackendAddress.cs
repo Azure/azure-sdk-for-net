@@ -21,24 +21,23 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
     /// Backend Address of application gateway
     /// </summary>
-    public partial class ApplicationGatewayBackendAddress : ChildResource
+    public partial class ApplicationGatewayBackendAddress
     {
-        private string _dnsName;
+        private string _fqdn;
         
         /// <summary>
         /// Optional. Gets or sets the dns name
         /// </summary>
-        public string DnsName
+        public string Fqdn
         {
-            get { return this._dnsName; }
-            set { this._dnsName = value; }
+            get { return this._fqdn; }
+            set { this._fqdn = value; }
         }
         
         private string _ipAddress;

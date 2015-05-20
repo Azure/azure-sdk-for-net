@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._cookieBasedAffinity = value; }
         }
         
-        private uint _port;
+        private int _port;
         
         /// <summary>
         /// Optional. Gets or sets the port
         /// </summary>
-        public uint Port
+        public int Port
         {
             get { return this._port; }
             set { this._port = value; }

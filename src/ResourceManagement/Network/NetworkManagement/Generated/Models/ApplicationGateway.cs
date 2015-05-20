@@ -56,6 +56,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._backendHttpSettingsList = value; }
         }
         
+        private string _fqdn;
+        
+        /// <summary>
+        /// Optional. Gets fqdn of application gateway resource
+        /// </summary>
+        public string Fqdn
+        {
+            get { return this._fqdn; }
+            set { this._fqdn = value; }
+        }
+        
         private IList<ApplicationGatewayFrontendIpConfiguration> _frontendIpConfigurations;
         
         /// <summary>
@@ -103,13 +114,13 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._httpListeners = value; }
         }
         
-        private uint _instanceCount;
+        private int _instanceCount;
         
         /// <summary>
         /// Optional. Gets or sets instance count of application gateway
         /// resource
         /// </summary>
-        public uint InstanceCount
+        public int InstanceCount
         {
             get { return this._instanceCount; }
             set { this._instanceCount = value; }
