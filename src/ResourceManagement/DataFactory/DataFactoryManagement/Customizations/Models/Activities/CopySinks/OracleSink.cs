@@ -44,10 +44,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// arguments.
         /// </summary>
         public OracleSink(int writeBatchSize, TimeSpan writeBatchTimeout)
-            : this()
+            : base(writeBatchSize, writeBatchTimeout)
         {
-            this.WriteBatchSize = writeBatchSize;
-            this.WriteBatchTimeout = writeBatchTimeout;
         }
     }
 }

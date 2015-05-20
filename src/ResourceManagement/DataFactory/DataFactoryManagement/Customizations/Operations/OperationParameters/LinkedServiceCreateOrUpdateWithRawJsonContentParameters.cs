@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public LinkedServiceCreateOrUpdateWithRawJsonContentParameters(string content)
             : this()
         {
-            Ensure.IsNotNull(content, "content");
+            Ensure.IsNotNullOrEmpty(content, "content");
             this.Content = content;
         }
 

@@ -48,5 +48,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Sink partition data.
         /// </summary>
         public bool? SinkPartitionData { get; set; }
+
+        protected CopySink()
+        {
+        }
+
+        protected CopySink(int writeBatchSize, TimeSpan writeBatchTimeout) 
+            : this()
+        {
+            this.WriteBatchSize = writeBatchSize;
+            this.WriteBatchTimeout = writeBatchTimeout;
+        }
     }
 }

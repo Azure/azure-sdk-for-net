@@ -24,5 +24,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The table name.
         /// </summary>
         public string TableName { get; set; }
+
+        public RelationalTableLocation()
+        {
+        }
+
+        public RelationalTableLocation(string tableName)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
+        }
     }
 }

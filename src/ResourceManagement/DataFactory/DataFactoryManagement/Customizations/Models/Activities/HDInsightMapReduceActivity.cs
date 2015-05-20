@@ -72,8 +72,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public HDInsightMapReduceActivity(string className, string jarFilePath)
             : this()
         {
-            Ensure.IsNotNull(className, "className");
-            Ensure.IsNotNull(jarFilePath, "jarFilePath");
+            Ensure.IsNotNullOrEmpty(className, "className");
+            Ensure.IsNotNullOrEmpty(jarFilePath, "jarFilePath");
 
             this.ClassName = className;
             this.JarFilePath = jarFilePath;

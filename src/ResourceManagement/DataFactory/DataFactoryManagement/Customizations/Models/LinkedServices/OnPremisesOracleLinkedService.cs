@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public OnPremisesOracleLinkedService(string connectionString, string gatewayName)
             : this()
         {
-            Ensure.IsNotNull(connectionString, "connectionString");
-            Ensure.IsNotNull(gatewayName, "gatewayName");
+            Ensure.IsNotNullOrEmpty(connectionString, "connectionString");
+            Ensure.IsNotNullOrEmpty(gatewayName, "gatewayName");
 
             this.ConnectionString = connectionString;
             this.GatewayName = gatewayName;

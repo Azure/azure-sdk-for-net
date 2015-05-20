@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -20,5 +22,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public class AzureQueueSink : CopySink
     {
+        public AzureQueueSink()
+        {
+        }
+
+        public AzureQueueSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
 }

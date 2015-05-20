@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             TypeProperties target = (TypeProperties)Activator.CreateInstance(objectType);
             serializer.Populate(obj.CreateReader(), target);
 
+#if ADF_INTERNAL
             List<string> props = objectType.GetProperties(ConversionCommon.DefaultBindingFlags)
                     .Select(p => this.camelCaseResolver.GetResolvedPropertyName(p.Name))
                     .ToList();
@@ -52,6 +53,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                     target.ServiceExtraProperties.Add(kvp.Key, kvp.Value);
                 }
             }
+#endif
 
             return target;
         }
@@ -60,9 +62,11 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         {
             TypeProperties typeProperties = (TypeProperties)value;
 
+#if ADF_INTERNAL
             // Remove properties in the property bag from the object to serialize
             IDictionary<string, JToken> propertyBag = typeProperties.ServiceExtraProperties;
             typeProperties.ServiceExtraProperties = null;
+#endif
 
             // Remove this converter from the list of converters used for serialization, 
             // otherwise JObject.FromObject() will throw an exception
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
             JObject obj = JObject.FromObject(typeProperties, serializer);
 
+#if ADF_INTERNAL
             if (propertyBag != null)
             {
                 // add the properties that were in the property bag
@@ -78,6 +83,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                     obj.Add(property.Key, property.Value);
                 }
             }
+#endif
 
             writer.WriteToken(obj.CreateReader());
         }

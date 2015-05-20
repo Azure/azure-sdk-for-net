@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public AzureStorageLinkedService(string connectionString)
             : this()
         {
-            Ensure.IsNotNull(connectionString, "connectionString");
+            Ensure.IsNotNullOrEmpty(connectionString, "connectionString");
             this.ConnectionString = connectionString;
         }
     }

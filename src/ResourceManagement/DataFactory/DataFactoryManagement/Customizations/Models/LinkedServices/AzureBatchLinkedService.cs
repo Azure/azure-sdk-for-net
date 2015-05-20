@@ -40,5 +40,27 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         [AdfRequired]
         public string PoolName { get; set; }
+
+        public AzureBatchLinkedService()
+        {
+        }
+
+        public AzureBatchLinkedService(
+            string accountName, 
+            string accessKey, 
+            string poolName, 
+            string linkedServiceName)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(accountName, "accountName");
+            Ensure.IsNotNullOrEmpty(accessKey, "accessKey");
+            Ensure.IsNotNullOrEmpty(poolName, "poolName");
+            Ensure.IsNotNullOrEmpty(linkedServiceName, "linkedServiceName");
+
+            this.AccountName = accountName;
+            this.AccessKey = accessKey;
+            this.PoolName = poolName;
+            this.LinkedServiceName = linkedServiceName;
+        }
     }
 }

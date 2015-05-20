@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public HDInsightBYOCLinkedService(string clusterUri, string userName, string password)
             : this()
         {
-            Ensure.IsNotNull(clusterUri, "clusterUri");
-            Ensure.IsNotNull(userName, "userName");
-            Ensure.IsNotNull(password, "password");
+            Ensure.IsNotNullOrEmpty(clusterUri, "clusterUri");
+            Ensure.IsNotNullOrEmpty(userName, "userName");
+            Ensure.IsNotNullOrEmpty(password, "password");
 
             this.ClusterUri = clusterUri;
             this.UserName = userName;

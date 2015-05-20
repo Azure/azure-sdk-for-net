@@ -35,9 +35,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public OperationStatus Status { get; set; }
 
+        public PipelineCreateOrUpdateResponse()
+        {
+        }
+
         internal PipelineCreateOrUpdateResponse(
             Core.Models.PipelineCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
+            : this() 
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Pipeline, "internalResponse.Pipeline");

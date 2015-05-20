@@ -28,12 +28,18 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public ActivityType ActivityType { get; set; }
 
+        public ActivityTypeGetResponse()
+        {
+        }
+
         internal ActivityTypeGetResponse(
             CoreRegistrationModel.ActivityTypeGetResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
-            this.ActivityType = ((ActivityTypeOperations)client.ActivityTypes).Converter.ToWrapperType(internalResponse.ActivityType);
+            this.ActivityType =
+                ((ActivityTypeOperations)client.ActivityTypes).Converter.ToWrapperType(internalResponse.ActivityType);
         }
     }
 }

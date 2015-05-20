@@ -25,10 +25,16 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-    internal abstract class CoreTypeConverter<TCore, TWrapper, TExtensibleTypeProperties, TGenericTypeProperties> :
+    internal abstract class CoreTypeConverter<TCore, TWrapper, TExtensibleTypeProperties
+#if ADF_INTERNAL
+        , TGenericTypeProperties
+#endif
+        > :
         PolymorphicTypeConverter<TExtensibleTypeProperties>
         where TExtensibleTypeProperties : TypeProperties
+#if ADF_INTERNAL
         where TGenericTypeProperties : TExtensibleTypeProperties, new()
+#endif
     {
         protected IDictionary<string, Type> TypeMap { get; private set; }
 
@@ -64,6 +70,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                         wrapperTypeName,
                         typeName));
             }
+
+            this.TypeMap.Add(typeName, type);
         }
 
         public bool TypeIsRegistered<T>() where T : TExtensibleTypeProperties
@@ -105,22 +113,41 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         #endregion
 
-        protected virtual TExtensibleTypeProperties DeserializeTypeProperties(string typeName, string json)
+        protected virtual TExtensibleTypeProperties DeserializeTypeProperties(
+            string typeName,
+            string json,
+            out Type type)
         {
             TExtensibleTypeProperties typeProperties;
-            Type type;
             if (this.TryGetRegisteredType(typeName, out type))
             {
-                typeProperties = (TExtensibleTypeProperties)TypeProperties.DeserializeObject(json, type);
+                if (string.IsNullOrEmpty(json))
+                {
+                    // No typeProperties exist to deserialize, just initialize a default instance
+                    typeProperties = (TExtensibleTypeProperties)Activator.CreateInstance(type);
+                }
+                else
+                {
+                    typeProperties = (TExtensibleTypeProperties)TypeProperties.DeserializeObject(json, type);
+                }
             }
             else
             {
-                Dictionary<string, JToken> serviceExtraProperties = 
+#if ADF_INTERNAL
+                Dictionary<string, JToken> serviceExtraProperties =
                     JsonConvert.DeserializeObject<Dictionary<string, JToken>>(
                         json,
                         ConversionCommon.DefaultSerializerSettings);
 
                 typeProperties = new TGenericTypeProperties() { ServiceExtraProperties = serviceExtraProperties };
+                type = typeof(TGenericTypeProperties);
+#else
+                throw new InvalidOperationException(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "There is no type with the name '{0}' to deserialize to",
+                        typeName));
+#endif
             }
 
             return typeProperties;

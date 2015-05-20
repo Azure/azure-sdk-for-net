@@ -35,9 +35,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public Table Table { get; set; }
 
+        public TableCreateOrUpdateResponse()
+        {
+        }
+
         internal TableCreateOrUpdateResponse(
             Core.Models.TableCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Table, "internalResponse.Table");

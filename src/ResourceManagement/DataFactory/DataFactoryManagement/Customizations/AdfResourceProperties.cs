@@ -18,9 +18,14 @@ using System.Globalization;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
+#if ADF_INTERNAL
     public abstract class AdfResourceProperties<TExtensibleTypeProperties, TGenericTypeProperties> 
         where TExtensibleTypeProperties : TypeProperties 
         where TGenericTypeProperties : TExtensibleTypeProperties
+#else
+    public abstract class AdfResourceProperties<TExtensibleTypeProperties> 
+        where TExtensibleTypeProperties : TypeProperties 
+#endif
     {
         /// <summary>
         /// The type of the resource. May be the name of a built-in ADF type or 
@@ -30,7 +35,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public string Type { get; private set; }
 
-        private readonly TExtensibleTypeProperties typeProperties;
+        private TExtensibleTypeProperties typeProperties;
 
         /// <summary>
         /// The properties specific to the resource type. 
@@ -42,23 +47,52 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             {
                 return this.typeProperties;
             }
+
+            set
+            {
+                this.SetTypeProperties(value);
+            }
         }
 
-        protected AdfResourceProperties(
-            TExtensibleTypeProperties properties,
-            string typeName = null)
+        protected AdfResourceProperties()
+        {
+        }
+
+#if ADF_INTERNAL
+        protected AdfResourceProperties(TExtensibleTypeProperties properties, string typeName = null)
+#else
+        protected AdfResourceProperties(TExtensibleTypeProperties properties)
+#endif
+            : this()
+        {
+#if ADF_INTERNAL
+            this.SetTypeProperties(properties, typeName);
+#else
+            this.SetTypeProperties(properties);
+#endif
+
+        }
+
+#if ADF_INTERNAL
+        private void SetTypeProperties(TExtensibleTypeProperties properties, string typeName = null)
+#else
+        private void SetTypeProperties(TExtensibleTypeProperties properties)
+#endif
         {
             this.typeProperties = properties;
 
             Type type = properties.GetType();
+#if ADF_INTERNAL
             Type genericTypePropertiesType = typeof(TGenericTypeProperties);
             if (type == genericTypePropertiesType)
             {
                 if (typeName == null)
                 {
-                    throw new ArgumentException(string.Format(
+                    throw new ArgumentException(
+                        string.Format(
                             CultureInfo.InvariantCulture,
-                            "'typeName' cannot be null if 'properties' is a {0} instance.",
+                            "'typeName' cannot be null if 'properties' is a {0} instance. The setter "
+                            + "for 'typeProperties' cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity.",
                             genericTypePropertiesType.Name));
                 }
 
@@ -66,8 +100,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             }
             else
             {
+#endif
                 this.Type = type.Name;
+#if ADF_INTERNAL
             }
+#endif
         }
     }
 }

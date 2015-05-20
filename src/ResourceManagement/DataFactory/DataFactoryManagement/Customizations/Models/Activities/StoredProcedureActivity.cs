@@ -34,5 +34,20 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// their customized Stored Procedure.
         /// </summary>
         public IDictionary<string, string> StoredProcedureActivityParameters { get; set; }
+
+        public StoredProcedureActivity()
+        {
+        }
+
+        public StoredProcedureActivity(
+            string storedProcedureName,
+            IDictionary<string, string> storedProcedureActivityParameters = null)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(storedProcedureName, "storedProcedureName");
+
+            this.StoredProcedureName = storedProcedureName;
+            this.StoredProcedureActivityParameters = storedProcedureActivityParameters;
+        }
     }
 }

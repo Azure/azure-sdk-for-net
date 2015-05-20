@@ -33,9 +33,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string NextLink { get; set; }
 
+        public PipelineListResponse()
+        {
+        }
+
         internal PipelineListResponse(
             Core.Models.PipelineListResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Pipelines, "internalResponse.Pipelines");

@@ -25,7 +25,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public LinkedService LinkedService { get; set; }
 
-        internal LinkedServiceGetResponse(Core.Models.LinkedServiceGetResponse internalResponse, DataFactoryManagementClient client)
+        public LinkedServiceGetResponse()
+        {
+        }
+
+        internal LinkedServiceGetResponse(
+            Core.Models.LinkedServiceGetResponse internalResponse,
+            DataFactoryManagementClient client)
+            : this()
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.LinkedService, "internalResponse.LinkedService");

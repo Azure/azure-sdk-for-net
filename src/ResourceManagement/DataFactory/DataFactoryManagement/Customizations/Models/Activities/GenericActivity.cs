@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     public sealed class GenericActivity : ActivityTypeProperties
-    {
+    { 
     }
 }
+#endif

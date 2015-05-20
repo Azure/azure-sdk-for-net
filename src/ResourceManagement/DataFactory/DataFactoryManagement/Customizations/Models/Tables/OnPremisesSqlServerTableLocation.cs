@@ -24,5 +24,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The table name of the on-premises SQL database.
         /// </summary>
         public string TableName { get; set; }
+
+        public OnPremisesSqlServerTableLocation()
+        {
+        }
+
+        public OnPremisesSqlServerTableLocation(string tableName)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
+        }
     }
 }

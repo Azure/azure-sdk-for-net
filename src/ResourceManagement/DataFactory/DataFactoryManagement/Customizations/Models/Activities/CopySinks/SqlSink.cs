@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
@@ -53,5 +54,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string CleanupStagingTableStoredProcedureName { get; set; }
 #endif
+
+        public SqlSink()
+        {
+        }
+
+        public SqlSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
 }

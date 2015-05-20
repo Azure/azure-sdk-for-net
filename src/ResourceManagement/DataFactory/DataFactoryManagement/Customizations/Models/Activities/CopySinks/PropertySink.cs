@@ -13,14 +13,25 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// A copy activity property sink.
     /// </summary>
     public class PropertySink : CopySink
     {
+        public PropertySink()
+        {
+        }
+
+        public PropertySink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
-#endif
 }
+
+#endif

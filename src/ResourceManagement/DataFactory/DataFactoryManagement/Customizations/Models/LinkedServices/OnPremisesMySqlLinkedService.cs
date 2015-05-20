@@ -58,5 +58,27 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Optional. Username for authentication.
         /// </summary>
         public string Username { get; set; }
+
+        public OnPremisesMySqlLinkedService()
+        {
+        }
+
+        public OnPremisesMySqlLinkedService(
+            string gatewayName, 
+            string server, 
+            string database,
+            string authenticationType)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(gatewayName, "gatewayName");
+            Ensure.IsNotNullOrEmpty(server, "server");
+            Ensure.IsNotNullOrEmpty(database, "database");
+            Ensure.IsNotNullOrEmpty(authenticationType, "authenticationType");
+
+            this.GatewayName = gatewayName;
+            this.Server = server;
+            this.Database = database;
+            this.AuthenticationType = authenticationType;
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public Pipeline(string name, PipelineProperties properties)
             : this()
         {
-            Ensure.IsNotNull(name, "name");
+            Ensure.IsNotNullOrEmpty(name, "name");
             Ensure.IsNotNull(properties, "properties");
 
             this.Name = name;

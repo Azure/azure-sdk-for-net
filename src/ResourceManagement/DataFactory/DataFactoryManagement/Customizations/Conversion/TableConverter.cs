@@ -18,7 +18,11 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
+#if ADF_INTERNAL
     internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties, GenericTable>
+#else
+    internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties>
+#endif
     {
         /// <summary> 
         /// Convert <paramref name="table"/> to an <see cref="Core.Models.Table"/> instance.
@@ -61,36 +65,41 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         /// <returns>A <see cref="Table"/> instance equivalent to <paramref name="internalTable"/>.</returns>
         public override Table ToWrapperType(Core.Models.Table internalTable)
         {
-            if (internalTable.Properties == null)
-            {
-                return null;
-            }
+            Ensure.IsNotNull(internalTable, "internalTable");
+            Ensure.IsNotNull(internalTable.Properties, "internalTable.Properties");
 
+            Type type;
             TableTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalTable.Properties.Type,
-                internalTable.Properties.TypeProperties);
+                internalTable.Properties.TypeProperties,
+                out type);
 
-            Table table = new Table()
-            {
-                Name = internalTable.Name, 
-                Properties = new TableProperties(
-                    typeProperties, 
-                    internalTable.Properties.Availability, 
-                    internalTable.Properties.Type)
-                    {
-                        Availability = internalTable.Properties.Availability,
-                        CreateTime = internalTable.Properties.CreateTime,
-                        Description = internalTable.Properties.Description,
-                        ErrorMessage = internalTable.Properties.ErrorMessage,
-                        LinkedServiceName = internalTable.Properties.LinkedServiceName,
-                        Policy = internalTable.Properties.Policy,
-                        ProvisioningState = internalTable.Properties.ProvisioningState,
-                        Published = internalTable.Properties.Published,
-                        Structure = internalTable.Properties.Structure
-                    }
-            };
+#if ADF_INTERNAL
+            string typeName = type == typeof(GenericTable) ? internalTable.Properties.Type : type.Name;
+            TableProperties properties = new TableProperties(
+                typeProperties,
+                internalTable.Properties.Availability,
+                internalTable.Properties.LinkedServiceName,
+                typeName)
+#else
+            TableProperties properties = new TableProperties(
+                typeProperties,
+                internalTable.Properties.Availability,
+                internalTable.Properties.LinkedServiceName)
+#endif
+                     {
+                         Availability = internalTable.Properties.Availability,
+                         CreateTime = internalTable.Properties.CreateTime,
+                         Description = internalTable.Properties.Description,
+                         ErrorMessage = internalTable.Properties.ErrorMessage,
+                         LinkedServiceName = internalTable.Properties.LinkedServiceName,
+                         Policy = internalTable.Properties.Policy,
+                         ProvisioningState = internalTable.Properties.ProvisioningState,
+                         Published = internalTable.Properties.Published,
+                         Structure = internalTable.Properties.Structure
+                     };
 
-            return table;
+            return new Table() { Name = internalTable.Name, Properties = properties };
         }
 
         /// <summary>

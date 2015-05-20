@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
@@ -30,3 +31,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
     }
 }
+#endif

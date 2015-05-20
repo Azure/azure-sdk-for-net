@@ -30,9 +30,14 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public OperationStatus Status { get; set; }
 
+        public ActivityTypeCreateOrUpdateResponse()
+        {
+        } 
+
         internal ActivityTypeCreateOrUpdateResponse(
             CoreRegistrationModel.ActivityTypeCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.ActivityType = ((ActivityTypeOperations)client.ActivityTypes).Converter.ToWrapperType(internalResponse.ActivityType);

@@ -24,5 +24,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The definition of the table to be created or updated.
         /// </summary>
         public Table Table { get; set; }
+
+        public TableCreateOrUpdateParameters()
+        {
+        }
+
+        public TableCreateOrUpdateParameters(Table table)
+            : this()
+        {
+            Ensure.IsNotNull(table, "table");
+            this.Table = table;
+        }
     }
 }

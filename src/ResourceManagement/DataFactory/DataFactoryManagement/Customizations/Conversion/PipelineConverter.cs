@@ -22,14 +22,22 @@ using Core = Microsoft.Azure.Management.DataFactories.Core.Models;
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
     internal class PipelineConverter :
+#if ADF_INTERNAL
         CoreTypeConverter<Core.Models.Pipeline, Pipeline, ActivityTypeProperties, GenericActivity>
+#else
+        CoreTypeConverter<Core.Models.Pipeline, Pipeline, ActivityTypeProperties>
+#endif
     {
         /// <summary> 
-        /// Convert <paramref name="pipeline"/> to an <see cref="InternalPipeline"/> instance.
-        /// This method should be called only after type is validated, otherwise type-specific logic will break
+        /// Convert <paramref name="pipeline"/> to a <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.Pipeline"/> instance.
+        /// This method should be called only after type is validated, otherwise type-specific logic will break.
         /// </summary>
-        /// <param name="pipeline">The <see cref="InternalPipeline"/> instance to convert.</param>
-        /// <returns>An <see cref="InternalPipeline"/> instance equivalent to <paramref name="pipeline"/>.</returns>
+        /// <param name="pipeline">
+        /// The <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.Pipeline"/> 
+        /// instance to convert.
+        /// </param>
+        /// <returns>A <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.Pipeline"/> 
+        /// instance equivalent to <paramref name="pipeline"/>.</returns>
         public override Core.Models.Pipeline ToCoreType(Pipeline pipeline)
         {
             Ensure.IsNotNull(pipeline, "pipeline");
@@ -58,11 +66,14 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
             return internalPipeline;
         }
-
+        
         /// <summary> 
-        /// Convert <paramref name="internalPipeline"/> to a <see cref="Pipeline"/> instance.
+        /// Convert <paramref name="internalPipeline"/> to a 
+        /// <see cref="Microsoft.Azure.Management.DataFactories.Models.Pipeline"/> instance.
         /// </summary>
-        /// <param name="internalPipeline">The <see cref="InternalPipeline"/> instance to convert.</param>
+        /// <param name="internalPipeline">
+        /// The <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.Pipeline"/> instance to convert.
+        /// </param>
         /// <returns>A <see cref="Pipeline"/> instance equivalent to <paramref name="internalPipeline"/>.</returns>
         public override Pipeline ToWrapperType(Core.Models.Pipeline internalPipeline)
         {
@@ -146,13 +157,19 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         {
             Ensure.IsNotNull(internalActivity, "internalActivity");
             Ensure.IsNotNull(internalActivity.Type, "internalActivity.Type");
-            Ensure.IsNotNull(internalActivity.TypeProperties, "internalActivity.TypeProperties");
 
+            Type type;
             ActivityTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalActivity.Type,
-                internalActivity.TypeProperties);
+                internalActivity.TypeProperties, 
+                out type);
 
-            return new Activity(typeProperties, internalActivity.Type)
+#if ADF_INTERNAL
+            string typeName = type == typeof(GenericActivity) ? internalActivity.Type : type.Name;
+            return new Activity(typeProperties, typeName)
+#else
+            return new Activity(typeProperties)
+#endif
                        {
                            Name = internalActivity.Name,
                            Description = internalActivity.Description,
