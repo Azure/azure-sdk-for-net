@@ -1,0 +1,365 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/byApi?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieUFwaT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Echo API\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "363"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "210c6c2d-0d50-45d8-9641-9995de70f42d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14962"
+        ],
+        "x-ms-correlation-request-id": [
+          "c74e0fe5-16b8-4d36-a7d2-cf6c091b86cc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200735Z:c74e0fe5-16b8-4d36-a7d2-cf6c091b86cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:34 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/byGeo?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieUdlbz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"count\": 0,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "18b30d0a-1dfa-4738-bf39-ca18c2d6571c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14961"
+        ],
+        "x-ms-correlation-request-id": [
+          "38d9060f-58b9-4311-912a-72a5e77d53b2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200735Z:38d9060f-58b9-4311-912a-72a5e77d53b2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/byOperation?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieU9wZXJhdGlvbj9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Retrieve resource\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"operationId\": \"/apis/555b938a7e8880049a040001/operations/555b938a7e8880049a080001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Retrieve resource (cached)\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"operationId\": \"/apis/555b938a7e8880049a040001/operations/555b938a7e8880049a080002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Modify Resource\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"operationId\": \"/apis/555b938a7e8880049a040001/operations/555b938a7e8880049a080003\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Create resource\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"operationId\": \"/apis/555b938a7e8880049a040001/operations/555b938a7e8880049a080004\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Remove resource\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"operationId\": \"/apis/555b938a7e8880049a040001/operations/555b938a7e8880049a080005\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Retrieve header only\",\r\n      \"apiId\": \"/apis/555b938a7e8880049a040001\",\r\n      \"operationId\": \"/apis/555b938a7e8880049a040001/operations/555b938a7e8880049a080006\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 6,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2551"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dd92cd60-97d6-4dec-ba1e-618e6311d024"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-correlation-request-id": [
+          "746697c7-9851-40a9-85cc-1b6124bc537c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200736Z:746697c7-9851-40a9-85cc-1b6124bc537c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/byProduct?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieVByb2R1Y3Q/YXBpLXZlcnNpb249MjAxNC0wMi0xNCYkZmlsdGVyPXRpbWVzdGFtcCUyMGdlJTIwZGF0ZXRpbWUlMjcyMDE1LTA1LTE4VDAwJTNBMDAlM0EwMCUyNw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Starter\",\r\n      \"productId\": \"/products/555b938a7e8880049a060001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Unlimited\",\r\n      \"productId\": \"/products/555b938a7e8880049a060002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "705"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5e6cba6d-5f78-413f-be31-fd5366b4db0f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14959"
+        ],
+        "x-ms-correlation-request-id": [
+          "157d7b3b-7037-4572-be00-3fbc2efc0bac"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200736Z:157d7b3b-7037-4572-be00-3fbc2efc0bac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/bySubscription?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieVN1YnNjcmlwdGlvbj9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"\",\r\n      \"userId\": \"/users/1\",\r\n      \"productId\": \"/products/555b938a7e8880049a060001\",\r\n      \"subscriptionId\": \"/subscriptions/555b938a7e8880049a070001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"\",\r\n      \"userId\": \"/users/1\",\r\n      \"productId\": \"/products/555b938a7e8880049a060002\",\r\n      \"subscriptionId\": \"/subscriptions/555b938a7e8880049a070002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "847"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "753d365d-a488-4ef1-b375-73fc099779bb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce06474a-6863-4ff6-b43f-ed5aaa096e43"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200737Z:ce06474a-6863-4ff6-b43f-ed5aaa096e43"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/byTime?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'&interval=PT30M",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieVRpbWU/YXBpLXZlcnNpb249MjAxNC0wMi0xNCYkZmlsdGVyPXRpbWVzdGFtcCUyMGdlJTIwZGF0ZXRpbWUlMjcyMDE1LTA1LTE4VDAwJTNBMDAlM0EwMCUyNyZpbnRlcnZhbD1QVDMwTQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"count\": 0,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a1bc6900-9e9e-4532-9408-f816537dcf91"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14957"
+        ],
+        "x-ms-correlation-request-id": [
+          "05340177-4166-419b-9d50-085b776296fb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200737Z:05340177-4166-419b-9d50-085b776296fb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e4f2946d-558a-4212-9e97-217ee3e55f94/resourceGroups/Api-Default-Central-US/providers/Microsoft.ApiManagement/service/hydraapimservice4557/reports/byUser?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTRmMjk0NmQtNTU4YS00MjEyLTllOTctMjE3ZWUzZTU1Zjk0L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWwtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTQ1NTcvcmVwb3J0cy9ieVVzZXI/YXBpLXZlcnNpb249MjAxNC0wMi0xNCYkZmlsdGVyPXRpbWVzdGFtcCUyMGdlJTIwZGF0ZXRpbWUlMjcyMDE1LTA1LTE4VDAwJTNBMDAlM0EwMCUyNw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Administrator\",\r\n      \"userId\": \"/users/1\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Anonymous\",\r\n      \"userId\": \"/users/54c800b332965a0035030000\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "676"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dba17ae4-3444-4930-afbf-c16c7be88bdf"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14956"
+        ],
+        "x-ms-correlation-request-id": [
+          "7dbc5884-eede-4489-9508-44b8c4fb2bee"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150519T200737Z:7dbc5884-eede-4489-9508-44b8c4fb2bee"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 19 May 2015 20:07:37 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e4f2946d-558a-4212-9e97-217ee3e55f94"
+  }
+}

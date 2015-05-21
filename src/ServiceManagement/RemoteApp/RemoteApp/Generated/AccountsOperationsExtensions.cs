@@ -24,10 +24,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RmoteApp management client
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// Definition for result of GetAccount operaton.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// Definition for result of GetAccount operaton.
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// Additional features enabled for the account.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// Additional features enabled for the account.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// Definition for result of ListBillingPlans operation.
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <returns>
         /// Definition for result of ListBillingPlans operation.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <param name='accountInfo'>
         /// Required. New details of account.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IAccountsOperations.
         /// </param>
         /// <param name='accountInfo'>
         /// Required. New details of account.

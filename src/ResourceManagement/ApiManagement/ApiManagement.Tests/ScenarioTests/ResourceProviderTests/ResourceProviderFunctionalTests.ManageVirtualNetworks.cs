@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         PublisherEmail = "publisher@live.com",
                         PublisherName = "publisher"
                     });
-                var createResponse = this.ApiManagementClient.ApiManagement.CreateOrUpdate(resourceGroup, serviceName, createServiceParameters);
+                var createResponse = this.ApiManagementClient.ResourceProvider.CreateOrUpdate(resourceGroup, serviceName, createServiceParameters);
                 Assert.NotNull(createResponse);
 
                 this.ApiManagementClient.RefreshAccessToken();
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 try
                 {
-                    var result = this.ApiManagementClient.ApiManagement.BeginManagingVirtualNetworksAsync(
+                    var result = this.ApiManagementClient.ResourceProvider.BeginManagingVirtualNetworksAsync(
                         resourceGroup,
                         serviceName,
                         new ApiServiceManageVirtualNetworksParameters

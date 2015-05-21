@@ -12,9 +12,9 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace RemoteApp.Tests
     /// <summary>
     /// RemoteApp collection user specific test cases
     /// </summary>
-    public class RemoteAppPrincipalTests : TestBase
+    public class RemoteAppPrincipalTests : RemoteAppTestBase
     {
         private IEnumerable<Collection> GetAllActiveCollections(RemoteAppManagementClient client)
         {
@@ -43,14 +43,6 @@ namespace RemoteApp.Tests
             Assert.True(activeCollections.Count() > 0, "No active collection exist for the test.");
 
             return activeCollections;
-        }
-
-        private RemoteAppManagementClient GetRemoteAppManagementClient()
-        {
-            RemoteAppManagementClient client =
-                TestBase.GetServiceClient<RemoteAppManagementClient>(new RDFETestEnvironmentFactory());
-            client.RdfeNamespace = "rdst15";
-            return client;
         }
 
         /// <summary>
