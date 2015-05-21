@@ -21,16 +21,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Custom location.
     /// </summary>
-    public sealed class CustomTableLocation : TableTypeProperties, IGenericTypeProperties
+    public sealed class CustomLocation : TableTypeProperties, IGenericTypeProperties
     {
         public IDictionary<string, JToken> ServiceExtraProperties { get; set; } 
 
-        public CustomTableLocation()
+        public CustomLocation()
         {
             this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
-        public CustomTableLocation(IDictionary<string, JToken> serviceExtraProperties)
+        public CustomLocation(IDictionary<string, JToken> serviceExtraProperties)
         {
             this.ServiceExtraProperties = serviceExtraProperties;
         }

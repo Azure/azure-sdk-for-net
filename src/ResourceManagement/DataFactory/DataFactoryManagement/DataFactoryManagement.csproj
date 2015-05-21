@@ -133,7 +133,7 @@
     <Compile Include="Customizations\Models\Tables\AzureSearchIndexLocation.cs" />
     <Compile Include="Customizations\Models\Tables\AzureSqlTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\AzureTableLocation.cs" />
-    <Compile Include="Customizations\Models\Tables\CustomTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\CustomLocation.cs" />
     <Compile Include="Customizations\Models\Tables\DocumentDbCollectionLocation.cs" />
     <Compile Include="Customizations\Models\Tables\GenericTable.cs" />
     <Compile Include="Customizations\Models\Tables\MdsTableLocation.cs" />
