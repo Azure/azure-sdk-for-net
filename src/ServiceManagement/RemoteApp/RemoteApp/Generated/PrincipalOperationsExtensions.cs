@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RmoteApp management client
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IPrincipalOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
         /// </param>
         /// <param name='collectionName'>
         /// Required. The RemoteApp collection name.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IPrincipalOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
         /// </param>
         /// <param name='collectionName'>
         /// Required. The RemoteApp collection name.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IPrincipalOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
         /// </param>
         /// <param name='collectionName'>
         /// Required. The RemoteApp collection name.
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IPrincipalOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
         /// </param>
         /// <param name='collectionName'>
         /// Required. The RemoteApp collection name.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IPrincipalOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
         /// </param>
         /// <param name='collectionName'>
         /// Required. The RemoteApp collection name.
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IPrincipalOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
         /// </param>
         /// <param name='collectionName'>
         /// Required. The RemoteApp collection name.

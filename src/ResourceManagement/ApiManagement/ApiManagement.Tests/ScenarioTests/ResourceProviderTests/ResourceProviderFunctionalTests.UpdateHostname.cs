@@ -15,8 +15,8 @@
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
     using System;
+    using System.IO;
     using System.Net;
-    using System.Reflection;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
     using Xunit;
@@ -35,20 +35,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
 
                 byte[] certificate;
-                var assembly = Assembly.GetExecutingAssembly();
-                const string certName = "_.preview.int-azure-api.net.pfx";
-                using (var certStream = assembly.GetManifestResourceStream(string.Format("{0}.Resources.{1}", assembly.GetName().Name, certName)))
+                const string certPath = "./Resources/testcertificate.pfx";
+                using (var certStream = File.OpenRead(certPath))
                 {
                     certificate = new byte[certStream.Length];
                     certStream.Read(certificate, 0, certificate.Length);
                 }
 
-                var response = apiManagementClient.ApiManagement.UploadCertificate(
+                var response = apiManagementClient.ResourceProvider.UploadCertificate(
                     ResourceGroupName,
                     ApiManagementServiceName,
                     new ApiServiceUploadCertificateParameters
                     {
-                        CertificatePassword = "Password!12",
+                        CertificatePassword = "powershelltest",
                         EncodedCertificate = Convert.ToBase64String(certificate),
                         Type = HostnameType.Portal
                     });

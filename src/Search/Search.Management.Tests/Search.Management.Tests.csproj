@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{B89334CA-F73C-4B04-9B38-D61FEE4D9DE8}</ProjectGuid>
+    <RootNamespace>Search.Management.Tests</RootNamespace>
+    <AssemblyName>Search.Management.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Generated\SearchManagementClient.cs" />
+    <Compile Include="Tests\AdminKeyTests.cs" />
+    <Compile Include="Tests\QueryKeyTests.cs" />
+    <Compile Include="Tests\SearchServiceTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ResourceGroupFixture.cs" />
+    <Compile Include="Utilities\SearchServiceFixture.cs" />
+    <Compile Include="Utilities\SearchServiceUndoHandler.cs" />
+    <Compile Include="Utilities\SearchTestBase.cs" />
+    <Compile Include="Utilities\SearchTestUtilities.cs" />
+    <Compile Include="Utilities\UndoContextDiscoveryExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Search.Tests.AdminKeyTests\CanListAdminKeys.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Search.Tests.QueryKeyTests\CanListQueryKeys.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Management.Search.Tests.SearchServiceTests\CanListServices.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.ResourceManager">
+      <HintPath>..\..\..\packages\Microsoft.Azure.Management.Resources.2.18.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
