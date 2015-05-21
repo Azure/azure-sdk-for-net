@@ -202,7 +202,8 @@
     <Compile Include="Customizations\Operations\Tables\TableOperations.cs" />
     <Compile Include="Customizations\Operations\Tables\TableOperationsExtensions.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Customization.cs" />
-    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Generated\**\*.cs" Condition="'$(ADF_INTERNAL)'!='true'" />
+    <Compile Include="GeneratedInternal\**\*.cs" Condition="'$(ADF_INTERNAL)'=='true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec">
