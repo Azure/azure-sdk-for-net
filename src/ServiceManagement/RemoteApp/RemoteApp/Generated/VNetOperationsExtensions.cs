@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RmoteApp management client
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='trackingId'>
         /// Required. Tracking ID returned by ResetVpnSharedKey
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='trackingId'>
         /// Required. Tracking ID returned by ResetVpnSharedKey
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <returns>
         /// List of virtual networks.
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <returns>
         /// List of virtual networks.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IVNetOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IVNetOperations.
         /// </param>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.

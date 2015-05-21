@@ -25,7 +25,7 @@ using System.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.RemoteApp.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
     /// Additional features enabled for the account.

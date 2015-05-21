@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IDictionary<string, string> _customProperties;
         
         /// <summary>
-        /// Optional. Gets or sets CustomProperties of the Api Management
+        /// Optional. Gets or sets custom properties of the Api Management
         /// service.
         /// </summary>
         public IDictionary<string, string> CustomProperties

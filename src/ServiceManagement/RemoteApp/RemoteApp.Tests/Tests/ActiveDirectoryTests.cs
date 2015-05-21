@@ -13,10 +13,10 @@
 //
 
 using Hyak.Common;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -27,7 +27,7 @@ namespace RemoteApp.Tests
     /// <summary>
     /// RemoteApp collection active directory related test cases
     /// </summary>
-    public class ActiveDirectoryTests : TestBase
+    public class ActiveDirectoryTests : RemoteAppTestBase
     {
 
         private string GetCollectionName()
@@ -58,14 +58,6 @@ namespace RemoteApp.Tests
         {
             AssertNotNullOrEmpty(adConfig.DomainName);
             AssertNotNullOrEmpty(adConfig.UserName);
-        }
-
-        private RemoteAppManagementClient GetRemoteAppManagementClient()
-        {
-            RemoteAppManagementClient client =
-                TestBase.GetServiceClient<RemoteAppManagementClient>(new RDFETestEnvironmentFactory());
-            client.RdfeNamespace = "rdst15";
-            return client;
         }
 
         /// <summary>

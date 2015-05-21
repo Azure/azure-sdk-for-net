@@ -14,10 +14,10 @@
 //
 
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,18 +28,10 @@ namespace RemoteApp.Tests
     /// <summary>
     /// RemoteApp template image specific test cases
     /// </summary>
-    public class TemplateImageTests : TestBase
+    public class TemplateImageTests : RemoteAppTestBase
     {
         private const string testRegion = "West US";
         private const double defaultTimeoutMs = 30000;
-
-        private RemoteAppManagementClient GetRemoteAppManagementClient()
-        {
-            RemoteAppManagementClient client =
-                TestBase.GetServiceClient<RemoteAppManagementClient>(new RDFETestEnvironmentFactory());
-            client.RdfeNamespace = "rdst15";
-            return client;
-        }
 
         private static string GetTestImageName()
         {

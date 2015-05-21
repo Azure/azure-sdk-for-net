@@ -30,11 +30,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// Operations to create, modify, list, and delete template images.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient.
         /// </summary>
         public RemoteAppManagementClient Client
         {
@@ -1142,21 +1142,23 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                requestDoc = new JObject();
-                requestDoc["Name"] = imageDetails.Name;
+                JObject templateImageDetailsValue = new JObject();
+                requestDoc = templateImageDetailsValue;
                 
-                requestDoc["Region"] = imageDetails.Region;
+                templateImageDetailsValue["Name"] = imageDetails.Name;
+                
+                templateImageDetailsValue["Region"] = imageDetails.Region;
                 
                 if (imageDetails.Id != null)
                 {
-                    requestDoc["Id"] = imageDetails.Id;
+                    templateImageDetailsValue["Id"] = imageDetails.Id;
                 }
                 
-                requestDoc["SizeInGB"] = imageDetails.SizeInGB;
+                templateImageDetailsValue["SizeInGB"] = imageDetails.SizeInGB;
                 
                 if (imageDetails.SourceImageSasUri != null)
                 {
-                    requestDoc["SourceImageSasUri"] = imageDetails.SourceImageSasUri;
+                    templateImageDetailsValue["SourceImageSasUri"] = imageDetails.SourceImageSasUri;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

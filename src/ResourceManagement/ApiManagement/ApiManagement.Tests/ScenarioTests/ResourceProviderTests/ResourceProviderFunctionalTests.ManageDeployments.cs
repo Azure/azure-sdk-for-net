@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
 
                 // update from Developer to Standard and Update Capacity from 1 to 2
-                var response = apiManagementClient.ApiManagement.ManageDeployments(
+                var response = apiManagementClient.ResourceProvider.ManageDeployments(
                     ResourceGroupName,
                     ApiManagementServiceName,
                     new ApiServiceManageDeploymentsParameters
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                var getResponse = apiManagementClient.ApiManagement.Get(ResourceGroupName, ApiManagementServiceName);
+                var getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
                 Assert.NotNull(getResponse);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 }
 
                 // renew access token
-                ApiManagementHelper.RefreshAccessToken(apiManagementClient);
+                apiManagementClient.RefreshAccessToken();
 
-                response = apiManagementClient.ApiManagement.ManageDeployments(
+                response = apiManagementClient.ResourceProvider.ManageDeployments(
                     ResourceGroupName,
                     ApiManagementServiceName,
                     new ApiServiceManageDeploymentsParameters
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                getResponse = apiManagementClient.ApiManagement.Get(ResourceGroupName, ApiManagementServiceName);
+                getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
                 Assert.NotNull(getResponse);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);
