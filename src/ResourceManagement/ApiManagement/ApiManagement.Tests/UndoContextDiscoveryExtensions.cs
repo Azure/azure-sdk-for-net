@@ -27,9 +27,9 @@ namespace ApiManagement.Tests
         /// Create an undo handler for Api Management service operations
         /// </summary>
         /// <returns>AN undo handler for Api Management service operations</returns>
-        public static OperationUndoHandler CreateStorageAccountUndoHandler()
+        public static OperationUndoHandler CreateApiManagementUndoHandler()
         {
-            return new ApiManagementUndoHandler();
+            return new ApiManagementResourceProviderUndoHandler();
         }
     }
 }
