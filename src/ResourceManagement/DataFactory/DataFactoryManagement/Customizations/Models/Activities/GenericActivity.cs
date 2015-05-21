@@ -13,11 +13,23 @@
 // limitations under the License.
 //
 
-#if ADF_INTERNAL
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public sealed class GenericActivity : ActivityTypeProperties
-    { 
+    public sealed class GenericActivity : ActivityTypeProperties, IGenericTypeProperties
+    {
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+
+        public GenericActivity()
+        {
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
+        }
+
+        public GenericActivity(Dictionary<string, JToken> serviceExtraProperties)
+        {
+            this.ServiceExtraProperties = serviceExtraProperties;
+        }
     }
 }
-#endif

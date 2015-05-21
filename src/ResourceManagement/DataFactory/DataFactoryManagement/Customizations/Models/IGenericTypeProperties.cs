@@ -18,18 +18,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public sealed class GenericLinkedService : LinkedServiceTypeProperties, IGenericTypeProperties
+    public interface IGenericTypeProperties 
     {
-        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
-
-        public GenericLinkedService()
-        {
-            this.ServiceExtraProperties = new Dictionary<string, JToken>();
-        }
-
-        public GenericLinkedService(IDictionary<string, JToken> serviceExtraProperties)
-        {
-            this.ServiceExtraProperties = serviceExtraProperties;
-        }
+        IDictionary<string, JToken> ServiceExtraProperties { get; set; }
     }
 }

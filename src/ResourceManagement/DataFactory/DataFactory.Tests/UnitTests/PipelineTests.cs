@@ -104,6 +104,7 @@ namespace DataFactory.Tests.UnitTests
             Assert.NotEmpty(samples);
             this.TestPipelineJsonSamples(samples);
         }
+#endif
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
@@ -146,7 +147,6 @@ namespace DataFactory.Tests.UnitTests
             Pipeline pipeline = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
-#endif
 
         private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
         {

@@ -18,7 +18,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class PipelineJsonSamples
     {
-#if ADF_INTERNAL
         [JsonSample]
         public const string ActivityTypePipeline = @"
 {
@@ -50,7 +49,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-#endif
 
         [JsonSample(propertyBagKeys: new string[] 
             { 

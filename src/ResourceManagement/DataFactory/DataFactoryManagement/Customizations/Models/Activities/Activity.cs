@@ -19,11 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// A pipeline activity.
     /// </summary>
-#if ADF_INTERNAL
     public class Activity : AdfResourceProperties<ActivityTypeProperties, GenericActivity>
-#else
-    public class Activity : AdfResourceProperties<ActivityTypeProperties>
-#endif
     {
         /// <summary>
         /// Activity name.
@@ -65,7 +61,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
         }
 
-#if ADF_INTERNAL
         public Activity(GenericActivity typeProperties, string typeName)
             : base(typeProperties, typeName)
         {
@@ -75,6 +70,5 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             : base(typeProperties, typeName)
         {
         }
-#endif
     }
 }
