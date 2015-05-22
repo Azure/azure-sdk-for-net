@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+#if ADF_INTERNAL
 namespace DataFactory.Tests.Framework.JsonSamples
 {
     /// <summary>
@@ -39,16 +40,23 @@ namespace DataFactory.Tests.Framework.JsonSamples
         ""supportedActivities"": [
             ""HadoopActivity""
         ],
-        ""typeProperties"": 
-            [
-                {""name"": ""KeyPairName"", ""required"": ""True"", ""value"":""HadoopClusterKey"", ""type"": ""string""},
-                {""name"": ""KeyPairKey"", ""required"": ""True"", ""type"": ""string""}
-            ]
+        ""schema"": {
+            ""properties"":{
+                ""KeyPairName"": {
+                    ""type"": ""string"",
+                    ""default"": ""HadoopClusterKey""
+                },
+                ""KeyPairKey"": {
+                    ""type"": ""string""
+                }
+            },
+            ""required"": [ ""KeyPairName"", ""KeyPairKey"" ]
+        }
     }
 }";
 
         [JsonSample]
-        public const string AmazonEMRCompute_WithoutTypeProperties = @"
+        public const string AmazonEMRCompute_ServiceBusTransport_NestedPropertiesAndDefinitions = @"
 { 
     ""name"": ""AmazonEMR"", 
     ""properties"": { 
@@ -64,24 +72,44 @@ namespace DataFactory.Tests.Framework.JsonSamples
         },
         ""supportedActivities"": [
             ""HadoopActivity""
-        ]
-    }
-}";
-
-        [JsonSample]
-        public const string AzureHDInsightCompute_BuiltInTransport = @"
-{ 
-    ""name"": ""AzureHDInsightCompute"", 
-    ""properties"": { 
-        ""scope"": ""Global"",
-        ""transport"": {
-            ""type"": ""BuiltIn"", 
-            ""transportProtocolVersion"": ""2.0-preview""
-        },
-        ""supportedActivities"": [
-            ""HadoopActivity""
-        ]
+        ],
+        ""schema"": {
+            ""properties"":{
+                ""KeyPairName"": {
+                    ""type"": ""object"",
+                    ""properties"":{
+                        ""prop1"":
+                            {   
+                                ""type"": ""string"",
+                                ""default"":""HadoopClusterKey"",
+                            }
+                    },
+                    ""required"":[ ""prop1"" ],
+                    ""type"": ""string"",
+                    ""default"": ""HadoopClusterKey""
+                },
+                ""KeyPairKey"": {
+                    ""type"": ""string""
+                },
+                ""switches"":{
+                }
+            },
+            ""required"": [ ""KeyPairName"", ""KeyPairKey"" ],
+            ""definitions"":{
+                ""switches"" :{
+                    ""type"": ""object"",
+                    ""properties"":{
+                        ""switchProp"":{
+                            ""type"": ""integer"",
+                            ""default"": 1
+                        }
+                    },
+                    ""required"": [ ""switchProp"" ]
+                }
+            }
+        }
     }
 }";
     }
 }
+#endif
