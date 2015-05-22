@@ -226,6 +226,7 @@ namespace Network.Tests
         #region Subnets
 
         [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void AddAndRemoveNetworkSecurityGroupToSubnet()
         {
             using (var undoContext = UndoContext.Current)
@@ -247,7 +248,7 @@ namespace Network.Tests
                     string subnetName = "FrontEndSubnet5";
                     _testFixture.SetSimpleVirtualNetwork();
 
-                    NetworkSecurityGroupAddToSubnetParameters parameters = new NetworkSecurityGroupAddToSubnetParameters()
+                    NetworkSecurityGroupAddAssociationParameters parameters = new NetworkSecurityGroupAddAssociationParameters()
                     {
                         Name = securityGroupName
                     };
