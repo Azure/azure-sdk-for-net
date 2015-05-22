@@ -30,6 +30,14 @@ namespace DataFactory.Tests.UnitTests
 {
     public class ComputeTypeTests : UnitTestBase
     {
+        private ComputeTypeOperations Operations
+        {
+            get 
+            {
+                return (ComputeTypeOperations)this.Client.ComputeTypes;
+            }
+        }
+
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -50,7 +58,7 @@ namespace DataFactory.Tests.UnitTests
         private void TestComputeTypeJson(string json)
         {
             ComputeType computeType = this.ConvertToWrapper(json);
-            CoreRegistrationModel.ComputeType actual = this.Client.ComputeTypes.Converter.ToCoreType(computeType);
+            CoreRegistrationModel.ComputeType actual = this.Operations.Converter.ToCoreType(computeType);
 
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalComputeTypeToJson(actual);
 
@@ -63,7 +71,7 @@ namespace DataFactory.Tests.UnitTests
             CoreRegistrationModel.ComputeType internalComputeType =
                 Core.DataFactoryManagementClient.DeserializeInternalComputeTypeJson(json);
 
-            return this.Client.ComputeTypes.Converter.ToWrapperType(internalComputeType);
+            return this.Operations.Converter.ToWrapperType(internalComputeType);
         }
     }
 }

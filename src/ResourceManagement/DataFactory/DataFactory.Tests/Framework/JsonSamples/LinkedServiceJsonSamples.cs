@@ -192,27 +192,27 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
-#if ADF_INTERNAL
-        [JsonSample("ExtraProperties")]
-        public const string ExtraPropertiesLinkedService = @"
-{
-    name: ""Test-ML-LinkedService"",
-    properties:
-    {
-        type: ""AzureMLLinkedService"",
-        typeProperties:
-        {
-            mlEndpoint:""https://service.azureml.net/"",
-            apiKey:""testApiKey"", 
-            extraProperty1: ""value1"",
-            extraProperty2: {
-                subProp1: 5, 
-                subProp2: ""subValue2""
-            }
-        }
-    }
-}";
-#endif
+//#if ADF_INTERNAL
+//        [JsonSample("ExtraProperties")]
+//        public const string ExtraPropertiesLinkedService = @"
+//{
+//    name: ""Test-ML-LinkedService"",
+//    properties:
+//    {
+//        type: ""AzureMLLinkedService"",
+//        typeProperties:
+//        {
+//            mlEndpoint:""https://service.azureml.net/"",
+//            apiKey:""testApiKey"", 
+//            extraProperty1: ""value1"",
+//            extraProperty2: {
+//                subProp1: 5, 
+//                subProp2: ""subValue2""
+//            }
+//        }
+//    }
+//}";
+//#endif
 
         [JsonSample]
         public const string HDInsightBYOCWithHCatalogLinkedService = @"
