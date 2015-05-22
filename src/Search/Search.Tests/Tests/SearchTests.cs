@@ -150,8 +150,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 var searchParameters = 
                     new SearchParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
+
+                // Also test that searchText can be null.
                 DocumentSearchResponse<Hotel> response =
-                    client.Documents.Search<Hotel>("*", searchParameters);
+                    client.Documents.Search<Hotel>(null, searchParameters);
 
                 AssertKeySequenceEqual(response, "1", "5");
             });

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Search
         /// Reference to the Microsoft.Azure.Search.IDocumentOperations.
         /// </param>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
