@@ -32,6 +32,9 @@ namespace Network.Tests
         public const string DeleteNetworkConfigurationFilePath = @"TestData\DeleteNetworkConfiguration.xml";
         public const string CoexistenceFeatureNetworkConfigurationFilePath = @"TestData\CoexistenceFeatureNetworkConfiguration.xml";
 
+        public const string VnetOneWebOneWorkerCscfgFilePath = @"TestData\VnetOneWebOneWorker.cscfg";
+        public const string OneWebOneWorkerPkgFilePath = @"OneWebOneWorker.cspkg";
+
         public static readonly NetworkSetConfigurationParameters EmptyNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(EmptyNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters SiteToSiteNetworkConfigurationParameters =
