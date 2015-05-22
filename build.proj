@@ -36,8 +36,8 @@
   
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
-
     This key should never be committed to source control.
+    
   /p:NuGetPublishingSource=Uri
     The NuGet Server to push packages to.
   -->  
