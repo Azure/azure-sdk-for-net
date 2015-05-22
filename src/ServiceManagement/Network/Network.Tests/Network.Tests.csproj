@@ -46,6 +46,7 @@
     <Compile Include="Gateways\VirtualNetworkGatewayConnectionTests.cs" />
     <Compile Include="Gateways\VirtualNetworkGatewayTests.cs" />
     <Compile Include="GatewayTestClient.cs" />
+    <Compile Include="IPForwardingIntegrationTests.cs" />
     <Compile Include="ManagementTestUtilities.cs" />
     <Compile Include="NetworkSecurityGroupIntegrationTests.cs" />
     <Compile Include="NetworkTestBase.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Routes\AddRouteTableToSubnetTests.cs" />
     <Compile Include="Routes\CreateRouteTableTests.cs" />
     <Compile Include="Routes\DeleteRouteTests.cs" />
+    <Compile Include="Routes\GetEffectiveRouteTableTests.cs" />
     <Compile Include="Routes\GetRouteTableForSubnetTests.cs" />
     <Compile Include="Routes\GetRouteTableTests.cs" />
     <Compile Include="Routes\DeleteRouteTableTests.cs" />
@@ -96,6 +98,8 @@
     <None Include="SessionRecords\Network.Tests.ApplicationGateways.SetupApplicationGatewayTests\CreateApplicationGateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnNICSucceeds.json" />
+    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnRoleSucceeds.json" />
     <None Include="SessionRecords\Network.Tests.VipMobilityTests\TestAssociateReserveIP.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -377,7 +381,7 @@
     <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\TestSetAndDeleteNetworkSecurityRule.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	<None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToNIC.json">
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToNIC.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToRole.json">
@@ -562,7 +566,7 @@
     </None>
     <None Include="SessionRecords\Network.Tests.IPForwardingIntegrationTests\SetIPForwardingOnRoleSucceeds.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>	
+    </None>
     <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayAPIsTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
