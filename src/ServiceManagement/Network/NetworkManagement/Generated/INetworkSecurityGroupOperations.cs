@@ -429,6 +429,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<NetworkSecurityGroupGetAssociationResponse> GetForNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        Task<NetworkSecurityGroupGetAssociationResponse> GetForRoleAsync(string serviceName, string deploymentName, string roleName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the Network Security Group applied to a specific subnet.
         /// </summary>
         /// <param name='cancellationToken'>

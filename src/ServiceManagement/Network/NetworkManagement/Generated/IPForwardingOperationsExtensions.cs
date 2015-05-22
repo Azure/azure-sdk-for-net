@@ -120,6 +120,82 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IIPForwardingOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Set IP Forwarding on role
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginSettingIPForwardingOnRole(this IIPForwardingOperations operations, string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIPForwardingOperations)s).BeginSettingIPForwardingOnRoleAsync(serviceName, deploymentName, roleName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IIPForwardingOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Set IP Forwarding on role
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginSettingIPForwardingOnRoleAsync(this IIPForwardingOperations operations, string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters)
+        {
+            return operations.BeginSettingIPForwardingOnRoleAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets the IP Forwarding applied to a network interface.
         /// </summary>
         /// <param name='operations'>
@@ -309,6 +385,82 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<OperationStatusResponse> SetOnNetworkInterfaceAsync(this IIPForwardingOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, IPForwardingSetParameters parameters)
         {
             return operations.SetOnNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IIPForwardingOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Set IP Forwarding on role
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse SetOnRole(this IIPForwardingOperations operations, string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIPForwardingOperations)s).SetOnRoleAsync(serviceName, deploymentName, roleName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IIPForwardingOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Set IP Forwarding on role
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> SetOnRoleAsync(this IIPForwardingOperations operations, string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters)
+        {
+            return operations.SetOnRoleAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
         }
     }
 }

@@ -58,6 +58,28 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<OperationStatusResponse> BeginSettingIPForwardingOnNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, IPForwardingSetParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Set IP Forwarding on role operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginSettingIPForwardingOnRoleAsync(string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the IP Forwarding applied to a network interface.
         /// </summary>
         /// <param name='cancellationToken'>
@@ -101,5 +123,27 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> SetOnNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, IPForwardingSetParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Set IP Forwarding on role operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> SetOnRoleAsync(string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters, CancellationToken cancellationToken);
     }
 }

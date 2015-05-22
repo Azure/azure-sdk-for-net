@@ -2835,6 +2835,180 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public async Task<NetworkSecurityGroupGetAssociationResponse> GetForRoleAsync(string serviceName, string deploymentName, string roleName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleName == null)
+            {
+                throw new ArgumentNullException("roleName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleName", roleName);
+                TracingAdapter.Enter(invocationId, this, "GetForRoleAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roles/";
+            url = url + Uri.EscapeDataString(roleName);
+            url = url + "/networksecuritygroups";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    NetworkSecurityGroupGetAssociationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkSecurityGroupGetAssociationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        if (networkSecurityGroupElement != null)
+                        {
+                            XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement stateElement = networkSecurityGroupElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                result.State = stateInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Gets the Network Security Group applied to a specific subnet.
         /// </summary>
         /// <param name='virtualNetworkName'>

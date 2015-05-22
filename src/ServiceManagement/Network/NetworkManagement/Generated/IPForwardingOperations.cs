@@ -259,6 +259,190 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Set IP Forwarding on role
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> BeginSettingIPForwardingOnRoleAsync(string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleName == null)
+            {
+                throw new ArgumentNullException("roleName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.State == null)
+            {
+                throw new ArgumentNullException("parameters.State");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleName", roleName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSettingIPForwardingOnRoleAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roles/";
+            url = url + Uri.EscapeDataString(roleName);
+            url = url + "/ipforwarding";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement iPForwardingElement = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(iPForwardingElement);
+                
+                XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                stateElement.Value = parameters.State;
+                iPForwardingElement.Add(stateElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationStatusResponse result = null;
+                    // Deserialize Response
+                    result = new OperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Gets the IP Forwarding applied to a network interface.
         /// </summary>
         /// <param name='serviceName'>
@@ -652,6 +836,111 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             cancellationToken.ThrowIfCancellationRequested();
             OperationStatusResponse response = await client.IPForwarding.BeginSettingIPForwardingOnNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Sets IP Forwarding on a role.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Set IP Forwarding on role
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> SetOnRoleAsync(string serviceName, string deploymentName, string roleName, IPForwardingSetParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleName", roleName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "SetOnRoleAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.IPForwarding.BeginSettingIPForwardingOnRoleAsync(serviceName, deploymentName, roleName, parameters, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;

@@ -1264,6 +1264,60 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public static NetworkSecurityGroupGetAssociationResponse GetForRole(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).GetForRoleAsync(serviceName, deploymentName, roleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public static Task<NetworkSecurityGroupGetAssociationResponse> GetForRoleAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName)
+        {
+            return operations.GetForRoleAsync(serviceName, deploymentName, roleName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets the Network Security Group applied to a specific subnet.
         /// </summary>
         /// <param name='operations'>
