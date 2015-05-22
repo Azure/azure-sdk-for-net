@@ -59,7 +59,7 @@
                           LogReplacement="false" />
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; -BasePath &apos;$(LibrarySourceFolder)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;%(NuspecFilesToUpdate.RootDir)%(NuspecFilesToUpdate.Directory)&apos; }&quot;" />
 
     <!-- Second, use the new files as destructive replacement targets. -->
     <ItemGroup>
