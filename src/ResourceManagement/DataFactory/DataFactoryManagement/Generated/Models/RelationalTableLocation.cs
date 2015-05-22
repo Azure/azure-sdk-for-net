@@ -21,52 +21,45 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// Relational Table location.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class RelationalTableLocation : TableLocation
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private string _tableName;
         
         /// <summary>
-        /// String type.
+        /// Optional. The table name.
         /// </summary>
-        public const string String = "String";
+        public string TableName
+        {
+            get { return this._tableName; }
+            set { this._tableName = value; }
+        }
         
         /// <summary>
-        /// Int type.
+        /// Initializes a new instance of the RelationalTableLocation class.
         /// </summary>
-        public const string Int = "Int";
+        public RelationalTableLocation()
+        {
+        }
         
         /// <summary>
-        /// Decimal type.
+        /// Initializes a new instance of the RelationalTableLocation class
+        /// with required arguments.
         /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public RelationalTableLocation(string linkedServiceName)
+            : this()
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException("linkedServiceName");
+            }
+            this.LinkedServiceName = linkedServiceName;
+        }
     }
 }
