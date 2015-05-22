@@ -134,6 +134,18 @@ namespace Microsoft.WindowsAzure.Management.Network
             get { return this._gateways; }
         }
         
+        private IIPForwardingOperations _iPForwarding;
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the IP
+        /// Forwarding for your roles and network interfaces in your
+        /// subscription.
+        /// </summary>
+        public virtual IIPForwardingOperations IPForwarding
+        {
+            get { return this._iPForwarding; }
+        }
+        
         private INetworkOperations _networks;
         
         /// <summary>
@@ -191,6 +203,17 @@ namespace Microsoft.WindowsAzure.Management.Network
             get { return this._staticIPs; }
         }
         
+        private IVirtualIPOperations _virtualIPs;
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// Virtual IPs for your deployment.
+        /// </summary>
+        public virtual IVirtualIPOperations VirtualIPs
+        {
+            get { return this._virtualIPs; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
@@ -200,11 +223,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._applicationGateways = new ApplicationGatewayOperations(this);
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
+            this._iPForwarding = new IPForwardingOperations(this);
             this._networks = new NetworkOperations(this);
             this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
             this._reservedIPs = new ReservedIPOperations(this);
             this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
+            this._virtualIPs = new VirtualIPOperations(this);
             this._apiVersion = "2015-02-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -273,11 +298,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._applicationGateways = new ApplicationGatewayOperations(this);
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
+            this._iPForwarding = new IPForwardingOperations(this);
             this._networks = new NetworkOperations(this);
             this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
             this._reservedIPs = new ReservedIPOperations(this);
             this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
+            this._virtualIPs = new VirtualIPOperations(this);
             this._apiVersion = "2015-02-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

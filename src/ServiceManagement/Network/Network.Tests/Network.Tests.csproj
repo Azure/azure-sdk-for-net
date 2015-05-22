@@ -377,6 +377,21 @@
     <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\TestSetAndDeleteNetworkSecurityRule.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+	<None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToNIC.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToRole.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\CreateVMWithNetworkSecurityGroupOnNIC.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\CreateVMWithNetworkSecurityGroupOnRole.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\TestDeleteNetworkSecurityGroup.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Network.Tests.Routes.AddRouteTableToSubnetTests\AddRouteTableToSubnet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -542,6 +557,12 @@
     <None Include="SessionRecords\Network.Tests.Routes.SetRouteTests\SetRouteWithNullRouteNameInParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.IPForwardingIntegrationTests\SetIPForwardingOnNICSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.IPForwardingIntegrationTests\SetIPForwardingOnRoleSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>	
     <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayAPIsTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

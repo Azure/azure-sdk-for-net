@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     public partial class VirtualNetworkGatewayCreateParameters
     {
         private string _gatewayName;
-        
+
         /// <summary>
         /// Optional. The name of the virtual network gateway.
         /// </summary>
@@ -39,21 +39,21 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             get { return this._gatewayName; }
             set { this._gatewayName = value; }
         }
-        
+
         private string _gatewaySKU;
-        
+
         /// <summary>
         /// Optional. The SKU of this virtual network gateway. Valid values are
-        /// Default and HighPerformance.
+        /// Default, HighPerformance and Standard.
         /// </summary>
         public string GatewaySKU
         {
             get { return this._gatewaySKU; }
             set { this._gatewaySKU = value; }
         }
-        
+
         private string _gatewayType;
-        
+
         /// <summary>
         /// Optional. The routing type for this virtual network gateway.
         /// </summary>
@@ -62,9 +62,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             get { return this._gatewayType; }
             set { this._gatewayType = value; }
         }
-        
+
         private string _location;
-        
+
         /// <summary>
         /// Optional. The location of the virtual network gateway.
         /// </summary>
@@ -73,9 +73,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             get { return this._location; }
             set { this._location = value; }
         }
-        
+
         private string _vnetId;
-        
+
         /// <summary>
         /// Optional. Virtual network Id.
         /// </summary>
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             get { return this._vnetId; }
             set { this._vnetId = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the
         /// VirtualNetworkGatewayCreateParameters class.
