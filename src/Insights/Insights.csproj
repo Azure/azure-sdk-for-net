@@ -43,6 +43,8 @@
     <Compile Include="Customizations\Sku\SkuOperations.Antares.Customizations.cs" />
     <Compile Include="Customizations\Sku\ISkuOperations.Customizations.cs" />
     <Compile Include="Customizations\Sku\SkuOperations.Customizations.cs" />
+    <Compile Include="Generated\Insights\Models\EventCategoryCollection.cs" />
+    <Compile Include="Generated\Insights\Models\EventCategoryListResponse.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperations.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAutomatedExportOperations.cs" />
