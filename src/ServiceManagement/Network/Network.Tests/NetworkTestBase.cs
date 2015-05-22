@@ -264,27 +264,6 @@ namespace Network.Tests
             };
         }
 
-        public void CreateMultiNICIaaSDeployment(
-            string serviceName,
-            string deploymentName,
-            string roleName,
-            string networkInterfaceName,
-            string storageAccountName,
-            string virtualNetworkName,
-            string subnetName)
-        {
-            this.ComputeClient.VirtualMachines.CreateDeployment(
-                serviceName,
-                CreateMultiNICIaaSDeploymentParameters(
-                    serviceName,
-                    deploymentName,
-                    roleName,
-                    networkInterfaceName,
-                    storageAccountName,
-                    virtualNetworkName,
-                    subnetName));
-        }
-
         public DeploymentGetResponse CreatePaaSDeployment(
             string storageAccountName,
             string serviceName,
