@@ -737,19 +737,19 @@ namespace Microsoft.WindowsAzure.Management.Network
                     gatewayNameElement.Value = parameters.GatewayName;
                     createVirtualNetworkGatewayParametersElement.Add(gatewayNameElement);
                 }
-                
-                if (parameters.GatewayType != null)
-                {
-                    XElement gatewayTypeElement = new XElement(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
-                    gatewayTypeElement.Value = parameters.GatewayType;
-                    createVirtualNetworkGatewayParametersElement.Add(gatewayTypeElement);
-                }
-                
+
                 if (parameters.GatewaySKU != null)
                 {
                     XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
                     gatewaySizeElement.Value = parameters.GatewaySKU;
                     createVirtualNetworkGatewayParametersElement.Add(gatewaySizeElement);
+                }
+
+                if (parameters.GatewayType != null)
+                {
+                    XElement gatewayTypeElement = new XElement(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
+                    gatewayTypeElement.Value = parameters.GatewayType;
+                    createVirtualNetworkGatewayParametersElement.Add(gatewayTypeElement);
                 }
                 
                 if (parameters.Location != null)
@@ -4896,7 +4896,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
             }
         }
-        
+
         /// <summary>
         /// The Create Virtual network Gateway operation creates a new network
         /// gateway.
@@ -4935,7 +4935,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateVirtualNetworkGatewayAsync", tracingParameters);
             }
-            
+
             cancellationToken.ThrowIfCancellationRequested();
             GatewayOperationResponse response = await client.Gateways.BeginCreatingVirtualNetworkGatewayAsync(networkName, parameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
@@ -4957,12 +4957,12 @@ namespace Microsoft.WindowsAzure.Management.Network
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-            
+
             if (shouldTrace)
             {
                 TracingAdapter.Exit(invocationId, result);
             }
-            
+
             if (result.Status != GatewayOperationStatus.Successful)
             {
                 if (result.Error != null)
@@ -4987,7 +4987,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     throw ex;
                 }
             }
-            
+
             return result;
         }
         
