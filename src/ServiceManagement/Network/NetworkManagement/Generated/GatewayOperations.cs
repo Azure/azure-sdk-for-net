@@ -155,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -336,7 +336,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -487,7 +487,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/gatewayconnections";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -514,7 +514,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -718,7 +718,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -737,14 +737,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                     gatewayNameElement.Value = parameters.GatewayName;
                     createVirtualNetworkGatewayParametersElement.Add(gatewayNameElement);
                 }
-
+                
                 if (parameters.GatewaySKU != null)
                 {
                     XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
                     gatewaySizeElement.Value = parameters.GatewaySKU;
                     createVirtualNetworkGatewayParametersElement.Add(gatewaySizeElement);
                 }
-
+                
                 if (parameters.GatewayType != null)
                 {
                     XElement gatewayTypeElement = new XElement(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
@@ -914,7 +914,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1050,7 +1050,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/connectedentity/";
             url = url + Uri.EscapeDataString(connectedentityId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1077,7 +1077,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1224,7 +1224,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1375,7 +1375,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1540,7 +1540,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1704,7 +1704,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1861,7 +1861,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2047,7 +2047,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2229,7 +2229,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2400,7 +2400,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2572,7 +2572,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2750,7 +2750,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2930,7 +2930,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3116,7 +3116,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3327,7 +3327,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3541,7 +3541,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3727,7 +3727,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3905,7 +3905,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4106,7 +4106,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4293,7 +4293,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/connectedentity/";
             url = url + Uri.EscapeDataString(connectedentityId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4320,7 +4320,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4755,7 +4755,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/localnetworkgateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4782,7 +4782,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4794,7 +4794,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 XElement createLocalNetworkGatewayParametersElement = new XElement(XName.Get("CreateLocalNetworkGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(createLocalNetworkGatewayParametersElement);
-
+                
                 if (parameters.AddressSpace != null)
                 {
                     if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
@@ -4896,7 +4896,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
             }
         }
-
+        
         /// <summary>
         /// The Create Virtual network Gateway operation creates a new network
         /// gateway.
@@ -4935,7 +4935,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateVirtualNetworkGatewayAsync", tracingParameters);
             }
-
+            
             cancellationToken.ThrowIfCancellationRequested();
             GatewayOperationResponse response = await client.Gateways.BeginCreatingVirtualNetworkGatewayAsync(networkName, parameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
@@ -4957,12 +4957,12 @@ namespace Microsoft.WindowsAzure.Management.Network
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-
+            
             if (shouldTrace)
             {
                 TracingAdapter.Exit(invocationId, result);
             }
-
+            
             if (result.Status != GatewayOperationStatus.Successful)
             {
                 if (result.Error != null)
@@ -4987,7 +4987,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     throw ex;
                 }
             }
-
+            
             return result;
         }
         
@@ -5218,7 +5218,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/services/networking/localnetworkgateways/";
             url = url + Uri.EscapeDataString(gatewayId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5245,7 +5245,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5655,7 +5655,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5902,7 +5902,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6041,7 +6041,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6195,7 +6195,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6338,7 +6338,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/connectedentity/";
             url = url + Uri.EscapeDataString(connectedentityId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -6365,7 +6365,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6560,7 +6560,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6750,7 +6750,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6907,7 +6907,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/services/networking/localnetworkgateways/";
             url = url + Uri.EscapeDataString(gatewayId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -6934,7 +6934,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7119,7 +7119,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7315,7 +7315,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7472,7 +7472,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7619,7 +7619,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7881,7 +7881,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8075,7 +8075,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/gatewayconnections";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -8102,7 +8102,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8259,7 +8259,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/localnetworkgateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -8286,7 +8286,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8362,7 +8362,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
                                 addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
                                 XElement addressSpaceSequenceElement = localNetworkGatewaysElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
-
+                                
                                 if (addressSpaceSequenceElement != null)
                                 {
                                     var addressSpaceElementFormat = new XElement(array + "string");
@@ -8461,7 +8461,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8621,7 +8621,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/virtualnetworkgateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -8648,7 +8648,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10273,7 +10273,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10445,7 +10445,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10692,7 +10692,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/services/networking/localnetworkgateways/";
             url = url + Uri.EscapeDataString(gatewayId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01");
+            queryParameters.Add("api-version=2015-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -10719,7 +10719,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10731,7 +10731,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 XElement updateLocalNetworkGatewayParametersElement = new XElement(XName.Get("UpdateLocalNetworkGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(updateLocalNetworkGatewayParametersElement);
-
+                
                 if (parameters.AddressSpace != null)
                 {
                     if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
