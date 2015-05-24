@@ -36,19 +36,10 @@
   
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
-
     This key should never be committed to source control.
-
-  /p:PublishSymbolSourcePackages
-    A true/false value indicating whether to push the symbol + source
-    packages to a symbol server.
-
+    
   /p:NuGetPublishingSource=Uri
     The NuGet Server to push packages to.
-
-  /p:NuGetSymbolPublishingSource=Uri
-    The NuGet Server to push symbol + source packages to.
-
   -->  
   
   <PropertyGroup>

@@ -22,51 +22,41 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// The status of an entity.
     /// </summary>
-    public static partial class PropertyDataType
+    public static partial class EntityStatus
     {
         /// <summary>
-        /// Enum value not specified.
+        /// Resource is being created.
         /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        public const string Creating = "Creating";
         
         /// <summary>
-        /// String type.
+        /// Resource creation succeeded.
         /// </summary>
-        public const string String = "String";
+        public const string Succeeded = "Succeeded";
         
         /// <summary>
-        /// Int type.
+        /// Resource creation failed.
         /// </summary>
-        public const string Int = "Int";
+        public const string Failed = "Failed";
         
         /// <summary>
-        /// Decimal type.
+        /// Resource creation was canceled.
         /// </summary>
-        public const string Decimal = "Decimal";
+        public const string Canceled = "Canceled";
         
         /// <summary>
-        /// Guid type.
+        /// Resource is being deleted.
         /// </summary>
-        public const string Guid = "Guid";
+        public const string Deleting = "Deleting";
         
         /// <summary>
-        /// Boolean type.
+        /// Resource is provisioning the account.
         /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public const string ProvisioningAccount = "ProvisioningAccount";
     }
 }

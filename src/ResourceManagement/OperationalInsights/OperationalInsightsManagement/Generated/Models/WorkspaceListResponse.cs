@@ -20,53 +20,47 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.OperationalInsights.Models;
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// The list workspaces operation response.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class WorkspaceListResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private string _nextLink;
         
         /// <summary>
-        /// String type.
+        /// Optional. Gets or sets the link (url) to the next page of results.
         /// </summary>
-        public const string String = "String";
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
+        private IList<Workspace> _workspaces;
         
         /// <summary>
-        /// Int type.
+        /// Optional. Gets or sets a list of workspace instances.
         /// </summary>
-        public const string Int = "Int";
+        public IList<Workspace> Workspaces
+        {
+            get { return this._workspaces; }
+            set { this._workspaces = value; }
+        }
         
         /// <summary>
-        /// Decimal type.
+        /// Initializes a new instance of the WorkspaceListResponse class.
         /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public WorkspaceListResponse()
+        {
+            this.Workspaces = new LazyList<Workspace>();
+        }
     }
 }

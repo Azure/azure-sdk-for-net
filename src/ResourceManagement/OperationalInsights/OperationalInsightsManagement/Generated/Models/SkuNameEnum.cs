@@ -22,51 +22,26 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// The type of sku.
     /// </summary>
-    public static partial class PropertyDataType
+    public static partial class SkuNameEnum
     {
         /// <summary>
-        /// Enum value not specified.
+        /// Free tier
         /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        public const string Free = "Free";
         
         /// <summary>
-        /// String type.
+        /// Standard tier
         /// </summary>
-        public const string String = "String";
+        public const string Standard = "Standard";
         
         /// <summary>
-        /// Int type.
+        /// Premium tier
         /// </summary>
-        public const string Int = "Int";
-        
-        /// <summary>
-        /// Decimal type.
-        /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public const string Premium = "Premium";
     }
 }

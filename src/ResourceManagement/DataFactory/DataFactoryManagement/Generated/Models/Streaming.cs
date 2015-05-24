@@ -65,6 +65,19 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._commandEnvironment = value; }
         }
         
+        private IDictionary<string, string> _extendedProperties;
+        
+        /// <summary>
+        /// Optional. User specified property bag. There is no restriction on
+        /// the keys or values that can be used. These are passed as Defines
+        /// in the streaming job request
+        /// </summary>
+        public IDictionary<string, string> ExtendedProperties
+        {
+            get { return this._extendedProperties; }
+            set { this._extendedProperties = value; }
+        }
+        
         private string _fileLinkedService;
         
         /// <summary>
@@ -138,6 +151,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             this.Arguments = new LazyList<string>();
             this.CommandEnvironment = new LazyList<string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
             this.FilePaths = new LazyList<string>();
         }
     }
