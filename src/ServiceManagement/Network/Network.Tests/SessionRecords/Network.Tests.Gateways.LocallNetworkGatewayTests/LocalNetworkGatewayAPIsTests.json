@@ -2,7 +2,7 @@
   "Entries": [
     {
       "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTUtMDItMDE=",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "<CreateLocalNetworkGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/16</a:string>\r\n  </AddressSpace>\r\n  <GatewayName>coexistenceLocalnetGateway</GatewayName>\r\n  <IpAddress>204.95.99.237</IpAddress>\r\n</CreateLocalNetworkGatewayParameters>",
       "RequestHeaders": {
@@ -16,10 +16,10 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
         ]
       },
-      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">4e35afec-85fd-4ce0-ab51-c5f25f10a33f</string>",
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">6d90ba5c-27de-4612-ad73-ae654067444b</string>",
       "ResponseHeaders": {
         "Content-Length": [
           "113"
@@ -31,13 +31,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "84cbbe2b60f60063be2e4bd0b6758eda"
+          "7413423bb52c65b7b796294be96ea72f"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 May 2015 07:39:26 GMT"
+          "Sun, 24 May 2015 06:51:52 GMT"
         ],
         "Server": [
           "1.0.6190.5938",
@@ -49,7 +49,7 @@
     },
     {
       "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTUtMDItMDE=",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,10 +57,10 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
         ]
       },
-      "ResponseBody": "<LocalNetworkGateways xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <LocalNetworkGateway>\r\n    <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n      <a:string>200.168.0.0/16</a:string>\r\n    </AddressSpace>\r\n    <GatewayName>coexistenceLocalnetGateway</GatewayName>\r\n    <Id>4e35afec-85fd-4ce0-ab51-c5f25f10a33f</Id>\r\n    <IpAddress>204.95.99.237</IpAddress>\r\n  </LocalNetworkGateway>\r\n</LocalNetworkGateways>",
+      "ResponseBody": "<LocalNetworkGateways xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <LocalNetworkGateway>\r\n    <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n      <a:string>200.168.0.0/16</a:string>\r\n    </AddressSpace>\r\n    <GatewayName>coexistenceLocalnetGateway</GatewayName>\r\n    <Id>6d90ba5c-27de-4612-ad73-ae654067444b</Id>\r\n    <IpAddress>204.95.99.237</IpAddress>\r\n  </LocalNetworkGateway>\r\n</LocalNetworkGateways>",
       "ResponseHeaders": {
         "Content-Length": [
           "456"
@@ -72,13 +72,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "72e8eec3f38e0c769fee7805af68fb2c"
+          "5e8cf6cda47e6f22b0f4c3460385d06f"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 May 2015 07:39:28 GMT"
+          "Sun, 24 May 2015 06:51:52 GMT"
         ],
         "Server": [
           "1.0.6190.5938",
@@ -90,7 +90,7 @@
     },
     {
       "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTUtMDItMDE=",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -98,7 +98,7 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
         ]
       },
       "ResponseBody": "<LocalNetworkGateways xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" />",
@@ -113,13 +113,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4758c854a4fa0bf3a15975ad098f4963"
+          "089e2b258a7b6f2da1306833559bbffc"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 May 2015 07:39:36 GMT"
+          "Sun, 24 May 2015 06:52:01 GMT"
         ],
         "Server": [
           "1.0.6190.5938",
@@ -130,8 +130,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/4e35afec-85fd-4ce0-ab51-c5f25f10a33f?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzRlMzVhZmVjLTg1ZmQtNGNlMC1hYjUxLWM1ZjI1ZjEwYTMzZj9hcGktdmVyc2lvbj0yMDE1LTAyLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/6d90ba5c-27de-4612-ad73-ae654067444b?api-version=2015-04-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzZkOTBiYTVjLTI3ZGUtNDYxMi1hZDczLWFlNjU0MDY3NDQ0Yj9hcGktdmVyc2lvbj0yMDE1LTA0LTAx",
       "RequestMethod": "PATCH",
       "RequestBody": "<UpdateLocalNetworkGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/24</a:string>\r\n  </AddressSpace>\r\n</UpdateLocalNetworkGatewayParameters>",
       "RequestHeaders": {
@@ -145,7 +145,7 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -157,13 +157,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4f1741bf237d0445af81cda851fe79c3"
+          "1873b4bfe5b663c981935931b40f2368"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 May 2015 07:39:33 GMT"
+          "Sun, 24 May 2015 06:51:59 GMT"
         ],
         "Server": [
           "1.0.6190.5938",
@@ -174,8 +174,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/4e35afec-85fd-4ce0-ab51-c5f25f10a33f?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzRlMzVhZmVjLTg1ZmQtNGNlMC1hYjUxLWM1ZjI1ZjEwYTMzZj9hcGktdmVyc2lvbj0yMDE1LTAyLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/6d90ba5c-27de-4612-ad73-ae654067444b?api-version=2015-04-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzZkOTBiYTVjLTI3ZGUtNDYxMi1hZDczLWFlNjU0MDY3NDQ0Yj9hcGktdmVyc2lvbj0yMDE1LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -183,10 +183,10 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
         ]
       },
-      "ResponseBody": "<LocalNetworkGateway xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/24</a:string>\r\n  </AddressSpace>\r\n  <GatewayName>coexistenceLocalnetGateway</GatewayName>\r\n  <Id>4e35afec-85fd-4ce0-ab51-c5f25f10a33f</Id>\r\n  <IpAddress>204.95.99.237</IpAddress>\r\n</LocalNetworkGateway>",
+      "ResponseBody": "<LocalNetworkGateway xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/24</a:string>\r\n  </AddressSpace>\r\n  <GatewayName>coexistenceLocalnetGateway</GatewayName>\r\n  <Id>6d90ba5c-27de-4612-ad73-ae654067444b</Id>\r\n  <IpAddress>204.95.99.237</IpAddress>\r\n</LocalNetworkGateway>",
       "ResponseHeaders": {
         "Content-Length": [
           "411"
@@ -198,13 +198,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1d4c6e17c0fd0ea9b7221db00da07d7b"
+          "9b67f2f2f87e688a8ca8645322e99d41"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 May 2015 07:39:35 GMT"
+          "Sun, 24 May 2015 06:51:59 GMT"
         ],
         "Server": [
           "1.0.6190.5938",
@@ -215,8 +215,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/4e35afec-85fd-4ce0-ab51-c5f25f10a33f?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzRlMzVhZmVjLTg1ZmQtNGNlMC1hYjUxLWM1ZjI1ZjEwYTMzZj9hcGktdmVyc2lvbj0yMDE1LTAyLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/6d90ba5c-27de-4612-ad73-ae654067444b?api-version=2015-04-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzZkOTBiYTVjLTI3ZGUtNDYxMi1hZDczLWFlNjU0MDY3NDQ0Yj9hcGktdmVyc2lvbj0yMDE1LTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -224,7 +224,7 @@
           "2015-04-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -236,13 +236,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9c3cb1833bc5003384112c5283a3cbd9"
+          "ec1e9ed8579a6341be007863430462ae"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 May 2015 07:39:36 GMT"
+          "Sun, 24 May 2015 06:52:01 GMT"
         ],
         "Server": [
           "1.0.6190.5938",

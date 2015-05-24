@@ -3745,7 +3745,7 @@
     },
     {
       "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/virtualnetworkgateways?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrZ2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNS0wMi0wMQ==",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrZ2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3786,7 +3786,7 @@
     },
     {
       "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/virtualnetworkgateways?api-version=2015-04-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrZ2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNS0wMi0wMQ==",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrZ2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

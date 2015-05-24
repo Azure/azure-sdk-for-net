@@ -98,8 +98,12 @@
     <None Include="SessionRecords\Network.Tests.ApplicationGateways.SetupApplicationGatewayTests\CreateApplicationGateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnNICSucceeds.json" />
-    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnRoleSucceeds.json" />
+    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnNICSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnRoleSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Network.Tests.VipMobilityTests\TestAssociateReserveIP.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -120,6 +124,9 @@
     </None>
     <None Include="TestData\CoexistenceFeatureNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\VnetOneWebOneWorker.cscfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +388,7 @@
     <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\TestSetAndDeleteNetworkSecurityRule.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
     <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToNIC.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -568,6 +576,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	<None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayStandardSkuValidationTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayConnectionTests\VirtualNetworkGatewayConnectionAPIsTests.json">
