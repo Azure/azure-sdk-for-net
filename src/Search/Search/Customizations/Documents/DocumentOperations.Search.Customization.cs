@@ -78,10 +78,7 @@ namespace Microsoft.Azure.Search
             where TDoc : class
         {
             // Validate
-            if (searchText == null)
-            {
-                throw new ArgumentNullException("searchText");
-            }
+            searchText = searchText ?? "*";
 
             if (searchParameters == null)
             {
