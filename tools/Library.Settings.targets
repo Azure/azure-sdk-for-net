@@ -131,6 +131,6 @@
     </PropertyGroup>
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(LibrarySourceFolder)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
   </Target>
 </Project>

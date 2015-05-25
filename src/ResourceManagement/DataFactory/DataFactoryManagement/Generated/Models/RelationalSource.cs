@@ -21,52 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// A copy activity source for various relational databases.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class RelationalSource : CopySource
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private string _query;
         
         /// <summary>
-        /// String type.
+        /// Optional. Database query.
         /// </summary>
-        public const string String = "String";
+        public string Query
+        {
+            get { return this._query; }
+            set { this._query = value; }
+        }
         
         /// <summary>
-        /// Int type.
+        /// Initializes a new instance of the RelationalSource class.
         /// </summary>
-        public const string Int = "Int";
-        
-        /// <summary>
-        /// Decimal type.
-        /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public RelationalSource()
+        {
+        }
     }
 }

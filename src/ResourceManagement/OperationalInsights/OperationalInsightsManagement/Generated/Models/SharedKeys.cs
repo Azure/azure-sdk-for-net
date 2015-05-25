@@ -22,51 +22,40 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The enum for all the allowed types of a data element.
+    /// The shared keys for a workspace.
     /// </summary>
-    public static partial class PropertyDataType
+    public partial class SharedKeys
     {
-        /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private string _primarySharedKey;
         
         /// <summary>
-        /// String type.
+        /// Optional. Gets or sets the primary shared key of a workspace.
         /// </summary>
-        public const string String = "String";
+        public string PrimarySharedKey
+        {
+            get { return this._primarySharedKey; }
+            set { this._primarySharedKey = value; }
+        }
+        
+        private string _secondarySharedKey;
         
         /// <summary>
-        /// Int type.
+        /// Optional. Gets or sets the secondary shared key of a workspace.
         /// </summary>
-        public const string Int = "Int";
+        public string SecondarySharedKey
+        {
+            get { return this._secondarySharedKey; }
+            set { this._secondarySharedKey = value; }
+        }
         
         /// <summary>
-        /// Decimal type.
+        /// Initializes a new instance of the SharedKeys class.
         /// </summary>
-        public const string Decimal = "Decimal";
-        
-        /// <summary>
-        /// Guid type.
-        /// </summary>
-        public const string Guid = "Guid";
-        
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        public const string Boolean = "Boolean";
-        
-        /// <summary>
-        /// Enum type.
-        /// </summary>
-        public const string Enum = "Enum";
-        
-        /// <summary>
-        /// Date type.
-        /// </summary>
-        public const string Date = "Date";
+        public SharedKeys()
+        {
+        }
     }
 }
