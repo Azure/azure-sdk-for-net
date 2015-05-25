@@ -79,6 +79,11 @@ namespace Microsoft.Azure.Search.Models
                 yield return new QueryOption("$orderby", OrderBy);
             }
 
+            if (PercentagePartitionsRequired != null)
+            {
+                yield return new QueryOption("percentagePartitionsRequired", PercentagePartitionsRequired.ToString());
+            }
+
             foreach (string scoringParameterExpr in ScoringParameters)
             {
                 yield return new QueryOption("scoringParameter", scoringParameterExpr);

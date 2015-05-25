@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Search.Tests
                     HighlightPreTag = "<b>",
                     HighlightPostTag = "</b>",
                     OrderBy = new[] { "field1 asc", "field2 desc" },
+                    PercentagePartitionsRequired = 33.33,
                     SearchFields = new[] { "field1", "field2" },
                     Select = new[] { "field1", "field2" },
                     Top = 5,
@@ -45,8 +46,8 @@ namespace Microsoft.Azure.Search.Tests
 
             const string ExpectedQueryString =
                 "$filter=field%20eq%20value&highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&" +
-                "$orderby=field1 asc,field2 desc&searchFields=field1,field2&$select=field1,field2&" +
-                "$top=5&fuzzy=true";
+                "$orderby=field1 asc,field2 desc&percentagePartitionsRequired=33.33&searchFields=field1,field2&" +
+                "$select=field1,field2&$top=5&fuzzy=true";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
         }
