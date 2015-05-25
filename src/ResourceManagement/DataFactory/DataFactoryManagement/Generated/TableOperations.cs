@@ -582,6 +582,18 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         locationValue["linkedServiceName"] = derived13.LinkedServiceName;
                     }
+                    if (parameters.Table.Properties.Location is RelationalTableLocation)
+                    {
+                        locationValue["type"] = "RelationalTableLocation";
+                        RelationalTableLocation derived14 = ((RelationalTableLocation)parameters.Table.Properties.Location);
+                        
+                        if (derived14.TableName != null)
+                        {
+                            locationValue["tableName"] = derived14.TableName;
+                        }
+                        
+                        locationValue["linkedServiceName"] = derived14.LinkedServiceName;
+                    }
                     
                     JObject availabilityValue = new JObject();
                     propertiesValue["availability"] = availabilityValue;
@@ -1207,6 +1219,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                             customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
+                                    }
+                                    if (typeName == "RelationalTableLocation")
+                                    {
+                                        RelationalTableLocation relationalTableLocationInstance = new RelationalTableLocation();
+                                        
+                                        JToken tableNameValue5 = locationValue2["tableName"];
+                                        if (tableNameValue5 != null && tableNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance5 = ((string)tableNameValue5);
+                                            relationalTableLocationInstance.TableName = tableNameInstance5;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue8 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue8 != null && linkedServiceNameValue8.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance8 = ((string)linkedServiceNameValue8);
+                                            relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance8;
+                                        }
+                                        propertiesInstance.Location = relationalTableLocationInstance;
                                     }
                                 }
                                 
@@ -2046,6 +2077,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                             customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
+                                    }
+                                    if (typeName == "RelationalTableLocation")
+                                    {
+                                        RelationalTableLocation relationalTableLocationInstance = new RelationalTableLocation();
+                                        
+                                        JToken tableNameValue5 = locationValue["tableName"];
+                                        if (tableNameValue5 != null && tableNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance5 = ((string)tableNameValue5);
+                                            relationalTableLocationInstance.TableName = tableNameInstance5;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue8 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue8 != null && linkedServiceNameValue8.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance8 = ((string)linkedServiceNameValue8);
+                                            relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance8;
+                                        }
+                                        propertiesInstance.Location = relationalTableLocationInstance;
                                     }
                                 }
                                 
@@ -3279,6 +3329,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
+                                    if (typeName == "RelationalTableLocation")
+                                    {
+                                        RelationalTableLocation relationalTableLocationInstance = new RelationalTableLocation();
+                                        
+                                        JToken tableNameValue5 = locationValue["tableName"];
+                                        if (tableNameValue5 != null && tableNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance5 = ((string)tableNameValue5);
+                                            relationalTableLocationInstance.TableName = tableNameInstance5;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue8 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue8 != null && linkedServiceNameValue8.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance8 = ((string)linkedServiceNameValue8);
+                                            relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance8;
+                                        }
+                                        propertiesInstance.Location = relationalTableLocationInstance;
+                                    }
                                 }
                                 
                                 JToken availabilityValue = propertiesValue["availability"];
@@ -4029,6 +4098,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                             customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
+                                    }
+                                    if (typeName == "RelationalTableLocation")
+                                    {
+                                        RelationalTableLocation relationalTableLocationInstance = new RelationalTableLocation();
+                                        
+                                        JToken tableNameValue5 = locationValue["tableName"];
+                                        if (tableNameValue5 != null && tableNameValue5.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance5 = ((string)tableNameValue5);
+                                            relationalTableLocationInstance.TableName = tableNameInstance5;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue8 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue8 != null && linkedServiceNameValue8.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance8 = ((string)linkedServiceNameValue8);
+                                            relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance8;
+                                        }
+                                        propertiesInstance.Location = relationalTableLocationInstance;
                                     }
                                 }
                                 
@@ -4848,6 +4936,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 propertiesInstance.Location = customLocationInstance;
                                             }
+                                            if (typeName == "RelationalTableLocation")
+                                            {
+                                                RelationalTableLocation relationalTableLocationInstance = new RelationalTableLocation();
+                                                
+                                                JToken tableNameValue5 = locationValue["tableName"];
+                                                if (tableNameValue5 != null && tableNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string tableNameInstance5 = ((string)tableNameValue5);
+                                                    relationalTableLocationInstance.TableName = tableNameInstance5;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue8 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue8 != null && linkedServiceNameValue8.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance8 = ((string)linkedServiceNameValue8);
+                                                    relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance8;
+                                                }
+                                                propertiesInstance.Location = relationalTableLocationInstance;
+                                            }
                                         }
                                         
                                         JToken availabilityValue = propertiesValue["availability"];
@@ -5615,6 +5722,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                                 }
                                                 propertiesInstance.Location = customLocationInstance;
+                                            }
+                                            if (typeName == "RelationalTableLocation")
+                                            {
+                                                RelationalTableLocation relationalTableLocationInstance = new RelationalTableLocation();
+                                                
+                                                JToken tableNameValue5 = locationValue["tableName"];
+                                                if (tableNameValue5 != null && tableNameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string tableNameInstance5 = ((string)tableNameValue5);
+                                                    relationalTableLocationInstance.TableName = tableNameInstance5;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue8 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue8 != null && linkedServiceNameValue8.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance8 = ((string)linkedServiceNameValue8);
+                                                    relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance8;
+                                                }
+                                                propertiesInstance.Location = relationalTableLocationInstance;
                                             }
                                         }
                                         
