@@ -1,0 +1,7 @@
+﻿{
+  "name": "transformationtest",
+  "properties": {
+    "streamingUnits": 1,
+    "query": "Select Id, Name from inputtest"
+  }
+}

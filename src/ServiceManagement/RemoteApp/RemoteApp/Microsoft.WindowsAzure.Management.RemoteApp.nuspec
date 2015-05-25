@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Microsoft.WindowsAzure.Management.RemoteApp</id>
+    <version>$version$</version>
+    <title>Microsoft WindowsAzure RemoteApp Management Library</title>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Spec DLL for Microsoft Azure RemoteApp Management</description>
+    <releaseNotes>Changed the Collection Set API to take a new type CollectionUpdateDetails type</releaseNotes>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial azureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.WindowsAzure.Management.RemoteApp.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.RemoteApp.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.0.4,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ServiceManagement\RemoteApp\RemoteApp\Generated\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.RemoteApp.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.RemoteApp.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.RemoteApp.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.RemoteApp.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.RemoteApp.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.RemoteApp.xml" target="lib\net40" />
+  </files>
+</package>

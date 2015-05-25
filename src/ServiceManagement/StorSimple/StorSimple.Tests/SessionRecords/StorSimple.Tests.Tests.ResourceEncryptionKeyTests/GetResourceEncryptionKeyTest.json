@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/4576bc2e-58ca-4d0f-ab76-6f9b32d45c86/cloudservices/CisService-JYXO6H4ZMZRAOY6NAK7XQATEYETPTET2SM7BM4GTR6A7OUA65GTA-west-us/resources/CISBVT2/~/CisVault/onesdk-avirupch/api/secretmanagement/publickey?api-version=2014-01-01.1.0",
+      "EncodedRequestUri": "LzQ1NzZiYzJlLTU4Y2EtNGQwZi1hYjc2LTZmOWIzMmQ0NWM4Ni9jbG91ZHNlcnZpY2VzL0Npc1NlcnZpY2UtSllYTzZINFpNWlJBT1k2TkFLN1hRQVRFWUVUUFRFVDJTTTdCTTRHVFI2QTdPVUE2NUdUQS13ZXN0LXVzL3Jlc291cmNlcy9DSVNCVlQyL34vQ2lzVmF1bHQvb25lc2RrLWF2aXJ1cGNoL2FwaS9zZWNyZXRtYW5hZ2VtZW50L3B1YmxpY2tleT9hcGktdmVyc2lvbj0yMDE0LTAxLTAxLjEuMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "x-ms-client-request-id": [
+          "f2ad0aac-799f-4ed8-8739-68bf207cd5aa"
+        ],
+        "x-ms-version": [
+          "2014-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ResourceEncryptionKeysEncrypted xmlns=\"http://windowscloudbackup.com/CiS/V2013_03\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <EncodedEncryptedPublicKey>EAAAAP5INCx0jyINO83V9wxsVtlDWgje8BFqSwGPUO2qMFztO6FyCQMt0QbL5u+9JN/ZB3M1hUdZ2Gq9gB9i8Y+Oxi50+oTdOPKaK2B4LZEaqvjWwOUyUdh0mbLyRMKJInSvgrpj+LbXukIvMlDmjn7zL5lUdS6IbrEteYHP12bI2E9VRGV/bEXToFN11nmzH25CDkdJiMaN48JUyef9cCUbzM2TD3ZYwUnmzJLaUzn6jRnWZSuX+JSovJKyxWRl6/sipBsz7QHlJJ8jM/POd8a9Hw9ZS36zWO78fLt4lbaXP5GHIkoUhQqOfgCIp8eF1hlVhW/tm6odbPNq2K840Cbk6wQfQ2xuSO9aSF7hlmAqLTNcYgmk7EBNQukKOceXgbuSy5ehG05xcV8cL4J2BBk8ngkX9yYRF1S4RGfS0ni6gBEj8dlOWXb5socyzvkxlpbLyJZflfdgE8ONFTiueePc4MeaPHkR68PSBdA5sR2XJusCoODk39qkkqMzkDX8rGHXLs3MwAHbhkWn/L9lEM2lh9af5zPqvaib9GawG2cbdI1Nbhpc65QUq7LTAmAUrjVIbMh/HQrq5Oo0Ae6swEnj/l6aNsKNbWK/ISdZE4r6Wddhcrb4C2pRvOKEs/NgV8pU6dByiCfOuRvnXKPxuZsMBelpcS3JKDy6hmS8o+jqCG9ueYUedNz9NpNphL33ajwhZE6KGkhNcNGDX4ToNI8W8GPNMQaN3RW92W8iSABJCKgMLAJG3MwZR6OPxZoNhWwI80CmSe6lpnE/QOaiP89ak8FC7r1vbB+4SIwDIXgF60LFH5n16J7sAqdkhF3WtrycQ43uKnMl1fQPCe/lEA6oenXeuK4I/SvjwU3Yu8zj+xfF8zOsnhC8E9EkB1ipiRB47IZ1rY0x9MYXOykz+/da9EWAMVQrL11DdDVOKOBNqJNsbWrXUx4yDtlI28nyEvsAhwbmj2u+1Sn+ILaY2tsvV5nn2gxG5pQxbHC7N9fnuNFmjjFDloaadfCUsfBJQpZR6hIQiXBxHU/E3xEwNrDWkL5A/Vwen+1cp4bUVGZfGzLPBuFCHGHzfDF6MpckVR+RNdsYHQWeb0FJszYm9qlv5evJSPX8In/ju9CB9J32DUwQqOhfNuGIYnVn5M4CHiJ7FRTVoOch6VuQGxxIAbes+F+ERbxw7a+7EThRoCocrV3jKtlNNMxzBqfmT8q1DD2wb845gdgzdsEDXPbquAcBvFbez5lT0Px/GnW/oh6oZTq5uUHTzdWXbd+Dcf/VJMhniqGvycyRasvyRhOaSzhcgbNKhHTE3yu3pFoyHFLyBjAy/G5YohlcpLUbS6OFTwgufQzYMO+/ZlQIrlZrGhuH8VNOudqlW4GCIjqKbvUiOqyG/0LUDykRWoKEbZqeZF1lSiiOxKRo1p00a/htpaej8A4sqpX6F/qT0XlFye/UHJeRTvpyYbfmiBNmUmLwloHdcc8/EV0nqo7paeEIBvzYbsA0KkOj0/0iTNcByt2Y8zqjVSAin4k/aY30MJaJhUQpjw==</EncodedEncryptedPublicKey>\r\n  <ResourceName i:nil=\"true\" />\r\n  <Thumbprint>AD977E631F28698120D7819F841EDA69386D4367</Thumbprint>\r\n</ResourceEncryptionKeysEncrypted>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1862"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "f2ad0aac-799f-4ed8-8739-68bf207cd5aa,f2ad0aac-799f-4ed8-8739-68bf207cd5aa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "522ddea93a59c8f1b83e5c9477614a5e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2015 09:17:53 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4576bc2e-58ca-4d0f-ab76-6f9b32d45c86"
+  }
+}

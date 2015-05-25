@@ -1,0 +1,158 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers?api-version=2014-10-27",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "0bc43f97-06c4-450d-9c77-84b0bf5546a9"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceResource>\r\n    <ID>051585c5-24ac-4d99-9e9e-6257df891628_0a480597-f375-43cd-b02f-7f601db0a5ca</ID>\r\n    <Name>PriCloud</Name>\r\n    <ConfigurationStatus>Paired</ConfigurationStatus>\r\n    <ReplicationProviderSettings>&lt;ArrayOfKeyValueOfstringstring xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplica&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplicaAzure&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n&lt;/ArrayOfKeyValueOfstringstring&gt;</ReplicationProviderSettings>\r\n    <ServerId>051585c5-24ac-4d99-9e9e-6257df891628</ServerId>\r\n  </ServiceResource>\r\n  <ServiceResource>\r\n    <ID>c248aa72-5257-4e1b-8550-884368a9b381_b0dc0458-ebd9-4b11-8d46-dd930cbfa1c0</ID>\r\n    <Name>SecCloud</Name>\r\n    <ConfigurationStatus>Paired</ConfigurationStatus>\r\n    <ReplicationProviderSettings>&lt;ArrayOfKeyValueOfstringstring xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplica&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplicaAzure&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n&lt;/ArrayOfKeyValueOfstringstring&gt;</ReplicationProviderSettings>\r\n    <ServerId>c248aa72-5257-4e1b-8550-884368a9b381</ServerId>\r\n  </ServiceResource>\r\n</ArrayOfServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0bc43f97-06c4-450d-9c77-84b0bf5546a9 7:57 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 21 Aug 2014 07:57:22 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers/051585c5-24ac-4d99-9e9e-6257df891628_0a480597-f375-43cd-b02f-7f601db0a5ca/ProtectionEntities?api-version=2014-10-27",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "0bc43f97-06c4-450d-9c77-84b0bf5546a9"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceResource>\r\n    <ID>f112fec3-4a88-4bee-89f1-203888fc2c9c</ID>\r\n    <Name>VM1</Name>\r\n    <CanCommit>false</CanCommit>\r\n    <CanFailover>true</CanFailover>\r\n    <CanReverseReplicate>false</CanReverseReplicate>\r\n    <FabricObjectId>8be466d1-a1ce-4891-a7f6-9f2afeae633f</FabricObjectId>\r\n    <IsRelationshipReversed>false</IsRelationshipReversed>\r\n    <Protected>true</Protected>\r\n    <ProtectionContainerId>051585c5-24ac-4d99-9e9e-6257df891628_0a480597-f375-43cd-b02f-7f601db0a5ca</ProtectionContainerId>\r\n    <ProtectionState>Protected</ProtectionState>\r\n    <ReplicationHealth i:nil=\"true\" />\r\n    <ReplicationProvider>HyperVReplica</ReplicationProvider>\r\n    <ServerId>051585c5-24ac-4d99-9e9e-6257df891628</ServerId>\r\n    <TestFailoverState>None</TestFailoverState>\r\n    <Type>ProtectionEntity</Type>\r\n    <ReplicationProviderSettings i:nil=\"true\" />\r\n  </ServiceResource>\r\n</ArrayOfServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0bc43f97-06c4-450d-9c77-84b0bf5546a9 7:57 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 21 Aug 2014 07:57:23 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers/051585c5-24ac-4d99-9e9e-6257df891628_0a480597-f375-43cd-b02f-7f601db0a5ca/ProtectionEntities/f112fec3-4a88-4bee-89f1-203888fc2c9c/DisableProtection?api-version=2014-10-27",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Agent-Authentication": [
+          "{\"NotBeforeTimestamp\":\"\\/Date(1408604243084)\\/\",\"NotAfterTimestamp\":\"\\/Date(1408625843084)\\/\",\"ClientRequestId\":\"0bc43f97-06c4-450d-9c77-84b0bf5546a9\",\"HashFunction\":\"HMACSHA256\",\"Hmac\":\"IKlEUvm24OdDsT4KSicuSafBeZ3Kh6XTcTVThly8DDg=\",\"Version\":{\"Major\":1,\"Minor\":2,\"Build\":-1,\"Revision\":-1,\"MajorRevision\":-1,\"MinorRevision\":-1},\"PropertyBag\":{}}"
+        ],
+        "x-ms-client-request-id": [
+          "0bc43f97-06c4-450d-9c77-84b0bf5546a9"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ID>cd63133f-050b-4580-aca7-e309a548fe3b</ID>\r\n  <ActivityId>0bc43f97-06c4-450d-9c77-84b0bf5546a9</ActivityId>\r\n  <AllowedActions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n  <Completed>false</Completed>\r\n  <EndTimestamp>0001-01-01T00:00:00</EndTimestamp>\r\n  <Errors />\r\n  <JobDisplayName i:nil=\"true\" />\r\n  <Jobs xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" />\r\n  <StartTimestamp>1601-01-01T00:00:00Z</StartTimestamp>\r\n  <State>NotStarted</State>\r\n  <Tasks />\r\n</ServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0bc43f97-06c4-450d-9c77-84b0bf5546a9 7:57 AM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 21 Aug 2014 07:57:28 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "947a55d7-75e9-4a36-b156-305c6270f018"
+  }
+}

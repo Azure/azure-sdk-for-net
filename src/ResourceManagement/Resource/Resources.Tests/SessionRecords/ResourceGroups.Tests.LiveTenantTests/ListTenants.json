@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/tenants?api-version=2014-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Subscriptions.SubscriptionClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/27becc5d-8661-4961-889c-af932da262a0\",\r\n      \"tenantId\": \"27becc5d-8661-4961-889c-af932da262a0\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "de89a66b-5170-494b-912d-d94c1b089efc"
+        ],
+        "x-ms-correlation-request-id": [
+          "de89a66b-5170-494b-912d-d94c1b089efc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140624T220519Z:de89a66b-5170-494b-912d-d94c1b089efc"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 24 Jun 2014 22:05:19 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+  }
+}

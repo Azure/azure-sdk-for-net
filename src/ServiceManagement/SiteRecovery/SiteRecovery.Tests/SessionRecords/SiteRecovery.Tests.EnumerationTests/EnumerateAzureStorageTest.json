@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/services/storageservices",
+      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9zZXJ2aWNlcy9zdG9yYWdlc2VydmljZXM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<StorageServices xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <StorageService>\r\n    <Url>https://management.rdfetest.dnsdemo4.com/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/services/storageservices/hostersfcbvtstorage</Url>\r\n    <ServiceName>hostersfcbvtstorage</ServiceName>\r\n    <StorageServiceProperties>\r\n      <Description i:nil=\"true\" />\r\n      <Location>West US</Location>\r\n      <Label>aG9zdGVyc2ZjYnZ0c3RvcmFnZQ==</Label>\r\n      <Status>Created</Status>\r\n      <Endpoints>\r\n        <Endpoint>http://hostersfcbvtstorage.blob.core.test-cint.azure-test.net/</Endpoint>\r\n        <Endpoint>http://hostersfcbvtstorage.queue.core.test-cint.azure-test.net/</Endpoint>\r\n        <Endpoint>http://hostersfcbvtstorage.table.core.test-cint.azure-test.net/</Endpoint>\r\n      </Endpoints>\r\n      <GeoReplicationEnabled>true</GeoReplicationEnabled>\r\n      <GeoPrimaryRegion>West US</GeoPrimaryRegion>\r\n      <GeoSecondaryRegion />\r\n      <CreationTime>2015-01-21T11:53:02Z</CreationTime>\r\n    </StorageServiceProperties>\r\n    <ExtendedProperties>\r\n      <ExtendedProperty>\r\n        <Name>ResourceGroup</Name>\r\n        <Value>Default-Storage-WestUS</Value>\r\n      </ExtendedProperty>\r\n      <ExtendedProperty>\r\n        <Name>ResourceLocation</Name>\r\n        <Value>West US</Value>\r\n      </ExtendedProperty>\r\n    </ExtendedProperties>\r\n  </StorageService>\r\n</StorageServices>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1192"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "5cd7a36076a0a77fbabebeb7f4173fd9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Apr 2015 05:06:36 GMT"
+        ],
+        "Server": [
+          "1.0.6198.202",
+          "(rd_rdfe_stable.150307-1902)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba"
+  }
+}

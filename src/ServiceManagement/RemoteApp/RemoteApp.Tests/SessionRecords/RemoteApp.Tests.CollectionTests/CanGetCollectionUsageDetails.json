@@ -1,0 +1,492 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/simple/billingusagealldetails/2015/2?locale=en-us&api-version=2014-09-01",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"ExtraData\": \"https://cdvtest15rdcx.blob.core.windows.net/f0265076f31041b4a9adf38b5123747e/billingdetailscsv/Report2015-2_simple.csv?sv=2012-02-12&se=2015-02-03T00%3A23%3A19Z&sr=b&sp=r&sig=MHhGNFRYfjgbIehGLf8NdsSxXZbRfK7MBXEVnl5j5Ak%3D\",\r\n  \"ResultId\": \"2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "292"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "d70410c884496850ad886edeecac13a6"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:20 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "8580d7c663636cc69b7b9a6581370fb7"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:21 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "51b32416a54a6c2ea6bd8aae2a3b3110"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:25 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "c04c9c1c5c616fd5a6992b0fd16aab5d"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:27 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "8609ae772560615da20182bd95bae539"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:29 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "31eab17037e86185959ceab78bdf9843"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:33 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "b5012145093f68b59dbb516466ae32a6"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:35 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "f051e270a1fc61abbab1398335f2aa74"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:38 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "efbc2e4b7df66cdea1d0580a328181b8"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:41 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"InProgress\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "78"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "496965cf598b6634a79d0818199a3e40"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:44 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/operationResults/2130eaa7-197a-4b6d-bbcb-5ff0b7eea9ab?api-version=2014-09-01",
+            "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvb3BlcmF0aW9uUmVzdWx0cy8yMTMwZWFhNy0xOTdhLTRiNmQtYmJjYi01ZmYwYjdlZWE5YWI/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+            "RequestMethod": "GET",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "Accept": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-version": [
+                    "2014-08-01"
+                ],
+                "User-Agent": [
+                    "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"Description\": \"BillingGenerateCSV\",\r\n  \"ErrorDetails\": null,\r\n  \"Status\": \"Success\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "75"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "x-ms-servedbyregion": [
+                    "uswest"
+                ],
+                "x-ms-request-id": [
+                    "b0f330f6eec06371af15cb69fb840b90"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Mon, 02 Feb 2015 23:23:47 GMT"
+                ],
+                "Server": [
+                    "1.0.6190.5218",
+                    "(rd_rdfe_n.150128-1022)",
+                    "Microsoft-HTTPAPI/2.0"
+                ]
+            },
+            "StatusCode": 200
+        }
+    ],
+    "Names": { },
+    "Variables": {
+        "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+    }
+}
+

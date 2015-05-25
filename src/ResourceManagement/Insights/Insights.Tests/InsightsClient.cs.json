@@ -1,0 +1,15 @@
+[
+    {
+        "Path": ["namespace Microsoft.Azure.Insights",
+                 "internal partial class MetricDefinitionOperations : IServiceOperations<InsightsClient>, IMetricDefinitionOperations",
+                 "public async Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)"],
+        "Replace": "public async Task<MetricDefinitionListResponse> GetMetricDefinitionsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)"
+    },
+
+    {
+        "Path": ["namespace Microsoft.Azure.Insights",
+                 "internal partial class MetricOperations : IServiceOperations<InsightsClient>, IMetricOperations",
+                 "public async Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)"],
+        "Replace": "public async Task<MetricListResponse> GetMetricsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)"
+    },
+]

@@ -1,0 +1,158 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers?api-version=2014-10-27",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "34ad08b0-7560-4db8-9780-21bc37f027a7"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceResource>\r\n    <ID>3bbef103-5cb8-4a0a-b03f-baac03ff02b6_28e0daf0-9860-4515-9205-159e905fb0b2</ID>\r\n    <Name>SimulatorCloud__0_83391e0c_92392OE52316</Name>\r\n    <ConfigurationStatus>Paired</ConfigurationStatus>\r\n    <ReplicationProviderSettings>&lt;ArrayOfKeyValueOfstringstring xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplica&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplicaAzure&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n&lt;/ArrayOfKeyValueOfstringstring&gt;</ReplicationProviderSettings>\r\n    <ServerId>3bbef103-5cb8-4a0a-b03f-baac03ff02b6</ServerId>\r\n  </ServiceResource>\r\n  <ServiceResource>\r\n    <ID>7fe82285-8bb8-44e2-98ad-7f8f7228f84d_02c055d5-5314-4f3d-a1b8-df37cb0d7c25</ID>\r\n    <Name>SimulatorCloud__0_7984d6ce_13874OE83565</Name>\r\n    <ConfigurationStatus>Paired</ConfigurationStatus>\r\n    <ReplicationProviderSettings>&lt;ArrayOfKeyValueOfstringstring xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplica&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n  &lt;KeyValueOfstringstring&gt;\r\n    &lt;Key&gt;HyperVReplicaAzure&lt;/Key&gt;\r\n    &lt;Value i:nil=\"true\" /&gt;\r\n  &lt;/KeyValueOfstringstring&gt;\r\n&lt;/ArrayOfKeyValueOfstringstring&gt;</ReplicationProviderSettings>\r\n    <ServerId>7fe82285-8bb8-44e2-98ad-7f8f7228f84d</ServerId>\r\n  </ServiceResource>\r\n</ArrayOfServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "34ad08b0-7560-4db8-9780-21bc37f027a7 1:54 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Tue, 02 Sep 2014 13:54:54 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers/3bbef103-5cb8-4a0a-b03f-baac03ff02b6_28e0daf0-9860-4515-9205-159e905fb0b2/ProtectionEntities?api-version=2014-10-27",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "x-ms-client-request-id": [
+          "34ad08b0-7560-4db8-9780-21bc37f027a7"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ArrayOfServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceResource>\r\n    <ID>bfcdea24-b7c7-4129-82ac-cdd57ad6d00c</ID>\r\n    <Name>SimVM-7fe82285-8bb8-44e2-98ad-7f8f7228f84d-OE9721-Simulat</Name>\r\n    <CanCommit>false</CanCommit>\r\n    <CanFailover>true</CanFailover>\r\n    <CanReverseReplicate>false</CanReverseReplicate>\r\n    <FabricObjectId>541ad56a-15be-4505-a2ff-d511fac556bd</FabricObjectId>\r\n    <IsRelationshipReversed>false</IsRelationshipReversed>\r\n    <Protected>true</Protected>\r\n    <ProtectionContainerId>7fe82285-8bb8-44e2-98ad-7f8f7228f84d_02c055d5-5314-4f3d-a1b8-df37cb0d7c25</ProtectionContainerId>\r\n    <ProtectionStateDescription>Protected</ProtectionStateDescription>\r\n    <ReplicationHealth>Normal</ReplicationHealth>\r\n    <ReplicationProvider>HyperVReplica</ReplicationProvider>\r\n    <ServerId>7fe82285-8bb8-44e2-98ad-7f8f7228f84d</ServerId>\r\n    <TestFailoverStateDescription>None</TestFailoverStateDescription>\r\n    <Type>VirtualMachine</Type>\r\n    <ReplicationProviderSettings i:nil=\"true\" />\r\n  </ServiceResource>\r\n</ArrayOfServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "34ad08b0-7560-4db8-9780-21bc37f027a7 1:54 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Tue, 02 Sep 2014 13:54:54 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/947a55d7-75e9-4a36-b156-305c6270f018/cloudservices/RecoveryServices-BKSIPEKSKUOD6BRA3PZOPIOUSEB6PBLUPHIK7Z3U7OVNBDOA257Q-west-us/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/rijethma-vault/ProtectionContainers/7fe82285-8bb8-44e2-98ad-7f8f7228f84d_02c055d5-5314-4f3d-a1b8-df37cb0d7c25/ProtectionEntities/bfcdea24-b7c7-4129-82ac-cdd57ad6d00c/TestFailover?api-version=2014-10-27",
+      "RequestMethod": "POST",
+      "RequestBody": "<TestFailoverRequest xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ReplicationProvider>HyperVReplica</ReplicationProvider>\r\n  <ReplicationProviderSettings>RPS</ReplicationProviderSettings>\r\n  <NetworkType>Type</NetworkType>\r\n  <NetworkID>ID</NetworkID>\r\n</TestFailoverRequest>",
+      "RequestHeaders": {
+        "Accept": [
+          "application/xml"
+        ],
+        "Agent-Authentication": [
+          "{\"NotBeforeTimestamp\":\"\\/Date(1409662494124)\\/\",\"NotAfterTimestamp\":\"\\/Date(1409684094124)\\/\",\"ClientRequestId\":\"34ad08b0-7560-4db8-9780-21bc37f027a7\",\"HashFunction\":\"HMACSHA256\",\"Hmac\":\"qU3MnarzbF9V03zzYG/2RHzttx/GQb8qO2v0vdgHqR0=\",\"Version\":{\"Major\":1,\"Minor\":2,\"Build\":-1,\"Revision\":-1,\"MajorRevision\":-1,\"MinorRevision\":-1},\"PropertyBag\":{}}"
+        ],
+        "x-ms-client-request-id": [
+          "34ad08b0-7560-4db8-9780-21bc37f027a7"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServiceResource xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ID>974c57c1-4b8d-41ac-8649-ba08381a1a25</ID>\r\n  <ActivityId>34ad08b0-7560-4db8-9780-21bc37f027a7</ActivityId>\r\n  <AllowedActions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <d2p1:string>Cancel</d2p1:string>\r\n    <d2p1:string>RestartTestFailoverCleanup</d2p1:string>\r\n  </AllowedActions>\r\n  <Completed>false</Completed>\r\n  <EndTimestamp>2014-09-02T13:55:11Z</EndTimestamp>\r\n  <Errors />\r\n  <JobDisplayName>Test failover</JobDisplayName>\r\n  <Jobs xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" />\r\n  <StartTimestamp>2014-09-02T13:55:08.6367938Z</StartTimestamp>\r\n  <State>InProgress</State>\r\n  <Tasks>\r\n    <Task>\r\n      <ID>32129078-e820-44f9-a009-25db629e3121</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>2014-09-02T13:55:10.4322856Z</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>2014-09-02T13:55:09.8474139Z</StartTime>\r\n      <Status>Completed</Status>\r\n      <TaskDisplayName>Test failover prerequisites check</TaskDisplayName>\r\n      <TaskName>VmTfoPrerequisitesCheck</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>7685bfcd-75b3-4eeb-aab3-35d6ae6786f0</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>Skipped</Status>\r\n      <TaskDisplayName>Create test environment</TaskDisplayName>\r\n      <TaskName>VmTfoNetworkCreation</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>11cfe3ae-3118-4206-a258-c49419240d10</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Create test virtual machine</TaskDisplayName>\r\n      <TaskName>VmTfoInitiateFailover</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>29d0d877-67b9-4c3f-8b9b-d6eceaff836d</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Add to cloud and attach network</TaskDisplayName>\r\n      <TaskName>VmTfoAttachNetwork</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>26d653db-a159-4d47-929f-617ee2171935</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Start the virtual machine</TaskDisplayName>\r\n      <TaskName>VmTfoBootTestVm</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>1f9bf1c4-8115-489c-80fa-47afdf02033e</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Complete testing</TaskDisplayName>\r\n      <TaskName>VmTfoWaitForCompletion</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>9c39496c-1f12-483d-bcd5-331b2288f070</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n        <d4p1:string>RestartTestFailoverCleanup</d4p1:string>\r\n      </Actions>\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Clean up the test virtual machine</TaskDisplayName>\r\n      <TaskName>VmTfoDeleteTestVm</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>0a6a9467-57a2-4100-af24-fad20b6827a5</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n        <d4p1:string>RestartTestFailoverCleanup</d4p1:string>\r\n      </Actions>\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Clean up the test environment</TaskDisplayName>\r\n      <TaskName>VmTfoDeleteTestNetwork</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n    <Task>\r\n      <ID>9eb70029-8111-4223-86e0-12f75105cc51</ID>\r\n      <Actions xmlns:d4p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\r\n      <CategoryName>Unknown</CategoryName>\r\n      <EndTime>0001-01-01T00:00:00</EndTime>\r\n      <ExtendedDetails>&lt;Task xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/windowsazure\"&gt;\r\n  &lt;ID i:nil=\"true\" /&gt;\r\n  &lt;Actions xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" i:nil=\"true\" /&gt;\r\n  &lt;CategoryName i:nil=\"true\" /&gt;\r\n  &lt;EndTime&gt;0001-01-01T00:00:00&lt;/EndTime&gt;\r\n  &lt;ExtendedDetails i:nil=\"true\" /&gt;\r\n  &lt;StartTime&gt;0001-01-01T00:00:00&lt;/StartTime&gt;\r\n  &lt;Status i:nil=\"true\" /&gt;\r\n  &lt;TaskDisplayName i:nil=\"true\" /&gt;\r\n  &lt;TaskName i:nil=\"true\" /&gt;\r\n  &lt;TaskType i:nil=\"true\" /&gt;\r\n&lt;/Task&gt;</ExtendedDetails>\r\n      <StartTime>0001-01-01T00:00:00</StartTime>\r\n      <Status>NotStarted</Status>\r\n      <TaskDisplayName>Finalizing test failover</TaskDisplayName>\r\n      <TaskName>VmTfoFinalizeStatus</TaskName>\r\n      <TaskType>TaskDetails</TaskType>\r\n    </Task>\r\n  </Tasks>\r\n</ServiceResource>",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "34ad08b0-7560-4db8-9780-21bc37f027a7 1:55 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Tue, 02 Sep 2014 13:55:14 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "947a55d7-75e9-4a36-b156-305c6270f018"
+  }
+}

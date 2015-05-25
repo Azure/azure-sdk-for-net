@@ -87,7 +87,6 @@ publish
 # Others
 [Bb]in
 [Oo]bj
-sql
 TestResults
 [Tt]est[Rr]esult*
 *.Cache
@@ -115,6 +114,7 @@ UpgradeLog*.XML
 
 # NuGet
 packages
+packages/repositories.config
 
 # Mac development
 .DS_Store
