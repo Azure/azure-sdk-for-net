@@ -73,9 +73,9 @@ namespace Network.Tests
         {
             undoContext = UndoContext.Current;
             undoContext.Start(4);
-            
+
             networkClient = TestBase.GetServiceClient<NetworkManagementClient>();
-            
+
             testOperations = new List<TestOperation>();
         }
 
@@ -91,10 +91,15 @@ namespace Network.Tests
 
         public void EnsureNoNetworkConfigurationExists()
         {
+            EnsureNoNetworkConfigurationExists(NetworkTestConstants.VirtualNetworkSiteName);
+        }
+
+        public void EnsureNoNetworkConfigurationExists(string virtualNetworkSiteName)
+        {
             string configuration = GetNetworkConfigurationSafe();
             if (IsEmptyConfiguration(configuration) == false)
             {
-                Gateways.EnsureNoGatewayExists();
+                Gateways.EnsureNoGatewayExists(virtualNetworkSiteName);
 
                 SetNetworkConfiguration(NetworkTestConstants.EmptyNetworkConfigurationParameters);
             }
@@ -199,9 +204,9 @@ namespace Network.Tests
         public OperationStatusResponse SetNetworkConfiguration(NetworkSetConfigurationParameters parameters)
         {
             SetNetworkConfiguration testOperation = new SetNetworkConfiguration(networkClient, parameters);
-            
+
             InvokeTestOperation(testOperation);
-            
+
             return testOperation.InvokeResponse;
         }
 

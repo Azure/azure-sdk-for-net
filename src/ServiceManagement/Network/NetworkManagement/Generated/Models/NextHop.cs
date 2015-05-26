@@ -26,10 +26,21 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     public partial class NextHop
     {
+        private string _ipAddress;
+        
+        /// <summary>
+        /// Optional. Gets or sets the next hop IP addresses.
+        /// </summary>
+        public string IpAddress
+        {
+            get { return this._ipAddress; }
+            set { this._ipAddress = value; }
+        }
+        
         private string _type;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the type of the next hop.
         /// </summary>
         public string Type
         {

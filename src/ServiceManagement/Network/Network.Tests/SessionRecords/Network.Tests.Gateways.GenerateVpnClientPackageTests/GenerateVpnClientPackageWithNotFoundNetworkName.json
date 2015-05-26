@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/NotFoundNetworkName/gateway/vpnclientpackage",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL05vdEZvdW5kTmV0d29ya05hbWUvZ2F0ZXdheS92cG5jbGllbnRwYWNrYWdl",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/NotFoundNetworkName/gateway/vpnclientpackage",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL05vdEZvdW5kTmV0d29ya05hbWUvZ2F0ZXdheS92cG5jbGllbnRwYWNrYWdl",
       "RequestMethod": "POST",
       "RequestBody": "<VpnClientParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ProcessorArchitecture>X86</ProcessorArchitecture>\r\n</VpnClientParameters>",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "149"
         ],
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -27,24 +27,21 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c293ebb3219a7cc88ee2be548557ffbf"
+          "cbcf2bf38c48bef5a17e97fa2551be64"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 09:48:32 GMT"
+          "Sat, 11 Apr 2015 19:04:30 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -53,6 +50,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "f771266f-1d85-498f-9280-ae4a6c3dae8b"
+    "SubscriptionId": "d2599f84-5099-4ef0-8548-d4765d6a0718"
   }
 }
