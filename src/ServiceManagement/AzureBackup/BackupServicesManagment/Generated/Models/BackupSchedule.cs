@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.BackupServices.Models;
+using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
     /// The definition of a Container Info object.

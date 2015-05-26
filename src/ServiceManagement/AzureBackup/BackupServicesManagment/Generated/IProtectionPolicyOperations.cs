@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Management.BackupServices.Models;
+using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
     /// Definition of Protection Policy operations for the Azure Backup
@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         /// <summary>
         /// Get the list of all Protection Policy.
         /// </summary>
-        /// <param name='resourceId'>
+        /// <param name='jobId'>
         /// Request header parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -48,6 +48,20 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         /// <returns>
         /// The response model for the list containers operation.
         /// </returns>
-        Task<ProtectionPolicyListResponse> ListAsync(string resourceId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobByIdResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionPolicies operation.
+        /// </returns>
+        Task<ProtectionPolicyListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

@@ -22,21 +22,21 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.WindowsAzure.Management.BackupServices.Models;
+using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the list containers operation.
+    /// The response model for the list ProtectionPolicies operation.
     /// </summary>
     public partial class ProtectionPolicyListResponse : AzureOperationResponse
     {
-        private ProtectionPolicyResponse _protectionPolicies;
+        private ProtectionPolicyInfoResponse _protectionPolicies;
         
         /// <summary>
-        /// Optional. The list of containers for the resource id.
+        /// Optional. The list of ProtectionPolicies for the resource id.
         /// </summary>
-        public ProtectionPolicyResponse ProtectionPolicies
+        public ProtectionPolicyInfoResponse ProtectionPolicies
         {
             get { return this._protectionPolicies; }
             set { this._protectionPolicies = value; }

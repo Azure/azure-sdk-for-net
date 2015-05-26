@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
     /// The definition of a Service resource base object without name.

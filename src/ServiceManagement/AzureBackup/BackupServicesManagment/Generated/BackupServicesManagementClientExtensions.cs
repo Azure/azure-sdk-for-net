@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices
 {
     public static partial class BackupServicesManagementClientExtensions
     {

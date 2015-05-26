@@ -24,9 +24,9 @@ using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.WindowsAzure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices
 {
     public partial class BackupServicesManagementClient : ServiceClient<BackupServicesManagementClient>, IBackupServicesManagementClient
     {
@@ -100,6 +100,17 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
             set { this._resourceName = value; }
         }
         
+        private IJobOperations _job;
+        
+        /// <summary>
+        /// Definition of Protection Policy operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IJobOperations Job
+        {
+            get { return this._job; }
+        }
+        
         private IProtectionPolicyOperations _protectionPolicy;
         
         /// <summary>
@@ -118,6 +129,7 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         public BackupServicesManagementClient()
             : base()
         {
+            this._job = new JobOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -219,6 +231,7 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         public BackupServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._job = new JobOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;

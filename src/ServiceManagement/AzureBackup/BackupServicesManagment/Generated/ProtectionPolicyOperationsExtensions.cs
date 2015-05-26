@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Management.BackupServices;
-using Microsoft.WindowsAzure.Management.BackupServices.Models;
+using Microsoft.Azure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices
 {
     public static partial class ProtectionPolicyOperationsExtensions
     {
@@ -35,9 +35,9 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
         /// </param>
-        /// <param name='resourceId'>
+        /// <param name='jobId'>
         /// Optional. Request header parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -46,11 +46,11 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         /// <returns>
         /// The response model for the list containers operation.
         /// </returns>
-        public static ProtectionPolicyListResponse List(this IProtectionPolicyOperations operations, string resourceId, CustomRequestHeaders customRequestHeaders)
+        public static JobByIdResponse Get(this IProtectionPolicyOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionPolicyOperations)s).ListAsync(resourceId, customRequestHeaders);
+                return ((IProtectionPolicyOperations)s).GetAsync(jobId, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -60,9 +60,9 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
         /// </param>
-        /// <param name='resourceId'>
+        /// <param name='jobId'>
         /// Optional. Request header parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -71,9 +71,49 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         /// <returns>
         /// The response model for the list containers operation.
         /// </returns>
-        public static Task<ProtectionPolicyListResponse> ListAsync(this IProtectionPolicyOperations operations, string resourceId, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobByIdResponse> GetAsync(this IProtectionPolicyOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(resourceId, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(jobId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionPolicies operation.
+        /// </returns>
+        public static ProtectionPolicyListResponse List(this IProtectionPolicyOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionPolicyOperations)s).ListAsync(customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of all Protection Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionPolicies operation.
+        /// </returns>
+        public static Task<ProtectionPolicyListResponse> ListAsync(this IProtectionPolicyOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListAsync(customRequestHeaders, CancellationToken.None);
         }
     }
 }

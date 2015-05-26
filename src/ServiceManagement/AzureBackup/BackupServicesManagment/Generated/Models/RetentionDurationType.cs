@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     public enum RetentionDurationType
     {

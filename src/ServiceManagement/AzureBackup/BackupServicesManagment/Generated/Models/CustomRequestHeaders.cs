@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
     /// HTTP Request headers for Azure Backup service.

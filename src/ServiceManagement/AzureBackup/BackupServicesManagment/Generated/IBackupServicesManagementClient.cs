@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.WindowsAzure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices;
 
-namespace Microsoft.WindowsAzure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices
 {
     public partial interface IBackupServicesManagementClient : IDisposable
     {
@@ -78,6 +78,15 @@ namespace Microsoft.WindowsAzure.Management.BackupServices
         string ResourceName
         {
             get; set; 
+        }
+        
+        /// <summary>
+        /// Definition of Protection Policy operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IJobOperations Job
+        {
+            get; 
         }
         
         /// <summary>
