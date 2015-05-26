@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Search
             // Construct URL
             string url = 
                 String.Format(
-                    "docs/suggest?search={0}&suggesterName={1}&{2}&api-version=2015-02-28", 
+                    "docs/search.suggest?search={0}&suggesterName={1}&{2}&api-version=2015-02-28", 
                     Uri.EscapeDataString(searchText),
                     suggesterName,
                     suggestParameters.ToString());

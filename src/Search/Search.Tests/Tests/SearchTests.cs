@@ -196,10 +196,8 @@ namespace Microsoft.Azure.Search.Tests
                 string[] expectedDescriptionHighlights =
                     new[] 
                     { 
-                        "Best <b>hotel</b> in town if you like <b>luxury</b> hotels. They have an amazing infinity " +
-                        "pool, a spa, and a",
-                        " really helpful concierge. The location is perfect -- right downtown, close to all the " +
-                        "tourist attractions. We highly recommend this <b>hotel</b>."
+                        "Best <b>hotel</b> in town if you like <b>luxury</b> hotels.",
+                        "We highly recommend this <b>hotel</b>."
                     };
 
                 SearchAssert.SequenceEqual(expectedDescriptionHighlights, highlights[Description]);
