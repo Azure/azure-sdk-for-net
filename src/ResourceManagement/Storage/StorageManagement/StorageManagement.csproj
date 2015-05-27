@@ -16,16 +16,39 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Reference Include="Hyak.Common">
-      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Common, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.3.0.4\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Azure.Common">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=0.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.0.9.7.4\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\*.cs" />
-    <Compile Include="Generated\Models\*.cs" />
+    <Compile Include="Generated\IStorageAccounts.cs" />
+    <Compile Include="Generated\IStorageManagementClient.cs" />
+    <Compile Include="Generated\Models\CheckNameAvailabilityResponse.cs" />
+    <Compile Include="Generated\Models\CustomDomain.cs" />
+    <Compile Include="Generated\Models\Endpoints.cs" />
+    <Compile Include="Generated\Models\StorageAccount.cs" />
+    <Compile Include="Generated\Models\StorageAccountCheckNameAvailabilityParameters.cs" />
+    <Compile Include="Generated\Models\StorageAccountCreateParameters.cs" />
+    <Compile Include="Generated\Models\StorageAccountCreateResponse.cs" />
+    <Compile Include="Generated\Models\StorageAccountKeys.cs" />
+    <Compile Include="Generated\Models\StorageAccountListResponse.cs" />
+    <Compile Include="Generated\Models\StorageAccountPropertiesCreateParametersJson.cs" />
+    <Compile Include="Generated\Models\StorageAccountPropertiesUpdateParametersJson.cs" />
+    <Compile Include="Generated\Models\StorageAccountUpdateParameters.cs" />
+    <Compile Include="Generated\StorageAccounts.cs" />
+    <Compile Include="Generated\StorageAccountsExtensions.cs" />
+    <Compile Include="Generated\StorageManagementClient.cs" />
+    <Compile Include="Generated\StorageManagementClientExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -35,5 +58,4 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
-  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
 </Project>
