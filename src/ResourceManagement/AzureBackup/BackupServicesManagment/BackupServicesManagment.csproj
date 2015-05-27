@@ -17,7 +17,6 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Management.BackupServices.nuget.proj">

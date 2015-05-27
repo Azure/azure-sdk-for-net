@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/Subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
             }
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
@@ -142,6 +142,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -351,10 +352,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -411,7 +408,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/Subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
             }
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
@@ -451,6 +448,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -496,18 +494,18 @@ namespace Microsoft.Azure.Management.BackupServices
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        JToken protectionPolicyInfoResponseValue = responseDoc["ProtectionPolicyInfoResponse"];
+                        if (protectionPolicyInfoResponseValue != null && protectionPolicyInfoResponseValue.Type != JTokenType.Null)
                         {
-                            ProtectionPolicyInfoResponse protectionPoliciesInstance = new ProtectionPolicyInfoResponse();
-                            result.ProtectionPolicies = protectionPoliciesInstance;
+                            ProtectionPolicyInfoResponse protectionPolicyInfoResponseInstance = new ProtectionPolicyInfoResponse();
                             
-                            JToken objectsArray = responseDoc["Objects"];
+                            JToken objectsArray = protectionPolicyInfoResponseValue["Objects"];
                             if (objectsArray != null && objectsArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken objectsValue in ((JArray)objectsArray))
                                 {
                                     ProtectionPolicyInfo protectionPolicyInfoInstance = new ProtectionPolicyInfo();
-                                    protectionPoliciesInstance.Objects.Add(protectionPolicyInfoInstance);
+                                    protectionPolicyInfoResponseInstance.Objects.Add(protectionPolicyInfoInstance);
                                     
                                     JToken workloadTypeValue = objectsValue["WorkloadType"];
                                     if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
@@ -606,27 +604,23 @@ namespace Microsoft.Azure.Management.BackupServices
                                 }
                             }
                             
-                            JToken resultCountValue = responseDoc["ResultCount"];
+                            JToken resultCountValue = protectionPolicyInfoResponseValue["ResultCount"];
                             if (resultCountValue != null && resultCountValue.Type != JTokenType.Null)
                             {
                                 int resultCountInstance = ((int)resultCountValue);
-                                protectionPoliciesInstance.ResultCount = resultCountInstance;
+                                protectionPolicyInfoResponseInstance.ResultCount = resultCountInstance;
                             }
                             
-                            JToken skiptokenValue = responseDoc["Skiptoken"];
+                            JToken skiptokenValue = protectionPolicyInfoResponseValue["Skiptoken"];
                             if (skiptokenValue != null && skiptokenValue.Type != JTokenType.Null)
                             {
                                 string skiptokenInstance = ((string)skiptokenValue);
-                                protectionPoliciesInstance.Skiptoken = skiptokenInstance;
+                                protectionPolicyInfoResponseInstance.Skiptoken = skiptokenInstance;
                             }
                         }
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
