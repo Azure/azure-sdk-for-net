@@ -42,8 +42,8 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private List<VirtualDiskGroup> virtualDiskGroupList;
         private List<AccessControlRecord> acrList;
         private List<MigrationBackupPolicy> policyList;
-        private List<MigrationChapSetting> inboundChapSettingList;
-        private List<MigrationChapSetting> targetChapSettingList;
+        private List<MigrationChapSetting> inboundChapSettingList = null;
+        private List<MigrationChapSetting> targetChapSettingList = null;
         private List<LegacyParserMessage> parserMessageList;
 
         // Helper classes
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <summary>
         /// LegacyApplianceConfig Parser constructor
         /// </summary>
-        /// <param name="client">stor simple service client</param>
+        /// <param name="encryptor">encryptor</param>
         public LegacyApplianceConfigParser(IServiceSecretEncryptor encryptor)
         {
             this.serviceSecretEncryptor = encryptor;
@@ -529,7 +529,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <summary>
         /// Create default backup schedule
         /// </summary>
-        /// <param name="scheduleNodeElement">backup schedule node</param>
         /// <returns>Backup schedule</returns>
         private BackupScheduleBase CreateDefaultBackupPolicySchedule()
         {
