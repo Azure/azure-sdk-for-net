@@ -16,14 +16,14 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// All available compression types.
+    /// The Deflate compression method used on a table.
     /// </summary>
-    public static class CompressionType
+    [AdfTypeName("Deflate")]
+    public class DeflateCompression : Compression
     {
-        public const string GZip = "GZip";
-
-        public const string Deflate = "Deflate";
-        
-        public const string BZip2 = "BZip2";
+        /// <summary>
+        /// The compression levels supported are: Optimal and Fastest.
+        /// </summary>
+        public string Level { get; set; }
     }
 }

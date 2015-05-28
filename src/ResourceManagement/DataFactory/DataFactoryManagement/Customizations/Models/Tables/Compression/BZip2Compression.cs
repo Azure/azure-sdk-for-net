@@ -16,18 +16,10 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The compression method used on a table.
+    /// The BZip2 compression method used on a table.
     /// </summary>
-    public class Compression
+    [AdfTypeName("BZip2")]
+    public class BZip2Compression : Compression
     {
-        /// <summary>
-        /// The current supported compression methods are: GZip, Deflate, and BZip2.
-        /// </summary>
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The compression levels (only applied to BZip and Deflate) supported are: Optimal and Fastest.
-        /// </summary>
-        public string Level { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                        {
                            new TypePropertiesConverter(), new PolymorphicTypeConverter<StorageFormat>(),
                            new PolymorphicTypeConverter<PartitionValue>(), new PolymorphicTypeConverter<CopyLocation>(),
-                           new PolymorphicTypeConverter<CopyTranslator>()
+                           new PolymorphicTypeConverter<CopyTranslator>(), new PolymorphicTypeConverter<Compression>()
                        };
         }
     }
