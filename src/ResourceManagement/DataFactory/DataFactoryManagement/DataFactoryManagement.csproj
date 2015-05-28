@@ -13,6 +13,9 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Models\Tables\Compression.cs" />
+    <Compile Include="Customizations\Models\Tables\CompressionLevel.cs" />
+    <Compile Include="Customizations\Models\Tables\CompressionType.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\IDataSliceRunOperations.cs" />

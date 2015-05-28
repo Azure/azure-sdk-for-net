@@ -16,25 +16,18 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The format definition of a storage.
+    /// The compression method used on a table.
     /// </summary>
-    public abstract class StorageFormat
+    public class Compression
     {
         /// <summary>
-        /// The serializer.
+        /// The current supported compression methods are: GZip, Deflate, and BZip2.
         /// </summary>
-        public string Serializer { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// The deserializer.
+        /// The compression levels (only applied to BZip and Deflate) supported are: Optimal and Fastest.
         /// </summary>
-        public string Deserializer { get; set; }
-        
-#if ADF_INTERNAL
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        public string Encryption { get; set; }
-#endif
+        public string Level { get; set; }
     }
 }

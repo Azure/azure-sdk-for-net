@@ -16,25 +16,14 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The format definition of a storage.
+    /// All available compression types.
     /// </summary>
-    public abstract class StorageFormat
+    public static class CompressionType
     {
-        /// <summary>
-        /// The serializer.
-        /// </summary>
-        public string Serializer { get; set; }
+        public const string GZip = "GZip";
 
-        /// <summary>
-        /// The deserializer.
-        /// </summary>
-        public string Deserializer { get; set; }
+        public const string Deflate = "Deflate";
         
-#if ADF_INTERNAL
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        public string Encryption { get; set; }
-#endif
+        public const string BZip2 = "BZip2";
     }
 }
