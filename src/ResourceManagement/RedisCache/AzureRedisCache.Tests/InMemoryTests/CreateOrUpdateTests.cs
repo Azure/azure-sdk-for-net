@@ -63,24 +63,24 @@ namespace AzureRedisCache.Tests
                                                                             });
 
             Assert.Equal(requestIdHeader, response.RequestId);
-            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
-            Assert.Equal("North Europe", response.Location);
-            Assert.Equal("hydraradiscache", response.Name);
-            Assert.Equal("Microsoft.Cache/Redis", response.Type);
-            
-            Assert.Equal("creating", response.Properties.ProvisioningState);
-            Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-            Assert.Equal(1, response.Properties.Sku.Capacity);
-            Assert.Equal("2.8", response.Properties.RedisVersion);
-            
-            Assert.NotNull(response.Properties.AccessKeys);
-            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Properties.AccessKeys.PrimaryKey);
-            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Properties.AccessKeys.SecondaryKey);
-            
-            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Properties.HostName);
-            Assert.Equal(6379, response.Properties.Port);
-            Assert.Equal(6380, response.Properties.SslPort);
+            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Resource.Id);
+            Assert.Equal("North Europe", response.Resource.Location);
+            Assert.Equal("hydraradiscache", response.Resource.Name);
+            Assert.Equal("Microsoft.Cache/Redis", response.Resource.Type);
+
+            Assert.Equal("creating", response.Resource.Properties.ProvisioningState);
+            Assert.Equal(SkuName.Basic, response.Resource.Properties.Sku.Name);
+            Assert.Equal(SkuFamily.C, response.Resource.Properties.Sku.Family);
+            Assert.Equal(1, response.Resource.Properties.Sku.Capacity);
+            Assert.Equal("2.8", response.Resource.Properties.RedisVersion);
+
+            Assert.NotNull(response.Resource.Properties.AccessKeys);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Resource.Properties.AccessKeys.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Resource.Properties.AccessKeys.SecondaryKey);
+
+            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Resource.Properties.HostName);
+            Assert.Equal(6379, response.Resource.Properties.Port);
+            Assert.Equal(6380, response.Resource.Properties.SslPort);
         }
 
         [Fact]
@@ -104,11 +104,11 @@ namespace AzureRedisCache.Tests
                                                                                 }
                                                                             });
             Assert.Null(response.RequestId);
-            Assert.Null(response.Id);
-            Assert.Null(response.Location);
-            Assert.Null(response.Name);
-            Assert.Null(response.Type);
-            Assert.Null(response.Properties); 
+            Assert.Null(response.Resource.Id);
+            Assert.Null(response.Resource.Location);
+            Assert.Null(response.Resource.Name);
+            Assert.Null(response.Resource.Type);
+            Assert.Null(response.Resource.Properties); 
         }
 
         [Fact]
@@ -274,7 +274,7 @@ namespace AzureRedisCache.Tests
                             ""capacity"": 1
                         },
 		            ""redisVersion"" : ""2.8"",
-		            ""maxMemoryPolicy"": ""AllKeysLRU"",
+                    ""redisConfiguration"": {""maxmemory-policy"": ""allkeys-lru""},
 		            ""accessKeys"" : {
 			            ""primaryKey"" : ""aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa="",
 			            ""secondaryKey"" : ""bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=""
@@ -302,30 +302,32 @@ namespace AzureRedisCache.Tests
                                                                                         Family = SkuFamily.C,
                                                                                         Capacity = 1
                                                                                     },
-                                                                                    MaxMemoryPolicy = MaxMemoryPolicy.AllKeysLRU
+                                                                                    RedisConfiguration = new Dictionary<string, string>() { 
+                                                                                        {"maxmemory-policy","allkeys-lru"}
+                                                                                    }
                                                                                 }
                                                                             });
 
             Assert.Equal(requestIdHeader, response.RequestId);
-            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
-            Assert.Equal("North Europe", response.Location);
-            Assert.Equal("hydraradiscache", response.Name);
-            Assert.Equal("Microsoft.Cache/Redis", response.Type);
+            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Resource.Id);
+            Assert.Equal("North Europe", response.Resource.Location);
+            Assert.Equal("hydraradiscache", response.Resource.Name);
+            Assert.Equal("Microsoft.Cache/Redis", response.Resource.Type);
 
-            Assert.Equal("creating", response.Properties.ProvisioningState);
-            Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-            Assert.Equal(1, response.Properties.Sku.Capacity);
-            Assert.Equal("2.8", response.Properties.RedisVersion);
-            Assert.Equal(MaxMemoryPolicy.AllKeysLRU, response.Properties.MaxMemoryPolicy);
+            Assert.Equal("creating", response.Resource.Properties.ProvisioningState);
+            Assert.Equal(SkuName.Basic, response.Resource.Properties.Sku.Name);
+            Assert.Equal(SkuFamily.C, response.Resource.Properties.Sku.Family);
+            Assert.Equal(1, response.Resource.Properties.Sku.Capacity);
+            Assert.Equal("2.8", response.Resource.Properties.RedisVersion);
+            Assert.Equal("allkeys-lru", response.Resource.Properties.RedisConfiguration["maxmemory-policy"]);
 
-            Assert.NotNull(response.Properties.AccessKeys);
-            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Properties.AccessKeys.PrimaryKey);
-            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Properties.AccessKeys.SecondaryKey);
+            Assert.NotNull(response.Resource.Properties.AccessKeys);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Resource.Properties.AccessKeys.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Resource.Properties.AccessKeys.SecondaryKey);
 
-            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Properties.HostName);
-            Assert.Equal(6379, response.Properties.Port);
-            Assert.Equal(6380, response.Properties.SslPort);
+            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Resource.Properties.HostName);
+            Assert.Equal(6379, response.Resource.Properties.Port);
+            Assert.Equal(6380, response.Resource.Properties.SslPort);
         }
     }
 }
