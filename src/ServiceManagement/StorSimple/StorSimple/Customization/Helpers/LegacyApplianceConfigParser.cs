@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <summary>
         /// LegacyApplianceConfig Parser constructor
         /// </summary>
-        /// <param name="client">stor simple service client</param>
+        /// <param name="encryptor">Service Secrets Encryptor</param>
         public LegacyApplianceConfigParser(IServiceSecretEncryptor encryptor)
         {
             this.serviceSecretEncryptor = encryptor;
