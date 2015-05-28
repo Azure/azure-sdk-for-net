@@ -108,7 +108,7 @@ namespace Compute.Tests
                 {
                     new VaultSecretGroup
                     {
-                         SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName).Result,
+                         SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName),
                          VaultCertificates = new List<VaultCertificate>
                          {
                              new VaultCertificate
@@ -189,7 +189,7 @@ namespace Compute.Tests
 
                 // The following variables are defined here to allow validation
                 string autoLogonContent = null;
-                Uri winRMCertificateUrl = SecretVaultHelper.AddSecret(m_subId, rgName, keyVaultName, winRMCertificateBase64).Result;
+                Uri winRMCertificateUrl = SecretVaultHelper.AddSecret(m_subId, rgName, keyVaultName, winRMCertificateBase64);
 
                 Action<VirtualMachine> enableWinRMCustomDataAndUnattendContent = inputVM =>
                     {
@@ -200,7 +200,7 @@ namespace Compute.Tests
                 Action<VirtualMachine> validateWinRMCustomDataAndUnattendContent = 
                     outputVM => ValidateWinRMCustomDataAndUnattendContent(rgName, keyVaultName, winRMCertificateUrl, autoLogonContent, outputVM);
 
-                SecretVaultHelper.CreateKeyVault(m_subId, rgName, keyVaultName).Wait();
+                SecretVaultHelper.CreateKeyVault(m_subId, rgName, keyVaultName);
                 
                 TestVMWithOSProfile(
                     rgName: rgName,
@@ -208,7 +208,7 @@ namespace Compute.Tests
                     vmCustomizer: enableWinRMCustomDataAndUnattendContent,
                     vmValidator: validateWinRMCustomDataAndUnattendContent);
 
-                SecretVaultHelper.DeleteKeyVault(m_subId, rgName, keyVaultName).Wait();
+                SecretVaultHelper.DeleteKeyVault(m_subId, rgName, keyVaultName);
             }
         }
 
@@ -363,25 +363,25 @@ namespace Compute.Tests
 
         public static Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/5c0b61f14941409aa752665210fd1319");
 
-        public static async Task CreateKeyVault(string subId, string rgName, string keyVaultName)
+        public static void CreateKeyVault(string subId, string rgName, string keyVaultName)
         {
         }
 
-        public static async Task DeleteKeyVault(string subId, string rgName, string keyVaultName)
+        public static void DeleteKeyVault(string subId, string rgName, string keyVaultName)
         {
         }
 
-        public static async Task<SourceVaultReference> GetVaultId(string subId, string rgName, string keyVaultName)
+        public static SourceVaultReference GetVaultId(string subId, string rgName, string keyVaultName)
         {
             return new SourceVaultReference { ReferenceUri = KeyVaultId };
         }
 
-        public static async Task<Uri> AddSecret(string subId, string rgName, string keyVaultName, string secret)
+        public static Uri AddSecret(string subId, string rgName, string keyVaultName, string secret)
         {
             return CertificateUrl;
         }
 
-        public static async Task DeleteSecret(string subId, string rgName, string keyVaultName, string secret)
+        public static void DeleteSecret(string subId, string rgName, string keyVaultName, string secret)
         {
         }
     }
