@@ -19,11 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// A pipeline activity.
     /// </summary>
-#if ADF_INTERNAL
     public class Activity : AdfResourceProperties<ActivityTypeProperties, GenericActivity>
-#else
-    public class Activity : AdfResourceProperties<ActivityTypeProperties>
-#endif
     {
         /// <summary>
         /// Activity name.
@@ -57,24 +53,32 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public IList<ActivityOutput> Outputs { get; set; }
 
         public Activity()
-        { 
+        {
+            this.Initialize();
         }
 
         public Activity(ActivityTypeProperties typeProperties)
             : base(typeProperties)
         {
+            this.Initialize();
         }
 
-#if ADF_INTERNAL
         public Activity(GenericActivity typeProperties, string typeName)
             : base(typeProperties, typeName)
         {
+            this.Initialize();
         }
 
         internal Activity(ActivityTypeProperties typeProperties, string typeName = null)
             : base(typeProperties, typeName)
         {
+            this.Initialize();
         }
-#endif
+
+        private void Initialize()
+        {
+            this.Inputs = new List<ActivityInput>();
+            this.Outputs = new List<ActivityOutput>();
+        }
     }
 }

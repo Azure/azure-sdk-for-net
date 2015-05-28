@@ -29,6 +29,14 @@ namespace DataFactory.Tests.UnitTests
 {
     public class ActivityTypeTests : UnitTestBase
     {
+        private ActivityTypeOperations Operations
+        {
+            get 
+            {
+                return (ActivityTypeOperations)this.Client.ActivityTypes;
+            }
+        }
+
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -49,7 +57,7 @@ namespace DataFactory.Tests.UnitTests
         private void TestActivityTypeJson(string json)
         {
             ActivityType activityType = this.ConvertToWrapper(json);
-            CoreRegistrationModel.ActivityType actual = this.Client.ActivityTypes.Converter.ToCoreType(activityType);
+            CoreRegistrationModel.ActivityType actual = this.Operations.Converter.ToCoreType(activityType);
 
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalActivityTypeToJson(actual);
 
@@ -62,7 +70,7 @@ namespace DataFactory.Tests.UnitTests
             CoreRegistrationModel.ActivityType internalActivityType =
                 Core.DataFactoryManagementClient.DeserializeInternalActivityTypeJson(json);
 
-            return this.Client.ActivityTypes.Converter.ToWrapperType(internalActivityType);
+            return this.Operations.Converter.ToWrapperType(internalActivityType);
         }
     }
 }

@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+#if ADF_INTERNAL
 namespace DataFactory.Tests.Framework.JsonSamples
 {
     /// <summary>
@@ -28,22 +29,49 @@ namespace DataFactory.Tests.Framework.JsonSamples
     ""properties"": { 
         ""baseType"": ""DotNetActivity"", 
         ""scope"": ""DataFactory"", 
-        ""typeProperties"": 
-            [
-                {""name"": ""PackageFile"", ""required"": ""True"", ""value"":""container/Foo.Zip"", ""type"": ""int""},
-                {""name"": ""bar"", ""required"": ""True"", ""type"": ""string""}
-            ]
+        ""schema"": {
+            ""properties"":{
+                ""PackageFile"": {
+                    ""type"": ""string"",
+                    ""default"": ""container/Foo.Zip""
+                },
+                ""Bar"": {
+                    ""type"": ""string""
+                }
+            },
+            ""required"": [ ""PackageFile"", ""Bar"" ]
+        }
     }
 }";
 
         [JsonSample]
-        public const string DotNetActivity_NoTypeProperties = @"
+        public const string DotNetActivityNestedProperties = @"
 { 
     ""name"": ""CloudMLActivity"", 
     ""properties"": { 
         ""baseType"": ""DotNetActivity"", 
-        ""scope"": ""DataFactory""
-    }
-}";
+        ""scope"": ""DataFactory"", 
+        ""schema"": {
+            ""properties"":{
+                ""PackageFile"": {
+                    ""type"": ""object"",
+                    ""properties"":{
+                        ""prop1"":
+                            {   
+                                ""type"": ""string"",
+                                ""default"":""container/Foo.Zip"",
+                            },
+                    },
+                    ""required"":[ ""prop1"" ]
+                },
+                ""Bar"": {
+                    ""type"": ""string""
+                }
+            },
+            ""required"": [ ""PackageFile"", ""Bar"" ]
+        }
+        }
+    }";
     }
 }
+#endif
