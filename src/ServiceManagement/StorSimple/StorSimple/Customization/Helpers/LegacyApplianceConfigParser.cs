@@ -529,7 +529,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <summary>
         /// Create default backup schedule
         /// </summary>
-        /// <param name="scheduleNodeElement">backup schedule node</param>
         /// <returns>Backup schedule</returns>
         private BackupScheduleBase CreateDefaultBackupPolicySchedule()
         {
