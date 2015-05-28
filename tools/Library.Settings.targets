@@ -32,8 +32,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
     <AdditionalBinariesFolder>$(LibraryFxTarget)\</AdditionalBinariesFolder>
-    <!-- TODO: remove 0219 ('appendFilter' is assigned but its value is never used) -->
-    <NoWarn>0219;1591;1573;1570;1573</NoWarn>
+    <NoWarn>1591;1573;1570;1573</NoWarn>
     <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
