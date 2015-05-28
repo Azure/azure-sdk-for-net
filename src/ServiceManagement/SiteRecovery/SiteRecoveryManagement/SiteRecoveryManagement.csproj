@@ -14,7 +14,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <PropertyGroup>
-    <!--TODO: denerated code has memeber naming conflict with inhertied ones, fix spec and remove the nowarn -->
+    <!--TODO: generated code has memeber naming confliction with inherited ones, please fix spec and remove the warn suppression -->
     <NoWarn>$(NoWarn);0108</NoWarn>
   </PropertyGroup>
   <ItemGroup>
