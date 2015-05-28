@@ -2,8 +2,8 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{3C768CCE-36A0-433E-8280-31979756CC07}</ProjectGuid>
-    <RootNamespace>Compute2.Tests</RootNamespace>
-    <AssemblyName>Compute2.Tests</AssemblyName>
+    <RootNamespace>Compute.Tests</RootNamespace>
+    <AssemblyName>Compute.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
@@ -30,7 +30,14 @@
     <Compile Include="ScenarioTests\OSProfileTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\WinRMCertificate.json">
+      <LogicalName>WinRMCertificateResource</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="SessionRecords\Compute.Tests.AvailabilitySetTests\TestOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
