@@ -38,7 +38,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClient().WithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(handler);
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(DummyTemplateUri)
+                            Uri = DummyTemplateUri
                         },
                         Parameters = serializedDictionary,
                         Mode = DeploymentMode.Incremental,

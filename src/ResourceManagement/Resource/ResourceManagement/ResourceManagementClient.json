@@ -1,0 +1,2181 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ResourceManagementClient",
+    "version": "2014-04-01-preview"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "text/json"
+  ],
+  "produces": [
+    "application/json",
+    "text/json"
+  ],
+  "paths": {
+    "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister": {
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "Providers_Unregister",
+        "description": "Unregisters provider from a subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Namespace of the resource provider."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register": {
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "Providers_Register",
+        "description": "Registers provider to be used with a subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Namespace of the resource provider."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers": {
+      "get": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "Providers_List",
+        "description": "Gets a list of resource providers.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all deployments."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProviderListResult"
+            }
+          }
+        },
+        "x-pageable": true
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}": {
+      "get": {
+        "tags": [
+          "Providers"
+        ],
+        "operationId": "Providers_Get",
+        "description": "Gets a resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Namespace of the resource provider."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources": {
+      "post": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_MoveResources",
+        "description": "Move resources within or across subscriptions.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "sourceResourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Source resource group name."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourcesMoveInfo"
+            },
+            "description": "move resources' parameters."
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}": {
+      "head": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_CheckExistence",
+        "description": "Checks whether resource exists.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "parentResourcePath",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceType",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-global-parameter": false
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_Delete",
+        "description": "Delete resource and all of its resources. ",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "parentResourcePath",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceType",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-global-parameter": false
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "202": {
+            "description": ""
+          },
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_CreateOrUpdate",
+        "description": "Create a resource.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "parentResourcePath",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceType",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-global-parameter": false
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GenericResource"
+            },
+            "description": "Create or update resource parameters."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GenericResourceExtended"
+            }
+          },
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GenericResourceExtended"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_Get",
+        "description": "Returns a resource belonging to a resource group.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "parentResourcePath",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceType",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "resourceName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-global-parameter": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GenericResourceExtended"
+            }
+          },
+          "204": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GenericResourceExtended"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources": {
+      "get": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_List",
+        "description": "Get all of the resources under a subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceListResult"
+            }
+          }
+        },
+        "x-pageable": true,
+        "x-odata": "#/definitions/GenericResourceExtended"
+      }
+    },
+    "/subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}": {
+      "delete": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "Tags_DeleteValue",
+        "description": "Delete a subscription resource tag value.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the tag."
+          },
+          {
+            "name": "tagValue",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The value of the tag."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "Tags_CreateOrUpdateValue",
+        "description": "Create a subscription resource tag value.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the tag."
+          },
+          {
+            "name": "tagValue",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The value of the tag."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/TagValue"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/TagValue"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/tagNames/{tagName}": {
+      "put": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "Tags_CreateOrUpdate",
+        "description": "Create a subscription resource tag.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the tag."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/TagDetails"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/TagDetails"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "Tags_Delete",
+        "description": "Delete a subscription resource tag.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the tag."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/tagNames": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "Tags_List",
+        "description": "Get a list of subscription resource tags.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/TagsListResult"
+            }
+          }
+        },
+        "x-pageable": true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations/{operationId}": {
+      "get": {
+        "tags": [
+          "DeploymentOperations"
+        ],
+        "operationId": "DeploymentOperations_Get",
+        "description": "Get a list of deployments operations.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "deploymentName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the deployment."
+          },
+          {
+            "name": "operationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Operation Id."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentOperation"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations": {
+      "get": {
+        "tags": [
+          "DeploymentOperations"
+        ],
+        "operationId": "DeploymentOperations_List",
+        "description": "Gets a list of deployments operations.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "deploymentName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the deployment."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentOperationsListResult"
+            }
+          }
+        },
+        "x-pageable": true
+      }
+    },
+    "/providers/{resourceProviderNamespace}/operations": {
+      "get": {
+        "tags": [
+          "ResourceProviderOperationDetails"
+        ],
+        "operationId": "ResourceProviderOperationDetails_List",
+        "description": "Gets a list of resource providers.",
+        "parameters": [
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Resource identity."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-global-parameter": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResourceProviderOperationDefinition"
+              }
+            }
+          },
+          "204": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResourceProviderOperationDefinition"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}": {
+      "head": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_CheckExistence",
+        "description": "Checks whether resource group exists.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to check. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_CreateOrUpdate",
+        "description": "Create a resource group.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to be created or updated."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourceGroup"
+            },
+            "description": "Parameters supplied to the create or update resource group service operation."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_Delete",
+        "description": "Delete resource group and all of its resources. ",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to be deleted. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "x-long-running-operation": true
+      },
+      "get": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_Get",
+        "description": "Get a resource group.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to get. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_Patch",
+        "description": "Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource groups, though if a field is unspecified current value will be carried over. ",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to be created or updated. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourceGroup"
+            },
+            "description": "Parameters supplied to the update state resource group service operation."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups": {
+      "get": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_List",
+        "description": "Gets a collection of resource groups.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupListResult"
+            }
+          }
+        },
+        "x-pageable": true,
+        "x-odata": "#/definitions/ResourceGroupExtended"
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/cancel": {
+      "post": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "Deployments_Cancel",
+        "description": "Cancel a currently running template deployment.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "deploymentName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the deployment."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/validate": {
+      "post": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "Deployments_Validate",
+        "description": "Validate a deployment template.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "deploymentName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the deployment."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Deployment"
+            },
+            "description": "Deployment to validate."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentValidateResponse"
+            }
+          },
+          "400": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentValidateResponse"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}": {
+      "put": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "Deployments_CreateOrUpdate",
+        "description": "Create a named template deployment using a template.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive."
+          },
+          {
+            "name": "deploymentName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the deployment."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Deployment"
+            },
+            "description": "Additional parameters supplied to the operation."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentExtended"
+            }
+          },
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentExtended"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "Deployments_Get",
+        "description": "Get a deployment.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to get. The name is case insensitive."
+          },
+          {
+            "name": "deploymentName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the deployment."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentExtended"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/": {
+      "get": {
+        "tags": [
+          "Deployments"
+        ],
+        "operationId": "Deployments_List",
+        "description": "Get a list of deployments.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to filter by. The name is case insensitive."
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all deployments."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeploymentListResult"
+            }
+          }
+        },
+        "x-pageable": true,
+        "x-odata": "#/definitions/DeploymentExtended"
+      }
+    }
+  },
+  "definitions": {
+    "ProviderResourceType": {
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "description": "Gets or sets the resource type."
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Gets or sets the collection of locations where this resource type can be created in."
+        },
+        "apiVersions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Gets or sets the api version."
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the properties."
+        }
+      },
+      "description": "Resource type managed by the resource provider."
+    },
+    "Provider": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the provider id."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Gets or sets the namespace of the provider."
+        },
+        "registrationState": {
+          "type": "string",
+          "description": "Gets or sets the registration state of the provider."
+        },
+        "resourceTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProviderResourceType"
+          },
+          "description": "Gets or sets the collection of provider resource types."
+        }
+      },
+      "description": "Resource provider information."
+    },
+    "ProviderListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Provider"
+          },
+          "description": "Gets or sets the list of resource providers."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of resource providers."
+    },
+    "ResourcesMoveInfo": {
+      "properties": {
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Gets or sets the ids of the resources."
+        },
+        "targetResourceGroup": {
+          "type": "string",
+          "description": "The target resource group."
+        }
+      },
+      "description": "Parameters of move resources."
+    },
+    "ResourceJsonFormat.ResourceProperties": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource provisioning state."
+        }
+      },
+      "description": "The resource properties."
+    },
+    "Plan": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the plan ID."
+        },
+        "publisher": {
+          "type": "string",
+          "description": "Gets or sets the publisher ID."
+        },
+        "product": {
+          "type": "string",
+          "description": "Gets or sets the offer ID."
+        },
+        "promotionCode": {
+          "type": "string",
+          "description": "Gets or sets the promotion code."
+        }
+      },
+      "description": "Plan for the resource."
+    },
+    "GenericResourceExtended": {
+      "properties": {
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource properties."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource provisioning state."
+        },
+        "plan": {
+          "$ref": "#/definitions/Plan",
+          "description": "Gets or sets the plan of the resource."
+        },
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the resource."
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the resource."
+        },
+        "type": {
+          "type": "string",
+          "description": "Gets or sets the type of the resource."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
+        }
+      },
+      "description": "Resource information."
+    },
+    "ResourceListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GenericResourceExtended"
+          },
+          "description": "Gets or sets the list of resource groups."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of resource groups."
+    },
+    "GenericResource": {
+      "properties": {
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource properties."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource provisioning state."
+        },
+        "plan": {
+          "$ref": "#/definitions/Plan",
+          "description": "Gets or sets the plan of the resource."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
+        }
+      },
+      "description": "Resource information."
+    },
+    "TagCount": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of count."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of count."
+        }
+      },
+      "description": "Tag count."
+    },
+    "TagValue": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the tag ID."
+        },
+        "tagValue": {
+          "type": "string",
+          "description": "Gets or sets the tag value."
+        },
+        "count": {
+          "$ref": "#/definitions/TagCount",
+          "description": "Gets or sets the tag value count."
+        }
+      },
+      "description": "Tag information."
+    },
+    "TagDetails": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the tag ID."
+        },
+        "tagName": {
+          "type": "string",
+          "description": "Gets or sets the tag name."
+        },
+        "count": {
+          "$ref": "#/definitions/TagCount",
+          "description": "Gets or sets the tag count."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TagValue"
+          },
+          "description": "Gets or sets the list of tag values."
+        }
+      },
+      "description": "Tag details."
+    },
+    "TagsListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TagDetails"
+          },
+          "description": "Gets or sets the list of tags."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of subscription tags."
+    },
+    "TargetResource": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the resource."
+        },
+        "resourceName": {
+          "type": "string",
+          "description": "Gets or sets the name of the resource."
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Gets or sets the type of the resource."
+        }
+      },
+      "description": "Target resource."
+    },
+    "DeploymentOperationProperties": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the state of the provisioning."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets or sets the date and time of the operation."
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Gets or sets operation status code."
+        },
+        "statusMessage": {
+          "type": "object",
+          "description": "Gets or sets operation status message."
+        },
+        "targetResource": {
+          "$ref": "#/definitions/TargetResource",
+          "description": "Gets or sets the target resource."
+        }
+      },
+      "description": "Deployment operation properties."
+    },
+    "DeploymentOperation": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets full deployment operation id."
+        },
+        "operationId": {
+          "type": "string",
+          "description": "Gets or sets deployment operation id."
+        },
+        "properties": {
+          "$ref": "#/definitions/DeploymentOperationProperties",
+          "description": "Gets or sets deployment properties."
+        }
+      },
+      "description": "Deployment operation information."
+    },
+    "DeploymentOperationsListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeploymentOperation"
+          },
+          "description": "Gets or sets the list of deployments."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of deployment operations."
+    },
+    "ResourceProviderOperationDisplayProperties": {
+      "properties": {
+        "publisher": {
+          "type": "string",
+          "description": "Gets or sets operation description."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Gets or sets operation provider."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Gets or sets operation resource."
+        },
+        "operation": {
+          "type": "string",
+          "description": "Gets or sets operation."
+        },
+        "description": {
+          "type": "string",
+          "description": "Gets or sets operation description."
+        }
+      },
+      "description": "Resource provider operation's display properties."
+    },
+    "ResourceProviderOperationDefinition": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the provider operation name."
+        },
+        "display": {
+          "$ref": "#/definitions/ResourceProviderOperationDisplayProperties",
+          "description": "Gets or sets the display property of the provider operation."
+        }
+      },
+      "description": "Resource provider operation information."
+    },
+    "ResourceGroup": {
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource group properties."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource group."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
+      "description": "Resource group information."
+    },
+    "ResourceGroupJsonFormat.ResourceProperties": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
+      "description": "The resource group properties."
+    },
+    "ResourceGroupExtended": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the resource group."
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the Name of the resource group."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource group properties."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource group."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
+      "description": "Resource group information."
+    },
+    "ResourceGroupListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceGroupExtended"
+          },
+          "description": "Gets or sets the list of resource groups."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of resource groups."
+    },
+    "TemplateLink": {
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI referencing the template."
+        },
+        "contentVersion": {
+          "type": "string",
+          "description": "If included it must match the ContentVersion in the template."
+        }
+      },
+      "description": "Entity representing the reference to the template."
+    },
+    "ParametersLink": {
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI referencing the template."
+        },
+        "contentVersion": {
+          "type": "string",
+          "description": "If included it must match the ContentVersion in the template."
+        }
+      },
+      "description": "Entity representing the reference to the deployment paramaters."
+    },
+    "DeploymentProperties": {
+      "properties": {
+        "template": {
+          "type": "object",
+          "description": "Gets or sets the template content. Use only one of Template or TemplateLink."
+        },
+        "templateLink": {
+          "$ref": "#/definitions/TemplateLink",
+          "description": "Gets or sets the URI referencing the template. Use only one of Template or TemplateLink."
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Deployment parameters. Use only one of Parameters or ParametersLink."
+        },
+        "parametersLink": {
+          "$ref": "#/definitions/ParametersLink",
+          "description": "Gets or sets the URI referencing the parameters. Use only one of Parameters or ParametersLink."
+        },
+        "mode": {
+          "type": "string",
+          "description": "Gets or sets the deployment mode.",
+          "enum": [
+            "Incremental"
+          ]
+        }
+      },
+      "description": "Deployment properties."
+    },
+    "Deployment": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/DeploymentProperties",
+          "description": "Gets or sets the deployment properties."
+        }
+      },
+      "description": "Deployment operation parameters."
+    },
+    "ResourceManagementError": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Gets or sets the error code returned from the server."
+        },
+        "message": {
+          "type": "string",
+          "description": "Gets or sets the error message returned from the server."
+        },
+        "target": {
+          "type": "string",
+          "description": "Gets or sets the target of the error."
+        }
+      }
+    },
+    "ResourceManagementErrorWithDetails": {
+      "properties": {
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceManagementError"
+          },
+          "description": "Gets or sets validation error."
+        },
+        "code": {
+          "type": "string",
+          "description": "Gets or sets the error code returned from the server."
+        },
+        "message": {
+          "type": "string",
+          "description": "Gets or sets the error message returned from the server."
+        },
+        "target": {
+          "type": "string",
+          "description": "Gets or sets the target of the error."
+        }
+      }
+    },
+    "BasicDependency": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the dependency."
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Gets or sets the dependency resource type."
+        },
+        "resourceName": {
+          "type": "string",
+          "description": "Gets or sets the dependency resource name."
+        }
+      },
+      "description": "Deployment dependency information."
+    },
+    "Dependency": {
+      "properties": {
+        "dependsOn": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BasicDependency"
+          },
+          "description": "Gets the list of dependencies."
+        },
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the dependency."
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Gets or sets the dependency resource type."
+        },
+        "resourceName": {
+          "type": "string",
+          "description": "Gets or sets the dependency resource name."
+        }
+      },
+      "description": "Deployment dependency information."
+    },
+    "DeploymentPropertiesExtended": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the state of the provisioning."
+        },
+        "correlationId": {
+          "type": "string",
+          "description": "Gets or sets the correlation ID of the deployment."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets or sets the timestamp of the template deployment."
+        },
+        "outputs": {
+          "type": "object",
+          "description": "Gets or sets key/value pairs that represent deploymentoutput."
+        },
+        "providers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Provider"
+          },
+          "description": "Gets the list of resource providers needed for the deployment."
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dependency"
+          },
+          "description": "Gets the list of deployment dependencies."
+        },
+        "template": {
+          "type": "object",
+          "description": "Gets or sets the template content. Use only one of Template or TemplateLink."
+        },
+        "templateLink": {
+          "$ref": "#/definitions/TemplateLink",
+          "description": "Gets or sets the URI referencing the template. Use only one of Template or TemplateLink."
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Deployment parameters. Use only one of Parameters or ParametersLink."
+        },
+        "parametersLink": {
+          "$ref": "#/definitions/ParametersLink",
+          "description": "Gets or sets the URI referencing the parameters. Use only one of Parameters or ParametersLink."
+        },
+        "mode": {
+          "type": "string",
+          "description": "Gets or sets the deployment mode.",
+          "enum": [
+            "Incremental"
+          ]
+        }
+      },
+      "description": "Deployment properties with additional details."
+    },
+    "DeploymentValidateResponse": {
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ResourceManagementErrorWithDetails",
+          "description": "Gets or sets validation error."
+        },
+        "properties": {
+          "$ref": "#/definitions/DeploymentPropertiesExtended",
+          "description": "Gets or sets the template deployment properties."
+        }
+      },
+      "description": "Information from validate template deployment response."
+    },
+    "DeploymentExtended": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the deployment."
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the deployment."
+        },
+        "properties": {
+          "$ref": "#/definitions/DeploymentPropertiesExtended",
+          "description": "Gets or sets deployment properties."
+        }
+      },
+      "description": "Deployment information."
+    },
+    "DeploymentListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeploymentExtended"
+          },
+          "description": "Gets or sets the list of deployments."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of deployments."
+    },
+    "Resource": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Resource Id"
+        }
+      },
+      "x-external": true
+    }
+  }
+}

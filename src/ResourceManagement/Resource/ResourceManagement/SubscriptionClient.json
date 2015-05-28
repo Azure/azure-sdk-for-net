@@ -1,0 +1,155 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "SubscriptionClient",
+    "version": "2014-04-01-preview"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "text/json"
+  ],
+  "produces": [
+    "application/json",
+    "text/json"
+  ],
+  "paths": {
+    "/subscriptions/{subscriptionId}": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "Subscriptions_Get",
+        "description": "Gets details about particular subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the subscription.",
+            "x-global-parameter": false
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Subscription"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "Subscriptions_List",
+        "description": "Gets a list of the subscriptionIds.",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Subscription"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tenants": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "operationId": "Tenants_List",
+        "description": "Gets a list of the tenantIds.",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TenantIdDescription"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Subscription": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the resource (/subscriptions/SubscriptionId)."
+        },
+        "subscriptionId": {
+          "type": "string",
+          "description": "Gets or sets the subscription Id."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Gets or sets the subscription display name"
+        },
+        "state": {
+          "type": "string",
+          "description": "Gets or sets the subscription state"
+        }
+      },
+      "description": "Subscription information."
+    },
+    "TenantIdDescription": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets Id"
+        },
+        "tenantId": {
+          "type": "string",
+          "description": "Gets or sets tenantId"
+        }
+      },
+      "description": "Tenant Id information"
+    },
+    "Resource": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Resource Id"
+        }
+      },
+      "x-external": true
+    }
+  }
+}

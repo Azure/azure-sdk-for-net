@@ -40,10 +40,10 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="handler"></param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static ResourceManagementClient GetResourceManagementClientWithHandler(RecordedDelegatingHandler handler)
+        public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
         }
 
         /// <summary>
@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Test
         public static SubscriptionClient GetSubscriptionClient(this TestBase testBase)
         {
             return TestBase.GetServiceClient<SubscriptionClient>(new CSMTestEnvironmentFactory());
+        }
+
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testBase">the test class</param>
+        /// <returns>A subscription client, created from the current context (environment variables)</returns>
+        public static SubscriptionClient GetSubscriptionClientWithHandler(this TestBase testBase, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            return TestBase.GetServiceClient<SubscriptionClient>(new CSMTestEnvironmentFactory(), handler);
         }
 
         /// <summary>
@@ -68,9 +79,9 @@ namespace Microsoft.Azure.Test
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.Provider.ResourceTypes)
+            foreach (var resource in provider.ResourceTypes)
             {
-                if (string.Equals(resource.Name, parts[1], StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {
                     location = resource.Locations.LastOrDefault<string>();
                 }

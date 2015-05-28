@@ -13,13 +13,12 @@
 // limitations under the License.
 //
 
-using Hyak.Common.TransientFaultHandling;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Subscriptions;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Test;
-using System.Linq;
 using System.Net;
+using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
 namespace ResourceGroups.Tests
@@ -29,8 +28,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClient();
-            client = client.WithHandler(handler);
+            var client = this.GetResourceManagementClient(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
@@ -43,8 +41,7 @@ namespace ResourceGroups.Tests
         public SubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetSubscriptionClient();
-            client = client.WithHandler(handler);
+            var client = this.GetSubscriptionClient(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
@@ -63,18 +60,16 @@ namespace ResourceGroups.Tests
             {
                 context.Start();
                 var client = GetSubscriptionClient(handler);
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                var subscription = client.Subscriptions.List();
+                var subscriptions = client.Subscriptions.List();
 
-                Assert.NotNull(subscription);
-                Assert.Equal(HttpStatusCode.OK, subscription.StatusCode);
-                Assert.NotNull(subscription.Subscriptions);
-                Assert.NotEqual(0, subscription.Subscriptions.Count());
-                Assert.NotNull(subscription.Subscriptions[0].Id);
-                Assert.NotNull(subscription.Subscriptions[0].SubscriptionId);
-                Assert.NotNull(subscription.Subscriptions[0].DisplayName);
-                Assert.NotNull(subscription.Subscriptions[0].State);
+                Assert.NotNull(subscriptions);
+                Assert.NotEqual(0, subscriptions.Count);
+                Assert.NotNull(subscriptions[0].Id);
+                Assert.NotNull(subscriptions[0].SubscriptionId);
+                Assert.NotNull(subscriptions[0].DisplayName);
+                Assert.NotNull(subscriptions[0].State);
             }
         }
         
@@ -88,16 +83,15 @@ namespace ResourceGroups.Tests
                 context.Start();
                 var client = GetSubscriptionClient(handler);
                 var rmclient = GetResourceManagementClient(handler);
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var subscriptionDetails = client.Subscriptions.Get(rmclient.Credentials.SubscriptionId);
 
                 Assert.NotNull(subscriptionDetails);
-                Assert.Equal(HttpStatusCode.OK, subscriptionDetails.StatusCode);
-                Assert.NotNull(subscriptionDetails.Subscription.Id);
-                Assert.NotNull(subscriptionDetails.Subscription.SubscriptionId);
-                Assert.NotNull(subscriptionDetails.Subscription.DisplayName);
-                Assert.NotNull(subscriptionDetails.Subscription.State);
+                Assert.NotNull(subscriptionDetails.Id);
+                Assert.NotNull(subscriptionDetails.SubscriptionId);
+                Assert.NotNull(subscriptionDetails.DisplayName);
+                Assert.NotNull(subscriptionDetails.State);
             }
         }
     }
