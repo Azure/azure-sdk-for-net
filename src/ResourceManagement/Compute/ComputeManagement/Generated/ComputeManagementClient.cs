@@ -625,6 +625,90 @@ namespace Microsoft.Azure.Management.Compute.Models
     }
     
     /// <summary>
+    /// The compute long running operation response.
+    /// </summary>
+    public partial class DeleteOperationResponse : ComputeOperationResponse
+    {
+        private System.DateTimeOffset? _endTime;
+        
+        /// <summary>
+        /// Optional. Gets the operation end time
+        /// </summary>
+        public System.DateTimeOffset? EndTime
+        {
+            get { return this._endTime; }
+            set { this._endTime = value; }
+        }
+        
+        private ApiError _error;
+        
+        /// <summary>
+        /// Optional. Gets or sets the operation error if any occurred
+        /// </summary>
+        public ApiError Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
+        private DateTimeOffset _startTime;
+        
+        /// <summary>
+        /// Required. Gets the operation start time
+        /// </summary>
+        public DateTimeOffset StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private OperationStatus _status;
+        
+        /// <summary>
+        /// Required. Gets the operation status.
+        /// </summary>
+        public OperationStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private string _trackingOperationId;
+        
+        /// <summary>
+        /// Required. Gets the operation identifier.
+        /// </summary>
+        public string TrackingOperationId
+        {
+            get { return this._trackingOperationId; }
+            set { this._trackingOperationId = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DeleteOperationResponse class.
+        /// </summary>
+        public DeleteOperationResponse()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DeleteOperationResponse class
+        /// with required arguments.
+        /// </summary>
+        public DeleteOperationResponse(string trackingOperationId, OperationStatus status, DateTimeOffset startTime)
+            : this()
+        {
+            if (trackingOperationId == null)
+            {
+                throw new ArgumentNullException("trackingOperationId");
+            }
+            this.TrackingOperationId = trackingOperationId;
+            this.Status = status;
+            this.StartTime = startTime;
+        }
+    }
+    
+    /// <summary>
     /// Describes a disk.
     /// </summary>
     public partial class Disk
@@ -3628,6 +3712,52 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class ComputeManagementClientExtensions
     {
         /// <summary>
+        /// The Get Delete Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetDeleteOperationStatus to determine whether the
+        /// operation has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Compute.IComputeManagementClient.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// The compute long running operation response.
+        /// </returns>
+        public static DeleteOperationResponse GetDeleteOperationStatus(this IComputeManagementClient operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IComputeManagementClient)s).GetDeleteOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Delete Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetDeleteOperationStatus to determine whether the
+        /// operation has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Compute.IComputeManagementClient.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// The compute long running operation response.
+        /// </returns>
+        public static Task<DeleteOperationResponse> GetDeleteOperationStatusAsync(this IComputeManagementClient operations, string operationStatusLink)
+        {
+            return operations.GetDeleteOperationStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call GetLongRunningOperationStatus to determine whether the
@@ -3779,6 +3909,23 @@ namespace Microsoft.Azure.Management.Compute
         {
             get; 
         }
+        
+        /// <summary>
+        /// The Get Delete Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetDeleteOperationStatus to determine whether the
+        /// operation has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The compute long running operation response.
+        /// </returns>
+        Task<DeleteOperationResponse> GetDeleteOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Operation Status operation returns the status of the
@@ -4099,6 +4246,240 @@ namespace Microsoft.Azure.Management.Compute
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+        
+        /// <summary>
+        /// The Get Delete Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetDeleteOperationStatus to determine whether the
+        /// operation has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The compute long running operation response.
+        /// </returns>
+        public async Task<DeleteOperationResponse> GetDeleteOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetDeleteOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DeleteOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DeleteOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken operationIdValue = responseDoc["operationId"];
+                            if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                            {
+                                string operationIdInstance = ((string)operationIdValue);
+                                result.TrackingOperationId = operationIdInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset startTimeInstance = ((DateTimeOffset)startTimeValue);
+                                result.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = responseDoc["endTime"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTimeOffset endTimeInstance = ((DateTimeOffset)endTimeValue);
+                                result.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                ApiError errorInstance = new ApiError();
+                                result.Error = errorInstance;
+                                
+                                JToken detailsArray = errorValue["details"];
+                                if (detailsArray != null && detailsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken detailsValue in ((JArray)detailsArray))
+                                    {
+                                        ApiErrorBase apiErrorBaseInstance = new ApiErrorBase();
+                                        errorInstance.Details.Add(apiErrorBaseInstance);
+                                        
+                                        JToken codeValue = detailsValue["code"];
+                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                        {
+                                            string codeInstance = ((string)codeValue);
+                                            apiErrorBaseInstance.Code = codeInstance;
+                                        }
+                                        
+                                        JToken targetValue = detailsValue["target"];
+                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                        {
+                                            string targetInstance = ((string)targetValue);
+                                            apiErrorBaseInstance.Target = targetInstance;
+                                        }
+                                        
+                                        JToken messageValue = detailsValue["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            apiErrorBaseInstance.Message = messageInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken innererrorValue = errorValue["innererror"];
+                                if (innererrorValue != null && innererrorValue.Type != JTokenType.Null)
+                                {
+                                    InnerError innererrorInstance = new InnerError();
+                                    errorInstance.InnerError = innererrorInstance;
+                                    
+                                    JToken exceptiontypeValue = innererrorValue["exceptiontype"];
+                                    if (exceptiontypeValue != null && exceptiontypeValue.Type != JTokenType.Null)
+                                    {
+                                        string exceptiontypeInstance = ((string)exceptiontypeValue);
+                                        innererrorInstance.ExceptionType = exceptiontypeInstance;
+                                    }
+                                    
+                                    JToken errordetailValue = innererrorValue["errordetail"];
+                                    if (errordetailValue != null && errordetailValue.Type != JTokenType.Null)
+                                    {
+                                        string errordetailInstance = ((string)errordetailValue);
+                                        innererrorInstance.ErrorDetail = errordetailInstance;
+                                    }
+                                }
+                                
+                                JToken codeValue2 = errorValue["code"];
+                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                {
+                                    string codeInstance2 = ((string)codeValue2);
+                                    errorInstance.Code = codeInstance2;
+                                }
+                                
+                                JToken targetValue2 = errorValue["target"];
+                                if (targetValue2 != null && targetValue2.Type != JTokenType.Null)
+                                {
+                                    string targetInstance2 = ((string)targetValue2);
+                                    errorInstance.Target = targetInstance2;
+                                }
+                                
+                                JToken messageValue2 = errorValue["message"];
+                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                {
+                                    string messageInstance2 = ((string)messageValue2);
+                                    errorInstance.Message = messageInstance2;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
             }
         }
         
@@ -5201,7 +5582,7 @@ namespace Microsoft.Azure.Management.Compute
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -10819,7 +11200,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        public static ComputeOperationResponse BeginDeleting(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
+        public static DeleteOperationResponse BeginDeleting(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -10844,7 +11225,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        public static Task<ComputeOperationResponse> BeginDeletingAsync(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
+        public static Task<DeleteOperationResponse> BeginDeletingAsync(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
         {
             return operations.BeginDeletingAsync(resourceGroupName, vmName, CancellationToken.None);
         }
@@ -11155,9 +11536,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Required. The name of the virtual machine.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        public static ComputeLongRunningOperationResponse Delete(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
+        public static DeleteOperationResponse Delete(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -11180,9 +11561,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Required. The name of the virtual machine.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        public static Task<ComputeLongRunningOperationResponse> DeleteAsync(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
+        public static Task<DeleteOperationResponse> DeleteAsync(this IVirtualMachineOperations operations, string resourceGroupName, string vmName)
         {
             return operations.DeleteAsync(resourceGroupName, vmName, CancellationToken.None);
         }
@@ -11723,7 +12104,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        Task<ComputeOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken);
+        Task<DeleteOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The operation to power off (stop) a virtual machine.
@@ -11846,9 +12227,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        Task<ComputeLongRunningOperationResponse> DeleteAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken);
+        Task<DeleteOperationResponse> DeleteAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Sets the state of the VM as Generalized.
@@ -14736,7 +15117,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        public async Task<ComputeOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken)
+        public async Task<DeleteOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -14823,7 +15204,7 @@ namespace Microsoft.Azure.Management.Compute
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -14835,9 +15216,9 @@ namespace Microsoft.Azure.Management.Compute
                     }
                     
                     // Create Result
-                    ComputeOperationResponse result = null;
+                    DeleteOperationResponse result = null;
                     // Deserialize Response
-                    result = new ComputeOperationResponse();
+                    result = new DeleteOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
@@ -14846,6 +15227,18 @@ namespace Microsoft.Azure.Management.Compute
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Conflict)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)
@@ -15523,9 +15916,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        public async Task<ComputeLongRunningOperationResponse> DeleteAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken)
+        public async Task<DeleteOperationResponse> DeleteAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -15540,20 +15933,24 @@ namespace Microsoft.Azure.Management.Compute
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            ComputeOperationResponse response = await client.VirtualMachines.BeginDeletingAsync(resourceGroupName, vmName, cancellationToken).ConfigureAwait(false);
+            DeleteOperationResponse response = await client.VirtualMachines.BeginDeletingAsync(resourceGroupName, vmName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            ComputeLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+            DeleteOperationResponse result = await client.GetDeleteOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+                result = await client.GetDeleteOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 30;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
