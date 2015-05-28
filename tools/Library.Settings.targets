@@ -33,6 +33,7 @@
     <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
     <AdditionalBinariesFolder>$(LibraryFxTarget)\</AdditionalBinariesFolder>
     <NoWarn>1591;1573;1570;1573</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
