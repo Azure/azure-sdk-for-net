@@ -118,7 +118,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.Last();
+                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.Where(r => r.Properties.Type == "BuiltInRole").Last();
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     Properties = new RoleAssignmentProperties()
@@ -347,29 +347,35 @@ namespace Authorization.Tests
                 foreach (var roleDefinition in allRoleDefinitions.RoleDefinitions)
                 {
                     var singleRole = client.RoleDefinitions.Get(roleDefinition.Name);
-
+                    
                     Assert.NotNull(singleRole);
-                    Assert.NotNull(singleRole.StatusCode);
-                    Assert.NotNull(singleRole.RoleDefinition);
-                    Assert.NotNull(singleRole.RoleDefinition.Id);
-                    Assert.NotNull(singleRole.RoleDefinition.Name);
-                    Assert.NotNull(singleRole.RoleDefinition.Type);
-                    Assert.NotNull(singleRole.RoleDefinition.Properties);
-                    Assert.NotNull(singleRole.RoleDefinition.Properties.Description);
-                    Assert.NotNull(singleRole.RoleDefinition.Properties.RoleName);
-                    Assert.NotNull(singleRole.RoleDefinition.Properties.Scope);
-                    Assert.NotNull(singleRole.RoleDefinition.Properties.Type);
-                    Assert.NotNull(singleRole.RoleDefinition.Properties.Permissions);
-                    // The service does not return these as AssignableScopes - when it does this test will need to be updated along with other tests in this file.
-                    Assert.Empty(singleRole.RoleDefinition.Properties.AssignableScopes);
 
-                    foreach(var permission in singleRole.RoleDefinition.Properties.Permissions) 
-                    { 
-                        Assert.NotNull(permission.Actions); 
-                        Assert.NotNull(permission.NotActions); 
-                        Assert.False(permission.Actions.Count() == 0 && 
-                        permission.NotActions.Count() == 0); 
-                    } 
+                    if (singleRole.RoleDefinition.Properties.Type == "BuiltInRole")
+                    {
+                        Assert.NotNull(singleRole.StatusCode);
+                        Assert.NotNull(singleRole.RoleDefinition);
+                        Assert.NotNull(singleRole.RoleDefinition.Id);
+                        Assert.NotNull(singleRole.RoleDefinition.Name);
+                        Assert.NotNull(singleRole.RoleDefinition.Type);
+                        Assert.NotNull(singleRole.RoleDefinition.Properties);
+                        Assert.NotNull(singleRole.RoleDefinition.Properties.Description);
+                        Assert.NotNull(singleRole.RoleDefinition.Properties.RoleName);
+                        Assert.NotNull(singleRole.RoleDefinition.Properties.Type);
+                        Assert.NotNull(singleRole.RoleDefinition.Properties.Permissions);
+                   
+                        foreach(var assignableScope in singleRole.RoleDefinition.Properties.AssignableScopes)
+                        {
+                            Assert.True(!string.IsNullOrWhiteSpace(assignableScope));
+                        }
+
+                        foreach(var permission in singleRole.RoleDefinition.Properties.Permissions) 
+                        { 
+                            Assert.NotNull(permission.Actions); 
+                            Assert.NotNull(permission.NotActions); 
+                            Assert.False(permission.Actions.Count() == 0 && 
+                            permission.NotActions.Count() == 0); 
+                        }
+                    }
                 }
             }
         }
@@ -411,72 +417,90 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Not yet implemented")]
+        [Fact]
         public void RoleDefinitionUpdateTests()
         {
+            const string RoleDefIdPrefix = "/providers/Microsoft.Authorization/roleDefinitions/";
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = testContext.GetAuthorizationManagementClient();
 
+                RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
+                string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
+                string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
-                // Create a role definition
-                var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, new RoleDefinitionCreateOrUpdateParameters
+                // Create a custom role definition
+                try
                 {
-                    RoleDefinition =
+                    createOrUpdateParams = new RoleDefinitionCreateOrUpdateParameters()
                     {
-                        Id = roleDefinitionId.ToString(),
-                        Properties = new RoleDefinitionProperties()
+                        RoleDefinition = new RoleDefinition()
                         {
-                            RoleName = "NewRoleName"
-                        }
-                    }
-                });
-
-                var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, new RoleDefinitionCreateOrUpdateParameters
-                {
-                    RoleDefinition =
-                    {
-                        Id = roleDefinitionId.ToString(),
-                        Properties = new RoleDefinitionProperties()
-                        {
-                            RoleName = "NewRoleName",
-                            Permissions = new List<Permission>()
-                            {
-                                new Permission()
-                                {
-                                    Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
-                                }
-                            }
-                        }
-                    }
-                });
-
-                // Compare the updatedRoleDefinition with roleDefinition.
-                // Id should be same.
-                // Role should be different.
-                // Permissions should be different.
-                // Delete the role definition.
-
-                // Negative test where the role name and actions are not provided.
-                var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
-
-                Assert.Throws<Hyak.Common.CloudException>(() => client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, new RoleDefinitionCreateOrUpdateParameters
-                    {
-                        RoleDefinition =
-                        {
-                            Id = roleDefinitionId.ToString(),
+                            // Name = roleDefinitionId,
                             Properties = new RoleDefinitionProperties()
+                            {
+                                RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
+                                Description = "New Test Custom Role",
+                                Permissions = new List<Permission>()
+                                {
+                                    new Permission()
+                                    {
+                                        Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
+                                    }
+                                },
+                                AssignableScopes = new List<string>() { currentSubscriptionId },
+                            },
                         }
-                    }));
-                TestUtilities.EndTest();
+                    };
 
-                Assert.Throws<Hyak.Common.CloudException>(() => client.RoleDefinitions.Delete(roleDefinition2Id.ToString()));
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+
+                    // Update role name, permissions for the custom role
+                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
+                    createOrUpdateParams.RoleDefinition.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
+
+                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                   
+                    // Validate the updated roleDefinition properties.
+                    Assert.NotNull(updatedRoleDefinition);
+                    Assert.NotNull(updatedRoleDefinition.RoleDefinition);
+                    Assert.Equal(updatedRoleDefinition.RoleDefinition.Id, roleDefinition.RoleDefinition.Id);
+                    Assert.Equal(updatedRoleDefinition.RoleDefinition.Name, roleDefinition.RoleDefinition.Name);
+                    // Role name and permissions should be updated
+                    Assert.Equal("UpdatedRoleName_" + roleDefinitionId.ToString(), updatedRoleDefinition.RoleDefinition.Properties.RoleName);
+                    Assert.NotEmpty(updatedRoleDefinition.RoleDefinition.Properties.Permissions);
+                    Assert.Equal("Microsoft.Authorization/*/Read", updatedRoleDefinition.RoleDefinition.Properties.Permissions.Single().Actions.First());
+                    Assert.Equal("Microsoft.Support/*/read", updatedRoleDefinition.RoleDefinition.Properties.Permissions.Single().Actions.Last());
+                    // Same assignable scopes
+                    Assert.NotEmpty(updatedRoleDefinition.RoleDefinition.Properties.AssignableScopes);
+                    Assert.Equal(currentSubscriptionId.ToLower(), updatedRoleDefinition.RoleDefinition.Properties.AssignableScopes.Single().ToLower());
+                
+                    // Negative test: Update the role with an empty RoleName 
+                    createOrUpdateParams.RoleDefinition.Properties.RoleName = null;
+
+                    try
+                    {
+                        client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    }
+                    catch (CloudException ce)
+                    {
+                        Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                        Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    Assert.NotNull(deleteResult);
+                }
+
+                TestUtilities.EndTest();
             }
         }
 
-        [Fact(Skip = "Not yet implemented")]
+        [Fact]
         public void RoleDefinitionCreateTests()
         {
             const string RoleDefIdPrefix = "/providers/Microsoft.Authorization/roleDefinitions/";
@@ -485,105 +509,167 @@ namespace Authorization.Tests
                 context.Start();
                 var client = testContext.GetAuthorizationManagementClient();
 
+                RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
+                string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
+                string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
                 // Create a custom role definition
-                var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, new RoleDefinitionCreateOrUpdateParameters
+                try
                 {
-                    RoleDefinition =
+                    createOrUpdateParams = new RoleDefinitionCreateOrUpdateParameters()
                     {
-                        Id = string.Concat(RoleDefIdPrefix, roleDefinitionId.ToString("D")),
-                        Name = roleDefinitionId,
-                        Properties = new RoleDefinitionProperties()
+                        RoleDefinition = new RoleDefinition()
                         {
-                            RoleName = "NewRoleName",
-                            Permissions = new List<Permission>()
+                            Properties = new RoleDefinitionProperties()
                             {
-                                new Permission()
+                                RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
+                                Description = "New Test Custom Role",
+                                Permissions = new List<Permission>()
                                 {
-                                    Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
-                                }
+                                    new Permission()
+                                    {
+                                        Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
+                                    }
+                                },
+                                AssignableScopes = new List<string>() { currentSubscriptionId },
                             },
-                            AssignableScopes = new List<string>() { "Scope1", "Scope2" },
-                            Type = "CustomRole"
                         }
-                    }
-                });
-                             
-                // TODO: Validate the roleDefinition properties.
-                                
+                    };
+
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+
+                    // Validate the roleDefinition properties.
+                    Assert.NotNull(roleDefinition);
+                    Assert.NotNull(roleDefinition.RoleDefinition);
+                    Assert.Equal(fullRoleId, roleDefinition.RoleDefinition.Id);
+                    Assert.Equal(roleDefinitionId, roleDefinition.RoleDefinition.Name);
+                    Assert.NotNull(roleDefinition.RoleDefinition.Properties);
+                    Assert.Equal("CustomRole", roleDefinition.RoleDefinition.Properties.Type);
+                    Assert.Equal("New Test Custom Role", roleDefinition.RoleDefinition.Properties.Description);
+                    Assert.NotEmpty(roleDefinition.RoleDefinition.Properties.AssignableScopes);
+                    Assert.Equal(currentSubscriptionId.ToLower(), roleDefinition.RoleDefinition.Properties.AssignableScopes.Single().ToLower());
+                    Assert.NotEmpty(roleDefinition.RoleDefinition.Properties.Permissions);
+                    Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.RoleDefinition.Properties.Permissions.Single().Actions.Single());
+
+                }
+                finally
+                {
+                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    Assert.NotNull(deleteResult);
+                }
+
+                // Negative test - create a roledefinition with same name (but different id) as an already existing custom role
+                try
+                {
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, createOrUpdateParams);
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
+                finally
+                {
+                    var deleteResult = client.RoleDefinitions.Delete(fullRoleId);
+                    Assert.NotNull(deleteResult);
+                }
+
+                // Negative test - create a roledefinition with same id as a built-in role
+                try
+                {
+                    var allRoleDefinitions = client.RoleDefinitions.List();
+                    Assert.NotNull(allRoleDefinitions);
+                    Assert.NotNull(allRoleDefinitions.RoleDefinitions);
+                    RoleDefinition builtInRole = allRoleDefinitions.RoleDefinitions.First(x => x.Properties.Type == "BuiltInRole");
+
+                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + builtInRole.Name.ToString();
+                    client.RoleDefinitions.CreateOrUpdate(builtInRole.Name, createOrUpdateParams);
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
+              
                 // Negative test - create a roledefinition with type=BuiltInRole
-                var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
+                createOrUpdateParams.RoleDefinition.Properties.Type = "BuiltInRole";
 
-                Assert.Throws<Hyak.Common.CloudException>(() => client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, new RoleDefinitionCreateOrUpdateParameters
+                try
                 {
-                    RoleDefinition =
-                    {
-                        Id = string.Concat(RoleDefIdPrefix, roleDefinition2Id.ToString("D")),
-                        Name = roleDefinition2Id,
-                        Properties = new RoleDefinitionProperties()
-                        {
-                            RoleName = "NewRoleName2",
-                            Permissions = new List<Permission>()
-                            {
-                                new Permission()
-                                {
-                                    Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
-                                }
-                            },
-                            AssignableScopes = new List<string>() { "Scope1", "Scope2" },
-                            Type = "BuiltInRole"
-                        }
-                    }
-                }));
-
-                // Negative Test - create a custom role with empty role id
-                Assert.Throws<Hyak.Common.CloudException>(() => client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, new RoleDefinitionCreateOrUpdateParameters
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                }
+                catch(CloudException ce)
                 {
-                    RoleDefinition =
-                    {
-                        Id = string.Empty,
-                        Name = Guid.Empty,
-                        Properties = new RoleDefinitionProperties()
-                        {
-                            RoleName = "NewRoleName2",
-                            Permissions = new List<Permission>()
-                            {
-                                new Permission()
-                                {
-                                    Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
-                                }
-                            },
-                            AssignableScopes = new List<string>() { "Scope1", "Scope2" },
-                            Type = "CustomRole"
-                        }
-                    }
-                }));
-
-                // Negative Test - create a custom role with Id's last segment not a GUID 
-                // (unsure if the service will throw or accept - but would be good to know and can be removed later if not relevant)
-                Assert.Throws<Hyak.Common.CloudException>(() => client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, new RoleDefinitionCreateOrUpdateParameters
-                {
-                    RoleDefinition =
-                    {
-                        Id = string.Concat(RoleDefIdPrefix, "NON_GUID_VALUE"),
-                        Name = Guid.NewGuid(),
-                        Properties = new RoleDefinitionProperties()
-                        {
-                            RoleName = "NewRoleName2",
-                            Permissions = new List<Permission>()
-                            {
-                                new Permission()
-                                {
-                                    Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
-                                }
-                            },
-                            AssignableScopes = new List<string>() { "Scope1", "Scope2" },
-                            Type = "CustomRole"
-                        }
-                    }
-                }));
+                    Assert.Equal("InvalidRoleDefinitionType", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
                 
+                // Negative Test - create a custom role with empty role name
+                // reset the role type
+                createOrUpdateParams.RoleDefinition.Properties.Type = null;
+                createOrUpdateParams.RoleDefinition.Properties.RoleName = string.Empty;
+
+                try
+                {
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
+
+                // Negative Test - create a custom role with empty assignable scopes
+                // reset the role name
+                createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + roleDefinitionId.ToString();
+                createOrUpdateParams.RoleDefinition.Properties.AssignableScopes = new List<string>();
+
+                try
+                {
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal("MissingAssignableScopes", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
+
+                // Negative Test - create a custom role with invalid value for assignable scopes
+                createOrUpdateParams.RoleDefinition.Properties.AssignableScopes.Add("Invalid_Scope");
+
+                try
+                {
+                    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal("AssignableScopeNotUnderSubscriptionScope", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
+
+                // Negative Test - create a custom role with empty permissions
+                // reset assignable scopes
+
+                /* TODO: Uncomment the below test case when PAS/PAS-RP determine whether to implement blocking of 
+                 * create with empty Permission list
+                 */
+                ////createOrUpdateParams.RoleDefinition.Properties.AssignableScopes.Remove("Invalid_Scope");
+                ////createOrUpdateParams.RoleDefinition.Properties.AssignableScopes.Add(currentSubscriptionId);
+                ////createOrUpdateParams.RoleDefinition.Properties.Permissions = new List<Permission>();
+
+                ////try
+                ////{
+                ////    client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
+                ////}
+                ////catch (CloudException ce)
+                ////{
+                ////    Assert.Equal("AssignableScopeNotUnderSubscriptionScope", ce.Error.Code);
+                ////    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                ////}
+
                 TestUtilities.EndTest();
             }
         }
