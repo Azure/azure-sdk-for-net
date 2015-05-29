@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class GZipCompression : Compression
     {
         /// <summary>
-        /// The compression levels supported are: Optimal and Fastest.
+        /// The <see cref="CompressionLevel "/> used.
         /// </summary>
         public string Level { get; set; }
     }
