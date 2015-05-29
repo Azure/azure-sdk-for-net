@@ -1,0 +1,47 @@
+﻿<NetworkConfiguration
+  xmlns="http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <VirtualNetworkConfiguration>
+    <Dns>
+      <DnsServers />
+    </Dns>
+    <LocalNetworkSites>
+      <LocalNetworkSite name="coexistenceLocalNetworkSiteName">
+        <AddressSpace>
+          <!-- A customer can define multiple address prefixes in this section. -->
+          <AddressPrefix>192.168.2.0/24</AddressPrefix>
+          <AddressPrefix>192.168.3.0/24</AddressPrefix>
+        </AddressSpace>
+        <!-- VPNGatewayAddress specifies the public IP address of the customer VPN gateway device. -->
+        <VPNGatewayAddress>204.95.99.237</VPNGatewayAddress>
+      </LocalNetworkSite>
+    </LocalNetworkSites>
+    <VirtualNetworkSites>
+      <VirtualNetworkSite name="coexistenceVirtualNetworkSiteName" AffinityGroup="DefaultAffinity-1">
+        <AddressSpace>
+          <!-- A customer can define multiple address prefixes in this section. -->
+          <AddressPrefix>192.168.0.0/24</AddressPrefix>
+          <AddressPrefix>192.168.1.0/24</AddressPrefix>
+        </AddressSpace>
+        <Subnets>
+          <Subnet name="FrontEndSubnet">
+            <AddressPrefix>192.168.0.0/28</AddressPrefix>
+          </Subnet>
+          <Subnet name="BackEndSubnet">
+            <AddressPrefix>192.168.1.0/28</AddressPrefix>
+          </Subnet>
+          <Subnet name="GatewaySubnet">
+            <AddressPrefix>192.168.1.16/28</AddressPrefix>
+          </Subnet>
+        </Subnets>
+        <DnsServersRef/>
+        <Gateway profile="Small">
+          <ConnectionsToLocalNetwork>
+            <!--A customer can specify more than one local network (customer site) to connect to. Only 1 local site per virtual network will be supported for IaaS v1.-->
+            <LocalNetworkSiteRef name="coexistenceLocalNetworkSiteName" />
+          </ConnectionsToLocalNetwork>
+        </Gateway>
+      </VirtualNetworkSite>
+    </VirtualNetworkSites>
+  </VirtualNetworkConfiguration>
+</NetworkConfiguration>

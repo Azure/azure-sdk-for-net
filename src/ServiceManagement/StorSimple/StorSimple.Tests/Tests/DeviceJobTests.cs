@@ -158,7 +158,7 @@ namespace StorSimple.Tests.Tests
         /// In order to stop a job we need to first schedule a job that is going to run long 
         /// enough for it to be stopped.
         /// </summary>
-        /// <param name="details">Device details.</param>
+        /// <param name="deviceInfo">Device details.</param>
         private void CreateSupportingVolumeAndBackupPolicy(DeviceInfo deviceInfo)
         {
             var client = GetServiceClient<StorSimpleManagementClient>();
