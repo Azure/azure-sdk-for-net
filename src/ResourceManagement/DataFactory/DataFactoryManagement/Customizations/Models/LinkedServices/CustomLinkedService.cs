@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-#if ADF_INTERNAL
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
@@ -22,10 +21,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Custom linked service.
     /// </summary>
-    public sealed class CustomLinkedService : LinkedServiceTypeProperties
+    public sealed class CustomLinkedService : LinkedServiceTypeProperties, IGenericTypeProperties
     {
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+
         public CustomLinkedService()
         {   
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
         public CustomLinkedService(IDictionary<string, JToken> serviceExtraProperties)
@@ -34,4 +36,3 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
     }
 }
-#endif

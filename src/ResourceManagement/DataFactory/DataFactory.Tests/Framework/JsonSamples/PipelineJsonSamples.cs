@@ -18,7 +18,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class PipelineJsonSamples
     {
-#if ADF_INTERNAL
         [JsonSample]
         public const string ActivityTypePipeline = @"
 {
@@ -50,7 +49,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-#endif
 
         [JsonSample(propertyBagKeys: new string[] 
             { 
@@ -750,51 +748,51 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
-#if ADF_INTERNAL
-        [JsonSample("ExtraProperties")]
-        public const string ExtraPropertiesPipeline = @"
-{
-    name: ""My machine learning pipeline"",
-    properties: 
-    {
-        description : ""ML pipeline description"",
-        hubName : ""someHub"",
-        activities:
-        [
-            {
-                name: ""MLActivity"",
-                description: ""Test activity description"", 
-                type: ""AzureMLBatchScoringActivity"",
-                typeProperties: { 
-                    extraProp1: ""extraValue1"", 
-                    extraProp2: 5
-                },
-                inputs: 
-                [ 
-                    {
-                        name: ""csvBlob""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        name: ""sasCopyBlob""
-                    }
-                ],
-                linkedServiceName: ""mlLinkedService"",
-                policy:
-                {
-                    concurrency: 3,
-                    executionPriorityOrder: ""NewestFirst"",
-                    retry: 3,
-                    timeout: ""00:00:05"",
-                    delay: ""00:00:01""
-                }
-            }
-        ]
-    }
-}";
-#endif
+//#if ADF_INTERNAL
+//        [JsonSample("ExtraProperties")]
+//        public const string ExtraPropertiesPipeline = @"
+//{
+//    name: ""My machine learning pipeline"",
+//    properties: 
+//    {
+//        description : ""ML pipeline description"",
+//        hubName : ""someHub"",
+//        activities:
+//        [
+//            {
+//                name: ""MLActivity"",
+//                description: ""Test activity description"", 
+//                type: ""AzureMLBatchScoringActivity"",
+//                typeProperties: { 
+//                    extraProp1: ""extraValue1"", 
+//                    extraProp2: 5
+//                },
+//                inputs: 
+//                [ 
+//                    {
+//                        name: ""csvBlob""
+//                    }
+//                ],
+//                outputs: 
+//                [ 
+//                    {
+//                        name: ""sasCopyBlob""
+//                    }
+//                ],
+//                linkedServiceName: ""mlLinkedService"",
+//                policy:
+//                {
+//                    concurrency: 3,
+//                    executionPriorityOrder: ""NewestFirst"",
+//                    retry: 3,
+//                    timeout: ""00:00:05"",
+//                    delay: ""00:00:01""
+//                }
+//            }
+//        ]
+//    }
+//}";
+//#endif
 
         [JsonSample(propertyBagKeys: new string[] 
             { 
@@ -838,6 +836,47 @@ namespace DataFactory.Tests.Framework.JsonSamples
 					retry:	1,
 					timeout: ""01:00:00""
 				}
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string StoredProcedureActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Run a SQL stored procedure activity."",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""StoredProcedureActivity"",
+                name: ""MyProcActivity"",
+                typeProperties:
+                {
+                    storedProcedureName: ""StoredProcName"", 
+                    storedProcedureParameters: {
+                        ""param1"": ""value1"",
+                        ""param2"": ""value2"",
+                        ""param3"": ""value3"",
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""ProcessedBlob""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
             }
         ]
     }

@@ -19,11 +19,7 @@ using Microsoft.Azure.Management.DataFactories.Common.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     public class TableProperties : AdfResourceProperties<TableTypeProperties, GenericTable>
-#else
-    public class TableProperties : AdfResourceProperties<TableTypeProperties>
-#endif
     {
         /// <summary>
         /// Required. The referenced data linkedService name.
@@ -84,7 +80,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.LinkedServiceName = linkedServiceName;
         }
 
-#if ADF_INTERNAL
         public TableProperties(
             GenericTable typeProperties,
             Availability availability,
@@ -106,7 +101,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.Availability = availability;
             this.LinkedServiceName = linkedServiceName;
         }
-#endif
         
         /// <summary>
         /// Initializes a new instance of TableProperties with CreateTime, 

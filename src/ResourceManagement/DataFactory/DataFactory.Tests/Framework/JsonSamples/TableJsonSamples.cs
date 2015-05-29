@@ -18,7 +18,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class TableJsonSamples
     {
-#if ADF_INTERNAL
         [JsonSample]
         public const string CustomTable = @"
 {
@@ -42,7 +41,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-#endif
 
         [JsonSample]
         public const string HDISTable = @"

@@ -58,7 +58,6 @@ namespace DataFactory.Tests.UnitTests
             this.TestLinkedServiceValidateSamples(samples);
         }
 
-#if ADF_INTERNAL
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -68,7 +67,6 @@ namespace DataFactory.Tests.UnitTests
                 JsonSampleCommon.GetJsonSamplesFromType<CustomLinkedServiceJsonSamples>();
             this.TestLinkedServiceJsonSamples(samples, true);
         }
-#endif
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
@@ -94,7 +92,6 @@ namespace DataFactory.Tests.UnitTests
             Assert.Contains("is required", ex.Message);
         }
 
-#if ADF_INTERNAL
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -131,7 +128,6 @@ namespace DataFactory.Tests.UnitTests
             LinkedService linkedService = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericLinkedService>(linkedService.Properties.TypeProperties);
         }
-#endif
 
 #if ADF_INTERNAL
         [Fact]
@@ -233,9 +229,7 @@ namespace DataFactory.Tests.UnitTests
         private void TestLinkedServiceJson(string json)
         {
             LinkedService linkedService = this.ConvertAndTestJson(json);
-#if ADF_INTERNAL
             Assert.IsNotType<GenericLinkedService>(linkedService.Properties.TypeProperties);
-#endif
         }
 
         private void TestLinkedServiceCustomJson(string json)
