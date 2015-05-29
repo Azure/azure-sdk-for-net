@@ -7624,7 +7624,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        public static ComputeOperationResponse BeginDeleting(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+        public static DeleteOperationResponse BeginDeleting(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -7653,7 +7653,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        public static Task<ComputeOperationResponse> BeginDeletingAsync(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+        public static Task<DeleteOperationResponse> BeginDeletingAsync(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
         {
             return operations.BeginDeletingAsync(resourceGroupName, vmName, vmExtensionName, CancellationToken.None);
         }
@@ -7729,9 +7729,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Required. The name of the virtual machine extension.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        public static ComputeLongRunningOperationResponse Delete(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+        public static DeleteOperationResponse Delete(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -7755,9 +7755,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Required. The name of the virtual machine extension.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        public static Task<ComputeLongRunningOperationResponse> DeleteAsync(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+        public static Task<DeleteOperationResponse> DeleteAsync(this IVirtualMachineExtensionOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
         {
             return operations.DeleteAsync(resourceGroupName, vmName, vmExtensionName, CancellationToken.None);
         }
@@ -7914,7 +7914,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        Task<ComputeOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken);
+        Task<DeleteOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The operation to create or update the extension.
@@ -7952,9 +7952,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        Task<ComputeLongRunningOperationResponse> DeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken);
+        Task<DeleteOperationResponse> DeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The operation to get the extension.
@@ -8612,7 +8612,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <returns>
         /// The compute long running operation response.
         /// </returns>
-        public async Task<ComputeOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken)
+        public async Task<DeleteOperationResponse> BeginDeletingAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -8706,7 +8706,7 @@ namespace Microsoft.Azure.Management.Compute
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -8718,9 +8718,9 @@ namespace Microsoft.Azure.Management.Compute
                     }
                     
                     // Create Result
-                    ComputeOperationResponse result = null;
+                    DeleteOperationResponse result = null;
                     // Deserialize Response
-                    result = new ComputeOperationResponse();
+                    result = new DeleteOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
@@ -8729,6 +8729,18 @@ namespace Microsoft.Azure.Management.Compute
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Conflict)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)
@@ -8833,9 +8845,9 @@ namespace Microsoft.Azure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Compute service response for long-running operations.
+        /// The compute long running operation response.
         /// </returns>
-        public async Task<ComputeLongRunningOperationResponse> DeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken)
+        public async Task<DeleteOperationResponse> DeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -8851,20 +8863,24 @@ namespace Microsoft.Azure.Management.Compute
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            ComputeOperationResponse response = await client.VirtualMachineExtensions.BeginDeletingAsync(resourceGroupName, vmName, vmExtensionName, cancellationToken).ConfigureAwait(false);
+            DeleteOperationResponse response = await client.VirtualMachineExtensions.BeginDeletingAsync(resourceGroupName, vmName, vmExtensionName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            ComputeLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+            DeleteOperationResponse result = await client.GetDeleteOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+                result = await client.GetDeleteOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 30;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
@@ -15232,11 +15248,11 @@ namespace Microsoft.Azure.Management.Compute
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
