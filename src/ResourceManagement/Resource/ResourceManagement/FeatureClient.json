@@ -46,34 +46,8 @@
               "$ref": "#/definitions/FeatureOperationsListResult"
             }
           }
-        }
-      }
-    },
-    "/{nextLink}": {
-      "get": {
-        "tags": [
-          "Features"
-        ],
-        "operationId": "Features_ListAllNext",
-        "description": "Gets a list of previewed features of a subscription.",
-        "parameters": [
-          {
-            "name": "nextLink",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "NextLink from the previous successful call to List operation.",
-            "x-skip-url-encoding": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/FeatureOperationsListResult"
-            }
-          }
-        }
+        },
+        "x-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features": {
@@ -112,7 +86,8 @@
               "$ref": "#/definitions/FeatureOperationsListResult"
             }
           }
-        }
+        },
+        "x-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}": {
@@ -248,7 +223,7 @@
           },
           "description": "Gets or sets the list of Features."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }

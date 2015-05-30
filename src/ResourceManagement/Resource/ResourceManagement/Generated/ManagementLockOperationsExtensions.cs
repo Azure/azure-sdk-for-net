@@ -489,5 +489,133 @@ namespace Microsoft.Azure.Management.Resources
                 return result.Body;
             }
 
+            /// <summary>
+            /// Gets all the management locks of a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ManagementLockListResult ListAtResourceGroupLevelNext(this IManagementLockOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IManagementLockOperations)s).ListAtResourceGroupLevelNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the management locks of a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ManagementLockListResult> ListAtResourceGroupLevelNextAsync( this IManagementLockOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtResourceGroupLevelNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets all the management locks of a resource or any level below resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ManagementLockListResult ListAtResourceLevelNext(this IManagementLockOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IManagementLockOperations)s).ListAtResourceLevelNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the management locks of a resource or any level below resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ManagementLockListResult> ListAtResourceLevelNextAsync( this IManagementLockOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtResourceLevelNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Get a list of management locks at resource level or below.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ManagementLockListResult ListNextNext(this IManagementLockOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IManagementLockOperations)s).ListNextNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a list of management locks at resource level or below.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ManagementLockListResult> ListNextNextAsync( this IManagementLockOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ManagementLockListResult> result = await operations.ListNextNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Gets all the management locks of a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ManagementLockListResult ListAtSubscriptionLevelNext(this IManagementLockOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IManagementLockOperations)s).ListAtSubscriptionLevelNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the management locks of a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ManagementLockListResult> ListAtSubscriptionLevelNextAsync( this IManagementLockOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtSubscriptionLevelNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
     }
 }

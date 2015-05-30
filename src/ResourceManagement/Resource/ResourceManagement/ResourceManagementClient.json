@@ -132,34 +132,8 @@
               "$ref": "#/definitions/ProviderListResult"
             }
           }
-        }
-      }
-    },
-    "/{nextLink}": {
-      "get": {
-        "tags": [
-          "Providers"
-        ],
-        "operationId": "Providers_ListNext",
-        "description": "Get a list of deployments.",
-        "parameters": [
-          {
-            "name": "nextLink",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "NextLink from the previous successful call to List operation.",
-            "x-skip-url-encoding": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProviderListResult"
-            }
-          }
-        }
+        },
+        "x-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}": {
@@ -596,6 +570,7 @@
             }
           }
         },
+        "x-pageable": true,
         "x-odata": "#/definitions/GenericResourceExtended"
       }
     },
@@ -806,7 +781,8 @@
               "$ref": "#/definitions/TagsListResult"
             }
           }
-        }
+        },
+        "x-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations/{operationId}": {
@@ -913,7 +889,8 @@
               "$ref": "#/definitions/DeploymentOperationsListResult"
             }
           }
-        }
+        },
+        "x-pageable": true
       }
     },
     "/providers/{resourceProviderNamespace}/operations": {
@@ -1215,6 +1192,7 @@
             }
           }
         },
+        "x-pageable": true,
         "x-odata": "#/definitions/ResourceGroupExtended"
       }
     },
@@ -1479,6 +1457,7 @@
             }
           }
         },
+        "x-pageable": true,
         "x-odata": "#/definitions/DeploymentExtended"
       }
     }
@@ -1547,7 +1526,7 @@
           },
           "description": "Gets or sets the list of resource providers."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }
@@ -1649,7 +1628,7 @@
           },
           "description": "Gets or sets the list of resource groups."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }
@@ -1747,7 +1726,7 @@
           },
           "description": "Gets or sets the list of tags."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }
@@ -1823,7 +1802,7 @@
           },
           "description": "Gets or sets the list of deployments."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }
@@ -1942,7 +1921,7 @@
           },
           "description": "Gets or sets the list of resource groups."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }
@@ -2190,7 +2169,7 @@
           },
           "description": "Gets or sets the list of deployments."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }
