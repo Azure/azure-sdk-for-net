@@ -15,10 +15,9 @@
 
 using Microsoft.Azure.Subscriptions;
 using Microsoft.Azure.Test.HttpRecorder;
-using Hyak.Common.TransientFaultHandling;
 using Microsoft.Azure.Test;
-using System.Linq;
 using System.Net;
+using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
 namespace ResourceGroups.Tests
@@ -28,8 +27,7 @@ namespace ResourceGroups.Tests
         public SubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetSubscriptionClient();
-            client = client.WithHandler(handler);
+            var client = this.GetSubscriptionClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
@@ -50,16 +48,16 @@ namespace ResourceGroups.Tests
             {
                 context.Start();
                 var client = GetSubscriptionClient(handler);
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                var tenants = client.Tenants.List();
+                var tenants = client.Tenants.ListWithOperationResponseAsync().Result;
 
                 Assert.NotNull(tenants);
-                Assert.Equal(HttpStatusCode.OK, tenants.StatusCode);
-                Assert.NotNull(tenants.TenantIds);
-                Assert.NotEqual(0, tenants.TenantIds.Count());
-                Assert.NotNull(tenants.TenantIds[0].Id);
-                Assert.NotNull(tenants.TenantIds[0].TenantId);
+                Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);
+                Assert.NotNull(tenants.Body);
+                Assert.NotEqual(0, tenants.Body.Count);
+                Assert.NotNull(tenants.Body[0].ID);
+                Assert.NotNull(tenants.Body[0].TenantId);
             }
         }
     }

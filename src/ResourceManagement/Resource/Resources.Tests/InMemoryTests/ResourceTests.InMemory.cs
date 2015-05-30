@@ -32,7 +32,7 @@ namespace ResourceGroups.Tests
         {
             var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token).WithHandler(handler);
+            return new ResourceManagementClient(token, handler);
         }
         
         [Fact]
@@ -56,24 +56,18 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.Get("foo", new ResourceIdentity
-                {
-                    ResourceName = "site1",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = "2014-01-04",
-                    ResourceType = "Sites"
-                });
+            var result = client.Resources.Get("foo", "Microsoft.Web", string.Empty, "Sites", "site1", "2014-01-04");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal("South Central US", result.Resource.Location);
-            Assert.Equal("site1", result.Resource.Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Resource.Id);
-            Assert.True(result.Resource.Properties.Contains("Dedicated"));
-            Assert.Equal("Running", result.Resource.ProvisioningState);
+            Assert.Equal("South Central US", result.Location);
+            Assert.Equal("site1", result.Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
+            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Equal("Running", result.ProvisioningState);
         }
 
         [Fact]
@@ -154,23 +148,24 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.List(new ResourceListParameters
+            var result = client.Resources.List("foo", r => r.Type == "Sites");
+            /*new ResourceListParameters
             {              
                 ResourceType = "Sites"
-            });
+            });*/
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.Resources.Count());
-            Assert.Equal("South Central US", result.Resources[0].Location);
-            Assert.Equal("site1", result.Resources[0].Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Resources[0].Id);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Resources[0].Id);
-            Assert.True(result.Resources[0].Properties.Contains("Dedicated"));
-            Assert.Equal("Running", result.Resources[0].ProvisioningState);
+            Assert.Equal(2, result.Value.Count());
+            Assert.Equal("South Central US", result.Value[0].Location);
+            Assert.Equal("site1", result.Value[0].Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].ID);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].ID);
+            Assert.True(result.Value[0].Properties.ToString().Contains("Dedicated"));
+            Assert.Equal("Running", result.Value[0].ProvisioningState);
         }
 
         [Fact]

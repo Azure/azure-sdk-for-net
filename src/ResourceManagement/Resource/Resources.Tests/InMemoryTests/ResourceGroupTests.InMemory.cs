@@ -14,10 +14,8 @@
 //
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Xunit;
@@ -34,7 +32,7 @@ namespace ResourceGroups.Tests
         {
             var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token).WithHandler(handler);
+            return new ResourceManagementClient(token, handler);
         }
         
         [Fact]
@@ -78,12 +76,12 @@ namespace ResourceGroups.Tests
             Assert.Equal("tagvalue", json["tags"]["tagname"].Value<string>());
 
             // Validate response
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.ResourceGroup.Id);
-            Assert.Equal("Succeeded", result.ResourceGroup.ProvisioningState);
-            Assert.Equal("foo", result.ResourceGroup.Name);
-            Assert.Equal("finance", result.ResourceGroup.Tags["department"]);
-            Assert.Equal("tagvalue", result.ResourceGroup.Tags["tagname"]);
-            Assert.Equal("WestEurope", result.ResourceGroup.Location);
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.ID);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("foo", result.Name);
+            Assert.Equal("finance", result.Tags["department"]);
+            Assert.Equal("tagvalue", result.Tags["tagname"]);
+            Assert.Equal("WestEurope", result.Location);
         }
 
         [Fact]

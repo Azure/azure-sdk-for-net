@@ -17,12 +17,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Hyak.Common.TransientFaultHandling;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 using Microsoft.Azure.Test.HttpRecorder;
 
@@ -35,8 +34,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClient();
-            client = client.WithHandler(handler);
+            var client = this.GetResourceManagementClient(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
@@ -57,28 +55,25 @@ namespace ResourceGroups.Tests
             var resourceGroupName = TestUtilities.GenerateName("csmrg");
             var resourceName = TestUtilities.GenerateName("csmr");
             var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
-            var createResourceResult = client.Resources.CreateOrUpdate(resourceGroupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = "2014-04-01"
-                },
+            var createResourceResult = client.Resources.CreateOrUpdate(
+                resourceGroupName,
+                "Microsoft.Web",
+                string.Empty,
+                "sites",
+                resourceName,
+                "2014-04-01",
                 new GenericResource
-                    {
-                        Location = location,
-                        Properties = "{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}"
-                    });
-            var deleteResult = client.ResourceGroups.Delete(resourceGroupName);
+                {
+                    Location = location,
+                    Properties = "{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}"
+                });
+
+            client.ResourceGroups.Delete(resourceGroupName);
             var listGroupsResult = client.ResourceGroups.List(null);
 
-            Assert.Throws<CloudException>(() => client.Resources.List(new ResourceListParameters
-                {
-                    ResourceGroupName = resourceGroupName
-                }));
+            Assert.Throws<CloudException>(() => client.Resources.List(resourceGroupName));
 
-            Assert.Equal(HttpStatusCode.OK, deleteResult.StatusCode);
-            Assert.False(listGroupsResult.ResourceGroups.Any(rg => rg.Name == resourceGroupName));
+            Assert.False(listGroupsResult.Value.Any(rg => rg.Name == resourceGroupName));
             TestUtilities.EndTest();
         }
 
@@ -90,14 +85,14 @@ namespace ResourceGroups.Tests
                 context.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
                 ResourceManagementClient client = this.GetResourceManagementClient(new RecordedDelegatingHandler());
-                ResourceGroupCreateOrUpdateResult result = client.ResourceGroups.CreateOrUpdate(groupName, 
+                var result = client.ResourceGroups.CreateOrUpdate(groupName, 
                     new ResourceGroup
                         {
                             Location = DefaultLocation,
                             Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
                         });
-                var listResult = client.ResourceGroups.List(new ResourceGroupListParameters());
-                var listedGroup = listResult.ResourceGroups.FirstOrDefault((g) => string.Equals(g.Name, groupName, StringComparison.Ordinal));
+                var listResult = client.ResourceGroups.List();
+                var listedGroup = listResult.Value.FirstOrDefault((g) => string.Equals(g.Name, groupName, StringComparison.Ordinal));
                 Assert.NotNull(listedGroup);
                 Assert.Equal("finance", listedGroup.Tags["department"]);
                 Assert.Equal("tagvalue", listedGroup.Tags["tagname"]);
@@ -105,9 +100,9 @@ namespace ResourceGroups.Tests
                    string.Format("Expected location '{0}' did not match actual location '{1}'", DefaultLocation, listedGroup.Location));
                 var gottenGroup = client.ResourceGroups.Get(groupName);
                 Assert.NotNull(gottenGroup);
-                Assert.Equal<string>(groupName, gottenGroup.ResourceGroup.Name);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(DefaultLocation, gottenGroup.ResourceGroup.Location),
-                    string.Format("Expected location '{0}' did not match actual location '{1}'", DefaultLocation, gottenGroup.ResourceGroup.Location));
+                Assert.Equal<string>(groupName, gottenGroup.Name);
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(DefaultLocation, gottenGroup.Location),
+                    string.Format("Expected location '{0}' did not match actual location '{1}'", DefaultLocation, gottenGroup.Location));
             }
         }
 
@@ -121,79 +116,16 @@ namespace ResourceGroups.Tests
                 context.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
                 var client = GetResourceManagementClient(handler);
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var checkExistenceFirst = client.ResourceGroups.CheckExistence(groupName);
-                Assert.False(checkExistenceFirst.Exists);
+                Assert.False(checkExistenceFirst);
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = DefaultLocation });
 
                 var checkExistenceSecond = client.ResourceGroups.CheckExistence(groupName);
 
-                Assert.True(checkExistenceSecond.Exists);
-            }
-        }
-
-        [Fact(Skip = "Not yet implemented.")]
-        public void ListResourceGroupsWithTagNameFilter()
-        {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                string groupName = TestUtilities.GenerateName("csmrg");
-                string tagName = TestUtilities.GenerateName("csmtn");
-                var client = GetResourceManagementClient(handler);
-
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup
-                    {
-                        Location = DefaultLocation,
-                        Tags = new Dictionary<string, string> { { tagName, "" } }
-                    });
-
-                var listResult = client.ResourceGroups.List(new ResourceGroupListParameters
-                    {
-                        TagName = tagName
-                    });
-
-                foreach (var group in listResult.ResourceGroups)
-                {
-                    Assert.True(group.Tags.Keys.Contains(tagName));
-                }
-            }
-        }
-
-        [Fact(Skip = "Not yet implemented.")]
-        public void ListResourceGroupsWithTagNameAndValueFilter()
-        {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                string groupName = TestUtilities.GenerateName("csmrg");
-                string tagName = TestUtilities.GenerateName("csmtn");
-                string tagValue = TestUtilities.GenerateName("csmtv");
-                var client = GetResourceManagementClient(handler);
-
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup
-                {
-                    Location = DefaultLocation,
-                    Tags = new Dictionary<string, string> { { tagName, tagValue } }
-                });
-
-                var listResult = client.ResourceGroups.List(new ResourceGroupListParameters
-                {
-                    TagName = tagName,
-                    TagValue = tagValue
-                });
-
-                foreach (var group in listResult.ResourceGroups)
-                {
-                    Assert.True(group.Tags.Keys.Contains(tagName));
-                    Assert.Equal(tagValue, group.Tags[tagName]);
-                }
+                Assert.True(checkExistenceSecond);
             }
         }
 
@@ -208,11 +140,12 @@ namespace ResourceGroups.Tests
             var resourceGroupName = TestUtilities.GenerateName("csmrg");
             var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = DefaultLocation });
             var getResult = client.ResourceGroups.Get(resourceGroupName);
-            var deleteResult = client.ResourceGroups.Delete(resourceGroupName);
+            var deleteResult = client.ResourceGroups.DeleteWithOperationResponseAsync(resourceGroupName)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
             var listResult = client.ResourceGroups.List(null);
 
-            Assert.Equal(HttpStatusCode.OK, deleteResult.StatusCode);
-            Assert.False(listResult.ResourceGroups.Any(rg => rg.Name == resourceGroupName && rg.ProvisioningState != ProvisioningState.Deleting));
+            Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);
+            Assert.False(listResult.Value.Any(rg => rg.Name == resourceGroupName && rg.ProvisioningState != "Deleting"));
             TestUtilities.EndTest();
         }
     }

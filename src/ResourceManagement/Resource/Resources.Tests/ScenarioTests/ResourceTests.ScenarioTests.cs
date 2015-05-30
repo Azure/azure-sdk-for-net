@@ -15,12 +15,11 @@
 
 using System.Collections.Generic;
 using System.Net;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Hyak.Common.TransientFaultHandling;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
 namespace ResourceGroups.Tests
@@ -44,7 +43,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClient().WithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(handler);
         }
 
         public string GetWebsiteLocation(ResourceManagementClient client)
@@ -66,18 +65,22 @@ namespace ResourceGroups.Tests
             {
                 context.Start();
                 var client = GetResourceManagementClient(handler);
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                var groups = client.ResourceGroups.List(null);
-                foreach (var group in groups.ResourceGroups)
+                var groups = client.ResourceGroups.List();
+                foreach (var group in groups.Value)
                 {
-                    TracingAdapter.Information("Deleting resources for RG {0}", group.Name);
-                    var resources = client.Resources.List(new ResourceListParameters { ResourceGroupName = group.Name, ResourceType = "Microsoft.Web/sites" });
-                    foreach (var resource in resources.Resources)
+                    var resources = client.Resources.List(group.Name, r => r.Type == "Microsoft.Web/sites");
+                    foreach (var resource in resources.Value)
                     {
-                        var response = client.Resources.Delete(group.Name, CreateResourceIdentity(resource));
+                        client.Resources.Delete(group.Name, 
+                            CreateResourceIdentity(resource).ResourceProviderNamespace, 
+                            string.Empty,
+                            CreateResourceIdentity(resource).ResourceType,
+                            resource.Name,
+                            CreateResourceIdentity(resource).ResourceProviderApiVersion);
                     }
-                    var groupResponse = client.ResourceGroups.BeginDeleting(group.Name);
+                    client.ResourceGroups.BeginDelete(group.Name);
                 }
             }
 
@@ -104,10 +107,11 @@ namespace ResourceGroups.Tests
                         ResourceProviderApiVersion = StoreResourceProviderVersion
                     };
 
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, groupIdentity,
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, groupName, "", groupIdentity.ResourceType, 
+                    groupIdentity.ResourceName, groupIdentity.ResourceProviderApiVersion, 
                     new GenericResource
                     {
                         Location = mySqlLocation,
@@ -116,21 +120,20 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                Assert.Equal(HttpStatusCode.OK, createOrUpdateResult.StatusCode);
-                Assert.Equal(resourceName, createOrUpdateResult.Resource.Name);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, createOrUpdateResult.Resource.Location),
-                    string.Format("Resource location for resource '{0}' does not match expected location '{1}'", createOrUpdateResult.Resource.Location, mySqlLocation));
-                Assert.NotNull(createOrUpdateResult.Resource.Plan);
-                Assert.Equal("Mercury", createOrUpdateResult.Resource.Plan.Name);
+                Assert.Equal(resourceName, createOrUpdateResult.Name);
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, createOrUpdateResult.Location),
+                    string.Format("Resource location for resource '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, mySqlLocation));
+                Assert.NotNull(createOrUpdateResult.Plan);
+                Assert.Equal("Mercury", createOrUpdateResult.Plan.Name);
 
-                var getResult = client.Resources.Get(groupName, groupIdentity);
+                var getResult = client.Resources.Get(groupName, groupIdentity.ResourceProviderNamespace,
+                    "", groupIdentity.ResourceType, groupIdentity.ResourceName, groupIdentity.ResourceProviderApiVersion);
 
-                Assert.Equal(HttpStatusCode.OK, getResult.StatusCode);
-                Assert.Equal(resourceName, getResult.Resource.Name);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, getResult.Resource.Location),
-                    string.Format("Resource location for resource '{0}' does not match expected location '{1}'", getResult.Resource.Location, mySqlLocation));
-                Assert.NotNull(getResult.Resource.Plan);
-                Assert.Equal("Mercury", getResult.Resource.Plan.Name);
+                Assert.Equal(resourceName, getResult.Name);
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, getResult.Location),
+                    string.Format("Resource location for resource '{0}' does not match expected location '{1}'", getResult.Location, mySqlLocation));
+                Assert.NotNull(getResult.Plan);
+                Assert.Equal("Mercury", getResult.Plan.Name);
             }
         }
 
@@ -148,16 +151,11 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
                 string websiteLocation = GetWebsiteLocation(client);
 
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                    {
-                        ResourceName = resourceName,
-                        ResourceProviderNamespace = "Microsoft.Web",
-                        ResourceType = "sites",
-                        ResourceProviderApiVersion = WebResourceProviderVersion
-                    },
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, resourceName, "", 
+                    "Microsoft.Web", "sites", WebResourceProviderVersion,
                     new GenericResource
                     {
                         Location = websiteLocation,
@@ -165,35 +163,27 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                Assert.Equal(HttpStatusCode.OK, createOrUpdateResult.StatusCode);
-                Assert.NotNull(createOrUpdateResult.Resource.Id);
-                Assert.Equal(resourceName, createOrUpdateResult.Resource.Name);
-                Assert.Equal("Microsoft.Web/sites", createOrUpdateResult.Resource.Type);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, createOrUpdateResult.Resource.Location),
-                    string.Format("Resource location for website '{0}' does not match expected location '{1}'", createOrUpdateResult.Resource.Location, websiteLocation));
+                Assert.NotNull(createOrUpdateResult.Id);
+                Assert.Equal(resourceName, createOrUpdateResult.Name);
+                Assert.Equal("Microsoft.Web/sites", createOrUpdateResult.Type);
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, createOrUpdateResult.Location),
+                    string.Format("Resource location for website '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, websiteLocation));
 
-                var listResult = client.Resources.List(new ResourceListParameters
-                    {
-                        ResourceGroupName = groupName
-                    });
+                var listResult = client.Resources.List(groupName);
 
-                Assert.Equal(1, listResult.Resources.Count);
-                Assert.Equal(resourceName, listResult.Resources[0].Name);
-                Assert.Equal("Microsoft.Web/sites", listResult.Resources[0].Type);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.Resources[0].Location),
-                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.Resources[0].Location, websiteLocation));
+                Assert.Equal(1, listResult.Value.Count);
+                Assert.Equal(resourceName, listResult.Value[0].Name);
+                Assert.Equal("Microsoft.Web/sites", listResult.Value[0].Type);
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.Value[0].Location),
+                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.Value[0].Location, websiteLocation));
 
-                listResult = client.Resources.List(new ResourceListParameters
-                {
-                    ResourceGroupName = groupName,
-                    Top = 10
-                });
+                listResult = client.Resources.List(groupName, top: 10);
 
-                Assert.Equal(1, listResult.Resources.Count);
-                Assert.Equal(resourceName, listResult.Resources[0].Name);
-                Assert.Equal("Microsoft.Web/sites", listResult.Resources[0].Type);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.Resources[0].Location),
-                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.Resources[0].Location, websiteLocation));
+                Assert.Equal(1, listResult.Value.Count);
+                Assert.Equal(resourceName, listResult.Value[0].Name);
+                Assert.Equal("Microsoft.Web/sites", listResult.Value[0].Type);
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.Value[0].Location),
+                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.Value[0].Location, websiteLocation));
             }
         }
 
@@ -213,36 +203,34 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
                 string websiteLocation = GetWebsiteLocation(client);
 
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
+                client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion,
                     new GenericResource
                     {
                         Tags = new Dictionary<string, string> { { tagName, "" } },
                         Location = websiteLocation,
                         Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
-                    }
-                );
-                client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceNameNoTags,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
+                    });
+                client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceNameNoTags,
+                    WebResourceProviderVersion,
                     new GenericResource
                     {
                         Location = websiteLocation,
                         Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
-                    }
-                );
+                    });
 
                 var listResult = client.Resources.List(new ResourceListParameters
                 {
@@ -250,19 +238,19 @@ namespace ResourceGroups.Tests
                     TagName = tagName
                 });
 
-                Assert.Equal(1, listResult.Resources.Count);
-                Assert.Equal(resourceName, listResult.Resources[0].Name);
+                Assert.Equal(1, listResult.Value.Count);
+                Assert.Equal(resourceName, listResult.Value[0].Name);
 
-                var getResult = client.Resources.Get(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                });
+                var getResult = client.Resources.Get(
+                    groupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion);
 
-                Assert.Equal(resourceName, getResult.Resource.Name);
-                Assert.True(getResult.Resource.Tags.Keys.Contains(tagName));
+                Assert.Equal(resourceName, getResult.Name);
+                Assert.True(getResult.Tags.Keys.Contains(tagName));
             }
         }
 

@@ -1,0 +1,268 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "FeatureClient",
+    "version": "2014-08-01-preview"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "text/json"
+  ],
+  "produces": [
+    "application/json",
+    "text/json"
+  ],
+  "paths": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/features": {
+      "get": {
+        "tags": [
+          "Features"
+        ],
+        "operationId": "Features_ListAll",
+        "description": "Gets a list of previewed features for all the providers in the current subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FeatureOperationsListResult"
+            }
+          }
+        }
+      }
+    },
+    "/{nextLink}": {
+      "get": {
+        "tags": [
+          "Features"
+        ],
+        "operationId": "Features_ListAllNext",
+        "description": "Gets a list of previewed features of a subscription.",
+        "parameters": [
+          {
+            "name": "nextLink",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "NextLink from the previous successful call to List operation.",
+            "x-skip-url-encoding": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FeatureOperationsListResult"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features": {
+      "get": {
+        "tags": [
+          "Features"
+        ],
+        "operationId": "Features_List",
+        "description": "Gets a list of previewed features of a resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The namespace of the resource provider."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FeatureOperationsListResult"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}": {
+      "get": {
+        "tags": [
+          "Features"
+        ],
+        "operationId": "Features_Get",
+        "description": "Get all features under the subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Namespace of the resource provider."
+          },
+          {
+            "name": "featureName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Previewed feature name in the resource provider."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FeatureResponse"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register": {
+      "post": {
+        "tags": [
+          "Features"
+        ],
+        "operationId": "Features_Register",
+        "description": "Registers for a previewed feature of a resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceProviderNamespace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Namespace of the resource provider."
+          },
+          {
+            "name": "featureName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Previewed feature name in the resource provider."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FeatureResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FeatureProperties": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Gets or sets the state of the previewed feature."
+        }
+      },
+      "description": "Previewed feature information."
+    },
+    "FeatureResponse": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the feature."
+        },
+        "properties": {
+          "$ref": "#/definitions/FeatureProperties",
+          "description": "Gets or sets the properties of the previewed feature."
+        },
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the Id of the feature."
+        },
+        "type": {
+          "type": "string",
+          "description": "Gets or sets the type of the feature."
+        }
+      },
+      "description": "Previewed feature information."
+    },
+    "FeatureOperationsListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FeatureResponse"
+          },
+          "description": "Gets or sets the list of Features."
+        },
+        "@odata.nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of previewed features."
+    },
+    "Resource": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Resource Id"
+        }
+      },
+      "x-external": true
+    }
+  }
+}

@@ -43,7 +43,7 @@ namespace Storage.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? "North US" : "West US";
-        public static AccountType DefaultAccountType = AccountType.StandardGRS;
+        public static string DefaultAccountType = "StandardGRS";
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
             {
                 {"key1","value1"},

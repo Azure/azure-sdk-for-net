@@ -14,7 +14,6 @@
 //
 
 using System.Net;
-using Hyak.Common;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 using Xunit;
