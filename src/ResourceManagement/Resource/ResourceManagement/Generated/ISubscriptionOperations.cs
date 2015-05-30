@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Subscriptions
 {
     /// <summary>
     /// </summary>
-    public partial interface ISubscriptionsOperationOperations
+    public partial interface ISubscriptionOperations
     {
         /// <summary>
         /// Gets details about particular subscription.

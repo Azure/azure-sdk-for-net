@@ -9,7 +9,7 @@ using Microsoft.Azure.Subscriptions.Models;
 
 namespace Microsoft.Azure.Subscriptions
 {
-    public static partial class SubscriptionsOperationsExtensions
+    public static partial class SubscriptionOperationsExtensions
     {
             /// <summary>
             /// Gets details about particular subscription.
@@ -20,9 +20,9 @@ namespace Microsoft.Azure.Subscriptions
             /// <param name='subscriptionId'>
             /// Id of the subscription.
             /// </param>
-            public static Subscription Get(this ISubscriptionsOperationOperations operations, string subscriptionId)
+            public static Subscription Get(this ISubscriptionOperations operations, string subscriptionId)
             {
-                return Task.Factory.StartNew(s => ((ISubscriptionsOperationOperations)s).GetAsync(subscriptionId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubscriptionOperations)s).GetAsync(subscriptionId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Subscriptions
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Subscription> GetAsync( this ISubscriptionsOperationOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Subscription> GetAsync( this ISubscriptionOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<Subscription> result = await operations.GetWithOperationResponseAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
                 return result.Body;
@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Subscriptions
             /// <param name='operations'>
             /// The operations group for this extension method
             /// </param>
-            public static IList<Subscription> List(this ISubscriptionsOperationOperations operations)
+            public static IList<Subscription> List(this ISubscriptionOperations operations)
             {
-                return Task.Factory.StartNew(s => ((ISubscriptionsOperationOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubscriptionOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Subscriptions
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<IList<Subscription>> ListAsync( this ISubscriptionsOperationOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Subscription>> ListAsync( this ISubscriptionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IList<Subscription>> result = await operations.ListWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
                 return result.Body;

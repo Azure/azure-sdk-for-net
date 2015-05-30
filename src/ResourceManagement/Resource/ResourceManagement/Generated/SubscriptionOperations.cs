@@ -13,15 +13,15 @@ using Microsoft.Azure.Subscriptions.Models;
 
 namespace Microsoft.Azure.Subscriptions
 {
-    internal partial class SubscriptionsOperationOperations : IServiceOperations<SubscriptionClient>, ISubscriptionsOperationOperations
+    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionsOperationOperations class.
+        /// Initializes a new instance of the SubscriptionOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal SubscriptionsOperationOperations(SubscriptionClient client)
+        internal SubscriptionOperations(SubscriptionClient client)
         {
             this.Client = client;
         }
