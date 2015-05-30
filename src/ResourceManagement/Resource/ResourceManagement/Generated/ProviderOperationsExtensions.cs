@@ -109,6 +109,38 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
+            /// Get a list of deployments.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ProviderListResult ListNext(this IProviderOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IProviderOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a list of deployments.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ProviderListResult> ListNextAsync( this IProviderOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ProviderListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// Gets a resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -137,38 +169,6 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<Provider> GetAsync( this IProviderOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<Provider> result = await operations.GetWithOperationResponseAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Gets a list of resource providers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method
-            /// </param>
-            /// <param name='nextLink'>
-            /// NextLink from the previous successful call to List operation.
-            /// </param>
-            public static ProviderListResult ListNext(this IProviderOperations operations, string nextLink)
-            {
-                return Task.Factory.StartNew(s => ((IProviderOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of resource providers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method
-            /// </param>
-            /// <param name='nextLink'>
-            /// NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// Cancellation token.
-            /// </param>
-            public static async Task<ProviderListResult> ListNextAsync( this IProviderOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ProviderListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

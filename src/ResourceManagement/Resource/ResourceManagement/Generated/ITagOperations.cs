@@ -68,15 +68,5 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         Task<AzureOperationResponse<TagsListResult>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get a list of subscription resource tags.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<TagsListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -191,46 +191,5 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         Task<AzureOperationResponse<ManagementLockListResult>> ListAtSubscriptionLevelWithOperationResponseAsync(Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets all the management locks of a resource group.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ManagementLockListResult>> ListAtResourceGroupLevelNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets all the management locks of a resource or any level below
-        /// resource.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ManagementLockListResult>> ListAtResourceLevelNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get a list of management locks at resource level or below.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ManagementLockListResult>> ListNextNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets all the management locks of a subscription.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ManagementLockListResult>> ListAtSubscriptionLevelNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

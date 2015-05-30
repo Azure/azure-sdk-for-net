@@ -236,12 +236,12 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}";
+                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
-            url = url.Replace("{parentResourcePath}", Uri.EscapeDataString(parentResourcePath));
-            url = url.Replace("{resourceType}", Uri.EscapeDataString(resourceType));
+            url = url.Replace("{parentResourcePath}", parentResourcePath);
+            url = url.Replace("{resourceType}", resourceType);
             url = url.Replace("{resourceName}", Uri.EscapeDataString(resourceName));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
             List<string> queryParameters = new List<string>();
@@ -382,12 +382,12 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}";
+                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
-            url = url.Replace("{parentResourcePath}", Uri.EscapeDataString(parentResourcePath));
-            url = url.Replace("{resourceType}", Uri.EscapeDataString(resourceType));
+            url = url.Replace("{parentResourcePath}", parentResourcePath);
+            url = url.Replace("{resourceType}", resourceType);
             url = url.Replace("{resourceName}", Uri.EscapeDataString(resourceName));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
             List<string> queryParameters = new List<string>();
@@ -985,12 +985,12 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}/providers/Microsoft.Authorization/locks";
+                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
-            url = url.Replace("{parentResourcePath}", Uri.EscapeDataString(parentResourcePath));
-            url = url.Replace("{resourceType}", Uri.EscapeDataString(resourceType));
+            url = url.Replace("{parentResourcePath}", parentResourcePath);
+            url = url.Replace("{resourceType}", resourceType);
             url = url.Replace("{resourceName}", Uri.EscapeDataString(resourceName));
             List<string> queryParameters = new List<string>();
             if (filter != null)
@@ -1085,9 +1085,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/{nextLink:unencoded}";
+                         "/{nextLink}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
-            url = url.Replace("{nextLink}", Uri.EscapeDataString(nextLink));
+            url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
@@ -1180,374 +1180,6 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            // Set Credentials
-            cancellationToken.ThrowIfCancellationRequested();
-            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                CloudException ex = new CloudException(responseContent);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            AzureOperationResponse<ManagementLockListResult> result = new AzureOperationResponse<ManagementLockListResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-              result.Body = JsonConvert.DeserializeObject<ManagementLockListResult>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Gets all the management locks of a resource group.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>    
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ManagementLockListResult>> ListAtResourceGroupLevelNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListAtResourceGroupLevelNext", tracingParameters);
-            }
-            // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/locks";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
-            url = url.Replace("{nextLink}", nextLink);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            // Set Credentials
-            cancellationToken.ThrowIfCancellationRequested();
-            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                CloudException ex = new CloudException(responseContent);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            AzureOperationResponse<ManagementLockListResult> result = new AzureOperationResponse<ManagementLockListResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-              result.Body = JsonConvert.DeserializeObject<ManagementLockListResult>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Gets all the management locks of a resource or any level below resource.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>    
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ManagementLockListResult>> ListAtResourceLevelNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListAtResourceLevelNext", tracingParameters);
-            }
-            // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}/providers/Microsoft.Authorization/locks";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
-            url = url.Replace("{nextLink}", nextLink);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            // Set Credentials
-            cancellationToken.ThrowIfCancellationRequested();
-            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                CloudException ex = new CloudException(responseContent);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            AzureOperationResponse<ManagementLockListResult> result = new AzureOperationResponse<ManagementLockListResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-              result.Body = JsonConvert.DeserializeObject<ManagementLockListResult>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Get a list of management locks at resource level or below.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>    
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ManagementLockListResult>> ListNextNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListNextNext", tracingParameters);
-            }
-            // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/{nextLink:unencoded}";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
-            url = url.Replace("{nextLink}", nextLink);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            // Set Credentials
-            cancellationToken.ThrowIfCancellationRequested();
-            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                CloudException ex = new CloudException(responseContent);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            AzureOperationResponse<ManagementLockListResult> result = new AzureOperationResponse<ManagementLockListResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-              result.Body = JsonConvert.DeserializeObject<ManagementLockListResult>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Gets all the management locks of a subscription.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>    
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ManagementLockListResult>> ListAtSubscriptionLevelNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListAtSubscriptionLevelNext", tracingParameters);
-            }
-            // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
-            url = url.Replace("{nextLink}", nextLink);
-            List<string> queryParameters = new List<string>();
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {

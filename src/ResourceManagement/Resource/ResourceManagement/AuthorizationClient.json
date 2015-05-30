@@ -78,7 +78,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}": {
       "put": {
         "tags": [
           "ManagementLocks"
@@ -112,14 +112,16 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Resource identity."
+            "description": "Resource identity.",
+            "x-skip-url-encoding": true
           },
           {
             "name": "resourceType",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Resource identity."
+            "description": "Resource identity.",
+            "x-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -199,14 +201,16 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Resource identity."
+            "description": "Resource identity.",
+            "x-skip-url-encoding": true
           },
           {
             "name": "resourceType",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Resource identity."
+            "description": "Resource identity.",
+            "x-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -472,11 +476,10 @@
             }
           }
         },
-        "x-pageable": true,
         "x-odata": "#/definitions/ManagementLockObject"
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{identity.ParentResourcePath:unencoded}/{identity.ResourceType:unencoded}/{resourceName}/providers/Microsoft.Authorization/locks": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks": {
       "get": {
         "tags": [
           "ManagementLocks"
@@ -510,14 +513,16 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Resource identity."
+            "description": "Resource identity.",
+            "x-skip-url-encoding": true
           },
           {
             "name": "resourceType",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Resource identity."
+            "description": "Resource identity.",
+            "x-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -548,11 +553,10 @@
             }
           }
         },
-        "x-pageable": true,
         "x-odata": "#/definitions/ManagementLockObject"
       }
     },
-    "/{nextLink:unencoded}": {
+    "/{nextLink}": {
       "get": {
         "tags": [
           "ManagementLocks"
@@ -565,7 +569,8 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "NextLink from the previous successful call to List operation."
+            "description": "NextLink from the previous successful call to List operation.",
+            "x-skip-url-encoding": true
           }
         ],
         "responses": {
@@ -575,8 +580,7 @@
               "$ref": "#/definitions/ManagementLockListResult"
             }
           }
-        },
-        "x-pageable": true
+        }
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks": {
@@ -616,7 +620,6 @@
             }
           }
         },
-        "x-pageable": true,
         "x-odata": "#/definitions/ManagementLockObject"
       }
     }
@@ -665,7 +668,7 @@
           },
           "description": "Gets or sets the list of locks."
         },
-        "nextLink": {
+        "@odata.nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }

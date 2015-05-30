@@ -40,6 +40,38 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
+            /// Gets a list of previewed features of a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static FeatureOperationsListResult ListAllNext(this IFeatureOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IFeatureOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of previewed features of a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<FeatureOperationsListResult> ListAllNextAsync( this IFeatureOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// Gets a list of previewed features of a resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -144,72 +176,6 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<FeatureResponse> RegisterAsync( this IFeatureOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<FeatureResponse> result = await operations.RegisterWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Gets a list of previewed features for all the providers in the current
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method
-            /// </param>
-            /// <param name='nextLink'>
-            /// NextLink from the previous successful call to List operation.
-            /// </param>
-            public static FeatureOperationsListResult ListAllNext(this IFeatureOperations operations, string nextLink)
-            {
-                return Task.Factory.StartNew(s => ((IFeatureOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of previewed features for all the providers in the current
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method
-            /// </param>
-            /// <param name='nextLink'>
-            /// NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// Cancellation token.
-            /// </param>
-            public static async Task<FeatureOperationsListResult> ListAllNextAsync( this IFeatureOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// Gets a list of previewed features of a resource provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method
-            /// </param>
-            /// <param name='nextLink'>
-            /// NextLink from the previous successful call to List operation.
-            /// </param>
-            public static FeatureOperationsListResult ListNext(this IFeatureOperations operations, string nextLink)
-            {
-                return Task.Factory.StartNew(s => ((IFeatureOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of previewed features of a resource provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method
-            /// </param>
-            /// <param name='nextLink'>
-            /// NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// Cancellation token.
-            /// </param>
-            public static async Task<FeatureOperationsListResult> ListNextAsync( this IFeatureOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

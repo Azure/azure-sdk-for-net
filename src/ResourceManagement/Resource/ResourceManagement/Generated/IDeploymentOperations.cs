@@ -91,15 +91,5 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         Task<AzureOperationResponse<DeploymentListResult>> ListWithOperationResponseAsync(string resourceGroupName, Expression<Func<DeploymentExtended, bool>> filter = default(Expression<Func<DeploymentExtended, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get a list of deployments.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<DeploymentListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

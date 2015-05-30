@@ -206,33 +206,31 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
+                client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion,
                     new GenericResource
                     {
                         Tags = new Dictionary<string, string> { { tagName, "" } },
                         Location = websiteLocation,
                         Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
-                    }
-                );
-                client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceNameNoTags,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
+                    });
+                client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceNameNoTags,
+                    WebResourceProviderVersion,
                     new GenericResource
                     {
                         Location = websiteLocation,
                         Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
-                    }
-                );
+                    });
 
                 var listResult = client.Resources.List(new ResourceListParameters
                 {
@@ -240,19 +238,19 @@ namespace ResourceGroups.Tests
                     TagName = tagName
                 });
 
-                Assert.Equal(1, listResult.Resources.Count);
-                Assert.Equal(resourceName, listResult.Resources[0].Name);
+                Assert.Equal(1, listResult.Value.Count);
+                Assert.Equal(resourceName, listResult.Value[0].Name);
 
-                var getResult = client.Resources.Get(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                });
+                var getResult = client.Resources.Get(
+                    groupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion);
 
-                Assert.Equal(resourceName, getResult.Resource.Name);
-                Assert.True(getResult.Resource.Tags.Keys.Contains(tagName));
+                Assert.Equal(resourceName, getResult.Name);
+                Assert.True(getResult.Tags.Keys.Contains(tagName));
             }
         }
 

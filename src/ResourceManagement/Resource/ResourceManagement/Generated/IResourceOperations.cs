@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resources
 {
     /// <summary>
     /// </summary>
-    public partial interface IResourcesOperationOperations
+    public partial interface IResourceOperations
     {
         /// <summary>
         /// Move resources within or across subscriptions.
@@ -143,15 +143,5 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         Task<AzureOperationResponse<ResourceListResult>> ListWithOperationResponseAsync(string resourceGroupName, Expression<Func<GenericResourceExtended, bool>> filter = default(Expression<Func<GenericResourceExtended, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get all of the resources under a subscription.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ResourceListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
