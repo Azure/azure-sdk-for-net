@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Gets or sets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.nextLink")]
-        public string OdatanextLink { get; set; }
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

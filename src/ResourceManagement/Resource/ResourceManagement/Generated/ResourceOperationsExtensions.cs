@@ -338,5 +338,37 @@ namespace Microsoft.Azure.Management.Resources
                 return result.Body;
             }
 
+            /// <summary>
+            /// Get all of the resources under a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ResourceListResult ListNext(this IResourceOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IResourceOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all of the resources under a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ResourceListResult> ListNextAsync( this IResourceOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ResourceListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
     }
 }

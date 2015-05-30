@@ -476,6 +476,7 @@
             }
           }
         },
+        "x-pageable": true,
         "x-odata": "#/definitions/ManagementLockObject"
       }
     },
@@ -553,6 +554,7 @@
             }
           }
         },
+        "x-pageable": true,
         "x-odata": "#/definitions/ManagementLockObject"
       }
     },
@@ -580,7 +582,8 @@
               "$ref": "#/definitions/ManagementLockListResult"
             }
           }
-        }
+        },
+        "x-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks": {
@@ -620,6 +623,7 @@
             }
           }
         },
+        "x-pageable": true,
         "x-odata": "#/definitions/ManagementLockObject"
       }
     }
@@ -668,7 +672,7 @@
           },
           "description": "Gets or sets the list of locks."
         },
-        "@odata.nextLink": {
+        "nextLink": {
           "type": "string",
           "description": "Gets or sets the URL to get the next set of results."
         }

@@ -192,23 +192,20 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.List(new ResourceListParameters
-            {
-                ResourceGroupName = "foo",
-                ResourceType = "Sites"
-            });
+            var result = client.Resources.List("foo", r => r.Type == "Sites");
+
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.Resources.Count());
-            Assert.Equal("South Central US", result.Resources[0].Location);
-            Assert.Equal("site1", result.Resources[0].Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Resources[0].Id);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Resources[0].Id);
-            Assert.Null(result.Resources[0].Properties);
+            Assert.Equal(2, result.Value.Count());
+            Assert.Equal("South Central US", result.Value[0].Location);
+            Assert.Equal("site1", result.Value[0].Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
+            Assert.Null(result.Value[0].Properties);
         }
 
         [Fact]
@@ -217,28 +214,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get(null, null));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get("foo", new ResourceIdentity()));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get("foo", new ResourceIdentity
-            {
-                ResourceName = null,
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = "Sites"
-            }));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = null,
-                ResourceType = "Sites"
-            }));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = null
-            }));
-            Assert.Throws<ArgumentOutOfRangeException>(() => client.Resources.Get("~`123", new ResourceIdentity()));
+            Assert.Throws<ArgumentNullException>(() => client.Resources.Get(null, null, null, null, null, null));
         }
 
         [Fact]
@@ -264,13 +240,13 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-                {
-                    ResourceName = "site3",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = "2014-01-04",
-                    ResourceType = "sites",
-                }, 
+            var result = client.Resources.CreateOrUpdate(
+                "foo",
+                "Microsoft.Web",
+                string.Empty,
+                "sites",
+                "site3",
+                "2014-01-04",
                 new GenericResource
                 {
                     Location = "South Central US",
@@ -295,11 +271,11 @@ namespace ResourceGroups.Tests
             Assert.Equal("tagvalue", json["tags"]["tagname"].Value<string>());
 
             // Validate result
-            Assert.Equal("South Central US", result.Resource.Location);
-            Assert.Equal("Running", result.Resource.ProvisioningState);
-            Assert.Equal("finance", result.Resource.Tags["department"]);
-            Assert.Equal("tagvalue", result.Resource.Tags["tagname"]);
-            Assert.True(result.Resource.Properties.Contains("Dedicated"));
+            Assert.Equal("South Central US", result.Location);
+            Assert.Equal("Running", result.ProvisioningState);
+            Assert.Equal("finance", result.Tags["department"]);
+            Assert.Equal("tagvalue", result.Tags["tagname"]);
+            Assert.True(result.Properties.ToString().Contains("Dedicated"));
         }
 
         [Fact]
@@ -313,13 +289,13 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-                {
-                    ResourceName = "csmr14v5efk0",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = "2014-01-04",
-                    ResourceType = "sites",
-                }, 
+            var result = client.Resources.CreateOrUpdate(
+                "foo",
+                "Microsoft.Web",
+                string.Empty,
+                "sites",
+                "csmr14v5efk0",
+                "2014-01-04",
                 new GenericResource
                     {
                         Location = "South Central US",
@@ -332,8 +308,7 @@ namespace ResourceGroups.Tests
                 );
 
             // Validate result
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal("South Central US", result.Resource.Location);
+            Assert.Equal("South Central US", result.Location);
         }
 
         [Fact]
@@ -341,14 +316,11 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
-
-            var identity = new ResourceIdentity
-                {
-                    ResourceName = "site3",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = null,
-                    ResourceType = "sites",
-                };
+            var resourceName = "site3";
+            var resourceProviderNamespace = "Microsoft.Web";
+            string resourceProviderApiVersion = null;
+            var resourceType = "sites";
+            var parentResourse = string.Empty;
 
             var resource = new GenericResource
                 {
@@ -361,83 +333,37 @@ namespace ResourceGroups.Tests
                 };
 
 
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get("foo",
-                identity));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CheckExistence("foo",
-                identity));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo",
-                identity, resource ));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo",
-                identity));
+            Assert.Throws<ArgumentNullException>(() => client.Resources.Get(
+                "foo",
+                resourceProviderNamespace,
+                parentResourse,
+                resourceType,
+                resourceName,
+                resourceProviderApiVersion));
+            Assert.Throws<ArgumentNullException>(() => client.Resources.CheckExistence(
+                "foo",
+                resourceProviderNamespace,
+                parentResourse,
+                resourceType,
+                resourceName,
+                resourceProviderApiVersion));
+            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate(
+                "foo",
+                resourceProviderNamespace,
+                parentResourse,
+                resourceType,
+                resourceName,
+                resourceProviderApiVersion, 
+                resource));
+            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete(
+                "foo",
+                resourceProviderNamespace,
+                parentResourse,
+                resourceType,
+                resourceName,
+                resourceProviderApiVersion));
         }
 
-        [Fact]
-        public void ResourceCreateOrUpdateThrowsExceptions()
-        {
-            var handler = new RecordedDelegatingHandler();
-            var client = GetResourceManagementClient(handler);
-
-
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate(null, null, null));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity(), new GenericResource()));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-            {
-                ResourceName = null,
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = "sites",
-            }, new GenericResource
-                {
-                    Location = "",
-                }
-            ));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = null,
-                ResourceType = "sites",
-            }, new GenericResource
-                {
-                    Location = "",
-                }
-            ));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = null,
-            }, new GenericResource
-                    {
-                        Location = "",
-                    }
-            ));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = "sites",
-            }, null));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = "sites",
-            }, new GenericResource
-                {
-                    Location = null,
-                }
-            ));
-            Assert.Throws<ArgumentOutOfRangeException>(() => client.Resources.CreateOrUpdate("~123", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = "sites",
-            }, new GenericResource
-                {
-                    Location = "",
-                    Properties = "",
-                }
-            ));
-        }
 
         [Fact]
         public void ResourceExistsValidateOkMessage()
