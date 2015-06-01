@@ -76,7 +76,6 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
