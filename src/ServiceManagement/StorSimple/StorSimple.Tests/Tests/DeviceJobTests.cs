@@ -1,10 +1,22 @@
-﻿using System;
+﻿// ----------------------------------------------------------------------------------
+//
+// Copyright Microsoft Corporation
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// ----------------------------------------------------------------------------------
+
+using System;
 using System.Linq;
 using Xunit;
-using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
-using StorSimple.Tests.Utilities;
 using Microsoft.Azure.Test;
 using System.Collections.Generic;
 
@@ -146,7 +158,7 @@ namespace StorSimple.Tests.Tests
         /// In order to stop a job we need to first schedule a job that is going to run long 
         /// enough for it to be stopped.
         /// </summary>
-        /// <param name="details">Device details.</param>
+        /// <param name="deviceInfo">Device details.</param>
         private void CreateSupportingVolumeAndBackupPolicy(DeviceInfo deviceInfo)
         {
             var client = GetServiceClient<StorSimpleManagementClient>();
