@@ -33,7 +33,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClient().WithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(handler);
         }
 
         [Fact]
@@ -46,7 +46,6 @@ namespace ResourceGroups.Tests
 
             var reg = client.Providers.Register(ProviderName);
             Assert.NotNull(reg);
-            Assert.Equal<HttpStatusCode>(HttpStatusCode.OK, reg.StatusCode);
 
             var result = client.Providers.Get(ProviderName);
 
@@ -56,13 +55,13 @@ namespace ResourceGroups.Tests
 
             // Validate result
             Assert.NotNull(result);
-            Assert.NotEmpty(result.Provider.Id);
-            Assert.Equal(ProviderName, result.Provider.Namespace);
-            Assert.True(ProviderRegistrationState.Registered == result.Provider.RegistrationState ||
-                ProviderRegistrationState.Registering == result.Provider.RegistrationState,
-                string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", result.Provider.RegistrationState));
-            Assert.NotEmpty(result.Provider.ResourceTypes);
-            Assert.NotEmpty(result.Provider.ResourceTypes[0].Locations);
+            Assert.NotEmpty(result.Id);
+            Assert.Equal(ProviderName, result.NamespaceProperty);
+            Assert.True("Registered" == result.RegistrationState ||
+                "Registering" == result.RegistrationState,
+                string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", result.RegistrationState));
+            Assert.NotEmpty(result.ResourceTypes);
+            Assert.NotEmpty(result.ResourceTypes[0].Locations);
             TestUtilities.EndTest();
         }
 
@@ -76,7 +75,6 @@ namespace ResourceGroups.Tests
 
             var reg = client.Providers.Register(ProviderName);
             Assert.NotNull(reg);
-            Assert.Equal<HttpStatusCode>(HttpStatusCode.OK, reg.StatusCode);
 
             var result = client.Providers.List(null);
 
@@ -85,13 +83,13 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.True(result.Providers.Any());
+            Assert.True(result.Value.Any());
             var websiteProvider =
-                result.Providers.First(
-                    p => p.Namespace.Equals(ProviderName, StringComparison.InvariantCultureIgnoreCase));
-            Assert.Equal(ProviderName, websiteProvider.Namespace);
-            Assert.True(ProviderRegistrationState.Registered == websiteProvider.RegistrationState ||
-                ProviderRegistrationState.Registering == websiteProvider.RegistrationState,
+                result.Value.First(
+                    p => p.NamespaceProperty.Equals(ProviderName, StringComparison.InvariantCultureIgnoreCase));
+            Assert.Equal(ProviderName, websiteProvider.NamespaceProperty);
+            Assert.True("Registered" == websiteProvider.RegistrationState ||
+                "Registering" == websiteProvider.RegistrationState,
                 string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", websiteProvider.RegistrationState));
             Assert.NotEmpty(websiteProvider.ResourceTypes);
             Assert.NotEmpty(websiteProvider.ResourceTypes[0].Locations);
@@ -101,18 +99,17 @@ namespace ResourceGroups.Tests
         [Fact]
         public void VerifyProviderRegister()
         {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = GetResourceManagementClient(handler);
 
-                AzureOperationResponse result = client.Providers.Register(ProviderName);
-                Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+                client.Providers.Register(ProviderName);
 
-                ProviderGetResult provider = client.Providers.Get(ProviderName);
-                Assert.True(provider.Provider.RegistrationState == ProviderRegistrationState.Registered ||
-                            provider.Provider.RegistrationState == ProviderRegistrationState.Registering);
+                var provider = client.Providers.Get(ProviderName);
+                Assert.True(provider.RegistrationState == "Registered" ||
+                            provider.RegistrationState == "Registering");
             }
         }
 
@@ -125,23 +122,19 @@ namespace ResourceGroups.Tests
                 context.Start();
                 var client = GetResourceManagementClient(handler);
 
-                AzureOperationResponse registerResult = client.Providers.Register(ProviderName);
+                var registerResult = client.Providers.Register(ProviderName);
 
-                Assert.Equal(HttpStatusCode.OK, registerResult.StatusCode);
+                var provider = client.Providers.Get(ProviderName);
+                Assert.True(provider.RegistrationState == "Registered" ||
+                            provider.RegistrationState == "Registering");
 
-                ProviderGetResult provider = client.Providers.Get(ProviderName);
-                Assert.True(provider.Provider.RegistrationState == ProviderRegistrationState.Registered ||
-                            provider.Provider.RegistrationState == ProviderRegistrationState.Registering);
-
-                AzureOperationResponse unregisterResult = client.Providers.Unregister(ProviderName);
-
-                Assert.Equal(HttpStatusCode.OK, unregisterResult.StatusCode);
+                var unregisterResult = client.Providers.Unregister(ProviderName);
 
                 provider = client.Providers.Get(ProviderName);
-                Assert.True(provider.Provider.RegistrationState == ProviderRegistrationState.NotRegistered ||
-                            provider.Provider.RegistrationState == ProviderRegistrationState.Unregistering,
+                Assert.True(provider.RegistrationState == "NotRegistered" ||
+                            provider.RegistrationState == "Unregistering",
                             "RegistrationState is expected NotRegistered or Unregistering. Actual value " +
-                            provider.Provider.RegistrationState);
+                            provider.RegistrationState);
             }
         }
     }

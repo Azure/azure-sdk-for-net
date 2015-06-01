@@ -14,6 +14,7 @@
 //
 
 using System.Net;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 using Xunit;
@@ -28,8 +29,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClient();
-            client = client.WithHandler(handler);
+            var client = this.GetResourceManagementClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
@@ -53,10 +53,10 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
                 var createResult = client.Tags.CreateOrUpdate(tagName);
 
-                Assert.Equal(tagName, createResult.Tag.Name);
+                Assert.Equal(tagName, createResult.TagName);
                 
                 var listResult = client.Tags.List();
-                Assert.True(listResult.Tags.Count > 0);
+                Assert.True(listResult.Value.Count > 0);
 
                 client.Tags.Delete(tagName);
             }
@@ -78,11 +78,11 @@ namespace ResourceGroups.Tests
                 var createNameResult = client.Tags.CreateOrUpdate(tagName);
                 var createValueResult = client.Tags.CreateOrUpdateValue(tagName, tagValue);
 
-                Assert.Equal(tagName, createNameResult.Tag.Name);
-                Assert.Equal(tagValue, createValueResult.Value.Value);
+                Assert.Equal(tagName, createNameResult.TagName);
+                Assert.Equal(tagValue, createValueResult.TagValueProperty);
 
                 var listResult = client.Tags.List();
-                Assert.True(listResult.Tags.Count > 0);
+                Assert.True(listResult.Value.Count > 0);
 
                 client.Tags.DeleteValue(tagName, tagValue);
                 client.Tags.Delete(tagName);

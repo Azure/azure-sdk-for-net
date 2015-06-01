@@ -232,11 +232,7 @@ namespace ResourceGroups.Tests
                         Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
                     });
 
-                var listResult = client.Resources.List(new ResourceListParameters
-                {
-                    ResourceGroupName = groupName,
-                    TagName = tagName
-                });
+                var listResult = client.Resources.List(groupName, r => r.Tags.Keys.Contains(tagName));
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -271,16 +267,16 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
                 string websiteLocation = GetWebsiteLocation(client);
 
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
+                client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion,
                     new GenericResource
                     {
                         Tags = new Dictionary<string, string> { { tagName, tagValue } },
@@ -288,13 +284,13 @@ namespace ResourceGroups.Tests
                         Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
                     }
                 );
-                client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceNameNoTags,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
+                client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites", 
+                    resourceNameNoTags,
+                    WebResourceProviderVersion,
                     new GenericResource
                     {
                         Location = websiteLocation,
@@ -302,26 +298,22 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.Resources.List(new ResourceListParameters
-                {
-                    ResourceGroupName = groupName,
-                    TagName = tagName,
-                    TagValue = tagValue
-                });
+                var listResult = client.Resources.List(groupName, 
+                    r => r.Tags.Keys.Contains(tagName) && r.Tags.Values.Contains(tagValue));
 
-                Assert.Equal(1, listResult.Resources.Count);
-                Assert.Equal(resourceName, listResult.Resources[0].Name);
+                Assert.Equal(1, listResult.Value.Count);
+                Assert.Equal(resourceName, listResult.Value[0].Name);
 
-                var getResult = client.Resources.Get(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                });
+                var getResult = client.Resources.Get(
+                    groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion);
 
-                Assert.Equal(resourceName, getResult.Resource.Name);
-                Assert.True(getResult.Resource.Tags.Keys.Contains(tagName));
+                Assert.Equal(resourceName, getResult.Name);
+                Assert.True(getResult.Tags.Keys.Contains(tagName));
             }
         }
 
@@ -337,41 +329,34 @@ namespace ResourceGroups.Tests
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(handler);
 
-                client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
                 string location = this.GetWebsiteLocation(client);
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
-                new GenericResource
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion,
+                    new GenericResource
                     {
                         Location = location,
                         Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
                     }
                 );
 
-                Assert.Equal(HttpStatusCode.OK, createOrUpdateResult.StatusCode);
+                var listResult = client.Resources.List(groupName);
 
-                var listResult = client.Resources.List(new ResourceListParameters
-                {
-                    ResourceGroupName = groupName
-                });
+                Assert.Equal(resourceName, listResult.Value[0].Name);
 
-                Assert.Equal(resourceName, listResult.Resources[0].Name);
-
-                var deleteResult = client.Resources.Delete(groupName, new ResourceIdentity
-                    {
-                        ResourceName = resourceName,
-                        ResourceProviderNamespace = "Microsoft.Web",
-                        ResourceType = "sites",
-                        ResourceProviderApiVersion = WebResourceProviderVersion
-                    });
-
-                Assert.Equal(HttpStatusCode.OK, deleteResult.StatusCode);
+                client.Resources.Delete(
+                    groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion);
             }
         }
 
@@ -388,14 +373,14 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
                 string location = this.GetWebsiteLocation(client);
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
-                {
-                    ResourceName = resourceName,
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceType = "sites",
-                    ResourceProviderApiVersion = WebResourceProviderVersion
-                },
-                new GenericResource
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(
+                    groupName,
+                    "Microsoft.Web",
+                    "",
+                    "sites",
+                    resourceName,
+                    WebResourceProviderVersion,
+                    new GenericResource
                     {
                         Location = location,
                         Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
@@ -403,15 +388,10 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                Assert.Equal(HttpStatusCode.OK, createOrUpdateResult.StatusCode);
+                var listResult = client.Resources.List(groupName, r => r.Type == "Microsoft.Web/sites");
 
-                var listResult = client.Resources.List(new ResourceListParameters
-                    {
-                        ResourceType = "Microsoft.Web/sites"
-                    });
-
-                Assert.NotEmpty(listResult.Resources);
-                Assert.Equal(2, listResult.Resources[0].Tags.Count);
+                Assert.NotEmpty(listResult.Value);
+                Assert.Equal(2, listResult.Value[0].Tags.Count);
             }
         }
     }

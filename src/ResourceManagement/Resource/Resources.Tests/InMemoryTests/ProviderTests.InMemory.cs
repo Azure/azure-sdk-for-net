@@ -14,16 +14,11 @@
 //
 
 using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Xunit;
-using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace ResourceGroups.Tests
 {
@@ -33,7 +28,7 @@ namespace ResourceGroups.Tests
         {
             var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token).WithHandler(handler);
+            return new ResourceManagementClient(token, handler);
         }
         
         [Fact]
@@ -71,12 +66,12 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal("Microsoft.Websites", result.Provider.Namespace);
-            Assert.Equal("Registered", result.Provider.RegistrationState);
-            Assert.Equal(2, result.Provider.ResourceTypes.Count);
-            Assert.Equal("sites", result.Provider.ResourceTypes[0].Name);
-            Assert.Equal(1, result.Provider.ResourceTypes[0].Locations.Count);
-            Assert.Equal("Central US", result.Provider.ResourceTypes[0].Locations[0]);
+            Assert.Equal("Microsoft.Websites", result.NamespaceProperty);
+            Assert.Equal("Registered", result.RegistrationState);
+            Assert.Equal(2, result.ResourceTypes.Count);
+            Assert.Equal("sites", result.ResourceTypes[0].ResourceType);
+            Assert.Equal(1, result.ResourceTypes[0].Locations.Count);
+            Assert.Equal("Central US", result.ResourceTypes[0].Locations[0]);
         }
 
         [Fact]
@@ -125,13 +120,13 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(1, result.Providers.Count());
-            Assert.Equal("Microsoft.Websites", result.Providers[0].Namespace);
-            Assert.Equal("Registered", result.Providers[0].RegistrationState);
-            Assert.Equal(2, result.Providers[0].ResourceTypes.Count);
-            Assert.Equal("sites", result.Providers[0].ResourceTypes[0].Name);
-            Assert.Equal(1, result.Providers[0].ResourceTypes[0].Locations.Count);
-            Assert.Equal("Central US", result.Providers[0].ResourceTypes[0].Locations[0]);
+            Assert.Equal(1, result.Value.Count);
+            Assert.Equal("Microsoft.Websites", result.Value[0].NamespaceProperty);
+            Assert.Equal("Registered", result.Value[0].RegistrationState);
+            Assert.Equal(2, result.Value[0].ResourceTypes.Count);
+            Assert.Equal("sites", result.Value[0].ResourceTypes[0].ResourceType);
+            Assert.Equal(1, result.Value[0].ResourceTypes[0].Locations.Count);
+            Assert.Equal("Central US", result.Value[0].ResourceTypes[0].Locations[0]);
         }
 
         [Fact]
@@ -146,9 +141,6 @@ namespace ResourceGroups.Tests
             // Validate headers
             Assert.Equal(HttpMethod.Post, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-            // Validate result
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
 
         [Fact]
@@ -172,9 +164,6 @@ namespace ResourceGroups.Tests
             // Validate headers
             Assert.Equal(HttpMethod.Post, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-            // Validate result
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
 
         [Fact]

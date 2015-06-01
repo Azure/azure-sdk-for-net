@@ -14,19 +14,12 @@
 //
 
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Xunit;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net;
-using Microsoft.Azure.Management.Resources.Models;
-using System.Runtime.Serialization.Formatters;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
 
 
 namespace ResourceGroups.Tests
@@ -37,7 +30,7 @@ namespace ResourceGroups.Tests
         {
             var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
             handler.IsPassThrough = false;
-            var client = new FeatureClient(token).WithHandler(handler);
+            var client = new FeatureClient(token, handler);
 
             HttpMockServer.Mode = HttpRecorderMode.Playback;
             return client;
@@ -96,9 +89,6 @@ namespace ResourceGroups.Tests
             expectedUrl = expectedUrl.Replace(" ", "%20");
 
             Assert.Equal(expectedUrl, handler.Uri.ToString());
-
-            // Valid response
-            Assert.Equal(registerResult.StatusCode, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -157,10 +147,6 @@ namespace ResourceGroups.Tests
             expectedUrl = expectedUrl.Replace(" ", "%20");
 
             Assert.Equal(expectedUrl, handler.Uri.ToString());
-
-            // Valid response
-            Assert.Equal(getResult.StatusCode, HttpStatusCode.OK);
-            //-------------
         }
 
         [Fact]
@@ -222,8 +208,6 @@ namespace ResourceGroups.Tests
 
             Assert.Equal(expectedUrl, handler.Uri.ToString());
 
-            // Valid response
-            Assert.Equal(getResult.StatusCode, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -279,10 +263,6 @@ namespace ResourceGroups.Tests
             expectedUrl = expectedUrl.Replace(" ", "%20");
 
             Assert.Equal(expectedUrl, handler.Uri.ToString());
-
-            // Valid response
-            Assert.Equal(getResult.StatusCode, HttpStatusCode.OK);
-           // Assert.Equal(getResult.Features.First(), new FeatureOperationsListResult(new FeatureResponse());
         }
     }
 }

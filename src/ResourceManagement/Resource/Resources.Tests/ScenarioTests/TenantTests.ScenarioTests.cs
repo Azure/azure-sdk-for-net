@@ -56,7 +56,7 @@ namespace ResourceGroups.Tests
                 Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);
                 Assert.NotNull(tenants.Body);
                 Assert.NotEqual(0, tenants.Body.Count);
-                Assert.NotNull(tenants.Body[0].ID);
+                Assert.NotNull(tenants.Body[0].Id);
                 Assert.NotNull(tenants.Body[0].TenantId);
             }
         }
