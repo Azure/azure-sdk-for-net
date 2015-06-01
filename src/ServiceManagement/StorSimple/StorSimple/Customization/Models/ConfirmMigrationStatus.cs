@@ -39,8 +39,8 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// Constructor - Constructs ConfirmMigrationStatus object of given statusType specified, 
         /// by filtering from overallstatus list provided 
         /// </summary>
-        /// <param name="type">MigrationStatus of the list of stored</param>
-        /// <param name="overallStatusList">overall migration status</param>        
+        /// <param name="statusType">MigrationStatus of the list of stored</param>
+        /// <param name="overallStatus">overall migration status</param>        
         public ConfirmMigrationStatus(MigrationVolumeContainerConfirmStatus statusType,
             MigrationConfirmStatus overallStatus)
         {

@@ -151,12 +151,17 @@
     <ItemGroup>
       <DelaySignedAssembliesToValidate Include="binaries\$(LibraryFxTarget)\unsigned\*.dll" />
     </ItemGroup>
+    
+    <Message Importance="high" Text="Binaries\$(LibraryFxTarget)\unsigned contains no files. Code sign will skip." 
+             Condition="'@(DelaySignedAssembliesToValidate)' == ''" />
+    
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
         Assembly="%(DelaySignedAssembliesToValidate.Identity)"
         ExpectedTokenSignature="$(StrongNameToken)"
         ExpectedDelaySigned="true"
-        ContinueOnError="false" />
+        ContinueOnError="false" 
+        Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
 
     <CodeSigningTask
         Description="Microsoft Azure SDK"
@@ -165,7 +170,7 @@
         DestinationPath="binaries\$(LibraryFxTarget)"
         SigningLogPath="binaries\$(LibraryFxTarget)\signing.log"
         ToolsPath="$(CIToolsPath)"
-        Condition="!$(DelaySign)"/>
+        Condition="!$(DelaySign) and '@(DelaySignedAssembliesToValidate)' != ''"/>
     <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
     <Copy SourceFiles="@(DelaySignedAssembliesToValidate)" DestinationFolder="binaries\$(LibraryFxTarget)" Condition="$(DelaySign)" />
     
@@ -178,7 +183,7 @@
         ExpectedTokenSignature="$(StrongNameToken)"
         ExpectedDelaySigned="false"
         ContinueOnError="false" 
-        Condition="!$(DelaySign)"/>
+        Condition="!$(DelaySign) and '@(DelaySignedAssembliesToValidate)' != ''"/>
     
     <RemoveDir Directories="binaries\$(LibraryFxTarget)\unsigned;" ContinueOnError="true" />
   </Target>
