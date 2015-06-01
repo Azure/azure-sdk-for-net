@@ -8,24 +8,6 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
-    <Compile Include="Customization\Helpers\ConfigSplitHelper.cs" />
-    <Compile Include="Customization\Helpers\IServiceSecretsEncryptor.cs" />
-    <Compile Include="Customization\Helpers\LegacyApplianceConfigDecryptor.cs" />
-    <Compile Include="Customization\Helpers\LegacyApplianceConfigParser.cs" />
-    <Compile Include="Customization\Models\ConfirmMigrationStatus.cs" />
-    <Compile Include="Customization\Models\ConfirmMigrationStatusMsg.cs" />
-    <Compile Include="Customization\Models\DataContainerMigrationStatus.cs" />
-    <Compile Include="Customization\Models\LegacyApplianceConfiguration.cs" />
-    <Compile Include="Customization\Models\LegacyApplianceDetails.cs" />
-    <Compile Include="Customization\Models\LegacyDataContainerMigrationStatus.cs" />
-    <Compile Include="Customization\Models\LegacyObjectsSupported.cs" />
-    <Compile Include="Customization\Models\LegacyParserMessage.cs" />
-    <Compile Include="Customization\Models\MessageType.cs" />
-    <Compile Include="Customization\Models\MigrationCommonModelFormatter.cs" />
-    <Compile Include="Customization\Models\MigrationConfig.cs" />
-    <Compile Include="Customization\Models\MigrationPlanInfoMsg.cs" />
-    <Compile Include="Customization\Models\MigrationPlanInfoMsgList.cs" />
-    <Compile Include="Customization\Models\MigrationPlanMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BackupTests.cs" />
     <Compile Include="Tests\CloneTests.cs" />
