@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Subscriptions
         /// </summary>
         Uri BaseUri { get; set; }
 
-        ISubscriptionOperations Subscriptions { get; }
+        ISubscriptionsOperations Subscriptions { get; }
 
-        ITenantOperations Tenants { get; }
+        ITenantsOperations Tenants { get; }
 
         }
 }

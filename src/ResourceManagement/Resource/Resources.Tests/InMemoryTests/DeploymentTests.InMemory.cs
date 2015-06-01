@@ -93,23 +93,17 @@ namespace ResourceGroups.Tests
                         {"param3_2", "value3_2"},
                     }}
                 };
-            var serializedDictionary = JsonConvert.SerializeObject(dictionary, new JsonSerializerSettings
-            {
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.None,
-                Formatting = Formatting.Indented
-            });
             var parameters = new Deployment
             {
                 Properties = new DeploymentProperties()
                 {
-                    Template = "{'api-version':'123'}",
+                    Template = JObject.Parse("{'api-version':'123'}"),
                     TemplateLink = new TemplateLink
                         {
                             Uri = "http://abc/def/template.json",
                             ContentVersion = "1.0.0.0"
                         },
-                    Parameters = serializedDictionary,
+                    Parameters = dictionary,
                     ParametersLink = new ParametersLink
                     {
                         Uri = "http://abc/def/template.json",
@@ -177,7 +171,7 @@ namespace ResourceGroups.Tests
                           }
                        }
                     ],
-                    '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+                    'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
                     }
 ")
             };
@@ -200,8 +194,8 @@ namespace ResourceGroups.Tests
             Assert.Equal("Microsoft.Web", result.Value[0].Properties.TargetResource.ResourceType);
             Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
             Assert.Equal("InternalServerError", result.Value[0].Properties.StatusCode);
-            Assert.Equal("\"InternalServerError\"", result.Value[0].Properties.StatusMessage);
-            Assert.Equal("https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw", result.NextLink.ToString());
+            Assert.Equal("InternalServerError", result.Value[0].Properties.StatusMessage);
+            Assert.Equal("https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw", result.NextLink);
         }
 
         [Fact]
@@ -211,7 +205,7 @@ namespace ResourceGroups.Tests
                 {
                     Content = new StringContent(@"{
                     'value': [],
-                    '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+                    'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
                     }")
                 };
 
@@ -351,7 +345,7 @@ namespace ResourceGroups.Tests
                           }
                        }
                     ],
-                    '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+                    'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
                     }
 ")
             };
@@ -427,7 +421,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("Microsoft.Web", result.Properties.TargetResource.ResourceType);
             Assert.Equal("Succeeded", result.Properties.ProvisioningState);
             Assert.Equal("OK", result.Properties.StatusCode);
-            Assert.Equal("\"OK\"", result.Properties.StatusMessage);
+            Assert.Equal("OK", result.Properties.StatusMessage);
         }
 
         [Fact]
@@ -466,11 +460,6 @@ namespace ResourceGroups.Tests
                         {"param3_2", "value3_2"},
                     }}
                 };
-            var serializedDictionary = JsonConvert.SerializeObject(dictionary, new JsonSerializerSettings
-            {
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.None
-            });
             var parameters = new Deployment
             {
                 Properties = new DeploymentProperties()
@@ -480,7 +469,7 @@ namespace ResourceGroups.Tests
                         Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Parameters = serializedDictionary,
+                    Parameters = dictionary,
                     Mode = "Incremental"
                 }
             };
@@ -539,7 +528,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("InvalidTemplate", result.Error.Code);
             Assert.Equal("Deployment template validation failed: The template parameters hostingPlanName, siteMode, computeMode are not valid; they are not present.", result.Error.Message);
             Assert.Null(result.Error.Target);
-            Assert.Equal(0, result.Error.Details.Count);
+            Assert.Null(result.Error.Details);
         }
 
         [Fact]
@@ -642,7 +631,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeploymentTestsCancelValidateMessage()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.NoContent);
+            var response = new HttpResponseMessage(HttpStatusCode.NoContent) { Content = new StringContent("") };
 
             var handler = new RecordedDelegatingHandler(response)
             {
@@ -825,7 +814,7 @@ namespace ResourceGroups.Tests
                         }
                       }
                     ],
-                    '@odata.nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
+                    'nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
                 }")
             };
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
@@ -932,14 +921,14 @@ namespace ResourceGroups.Tests
                         }
                       }
                     ],
-                    '@odata.nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
+                    'nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
                 }")
             };
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", d => d.Properties.ProvisioningState == "Succeeded", top: 10);
+            var result = client.Deployments.List("foo", d => d.ProvisioningState == "Succeeded", top: 10);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -1041,14 +1030,14 @@ namespace ResourceGroups.Tests
                         }
                       }
                     ],
-                    '@odata.nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
+                    'nextLink': 'https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw' 
                 }")
             };
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", d => d.Properties.ProvisioningState == "Succeeded", 10);
+            var result = client.Deployments.List("foo", d => d.ProvisioningState == "Succeeded", 10);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);

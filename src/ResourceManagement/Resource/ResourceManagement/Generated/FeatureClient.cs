@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         public int LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IFeatureOperations Features { get; private set; }
+        public virtual IFeaturesOperations Features { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the FeatureClient class.
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         private void Initialize()
         {
-            this.Features = new FeatureOperations(this);
+            this.Features = new FeaturesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-08-01-preview";
             this.LongRunningOperationInitialTimeout = -1;

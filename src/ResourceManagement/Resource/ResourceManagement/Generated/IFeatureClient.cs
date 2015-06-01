@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         Uri BaseUri { get; set; }
 
-        IFeatureOperations Features { get; }
+        IFeaturesOperations Features { get; }
 
         }
 }

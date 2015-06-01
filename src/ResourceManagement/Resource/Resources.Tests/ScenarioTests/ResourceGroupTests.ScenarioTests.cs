@@ -34,7 +34,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClient(handler);
+            var client = this.GetResourceManagementClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
@@ -71,7 +71,7 @@ namespace ResourceGroups.Tests
             client.ResourceGroups.Delete(resourceGroupName);
             var listGroupsResult = client.ResourceGroups.List(null);
 
-            Assert.Throws<CloudException>(() => client.Resources.List(resourceGroupName));
+            Assert.Throws<CloudException>(() => client.ResourceGroups.ListResources(resourceGroupName));
 
             Assert.False(listGroupsResult.Value.Any(rg => rg.Name == resourceGroupName));
             TestUtilities.EndTest();

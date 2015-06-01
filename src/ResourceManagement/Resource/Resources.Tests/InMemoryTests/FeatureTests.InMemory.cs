@@ -170,7 +170,7 @@ namespace ResourceGroups.Tests
                     'type': 'Microsoft.Features/providers/features'   
                 }
                 ],
-              '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+              'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
               }
             ")
             };
@@ -231,7 +231,7 @@ namespace ResourceGroups.Tests
                     'type': 'Microsoft.Features/providers/features'   
                 }            
                 ],
-              '@odata.nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
+              'nextLink': 'https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw'
               }
             ")
             };

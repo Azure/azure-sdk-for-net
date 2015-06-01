@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Subscriptions
         /// </summary>
         public int LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual ISubscriptionOperations Subscriptions { get; private set; }
+        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
-        public virtual ITenantOperations Tenants { get; private set; }
+        public virtual ITenantsOperations Tenants { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SubscriptionClient class.
@@ -164,8 +164,8 @@ namespace Microsoft.Azure.Subscriptions
         /// </summary>
         private void Initialize()
         {
-            this.Subscriptions = new SubscriptionOperations(this);
-            this.Tenants = new TenantOperations(this);
+            this.Subscriptions = new SubscriptionsOperations(this);
+            this.Tenants = new TenantsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-04-01-preview";
             this.LongRunningOperationInitialTimeout = -1;

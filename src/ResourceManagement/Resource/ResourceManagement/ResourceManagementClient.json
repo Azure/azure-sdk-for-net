@@ -175,6 +175,320 @@
         }
       }
     },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources": {
+      "get": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_ListResources",
+        "description": "Get all of the resources under a subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceListResult"
+            }
+          }
+        },
+        "x-pageable": true,
+        "x-odata": "#/definitions/GenericResourceExtendedFilter"
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}": {
+      "head": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_CheckExistence",
+        "description": "Checks whether resource group exists.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to check. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_CreateOrUpdate",
+        "description": "Create a resource group.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to be created or updated."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourceGroup"
+            },
+            "description": "Parameters supplied to the create or update resource group service operation."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          },
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_Delete",
+        "description": "Delete resource group and all of its resources. ",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to be deleted. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "x-long-running-operation": true
+      },
+      "get": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_Get",
+        "description": "Get a resource group.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to get. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_Patch",
+        "description": "Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource groups, though if a field is unspecified current value will be carried over. ",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group to be created or updated. The name is case insensitive."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResourceGroup"
+            },
+            "description": "Parameters supplied to the update state resource group service operation."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupExtended"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups": {
+      "get": {
+        "tags": [
+          "ResourceGroups"
+        ],
+        "operationId": "ResourceGroups_List",
+        "description": "Gets a collection of resource groups.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceGroupListResult"
+            }
+          }
+        },
+        "x-pageable": true,
+        "x-odata": "#/definitions/ResourceGroupExtendedFilter"
+      }
+    },
     "/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources": {
       "post": {
         "tags": [
@@ -349,10 +663,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           },
           "200": {
@@ -429,13 +743,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResourceExtended"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResourceExtended"
@@ -516,62 +830,6 @@
             }
           }
         }
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources": {
-      "get": {
-        "tags": [
-          "Resources"
-        ],
-        "operationId": "Resources_List",
-        "description": "Get all of the resources under a subscription.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Query parameters. If null is passed returns all resource groups."
-          },
-          {
-            "name": "$filter",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "The filter to apply on the operation."
-          },
-          {
-            "name": "$top",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Query parameters. If null is passed returns all resource groups."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ResourceListResult"
-            }
-          }
-        },
-        "x-pageable": true,
-        "x-odata": "#/definitions/GenericResourceExtended"
       }
     },
     "/subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}": {
@@ -655,13 +913,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagValue"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagValue"
@@ -700,13 +958,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagDetails"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagDetails"
@@ -743,10 +1001,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -917,15 +1175,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ResourceProviderOperationDefinition"
-              }
-            }
-          },
           "204": {
             "description": "",
             "schema": {
@@ -934,266 +1183,17 @@
                 "$ref": "#/definitions/ResourceProviderOperationDefinition"
               }
             }
-          }
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}": {
-      "head": {
-        "tags": [
-          "ResourceGroups"
-        ],
-        "operationId": "ResourceGroups_CheckExistence",
-        "description": "Checks whether resource group exists.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group to check. The name is case insensitive."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "ResourceGroups"
-        ],
-        "operationId": "ResourceGroups_CreateOrUpdate",
-        "description": "Create a resource group.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group to be created or updated."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parameters",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ResourceGroup"
-            },
-            "description": "Parameters supplied to the create or update resource group service operation."
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
-            }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResourceProviderOperationDefinition"
+              }
             }
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "ResourceGroups"
-        ],
-        "operationId": "ResourceGroups_Delete",
-        "description": "Delete resource group and all of its resources. ",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group to be deleted. The name is case insensitive."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "x-long-running-operation": true
-      },
-      "get": {
-        "tags": [
-          "ResourceGroups"
-        ],
-        "operationId": "ResourceGroups_Get",
-        "description": "Get a resource group.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group to get. The name is case insensitive."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "ResourceGroups"
-        ],
-        "operationId": "ResourceGroups_Patch",
-        "description": "Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource groups, though if a field is unspecified current value will be carried over. ",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group to be created or updated. The name is case insensitive."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parameters",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ResourceGroup"
-            },
-            "description": "Parameters supplied to the update state resource group service operation."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
-            }
-          }
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourcegroups": {
-      "get": {
-        "tags": [
-          "ResourceGroups"
-        ],
-        "operationId": "ResourceGroups_List",
-        "description": "Gets a collection of resource groups.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "$filter",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "The filter to apply on the operation."
-          },
-          {
-            "name": "$top",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Query parameters. If null is passed returns all resource groups."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ResourceGroupListResult"
-            }
-          }
-        },
-        "x-pageable": true,
-        "x-odata": "#/definitions/ResourceGroupExtended"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/cancel": {
@@ -1285,13 +1285,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "400": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentValidateResponse"
             }
           },
-          "400": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentValidateResponse"
@@ -1346,13 +1346,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentExtended"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentExtended"
@@ -1458,11 +1458,50 @@
           }
         },
         "x-pageable": true,
-        "x-odata": "#/definitions/DeploymentExtended"
+        "x-odata": "#/definitions/DeploymentExtendedFilter"
       }
     }
   },
   "definitions": {
+    "DeploymentExtendedFilter": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the provisioning state."
+        }
+      },
+      "description": "Deployment filter."
+    },
+    "GenericResourceExtendedFilter": {
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "description": "Gets or sets the resource type."
+        },
+        "tagName": {
+          "type": "string",
+          "description": "Gets or sets the tag name."
+        },
+        "tagValue": {
+          "type": "string",
+          "description": "Gets or sets the tag value."
+        }
+      },
+      "description": "Resource filter."
+    },
+    "ResourceGroupExtendedFilter": {
+      "properties": {
+        "tagName": {
+          "type": "string",
+          "description": "Gets or sets the tag name."
+        },
+        "tagValue": {
+          "type": "string",
+          "description": "Gets or sets the tag value."
+        }
+      },
+      "description": "Resource group filter."
+    },
     "ProviderResourceType": {
       "properties": {
         "resourceType": {
@@ -1532,22 +1571,6 @@
         }
       },
       "description": "List of resource providers."
-    },
-    "ResourcesMoveInfo": {
-      "properties": {
-        "resources": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Gets or sets the ids of the resources."
-        },
-        "targetResourceGroup": {
-          "type": "string",
-          "description": "The target resource group."
-        }
-      },
-      "description": "Parameters of move resources."
     },
     "ResourceJsonFormat.ResourceProperties": {
       "properties": {
@@ -1634,6 +1657,103 @@
         }
       },
       "description": "List of resource groups."
+    },
+    "ResourceGroup": {
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource group properties."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource group."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
+      "description": "Resource group information."
+    },
+    "ResourceGroupJsonFormat.ResourceProperties": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
+      "description": "The resource group properties."
+    },
+    "ResourceGroupExtended": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gets or sets the ID of the resource group."
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the Name of the resource group."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource group properties."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource group."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
+      "description": "Resource group information."
+    },
+    "ResourceGroupListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceGroupExtended"
+          },
+          "description": "Gets or sets the list of resource groups."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "List of resource groups."
+    },
+    "ResourcesMoveInfo": {
+      "properties": {
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Gets or sets the ids of the resources."
+        },
+        "targetResourceGroup": {
+          "type": "string",
+          "description": "The target resource group."
+        }
+      },
+      "description": "Parameters of move resources."
     },
     "GenericResource": {
       "properties": {
@@ -1846,87 +1966,6 @@
         }
       },
       "description": "Resource provider operation information."
-    },
-    "ResourceGroup": {
-      "properties": {
-        "location": {
-          "type": "string",
-          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
-        },
-        "properties": {
-          "type": "object",
-          "description": "Gets or sets the resource group properties."
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Gets or sets the tags attached to the resource group."
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
-        }
-      },
-      "description": "Resource group information."
-    },
-    "ResourceGroupJsonFormat.ResourceProperties": {
-      "properties": {
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
-        }
-      },
-      "description": "The resource group properties."
-    },
-    "ResourceGroupExtended": {
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Gets or sets the ID of the resource group."
-        },
-        "name": {
-          "type": "string",
-          "description": "Gets or sets the Name of the resource group."
-        },
-        "properties": {
-          "type": "object",
-          "description": "Gets or sets the resource group properties."
-        },
-        "location": {
-          "type": "string",
-          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Gets or sets the tags attached to the resource group."
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
-        }
-      },
-      "description": "Resource group information."
-    },
-    "ResourceGroupListResult": {
-      "properties": {
-        "value": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ResourceGroupExtended"
-          },
-          "description": "Gets or sets the list of resource groups."
-        },
-        "nextLink": {
-          "type": "string",
-          "description": "Gets or sets the URL to get the next set of results."
-        }
-      },
-      "description": "List of resource groups."
     },
     "TemplateLink": {
       "properties": {
