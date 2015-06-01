@@ -16,6 +16,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Xunit;
@@ -76,7 +77,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("tagvalue", json["tags"]["tagname"].Value<string>());
 
             // Validate response
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.ID);
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
             Assert.Equal("Succeeded", result.ProvisioningState);
             Assert.Equal("foo", result.Name);
             Assert.Equal("finance", result.Tags["department"]);
@@ -108,8 +109,7 @@ namespace ResourceGroups.Tests
             Assert.Empty(handler.Request);
 
             // Validate response
-            Assert.True(result.Exists);
-            Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
+            Assert.True(result);
         }
 
         [Fact]
@@ -125,8 +125,7 @@ namespace ResourceGroups.Tests
             Assert.Empty(handler.Request);
 
             // Validate response
-            Assert.False(result.Exists);
-            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+            Assert.False(result);
         }
 
         [Fact]
@@ -175,10 +174,10 @@ namespace ResourceGroups.Tests
             Assert.Equal("WestEurope", json["location"].Value<string>());
 
             // Validate response
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.ResourceGroup.Id);
-            Assert.Equal("Succeeded", result.ResourceGroup.ProvisioningState);
-            Assert.Equal("foo", result.ResourceGroup.Name);
-            Assert.Equal("WestEurope", result.ResourceGroup.Location);
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("foo", result.Name);
+            Assert.Equal("WestEurope", result.Location);
         }
 
         [Fact]
@@ -211,18 +210,18 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            ResourceGroupGetResult result = client.ResourceGroups.Get("foo");
+            var result = client.ResourceGroups.Get("foo");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.ResourceGroup.Id);
-            Assert.Equal("WestEurope", result.ResourceGroup.Location);
-            Assert.Equal("foo", result.ResourceGroup.Name);
-            Assert.Equal("Succeeded", result.ResourceGroup.ProvisioningState);
-            Assert.True(result.ResourceGroup.Properties.Contains("provisioningState"));
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
+            Assert.Equal("WestEurope", result.Location);
+            Assert.Equal("foo", result.Name);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.True(result.Properties.ToString().Contains("provisioningState"));
         }
 
         [Fact]
@@ -294,10 +293,10 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.ResourceGroups.Count);
-            Assert.Equal("myresourcegroup1", result.ResourceGroups[0].Name);
-            Assert.Equal("Succeeded", result.ResourceGroups[0].ProvisioningState);
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.ResourceGroups[0].Id);
+            Assert.Equal(2, result.Value.Count);
+            Assert.Equal("myresourcegroup1", result.Value[0].Name);
+            Assert.Equal("Succeeded", result.Value[0].ProvisioningState);
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Value[0].Id);
             Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
         }
 
@@ -319,7 +318,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(0, result.ResourceGroups.Count);
+            Assert.Equal(0, result.Value.Count);
         }
 
         [Fact]
@@ -336,17 +335,19 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.GetLongRunningOperationStatus("http://test");
+            var result = client.GetLongRunningOperationStatusAsync("http://test", CancellationToken.None)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Validate headers
-            Assert.Equal(HttpStatusCode.Accepted, result.StatusCode);
-            Assert.Equal(OperationStatus.InProgress, result.Status);
+            Assert.Equal(HttpStatusCode.Accepted, result.Response.StatusCode);
+            Assert.Equal("InProgress", result.Body.Status);
 
-            result = client.GetLongRunningOperationStatus("http://test");
+            result = client.GetLongRunningOperationStatusAsync("http://test", CancellationToken.None)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Validate headers
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal(OperationStatus.Succeeded, result.Status);
+            Assert.Equal(HttpStatusCode.OK, result.Response.StatusCode);
+            Assert.Equal("Succeeded", result.Body.Status);
         }
 
         [Fact]
@@ -373,10 +374,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.ResourceGroups.List(new ResourceGroupListParameters
-                {
-                    Top = 5,
-                });
+            var result = client.ResourceGroups.List(top: 5);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -384,8 +382,8 @@ namespace ResourceGroups.Tests
             Assert.True(handler.Uri.ToString().Contains("$top=5"));
 
             // Validate result
-            Assert.Equal(2, result.ResourceGroups.Count);
-            Assert.Equal("myresourcegroup1", result.ResourceGroups[0].Name);
+            Assert.Equal(2, result.Value.Count);
+            Assert.Equal("myresourcegroup1", result.Value[0].Name);
             Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
         }
 
@@ -403,10 +401,7 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
 
-            var result = client.ResourceGroups.Delete("foo");
-
-            // Validate headers
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            client.ResourceGroups.Delete("foo");
         }
 
         [Fact]

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
 using Xunit;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
@@ -90,25 +91,31 @@ namespace ResourceGroups.Tests
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
-
-            var result = client.Resources.Get("foo", new ResourceIdentity
+            var identity = new ResourceIdentity
             {
                 ResourceName = "site1",
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceProviderApiVersion = "2014-01-04",
                 ResourceType = "Sites"
-            });
+            };
+            var result = client.Resources.Get(
+                "foo",
+                identity.ResourceProviderNamespace,
+                "",
+                identity.ResourceType,
+                identity.ResourceName,
+                identity.ResourceProviderApiVersion);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal("South Central US", result.Resource.Location);
-            Assert.Equal("site1", result.Resource.Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Resource.Id);
-            Assert.True(result.Resource.Properties.Contains("Dedicated"));
-            Assert.Null(result.Resource.ProvisioningState);
+            Assert.Equal("South Central US", result.Location);
+            Assert.Equal("site1", result.Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
+            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Null(result.ProvisioningState);
         }
 
         [Fact]
@@ -162,8 +169,8 @@ namespace ResourceGroups.Tests
             Assert.Equal(2, result.Value.Count());
             Assert.Equal("South Central US", result.Value[0].Location);
             Assert.Equal("site1", result.Value[0].Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].ID);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].ID);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
             Assert.True(result.Value[0].Properties.ToString().Contains("Dedicated"));
             Assert.Equal("Running", result.Value[0].ProvisioningState);
         }
@@ -374,20 +381,27 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.CheckExistence("foo", new ResourceIdentity
+            var identity = new ResourceIdentity
             {
                 ResourceName = "site3",
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceProviderApiVersion = "2014-01-04",
                 ResourceType = "sites"
-            });
+            };
+            var result = client.Resources.CheckExistence(
+                "foo", 
+                identity.ResourceProviderNamespace, 
+                "",
+                identity.ResourceType,
+                identity.ResourceName,
+                identity.ResourceProviderApiVersion);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(true, result.Exists);
+            Assert.Equal(true, result);
         }
 
         [Fact]
@@ -399,20 +413,27 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.NotFound };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.CheckExistence("foo", new ResourceIdentity
+            var identity = new ResourceIdentity
             {
                 ResourceName = Guid.NewGuid().ToString(),
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceProviderApiVersion = "2014-01-04",
                 ResourceType = "sites"
-            });
+            };
+            var result = client.Resources.CheckExistence(
+                "foo", 
+                identity.ResourceProviderNamespace, 
+                "",
+                identity.ResourceType,
+                identity.ResourceName,
+                identity.ResourceProviderApiVersion);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(false, result.Exists);
+            Assert.Equal(false, result);
         }
 
         [Fact]
@@ -423,14 +444,20 @@ namespace ResourceGroups.Tests
             handler.IsPassThrough = false;
             var randomValue = Guid.NewGuid().ToString();
             var token = new TokenCloudCredentials(randomValue, "abc123");
-            var client = new ResourceManagementClient(token, new Uri("https://localhost:123/test/")).WithHandler(handler);
-            client.Resources.CheckExistence("foo", new ResourceIdentity
+            var client = new ResourceManagementClient(new Uri("https://localhost:123/test/"), token, handler);
+            var identity = new ResourceIdentity
             {
                 ResourceName = randomValue,
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceProviderApiVersion = "2014-01-04",
                 ResourceType = "sites"
-            });
+            };
+            client.Resources.CheckExistence("foo",
+                identity.ResourceProviderNamespace,
+                "",
+                identity.ResourceType,
+                identity.ResourceName,
+                identity.ResourceProviderApiVersion);
             // Validate headers
             Assert.Equal("https://localhost:123/test/subscriptions/" + randomValue + "/resourcegroups/foo/providers/Microsoft.Web//sites/" + randomValue + "?api-version=2014-01-04", handler.Uri.AbsoluteUri);
         }
@@ -444,20 +471,23 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.Delete("foo", new ResourceIdentity
+            var identity = new ResourceIdentity
             {
                 ResourceName = "site3",
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceProviderApiVersion = "2014-01-04",
                 ResourceType = "sites",
-            });
+            };
+            client.Resources.Delete("foo",
+                identity.ResourceProviderNamespace,
+                "",
+                identity.ResourceType,
+                identity.ResourceName,
+                identity.ResourceProviderApiVersion);
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-            // Validate result
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
 
         [Fact]
@@ -469,43 +499,19 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.NoContent };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.Delete("foo", new ResourceIdentity
+            var identity = new ResourceIdentity
             {
                 ResourceName = "site3",
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceProviderApiVersion = "2014-01-04",
                 ResourceType = "sites",
-            });
-        }
-
-        [Fact]
-        public void ResourceDeleteThrowsExceptions()
-        {
-            var handler = new RecordedDelegatingHandler();
-            var client = GetResourceManagementClient(handler);
-
-
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo", null));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete(null, new ResourceIdentity()));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo", new ResourceIdentity()));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo", new ResourceIdentity
-            {
-                ResourceName = null,
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = "Sites",
-            }));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = null,
-                ResourceType = "Sites",
-            }));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo", new ResourceIdentity
-            {
-                ResourceName = "site1",
-                ResourceProviderNamespace = "Microsoft.Web",
-                ResourceType = null,
-            }));
+            };
+            client.Resources.Delete("foo",
+                identity.ResourceProviderNamespace,
+                "",
+                identity.ResourceType,
+                identity.ResourceName,
+                identity.ResourceProviderApiVersion);
         }
 
         [Fact]
@@ -528,7 +534,7 @@ namespace ResourceGroups.Tests
             var resource2 = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup0/providers/Microsoft.Compute/hostservice/vm1";
             resourceToMove.Resources.Add(resource2);
 
-            var moveResult = client.Resources.MoveResources("resourceGroup0", resourceToMove);
+            client.Resources.MoveResources("resourceGroup0", resourceToMove);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Post, handler.Method);
@@ -552,11 +558,6 @@ namespace ResourceGroups.Tests
             expectedUrl = expectedUrl.Replace(" ", "%20");
 
             Assert.Equal(expectedUrl, handler.Uri.ToString());
-            
-            // Valid response
-            Assert.Equal(moveResult.StatusCode, HttpStatusCode.Accepted);
-           
-           
         }
     }
 }

@@ -34,7 +34,7 @@ namespace ResourceGroups.Tests
         {
             var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token).WithHandler(handler);
+            return new ResourceManagementClient(token, handler);
         }
         
         [Fact]
@@ -106,16 +106,16 @@ namespace ResourceGroups.Tests
                     Template = "{'api-version':'123'}",
                     TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri("http://abc/def/template.json"),
+                            Uri = "http://abc/def/template.json",
                             ContentVersion = "1.0.0.0"
                         },
                     Parameters = serializedDictionary,
                     ParametersLink = new ParametersLink
                     {
-                        Uri = new Uri("http://abc/def/template.json"),
+                        Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0"
                     },
-                    Mode = DeploymentMode.Incremental
+                    Mode = "Incremental"
                 }
             };
 
@@ -140,15 +140,15 @@ namespace ResourceGroups.Tests
             Assert.Equal(123, json["properties"]["template"]["api-version"].Value<int>());
 
             // Validate result
-            Assert.Equal("foo", result.Deployment.Id);
-            Assert.Equal("myrealease-3.14", result.Deployment.Name);
-            Assert.Equal("Succeeded", result.Deployment.Properties.ProvisioningState);
-            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Deployment.Properties.Timestamp);
-            Assert.Equal(DeploymentMode.Incremental, result.Deployment.Properties.Mode);
-            Assert.Equal("http://wa/template.json", result.Deployment.Properties.TemplateLink.Uri.ToString());
-            Assert.Equal("1.0.0.0", result.Deployment.Properties.TemplateLink.ContentVersion);
-            Assert.True(result.Deployment.Properties.Parameters.Contains("\"type\": \"string\""));
-            Assert.True(result.Deployment.Properties.Outputs.Contains("\"type\": \"string\""));
+            Assert.Equal("foo", result.Id);
+            Assert.Equal("myrealease-3.14", result.Name);
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
+            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Properties.Timestamp);
+            Assert.Equal("Incremental", result.Properties.Mode);
+            Assert.Equal("http://wa/template.json", result.Properties.TemplateLink.Uri);
+            Assert.Equal("1.0.0.0", result.Properties.TemplateLink.ContentVersion);
+            Assert.True(result.Properties.Parameters.ToString().Contains("\"type\": \"string\""));
+            Assert.True(result.Properties.Outputs.ToString().Contains("\"type\": \"string\""));
         }
          
         [Fact]
@@ -193,15 +193,14 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate response 
-            Assert.Equal(1, result.Operations.Count);
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal("AEF2398", result.Operations[0].OperationId);
-            Assert.Equal("/subscriptions/123abc/resourcegroups/foo/providers/ResourceProviderTestHost/TestResourceType/resource1", result.Operations[0].Properties.TargetResource.Id);
-            Assert.Equal("mySite1", result.Operations[0].Properties.TargetResource.ResourceName);
-            Assert.Equal("Microsoft.Web", result.Operations[0].Properties.TargetResource.ResourceType);
-            Assert.Equal("Succeeded", result.Operations[0].Properties.ProvisioningState);
-            Assert.Equal("InternalServerError", result.Operations[0].Properties.StatusCode);
-            Assert.Equal("\"InternalServerError\"", result.Operations[0].Properties.StatusMessage);
+            Assert.Equal(1, result.Value.Count);
+            Assert.Equal("AEF2398", result.Value[0].OperationId);
+            Assert.Equal("/subscriptions/123abc/resourcegroups/foo/providers/ResourceProviderTestHost/TestResourceType/resource1", result.Value[0].Properties.TargetResource.Id);
+            Assert.Equal("mySite1", result.Value[0].Properties.TargetResource.ResourceName);
+            Assert.Equal("Microsoft.Web", result.Value[0].Properties.TargetResource.ResourceType);
+            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
+            Assert.Equal("InternalServerError", result.Value[0].Properties.StatusCode);
+            Assert.Equal("\"InternalServerError\"", result.Value[0].Properties.StatusMessage);
             Assert.Equal("https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw", result.NextLink.ToString());
         }
 
@@ -227,8 +226,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate response 
-            Assert.Equal(0, result.Operations.Count);
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.Equal(0, result.Value.Count);
         }
 
         [Fact]
@@ -323,7 +321,7 @@ namespace ResourceGroups.Tests
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            Assert.True(JObject.Parse(result.Operations[0].Properties.StatusMessage).HasValues);
+            Assert.True(JObject.Parse(result.Value[0].Properties.StatusMessage.ToString()).HasValues);
         }
 
         [Fact]
@@ -383,7 +381,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw", handler.Uri.ToString());
 
             // Validate response 
-            Assert.Equal(0, result.Operations.Count);
+            Assert.Equal(0, result.Value.Count);
             Assert.Equal(null, result.NextLink);
         }
 
@@ -423,14 +421,13 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate response 
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal("AEF2398", result.Operation.OperationId);
-            Assert.Equal("mySite1", result.Operation.Properties.TargetResource.ResourceName);
-            Assert.Equal("/subscriptions/123abc/resourcegroups/foo/providers/ResourceProviderTestHost/TestResourceType/resource1", result.Operation.Properties.TargetResource.Id);
-            Assert.Equal("Microsoft.Web", result.Operation.Properties.TargetResource.ResourceType);
-            Assert.Equal("Succeeded", result.Operation.Properties.ProvisioningState);
-            Assert.Equal("OK", result.Operation.Properties.StatusCode);
-            Assert.Equal("\"OK\"", result.Operation.Properties.StatusMessage);
+            Assert.Equal("AEF2398", result.OperationId);
+            Assert.Equal("mySite1", result.Properties.TargetResource.ResourceName);
+            Assert.Equal("/subscriptions/123abc/resourcegroups/foo/providers/ResourceProviderTestHost/TestResourceType/resource1", result.Properties.TargetResource.Id);
+            Assert.Equal("Microsoft.Web", result.Properties.TargetResource.ResourceType);
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
+            Assert.Equal("OK", result.Properties.StatusCode);
+            Assert.Equal("\"OK\"", result.Properties.StatusMessage);
         }
 
         [Fact]
@@ -480,11 +477,11 @@ namespace ResourceGroups.Tests
                 {
                     TemplateLink = new TemplateLink
                     {
-                        Uri = new Uri("http://abc/def/template.json"),
+                        Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
                     Parameters = serializedDictionary,
-                    Mode = DeploymentMode.Incremental
+                    Mode = "Incremental"
                 }
             };
 
@@ -529,17 +526,16 @@ namespace ResourceGroups.Tests
                 {
                     TemplateLink = new TemplateLink
                     {
-                        Uri = new Uri("http://abc/def/template.json"),
+                        Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Mode = DeploymentMode.Incremental
+                    Mode = "Incremental"
                 }
             };
 
             var result = client.Deployments.Validate("foo", "bar", parameters);
 
             // Validate result
-            Assert.False(result.IsValid);
             Assert.Equal("InvalidTemplate", result.Error.Code);
             Assert.Equal("Deployment template validation failed: The template parameters hostingPlanName, siteMode, computeMode are not valid; they are not present.", result.Error.Message);
             Assert.Null(result.Error.Target);
@@ -578,10 +574,10 @@ namespace ResourceGroups.Tests
                 {
                     TemplateLink = new TemplateLink
                     {
-                        Uri = new Uri("http://abc/def/template.json"),
+                        Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Mode = DeploymentMode.Incremental
+                    Mode = "Incremental"
                 }
             };
 
@@ -590,7 +586,6 @@ namespace ResourceGroups.Tests
             JObject json = JObject.Parse(handler.Request);
 
             // Validate result
-            Assert.False(result.IsValid);
             Assert.Equal("InvalidTemplate", result.Error.Code);
             Assert.Equal("Deployment template validation failed: The template parameters hostingPlanName, siteMode, computeMode are not valid; they are not present.", result.Error.Message);
             Assert.Equal("", result.Error.Target);
@@ -612,10 +607,10 @@ namespace ResourceGroups.Tests
                 {
                     TemplateLink = new TemplateLink
                     {
-                        Uri = new Uri("http://abc/def/template.json"),
+                        Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Mode = DeploymentMode.Incremental
+                    Mode = "Incremental"
                 }
             };
 
@@ -629,7 +624,6 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.True(result.IsValid);
             Assert.Null(result.Error);
         }
 
@@ -657,10 +651,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.Cancel("foo", "bar");
-
-            // Validate headers
-            Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
+            client.Deployments.Cancel("foo", "bar");
         }
 
         [Fact]
@@ -729,15 +720,15 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal("myrealease-3.14", result.Deployment.Name);
-            Assert.Equal("Succeeded", result.Deployment.Properties.ProvisioningState);
-            Assert.Equal("12345", result.Deployment.Properties.CorrelationId);
-            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Deployment.Properties.Timestamp);
-            Assert.Equal(DeploymentMode.Incremental, result.Deployment.Properties.Mode);
-            Assert.Equal("http://wa/template.json", result.Deployment.Properties.TemplateLink.Uri.ToString());
-            Assert.Equal("1.0.0.0", result.Deployment.Properties.TemplateLink.ContentVersion);
-            Assert.True(result.Deployment.Properties.Parameters.Contains("\"type\": \"string\""));
-            Assert.True(result.Deployment.Properties.Outputs.Contains("\"type\": \"string\""));
+            Assert.Equal("myrealease-3.14", result.Name);
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
+            Assert.Equal("12345", result.Properties.CorrelationId);
+            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Properties.Timestamp);
+            Assert.Equal("Incremental", result.Properties.Mode);
+            Assert.Equal("http://wa/template.json", result.Properties.TemplateLink.Uri.ToString());
+            Assert.Equal("1.0.0.0", result.Properties.TemplateLink.ContentVersion);
+            Assert.True(result.Properties.Parameters.ToString().Contains("\"type\": \"string\""));
+            Assert.True(result.Properties.Outputs.ToString().Contains("\"type\": \"string\""));
         }
 
         [Fact]
@@ -841,21 +832,21 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", new DeploymentListParameters());
+            var result = client.Deployments.List("foo");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal("myrealease-3.14", result.Deployments[0].Name);
-            Assert.Equal("Succeeded", result.Deployments[0].Properties.ProvisioningState);
-            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Deployments[0].Properties.Timestamp);
-            Assert.Equal(DeploymentMode.Incremental, result.Deployments[0].Properties.Mode);
-            Assert.Equal("http://wa/template.json", result.Deployments[0].Properties.TemplateLink.Uri.ToString());
-            Assert.Equal("1.0.0.0", result.Deployments[0].Properties.TemplateLink.ContentVersion);
-            Assert.True(result.Deployments[0].Properties.Parameters.Contains("\"type\": \"string\""));
-            Assert.True(result.Deployments[0].Properties.Outputs.Contains("\"type\": \"string\""));
+            Assert.Equal("myrealease-3.14", result.Value[0].Name);
+            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
+            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Value[0].Properties.Timestamp);
+            Assert.Equal("Incremental", result.Value[0].Properties.Mode);
+            Assert.Equal("http://wa/template.json", result.Value[0].Properties.TemplateLink.Uri.ToString());
+            Assert.Equal("1.0.0.0", result.Value[0].Properties.TemplateLink.ContentVersion);
+            Assert.True(result.Value[0].Properties.Parameters.ToString().Contains("\"type\": \"string\""));
+            Assert.True(result.Value[0].Properties.Outputs.ToString().Contains("\"type\": \"string\""));
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextLink.ToString());
         }
 
@@ -948,11 +939,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", new DeploymentListParameters
-                {
-                    ProvisioningState = "Succeeded",
-                    Top = 10,
-                });
+            var result = client.Deployments.List("foo", d => d.Properties.ProvisioningState == "Succeeded", top: 10);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -961,14 +948,14 @@ namespace ResourceGroups.Tests
             Assert.True(handler.Uri.ToString().Contains("$filter=provisioningState eq 'Succeeded'"));
 
             // Validate result
-            Assert.Equal("myrealease-3.14", result.Deployments[0].Name);
-            Assert.Equal("Succeeded", result.Deployments[0].Properties.ProvisioningState);
-            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Deployments[0].Properties.Timestamp);
-            Assert.Equal(DeploymentMode.Incremental, result.Deployments[0].Properties.Mode);
-            Assert.Equal("http://wa/template.json", result.Deployments[0].Properties.TemplateLink.Uri.ToString());
-            Assert.Equal("1.0.0.0", result.Deployments[0].Properties.TemplateLink.ContentVersion);
-            Assert.True(result.Deployments[0].Properties.Parameters.Contains("\"type\": \"string\""));
-            Assert.True(result.Deployments[0].Properties.Outputs.Contains("\"type\": \"string\""));
+            Assert.Equal("myrealease-3.14", result.Value[0].Name);
+            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
+            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Value[0].Properties.Timestamp);
+            Assert.Equal("Incremental", result.Value[0].Properties.Mode);
+            Assert.Equal("http://wa/template.json", result.Value[0].Properties.TemplateLink.Uri.ToString());
+            Assert.Equal("1.0.0.0", result.Value[0].Properties.TemplateLink.ContentVersion);
+            Assert.True(result.Value[0].Properties.Parameters.ToString().Contains("\"type\": \"string\""));
+            Assert.True(result.Value[0].Properties.Outputs.ToString().Contains("\"type\": \"string\""));
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextLink.ToString());
         }
 
@@ -1061,11 +1048,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", new DeploymentListParameters
-            {
-                ProvisioningState = "Succeeded",
-                Top = 10,
-            });
+            var result = client.Deployments.List("foo", d => d.Properties.ProvisioningState == "Succeeded", 10);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -1075,14 +1058,14 @@ namespace ResourceGroups.Tests
             Assert.True(handler.Uri.ToString().Contains("resourcegroups/foo/deployments"));
 
             // Validate result
-            Assert.Equal("myrealease-3.14", result.Deployments[0].Name);
-            Assert.Equal("Succeeded", result.Deployments[0].Properties.ProvisioningState);
-            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Deployments[0].Properties.Timestamp);
-            Assert.Equal(DeploymentMode.Incremental, result.Deployments[0].Properties.Mode);
-            Assert.Equal("http://wa/template.json", result.Deployments[0].Properties.TemplateLink.Uri.ToString());
-            Assert.Equal("1.0.0.0", result.Deployments[0].Properties.TemplateLink.ContentVersion);
-            Assert.True(result.Deployments[0].Properties.Parameters.Contains("\"type\": \"string\""));
-            Assert.True(result.Deployments[0].Properties.Outputs.Contains("\"type\": \"string\""));
+            Assert.Equal("myrealease-3.14", result.Value[0].Name);
+            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
+            Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Value[0].Properties.Timestamp);
+            Assert.Equal("Incremental", result.Value[0].Properties.Mode);
+            Assert.Equal("http://wa/template.json", result.Value[0].Properties.TemplateLink.Uri.ToString());
+            Assert.Equal("1.0.0.0", result.Value[0].Properties.TemplateLink.ContentVersion);
+            Assert.True(result.Value[0].Properties.Parameters.ToString().Contains("\"type\": \"string\""));
+            Assert.True(result.Value[0].Properties.Outputs.ToString().Contains("\"type\": \"string\""));
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextLink.ToString());
         }
 
@@ -1096,8 +1079,8 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", new DeploymentListParameters());
-            Assert.Empty(result.Deployments);
+            var result = client.Deployments.List("foo");
+            Assert.Empty(result.Value);
         }
     }
 }

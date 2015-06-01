@@ -79,7 +79,7 @@ namespace ResourceGroups.Tests
                             Uri = DummyTemplateUri
                         },
                         Parameters = serializedDictionary,
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
 
@@ -90,7 +90,7 @@ namespace ResourceGroups.Tests
 
                 JObject json = JObject.Parse(handler.Request);
 
-                Assert.Equal(HttpStatusCode.OK, client.Deployments.Get(groupName, deploymentName).StatusCode);
+                Assert.NotNull(client.Deployments.Get(groupName, deploymentName));
             }
         }
 
@@ -111,11 +111,11 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(GoodWebsiteTemplateUri),
+                            Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -123,25 +123,25 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
                 var deploymentCreateResult = client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
-                Assert.NotNull(deploymentCreateResult.Deployment.Id);
-                Assert.Equal(deploymentName, deploymentCreateResult.Deployment.Name);
+                Assert.NotNull(deploymentCreateResult.Id);
+                Assert.Equal(deploymentName, deploymentCreateResult.Name);
 
                 TestUtilities.Wait(1000);
 
                 var deploymentListResult = client.Deployments.List(groupName, null);
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 
-                Assert.NotEmpty(deploymentListResult.Deployments);
-                Assert.Equal(deploymentName, deploymentGetResult.Deployment.Name);
-                Assert.Equal(deploymentName, deploymentListResult.Deployments[0].Name);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Deployment.Properties.TemplateLink.Uri.AbsoluteUri);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Deployments[0].Properties.TemplateLink.Uri.AbsoluteUri);
-                Assert.NotNull(deploymentGetResult.Deployment.Properties.ProvisioningState);
-                Assert.NotNull(deploymentListResult.Deployments[0].Properties.ProvisioningState);
-                Assert.NotNull(deploymentGetResult.Deployment.Properties.CorrelationId);
-                Assert.NotNull(deploymentListResult.Deployments[0].Properties.CorrelationId);
-                Assert.True(deploymentGetResult.Deployment.Properties.Parameters.Contains("mctest0101"));
-                Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
+                Assert.NotEmpty(deploymentListResult.Value);
+                Assert.Equal(deploymentName, deploymentGetResult.Name);
+                Assert.Equal(deploymentName, deploymentListResult.Value[0].Name);
+                Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Properties.TemplateLink.Uri);
+                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Value[0].Properties.TemplateLink.Uri);
+                Assert.NotNull(deploymentGetResult.Properties.ProvisioningState);
+                Assert.NotNull(deploymentListResult.Value[0].Properties.ProvisioningState);
+                Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.Value[0].Properties.CorrelationId);
+                Assert.True(deploymentGetResult.Properties.Parameters.ToString().Contains("mctest0101"));
+                Assert.True(deploymentListResult.Value[0].Properties.Parameters.ToString().Contains("mctest0101"));
             }
         }
 
@@ -163,11 +163,11 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(GoodWebsiteTemplateUri),
+                            Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
 
@@ -177,12 +177,11 @@ namespace ResourceGroups.Tests
                 DeploymentValidateResponse validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
  
                  //Assert
-                Assert.True(validationResult.IsValid);
                 Assert.Null(validationResult.Error);
                 Assert.NotNull(validationResult.Properties);
                 Assert.NotNull(validationResult.Properties.Providers);
                 Assert.Equal(1, validationResult.Properties.Providers.Count);
-                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].Namespace);
+                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].NamespaceProperty);
             }
         }
 
@@ -205,7 +204,7 @@ namespace ResourceGroups.Tests
                         Template = File.ReadAllText("ScenarioTests\\good-website.js"),
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
 
@@ -215,12 +214,11 @@ namespace ResourceGroups.Tests
                 DeploymentValidateResponse validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
 
                 //Assert
-                Assert.True(validationResult.IsValid);
                 Assert.Null(validationResult.Error);
                 Assert.NotNull(validationResult.Properties);
                 Assert.NotNull(validationResult.Properties.Providers);
                 Assert.Equal(1, validationResult.Properties.Providers.Count);
-                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].Namespace);
+                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].NamespaceProperty);
             }
         }
 
@@ -242,17 +240,17 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(BadTemplateUri),
+                            Uri = BadTemplateUri,
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
                 var result = client.Deployments.Validate(groupName, deploymentName, parameters);
-                Assert.False(result.IsValid);
+                Assert.NotNull(result);
                 Assert.Equal("InvalidTemplate", result.Error.Code);
             }
         }
@@ -291,10 +289,10 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(DummyTemplateUri)
+                            Uri = DummyTemplateUri
                         },
                         Parameters = serializedDictionary,
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
 
@@ -309,10 +307,10 @@ namespace ResourceGroups.Tests
                 TestUtilities.Wait(30000);
                 var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
 
-                Assert.True(operations.Operations.Any());
-                Assert.NotNull(operations.Operations[0].Id);
-                Assert.NotNull(operations.Operations[0].OperationId);
-                Assert.NotNull(operations.Operations[0].Properties);
+                Assert.True(operations.Value.Any());
+                Assert.NotNull(operations.Value[0].Id);
+                Assert.NotNull(operations.Value[0].OperationId);
+                Assert.NotNull(operations.Value[0].Properties);
             }
         }
 
@@ -333,11 +331,11 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(GoodWebsiteTemplateUri),
+                            Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -345,24 +343,24 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
-                var deploymentListResult = client.Deployments.List(groupName, new DeploymentListParameters { ProvisioningState = ProvisioningState.Running });
-                if (null == deploymentListResult.Deployments || deploymentListResult.Deployments.Count < 1)
+                var deploymentListResult = client.Deployments.List(groupName, d => d.Properties.ProvisioningState == "Running");
+                if (null == deploymentListResult.Value || deploymentListResult.Value.Count < 1)
                 {
-                    deploymentListResult = client.Deployments.List(groupName, new DeploymentListParameters { ProvisioningState = ProvisioningState.Accepted });
+                    deploymentListResult = client.Deployments.List(groupName, d => d.Properties.ProvisioningState == "Running");
                 }
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 
-                Assert.NotEmpty(deploymentListResult.Deployments);
-                Assert.Equal(deploymentName, deploymentGetResult.Deployment.Name);
-                Assert.Equal(deploymentName, deploymentListResult.Deployments[0].Name);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Deployment.Properties.TemplateLink.Uri.AbsoluteUri);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Deployments[0].Properties.TemplateLink.Uri.AbsoluteUri);
-                Assert.NotNull(deploymentGetResult.Deployment.Properties.ProvisioningState);
-                Assert.NotNull(deploymentListResult.Deployments[0].Properties.ProvisioningState);
-                Assert.NotNull(deploymentGetResult.Deployment.Properties.CorrelationId);
-                Assert.NotNull(deploymentListResult.Deployments[0].Properties.CorrelationId);
-                Assert.True(deploymentGetResult.Deployment.Properties.Parameters.Contains("mctest0101"));
-                Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
+                Assert.NotEmpty(deploymentListResult.Value);
+                Assert.Equal(deploymentName, deploymentGetResult.Name);
+                Assert.Equal(deploymentName, deploymentListResult.Value[0].Name);
+                Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Properties.TemplateLink.Uri);
+                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Value[0].Properties.TemplateLink.Uri);
+                Assert.NotNull(deploymentGetResult.Properties.ProvisioningState);
+                Assert.NotNull(deploymentListResult.Value[0].Properties.ProvisioningState);
+                Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.Value[0].Properties.CorrelationId);
+                Assert.True(deploymentGetResult.Properties.Parameters.ToString().Contains("mctest0101"));
+                Assert.True(deploymentListResult.Value[0].Properties.Parameters.ToString().Contains("mctest0101"));
             }
         }
 
@@ -384,13 +382,13 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(GoodWebsiteTemplateUri),
+                            Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
                             "{ 'siteName': {'value': '" + resourceName + "'},'hostingPlanName': {'value': '" +
                             resourceName +
                             "'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = "Incremental",
                     }
                 };
 
@@ -401,7 +399,7 @@ namespace ResourceGroups.Tests
                 TestUtilities.Wait(30000);
                 var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
 
-                Assert.True(operations.Operations.Any());
+                Assert.True(operations.Value.Any());
             }
         }
     }
