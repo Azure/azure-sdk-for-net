@@ -29,10 +29,10 @@ using Microsoft.Azure.Management.ApiApps.Models;
 namespace Microsoft.Azure.Management.ApiApps
 {
     /// <summary>
-    /// The Windows Azure ApiApp management API provides a RESTful set of web
-    /// services that interact with Windows Azure ApiApp service to manage
+    /// The Microsoft Azure ApiApp management API provides a RESTful set of web
+    /// services that interact with Microsoft Azure ApiApp service to manage
     /// your ApiApps. The API has entities that capture the relationship
-    /// between an end user and the Windows Azure ApiApp service.  (see
+    /// between an end user and the Microsoft Azure ApiApp service.  (see
     /// http://azure.microsoft.com/en-us/services/app-service/api/ for more
     /// information)
     /// </summary>

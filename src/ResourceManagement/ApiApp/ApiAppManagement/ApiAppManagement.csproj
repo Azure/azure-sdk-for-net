@@ -2,66 +2,29 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B304999A-EBE1-4FA5-B28B-894C1AFACA15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.ApiApps</RootNamespace>
     <AssemblyName>Microsoft.Azure.Management.ApiApps</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net45-Debug|AnyCPU'">
-    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net45-Release|AnyCPU'">
-    <DocumentationFile>bin\Net45-Release\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net40-Debug|AnyCPU'">
-    <DocumentationFile>bin\Net40-Debug\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net40-Release|AnyCPU'">
-    <DocumentationFile>bin\Net40-Release\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Portable-Debug|AnyCPU'">
-    <DocumentationFile>bin\Portable-Debug\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Portable-Release|AnyCPU'">
-    <DocumentationFile>bin\Portable-Release\Microsoft.Azure.Management.ApiApps.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <!--
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    -->
     <Reference Include="Hyak.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\ApiAppManagementClient.cs" />

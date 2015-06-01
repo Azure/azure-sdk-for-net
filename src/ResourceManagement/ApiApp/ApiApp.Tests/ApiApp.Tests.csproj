@@ -16,8 +16,6 @@
     <Compile Include="TestSupport\ApiAppTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="SessionRecords\Microsoft.Azure.Management.ApiApps.Tests.ApiApps.ListTests\CanListApiAppsInSubscription.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -37,9 +35,6 @@
       <Project>{b304999a-ebe1-4fa5-b28b-894c1afaca15}</Project>
       <Name>ApiAppManagement</Name>
     </ProjectReference>
-    <Reference Include="Microsoft.Azure.ResourceManager">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Resources.2.18.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
