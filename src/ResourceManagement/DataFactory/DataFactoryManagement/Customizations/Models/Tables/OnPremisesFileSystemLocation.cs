@@ -46,5 +46,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Files sets filter by wildcard.
         /// </summary>
         public string FileFilter { get; set; }
+
+        /// <summary>
+        /// The data compression method used on files.
+        /// </summary>
+        public Compression Compression { get; set; }
     }
 }

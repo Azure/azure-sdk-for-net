@@ -13,28 +13,14 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    /// <summary>
-    /// The format definition of a storage.
-    /// </summary>
-    public abstract class StorageFormat
+    /// ToDo: for forward compatibility, we will introduce a property bag based Compression.
+    /*[AdfTypeName("", deferTypeGeneration: true)]
+    public class GenericCompression : Compression
     {
-        /// <summary>
-        /// The serializer.
-        /// </summary>
-        public string Serializer { get; set; }
-
-        /// <summary>
-        /// The deserializer.
-        /// </summary>
-        public string Deserializer { get; set; }
-        
-#if ADF_INTERNAL
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        public string Encryption { get; set; }
-#endif
-    }
+        public IDictionary<string, string> Properties { get; set; } 
+    }*/
 }
