@@ -63,13 +63,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
@@ -154,13 +154,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
@@ -237,10 +237,10 @@
           "204": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           }
         }
@@ -331,10 +331,10 @@
           "202": {
             "description": ""
           },
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -423,10 +423,10 @@
           "202": {
             "description": ""
           },
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -629,6 +629,45 @@
     }
   },
   "definitions": {
+    "DeploymentExtendedFilter": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the provisioning state."
+        }
+      },
+      "description": "Deployment filter."
+    },
+    "GenericResourceExtendedFilter": {
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "description": "Gets or sets the resource type."
+        },
+        "tagName": {
+          "type": "string",
+          "description": "Gets or sets the tag name."
+        },
+        "tagValue": {
+          "type": "string",
+          "description": "Gets or sets the tag value."
+        }
+      },
+      "description": "Resource filter."
+    },
+    "ResourceGroupExtendedFilter": {
+      "properties": {
+        "tagName": {
+          "type": "string",
+          "description": "Gets or sets the tag name."
+        },
+        "tagValue": {
+          "type": "string",
+          "description": "Gets or sets the tag value."
+        }
+      },
+      "description": "Resource group filter."
+    },
     "ManagementLockProperties": {
       "properties": {
         "level": {

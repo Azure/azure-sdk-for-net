@@ -155,7 +155,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.List("foo", r => r.Type == "Sites");
+            var result = client.ResourceGroups.ListResources("foo", r => r.ResourceType == "Sites");
             /*new ResourceListParameters
             {              
                 ResourceType = "Sites"
@@ -199,7 +199,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Resources.List("foo", r => r.Type == "Sites");
+            var result = client.ResourceGroups.ListResources("foo", r => r.ResourceType == "Sites");
 
 
             // Validate headers

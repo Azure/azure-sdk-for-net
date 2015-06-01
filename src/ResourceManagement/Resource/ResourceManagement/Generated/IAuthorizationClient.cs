@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         Uri BaseUri { get; set; }
 
-        IManagementLockOperations ManagementLocks { get; }
+        IManagementLocksOperations ManagementLocks { get; }
 
         }
 }

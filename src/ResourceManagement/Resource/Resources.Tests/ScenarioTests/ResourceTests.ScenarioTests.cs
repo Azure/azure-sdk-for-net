@@ -70,7 +70,7 @@ namespace ResourceGroups.Tests
                 var groups = client.ResourceGroups.List();
                 foreach (var group in groups.Value)
                 {
-                    var resources = client.Resources.List(group.Name, r => r.Type == "Microsoft.Web/sites");
+                    var resources = client.ResourceGroups.ListResources(group.Name, r => r.ResourceType == "Microsoft.Web/sites");
                     foreach (var resource in resources.Value)
                     {
                         client.Resources.Delete(group.Name, 
@@ -169,7 +169,7 @@ namespace ResourceGroups.Tests
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, createOrUpdateResult.Location),
                     string.Format("Resource location for website '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, websiteLocation));
 
-                var listResult = client.Resources.List(groupName);
+                var listResult = client.ResourceGroups.ListResources(groupName);
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -177,7 +177,7 @@ namespace ResourceGroups.Tests
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.Value[0].Location),
                     string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.Value[0].Location, websiteLocation));
 
-                listResult = client.Resources.List(groupName, top: 10);
+                listResult = client.ResourceGroups.ListResources(groupName, top: 10);
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -232,7 +232,7 @@ namespace ResourceGroups.Tests
                         Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
                     });
 
-                var listResult = client.Resources.List(groupName, r => r.Tags.Keys.Contains(tagName));
+                var listResult = client.ResourceGroups.ListResources(groupName, r => r.TagName == tagName);
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -298,8 +298,8 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.Resources.List(groupName, 
-                    r => r.Tags.Keys.Contains(tagName) && r.Tags.Values.Contains(tagValue));
+                var listResult = client.ResourceGroups.ListResources(groupName, 
+                    r => r.TagName == tagName && r.TagValue == tagValue);
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -346,7 +346,7 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.Resources.List(groupName);
+                var listResult = client.ResourceGroups.ListResources(groupName);
 
                 Assert.Equal(resourceName, listResult.Value[0].Name);
 
@@ -388,7 +388,7 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.Resources.List(groupName, r => r.Type == "Microsoft.Web/sites");
+                var listResult = client.ResourceGroups.ListResources(groupName, r => r.ResourceType == "Microsoft.Web/sites");
 
                 Assert.NotEmpty(listResult.Value);
                 Assert.Equal(2, listResult.Value[0].Tags.Count);

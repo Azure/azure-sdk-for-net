@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         public int LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IManagementLockOperations ManagementLocks { get; private set; }
+        public virtual IManagementLocksOperations ManagementLocks { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AuthorizationClient class.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         private void Initialize()
         {
-            this.ManagementLocks = new ManagementLockOperations(this);
+            this.ManagementLocks = new ManagementLocksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-01-01";
             this.LongRunningOperationInitialTimeout = -1;

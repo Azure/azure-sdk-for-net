@@ -20,19 +20,19 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         Uri BaseUri { get; set; }
 
-        IProviderOperations Providers { get; }
+        IProvidersOperations Providers { get; }
 
-        IResourceOperations Resources { get; }
+        IResourceGroupsOperations ResourceGroups { get; }
 
-        ITagOperations Tags { get; }
+        IResourcesOperations Resources { get; }
 
-        IDeploymentOperationOperations DeploymentOperations { get; }
+        ITagsOperations Tags { get; }
 
-        IResourceProviderOperationDetailOperations ResourceProviderOperationDetails { get; }
+        IDeploymentOperationsOperations DeploymentOperations { get; }
 
-        IResourceGroupOperations ResourceGroups { get; }
+        IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; }
 
-        IDeploymentOperations Deployments { get; }
+        IDeploymentsOperations Deployments { get; }
 
         }
 }

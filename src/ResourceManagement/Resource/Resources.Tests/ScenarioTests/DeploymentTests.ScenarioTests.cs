@@ -343,10 +343,10 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
-                var deploymentListResult = client.Deployments.List(groupName, d => d.Properties.ProvisioningState == "Running");
+                var deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Running");
                 if (null == deploymentListResult.Value || deploymentListResult.Value.Count < 1)
                 {
-                    deploymentListResult = client.Deployments.List(groupName, d => d.Properties.ProvisioningState == "Running");
+                    deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Running");
                 }
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 

@@ -57,19 +57,19 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         public int LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IProviderOperations Providers { get; private set; }
+        public virtual IProvidersOperations Providers { get; private set; }
 
-        public virtual IResourceOperations Resources { get; private set; }
+        public virtual IResourceGroupsOperations ResourceGroups { get; private set; }
 
-        public virtual ITagOperations Tags { get; private set; }
+        public virtual IResourcesOperations Resources { get; private set; }
 
-        public virtual IDeploymentOperationOperations DeploymentOperations { get; private set; }
+        public virtual ITagsOperations Tags { get; private set; }
 
-        public virtual IResourceProviderOperationDetailOperations ResourceProviderOperationDetails { get; private set; }
+        public virtual IDeploymentOperationsOperations DeploymentOperations { get; private set; }
 
-        public virtual IResourceGroupOperations ResourceGroups { get; private set; }
+        public virtual IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; private set; }
 
-        public virtual IDeploymentOperations Deployments { get; private set; }
+        public virtual IDeploymentsOperations Deployments { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ResourceManagementClient class.
@@ -176,13 +176,13 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         private void Initialize()
         {
-            this.Providers = new ProviderOperations(this);
-            this.Resources = new ResourceOperations(this);
-            this.Tags = new TagOperations(this);
-            this.DeploymentOperations = new DeploymentOperationOperations(this);
-            this.ResourceProviderOperationDetails = new ResourceProviderOperationDetailOperations(this);
-            this.ResourceGroups = new ResourceGroupOperations(this);
-            this.Deployments = new DeploymentOperations(this);
+            this.Providers = new ProvidersOperations(this);
+            this.ResourceGroups = new ResourceGroupsOperations(this);
+            this.Resources = new ResourcesOperations(this);
+            this.Tags = new TagsOperations(this);
+            this.DeploymentOperations = new DeploymentOperationsOperations(this);
+            this.ResourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
+            this.Deployments = new DeploymentsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-04-01-preview";
             this.LongRunningOperationInitialTimeout = -1;
