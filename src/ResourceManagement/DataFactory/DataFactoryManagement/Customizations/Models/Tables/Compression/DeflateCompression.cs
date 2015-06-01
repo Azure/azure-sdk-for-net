@@ -16,25 +16,14 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The format definition of a storage.
+    /// The Deflate compression method used on a table.
     /// </summary>
-    public abstract class StorageFormat
+    [AdfTypeName("Deflate")]
+    public class DeflateCompression : Compression
     {
         /// <summary>
-        /// The serializer.
+        /// The <see cref="CompressionLevel "/> used.
         /// </summary>
-        public string Serializer { get; set; }
-
-        /// <summary>
-        /// The deserializer.
-        /// </summary>
-        public string Deserializer { get; set; }
-        
-#if ADF_INTERNAL
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        public string Encryption { get; set; }
-#endif
+        public string Level { get; set; }
     }
 }

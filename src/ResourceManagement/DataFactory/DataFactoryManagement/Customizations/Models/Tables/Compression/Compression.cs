@@ -16,25 +16,9 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The format definition of a storage.
+    /// The compression method used on a table.
     /// </summary>
-    public abstract class StorageFormat
+    public abstract class Compression
     {
-        /// <summary>
-        /// The serializer.
-        /// </summary>
-        public string Serializer { get; set; }
-
-        /// <summary>
-        /// The deserializer.
-        /// </summary>
-        public string Deserializer { get; set; }
-        
-#if ADF_INTERNAL
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        public string Encryption { get; set; }
-#endif
     }
 }

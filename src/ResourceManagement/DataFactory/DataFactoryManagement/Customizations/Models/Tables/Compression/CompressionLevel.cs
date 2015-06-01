@@ -16,25 +16,12 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The format definition of a storage.
+    /// All available compression levels.
     /// </summary>
-    public abstract class StorageFormat
+    public static class CompressionLevel
     {
-        /// <summary>
-        /// The serializer.
-        /// </summary>
-        public string Serializer { get; set; }
+        public const string Optimal = "Optimal";
 
-        /// <summary>
-        /// The deserializer.
-        /// </summary>
-        public string Deserializer { get; set; }
-        
-#if ADF_INTERNAL
-        /// <summary>
-        /// Encryption.
-        /// </summary>
-        public string Encryption { get; set; }
-#endif
+        public const string Fastest = "Fastest";
     }
 }

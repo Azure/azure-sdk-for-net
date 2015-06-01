@@ -13,6 +13,12 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\GenericCompression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\DeflateCompression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\GZipCompression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\Compression.cs" />
     <Compile Include="Customizations\Models\IGenericTypeProperties.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />

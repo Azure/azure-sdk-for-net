@@ -46,5 +46,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The format of the Azure blob storage.
         /// </summary>
         public StorageFormat Format { get; set; }
+
+        /// <summary>
+        /// The data compression method used for the blob storage.
+        /// </summary>
+        public Compression Compression { get; set; }
     }
 }
