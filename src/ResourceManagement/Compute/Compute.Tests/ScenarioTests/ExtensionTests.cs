@@ -21,6 +21,7 @@ using Microsoft.Azure.Test;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Microsoft.Azure;
 using Xunit;
 
 namespace Compute.Tests
@@ -67,6 +68,11 @@ namespace Compute.Tests
 
                     var vm = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM);
 
+                    // Delete an extension that does not exist in the VM. A http status code of NoContent should be returned which translates to operation success.
+                    var deleteResponse = m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, "VMExtensionDoesNotExist");
+                    Assert.True(deleteResponse.StatusCode == HttpStatusCode.NoContent);
+                    Assert.True(deleteResponse.Status == OperationStatus.Succeeded);
+                    
                     // Add an extension to the VM
                     var vmExtension = GetTestVMExtension();
                     //var lroResponse = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension);
@@ -96,7 +102,7 @@ namespace Compute.Tests
                     ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.VirtualMachine.InstanceView.Extensions.FirstOrDefault());
 
                     // Validate the extension delete API
-                    var deleteResponse = m_CrpClient.VirtualMachineExtensions.BeginDeleting(rgName, vm.Name, vmExtension.Name);
+                    deleteResponse = m_CrpClient.VirtualMachineExtensions.BeginDeleting(rgName, vm.Name, vmExtension.Name);
                     Assert.True(deleteResponse.StatusCode == HttpStatusCode.Accepted);
                 }
                 finally
