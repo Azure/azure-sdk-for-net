@@ -307,13 +307,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ResourceGroupExtended"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ResourceGroupExtended"
@@ -350,6 +350,9 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": ""
           }
@@ -534,6 +537,55 @@
         }
       }
     },
+    "/subscriptions/{subscriptionId}/resources": {
+      "get": {
+        "tags": [
+          "Resources"
+        ],
+        "operationId": "Resources_List",
+        "description": "Get all of the resources under a subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The filter to apply on the operation."
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Query parameters. If null is passed returns all resource groups."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResourceListResult"
+            }
+          }
+        },
+        "x-pageable": true,
+        "x-odata": "#/definitions/GenericResourceExtendedFilter"
+      }
+    },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}": {
       "head": {
         "tags": [
@@ -595,10 +647,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "404": {
             "description": ""
           },
-          "404": {
+          "204": {
             "description": ""
           }
         }
@@ -663,13 +715,13 @@
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": ""
           },
           "204": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           }
         }
@@ -743,13 +795,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResourceExtended"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResourceExtended"
@@ -958,13 +1010,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagDetails"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagDetails"
@@ -1175,7 +1227,7 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "",
             "schema": {
               "type": "array",
@@ -1184,7 +1236,7 @@
               }
             }
           },
-          "200": {
+          "204": {
             "description": "",
             "schema": {
               "type": "array",
@@ -1285,13 +1337,13 @@
           }
         ],
         "responses": {
-          "400": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentValidateResponse"
             }
           },
-          "200": {
+          "400": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentValidateResponse"
@@ -1346,13 +1398,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentExtended"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/DeploymentExtended"
@@ -1478,11 +1530,11 @@
           "type": "string",
           "description": "Gets or sets the resource type."
         },
-        "tagName": {
+        "tagname": {
           "type": "string",
           "description": "Gets or sets the tag name."
         },
-        "tagValue": {
+        "tagvalue": {
           "type": "string",
           "description": "Gets or sets the tag value."
         }

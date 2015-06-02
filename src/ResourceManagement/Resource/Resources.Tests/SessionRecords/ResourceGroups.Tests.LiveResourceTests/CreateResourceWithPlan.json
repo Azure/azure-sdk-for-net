@@ -101,7 +101,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7649/providers/SuccessBricks.ClearDB//databases/csmr4652?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7649/providers/SuccessBricks.ClearDB/databases/csmr4652?api-version=2014-04-01-preview",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  },\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -167,7 +167,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7649/providers/SuccessBricks.ClearDB//databases/csmr4652?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7649/providers/SuccessBricks.ClearDB/databases/csmr4652?api-version=2014-04-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

@@ -29,6 +29,19 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse> MoveResourcesWithOperationResponseAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all of the resources under a subscription.
+        /// </summary>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// Query parameters. If null is passed returns all resource groups.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceListResult>> ListWithOperationResponseAsync(Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Checks whether resource exists.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -127,5 +140,15 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         Task<AzureOperationResponse<GenericResourceExtended>> GetWithOperationResponseAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get all of the resources under a subscription.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -451,7 +451,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg4976/providers/Microsoft.Web//sites/csmr4127?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg4976/providers/Microsoft.Web/sites/csmr4127?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -802,7 +802,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg505/providers/Microsoft.Web//sites/csmr5503?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg505/providers/Microsoft.Web/sites/csmr5503?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1077,7 +1077,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5354/providers/Microsoft.Web//sites/csmr2881?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5354/providers/Microsoft.Web/sites/csmr2881?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1276,7 +1276,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971/providers/Microsoft.Web//sites/csmr4313?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971/providers/Microsoft.Web/sites/csmr4313?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1323,7 +1323,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971/providers/Microsoft.Web//sites/csmr7663?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971/providers/Microsoft.Web/sites/csmr7663?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2206,7 +2206,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162/providers/Microsoft.Web//sites/csmr1166?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162/providers/Microsoft.Web/sites/csmr1166?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2253,7 +2253,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162/providers/Microsoft.Web//sites/csmr9450?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162/providers/Microsoft.Web/sites/csmr9450?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2376,7 +2376,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569/providers/Microsoft.Web//sites/csmr5645?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569/providers/Microsoft.Web/sites/csmr5645?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2423,7 +2423,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569/providers/Microsoft.Web//sites/csmr7949?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569/providers/Microsoft.Web/sites/csmr7949?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2850,7 +2850,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9165/providers/Microsoft.Web//sites/csmr6087?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9165/providers/Microsoft.Web/sites/csmr6087?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2973,7 +2973,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9288/providers/Microsoft.Web//sites/csmr9773?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9288/providers/Microsoft.Web/sites/csmr9773?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3096,7 +3096,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9292/providers/Microsoft.Web//sites/csmr759?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9292/providers/Microsoft.Web/sites/csmr759?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3295,7 +3295,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9699/providers/Microsoft.Web//sites/csmr6979?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9699/providers/Microsoft.Web/sites/csmr6979?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3418,7 +3418,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9972/providers/Microsoft.Web//sites/csmr3810?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9972/providers/Microsoft.Web/sites/csmr3810?api-version=2014-04-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

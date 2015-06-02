@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Gets or sets the date and time of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets operation status code.

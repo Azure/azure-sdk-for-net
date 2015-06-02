@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest;
@@ -67,8 +68,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/providers/{resourceProviderNamespace}/operations";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//providers/{resourceProviderNamespace}/operations";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
             List<string> queryParameters = new List<string>();
@@ -76,11 +77,12 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");
@@ -103,7 +105,7 @@ namespace Microsoft.Azure.Management.Resources
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
             {
                 CloudException ex = new CloudException(responseContent);
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
@@ -125,12 +127,12 @@ namespace Microsoft.Azure.Management.Resources
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
               result.Body = JsonConvert.DeserializeObject<List<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
             {
               result.Body = JsonConvert.DeserializeObject<List<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
             }

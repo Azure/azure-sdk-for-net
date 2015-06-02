@@ -71,7 +71,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9977/providers/Microsoft.Web//sites/csmr5229?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9977/providers/Microsoft.Web/sites/csmr5229?api-version=2014-04-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"name\": \"csmr5229\",\r\n    \"siteMode\": \"Standard\",\r\n    \"computeMode\": \"Shared\"\r\n  },\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
@@ -166,9 +166,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
@@ -213,9 +210,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
@@ -260,9 +254,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
@@ -307,9 +298,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
@@ -354,9 +342,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
@@ -401,9 +386,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
@@ -448,12 +430,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2014-04-01-preview"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ],
         "client-tracking-id": [
           "76"
         ]

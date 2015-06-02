@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest;
@@ -72,8 +73,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "MoveResources", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{sourceResourceGroupName}", Uri.EscapeDataString(sourceResourceGroupName));
             List<string> queryParameters = new List<string>();
@@ -82,6 +83,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("POST");
@@ -123,6 +126,107 @@ namespace Microsoft.Azure.Management.Resources
             AzureOperationResponse result = new AzureOperationResponse();
             result.Request = httpRequest;
             result.Response = httpResponse;
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get all of the resources under a subscription.
+        /// </summary>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>    
+        /// <param name='top'>
+        /// Query parameters. If null is passed returns all resource groups.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ResourceListResult>> ListWithOperationResponseAsync(Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
+            }
+            // Construct URL
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/resources";
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (filter != null)
+            {
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
+            }
+            if (top != null)
+            {
+                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(top.ToString())));
+            }
+            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            // Set Credentials
+            cancellationToken.ThrowIfCancellationRequested();
+            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                CloudException ex = new CloudException(responseContent);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            AzureOperationResponse<ResourceListResult> result = new AzureOperationResponse<ResourceListResult>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+              result.Body = JsonConvert.DeserializeObject<ResourceListResult>(responseContent, this.Client.DeserializationSettings);
+            }
             if (shouldTrace)
             {
                 ServiceClientTracing.Exit(invocationId, result);
@@ -196,8 +300,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "CheckExistence", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -209,11 +313,12 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("HEAD");
@@ -236,7 +341,7 @@ namespace Microsoft.Azure.Management.Resources
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NotFound")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NotFound") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
             {
                 CloudException ex = new CloudException(responseContent);
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
@@ -331,8 +436,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -344,11 +449,12 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("DELETE");
@@ -371,7 +477,7 @@ namespace Microsoft.Azure.Management.Resources
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted")))
             {
                 CloudException ex = new CloudException(responseContent);
                 ex.Request = httpRequest;
@@ -471,8 +577,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -484,11 +590,12 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("PUT");
@@ -515,7 +622,7 @@ namespace Microsoft.Azure.Management.Resources
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created")))
             {
                 CloudException ex = new CloudException(responseContent);
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
@@ -537,12 +644,12 @@ namespace Microsoft.Azure.Management.Resources
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
               result.Body = JsonConvert.DeserializeObject<GenericResourceExtended>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
               result.Body = JsonConvert.DeserializeObject<GenericResourceExtended>(responseContent, this.Client.DeserializationSettings);
             }
@@ -619,8 +726,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -632,11 +739,12 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");
@@ -689,6 +797,98 @@ namespace Microsoft.Azure.Management.Resources
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
             {
               result.Body = JsonConvert.DeserializeObject<GenericResourceExtended>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get all of the resources under a subscription.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ResourceListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "ListNext", tracingParameters);
+            }
+            // Construct URL
+            string url = "{nextLink}";       
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
+            url = url.Replace("{nextLink}", nextLink);
+            List<string> queryParameters = new List<string>();
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            // Set Credentials
+            cancellationToken.ThrowIfCancellationRequested();
+            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                CloudException ex = new CloudException(responseContent);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            AzureOperationResponse<ResourceListResult> result = new AzureOperationResponse<ResourceListResult>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+              result.Body = JsonConvert.DeserializeObject<ResourceListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

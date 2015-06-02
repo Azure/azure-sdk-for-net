@@ -19,14 +19,14 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Gets or sets the tag name.
         /// </summary>
-        [JsonProperty(PropertyName = "tagName")]
-        public string TagName { get; set; }
+        [JsonProperty(PropertyName = "tagname")]
+        public string Tagname { get; set; }
 
         /// <summary>
         /// Gets or sets the tag value.
         /// </summary>
-        [JsonProperty(PropertyName = "tagValue")]
-        public string TagValue { get; set; }
+        [JsonProperty(PropertyName = "tagvalue")]
+        public string Tagvalue { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

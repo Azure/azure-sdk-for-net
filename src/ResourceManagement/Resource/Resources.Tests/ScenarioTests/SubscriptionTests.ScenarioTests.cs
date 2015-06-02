@@ -41,7 +41,7 @@ namespace ResourceGroups.Tests
         public SubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetSubscriptionClient(handler);
+            var client = this.GetSubscriptionClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationInitialTimeout = 0;
