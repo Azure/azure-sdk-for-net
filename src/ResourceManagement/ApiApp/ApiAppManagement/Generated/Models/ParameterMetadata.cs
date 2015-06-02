@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private ParameterConstraints _constraints;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets constraints
         /// </summary>
         public ParameterConstraints Constraints
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _defaultValue;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets default value
         /// </summary>
         public string DefaultValue
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _description;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets description
         /// </summary>
         public string Description
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets display name
         /// </summary>
         public string DisplayName
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _name;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets name
         /// </summary>
         public string Name
         {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _tooltip;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets tooltip
         /// </summary>
         public string Tooltip
         {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _type;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets type
         /// </summary>
         public string Type
         {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _uIHint;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets ui hint
         /// </summary>
         public string UIHint
         {

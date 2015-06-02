@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _endpoint;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets endpoint
         /// </summary>
         public string Endpoint
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _hasDefinition;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets has definition
         /// </summary>
         public bool HasDefinition
         {

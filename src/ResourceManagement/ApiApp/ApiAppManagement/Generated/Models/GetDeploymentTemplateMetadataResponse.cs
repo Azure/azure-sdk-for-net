@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private DeploymentTemplateMetadata _metadata;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets package metadata
         /// </summary>
         public DeploymentTemplateMetadata Metadata
         {

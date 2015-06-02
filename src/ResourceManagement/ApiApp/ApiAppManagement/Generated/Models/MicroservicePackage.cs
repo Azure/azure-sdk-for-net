@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<MicroserviceAuthentication> _authentication;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets authentication
         /// </summary>
         public IList<MicroserviceAuthentication> Authentication
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _id;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets id
         /// </summary>
         public string Id
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<MicroserviceLink> _links;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets links
         /// </summary>
         public IList<MicroserviceLink> Links
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _version;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets version
         /// </summary>
         public string Version
         {

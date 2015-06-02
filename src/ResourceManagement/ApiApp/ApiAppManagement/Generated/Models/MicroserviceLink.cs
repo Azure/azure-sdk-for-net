@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _text;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets text
         /// </summary>
         public string Text
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _url;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets url
         /// </summary>
         public string Url
         {

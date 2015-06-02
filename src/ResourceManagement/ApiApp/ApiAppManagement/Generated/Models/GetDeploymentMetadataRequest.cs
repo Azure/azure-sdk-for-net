@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _microserviceId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets service id
         /// </summary>
         public string MicroserviceId
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _resourceGroupName;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets resource group
         /// </summary>
         public string ResourceGroupName
         {

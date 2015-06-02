@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<string> _allowedValues;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets allowed values
         /// </summary>
         public IList<string> AllowedValues
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _containsCharacters;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets contains characters
         /// </summary>
         public string ContainsCharacters
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _hasDigit;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets has digit
         /// </summary>
         public bool HasDigit
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _hasLetter;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets has letter
         /// </summary>
         public bool HasLetter
         {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _hasPunctuation;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets has punctuation
         /// </summary>
         public bool HasPunctuation
         {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _hidden;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets hidden
         /// </summary>
         public bool Hidden
         {
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private LengthConstraint _length;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets length
         /// </summary>
         public LengthConstraint Length
         {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _notContainsCharacters;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets not contains characters
         /// </summary>
         public string NotContainsCharacters
         {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _numeric;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets numeric
         /// </summary>
         public bool Numeric
         {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private RangeConstraint _range;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets range
         /// </summary>
         public RangeConstraint Range
         {
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private bool _required;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets required
         /// </summary>
         public bool Required
         {

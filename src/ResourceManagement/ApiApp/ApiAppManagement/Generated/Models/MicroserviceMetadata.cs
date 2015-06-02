@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets display name
         /// </summary>
         public string DisplayName
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _microserviceId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets service id
         /// </summary>
         public string MicroserviceId
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<ParameterMetadata> _parameters;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets parameters
         /// </summary>
         public IList<ParameterMetadata> Parameters
         {

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private int _lowerBound;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets lower bound
         /// </summary>
         public int LowerBound
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private int _upperBound;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets upper bound
         /// </summary>
         public int UpperBound
         {

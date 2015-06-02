@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.ApiApps
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "//resourcegroups/";
+            url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroup);
             url = url + "/providers/Microsoft.AppService/apiapps";
             List<string> queryParameters = new List<string>();

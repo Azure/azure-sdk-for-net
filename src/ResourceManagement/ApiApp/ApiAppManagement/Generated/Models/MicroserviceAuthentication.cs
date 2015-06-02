@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<string> _scopes;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets scopes
         /// </summary>
         public IList<string> Scopes
         {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _type;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets type
         /// </summary>
         public string Type
         {

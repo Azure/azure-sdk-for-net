@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private int _max;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets max
         /// </summary>
         public int Max
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private int _min;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets min
         /// </summary>
         public int Min
         {

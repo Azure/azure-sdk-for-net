@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _message;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets message
         /// </summary>
         public string Message
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _name;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets name
         /// </summary>
         public string Name
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _statusLevel;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets status level
         /// </summary>
         public string StatusLevel
         {

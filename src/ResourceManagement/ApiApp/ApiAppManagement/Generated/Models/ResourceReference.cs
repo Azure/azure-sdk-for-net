@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _id;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets id
         /// </summary>
         public string Id
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _resourceName;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets resource name
         /// </summary>
         public string ResourceName
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _resourceType;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets resource type
         /// </summary>
         public string ResourceType
         {

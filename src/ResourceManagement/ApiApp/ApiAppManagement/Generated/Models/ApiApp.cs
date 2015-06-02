@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _accessLevel;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets access level
         /// </summary>
         public string AccessLevel
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private MicroserviceApi _api;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets api
         /// </summary>
         public MicroserviceApi Api
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private MicroserviceAuthentication _authentication;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets authentication
         /// </summary>
         public MicroserviceAuthentication Authentication
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<string> _dependencies;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets dependencies
         /// </summary>
         public IList<string> Dependencies
         {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private ResourceReference _gateway;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets gateway
         /// </summary>
         public ResourceReference Gateway
         {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private ResourceReference _host;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets host
         /// </summary>
         public ResourceReference Host
         {
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _id;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets id
         /// </summary>
         public string Id
         {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _location;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets location
         /// </summary>
         public string Location
         {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _name;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets name
         /// </summary>
         public string Name
         {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private MicroservicePackage _package;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets package
         /// </summary>
         public MicroservicePackage Package
         {
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IList<StatusCheckEntry> _status;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets status
         /// </summary>
         public IList<StatusCheckEntry> Status
         {
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets tags
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.ApiApps.Models
         private string _updatePolicy;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets update policy
         /// </summary>
         public string UpdatePolicy
         {
