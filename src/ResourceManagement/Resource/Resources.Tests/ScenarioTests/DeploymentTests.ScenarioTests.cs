@@ -346,7 +346,7 @@ namespace ResourceGroups.Tests
                 var deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Running");
                 if (null == deploymentListResult.Value || deploymentListResult.Value.Count < 1)
                 {
-                    deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Running");
+                    deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Accepted");
                 }
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 

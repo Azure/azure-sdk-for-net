@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest;
@@ -60,8 +61,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "Unregister", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
             List<string> queryParameters = new List<string>();
@@ -70,6 +71,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("POST");
@@ -152,8 +155,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "Register", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
             List<string> queryParameters = new List<string>();
@@ -162,6 +165,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("POST");
@@ -240,8 +245,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/providers";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/providers";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (top != null)
@@ -253,6 +258,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");
@@ -335,8 +342,8 @@ namespace Microsoft.Azure.Management.Resources
                 ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            string url = this.Client.BaseUri.AbsoluteUri.TrimEnd('/') + 
-                         "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
+            string url = this.Client.BaseUri.AbsoluteUri + 
+                         "//subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
             List<string> queryParameters = new List<string>();
@@ -345,6 +352,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");
@@ -435,6 +444,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 url += "?" + string.Join("&", queryParameters);
             }
+            // trim all duplicate forward slashes in the url
+            url = Regex.Replace(url, "([^:]/)/+", "$1");
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
             httpRequest.Method = new HttpMethod("GET");

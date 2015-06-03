@@ -35,8 +35,8 @@ namespace ResourceGroups.Tests
             handler.IsPassThrough = false;
             return new ResourceManagementClient(token, handler);
         }
-        
-        [Fact]
+
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceGetValidateMessage()
         { 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -118,7 +118,7 @@ namespace ResourceGroups.Tests
             Assert.Null(result.ProvisioningState);
         }
 
-        [Fact]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceListValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -224,7 +224,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentNullException>(() => client.Resources.Get(null, null, null, null, null, null));
         }
 
-        [Fact]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceCreateOrUpdateValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -373,12 +373,12 @@ namespace ResourceGroups.Tests
 
 
         [Fact]
-        public void ResourceExistsValidateOkMessage()
+        public void ResourceExistsValidateNoContentMessage()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var response = new HttpResponseMessage(HttpStatusCode.NoContent);
             response.Headers.Add("x-ms-request-id", "1");
 
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.NoContent };
             var client = GetResourceManagementClient(handler);
 
             var identity = new ResourceIdentity
@@ -397,7 +397,7 @@ namespace ResourceGroups.Tests
                 identity.ResourceProviderApiVersion);
 
             // Validate headers
-            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.Equal(HttpMethod.Head, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
@@ -429,7 +429,7 @@ namespace ResourceGroups.Tests
                 identity.ResourceProviderApiVersion);
 
             // Validate headers
-            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.Equal(HttpMethod.Head, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
@@ -459,7 +459,7 @@ namespace ResourceGroups.Tests
                 identity.ResourceName,
                 identity.ResourceProviderApiVersion);
             // Validate headers
-            Assert.Equal("https://localhost:123/test/subscriptions/" + randomValue + "/resourcegroups/foo/providers/Microsoft.Web//sites/" + randomValue + "?api-version=2014-01-04", handler.Uri.AbsoluteUri);
+            Assert.Equal("https://localhost:123/test/subscriptions/" + randomValue + "/resourcegroups/foo/providers/Microsoft.Web/sites/" + randomValue + "?api-version=2014-01-04", handler.Uri.AbsoluteUri);
         }
 
         [Fact]
@@ -526,6 +526,7 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
             var resourceToMove = new ResourcesMoveInfo();
+            resourceToMove.Resources = new List<string>();
             resourceToMove.TargetResourceGroup = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup1";
 
             var resource1 = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup0/providers/Microsoft.Web/website/website1";

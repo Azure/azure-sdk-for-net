@@ -50,6 +50,44 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
+            /// Get all of the resources under a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// Query parameters. If null is passed returns all resource groups.
+            /// </param>
+            public static ResourceListResult List(this IResourcesOperations operations, Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?))
+            {
+                return Task.Factory.StartNew(s => ((IResourcesOperations)s).ListAsync(filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all of the resources under a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// Query parameters. If null is passed returns all resource groups.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ResourceListResult> ListAsync( this IResourcesOperations operations, Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ResourceListResult> result = await operations.ListWithOperationResponseAsync(filter, top, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// Checks whether resource exists.
             /// </summary>
             /// <param name='operations'>
@@ -291,6 +329,38 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<GenericResourceExtended> GetAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<GenericResourceExtended> result = await operations.GetWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Get all of the resources under a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            public static ResourceListResult ListNext(this IResourcesOperations operations, string nextLink)
+            {
+                return Task.Factory.StartNew(s => ((IResourcesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all of the resources under a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='nextLink'>
+            /// NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ResourceListResult> ListNextAsync( this IResourcesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ResourceListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

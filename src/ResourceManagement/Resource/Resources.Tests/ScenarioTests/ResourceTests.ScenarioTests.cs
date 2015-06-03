@@ -110,7 +110,7 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, groupName, "", groupIdentity.ResourceType, 
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, groupIdentity.ResourceProviderNamespace, "", groupIdentity.ResourceType, 
                     groupIdentity.ResourceName, groupIdentity.ResourceProviderApiVersion, 
                     new GenericResource
                     {
@@ -144,7 +144,6 @@ namespace ResourceGroups.Tests
 
             using (UndoContext context = UndoContext.Current)
             {
-
                 context.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -154,8 +153,7 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, resourceName, "", 
-                    "Microsoft.Web", "sites", WebResourceProviderVersion,
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, "Microsoft.Web", "", "sites",resourceName, WebResourceProviderVersion,
                     new GenericResource
                     {
                         Location = websiteLocation,
@@ -232,7 +230,7 @@ namespace ResourceGroups.Tests
                         Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
                     });
 
-                var listResult = client.ResourceGroups.ListResources(groupName, r => r.TagName == tagName);
+                var listResult = client.ResourceGroups.ListResources(groupName, r => r.Tagname == tagName);
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -299,7 +297,7 @@ namespace ResourceGroups.Tests
                 );
 
                 var listResult = client.ResourceGroups.ListResources(groupName, 
-                    r => r.TagName == tagName && r.TagValue == tagValue);
+                    r => r.Tagname == tagName && r.Tagvalue == tagValue);
 
                 Assert.Equal(1, listResult.Value.Count);
                 Assert.Equal(resourceName, listResult.Value[0].Name);
@@ -388,7 +386,7 @@ namespace ResourceGroups.Tests
                     }
                 );
 
-                var listResult = client.ResourceGroups.ListResources(groupName, r => r.ResourceType == "Microsoft.Web/sites");
+                var listResult = client.Resources.List(r => r.ResourceType == "Microsoft.Web/sites");
 
                 Assert.NotEmpty(listResult.Value);
                 Assert.Equal(2, listResult.Value[0].Tags.Count);

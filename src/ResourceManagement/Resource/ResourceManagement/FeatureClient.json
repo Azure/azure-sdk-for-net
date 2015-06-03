@@ -199,11 +199,11 @@
           "type": "string",
           "description": "Gets or sets the resource type."
         },
-        "tagName": {
+        "tagname": {
           "type": "string",
           "description": "Gets or sets the tag name."
         },
-        "tagValue": {
+        "tagvalue": {
           "type": "string",
           "description": "Gets or sets the tag value."
         }

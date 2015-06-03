@@ -36,6 +36,10 @@ namespace ResourceGroups.Tests
             StatusCodeToReturn = HttpStatusCode.Created;
             SubsequentStatusCodeToReturn = StatusCodeToReturn;
             _response = response;
+            if (_response.Content == null)
+            {
+                _response.Content = new StringContent(string.Empty);
+            }
         }
 
         public HttpStatusCode StatusCodeToReturn { get; set; }

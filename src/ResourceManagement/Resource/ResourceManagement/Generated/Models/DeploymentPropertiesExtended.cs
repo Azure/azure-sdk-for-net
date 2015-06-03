@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Gets or sets the timestamp of the template deployment.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets key/value pairs that represent deploymentoutput.

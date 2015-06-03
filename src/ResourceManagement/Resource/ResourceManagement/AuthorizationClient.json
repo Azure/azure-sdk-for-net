@@ -63,13 +63,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
@@ -154,13 +154,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
@@ -234,13 +234,13 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
           "202": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -285,13 +285,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
@@ -328,13 +328,13 @@
           }
         ],
         "responses": {
-          "202": {
+          "204": {
             "description": ""
           },
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           }
         }
@@ -420,10 +420,10 @@
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           },
           "204": {
@@ -644,11 +644,11 @@
           "type": "string",
           "description": "Gets or sets the resource type."
         },
-        "tagName": {
+        "tagname": {
           "type": "string",
           "description": "Gets or sets the tag name."
         },
-        "tagValue": {
+        "tagvalue": {
           "type": "string",
           "description": "Gets or sets the tag value."
         }
