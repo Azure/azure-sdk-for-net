@@ -81,6 +81,14 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
+        /// Definition of BackUp operations for the Azure Backup extension.
+        /// </summary>
+        IBackUpOperations BackUp
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Protection Policy operations for the Azure Backup
         /// extension.
         /// </summary>
@@ -94,6 +102,15 @@ namespace Microsoft.Azure.Management.BackupServices
         /// extension.
         /// </summary>
         IProtectionPolicyOperations ProtectionPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Recovery Point operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IRecoveryPointOperations RecoveryPoint
         {
             get; 
         }
