@@ -128,12 +128,12 @@ namespace ResourceGroups.Tests
             Assert.False(result);
         }
 
-        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
+        [Fact()]
         public void ResourceGroupExistsThrowsException()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.BadRequest };
             var client = GetResourceManagementClient(handler);
-            Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.CheckExistence("foo"));
+            Assert.Throws<CloudException>(() => client.ResourceGroups.CheckExistence("foo"));
         }
 
         [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
