@@ -122,6 +122,17 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._protectionPolicy; }
         }
         
+        private IVaultCredentialOperations _vaultCredentials;
+        
+        /// <summary>
+        /// Definition of Vault credential-related operations for the Azure
+        /// Backup extension.
+        /// </summary>
+        public virtual IVaultCredentialOperations VaultCredentials
+        {
+            get { return this._vaultCredentials; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the BackupServicesManagementClient
         /// class.
@@ -131,6 +142,7 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             this._job = new JobOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
+            this._vaultCredentials = new VaultCredentialOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -233,6 +245,7 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             this._job = new JobOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
+            this._vaultCredentials = new VaultCredentialOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

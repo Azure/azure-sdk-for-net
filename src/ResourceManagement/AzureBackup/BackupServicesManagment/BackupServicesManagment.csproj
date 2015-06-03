@@ -16,7 +16,41 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Generated\BackupServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\IBackupServicesManagementClient.cs" />
+    <Compile Include="Generated\IJobOperations.cs" />
+    <Compile Include="Generated\IProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\IVaultCredentialOperations.cs" />
+    <Compile Include="Generated\JobOperations.cs" />
+    <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\JobQueryParameter.cs" />
+    <Compile Include="Generated\JobResponse.cs" />
+    <Compile Include="Generated\Models\BackupSchedule.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\Job.cs" />
+    <Compile Include="Generated\Models\JobByIdResponse.cs" />
+    <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobProperties.cs" />
+    <Compile Include="Generated\Models\JobSupportedAction.cs" />
+    <Compile Include="Generated\Models\JobTaskDetails.cs" />
+    <Compile Include="Generated\Models\ManagementBaseObject.cs" />
+    <Compile Include="Generated\Models\ManagementResponseObject.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyInfo.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyInfoResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
+    <Compile Include="Generated\Models\RawCertificateData.cs" />
+    <Compile Include="Generated\Models\ResourceCertificateAndACSDetails.cs" />
+    <Compile Include="Generated\Models\RetentionDurationType.cs" />
+    <Compile Include="Generated\Models\RetentionPolicy.cs" />
+    <Compile Include="Generated\Models\VaultCredUploadCertRequest.cs" />
+    <Compile Include="Generated\Models\VaultCredUploadCertResponse.cs" />
+    <Compile Include="Generated\ProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs" />
+    <Compile Include="Generated\VaultCredentialOperations.cs" />
+    <Compile Include="Generated\VaultCredentialOperations.cs" />
+    <Compile Include="Generated\VaultCredentialOperationsExtensions.cs" />
+    <Compile Include="Generated\VaultCredentialOperationsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Management.BackupServices.nuget.proj">
