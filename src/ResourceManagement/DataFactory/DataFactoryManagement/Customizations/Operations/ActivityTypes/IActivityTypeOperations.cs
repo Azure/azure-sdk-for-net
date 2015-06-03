@@ -20,7 +20,6 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Operations for managing data factory ActivityTypes.
     /// </summary>
@@ -193,5 +192,4 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </returns>
         Task<ActivityTypeListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }
-#endif
 }

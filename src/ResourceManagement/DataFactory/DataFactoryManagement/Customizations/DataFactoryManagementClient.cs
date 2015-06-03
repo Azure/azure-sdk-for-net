@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </summary>
         public SubscriptionCloudCredentials Credentials { get; set; }
 
-#if ADF_INTERNAL
         /// <summary>
         /// Operations for managing data factory ActivityTypes.
         /// </summary>
@@ -50,7 +49,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Operations for managing data factory ComputeTypes.
         /// </summary>
         public virtual IComputeTypeOperations ComputeTypes { get; private set; }
-#endif
 
         /// <summary>
         /// Operations for managing data factories.
@@ -253,10 +251,8 @@ namespace Microsoft.Azure.Management.DataFactories
         {
             this.InternalClient = new Core.DataFactoryManagementClient();
 
-#if ADF_INTERNAL
             this.ActivityTypes = new ActivityTypeOperations(this);
             this.ComputeTypes = new ComputeTypeOperations(this);
-#endif
             this.DataFactories = new DataFactoryOperations(this);
             this.DataSlices = new DataSliceOperations(this);
             this.DataSliceRuns = new DataSliceRunOperations(this);

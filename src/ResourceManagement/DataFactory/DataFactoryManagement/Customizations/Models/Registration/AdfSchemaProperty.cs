@@ -17,7 +17,6 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public class AdfSchemaProperty
     {
         /// <summary>
@@ -71,5 +70,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public bool? SecureString { get; set; }
     }
-#endif
 }

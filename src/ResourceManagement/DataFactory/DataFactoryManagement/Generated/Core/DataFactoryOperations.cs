@@ -227,6 +227,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         {
                             propertiesValue["errorMessage"] = parameters.DataFactory.Properties.ErrorMessage;
                         }
+                        
+                        if (parameters.DataFactory.Properties.DataFactoryId != null)
+                        {
+                            propertiesValue["dataFactoryId"] = parameters.DataFactory.Properties.DataFactoryId;
+                        }
                     }
                 }
                 
@@ -329,6 +334,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string errorMessageInstance = ((string)errorMessageValue);
                                     propertiesInstance.ErrorMessage = errorMessageInstance;
+                                }
+                                
+                                JToken dataFactoryIdValue = propertiesValue2["dataFactoryId"];
+                                if (dataFactoryIdValue != null && dataFactoryIdValue.Type != JTokenType.Null)
+                                {
+                                    string dataFactoryIdInstance = ((string)dataFactoryIdValue);
+                                    propertiesInstance.DataFactoryId = dataFactoryIdInstance;
                                 }
                             }
                         }
@@ -784,6 +796,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     string errorMessageInstance = ((string)errorMessageValue);
                                     propertiesInstance.ErrorMessage = errorMessageInstance;
                                 }
+                                
+                                JToken dataFactoryIdValue = propertiesValue["dataFactoryId"];
+                                if (dataFactoryIdValue != null && dataFactoryIdValue.Type != JTokenType.Null)
+                                {
+                                    string dataFactoryIdInstance = ((string)dataFactoryIdValue);
+                                    propertiesInstance.DataFactoryId = dataFactoryIdInstance;
+                                }
                             }
                         }
                         
@@ -967,6 +986,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string errorMessageInstance = ((string)errorMessageValue);
                                     propertiesInstance.ErrorMessage = errorMessageInstance;
+                                }
+                                
+                                JToken dataFactoryIdValue = propertiesValue["dataFactoryId"];
+                                if (dataFactoryIdValue != null && dataFactoryIdValue.Type != JTokenType.Null)
+                                {
+                                    string dataFactoryIdInstance = ((string)dataFactoryIdValue);
+                                    propertiesInstance.DataFactoryId = dataFactoryIdInstance;
                                 }
                             }
                         }
@@ -1195,6 +1221,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string errorMessageInstance = ((string)errorMessageValue);
                                             propertiesInstance.ErrorMessage = errorMessageInstance;
                                         }
+                                        
+                                        JToken dataFactoryIdValue = propertiesValue["dataFactoryId"];
+                                        if (dataFactoryIdValue != null && dataFactoryIdValue.Type != JTokenType.Null)
+                                        {
+                                            string dataFactoryIdInstance = ((string)dataFactoryIdValue);
+                                            propertiesInstance.DataFactoryId = dataFactoryIdInstance;
+                                        }
                                     }
                                 }
                             }
@@ -1389,6 +1422,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string errorMessageInstance = ((string)errorMessageValue);
                                             propertiesInstance.ErrorMessage = errorMessageInstance;
+                                        }
+                                        
+                                        JToken dataFactoryIdValue = propertiesValue["dataFactoryId"];
+                                        if (dataFactoryIdValue != null && dataFactoryIdValue.Type != JTokenType.Null)
+                                        {
+                                            string dataFactoryIdInstance = ((string)dataFactoryIdValue);
+                                            propertiesInstance.DataFactoryId = dataFactoryIdInstance;
                                         }
                                     }
                                 }
