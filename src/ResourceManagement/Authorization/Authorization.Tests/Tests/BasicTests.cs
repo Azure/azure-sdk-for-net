@@ -646,7 +646,7 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("AssignableScopeNotUnderSubscriptionScope", ce.Error.Code);
+                    Assert.Equal("LinkedInvalidPropertyId", ce.Error.Code);
                     Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
 
