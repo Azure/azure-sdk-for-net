@@ -31,16 +31,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:f6441504-dcdf-47be-a995-3345e0884fc5"
+          "centralus:208b23f9-1713-4954-be70-525f1c2d0cf4"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14957"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "4941cf5b-b8f1-428a-8d14-b958733d5c42"
+          "ea88a2cc-4e03-41c7-b052-afe568e18523"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150602T221005Z:4941cf5b-b8f1-428a-8d14-b958733d5c42"
+          "CENTRALUS:20150603T231308Z:ea88a2cc-4e03-41c7-b052-afe568e18523"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Jun 2015 22:10:05 GMT"
+          "Wed, 03 Jun 2015 23:13:08 GMT"
         ]
       },
       "StatusCode": 200
