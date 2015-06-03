@@ -36,19 +36,10 @@
   
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
-
     This key should never be committed to source control.
-
-  /p:PublishSymbolSourcePackages
-    A true/false value indicating whether to push the symbol + source
-    packages to a symbol server.
-
+    
   /p:NuGetPublishingSource=Uri
     The NuGet Server to push packages to.
-
-  /p:NuGetSymbolPublishingSource=Uri
-    The NuGet Server to push symbol + source packages to.
-
   -->  
   
   <PropertyGroup>
@@ -68,6 +59,7 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
+    <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
   </PropertyGroup>
 
   <ItemGroup>
@@ -159,12 +151,17 @@
     <ItemGroup>
       <DelaySignedAssembliesToValidate Include="binaries\$(LibraryFxTarget)\unsigned\*.dll" />
     </ItemGroup>
+    
+    <Message Importance="high" Text="Binaries\$(LibraryFxTarget)\unsigned contains no files. Code sign will skip." 
+             Condition="'@(DelaySignedAssembliesToValidate)' == ''" />
+    
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
         Assembly="%(DelaySignedAssembliesToValidate.Identity)"
         ExpectedTokenSignature="$(StrongNameToken)"
         ExpectedDelaySigned="true"
-        ContinueOnError="false" />
+        ContinueOnError="false" 
+        Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
 
     <CodeSigningTask
         Description="Microsoft Azure SDK"
@@ -173,7 +170,7 @@
         DestinationPath="binaries\$(LibraryFxTarget)"
         SigningLogPath="binaries\$(LibraryFxTarget)\signing.log"
         ToolsPath="$(CIToolsPath)"
-        Condition="!$(DelaySign)"/>
+        Condition="!$(DelaySign) and '@(DelaySignedAssembliesToValidate)' != ''"/>
     <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
     <Copy SourceFiles="@(DelaySignedAssembliesToValidate)" DestinationFolder="binaries\$(LibraryFxTarget)" Condition="$(DelaySign)" />
     
@@ -186,7 +183,7 @@
         ExpectedTokenSignature="$(StrongNameToken)"
         ExpectedDelaySigned="false"
         ContinueOnError="false" 
-        Condition="!$(DelaySign)"/>
+        Condition="!$(DelaySign) and '@(DelaySignedAssembliesToValidate)' != ''"/>
     
     <RemoveDir Directories="binaries\$(LibraryFxTarget)\unsigned;" ContinueOnError="true" />
   </Target>

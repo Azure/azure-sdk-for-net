@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
     /// RmoteApp management client
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IOperationResultOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IOperationResultOperations.
         /// </param>
         /// <param name='trackingId'>
         /// Required. The operation tracking id.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RemoteApp.IOperationResultOperations.
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IOperationResultOperations.
         /// </param>
         /// <param name='trackingId'>
         /// Required. The operation tracking id.

@@ -112,6 +112,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Network Management API includes operations for managing the IP
+        /// Forwarding for your roles and network interfaces in your
+        /// subscription.
+        /// </summary>
+        IIPForwardingOperations IPForwarding
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Network Management API includes operations for managing the
         /// virtual networks for your subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx
@@ -154,6 +164,15 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// static IPs for your subscription.
         /// </summary>
         IStaticIPOperations StaticIPs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// Virtual IPs for your deployment.
+        /// </summary>
+        IVirtualIPOperations VirtualIPs
         {
             get; 
         }

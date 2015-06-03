@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 var validServiceName = TestUtilities.GenerateName("hydraapimservicevalid");
                 var response =
-                    apiManagementClient.ApiManagement.CheckServiceNameAvailability(
+                    apiManagementClient.ResourceProvider.CheckServiceNameAvailability(
                         new ApiServiceCheckNameAvailabilityParameters(validServiceName));
                 Assert.NotNull(response);
                 Assert.True(response.IsAvailable);
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 const string invalidName = "!!!invalidname";
                 response =
-                    apiManagementClient.ApiManagement.CheckServiceNameAvailability(
+                    apiManagementClient.ResourceProvider.CheckServiceNameAvailability(
                         new ApiServiceCheckNameAvailabilityParameters(invalidName));
                 Assert.NotNull(response);
                 Assert.False(response.IsAvailable);
@@ -70,12 +70,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         PublisherName = "publisher"
                     });
 
-                var createResponse = apiManagementClient.ApiManagement.CreateOrUpdate(resourceGroup, validServiceName,
+                var createResponse = apiManagementClient.ResourceProvider.CreateOrUpdate(resourceGroup, validServiceName,
                     createServiceParameters);
                 Assert.NotNull(createResponse);
 
                 response =
-                    apiManagementClient.ApiManagement.CheckServiceNameAvailability(
+                    apiManagementClient.ResourceProvider.CheckServiceNameAvailability(
                         new ApiServiceCheckNameAvailabilityParameters(validServiceName));
                 Assert.NotNull(response);
                 Assert.False(response.IsAvailable);

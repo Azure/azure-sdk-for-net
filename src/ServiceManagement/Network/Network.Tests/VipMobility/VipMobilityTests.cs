@@ -45,8 +45,6 @@ namespace Network.Tests
                 undoContext.Start();
                 using (NetworkTestBase _testFixture = new NetworkTestBase())
                 {
-                    ComputeManagementClient computeClient = _testFixture.GetComputeManagementClient();
-                    StorageManagementClient storageClient = _testFixture.GetStorageManagementClient();
                     var managementClient = _testFixture.ManagementClient;
                     bool storageAccountCreated = false;
                     bool hostedServiceCreated = false;
@@ -58,11 +56,11 @@ namespace Network.Tests
                     bool reservedIpCreated = false;
                     try
                     {
-                        CreateStorageAccount(location, storageClient, storageAccountName, out storageAccountCreated);
+                        _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
 
-                        CreateHostedService(location, computeClient, serviceName, out hostedServiceCreated);
+                        _testFixture.CreateHostedService(location, serviceName, out hostedServiceCreated);
 
-                        var deployment = CreatePaaSDeployment(storageAccountName, computeClient, serviceName, deploymentName);
+                        var deployment = _testFixture.CreatePaaSDeployment(storageAccountName, serviceName, deploymentName, NetworkTestConstants.OneWebOneWorkerPkgFilePath, "OneWebOneWorker.cscfg");
 
                         NetworkReservedIPCreateParameters reservedIpCreatePars = new NetworkReservedIPCreateParameters
                         {
@@ -96,11 +94,11 @@ namespace Network.Tests
                     {
                         if (storageAccountCreated)
                         {
-                            storageClient.StorageAccounts.Delete(storageAccountName);
+                            _testFixture.StorageClient.StorageAccounts.Delete(storageAccountName);
                         }
                         if (hostedServiceCreated)
                         {
-                            computeClient.HostedServices.DeleteAll(serviceName);
+                            _testFixture.ComputeClient.HostedServices.DeleteAll(serviceName);
                         }
                         if (reservedIpCreated)
                         {
@@ -110,6 +108,7 @@ namespace Network.Tests
                 }
             }
         }
+
 
         [Fact]
         [Trait("Feature", "Rnm")]
@@ -121,8 +120,6 @@ namespace Network.Tests
                 undoContext.Start();
                 using (NetworkTestBase _testFixture = new NetworkTestBase())
                 {
-                    ComputeManagementClient computeClient = _testFixture.GetComputeManagementClient();
-                    StorageManagementClient storageClient = _testFixture.GetStorageManagementClient();
                     var managementClient = _testFixture.ManagementClient;
                     bool storageAccountCreated = false;
                     bool hostedServiceCreated = false;
@@ -135,7 +132,16 @@ namespace Network.Tests
                     const string usWestLocStr = "West US";
                     try
                     {
-                        AssociateReservedIP(managementClient, usWestLocStr, location, storageClient, storageAccountName, ref storageAccountCreated, computeClient, serviceName, deploymentName, reserveIpName, _testFixture, ref hostedServiceCreated, ref reserveIpCreated);
+                        _testFixture.AssociateReservedIP(
+                            usWestLocStr,
+                            location,
+                            storageAccountName,
+                            ref storageAccountCreated,
+                            serviceName,
+                            deploymentName,
+                            reserveIpName,
+                            ref hostedServiceCreated,
+                            ref reserveIpCreated);
                     }
                     catch (Exception)
                     {
@@ -145,11 +151,11 @@ namespace Network.Tests
                     {
                         if (storageAccountCreated)
                         {
-                            storageClient.StorageAccounts.Delete(storageAccountName);
+                            _testFixture.StorageClient.StorageAccounts.Delete(storageAccountName);
                         }
                         if (hostedServiceCreated)
                         {
-                            computeClient.HostedServices.DeleteAll(serviceName);
+                            _testFixture.ComputeClient.HostedServices.DeleteAll(serviceName);
                         }
                         if (reserveIpCreated)
                         {
@@ -185,9 +191,17 @@ namespace Network.Tests
                     const string usWestLocStr = "West US";
                     try
                     {
-                        AssociateReservedIP(managementClient, usWestLocStr, location, storageClient, storageAccountName,
-                            ref storageAccountCreated, computeClient, serviceName, deploymentName, reserveIpName,
-                            _testFixture, ref hostedServiceCreated, ref reserveIpCreated);
+                        _testFixture.AssociateReservedIP(
+                            usWestLocStr,
+                            location,
+                            storageAccountName,
+                            ref storageAccountCreated,
+                            serviceName,
+                            deploymentName,
+                            reserveIpName,
+                            ref hostedServiceCreated,
+                            ref reserveIpCreated);
+
                         Assert.True(storageAccountCreated);
                         Assert.True(hostedServiceCreated);
                         Assert.True(reserveIpCreated);
@@ -237,125 +251,5 @@ namespace Network.Tests
             Assert.True(string.IsNullOrEmpty(receivedReservedIpFromRdfe.DeploymentName));
         }
 
-        private static void AssociateReservedIP(ManagementClient managementClient, string usWestLocStr, string location,
-            StorageManagementClient storageClient, string storageAccountName, ref bool storageAccountCreated,
-            ComputeManagementClient computeClient, string serviceName, string deploymentName, string reserveIpName,
-            NetworkTestBase _testFixture, ref bool hostedServiceCreated, ref bool reserveIpCreated)
-        {
-            if (managementClient.Locations.List().Any(
-                c => string.Equals(c.Name, usWestLocStr, StringComparison.OrdinalIgnoreCase)))
-            {
-                location = usWestLocStr;
-            }
-
-            CreateStorageAccount(location, storageClient, storageAccountName, out storageAccountCreated);
-
-            CreateHostedService(location, computeClient, serviceName, out hostedServiceCreated);
-
-            CreatePaaSDeployment(storageAccountName, computeClient, serviceName, deploymentName);
-
-            NetworkReservedIPCreateParameters reservedIpCreatePars = new NetworkReservedIPCreateParameters
-            {
-                Name = reserveIpName,
-                Location = "uswest",
-                Label = "SampleReserveIPLabel"
-            };
-
-            OperationStatusResponse reserveIpCreate = _testFixture.NetworkClient.ReservedIPs.Create(reservedIpCreatePars);
-            Assert.True(reserveIpCreate.StatusCode == HttpStatusCode.OK);
-            reserveIpCreated = true;
-
-            NetworkReservedIPGetResponse reserveIpCreationResponse =
-                _testFixture.NetworkClient.ReservedIPs.Get(reserveIpName);
-
-            Assert.True(reserveIpCreationResponse.StatusCode == HttpStatusCode.OK);
-
-
-            NetworkReservedIPMobilityParameters pars = new NetworkReservedIPMobilityParameters
-            {
-                ServiceName = serviceName,
-                DeploymentName = deploymentName
-            };
-            OperationStatusResponse responseAssociateRip = _testFixture.NetworkClient.ReservedIPs.Associate(reserveIpName, pars);
-            Assert.True(responseAssociateRip.StatusCode == HttpStatusCode.OK);
-
-            NetworkReservedIPGetResponse receivedReservedIpFromRdfe =
-                _testFixture.NetworkClient.ReservedIPs.Get(reserveIpName);
-
-            Assert.True(receivedReservedIpFromRdfe.StatusCode == HttpStatusCode.OK);
-
-            Assert.True(serviceName == receivedReservedIpFromRdfe.ServiceName);
-            Assert.True(receivedReservedIpFromRdfe.InUse == true);
-            Assert.True(deploymentName == receivedReservedIpFromRdfe.DeploymentName);
-        }
-
-        private static DeploymentGetResponse CreatePaaSDeployment(string storageAccountName, ComputeManagementClient computeClient,
-            string serviceName, string deploymentName)
-        {
-            var cfgFilePath = "OneWebOneWorker.cscfg";
-            var containerStr = AZT.TestUtilities.GenerateName("cspkg");
-            var pkgFileName = "OneWebOneWorker.cspkg";
-            var pkgFilePath = ".\\" + pkgFileName;
-
-            var blobUri = StorageTestUtilities.UploadFileToBlobStorage(
-                storageAccountName,
-                containerStr,
-                pkgFilePath);
-            var blobUriStr = blobUri.ToString();
-            var containerUriStr = blobUriStr.Substring(0, blobUriStr.IndexOf("/" + pkgFileName));
-            containerUriStr = containerUriStr.Replace("https", "http");
-            var containerUri = new Uri(containerUriStr);
-
-            var deploymentCreate = computeClient.Deployments.Create(
-                serviceName,
-                DeploymentSlot.Production,
-                new DeploymentCreateParameters
-                {
-                    Configuration = File.ReadAllText(cfgFilePath),
-                    PackageUri = blobUri,
-                    Name = deploymentName,
-                    Label = serviceName,
-                    ExtendedProperties = null,
-                    StartDeployment = false,
-                    TreatWarningsAsError = false,
-                    ExtensionConfiguration = null
-                });
-
-            Assert.True(deploymentCreate.StatusCode == HttpStatusCode.OK);
-
-            var deploymentReceived = computeClient.Deployments.GetByName(serviceName, deploymentName);
-            return deploymentReceived;
-        }
-
-        private static void CreateHostedService(string location, ComputeManagementClient computeClient, string serviceName,
-            out bool hostedServiceCreated)
-        {
-                AzureOperationResponse hostedServiceCreate = computeClient.HostedServices.Create(
-                new HostedServiceCreateParameters
-                {
-                    Location = location,
-                    Label = serviceName,
-                    ServiceName = serviceName
-                });
-
-            Assert.True(hostedServiceCreate.StatusCode == HttpStatusCode.Created);
-
-            hostedServiceCreated = true;
-        }
-
-        private static void CreateStorageAccount(string location, StorageManagementClient storageClient,
-            string storageAccountName, out bool storageAccountCreated)
-        {
-            AzureOperationResponse storageCreate = storageClient.StorageAccounts.Create(
-                new StorageAccountCreateParameters
-                {
-                    Location = location,
-                    Label = storageAccountName,
-                    Name = storageAccountName,
-                    AccountType = "Standard_LRS"
-                });
-            Assert.True(storageCreate.StatusCode == HttpStatusCode.OK);
-            storageAccountCreated = true;
-        }
     }
 }

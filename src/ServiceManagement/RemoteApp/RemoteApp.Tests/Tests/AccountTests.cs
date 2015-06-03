@@ -12,9 +12,9 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using Xunit;
 
 namespace RemoteApp.Tests
@@ -22,7 +22,7 @@ namespace RemoteApp.Tests
     /// <summary>
     /// RemoteApp account related tests
     /// </summary>
-    public class AccountTests : TestBase
+    public class AccountTests : RemoteAppTestBase
     {
         /// <summary>
         /// Testing for querying the account
@@ -113,14 +113,6 @@ namespace RemoteApp.Tests
                 Assert.NotNull(enabledFeaturesResult);
                 Assert.NotEmpty(enabledFeaturesResult.EnabledFeatures);
             }
-        }
-
-        private RemoteAppManagementClient GetRemoteAppManagementClient()
-        {
-            RemoteAppManagementClient client =
-                TestBase.GetServiceClient<RemoteAppManagementClient>(new RDFETestEnvironmentFactory());
-            client.RdfeNamespace = "rdst15";
-            return client;
         }
     }
 }

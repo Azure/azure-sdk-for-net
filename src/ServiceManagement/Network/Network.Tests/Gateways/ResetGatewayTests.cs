@@ -31,7 +31,7 @@ namespace Network.Tests.Gateways
 
                 try
                 {
-                    networkTestClient.Gateways.ResetGateway("NonExistantVirtualNetworkName", CreateParameters());
+                    networkTestClient.Gateways.ResetGateway("NonExistantVirtualNetworkName", new ResetGatewayParameters());
                     Assert.True(false, "ResetGateway should have thrown a CloudException when the virtual network site did not exist.");
                 }
                 catch (Hyak.Common.CloudException e)
@@ -55,7 +55,7 @@ namespace Network.Tests.Gateways
 
                 try
                 {
-                    networkTestClient.Gateways.ResetGateway(NetworkTestConstants.VirtualNetworkSiteName, CreateParameters());
+                    networkTestClient.Gateways.ResetGateway(NetworkTestConstants.VirtualNetworkSiteName, new ResetGatewayParameters());
                     Assert.True(false, "ResetGateway should have thrown a CloudException when the virtual network gateway was not provisioned.");
                 }
                 catch (Hyak.Common.CloudException e)
@@ -78,20 +78,12 @@ namespace Network.Tests.Gateways
             {
                 networkTestClient.Gateways.EnsureStaticRoutingGatewayExists();
 
-                networkTestClient.Gateways.ResetGateway(NetworkTestConstants.VirtualNetworkSiteName, CreateParameters());
+                networkTestClient.Gateways.ResetGateway(NetworkTestConstants.VirtualNetworkSiteName, new ResetGatewayParameters());
 
                 GatewayGetResponse response = networkTestClient.Gateways.GetGateway(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.NotNull(response);
                 Assert.Equal(GatewayProvisioningEventStates.Provisioned, response.State);
             }
-        }
-
-        private static ResetGatewayParameters CreateParameters()
-        {
-            return new ResetGatewayParameters()
-            {
-                GatewaySKU = GatewaySKU.Default,
-            };
         }
     }
 }

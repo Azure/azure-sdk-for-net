@@ -38,6 +38,164 @@ namespace Microsoft.WindowsAzure.Management.Network
     public static partial class NetworkSecurityGroupOperationsExtensions
     {
         /// <summary>
+        /// Adds a Network Security Group to a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// a network interface operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse AddToNetworkInterface(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).AddToNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// a network interface operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AddToNetworkInterfaceAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return operations.AddToNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a Role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// Role operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse AddToRole(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).AddToRoleAsync(serviceName, deploymentName, roleName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a Role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// Role operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AddToRoleAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return operations.AddToRoleAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Adds a Network Security Group to a subnet.
         /// </summary>
         /// <param name='operations'>
@@ -65,7 +223,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static OperationStatusResponse AddToSubnet(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters)
+        public static OperationStatusResponse AddToSubnet(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -102,9 +260,167 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> AddToSubnetAsync(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters)
+        public static Task<OperationStatusResponse> AddToSubnetAsync(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters)
         {
             return operations.AddToSubnetAsync(virtualNetworkName, subnetName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// a network interface operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginAddingToNetworkInterface(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).BeginAddingToNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// a network interface operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginAddingToNetworkInterfaceAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return operations.BeginAddingToNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a Role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// Role operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginAddingToRole(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).BeginAddingToRoleAsync(serviceName, deploymentName, roleName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Adds a Network Security Group to a Role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add Network Security Group to
+        /// Role operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginAddingToRoleAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, NetworkSecurityGroupAddAssociationParameters parameters)
+        {
+            return operations.BeginAddingToRoleAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -135,7 +451,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static OperationStatusResponse BeginAddingToSubnet(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters)
+        public static OperationStatusResponse BeginAddingToSubnet(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -172,7 +488,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> BeginAddingToSubnetAsync(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters)
+        public static Task<OperationStatusResponse> BeginAddingToSubnetAsync(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters)
         {
             return operations.BeginAddingToSubnetAsync(virtualNetworkName, subnetName, parameters, CancellationToken.None);
         }
@@ -357,6 +673,160 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<OperationStatusResponse> BeginDeletingRuleAsync(this INetworkSecurityGroupOperations operations, string networkSecurityGroupName, string ruleName)
         {
             return operations.BeginDeletingRuleAsync(networkSecurityGroupName, ruleName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginRemovingFromNetworkInterface(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, string networkSecurityGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).BeginRemovingFromNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, networkSecurityGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginRemovingFromNetworkInterfaceAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, string networkSecurityGroupName)
+        {
+            return operations.BeginRemovingFromNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, networkSecurityGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginRemovingFromRole(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkSecurityGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).BeginRemovingFromRoleAsync(serviceName, deploymentName, roleName, networkSecurityGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginRemovingFromRoleAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkSecurityGroupName)
+        {
+            return operations.BeginRemovingFromRoleAsync(serviceName, deploymentName, roleName, networkSecurityGroupName, CancellationToken.None);
         }
         
         /// <summary>
@@ -732,6 +1202,122 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Gets the Network Security Group applied to a specific network
+        /// interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public static NetworkSecurityGroupGetAssociationResponse GetForNetworkInterface(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).GetForNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the Network Security Group applied to a specific network
+        /// interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public static Task<NetworkSecurityGroupGetAssociationResponse> GetForNetworkInterfaceAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName)
+        {
+            return operations.GetForNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public static NetworkSecurityGroupGetAssociationResponse GetForRole(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).GetForRoleAsync(serviceName, deploymentName, roleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        public static Task<NetworkSecurityGroupGetAssociationResponse> GetForRoleAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName)
+        {
+            return operations.GetForRoleAsync(serviceName, deploymentName, roleName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets the Network Security Group applied to a specific subnet.
         /// </summary>
         /// <param name='operations'>
@@ -745,9 +1331,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Required.
         /// </param>
         /// <returns>
-        /// The Network Security Group associated with a subnet.
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
         /// </returns>
-        public static NetworkSecurityGroupGetForSubnetResponse GetForSubnet(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName)
+        public static NetworkSecurityGroupGetAssociationResponse GetForSubnet(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -770,9 +1357,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Required.
         /// </param>
         /// <returns>
-        /// The Network Security Group associated with a subnet.
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
         /// </returns>
-        public static Task<NetworkSecurityGroupGetForSubnetResponse> GetForSubnetAsync(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName)
+        public static Task<NetworkSecurityGroupGetAssociationResponse> GetForSubnetAsync(this INetworkSecurityGroupOperations operations, string virtualNetworkName, string subnetName)
         {
             return operations.GetForSubnetAsync(virtualNetworkName, subnetName, CancellationToken.None);
         }
@@ -809,6 +1397,160 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<NetworkSecurityGroupListResponse> ListAsync(this INetworkSecurityGroupOperations operations)
         {
             return operations.ListAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse RemoveFromNetworkInterface(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, string networkSecurityGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).RemoveFromNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, networkSecurityGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a network interface.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> RemoveFromNetworkInterfaceAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkInterfaceName, string networkSecurityGroupName)
+        {
+            return operations.RemoveFromNetworkInterfaceAsync(serviceName, deploymentName, roleName, networkInterfaceName, networkSecurityGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse RemoveFromRole(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkSecurityGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkSecurityGroupOperations)s).RemoveFromRoleAsync(serviceName, deploymentName, roleName, networkSecurityGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Removes a Network Security Group from a role.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> RemoveFromRoleAsync(this INetworkSecurityGroupOperations operations, string serviceName, string deploymentName, string roleName, string networkSecurityGroupName)
+        {
+            return operations.RemoveFromRoleAsync(serviceName, deploymentName, roleName, networkSecurityGroupName, CancellationToken.None);
         }
         
         /// <summary>
