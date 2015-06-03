@@ -36,7 +36,7 @@ namespace ResourceGroups.Tests
             return new ResourceManagementClient(token, handler);
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceGetValidateMessage()
         { 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -118,7 +118,7 @@ namespace ResourceGroups.Tests
             Assert.Null(result.ProvisioningState);
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceListValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -224,7 +224,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentNullException>(() => client.Resources.Get(null, null, null, null, null, null));
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceCreateOrUpdateValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)

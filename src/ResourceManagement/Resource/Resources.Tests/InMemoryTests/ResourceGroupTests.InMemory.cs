@@ -36,7 +36,7 @@ namespace ResourceGroups.Tests
             return new ResourceManagementClient(token, handler);
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceGroupCreateOrUpdateValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -128,7 +128,7 @@ namespace ResourceGroups.Tests
             Assert.False(result);
         }
 
-        [Fact(Skip = "Pattern matching is not supported yet at code-gen, the work is on-going.")]
+        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
         public void ResourceGroupExistsThrowsException()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.BadRequest };
@@ -136,7 +136,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.CheckExistence("foo"));
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceGroupPatchValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -178,7 +178,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("WestEurope", result.Location);
         }
 
-        [Fact]
+        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
         public void ResourceGroupUpdateStateThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
@@ -186,10 +186,10 @@ namespace ResourceGroups.Tests
 
             Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Patch(null, new ResourceGroup()));
             Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Patch("foo", null));
-            Assert.Throws<CloudException>(() => client.ResourceGroups.Patch("~`123", new ResourceGroup()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.Patch("~`123", new ResourceGroup()));
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceGroupGetValidateMessage()
         { 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -242,7 +242,7 @@ namespace ResourceGroups.Tests
             client.ResourceGroups.Get("foo-123_bar");
         }
 
-        [Fact(Skip = "Pattern matching is not supported yet at code-gen, the work is on-going.")]
+        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
         public void ResourceGroupGetThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
@@ -252,7 +252,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.Get("~`123"));
         }
 
-        [Fact(Skip = "\'provisioningState\' is not handled correctly at code-gen, the work is on-going.")]
+        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
         public void ResourceGroupListAllValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)

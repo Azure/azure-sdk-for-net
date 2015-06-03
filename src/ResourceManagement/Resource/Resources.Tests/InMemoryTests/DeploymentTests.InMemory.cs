@@ -424,7 +424,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("OK", result.Properties.StatusMessage);
         }
 
-        [Fact(Skip = "Pattern matching is not supported yet at code-gen, the work is on-going.")]
+        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
         public void DeploymentTestsCreateThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
@@ -616,7 +616,7 @@ namespace ResourceGroups.Tests
             Assert.Null(result);
         }
 
-        [Fact(Skip = "Pattern matching is not supported yet at code-gen, the work is on-going.")]
+        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
         public void DeploymentTestsValidateThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
@@ -719,7 +719,7 @@ namespace ResourceGroups.Tests
             Assert.True(result.Properties.Outputs.ToString().Contains("\"type\": \"string\""));
         }
 
-        [Fact(Skip = "Pattern matching is not supported yet at code-gen, the work is on-going.")]
+        [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
         public void DeploymentGetValidateThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
