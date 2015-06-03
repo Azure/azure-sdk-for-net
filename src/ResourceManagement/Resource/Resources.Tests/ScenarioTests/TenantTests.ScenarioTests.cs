@@ -37,7 +37,7 @@ namespace ResourceGroups.Tests
             return client;
         }
 
-        [Fact]
+        [Fact(Skip = "Bugs in Hydra Spec Converter that the PassThrough flag is not handled correctly")]
         public void ListTenants()
         {
             // NEXT environment variables used to record the mock

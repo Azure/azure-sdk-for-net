@@ -51,7 +51,7 @@ namespace ResourceGroups.Tests
             return client;
         }
 
-        [Fact]
+        [Fact(Skip = "Bugs in Hydra Spec Converter that the PassThrough flag is not handled correctly")]
         public void ListSubscriptions()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
