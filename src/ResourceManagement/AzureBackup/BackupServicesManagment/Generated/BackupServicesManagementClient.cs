@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._resourceName = value; }
         }
         
+        private IContainerOperation _container;
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IContainerOperation Container
+        {
+            get { return this._container; }
+        }
+        
         private IJobOperations _job;
         
         /// <summary>
@@ -129,6 +139,7 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupServicesManagementClient()
             : base()
         {
+            this._container = new ContainerOperation(this);
             this._job = new JobOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._apiVersion = "2013-03-01";
@@ -231,6 +242,7 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._container = new ContainerOperation(this);
             this._job = new JobOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._apiVersion = "2013-03-01";
