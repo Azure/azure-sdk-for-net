@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// The partitions to be used by the path.
         /// </summary>
-        public IEnumerable<Partition> PartitionedBy { get; set; }
+        public IList<Partition> PartitionedBy { get; set; }
 
         /// <summary>
         /// The format of the Azure blob storage.
