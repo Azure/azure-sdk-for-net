@@ -15,12 +15,13 @@
 
 using System;
 using Microsoft.Azure.Management.DataFactories.Conversion;
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public abstract class TypeProperties
+    public abstract class TypeProperties : IRegisteredType
     {
         protected TypeProperties()
         {
@@ -51,9 +52,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             return new JsonConverter[]
                        {
-                           new TypePropertiesConverter(), new PolymorphicTypeConverter<StorageFormat>(),
-                           new PolymorphicTypeConverter<PartitionValue>(), new PolymorphicTypeConverter<CopyLocation>(),
-                           new PolymorphicTypeConverter<CopyTranslator>(), new PolymorphicTypeConverter<Compression>()
+                           new TypePropertiesConverter(), new GenericRegisteredTypeConverter<StorageFormat>(), 
+                           new GenericRegisteredTypeConverter<PartitionValue>(), new GenericRegisteredTypeConverter<CopyLocation>(),
+                           new GenericRegisteredTypeConverter<CopyTranslator>(), new GenericRegisteredTypeConverter<Compression>()
                        };
         }
     }

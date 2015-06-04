@@ -25,17 +25,15 @@ namespace Microsoft.Azure.Management.DataFactories
     {
         internal TableConverter Converter { get; set; }
 
-#if ADF_INTERNAL
-        public void RegisterType<T>() where T : TableTypeProperties
+        internal void RegisterType<T>()
         {
-            this.Converter.RegisterType<T>();
+            this.Converter.RegisterType<T>(typeof(Table));
         }
 
-        public bool TypeIsRegistered<T>() where T : TableTypeProperties
+        internal bool TypeIsRegistered<T>() 
         {
             return this.Converter.TypeIsRegistered<T>();
         }
-#endif
 
         public void ValidateObject(Table table)
         {

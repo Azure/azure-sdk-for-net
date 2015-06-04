@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Client for interacting with the Azure Data Factory service.
     /// </summary>
-    public class DataFactoryManagementClient : ServiceClient<DataFactoryManagementClient>, IDataFactoryManagementClient
+    public partial class DataFactoryManagementClient : ServiceClient<DataFactoryManagementClient>, IDataFactoryManagementClient
     {
         /// <summary>
         /// The URI used as the base for all Service Management requests.

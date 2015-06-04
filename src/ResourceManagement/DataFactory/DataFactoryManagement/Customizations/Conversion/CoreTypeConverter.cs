@@ -26,60 +26,11 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
     internal abstract class CoreTypeConverter<TCore, TWrapper, TExtensibleTypeProperties, TGenericTypeProperties> :
-        PolymorphicTypeConverter<TExtensibleTypeProperties>
+        GenericRegisteredTypeConverter<TExtensibleTypeProperties>
         where TExtensibleTypeProperties : TypeProperties
         where TGenericTypeProperties : TExtensibleTypeProperties, IGenericTypeProperties, new()
-    {
-        protected IDictionary<string, Type> TypeMap { get; private set; }
-
-        protected CoreTypeConverter()
-        {
-            this.TypeMap = new Dictionary<string, Type>();
-        }
-
-        /// <summary>
-        /// Registers a type for conversion to and from its Core type.
-        /// </summary>
-        /// <typeparam name="T">The type to register.</typeparam>
-        public void RegisterType<T>() where T : TExtensibleTypeProperties
-        {
-            Type type = typeof(T);
-            string typeName = type.Name;
-            string wrapperTypeName = typeof(TWrapper).Name;
-
-            if (ReservedTypes.ContainsKey(typeName))
-            {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "{0} type '{1}' cannot be locally registered because it has the same name as a built-in ADF {0} type.",
-                        wrapperTypeName,
-                        typeName));
-            }
-
-            if (this.TypeMap.ContainsKey(typeName))
-            {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "A {0} type with the name '{1}' is already registered.",
-                        wrapperTypeName,
-                        typeName));
-            }
-
-            this.TypeMap.Add(typeName, type);
-        }
-
-        public bool TypeIsRegistered<T>() where T : TExtensibleTypeProperties
-        {
-            string typeName = typeof(T).Name;
-            return ReservedTypes.ContainsKey(typeName) || this.TypeMap.ContainsKey(typeName);
-        }
-
-        public bool TryGetRegisteredType(string typeName, out Type type)
-        {
-            return ReservedTypes.TryGetValue(typeName, out type) || this.TypeMap.TryGetValue(typeName, out type);
-        }
-
-        #region Abstract methods
+    {       
+       #region Abstract methods
 
         /// <summary>
         /// Converts <paramref name="wrappedObject"/> from type TCore to TWrapper.
