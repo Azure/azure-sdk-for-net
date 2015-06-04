@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
             url = url + Uri.EscapeDataString(roleDefinitionId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01-preview");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -177,11 +177,6 @@ namespace Microsoft.Azure.Management.Authorization
                             propertiesValue2["description"] = parameters.RoleDefinition.Properties.Description;
                         }
                         
-                        if (parameters.RoleDefinition.Properties.Scope != null)
-                        {
-                            propertiesValue2["scope"] = parameters.RoleDefinition.Properties.Scope;
-                        }
-                        
                         if (parameters.RoleDefinition.Properties.Type != null)
                         {
                             propertiesValue2["type"] = parameters.RoleDefinition.Properties.Type;
@@ -194,6 +189,9 @@ namespace Microsoft.Azure.Management.Authorization
                                 JArray permissionsArray = new JArray();
                                 foreach (Permission permissionsItem in parameters.RoleDefinition.Properties.Permissions)
                                 {
+                                    JObject permissionValue = new JObject();
+                                    permissionsArray.Add(permissionValue);
+                                    
                                     if (permissionsItem.Actions != null)
                                     {
                                         if (permissionsItem.Actions is ILazyCollection == false || ((ILazyCollection)permissionsItem.Actions).IsInitialized)
@@ -203,7 +201,7 @@ namespace Microsoft.Azure.Management.Authorization
                                             {
                                                 actionsArray.Add(actionsItem);
                                             }
-                                            requestDoc = actionsArray;
+                                            permissionValue["actions"] = actionsArray;
                                         }
                                     }
                                     
@@ -216,7 +214,7 @@ namespace Microsoft.Azure.Management.Authorization
                                             {
                                                 notActionsArray.Add(notActionsItem);
                                             }
-                                            requestDoc = notActionsArray;
+                                            permissionValue["notActions"] = notActionsArray;
                                         }
                                     }
                                 }
@@ -228,12 +226,12 @@ namespace Microsoft.Azure.Management.Authorization
                         {
                             if (parameters.RoleDefinition.Properties.AssignableScopes is ILazyCollection == false || ((ILazyCollection)parameters.RoleDefinition.Properties.AssignableScopes).IsInitialized)
                             {
-                                JArray assignablescopesArray = new JArray();
-                                foreach (string assignablescopesItem in parameters.RoleDefinition.Properties.AssignableScopes)
+                                JArray assignableScopesArray = new JArray();
+                                foreach (string assignableScopesItem in parameters.RoleDefinition.Properties.AssignableScopes)
                                 {
-                                    assignablescopesArray.Add(assignablescopesItem);
+                                    assignableScopesArray.Add(assignableScopesItem);
                                 }
-                                propertiesValue2["assignablescopes"] = assignablescopesArray;
+                                propertiesValue2["assignableScopes"] = assignableScopesArray;
                             }
                         }
                     }
@@ -258,7 +256,7 @@ namespace Microsoft.Azure.Management.Authorization
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -272,7 +270,7 @@ namespace Microsoft.Azure.Management.Authorization
                     // Create Result
                     RoleDefinitionCreateOrUpdateResult result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -329,13 +327,6 @@ namespace Microsoft.Azure.Management.Authorization
                                     propertiesInstance.Description = descriptionInstance;
                                 }
                                 
-                                JToken scopeValue = propertiesValue3["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
-                                }
-                                
                                 JToken typeValue2 = propertiesValue3["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
@@ -371,12 +362,12 @@ namespace Microsoft.Azure.Management.Authorization
                                     }
                                 }
                                 
-                                JToken assignablescopesArray2 = propertiesValue3["assignablescopes"];
-                                if (assignablescopesArray2 != null && assignablescopesArray2.Type != JTokenType.Null)
+                                JToken assignableScopesArray2 = propertiesValue3["assignableScopes"];
+                                if (assignableScopesArray2 != null && assignableScopesArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken assignablescopesValue in ((JArray)assignablescopesArray2))
+                                    foreach (JToken assignableScopesValue in ((JArray)assignableScopesArray2))
                                     {
-                                        propertiesInstance.AssignableScopes.Add(((string)assignablescopesValue));
+                                        propertiesInstance.AssignableScopes.Add(((string)assignableScopesValue));
                                     }
                                 }
                             }
@@ -448,7 +439,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleDefinitionId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01-preview");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -475,7 +466,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -567,13 +558,6 @@ namespace Microsoft.Azure.Management.Authorization
                                     propertiesInstance.Description = descriptionInstance;
                                 }
                                 
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
-                                }
-                                
                                 JToken typeValue2 = propertiesValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
@@ -609,12 +593,12 @@ namespace Microsoft.Azure.Management.Authorization
                                     }
                                 }
                                 
-                                JToken assignablescopesArray = propertiesValue["assignablescopes"];
-                                if (assignablescopesArray != null && assignablescopesArray.Type != JTokenType.Null)
+                                JToken assignableScopesArray = propertiesValue["assignableScopes"];
+                                if (assignableScopesArray != null && assignableScopesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken assignablescopesValue in ((JArray)assignablescopesArray))
+                                    foreach (JToken assignableScopesValue in ((JArray)assignableScopesArray))
                                     {
-                                        propertiesInstance.AssignableScopes.Add(((string)assignablescopesValue));
+                                        propertiesInstance.AssignableScopes.Add(((string)assignableScopesValue));
                                     }
                                 }
                             }
@@ -687,7 +671,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
             url = url + Uri.EscapeDataString(roleDefinitionName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01-preview");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -714,7 +698,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -806,13 +790,6 @@ namespace Microsoft.Azure.Management.Authorization
                                     propertiesInstance.Description = descriptionInstance;
                                 }
                                 
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
-                                }
-                                
                                 JToken typeValue2 = propertiesValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
@@ -848,12 +825,12 @@ namespace Microsoft.Azure.Management.Authorization
                                     }
                                 }
                                 
-                                JToken assignablescopesArray = propertiesValue["assignablescopes"];
-                                if (assignablescopesArray != null && assignablescopesArray.Type != JTokenType.Null)
+                                JToken assignableScopesArray = propertiesValue["assignableScopes"];
+                                if (assignableScopesArray != null && assignableScopesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken assignablescopesValue in ((JArray)assignablescopesArray))
+                                    foreach (JToken assignableScopesValue in ((JArray)assignableScopesArray))
                                     {
-                                        propertiesInstance.AssignableScopes.Add(((string)assignablescopesValue));
+                                        propertiesInstance.AssignableScopes.Add(((string)assignableScopesValue));
                                     }
                                 }
                             }
@@ -925,7 +902,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleDefinitionId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01-preview");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -952,7 +929,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1044,13 +1021,6 @@ namespace Microsoft.Azure.Management.Authorization
                                     propertiesInstance.Description = descriptionInstance;
                                 }
                                 
-                                JToken scopeValue = propertiesValue["scope"];
-                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                {
-                                    string scopeInstance = ((string)scopeValue);
-                                    propertiesInstance.Scope = scopeInstance;
-                                }
-                                
                                 JToken typeValue2 = propertiesValue["type"];
                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                 {
@@ -1086,12 +1056,12 @@ namespace Microsoft.Azure.Management.Authorization
                                     }
                                 }
                                 
-                                JToken assignablescopesArray = propertiesValue["assignablescopes"];
-                                if (assignablescopesArray != null && assignablescopesArray.Type != JTokenType.Null)
+                                JToken assignableScopesArray = propertiesValue["assignableScopes"];
+                                if (assignableScopesArray != null && assignableScopesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken assignablescopesValue in ((JArray)assignablescopesArray))
+                                    foreach (JToken assignableScopesValue in ((JArray)assignableScopesArray))
                                     {
-                                        propertiesInstance.AssignableScopes.Add(((string)assignablescopesValue));
+                                        propertiesInstance.AssignableScopes.Add(((string)assignableScopesValue));
                                     }
                                 }
                             }
@@ -1159,7 +1129,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
             url = url + "/providers/Microsoft.Authorization/roleDefinitions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-01-preview");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1186,7 +1156,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1283,13 +1253,6 @@ namespace Microsoft.Azure.Management.Authorization
                                             propertiesInstance.Description = descriptionInstance;
                                         }
                                         
-                                        JToken scopeValue = propertiesValue["scope"];
-                                        if (scopeValue != null && scopeValue.Type != JTokenType.Null)
-                                        {
-                                            string scopeInstance = ((string)scopeValue);
-                                            propertiesInstance.Scope = scopeInstance;
-                                        }
-                                        
                                         JToken typeValue2 = propertiesValue["type"];
                                         if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                         {
@@ -1325,12 +1288,12 @@ namespace Microsoft.Azure.Management.Authorization
                                             }
                                         }
                                         
-                                        JToken assignablescopesArray = propertiesValue["assignablescopes"];
-                                        if (assignablescopesArray != null && assignablescopesArray.Type != JTokenType.Null)
+                                        JToken assignableScopesArray = propertiesValue["assignableScopes"];
+                                        if (assignableScopesArray != null && assignableScopesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken assignablescopesValue in ((JArray)assignablescopesArray))
+                                            foreach (JToken assignableScopesValue in ((JArray)assignableScopesArray))
                                             {
-                                                propertiesInstance.AssignableScopes.Add(((string)assignablescopesValue));
+                                                propertiesInstance.AssignableScopes.Add(((string)assignableScopesValue));
                                             }
                                         }
                                     }

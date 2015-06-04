@@ -114,6 +114,14 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
+        /// Operations for managing Resource provider operations.
+        /// </summary>
+        IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing tags.
         /// </summary>
         ITagOperations Tags
