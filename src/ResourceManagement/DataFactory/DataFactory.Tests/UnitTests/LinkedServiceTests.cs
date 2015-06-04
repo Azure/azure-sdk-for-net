@@ -181,11 +181,11 @@ namespace DataFactory.Tests.UnitTests
     }
 }";
 
-            this.Client.LinkedServices.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>();
+            this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>();
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
         }
-#endif
+#endif 
 
         #endregion Tests
 
