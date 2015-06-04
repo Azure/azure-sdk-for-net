@@ -241,7 +241,7 @@ namespace Authorization.Tests
         public void RoleAssignmentListByFilterTest()
         {
             var principalId = testContext.Users.ElementAt(1);
-
+           
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
@@ -510,7 +510,7 @@ namespace Authorization.Tests
                 var client = testContext.GetAuthorizationManagementClient();
 
                 RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
-                var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
+                var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
                 string currentSubscriptionId = "/subscriptions/" + client.Credentials.SubscriptionId;
                 string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
@@ -563,7 +563,7 @@ namespace Authorization.Tests
                 try
                 {
                     client.RoleDefinitions.CreateOrUpdate(roleDefinitionId, createOrUpdateParams);
-                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
+                    var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
                     client.RoleDefinitions.CreateOrUpdate(roleDefinition2Id, createOrUpdateParams);
                 }
                 catch (CloudException ce)
