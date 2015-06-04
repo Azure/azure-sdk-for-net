@@ -18,10 +18,9 @@ using System;
 using System.Globalization;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
-
-using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+
 namespace DataFactory.Tests.UnitTests
 {
     public class LinkedServiceTypeRegistrationTests : UnitTestBase
@@ -32,7 +31,6 @@ namespace DataFactory.Tests.UnitTests
         public void CanRegisterLinkedServiceType()
         {
             this.Client.RegisterType<MyLinkedServiceType>();
-            //this.Operations.RegisterType<MyLinkedServiceType>();
 
             Assert.True(
                 this.Client.TypeIsRegistered<MyLinkedServiceType>(),
