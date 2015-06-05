@@ -23,23 +23,18 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of Container operations for the Azure Backup extension.
+    /// Definition of DataSource operations for the Azure Backup extension.
     /// </summary>
-    public partial interface IContainerOperation
+    public partial interface IDataSourceOperations
     {
         /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
+        /// Disable protection for given item
         /// </summary>
-        /// <param name='queryFilterString'>
-        /// Job query parameter string.
-        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -47,12 +42,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ListContainerResponse.
+        /// The response model for the Disable Protection operation.
         /// </returns>
-        Task<ListContainerResponse> ListAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<DisableProtectionResponse> DisableProtectionAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// Enable protection for given item.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -61,16 +56,13 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// The response model for the Enable Protection operation.
         /// </returns>
-        Task<OperationResponse> RefreshAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<EnableProtectionResponse> EnableProtectionAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Register the container.
+        /// Get the list of all DataSpurce.
         /// </summary>
-        /// <param name='parameters'>
-        /// Container to be register.
-        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -78,25 +70,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// The response model for the list DataSource operation.
         /// </returns>
-        Task<OperationResponse> RegisterAsync(RegisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Unregister the container.
-        /// </summary>
-        /// <param name='parameters'>
-        /// Container which we want to unregister.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a Operation Response.
-        /// </returns>
-        Task<OperationResponse> UnregisterAsync(UnregisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<DataSourceListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

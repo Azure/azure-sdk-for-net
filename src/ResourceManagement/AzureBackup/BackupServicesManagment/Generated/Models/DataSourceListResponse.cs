@@ -22,44 +22,31 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// This is the Job Response for all Async Calls
+    /// The response model for the list DataSource operation.
     /// </summary>
-    public partial class OperationResponse : AzureOperationResponse
+    public partial class DataSourceListResponse : AzureOperationResponse
     {
-        private string _jobId;
+        private DataSourceResponse _dataSources;
         
         /// <summary>
-        /// Required. The Job Id of the Job Submitted
+        /// Optional. The list of DataSource for the resource id.
         /// </summary>
-        public string JobId
+        public DataSourceResponse DataSources
         {
-            get { return this._jobId; }
-            set { this._jobId = value; }
+            get { return this._dataSources; }
+            set { this._dataSources = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the OperationResponse class.
+        /// Initializes a new instance of the DataSourceListResponse class.
         /// </summary>
-        public OperationResponse()
+        public DataSourceListResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the OperationResponse class with
-        /// required arguments.
-        /// </summary>
-        public OperationResponse(string jobId)
-            : this()
-        {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException("jobId");
-            }
-            this.JobId = jobId;
         }
     }
 }
