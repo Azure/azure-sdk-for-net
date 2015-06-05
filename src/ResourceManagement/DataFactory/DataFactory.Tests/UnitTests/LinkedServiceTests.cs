@@ -129,7 +129,7 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericLinkedService>(linkedService.Properties.TypeProperties);
         }
 
-#if ADF_INTERNAL
+#if NET45
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -151,9 +151,36 @@ namespace DataFactory.Tests.UnitTests
     }
 }";
 
-            this.Client.LinkedServices.RegisterType<MyLinkedServiceTypeWithListProperty>();
+            this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>();
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void ValidateLinkedServiceWithListPropertyThrowsForMissingRequiredProperty()
+        {
+            string json = @"
+{
+    name: ""Test-ML-LinkedService"",
+    properties:
+    {
+        type: ""MyLinkedServiceTypeWithListProperty"",
+        typeProperties:
+        { 
+            list: [
+                { number: 1 }, 
+                { }
+            ]
+        }
+    }
+}";
+
+            this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>();
+            InvalidOperationException ex =
+                Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
+            Assert.Contains("is required", ex.Message);
         }
 
         [Fact]
@@ -184,6 +211,33 @@ namespace DataFactory.Tests.UnitTests
             this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>();
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void ValidateLinkedServiceWithDictionaryPropertyThrowsForMissingRequiredProperty()
+        {
+            string json = @"
+{
+    name: ""Test-ML-LinkedService"",
+    properties:
+    {
+        type: ""MyLinkedServiceTypeWithDictionaryProperty"",
+        typeProperties:
+        { 
+            dictionary: {
+                item1: { }
+            }
+        }
+    }
+}";
+
+            this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>();
+
+            InvalidOperationException ex =
+                Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
+            Assert.Contains("is required", ex.Message);
         }
 #endif 
 
