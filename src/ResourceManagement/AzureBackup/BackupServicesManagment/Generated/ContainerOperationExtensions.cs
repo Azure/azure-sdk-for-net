@@ -31,14 +31,15 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class ContainerOperationExtensions
     {
         /// <summary>
-        /// Get the list of all container with same friendlyName.
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
         /// </param>
-        /// <param name='parameters'>
-        /// Optional. Job query parameter.
+        /// <param name='queryFilterString'>
+        /// Optional. Job query parameter string.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -46,24 +47,25 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a ListContainerResponse.
         /// </returns>
-        public static ListContainerResponse List(this IContainerOperation operations, ListContainerQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        public static ListContainerResponse List(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).ListAsync(parameters, customRequestHeaders);
+                return ((IContainerOperation)s).ListAsync(queryFilterString, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Get the list of all container with same friendlyName.
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
         /// </param>
-        /// <param name='parameters'>
-        /// Optional. Job query parameter.
+        /// <param name='queryFilterString'>
+        /// Optional. Job query parameter string.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -71,9 +73,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a ListContainerResponse.
         /// </returns>
-        public static Task<ListContainerResponse> ListAsync(this IContainerOperation operations, ListContainerQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<ListContainerResponse> ListAsync(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(queryFilterString, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

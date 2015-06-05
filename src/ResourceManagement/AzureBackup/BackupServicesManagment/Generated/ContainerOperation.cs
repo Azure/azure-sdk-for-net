@@ -64,10 +64,11 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all container with same friendlyName.
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
-        /// <param name='parameters'>
-        /// Optional. Job query parameter.
+        /// <param name='queryFilterString'>
+        /// Optional. Job query parameter string.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -78,16 +79,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a ListContainerResponse.
         /// </returns>
-        public async Task<ListContainerResponse> ListAsync(ListContainerQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ListContainerResponse> ListAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
-            if (parameters != null)
-            {
-                if (parameters.ContainerTypeField == null)
-                {
-                    throw new ArgumentNullException("parameters.ContainerTypeField");
-                }
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -96,7 +90,7 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("queryFilterString", queryFilterString);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -118,14 +112,9 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/containers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
-            if (parameters != null)
+            if (queryFilterString != null)
             {
-                queryParameters.Add("ContainerType=" + Uri.EscapeDataString(parameters.ContainerTypeField));
-            }
-            if (parameters != null && parameters.ContainerFriendlyNameField != null)
-            {
-                queryParameters.Add("FriendlyName=" + Uri.EscapeDataString(parameters.ContainerFriendlyNameField));
+                queryParameters.Add("api-version=2014-09-01.1.0" + Uri.EscapeDataString(queryFilterString));
             }
             if (queryParameters.Count > 0)
             {

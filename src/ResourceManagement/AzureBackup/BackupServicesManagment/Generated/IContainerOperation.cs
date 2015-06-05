@@ -34,10 +34,11 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IContainerOperation
     {
         /// <summary>
-        /// Get the list of all container with same friendlyName.
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
-        /// <param name='parameters'>
-        /// Job query parameter.
+        /// <param name='queryFilterString'>
+        /// Job query parameter string.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a ListContainerResponse.
         /// </returns>
-        Task<ListContainerResponse> ListAsync(ListContainerQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ListContainerResponse> ListAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Trigger the Discovery.
