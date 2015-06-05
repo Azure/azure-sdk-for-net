@@ -320,6 +320,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._subStatus = value; }
         }
         
+        private string _tenantId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Azure tenant Id
+        /// </summary>
+        public string TenantId
+        {
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the EventData class.
         /// </summary>

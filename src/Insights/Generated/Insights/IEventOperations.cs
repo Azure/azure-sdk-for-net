@@ -117,6 +117,40 @@ namespace Microsoft.Azure.Insights
         Task<EventDataListResponse> ListEventsNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='filterString'>
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListTenantDigestEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The next link
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListTenantDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The list tenant event values operation lists the tenant events.
         /// </summary>
         /// <param name='filterString'>

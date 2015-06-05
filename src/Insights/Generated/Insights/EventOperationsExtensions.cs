@@ -249,6 +249,94 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListTenantDigestEvents(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListTenantDigestEventsAsync(filterString, selectedProperties);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListTenantDigestEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return operations.ListTenantDigestEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListTenantDigestEventsNext(this IEventOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListTenantDigestEventsNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListTenantDigestEventsNextAsync(this IEventOperations operations, string nextLink)
+        {
+            return operations.ListTenantDigestEventsNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The list tenant event values operation lists the tenant events.
         /// </summary>
         /// <param name='operations'>
