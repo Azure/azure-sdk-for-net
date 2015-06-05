@@ -134,6 +134,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 #if NET45
                 this.ValidateDictionary(actualValue as IDictionary);
 #endif
+                return;
             }
                 
             if (ImplementsIDictionary(property) || !ShouldValidateMembers(property))
