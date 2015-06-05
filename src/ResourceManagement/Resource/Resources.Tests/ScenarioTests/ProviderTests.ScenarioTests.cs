@@ -144,5 +144,66 @@ namespace ResourceGroups.Tests
                             provider.Provider.RegistrationState);
             }
         }
+
+        [Fact]
+        public void ProviderOperationsList()
+        {
+            TestUtilities.StartTest();
+            const string DefaultApiVersion = "2014-06-01";
+
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetResourceManagementClient(handler);
+            var insightsProvider = client.Providers.Get(ProviderName);
+
+            // Validate result
+            Assert.True(insightsProvider != null);
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            Assert.NotEmpty(insightsProvider.Provider.ResourceTypes);
+            var operationResourceType = insightsProvider.Provider.ResourceTypes.Single(x => x.Name == "operations");
+            IList<string> operationsSupportedApiVersions = operationResourceType.ApiVersions;
+            string latestSupportedApiVersion = DefaultApiVersion;
+            
+            if (operationsSupportedApiVersions != null && operationsSupportedApiVersions.Any())
+            {
+                latestSupportedApiVersion = operationsSupportedApiVersions.First();
+            }
+
+            ResourceIdentity identity = new ResourceIdentity
+            {
+                ResourceName = string.Empty,
+                ResourceType = "operations",
+                ResourceProviderNamespace = ProviderName,
+                ResourceProviderApiVersion = latestSupportedApiVersion
+            };
+
+            var operations = client.ResourceProviderOperationDetails.List(identity);
+
+            Assert.NotNull(operations);
+            Assert.NotEmpty(operations.ResourceProviderOperationDetails);
+            Assert.NotEmpty(operations.ResourceProviderOperationDetails[0].Name);
+            Assert.NotNull(operations.ResourceProviderOperationDetails[0].ResourceProviderOperationDisplayProperties);
+            IEnumerable<ResourceProviderOperationDefinition> definitions =
+                operations.ResourceProviderOperationDetails.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.InvariantCultureIgnoreCase));
+            Assert.NotNull(definitions);
+            Assert.NotEmpty(definitions);
+            Assert.Equal(1, definitions.Count());
+
+            // Negative case with unsupported api version
+            identity = new ResourceIdentity
+            {
+                ResourceName = string.Empty,
+                ResourceType = "operations",
+                ResourceProviderNamespace = ProviderName,
+                ResourceProviderApiVersion = "2015-01-01"
+            };
+
+            Assert.Throws<Hyak.Common.CloudException>(() => client.ResourceProviderOperationDetails.List(identity));
+            TestUtilities.EndTest();
+        }
     }
 }
