@@ -79,6 +79,50 @@ namespace Microsoft.Azure.Management.Network
         Task<UpdateOperationResponse> BeginDeletingAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Start ApplicationGateway operation starts application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Start ApplicationGateway operation
+        /// through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for PutVirtualNetworkGateway Api servive call
+        /// </returns>
+        Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The STOP ApplicationGateway operation stops application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Stop ApplicationGateway operation
+        /// through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for PutVirtualNetworkGateway Api servive call
+        /// </returns>
+        Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Put ApplicationGateway operation creates/updates a
         /// ApplicationGateway
         /// </summary>
@@ -167,5 +211,65 @@ namespace Microsoft.Azure.Management.Network
         /// Response for ListLoadBalancers Api service call
         /// </returns>
         Task<ApplicationGatewayListResponse> ListAllAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Start ApplicationGateway operation starts application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Start ApplicationGateway operation
+        /// through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<AzureAsyncOperationResponse> StartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The STOP ApplicationGateway operation stops application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Stop ApplicationGateway operation
+        /// through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<AzureAsyncOperationResponse> StopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
     }
 }

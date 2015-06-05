@@ -41,6 +41,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._port = value; }
         }
         
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets Provisioning state of the frontend port
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayFrontendPort
         /// class.

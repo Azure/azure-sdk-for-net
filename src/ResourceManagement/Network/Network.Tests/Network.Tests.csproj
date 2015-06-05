@@ -12,6 +12,7 @@
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="Helpers\ResourcesManagementTestUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\ApplicationGatewayTests.cs" />
     <Compile Include="Tests\GatewayOperationsTests.cs" />
     <Compile Include="Tests\UsageTests.cs" />
     <Compile Include="Tests\LoadBalancerTests.cs" />
@@ -102,5 +103,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\" />
+  </ItemGroup>
 </Project>

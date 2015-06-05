@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._backendAddressPools = value; }
         }
         
-        private IList<ApplicationGatewayBackendHttpSettings> _backendHttpSettingsList;
+        private IList<ApplicationGatewayBackendHttpSettings> _backendHttpSettingsCollection;
         
         /// <summary>
         /// Optional. Gets or sets backend http settings of application gateway
         /// resource
         /// </summary>
-        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsList
+        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection
         {
-            get { return this._backendHttpSettingsList; }
-            set { this._backendHttpSettingsList = value; }
+            get { return this._backendHttpSettingsCollection; }
+            set { this._backendHttpSettingsCollection = value; }
         }
         
         private string _fqdn;
@@ -126,6 +126,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._instanceCount = value; }
         }
         
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets Provisioning state of the ApplicationGateway
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
         private IList<ApplicationGatewayRequestRoutingRule> _requestRoutingRules;
         
         /// <summary>
@@ -167,7 +179,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGateway()
         {
             this.BackendAddressPools = new LazyList<ApplicationGatewayBackendAddressPool>();
-            this.BackendHttpSettingsList = new LazyList<ApplicationGatewayBackendHttpSettings>();
+            this.BackendHttpSettingsCollection = new LazyList<ApplicationGatewayBackendHttpSettings>();
             this.FrontendIpConfigurations = new LazyList<ApplicationGatewayFrontendIpConfiguration>();
             this.FrontendPorts = new LazyList<ApplicationGatewayFrontendPort>();
             this.GatewayIpConfigurations = new LazyList<ApplicationGatewayIpConfiguration>();

@@ -66,6 +66,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._httpListener = value; }
         }
         
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets Provisioning state of the request routing
+        /// rule resource Updating/Deleting/Failed
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
         private string _ruleType;
         
         /// <summary>

@@ -30,6 +30,18 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class ApplicationGatewayIpConfiguration : ChildResource
     {
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets Provisioning state of the application
+        /// gateway subnet resource Updating/Deleting/Failed
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
         private ResourceId _subnet;
         
         /// <summary>

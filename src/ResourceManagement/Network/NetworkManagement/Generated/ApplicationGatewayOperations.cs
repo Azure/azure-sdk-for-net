@@ -212,7 +212,10 @@ namespace Microsoft.Azure.Management.Network
                                 }
                             }
                             
-                            propertiesValue2["provisioningState"] = propertiesValue2;
+                            if (gatewayIpConfigurationsItem.ProvisioningState != null)
+                            {
+                                propertiesValue2["provisioningState"] = gatewayIpConfigurationsItem.ProvisioningState;
+                            }
                             
                             if (gatewayIpConfigurationsItem.Name != null)
                             {
@@ -261,7 +264,10 @@ namespace Microsoft.Azure.Management.Network
                                 propertiesValue3["publicCertData"] = sslCertificatesItem.PublicCertData;
                             }
                             
-                            propertiesValue3["provisioningState"] = propertiesValue3;
+                            if (sslCertificatesItem.ProvisioningState != null)
+                            {
+                                propertiesValue3["provisioningState"] = sslCertificatesItem.ProvisioningState;
+                            }
                             
                             if (sslCertificatesItem.Name != null)
                             {
@@ -366,7 +372,10 @@ namespace Microsoft.Azure.Management.Network
                             
                             propertiesValue5["port"] = frontendPortsItem.Port;
                             
-                            propertiesValue5["provisioningState"] = propertiesValue5;
+                            if (frontendPortsItem.ProvisioningState != null)
+                            {
+                                propertiesValue5["provisioningState"] = frontendPortsItem.ProvisioningState;
+                            }
                             
                             if (frontendPortsItem.Name != null)
                             {
@@ -443,7 +452,10 @@ namespace Microsoft.Azure.Management.Network
                                 }
                             }
                             
-                            propertiesValue6["provisioningState"] = propertiesValue6;
+                            if (backendAddressPoolsItem.ProvisioningState != null)
+                            {
+                                propertiesValue6["provisioningState"] = backendAddressPoolsItem.ProvisioningState;
+                            }
                             
                             if (backendAddressPoolsItem.Name != null)
                             {
@@ -464,49 +476,52 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                if (parameters.BackendHttpSettingsList != null)
+                if (parameters.BackendHttpSettingsCollection != null)
                 {
-                    if (parameters.BackendHttpSettingsList is ILazyCollection == false || ((ILazyCollection)parameters.BackendHttpSettingsList).IsInitialized)
+                    if (parameters.BackendHttpSettingsCollection is ILazyCollection == false || ((ILazyCollection)parameters.BackendHttpSettingsCollection).IsInitialized)
                     {
-                        JArray backendHttpSettingsListArray = new JArray();
-                        foreach (ApplicationGatewayBackendHttpSettings backendHttpSettingsListItem in parameters.BackendHttpSettingsList)
+                        JArray backendHttpSettingsCollectionArray = new JArray();
+                        foreach (ApplicationGatewayBackendHttpSettings backendHttpSettingsCollectionItem in parameters.BackendHttpSettingsCollection)
                         {
                             JObject applicationGatewayBackendHttpSettingsJsonFormatValue = new JObject();
-                            backendHttpSettingsListArray.Add(applicationGatewayBackendHttpSettingsJsonFormatValue);
+                            backendHttpSettingsCollectionArray.Add(applicationGatewayBackendHttpSettingsJsonFormatValue);
                             
                             JObject propertiesValue7 = new JObject();
                             applicationGatewayBackendHttpSettingsJsonFormatValue["properties"] = propertiesValue7;
                             
-                            propertiesValue7["port"] = backendHttpSettingsListItem.Port;
+                            propertiesValue7["port"] = backendHttpSettingsCollectionItem.Port;
                             
-                            if (backendHttpSettingsListItem.Protocol != null)
+                            if (backendHttpSettingsCollectionItem.Protocol != null)
                             {
-                                propertiesValue7["protocol"] = backendHttpSettingsListItem.Protocol;
+                                propertiesValue7["protocol"] = backendHttpSettingsCollectionItem.Protocol;
                             }
                             
-                            if (backendHttpSettingsListItem.CookieBasedAffinity != null)
+                            if (backendHttpSettingsCollectionItem.CookieBasedAffinity != null)
                             {
-                                propertiesValue7["cookieBasedAffinity"] = backendHttpSettingsListItem.CookieBasedAffinity;
+                                propertiesValue7["cookieBasedAffinity"] = backendHttpSettingsCollectionItem.CookieBasedAffinity;
                             }
                             
-                            propertiesValue7["provisioningState"] = propertiesValue7;
-                            
-                            if (backendHttpSettingsListItem.Name != null)
+                            if (backendHttpSettingsCollectionItem.ProvisioningState != null)
                             {
-                                applicationGatewayBackendHttpSettingsJsonFormatValue["name"] = backendHttpSettingsListItem.Name;
+                                propertiesValue7["provisioningState"] = backendHttpSettingsCollectionItem.ProvisioningState;
                             }
                             
-                            if (backendHttpSettingsListItem.Etag != null)
+                            if (backendHttpSettingsCollectionItem.Name != null)
                             {
-                                applicationGatewayBackendHttpSettingsJsonFormatValue["etag"] = backendHttpSettingsListItem.Etag;
+                                applicationGatewayBackendHttpSettingsJsonFormatValue["name"] = backendHttpSettingsCollectionItem.Name;
                             }
                             
-                            if (backendHttpSettingsListItem.Id != null)
+                            if (backendHttpSettingsCollectionItem.Etag != null)
                             {
-                                applicationGatewayBackendHttpSettingsJsonFormatValue["id"] = backendHttpSettingsListItem.Id;
+                                applicationGatewayBackendHttpSettingsJsonFormatValue["etag"] = backendHttpSettingsCollectionItem.Etag;
+                            }
+                            
+                            if (backendHttpSettingsCollectionItem.Id != null)
+                            {
+                                applicationGatewayBackendHttpSettingsJsonFormatValue["id"] = backendHttpSettingsCollectionItem.Id;
                             }
                         }
-                        propertiesValue["backendHttpSettingsList"] = backendHttpSettingsListArray;
+                        propertiesValue["backendHttpSettingsCollection"] = backendHttpSettingsCollectionArray;
                     }
                 }
                 
@@ -561,7 +576,10 @@ namespace Microsoft.Azure.Management.Network
                                 }
                             }
                             
-                            propertiesValue8["provisioningState"] = propertiesValue8;
+                            if (httpListenersItem.ProvisioningState != null)
+                            {
+                                propertiesValue8["provisioningState"] = httpListenersItem.ProvisioningState;
+                            }
                             
                             if (httpListenersItem.Name != null)
                             {
@@ -633,7 +651,10 @@ namespace Microsoft.Azure.Management.Network
                                 }
                             }
                             
-                            propertiesValue9["provisioningState"] = propertiesValue9;
+                            if (requestRoutingRulesItem.ProvisioningState != null)
+                            {
+                                propertiesValue9["provisioningState"] = requestRoutingRulesItem.ProvisioningState;
+                            }
                             
                             if (requestRoutingRulesItem.Name != null)
                             {
@@ -654,7 +675,10 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                propertiesValue["provisioningState"] = propertiesValue;
+                if (parameters.ProvisioningState != null)
+                {
+                    propertiesValue["provisioningState"] = parameters.ProvisioningState;
+                }
                 
                 if (parameters.Etag != null)
                 {
@@ -791,6 +815,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue = propertiesValue11["provisioningState"];
                                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                                applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                             }
                                         }
                                         
@@ -852,6 +878,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue2 = propertiesValue12["provisioningState"];
                                             if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                applicationGatewaySslCertificateJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                             }
                                         }
                                         
@@ -934,8 +962,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue3 = propertiesValue13["provisioningState"];
                                             if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance = ((string)provisioningStateValue3);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                             }
                                         }
                                         
@@ -983,6 +1011,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue4 = propertiesValue14["provisioningState"];
                                             if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance4 = ((string)provisioningStateValue4);
+                                                applicationGatewayFrontendPortJsonFormatInstance.ProvisioningState = provisioningStateInstance4;
                                             }
                                         }
                                         
@@ -1064,6 +1094,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue5 = propertiesValue15["provisioningState"];
                                             if (provisioningStateValue5 != null && provisioningStateValue5.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance5 = ((string)provisioningStateValue5);
+                                                applicationGatewayBackendAddressPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance5;
                                             }
                                         }
                                         
@@ -1090,15 +1122,15 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken backendHttpSettingsListArray2 = propertiesValue10["backendHttpSettingsList"];
-                                if (backendHttpSettingsListArray2 != null && backendHttpSettingsListArray2.Type != JTokenType.Null)
+                                JToken backendHttpSettingsCollectionArray2 = propertiesValue10["backendHttpSettingsCollection"];
+                                if (backendHttpSettingsCollectionArray2 != null && backendHttpSettingsCollectionArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken backendHttpSettingsListValue in ((JArray)backendHttpSettingsListArray2))
+                                    foreach (JToken backendHttpSettingsCollectionValue in ((JArray)backendHttpSettingsCollectionArray2))
                                     {
                                         ApplicationGatewayBackendHttpSettings applicationGatewayBackendHttpSettingsJsonFormatInstance = new ApplicationGatewayBackendHttpSettings();
-                                        applicationGatewayInstance.BackendHttpSettingsList.Add(applicationGatewayBackendHttpSettingsJsonFormatInstance);
+                                        applicationGatewayInstance.BackendHttpSettingsCollection.Add(applicationGatewayBackendHttpSettingsJsonFormatInstance);
                                         
-                                        JToken propertiesValue16 = backendHttpSettingsListValue["properties"];
+                                        JToken propertiesValue16 = backendHttpSettingsCollectionValue["properties"];
                                         if (propertiesValue16 != null && propertiesValue16.Type != JTokenType.Null)
                                         {
                                             JToken portValue2 = propertiesValue16["port"];
@@ -1125,24 +1157,26 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue6 = propertiesValue16["provisioningState"];
                                             if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                applicationGatewayBackendHttpSettingsJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
                                             }
                                         }
                                         
-                                        JToken nameValue6 = backendHttpSettingsListValue["name"];
+                                        JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
                                         if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
                                         {
                                             string nameInstance6 = ((string)nameValue6);
                                             applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
                                         }
                                         
-                                        JToken etagValue6 = backendHttpSettingsListValue["etag"];
+                                        JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
                                         if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
                                         {
                                             string etagInstance6 = ((string)etagValue6);
                                             applicationGatewayBackendHttpSettingsJsonFormatInstance.Etag = etagInstance6;
                                         }
                                         
-                                        JToken idValue10 = backendHttpSettingsListValue["id"];
+                                        JToken idValue10 = backendHttpSettingsCollectionValue["id"];
                                         if (idValue10 != null && idValue10.Type != JTokenType.Null)
                                         {
                                             string idInstance10 = ((string)idValue10);
@@ -1214,6 +1248,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue7 = propertiesValue17["provisioningState"];
                                             if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                applicationGatewayHttpListenerJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
                                             }
                                         }
                                         
@@ -1303,6 +1339,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue8 = propertiesValue18["provisioningState"];
                                             if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                                applicationGatewayRequestRoutingRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance8;
                                             }
                                         }
                                         
@@ -1332,6 +1370,8 @@ namespace Microsoft.Azure.Management.Network
                                 JToken provisioningStateValue9 = propertiesValue10["provisioningState"];
                                 if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
                                 {
+                                    string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                    applicationGatewayInstance.ProvisioningState = provisioningStateInstance9;
                                 }
                             }
                             
@@ -1602,6 +1642,340 @@ namespace Microsoft.Azure.Management.Network
                     UpdateOperationResponse result = null;
                     // Deserialize Response
                     result = new UpdateOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Start ApplicationGateway operation starts application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// Required. The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Start ApplicationGateway
+        /// operation through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for PutVirtualNetworkGateway Api servive call
+        /// </returns>
+        public async Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (applicationGatewayName == null)
+            {
+                throw new ArgumentNullException("applicationGatewayName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("applicationGatewayName", applicationGatewayName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginStartAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Network";
+            url = url + "/applicationGateways/";
+            url = url + Uri.EscapeDataString(applicationGatewayName);
+            url = url + "/start";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualNetworkGatewayPutResponse result = null;
+                    // Deserialize Response
+                    result = new VirtualNetworkGatewayPutResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The STOP ApplicationGateway operation stops application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// Required. The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
+        /// operation through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for PutVirtualNetworkGateway Api servive call
+        /// </returns>
+        public async Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (applicationGatewayName == null)
+            {
+                throw new ArgumentNullException("applicationGatewayName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("applicationGatewayName", applicationGatewayName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginStopAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Network";
+            url = url + "/applicationGateways/";
+            url = url + Uri.EscapeDataString(applicationGatewayName);
+            url = url + "/stop";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualNetworkGatewayPutResponse result = null;
+                    // Deserialize Response
+                    result = new VirtualNetworkGatewayPutResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
@@ -1968,6 +2342,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue = propertiesValue2["provisioningState"];
                                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                                applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                             }
                                         }
                                         
@@ -2029,6 +2405,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
                                             if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                applicationGatewaySslCertificateJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                             }
                                         }
                                         
@@ -2111,8 +2489,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue3 = propertiesValue4["provisioningState"];
                                             if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance = ((string)provisioningStateValue3);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                             }
                                         }
                                         
@@ -2160,6 +2538,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue4 = propertiesValue5["provisioningState"];
                                             if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance4 = ((string)provisioningStateValue4);
+                                                applicationGatewayFrontendPortJsonFormatInstance.ProvisioningState = provisioningStateInstance4;
                                             }
                                         }
                                         
@@ -2241,6 +2621,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue5 = propertiesValue6["provisioningState"];
                                             if (provisioningStateValue5 != null && provisioningStateValue5.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance5 = ((string)provisioningStateValue5);
+                                                applicationGatewayBackendAddressPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance5;
                                             }
                                         }
                                         
@@ -2267,15 +2649,15 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken backendHttpSettingsListArray = propertiesValue["backendHttpSettingsList"];
-                                if (backendHttpSettingsListArray != null && backendHttpSettingsListArray.Type != JTokenType.Null)
+                                JToken backendHttpSettingsCollectionArray = propertiesValue["backendHttpSettingsCollection"];
+                                if (backendHttpSettingsCollectionArray != null && backendHttpSettingsCollectionArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken backendHttpSettingsListValue in ((JArray)backendHttpSettingsListArray))
+                                    foreach (JToken backendHttpSettingsCollectionValue in ((JArray)backendHttpSettingsCollectionArray))
                                     {
                                         ApplicationGatewayBackendHttpSettings applicationGatewayBackendHttpSettingsJsonFormatInstance = new ApplicationGatewayBackendHttpSettings();
-                                        applicationGatewayInstance.BackendHttpSettingsList.Add(applicationGatewayBackendHttpSettingsJsonFormatInstance);
+                                        applicationGatewayInstance.BackendHttpSettingsCollection.Add(applicationGatewayBackendHttpSettingsJsonFormatInstance);
                                         
-                                        JToken propertiesValue7 = backendHttpSettingsListValue["properties"];
+                                        JToken propertiesValue7 = backendHttpSettingsCollectionValue["properties"];
                                         if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                         {
                                             JToken portValue2 = propertiesValue7["port"];
@@ -2302,24 +2684,26 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
                                             if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                applicationGatewayBackendHttpSettingsJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
                                             }
                                         }
                                         
-                                        JToken nameValue6 = backendHttpSettingsListValue["name"];
+                                        JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
                                         if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
                                         {
                                             string nameInstance6 = ((string)nameValue6);
                                             applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
                                         }
                                         
-                                        JToken etagValue6 = backendHttpSettingsListValue["etag"];
+                                        JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
                                         if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
                                         {
                                             string etagInstance6 = ((string)etagValue6);
                                             applicationGatewayBackendHttpSettingsJsonFormatInstance.Etag = etagInstance6;
                                         }
                                         
-                                        JToken idValue10 = backendHttpSettingsListValue["id"];
+                                        JToken idValue10 = backendHttpSettingsCollectionValue["id"];
                                         if (idValue10 != null && idValue10.Type != JTokenType.Null)
                                         {
                                             string idInstance10 = ((string)idValue10);
@@ -2391,6 +2775,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue7 = propertiesValue8["provisioningState"];
                                             if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                applicationGatewayHttpListenerJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
                                             }
                                         }
                                         
@@ -2480,6 +2866,8 @@ namespace Microsoft.Azure.Management.Network
                                             JToken provisioningStateValue8 = propertiesValue9["provisioningState"];
                                             if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                             {
+                                                string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                                applicationGatewayRequestRoutingRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance8;
                                             }
                                         }
                                         
@@ -2509,6 +2897,8 @@ namespace Microsoft.Azure.Management.Network
                                 JToken provisioningStateValue9 = propertiesValue["provisioningState"];
                                 if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
                                 {
+                                    string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                    applicationGatewayInstance.ProvisioningState = provisioningStateInstance9;
                                 }
                             }
                             
@@ -2891,6 +3281,168 @@ namespace Microsoft.Azure.Management.Network
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// The Start ApplicationGateway operation starts application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// Required. The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Start ApplicationGateway
+        /// operation through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<AzureAsyncOperationResponse> StartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        {
+            NetworkResourceProviderClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("applicationGatewayName", applicationGatewayName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "StartAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            VirtualNetworkGatewayPutResponse response = await client.ApplicationGateways.BeginStartAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 30;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 30;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The STOP ApplicationGateway operation stops application gatewayin
+        /// the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// Required. The name of the application gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
+        /// operation through Network resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<AzureAsyncOperationResponse> StopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        {
+            NetworkResourceProviderClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("applicationGatewayName", applicationGatewayName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            VirtualNetworkGatewayPutResponse response = await client.ApplicationGateways.BeginStopAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 30;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.Management.Network.Models.OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 30;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
         }
     }
 }

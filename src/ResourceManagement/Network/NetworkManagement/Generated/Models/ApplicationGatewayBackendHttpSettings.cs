@@ -63,6 +63,18 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._protocol = value; }
         }
         
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets Provisioning state of the backend http
+        /// settings resource Updating/Deleting/Failed
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendHttpSettings class.
