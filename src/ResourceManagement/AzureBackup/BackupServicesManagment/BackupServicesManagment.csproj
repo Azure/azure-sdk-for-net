@@ -20,9 +20,13 @@
     <Compile Include="Generated\BackupServicesManagementClientExtensions.cs" />
     <Compile Include="Generated\ContainerOperation.cs" />
     <Compile Include="Generated\ContainerOperationExtensions.cs" />
+    <Compile Include="Generated\DataSourceOperations.cs" />
+    <Compile Include="Generated\DataSourceOperationsExtensions.cs" />
     <Compile Include="Generated\IBackupServicesManagementClient.cs" />
     <Compile Include="Generated\IContainerOperation.cs" />
+    <Compile Include="Generated\IDataSourceOperations.cs" />
     <Compile Include="Generated\IJobOperations.cs" />
+    <Compile Include="Generated\IProtectableObjectOperations.cs" />
     <Compile Include="Generated\IProtectionPolicyOperations.cs" />
     <Compile Include="Generated\IVaultCredentialOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
@@ -32,6 +36,11 @@
     <Compile Include="Generated\Models\BackupSchedule.cs" />
     <Compile Include="Generated\Models\ContainerInfo.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\DataSourceInfo.cs" />
+    <Compile Include="Generated\Models\DataSourceListResponse.cs" />
+    <Compile Include="Generated\Models\DataSourceResponse.cs" />
+    <Compile Include="Generated\Models\DisableProtectionResponse.cs" />
+    <Compile Include="Generated\Models\EnableProtectionResponse.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobByIdResponse.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs" />
@@ -42,6 +51,9 @@
     <Compile Include="Generated\Models\ListContainerResponse.cs" />
     <Compile Include="Generated\Models\ManagementBaseObject.cs" />
     <Compile Include="Generated\Models\ManagementResponseObject.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectInfo.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResponse.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyInfo.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyInfoResponse.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
@@ -55,6 +67,8 @@
     <Compile Include="Generated\Models\UnregisterContainerRequest.cs" />
     <Compile Include="Generated\Models\VaultCredUploadCertRequest.cs" />
     <Compile Include="Generated\Models\VaultCredUploadCertResponse.cs" />
+    <Compile Include="Generated\ProtectableObjectOperations.cs" />
+    <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
     <Compile Include="Generated\ProtectionPolicyOperations.cs" />
     <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs" />
     <Compile Include="Generated\VaultCredentialOperations.cs" />

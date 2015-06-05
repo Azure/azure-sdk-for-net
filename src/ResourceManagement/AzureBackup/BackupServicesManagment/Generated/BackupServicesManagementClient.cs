@@ -120,6 +120,16 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._container; }
         }
         
+        private IDataSourceOperations _dataSource;
+        
+        /// <summary>
+        /// Definition of DataSource operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IDataSourceOperations DataSource
+        {
+            get { return this._dataSource; }
+        }
+        
         private IJobOperations _job;
         
         /// <summary>
@@ -129,6 +139,17 @@ namespace Microsoft.Azure.Management.BackupServices
         public virtual IJobOperations Job
         {
             get { return this._job; }
+        }
+        
+        private IProtectableObjectOperations _protectableObject;
+        
+        /// <summary>
+        /// Definition of Protectable ObjectOperation operations for the Azure
+        /// Backup extension.
+        /// </summary>
+        public virtual IProtectableObjectOperations ProtectableObject
+        {
+            get { return this._protectableObject; }
         }
         
         private IProtectionPolicyOperations _protectionPolicy;
@@ -173,7 +194,9 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             this._backUp = new BackUpOperations(this);
             this._container = new ContainerOperation(this);
+            this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._vaultCredentials = new VaultCredentialOperations(this);
@@ -279,7 +302,9 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             this._backUp = new BackUpOperations(this);
             this._container = new ContainerOperation(this);
+            this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._vaultCredentials = new VaultCredentialOperations(this);
