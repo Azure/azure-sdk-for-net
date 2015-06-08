@@ -204,6 +204,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\AuthorizationServersCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -243,6 +246,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\UserGroupsListAddRemove.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -250,6 +256,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\UsersCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\UserSubscriptionsList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiTestsFixture\CreateApiManagementService.json">
