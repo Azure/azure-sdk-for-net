@@ -32,5 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         public const string Default = "Default";
         
         public const string HighPerformance = "HighPerformance";
+        
+        public const string Standard = "Standard";
     }
 }

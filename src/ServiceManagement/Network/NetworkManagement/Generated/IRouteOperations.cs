@@ -245,6 +245,53 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<OperationStatusResponse> DeleteRouteTableAsync(string routeTableName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Get the effective route table for the provided network interface in
+        /// this subscription.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// The name of the role instance.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// The name of the network interface.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GetEffectiveRouteTableResponse> GetEffectiveRouteTableForNetworkInterfaceAsync(string serviceName, string deploymentName, string roleinstanceName, string networkInterfaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the effective route table for the provided role instance in
+        /// this subscription.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// The name of the role instance.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GetEffectiveRouteTableResponse> GetEffectiveRouteTableForRoleInstanceAsync(string serviceName, string deploymentName, string roleinstanceName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the specified route table for this subscription.
         /// </summary>
         /// <param name='routeTableName'>

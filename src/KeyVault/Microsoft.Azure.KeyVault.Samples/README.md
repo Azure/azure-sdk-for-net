@@ -7,9 +7,9 @@
 ##Pre-requisites
 1. Visual Studio 2013 or Visual Studio 2012
 2. Azure SDK 2.5 and an active Azure subscription
-3. Azure PowerShell version 0.8.13 or newer
-4. [Azure Key Vault PowerShell scripts][1]
-5. NuGet version 2.7 or newer
+3. Azure PowerShell version 0.9.1 or newer
+4. NuGet version 2.7 or newer
+5. nuget.org (https://www.nuget.org/api/v2/) should be an available package source in Visual Studio NuGet Package Manager settings
 
 ##Sample Applications
 > Please read the [documentation about Key Vault][2] to familiarize yourself with the basic concepts of Key Vault before running this sample application.
@@ -28,7 +28,7 @@ A console application that walks through the key scenarios supported by Key Vaul
 Update the app configuration settings in HelloKeyVault\App.config with your vault URL, application principal ID and secret. The information can optionally be generated using *scripts\GetAppConfigSettings.ps1*. To use the sample script, follow these steps:
 
  1. Update the values of mandatory variables in GetAppConfigSettings.ps1
- 2. Launch the Microsoft Azure PowerShell window & import the [Azure Key Vault PowerShell scripts][1] module
+ 2. Launch the Microsoft Azure PowerShell window
  3. Run the GetAppConfigSettings.ps1 script within the Microsoft Azure PowerShell window
  4. Copy the results of the script into the HelloKeyVault\App.config file
 
@@ -48,8 +48,8 @@ Such applications typically require credentials in their service configuration, 
 	- openssl [x509][6] -req -days 3000 -in keyvault.csr -signkey keyvault.key -out keyvault.cer
 		- *Note:  The keyvault.cer file is a required input to the GetServiceConfigSettings.ps1 script* 
 	- openssl [pkcs12][7] -export -out keyvault.pfx -inkey keyvault.key -in keyvault.cer
-1. Create a new Azure cloud service in the [Azure management portal][10].  Upload the PFX file for the certificate you just created into the certificate tab for the cloud service. For instructions see [service certificate][9].
-1. Create a new Azure storage account in the [Azure management portal][10].  Remember the storage account name -- you'll need it as an input parameter for the GetServiceConfigSettings.ps1 script.
+1. Create a new Azure cloud service in the [Azure management portal][1].  Upload the PFX file for the certificate you just created into the certificate tab for the cloud service. For instructions see [service certificate][9].
+1. Create a new Azure storage account in the [Azure management portal][1].  Remember the storage account name -- you'll need it as an input parameter for the GetServiceConfigSettings.ps1 script.
 1. Update the service configuration settings in ServiceConfiguration.Cloud.cscfg by providing:
 	- Key Vault authentication certificate thumbprint (you can find the thumbprint in the 'detailed' tab of the certificate).
 	- Name of the storage account to store messages in.
@@ -59,7 +59,7 @@ Such applications typically require credentials in their service configuration, 
 	For step 3 the service configuration settings can be generated using *scripts\GetServiceConfigSettings.ps1*. To use the sample script, follow these steps:
 
 	 1. Update the values of mandatory variables in GetServiceConfigSettings.ps1
-	 2. Launch the Microsoft Azure PowerShell window & import the [Azure Key Vault PowerShell scripts][1] module
+	 2. Launch the Microsoft Azure PowerShell window
 	 3. Run the GetServiceConfigSettings.ps1 script within the Microsoft Azure PowerShell window
 	 4. Copy the results of the script into both CSCFG files in the project
 
@@ -74,7 +74,7 @@ Navigate to the web service from your browser to save messages and read recent m
 
 Now go back to the Azure portal and regenerate the storage account keys. The web service will now fail to load or save messages, as expected. Read the trace messages to confirm this. Use Set-AzureKeyVaultSecret PowerShell cmdlet to update the secret stored in your vault. Notice the web service starts to work again without having to redeploy or reconfigure it.
 
-[1]: http://go.microsoft.com/fwlink/?LinkId=521539
+[1]: http://manage.windowsazure.com
 [2]: http://go.microsoft.com/fwlink/?LinkID=512410 
 [3]: http://www.openssl.org/related/binaries.html
 [4]: https://www.openssl.org/docs/apps/genrsa.html
@@ -83,4 +83,3 @@ Now go back to the Azure portal and regenerate the storage account keys. The web
 [7]: https://www.openssl.org/docs/apps/pkcs12.html
 [8]: http://msdn.microsoft.com/en-us/library/vstudio/bfsktky3(v=vs.100).aspx
 [9]: http://msdn.microsoft.com/en-us/library/azure/gg981929.aspx
-[10]: http://manage.windowsazure.com

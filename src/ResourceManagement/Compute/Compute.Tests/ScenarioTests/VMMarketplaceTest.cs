@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
@@ -100,7 +101,7 @@ namespace Compute.Tests
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
 
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
                 }
                 finally
                 {

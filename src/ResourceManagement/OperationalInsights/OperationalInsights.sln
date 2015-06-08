@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationalInsightsManagement", "OperationalInsightsManagement\OperationalInsightsManagement.csproj", "{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationalInsights.Tests", "OperationalInsights.Tests\OperationalInsights.Tests.csproj", "{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Net40-Debug|Any CPU = Net40-Debug|Any CPU
+		Net40-Release|Any CPU = Net40-Release|Any CPU
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+		Portable-Debug|Any CPU = Portable-Debug|Any CPU
+		Portable-Release|Any CPU = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{51DBB13B-7156-4BDF-9B94-34AB625BA6EA}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{D5C1B82E-40A8-4D28-BA22-8E085B0D9AD6}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

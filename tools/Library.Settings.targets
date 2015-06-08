@@ -32,8 +32,8 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
     <AdditionalBinariesFolder>$(LibraryFxTarget)\</AdditionalBinariesFolder>
-    <!-- TODO: remove 0219 ('appendFilter' is assigned but its value is never used) -->
-    <NoWarn>0219;1591;1573;1570;1573</NoWarn>
+    <NoWarn>1591;1573;1570;1573</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
@@ -44,6 +44,14 @@
   
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45'" >
     <LibraryCustomConstants>NET45</LibraryCustomConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net40'" >
+    <LibraryCustomConstants>NET40</LibraryCustomConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable'" >
+    <LibraryCustomConstants>PORTABLE</LibraryCustomConstants>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
@@ -131,6 +139,6 @@
     </PropertyGroup>
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(LibrarySourceFolder)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
   </Target>
 </Project>

@@ -23,6 +23,7 @@ using System.Net;
 using Xunit;
 using System;
 using System.Collections.Generic;
+using Microsoft.Azure;
 
 namespace Compute.Tests
 {
@@ -63,7 +64,7 @@ namespace Compute.Tests
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, AddCertificateInfo);
 
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
                 }
                 finally
                 {

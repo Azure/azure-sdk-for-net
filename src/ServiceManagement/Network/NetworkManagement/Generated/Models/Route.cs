@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private int _metric;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the metric of this route.
         /// </summary>
         public int Metric
         {
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _name;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the name of this route.
         /// </summary>
         public string Name
         {
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private NextHop _nextHop;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the next hop of this route.
         /// </summary>
         public NextHop NextHop
         {
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private RouteState _state;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the state of this route.
         /// </summary>
         public RouteState State
         {
