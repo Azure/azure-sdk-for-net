@@ -51,7 +51,7 @@ namespace BackupServices.Tests
 
             string resourceName = ConfigurationManager.AppSettings["ResourceName"];
             string resourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
-            if (testEnvironment.UsesCustomUri())
+           if (testEnvironment.UsesCustomUri())
             {
                 client = new BackupServicesManagementClient(
                     resourceName,

@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -35,18 +34,17 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of Protection Policy operations for the Azure Backup
-    /// extension.
+    /// Definition of Recovery Point operations for the Azure Backup extension.
     /// </summary>
-    internal partial class JobOperations : IServiceOperations<BackupServicesManagementClient>, IJobOperations
+    internal partial class RecoveryPointOperations : IServiceOperations<BackupServicesManagementClient>, IRecoveryPointOperations
     {
         /// <summary>
-        /// Initializes a new instance of the JobOperations class.
+        /// Initializes a new instance of the RecoveryPointOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal JobOperations(BackupServicesManagementClient client)
+        internal RecoveryPointOperations(BackupServicesManagementClient client)
         {
             this._client = client;
         }
@@ -65,19 +63,25 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all Protection Policy.
         /// </summary>
-        /// <param name='parameters'>
-        /// Optional. Job query parameter.
-        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Optional.
+        /// </param>
+        /// <param name='dataSourceType'>
+        /// Optional.
+        /// </param>
+        /// <param name='dataSourceId'>
+        /// Optional.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list containers operation.
+        /// The response model for the list RecoveryPoints operation.
         /// </returns>
-        public async Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<RecoveryPointListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -88,8 +92,10 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("dataSourceType", dataSourceType);
+                tracingParameters.Add("dataSourceId", dataSourceId);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -108,33 +114,24 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/jobs";
+            url = url + "/containers/";
+            if (containerName != null)
+            {
+                url = url + Uri.EscapeDataString(containerName);
+            }
+            url = url + "/datasources/";
+            if (dataSourceType != null)
+            {
+                url = url + Uri.EscapeDataString(dataSourceType);
+            }
+            url = url + "/";
+            if (dataSourceId != null)
+            {
+                url = url + Uri.EscapeDataString(dataSourceId);
+            }
+            url = url + "/recoverypoints";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
-            if (parameters != null && parameters.Status != null)
-            {
-                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));
-            }
-            if (parameters != null && parameters.Type != null)
-            {
-                queryParameters.Add("Type=" + Uri.EscapeDataString(parameters.Type));
-            }
-            if (parameters != null && parameters.Operation != null)
-            {
-                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Operation));
-            }
-            if (parameters != null && parameters.JobId != null)
-            {
-                queryParameters.Add("JobId=" + Uri.EscapeDataString(parameters.JobId));
-            }
-            if (parameters != null && parameters.StartTime != null)
-            {
-                queryParameters.Add("StartTime=" + Uri.EscapeDataString(parameters.StartTime));
-            }
-            if (parameters != null && parameters.EndTime != null)
-            {
-                queryParameters.Add("EndTime=" + Uri.EscapeDataString(parameters.EndTime));
-            }
+            queryParameters.Add("api-version=2014-09-01.1.0");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -194,13 +191,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    JobListResponse result = null;
+                    RecoveryPointListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobListResponse();
+                        result = new RecoveryPointListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -209,94 +206,57 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JobResponse jobsInstance = new JobResponse();
-                            result.Jobs = jobsInstance;
+                            RecoveryPointInfoResponse recoveryPointsInstance = new RecoveryPointInfoResponse();
+                            result.RecoveryPoints = recoveryPointsInstance;
                             
                             JToken objectsArray = responseDoc["Objects"];
                             if (objectsArray != null && objectsArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken objectsValue in ((JArray)objectsArray))
                                 {
-                                    Job jobInstance = new Job();
-                                    jobsInstance.Objects.Add(jobInstance);
+                                    RecoveryPointInfo recoveryPointInfoInstance = new RecoveryPointInfo();
+                                    recoveryPointsInstance.Objects.Add(recoveryPointInfoInstance);
                                     
-                                    JToken typeValue = objectsValue["Type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken recoveryPointTypeValue = objectsValue["RecoveryPointType"];
+                                    if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance = ((string)typeValue);
-                                        jobInstance.Type = typeInstance;
+                                        string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
+                                        recoveryPointInfoInstance.RecoveryPointType = recoveryPointTypeInstance;
                                     }
                                     
-                                    JToken operationValue = objectsValue["Operation"];
-                                    if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                    JToken recoveryPointTimeValue = objectsValue["RecoveryPointTime"];
+                                    if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
                                     {
-                                        string operationInstance = ((string)operationValue);
-                                        jobInstance.Operation = operationInstance;
+                                        DateTime recoveryPointTimeInstance = ((DateTime)recoveryPointTimeValue);
+                                        recoveryPointInfoInstance.RecoveryPointTime = recoveryPointTimeInstance;
                                     }
                                     
-                                    JToken statusValue = objectsValue["Status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    JToken recoveryPointAdditionalInfoValue = objectsValue["RecoveryPointAdditionalInfo"];
+                                    if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = ((string)statusValue);
-                                        jobInstance.Status = statusInstance;
-                                    }
-                                    
-                                    JToken startTimestampValue = objectsValue["StartTimestamp"];
-                                    if (startTimestampValue != null && startTimestampValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime startTimestampInstance = ((DateTime)startTimestampValue);
-                                        jobInstance.StartTimestamp = startTimestampInstance;
-                                    }
-                                    
-                                    JToken endTimestampValue = objectsValue["EndTimestamp"];
-                                    if (endTimestampValue != null && endTimestampValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimestampInstance = ((DateTime)endTimestampValue);
-                                        jobInstance.EndTimestamp = endTimestampInstance;
-                                    }
-                                    
-                                    JToken durationValue = objectsValue["Duration"];
-                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
-                                    {
-                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                        jobInstance.Duration = durationInstance;
-                                    }
-                                    
-                                    JToken entityFriendlyNameValue = objectsValue["EntityFriendlyName"];
-                                    if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
-                                    }
-                                    
-                                    JToken actionsInfoArray = objectsValue["ActionsInfo"];
-                                    if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
-                                        {
-                                            jobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
-                                        }
+                                        string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
+                                        recoveryPointInfoInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
                                     }
                                     
                                     JToken instanceIdValue = objectsValue["InstanceId"];
                                     if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
                                     {
                                         string instanceIdInstance = ((string)instanceIdValue);
-                                        jobInstance.InstanceId = instanceIdInstance;
+                                        recoveryPointInfoInstance.InstanceId = instanceIdInstance;
                                     }
                                     
                                     JToken nameValue = objectsValue["Name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        jobInstance.Name = nameInstance;
+                                        recoveryPointInfoInstance.Name = nameInstance;
                                     }
                                     
                                     JToken operationInProgressValue = objectsValue["OperationInProgress"];
                                     if (operationInProgressValue != null && operationInProgressValue.Type != JTokenType.Null)
                                     {
                                         bool operationInProgressInstance = ((bool)operationInProgressValue);
-                                        jobInstance.OperationInProgress = operationInProgressInstance;
+                                        recoveryPointInfoInstance.OperationInProgress = operationInProgressInstance;
                                     }
                                 }
                             }
@@ -305,14 +265,14 @@ namespace Microsoft.Azure.Management.BackupServices
                             if (resultCountValue != null && resultCountValue.Type != JTokenType.Null)
                             {
                                 int resultCountInstance = ((int)resultCountValue);
-                                jobsInstance.ResultCount = resultCountInstance;
+                                recoveryPointsInstance.ResultCount = resultCountInstance;
                             }
                             
                             JToken skiptokenValue = responseDoc["Skiptoken"];
                             if (skiptokenValue != null && skiptokenValue.Type != JTokenType.Null)
                             {
                                 string skiptokenInstance = ((string)skiptokenValue);
-                                jobsInstance.Skiptoken = skiptokenInstance;
+                                recoveryPointsInstance.Skiptoken = skiptokenInstance;
                             }
                         }
                         

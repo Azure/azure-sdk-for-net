@@ -100,6 +100,36 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._resourceName = value; }
         }
         
+        private IBackUpOperations _backUp;
+        
+        /// <summary>
+        /// Definition of BackUp operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IBackUpOperations BackUp
+        {
+            get { return this._backUp; }
+        }
+        
+        private IContainerOperation _container;
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IContainerOperation Container
+        {
+            get { return this._container; }
+        }
+        
+        private IDataSourceOperations _dataSource;
+        
+        /// <summary>
+        /// Definition of DataSource operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IDataSourceOperations DataSource
+        {
+            get { return this._dataSource; }
+        }
+        
         private IJobOperations _job;
         
         /// <summary>
@@ -109,6 +139,17 @@ namespace Microsoft.Azure.Management.BackupServices
         public virtual IJobOperations Job
         {
             get { return this._job; }
+        }
+        
+        private IProtectableObjectOperations _protectableObject;
+        
+        /// <summary>
+        /// Definition of Protectable ObjectOperation operations for the Azure
+        /// Backup extension.
+        /// </summary>
+        public virtual IProtectableObjectOperations ProtectableObject
+        {
+            get { return this._protectableObject; }
         }
         
         private IProtectionPolicyOperations _protectionPolicy;
@@ -122,6 +163,28 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._protectionPolicy; }
         }
         
+        private IRecoveryPointOperations _recoveryPoint;
+        
+        /// <summary>
+        /// Definition of Recovery Point operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IRecoveryPointOperations RecoveryPoint
+        {
+            get { return this._recoveryPoint; }
+        }
+        
+        private IVaultCredentialOperations _vaultCredentials;
+        
+        /// <summary>
+        /// Definition of Vault credential-related operations for the Azure
+        /// Backup extension.
+        /// </summary>
+        public virtual IVaultCredentialOperations VaultCredentials
+        {
+            get { return this._vaultCredentials; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the BackupServicesManagementClient
         /// class.
@@ -129,8 +192,14 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupServicesManagementClient()
             : base()
         {
+            this._backUp = new BackUpOperations(this);
+            this._container = new ContainerOperation(this);
+            this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._vaultCredentials = new VaultCredentialOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -231,8 +300,14 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._backUp = new BackUpOperations(this);
+            this._container = new ContainerOperation(this);
+            this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._vaultCredentials = new VaultCredentialOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
