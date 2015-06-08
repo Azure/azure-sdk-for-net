@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.BackupServices
             }
             url = url + "/recoverypoints";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

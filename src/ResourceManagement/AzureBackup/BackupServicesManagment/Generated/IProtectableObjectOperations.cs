@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all Protectable Objects.
         /// </summary>
+        /// <param name='parameters'>
+        /// Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -45,6 +48,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The response model for the list ProtectableObject operation.
         /// </returns>
-        Task<ProtectableObjectListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ProtectableObjectListResponse> ListAsync(POQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

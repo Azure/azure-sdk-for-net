@@ -37,17 +37,20 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list ProtectableObject operation.
         /// </returns>
-        public static ProtectableObjectListResponse List(this IProtectableObjectOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static ProtectableObjectListResponse List(this IProtectableObjectOperations operations, POQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectableObjectOperations)s).ListAsync(customRequestHeaders);
+                return ((IProtectableObjectOperations)s).ListAsync(parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -59,15 +62,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list ProtectableObject operation.
         /// </returns>
-        public static Task<ProtectableObjectListResponse> ListAsync(this IProtectableObjectOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectableObjectListResponse> ListAsync(this IProtectableObjectOperations operations, POQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }
