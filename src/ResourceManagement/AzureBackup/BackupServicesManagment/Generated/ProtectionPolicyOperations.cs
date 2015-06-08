@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(jobId);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/protectionpolicies";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

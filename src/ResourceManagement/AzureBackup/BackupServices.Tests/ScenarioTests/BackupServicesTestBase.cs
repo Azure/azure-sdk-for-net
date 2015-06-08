@@ -44,14 +44,14 @@ namespace BackupServices.Tests
             var factory = (TestEnvironmentFactory)new CSMTestEnvironmentFactory();
 
             var testEnvironment = factory.GetTestEnvironment();
-
+            //testEnvironment.BaseUri = new Uri("https://localhost:8443/RdfeProxy.svc/");
             ServicePointManager.ServerCertificateValidationCallback = IgnoreCertificateErrorHandler;
 
             BackupServicesManagementClient client;
 
-            string resourceName = ConfigurationManager.AppSettings["RESOURCE_NAME"];
-            string resourceGroupName = ConfigurationManager.AppSettings["RESOURCE_GROUP_NAME"];
-            if (testEnvironment.UsesCustomUri())
+            string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+            string resourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
+           if (testEnvironment.UsesCustomUri())
             {
                 client = new BackupServicesManagementClient(
                     resourceName,
