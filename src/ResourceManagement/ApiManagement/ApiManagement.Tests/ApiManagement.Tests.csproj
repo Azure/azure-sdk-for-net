@@ -42,6 +42,7 @@
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ProductSubscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Regions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Reports.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserSubscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Subscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserGroups.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserIdentities.cs" />
