@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/jobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (parameters != null && parameters.Status != null)
             {
                 queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));

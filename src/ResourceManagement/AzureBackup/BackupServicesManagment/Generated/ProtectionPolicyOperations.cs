@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(jobId);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/protectionpolicies";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -494,18 +494,18 @@ namespace Microsoft.Azure.Management.BackupServices
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken protectionPolicyInfoResponseValue = responseDoc["ProtectionPolicyInfoResponse"];
-                        if (protectionPolicyInfoResponseValue != null && protectionPolicyInfoResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ProtectionPolicyInfoResponse protectionPolicyInfoResponseInstance = new ProtectionPolicyInfoResponse();
+                            ProtectionPolicyInfoResponse protectionPoliciesInstance = new ProtectionPolicyInfoResponse();
+                            result.ProtectionPolicies = protectionPoliciesInstance;
                             
-                            JToken objectsArray = protectionPolicyInfoResponseValue["Objects"];
+                            JToken objectsArray = responseDoc["Objects"];
                             if (objectsArray != null && objectsArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken objectsValue in ((JArray)objectsArray))
                                 {
                                     ProtectionPolicyInfo protectionPolicyInfoInstance = new ProtectionPolicyInfo();
-                                    protectionPolicyInfoResponseInstance.Objects.Add(protectionPolicyInfoInstance);
+                                    protectionPoliciesInstance.Objects.Add(protectionPolicyInfoInstance);
                                     
                                     JToken workloadTypeValue = objectsValue["WorkloadType"];
                                     if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
@@ -604,18 +604,18 @@ namespace Microsoft.Azure.Management.BackupServices
                                 }
                             }
                             
-                            JToken resultCountValue = protectionPolicyInfoResponseValue["ResultCount"];
+                            JToken resultCountValue = responseDoc["ResultCount"];
                             if (resultCountValue != null && resultCountValue.Type != JTokenType.Null)
                             {
                                 int resultCountInstance = ((int)resultCountValue);
-                                protectionPolicyInfoResponseInstance.ResultCount = resultCountInstance;
+                                protectionPoliciesInstance.ResultCount = resultCountInstance;
                             }
                             
-                            JToken skiptokenValue = protectionPolicyInfoResponseValue["Skiptoken"];
+                            JToken skiptokenValue = responseDoc["Skiptoken"];
                             if (skiptokenValue != null && skiptokenValue.Type != JTokenType.Null)
                             {
                                 string skiptokenInstance = ((string)skiptokenValue);
-                                protectionPolicyInfoResponseInstance.Skiptoken = skiptokenInstance;
+                                protectionPoliciesInstance.Skiptoken = skiptokenInstance;
                             }
                         }
                         
