@@ -75,6 +75,7 @@
     <Compile Include="Generated\IUserGroupsOperations.cs" />
     <Compile Include="Generated\IUserIdentitiesOperations.cs" />
     <Compile Include="Generated\IUsersOperations.cs" />
+    <Compile Include="Generated\IUserSubscriptionsOperations.cs" />
     <Compile Include="Generated\Models\AdditionalRegion.cs" />
     <Compile Include="Generated\Models\ApiManagementError.cs" />
     <Compile Include="Generated\Models\ApiServiceBackupRestoreParameters.cs" />
@@ -212,6 +213,8 @@
     <Compile Include="Generated\UserIdentitiesOperationsExtensions.cs" />
     <Compile Include="Generated\UsersOperations.cs" />
     <Compile Include="Generated\UsersOperationsExtensions.cs" />
+    <Compile Include="Generated\UserSubscriptionsOperations.cs" />
+    <Compile Include="Generated\UserSubscriptionsOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

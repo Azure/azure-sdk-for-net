@@ -50,17 +50,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
             {
                 TestUtilities.StartTest("SmapiTestsFixture", "CreateApiManagementService");
 
-                this.ResourceGroupName = this.ResourceManagementClient.TryGetResourceGroup(Location);
-                this.Location = "West US"; //this.ManagmentClient.TryGetLocation("West US");
+                //this.ResourceGroupName = this.ResourceManagementClient.TryGetResourceGroup(Location);
+                //this.Location = "West US"; //this.ManagmentClient.TryGetLocation("West US");
 
-                if (string.IsNullOrWhiteSpace(ResourceGroupName))
-                {
-                    ResourceGroupName = TestUtilities.GenerateName("Api-Default");
-                    this.ResourceManagementClient.TryRegisterResourceGroup(Location, ResourceGroupName);
-                }
+                //if (string.IsNullOrWhiteSpace(ResourceGroupName))
+                //{
+                //    ResourceGroupName = TestUtilities.GenerateName("Api-Default");
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(Location, ResourceGroupName);
+                //}
 
-                ApiManagementServiceName = TestUtilities.GenerateName("hydraapimservice");
-                this.ApiManagementClient.TryCreateApiService(ResourceGroupName, ApiManagementServiceName, Location);
+                //ApiManagementServiceName = TestUtilities.GenerateName("hydraapimservice");
+                //this.ApiManagementClient.TryCreateApiService(ResourceGroupName, ApiManagementServiceName, Location);
+
+                this.ResourceGroupName = "Api-Default-West-US";
+                this.ApiManagementServiceName = "ailntest";
+                this.Location = "West US";
             }
             catch (Exception)
             {
