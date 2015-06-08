@@ -36,12 +36,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Optional. Gets or sets the collection of recommended database
-        /// properties for the Azure SQL Database Server Upgrade
+        /// properties to upgrade the Azure SQL Database Server.
         /// </summary>
         public IList<RecommendedDatabaseProperties> DatabaseCollection
         {
             get { return this._databaseCollection; }
             set { this._databaseCollection = value; }
+        }
+        
+        private IList<UpgradeRecommendedElasticPoolProperties> _elasticPoolCollection;
+        
+        /// <summary>
+        /// Optional. Gets or sets the collection of recommended elastic pool
+        /// properties to upgrade the Azure SQL Database Server.
+        /// </summary>
+        public IList<UpgradeRecommendedElasticPoolProperties> ElasticPoolCollection
+        {
+            get { return this._elasticPoolCollection; }
+            set { this._elasticPoolCollection = value; }
         }
         
         private System.DateTime? _scheduleUpgradeAfterUtcDateTime;
@@ -74,6 +86,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ServerUpgradeProperties()
         {
             this.DatabaseCollection = new LazyList<RecommendedDatabaseProperties>();
+            this.ElasticPoolCollection = new LazyList<UpgradeRecommendedElasticPoolProperties>();
         }
         
         /// <summary>

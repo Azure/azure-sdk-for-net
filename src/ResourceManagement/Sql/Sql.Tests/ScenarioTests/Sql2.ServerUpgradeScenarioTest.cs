@@ -19,6 +19,7 @@ using Microsoft.Azure.Test;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using Hyak.Common;
 using Xunit;
@@ -39,6 +40,11 @@ namespace Sql2.Tests.ScenarioTests
         private const string upgradeStatusQueued = "Queued";
         private const string upgradeStatusInProgress = "InProgress";
         private const string upgradeStatusCancelling = "Cancelling";
+
+        private const int defaultElasticPoolDtu = 800;
+        private const int defaultElasticPoolStorageMb = 800*1024;
+        private const int defaultElasticPoolDatabaseDtuMax = 100;
+        private const int defaultElasticPoolDatabaseDtuMin = 50;
 
         // Short sleep time so that test with Playback runs faster. 
         // If running the test in Record mode, change to 60 seconds
@@ -76,7 +82,26 @@ namespace Sql2.Tests.ScenarioTests
                     new BasicDelegatingHandler(), 
                     currentVersion, 
                     serverLocation, 
-                    UpgradeServer);
+                    UpgradeServerWithRecommendedDatabase);
+            }
+        }
+
+        /// <summary>
+        /// Positive test for server upgrade operation and polling the upgrade status until completed. 
+        /// This test is for server with 1 Basic database mapped to a new target edition and SLO
+        /// and 1 Basic database put in an elastic pool
+        /// </summary>
+        [Fact]
+        public void PositiveTestWithElasticPool()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                Sql2ScenarioHelper.RunDatabaseTestInEnvironment(
+                    new BasicDelegatingHandler(),
+                    currentVersion,
+                    serverLocation,
+                    UpgradeServerWithElasticPool);
             }
         }
 
@@ -124,7 +149,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="server">The server to upgrade</param>
         private void UpgradeEmptyServer(SqlManagementClient sqlClient, string resourceGroupName, Server server)
         {
-            UpgradeServer(sqlClient, resourceGroupName, server, null);
+            UpgradeServerWithRecommendedDatabase(sqlClient, resourceGroupName, server, null);
         }
 
         /// <summary>
@@ -134,10 +159,10 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="sqlClient">The SQL Management client</param>
         /// <param name="resourceGroupName">The resource group containing the server to upgrade</param>
         /// <param name="server">The server to upgrade</param>
-        /// <param name="database">The database under server that will be mapped to new edition and SLO</param>
-        private void UpgradeServer(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database database)
+        /// <param name="recommendedDatabase">The database under server that will be mapped to new edition and SLO</param>
+        private void UpgradeServerWithRecommendedDatabase(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database recommendedDatabase)
         {
-            var parameters = CreateUpgradeStartParameters(database: database);
+            var parameters = CreateUpgradeStartParameters(recommendedDatabase: recommendedDatabase);
 
             var startResponse = sqlClient.ServerUpgrades.Start(resourceGroupName, server.Name, parameters);
             Assert.True(startResponse.StatusCode == HttpStatusCode.Accepted);
@@ -164,12 +189,66 @@ namespace Sql2.Tests.ScenarioTests
             TestUtilities.ValidateOperationResponse(serverGetResponse);
             Assert.Equal(serverGetResponse.Server.Properties.Version, upgradedVersion);
 
-            if (database != null)
+            if (recommendedDatabase != null)
             {
                 // Make sure that database has new edition
-                var databaseGetResponse = sqlClient.Databases.Get(resourceGroupName, server.Name, database.Name);
+                var databaseGetResponse = sqlClient.Databases.Get(resourceGroupName, server.Name, recommendedDatabase.Name);
                 TestUtilities.ValidateOperationResponse(databaseGetResponse);
                 Assert.Equal(databaseGetResponse.Database.Properties.Edition, targetEdition);
+            }
+        }
+
+        /// <summary>
+        /// Implementation of the positive test to upgrade server and poll for upgrade status until the upgrade is completed.
+        /// The test server has 1 database that will be put into a new elastic pool after the upgrade
+        /// </summary>
+        /// <param name="sqlClient">The SQL Management client</param>
+        /// <param name="resourceGroupName">The resource group containing the server to upgrade</param>
+        /// <param name="server">The server to upgrade</param>
+        /// <param name="databaseInElasticPool">The database under server that will be put into a new elastic pool</param>
+        private void UpgradeServerWithElasticPool(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database databaseInElasticPool)
+        {
+            var parameters = CreateUpgradeStartParameters(databaseInElasticPool: databaseInElasticPool);
+
+            var startResponse = sqlClient.ServerUpgrades.Start(resourceGroupName, server.Name, parameters);
+            Assert.True(startResponse.StatusCode == HttpStatusCode.Accepted);
+
+            // Get server upgrade status
+            while (true)
+            {
+                var getUpgradeResponse = sqlClient.ServerUpgrades.Get(resourceGroupName, server.Name);
+                if (getUpgradeResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    Debug.WriteLine(getUpgradeResponse);
+                    break;
+                }
+
+                // status must be Queued or InProgress
+                Assert.True(getUpgradeResponse.Status.Equals(upgradeStatusQueued, StringComparison.InvariantCultureIgnoreCase) ||
+                            getUpgradeResponse.Status.Equals(upgradeStatusInProgress, StringComparison.InvariantCultureIgnoreCase));
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(UpgradePollingTimeInSeconds));
+            }
+
+            // Make sure that server has new version
+            var serverGetResponse = sqlClient.Servers.Get(resourceGroupName, server.Name);
+            TestUtilities.ValidateOperationResponse(serverGetResponse);
+            Assert.Equal(serverGetResponse.Server.Properties.Version, upgradedVersion);
+
+            if (databaseInElasticPool != null)
+            {
+                // Make sure that elastic pool has desired properties
+                var elasticPoolListGetResponse = sqlClient.ElasticPools.List(resourceGroupName, server.Name);
+                TestUtilities.ValidateOperationResponse(elasticPoolListGetResponse);
+                Assert.Equal(elasticPoolListGetResponse.ElasticPools.Count, 1);
+                var elasticPool = elasticPoolListGetResponse.ElasticPools.FirstOrDefault();
+                var expectedElasticPool = parameters.Properties.ElasticPoolCollection.FirstOrDefault();
+                Assert.Equal(elasticPool.Name, expectedElasticPool.Name);
+                Assert.Equal(elasticPool.Properties.Dtu, expectedElasticPool.Dtu);
+                Assert.Equal(elasticPool.Properties.DatabaseDtuMin, expectedElasticPool.DatabaseDtuMin);
+                Assert.Equal(elasticPool.Properties.DatabaseDtuMax, expectedElasticPool.DatabaseDtuMax);
+                Assert.Equal(elasticPool.Properties.Edition, expectedElasticPool.Edition);
+                Assert.Equal(elasticPool.Properties.StorageMB, expectedElasticPool.StorageMb);
             }
         }
 
@@ -251,12 +330,12 @@ namespace Sql2.Tests.ScenarioTests
             Assert.Throws<CloudException>(() => sqlClient.ServerUpgrades.Start(resourceGroupName, server.Name, invalidScheduleParameters));
 
             // Invalid edition
-            var invalidEditionParameters = CreateUpgradeStartParameters(database: database);
+            var invalidEditionParameters = CreateUpgradeStartParameters(recommendedDatabase: database);
             invalidEditionParameters.Properties.DatabaseCollection[0].TargetEdition = "InvalidEdition";
             Assert.Throws<CloudException>(() => sqlClient.ServerUpgrades.Start(resourceGroupName, server.Name, invalidEditionParameters));
 
             // Invalid edition and slo combination
-            var mismatchedSloAndEditionParameters = CreateUpgradeStartParameters(database: database);
+            var mismatchedSloAndEditionParameters = CreateUpgradeStartParameters(recommendedDatabase: database);
             mismatchedSloAndEditionParameters.Properties.DatabaseCollection[0].TargetEdition = "Premium";
             mismatchedSloAndEditionParameters.Properties.DatabaseCollection[0].TargetServiceLevelObjective = "S0";
             Assert.Throws<CloudException>(() => sqlClient.ServerUpgrades.Start(resourceGroupName, server.Name, mismatchedSloAndEditionParameters));
@@ -267,12 +346,14 @@ namespace Sql2.Tests.ScenarioTests
         /// </summary>
         /// <param name="version">The version to upgrade the server to</param>
         /// <param name="scheduleUpgradeAfter">The earliest time to upgrade the server</param>
-        /// <param name="database">The database to map to new edition and SLO. Target SLO and edition are in the constants at the top of this file</param>
+        /// <param name="recommendedDatabase">The database to map to new edition and SLO. Target SLO and edition are in the constants at the top of this file</param>
+        /// <param name="databaseInElasticPool">The database to be put in new elastic pool. Elastic pool properties are in the constants at the top of this file</param>
         /// <returns>The server upgrade start parameters object</returns>
         private ServerUpgradeStartParameters CreateUpgradeStartParameters(
             string version = upgradedVersion,
             DateTime? scheduleUpgradeAfter = null,
-            Database database = null)
+            Database recommendedDatabase = null,
+            Database databaseInElasticPool = null)
         {
             var parameters = new ServerUpgradeStartParameters()
             {
@@ -283,15 +364,33 @@ namespace Sql2.Tests.ScenarioTests
                 }
             };
 
-            if (database != null)
+            if (recommendedDatabase != null)
             {
                 parameters.Properties.DatabaseCollection = new List<RecommendedDatabaseProperties>()
                 {
                     new RecommendedDatabaseProperties()
                     {
-                        Name = database.Name,
+                        Name = recommendedDatabase.Name,
                         TargetServiceLevelObjective = targetServiceLevelObjective,
                         TargetEdition = targetEdition
+                    }
+                };
+            }
+
+            if (databaseInElasticPool != null)
+            {
+                parameters.Properties.ElasticPoolCollection = new List<UpgradeRecommendedElasticPoolProperties>()
+                {
+                    // Create an elastic pool with default values and contain only the provided database
+                    new UpgradeRecommendedElasticPoolProperties()
+                    {
+                        Name = TestUtilities.GenerateName("csm-ep-"),
+                        Edition = targetEdition,
+                        Dtu = defaultElasticPoolDtu,
+                        StorageMb = defaultElasticPoolStorageMb,
+                        DatabaseDtuMax = defaultElasticPoolDatabaseDtuMax,
+                        DatabaseDtuMin = defaultElasticPoolDatabaseDtuMin,
+                        DatabaseCollection = new List<string>() { databaseInElasticPool.Name }
                     }
                 };
             }
