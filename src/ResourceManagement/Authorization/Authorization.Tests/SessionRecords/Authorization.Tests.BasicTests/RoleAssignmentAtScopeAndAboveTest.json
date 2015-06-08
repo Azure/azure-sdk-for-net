@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/Microsoft.Authorization/roleAssignments?$filter=atScope()&api-version=2014-10-01-preview",
+      "RequestUri": "/subscriptions/e7fc6eb8-cb1d-469b-9203-449a8214a3e0/providers/Microsoft.Authorization/roleAssignments?$filter=atScope()&api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdmYzZlYjgtY2IxZC00NjliLTkyMDMtNDQ5YTgyMTRhM2UwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9yb2xlQXNzaWdubWVudHM/JGZpbHRlcj1hdFNjb3BlKCkmYXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2014-10-01-preview"
+          "2015-05-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
@@ -30,16 +31,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus:fad0e43c-50c8-4e40-bb9c-c46586346998"
+          "centralus:98334ad6-1c55-4bea-bf58-482dbf9de007"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31992"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "499a856c-d217-443e-9551-0b14d515092d"
+          "8f6b9158-4e6c-4a9f-a86b-d333098a7b3d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150121T004009Z:499a856c-d217-443e-9551-0b14d515092d"
+          "CENTRALUS:20150604T194304Z:8f6b9158-4e6c-4a9f-a86b-d333098a7b3d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 21 Jan 2015 00:40:08 GMT"
+          "Thu, 04 Jun 2015 19:43:04 GMT"
         ]
       },
       "StatusCode": 200
@@ -56,6 +57,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "e7fc6eb8-cb1d-469b-9203-449a8214a3e0"
   }
 }
