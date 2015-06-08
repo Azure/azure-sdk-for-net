@@ -63,6 +63,465 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
+        /// Gets a Data Slice Run instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='runId'>
+        /// Required. A unique Data Slice Run Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get Data Slice Run operation response.
+        /// </returns>
+        public async Task<DataSliceRunGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, string runId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (dataFactoryName == null)
+            {
+                throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException("runId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("dataFactoryName", dataFactoryName);
+                tracingParameters.Add("runId", runId);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/runs/";
+            url = url + Uri.EscapeDataString(runId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DataSliceRunGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DataSliceRunGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            DataSliceRun dataSliceRunInstance = new DataSliceRun();
+                            result.DataSliceRun = dataSliceRunInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                dataSliceRunInstance.Id = idInstance;
+                            }
+                            
+                            JToken tableNameValue = responseDoc["tableName"];
+                            if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
+                            {
+                                string tableNameInstance = ((string)tableNameValue);
+                                dataSliceRunInstance.TableName = tableNameInstance;
+                            }
+                            
+                            JToken pipelineNameValue = responseDoc["pipelineName"];
+                            if (pipelineNameValue != null && pipelineNameValue.Type != JTokenType.Null)
+                            {
+                                string pipelineNameInstance = ((string)pipelineNameValue);
+                                dataSliceRunInstance.PipelineName = pipelineNameInstance;
+                            }
+                            
+                            JToken activityNameValue = responseDoc["activityName"];
+                            if (activityNameValue != null && activityNameValue.Type != JTokenType.Null)
+                            {
+                                string activityNameInstance = ((string)activityNameValue);
+                                dataSliceRunInstance.ActivityName = activityNameInstance;
+                            }
+                            
+                            JToken activityRunIdValue = responseDoc["activityRunId"];
+                            if (activityRunIdValue != null && activityRunIdValue.Type != JTokenType.Null)
+                            {
+                                string activityRunIdInstance = ((string)activityRunIdValue);
+                                dataSliceRunInstance.ActivityRunId = activityRunIdInstance;
+                            }
+                            
+                            JToken computeClusterNameValue = responseDoc["computeClusterName"];
+                            if (computeClusterNameValue != null && computeClusterNameValue.Type != JTokenType.Null)
+                            {
+                                string computeClusterNameInstance = ((string)computeClusterNameValue);
+                                dataSliceRunInstance.ComputeClusterName = computeClusterNameInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                dataSliceRunInstance.Status = statusInstance;
+                            }
+                            
+                            JToken processingStartTimeValue = responseDoc["processingStartTime"];
+                            if (processingStartTimeValue != null && processingStartTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime processingStartTimeInstance = ((DateTime)processingStartTimeValue);
+                                dataSliceRunInstance.ProcessingStartTime = processingStartTimeInstance;
+                            }
+                            
+                            JToken processingEndTimeValue = responseDoc["processingEndTime"];
+                            if (processingEndTimeValue != null && processingEndTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime processingEndTimeInstance = ((DateTime)processingEndTimeValue);
+                                dataSliceRunInstance.ProcessingEndTime = processingEndTimeInstance;
+                            }
+                            
+                            JToken batchTimeValue = responseDoc["batchTime"];
+                            if (batchTimeValue != null && batchTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime batchTimeInstance = ((DateTime)batchTimeValue);
+                                dataSliceRunInstance.BatchTime = batchTimeInstance;
+                            }
+                            
+                            JToken percentCompleteValue = responseDoc["percentComplete"];
+                            if (percentCompleteValue != null && percentCompleteValue.Type != JTokenType.Null)
+                            {
+                                int percentCompleteInstance = ((int)percentCompleteValue);
+                                dataSliceRunInstance.PercentComplete = percentCompleteInstance;
+                            }
+                            
+                            JToken dataSliceStartValue = responseDoc["dataSliceStart"];
+                            if (dataSliceStartValue != null && dataSliceStartValue.Type != JTokenType.Null)
+                            {
+                                DateTime dataSliceStartInstance = ((DateTime)dataSliceStartValue);
+                                dataSliceRunInstance.DataSliceStart = dataSliceStartInstance;
+                            }
+                            
+                            JToken dataSliceEndValue = responseDoc["dataSliceEnd"];
+                            if (dataSliceEndValue != null && dataSliceEndValue.Type != JTokenType.Null)
+                            {
+                                DateTime dataSliceEndInstance = ((DateTime)dataSliceEndValue);
+                                dataSliceRunInstance.DataSliceEnd = dataSliceEndInstance;
+                            }
+                            
+                            JToken timestampValue = responseDoc["timestamp"];
+                            if (timestampValue != null && timestampValue.Type != JTokenType.Null)
+                            {
+                                DateTime timestampInstance = ((DateTime)timestampValue);
+                                dataSliceRunInstance.Timestamp = timestampInstance;
+                            }
+                            
+                            JToken retryAttemptValue = responseDoc["retryAttempt"];
+                            if (retryAttemptValue != null && retryAttemptValue.Type != JTokenType.Null)
+                            {
+                                int retryAttemptInstance = ((int)retryAttemptValue);
+                                dataSliceRunInstance.RetryAttempt = retryAttemptInstance;
+                            }
+                            
+                            JToken hasLogsValue = responseDoc["hasLogs"];
+                            if (hasLogsValue != null && hasLogsValue.Type != JTokenType.Null)
+                            {
+                                bool hasLogsInstance = ((bool)hasLogsValue);
+                                dataSliceRunInstance.HasLogs = hasLogsInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                dataSliceRunInstance.Type = typeInstance;
+                            }
+                            
+                            JToken activityinputpropertiesSequenceElement = ((JToken)responseDoc["activityinputproperties"]);
+                            if (activityinputpropertiesSequenceElement != null && activityinputpropertiesSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in activityinputpropertiesSequenceElement)
+                                {
+                                    string activityinputpropertiesKey = ((string)property.Name);
+                                    string activityinputpropertiesValue = ((string)property.Value);
+                                    dataSliceRunInstance.ActivityInputProperties.Add(activityinputpropertiesKey, activityinputpropertiesValue);
+                                }
+                            }
+                            
+                            JToken propertiesSequenceElement = ((JToken)responseDoc["properties"]);
+                            if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property2 in propertiesSequenceElement)
+                                {
+                                    string propertiesKey = ((string)property2.Name);
+                                    string propertiesValue = ((string)property2.Value);
+                                    dataSliceRunInstance.Properties.Add(propertiesKey, propertiesValue);
+                                }
+                            }
+                            
+                            JToken inputRunRecordReferencesArray = responseDoc["inputRunRecordReferences"];
+                            if (inputRunRecordReferencesArray != null && inputRunRecordReferencesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken inputRunRecordReferencesValue in ((JArray)inputRunRecordReferencesArray))
+                                {
+                                    RunRecordReference runRecordReferenceInstance = new RunRecordReference();
+                                    dataSliceRunInstance.InputRunRecordReferences.Add(runRecordReferenceInstance);
+                                    
+                                    JToken tableNameValue2 = inputRunRecordReferencesValue["tableName"];
+                                    if (tableNameValue2 != null && tableNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string tableNameInstance2 = ((string)tableNameValue2);
+                                        runRecordReferenceInstance.TableName = tableNameInstance2;
+                                    }
+                                    
+                                    JToken dataSliceStartValue2 = inputRunRecordReferencesValue["dataSliceStart"];
+                                    if (dataSliceStartValue2 != null && dataSliceStartValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime dataSliceStartInstance2 = ((DateTime)dataSliceStartValue2);
+                                        runRecordReferenceInstance.DataSliceStart = dataSliceStartInstance2;
+                                    }
+                                    
+                                    JToken dataSliceEndValue2 = inputRunRecordReferencesValue["dataSliceEnd"];
+                                    if (dataSliceEndValue2 != null && dataSliceEndValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime dataSliceEndInstance2 = ((DateTime)dataSliceEndValue2);
+                                        runRecordReferenceInstance.DataSliceEnd = dataSliceEndInstance2;
+                                    }
+                                    
+                                    JToken pipelineNameValue2 = inputRunRecordReferencesValue["pipelineName"];
+                                    if (pipelineNameValue2 != null && pipelineNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string pipelineNameInstance2 = ((string)pipelineNameValue2);
+                                        runRecordReferenceInstance.PipelineName = pipelineNameInstance2;
+                                    }
+                                    
+                                    JToken activityNameValue2 = inputRunRecordReferencesValue["activityName"];
+                                    if (activityNameValue2 != null && activityNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string activityNameInstance2 = ((string)activityNameValue2);
+                                        runRecordReferenceInstance.ActivityName = activityNameInstance2;
+                                    }
+                                    
+                                    JToken dataSliceRunNameValue = inputRunRecordReferencesValue["dataSliceRunName"];
+                                    if (dataSliceRunNameValue != null && dataSliceRunNameValue.Type != JTokenType.Null)
+                                    {
+                                        string dataSliceRunNameInstance = ((string)dataSliceRunNameValue);
+                                        runRecordReferenceInstance.DataSliceRunName = dataSliceRunNameInstance;
+                                    }
+                                    
+                                    JToken dataFactoryNameValue = inputRunRecordReferencesValue["dataFactoryName"];
+                                    if (dataFactoryNameValue != null && dataFactoryNameValue.Type != JTokenType.Null)
+                                    {
+                                        string dataFactoryNameInstance = ((string)dataFactoryNameValue);
+                                        runRecordReferenceInstance.DataFactoryName = dataFactoryNameInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken outputRunRecordReferencesArray = responseDoc["outputRunRecordReferences"];
+                            if (outputRunRecordReferencesArray != null && outputRunRecordReferencesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken outputRunRecordReferencesValue in ((JArray)outputRunRecordReferencesArray))
+                                {
+                                    RunRecordReference runRecordReferenceInstance2 = new RunRecordReference();
+                                    dataSliceRunInstance.OutputRunRecordReferences.Add(runRecordReferenceInstance2);
+                                    
+                                    JToken tableNameValue3 = outputRunRecordReferencesValue["tableName"];
+                                    if (tableNameValue3 != null && tableNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string tableNameInstance3 = ((string)tableNameValue3);
+                                        runRecordReferenceInstance2.TableName = tableNameInstance3;
+                                    }
+                                    
+                                    JToken dataSliceStartValue3 = outputRunRecordReferencesValue["dataSliceStart"];
+                                    if (dataSliceStartValue3 != null && dataSliceStartValue3.Type != JTokenType.Null)
+                                    {
+                                        DateTime dataSliceStartInstance3 = ((DateTime)dataSliceStartValue3);
+                                        runRecordReferenceInstance2.DataSliceStart = dataSliceStartInstance3;
+                                    }
+                                    
+                                    JToken dataSliceEndValue3 = outputRunRecordReferencesValue["dataSliceEnd"];
+                                    if (dataSliceEndValue3 != null && dataSliceEndValue3.Type != JTokenType.Null)
+                                    {
+                                        DateTime dataSliceEndInstance3 = ((DateTime)dataSliceEndValue3);
+                                        runRecordReferenceInstance2.DataSliceEnd = dataSliceEndInstance3;
+                                    }
+                                    
+                                    JToken pipelineNameValue3 = outputRunRecordReferencesValue["pipelineName"];
+                                    if (pipelineNameValue3 != null && pipelineNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string pipelineNameInstance3 = ((string)pipelineNameValue3);
+                                        runRecordReferenceInstance2.PipelineName = pipelineNameInstance3;
+                                    }
+                                    
+                                    JToken activityNameValue3 = outputRunRecordReferencesValue["activityName"];
+                                    if (activityNameValue3 != null && activityNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string activityNameInstance3 = ((string)activityNameValue3);
+                                        runRecordReferenceInstance2.ActivityName = activityNameInstance3;
+                                    }
+                                    
+                                    JToken dataSliceRunNameValue2 = outputRunRecordReferencesValue["dataSliceRunName"];
+                                    if (dataSliceRunNameValue2 != null && dataSliceRunNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string dataSliceRunNameInstance2 = ((string)dataSliceRunNameValue2);
+                                        runRecordReferenceInstance2.DataSliceRunName = dataSliceRunNameInstance2;
+                                    }
+                                    
+                                    JToken dataFactoryNameValue2 = outputRunRecordReferencesValue["dataFactoryName"];
+                                    if (dataFactoryNameValue2 != null && dataFactoryNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string dataFactoryNameInstance2 = ((string)dataFactoryNameValue2);
+                                        runRecordReferenceInstance2.DataFactoryName = dataFactoryNameInstance2;
+                                    }
+                                }
+                            }
+                            
+                            JToken errorMessageValue = responseDoc["errorMessage"];
+                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                            {
+                                string errorMessageInstance = ((string)errorMessageValue);
+                                dataSliceRunInstance.ErrorMessage = errorMessageInstance;
+                            }
+                            
+                            JToken logUriValue = responseDoc["logUri"];
+                            if (logUriValue != null && logUriValue.Type != JTokenType.Null)
+                            {
+                                string logUriInstance = ((string)logUriValue);
+                                dataSliceRunInstance.LogUri = logUriInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Gets logs for a data slice run
         /// </summary>
         /// <param name='resourceGroupName'>
