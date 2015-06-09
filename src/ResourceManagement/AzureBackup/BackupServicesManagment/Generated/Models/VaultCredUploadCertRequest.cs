@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private RawCertificateData _rawCertificateData;
         
         /// <summary>
-        /// Optional. Certificate properties.
+        /// Required. Certificate properties.
         /// </summary>
         public RawCertificateData RawCertificateData
         {
@@ -46,6 +46,20 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         /// </summary>
         public VaultCredUploadCertRequest()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VaultCredUploadCertRequest class
+        /// with required arguments.
+        /// </summary>
+        public VaultCredUploadCertRequest(RawCertificateData rawCertificateData)
+            : this()
+        {
+            if (rawCertificateData == null)
+            {
+                throw new ArgumentNullException("rawCertificateData");
+            }
+            this.RawCertificateData = rawCertificateData;
         }
     }
 }

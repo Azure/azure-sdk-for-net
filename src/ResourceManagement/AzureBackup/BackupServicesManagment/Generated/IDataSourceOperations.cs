@@ -63,6 +63,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all DataSpurce.
         /// </summary>
+        /// <param name='parameters'>
+        /// DataSource query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -72,6 +75,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The response model for the list DataSource operation.
         /// </returns>
-        Task<DataSourceListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<DataSourceListResponse> ListAsync(DataSourceQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

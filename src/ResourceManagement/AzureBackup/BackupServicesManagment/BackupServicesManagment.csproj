@@ -38,6 +38,7 @@
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
     <Compile Include="Generated\Models\DataSourceInfo.cs" />
     <Compile Include="Generated\Models\DataSourceListResponse.cs" />
+    <Compile Include="Generated\Models\DataSourceQueryParameter.cs" />
     <Compile Include="Generated\Models\DataSourceResponse.cs" />
     <Compile Include="Generated\Models\DisableProtectionResponse.cs" />
     <Compile Include="Generated\Models\EnableProtectionResponse.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Generated\Models\ListContainerResponse.cs" />
     <Compile Include="Generated\Models\ManagementBaseObject.cs" />
     <Compile Include="Generated\Models\ManagementResponseObject.cs" />
+    <Compile Include="Generated\Models\POQueryParameter.cs" />
     <Compile Include="Generated\Models\ProtectableObjectInfo.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
     <Compile Include="Generated\Models\ProtectableObjectResponse.cs" />

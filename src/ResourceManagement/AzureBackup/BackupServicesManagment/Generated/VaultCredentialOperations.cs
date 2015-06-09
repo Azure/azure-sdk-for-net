@@ -24,11 +24,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
@@ -64,10 +67,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Uploads vault credential certificate.
         /// </summary>
         /// <param name='certificateName'>
-        /// Optional. Name of the certificate.
+        /// Required. Name of the certificate.
         /// </param>
         /// <param name='vaultCredUploadCertRequest'>
-        /// Optional. Certificate parameters.
+        /// Required. Certificate parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -81,6 +84,18 @@ namespace Microsoft.Azure.Management.BackupServices
         public async Task<VaultCredUploadCertResponse> UploadCertificateAsync(string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException("certificateName");
+            }
+            if (vaultCredUploadCertRequest == null)
+            {
+                throw new ArgumentNullException("vaultCredUploadCertRequest");
+            }
+            if (vaultCredUploadCertRequest.RawCertificateData == null)
+            {
+                throw new ArgumentNullException("vaultCredUploadCertRequest.RawCertificateData");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -111,12 +126,9 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/certificates/";
-            if (certificateName != null)
-            {
-                url = url + Uri.EscapeDataString(certificateName);
-            }
+            url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -144,10 +156,30 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject vaultCredUploadCertRequestValue = new JObject();
+                requestDoc = vaultCredUploadCertRequestValue;
+                
+                JObject propertiesValue = new JObject();
+                vaultCredUploadCertRequestValue["properties"] = propertiesValue;
+                
+                if (vaultCredUploadCertRequest.RawCertificateData.Certificate != null)
+                {
+                    propertiesValue["certificate"] = vaultCredUploadCertRequest.RawCertificateData.Certificate;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -167,7 +199,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -178,7 +210,105 @@ namespace Microsoft.Azure.Management.BackupServices
                     // Create Result
                     VaultCredUploadCertResponse result = null;
                     // Deserialize Response
-                    result = new VaultCredUploadCertResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VaultCredUploadCertResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                ResourceCertificateAndACSDetails propertiesInstance = new ResourceCertificateAndACSDetails();
+                                result.ResourceCertificateAndACSDetails = propertiesInstance;
+                                
+                                JToken certificateValue = propertiesValue2["certificate"];
+                                if (certificateValue != null && certificateValue.Type != JTokenType.Null)
+                                {
+                                    string certificateInstance = ((string)certificateValue);
+                                    propertiesInstance.Certificate = certificateInstance;
+                                }
+                                
+                                JToken resourceIdValue = propertiesValue2["resourceId"];
+                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                {
+                                    long resourceIdInstance = ((long)resourceIdValue);
+                                    propertiesInstance.ResourceId = resourceIdInstance;
+                                }
+                                
+                                JToken globalAcsNamespaceValue = propertiesValue2["globalAcsNamespace"];
+                                if (globalAcsNamespaceValue != null && globalAcsNamespaceValue.Type != JTokenType.Null)
+                                {
+                                    string globalAcsNamespaceInstance = ((string)globalAcsNamespaceValue);
+                                    propertiesInstance.GlobalAcsNamespace = globalAcsNamespaceInstance;
+                                }
+                                
+                                JToken globalAcsHostNameValue = propertiesValue2["globalAcsHostName"];
+                                if (globalAcsHostNameValue != null && globalAcsHostNameValue.Type != JTokenType.Null)
+                                {
+                                    string globalAcsHostNameInstance = ((string)globalAcsHostNameValue);
+                                    propertiesInstance.GlobalAcsHostName = globalAcsHostNameInstance;
+                                }
+                                
+                                JToken globalAcsRPRealmValue = propertiesValue2["globalAcsRPRealm"];
+                                if (globalAcsRPRealmValue != null && globalAcsRPRealmValue.Type != JTokenType.Null)
+                                {
+                                    string globalAcsRPRealmInstance = ((string)globalAcsRPRealmValue);
+                                    propertiesInstance.GlobalAcsRPRealm = globalAcsRPRealmInstance;
+                                }
+                                
+                                JToken subjectValue = propertiesValue2["subject"];
+                                if (subjectValue != null && subjectValue.Type != JTokenType.Null)
+                                {
+                                    string subjectInstance = ((string)subjectValue);
+                                    propertiesInstance.Subject = subjectInstance;
+                                }
+                                
+                                JToken validFromValue = propertiesValue2["validFrom"];
+                                if (validFromValue != null && validFromValue.Type != JTokenType.Null)
+                                {
+                                    DateTime validFromInstance = ((DateTime)validFromValue);
+                                    propertiesInstance.ValidFrom = validFromInstance;
+                                }
+                                
+                                JToken validToValue = propertiesValue2["validTo"];
+                                if (validToValue != null && validToValue.Type != JTokenType.Null)
+                                {
+                                    DateTime validToInstance = ((DateTime)validToValue);
+                                    propertiesInstance.ValidTo = validToInstance;
+                                }
+                                
+                                JToken thumbprintValue = propertiesValue2["thumbprint"];
+                                if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                {
+                                    string thumbprintInstance = ((string)thumbprintValue);
+                                    propertiesInstance.Thumbprint = thumbprintInstance;
+                                }
+                                
+                                JToken friendlyNameValue = propertiesValue2["friendlyName"];
+                                if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string friendlyNameInstance = ((string)friendlyNameValue);
+                                    propertiesInstance.FriendlyName = friendlyNameInstance;
+                                }
+                                
+                                JToken issuerValue = propertiesValue2["issuer"];
+                                if (issuerValue != null && issuerValue.Type != JTokenType.Null)
+                                {
+                                    string issuerInstance = ((string)issuerValue);
+                                    propertiesInstance.Issuer = issuerInstance;
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-client-request-id"))
                     {

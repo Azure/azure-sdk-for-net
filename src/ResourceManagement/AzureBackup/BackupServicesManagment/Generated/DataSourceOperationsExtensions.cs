@@ -135,17 +135,20 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. DataSource query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list DataSource operation.
         /// </returns>
-        public static DataSourceListResponse List(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static DataSourceListResponse List(this IDataSourceOperations operations, DataSourceQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).ListAsync(customRequestHeaders);
+                return ((IDataSourceOperations)s).ListAsync(parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -157,15 +160,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. DataSource query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list DataSource operation.
         /// </returns>
-        public static Task<DataSourceListResponse> ListAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<DataSourceListResponse> ListAsync(this IDataSourceOperations operations, DataSourceQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }
