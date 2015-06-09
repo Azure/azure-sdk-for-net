@@ -36,6 +36,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string EscapeChar { get; set; }
 
         /// <summary>
+        /// The quote character.
+        /// </summary>
+        public string QuoteChar { get; set; }
+
+        /// <summary>
         /// The null value string.
         /// </summary>
         public string NullValue { get; set; }
