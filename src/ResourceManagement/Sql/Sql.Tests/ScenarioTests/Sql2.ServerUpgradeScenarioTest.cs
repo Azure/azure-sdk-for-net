@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using Hyak.Common;
+using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 
 namespace Sql2.Tests.ScenarioTests
@@ -46,9 +47,24 @@ namespace Sql2.Tests.ScenarioTests
         private const int defaultElasticPoolDatabaseDtuMax = 100;
         private const int defaultElasticPoolDatabaseDtuMin = 50;
 
-        // Short sleep time so that test with Playback runs faster. 
-        // If running the test in Record mode, change to 60 seconds
-        private const int UpgradePollingTimeInSeconds = 1;
+        // For Playback mode, use short sleep time so tests run faster
+        // For Record mode, use longer sleep time to match with realistic time for a server upgrade
+        private const int PlaybackModeUpgradePollingTimeInSeconds = 0;
+        private const int RecordModeUpgradePollingTimeInSeconds = 60;
+
+        private readonly int upgradePollingTimeInSeconds;
+
+        public Sql2ServerUpgradeScenarioTest()
+        {
+            if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
+            {
+                upgradePollingTimeInSeconds = RecordModeUpgradePollingTimeInSeconds;
+            }
+            else
+            {
+                upgradePollingTimeInSeconds = PlaybackModeUpgradePollingTimeInSeconds;
+            }
+        }
 
         /// <summary>
         /// Positive test for server upgrade operation and polling the upgrade status until completed. 
@@ -181,7 +197,7 @@ namespace Sql2.Tests.ScenarioTests
                 Assert.True(getUpgradeResponse.Status.Equals(upgradeStatusQueued, StringComparison.InvariantCultureIgnoreCase) ||
                             getUpgradeResponse.Status.Equals(upgradeStatusInProgress, StringComparison.InvariantCultureIgnoreCase));
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(UpgradePollingTimeInSeconds));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(upgradePollingTimeInSeconds));
             }
 
             // Make sure that server has new version
@@ -227,7 +243,7 @@ namespace Sql2.Tests.ScenarioTests
                 Assert.True(getUpgradeResponse.Status.Equals(upgradeStatusQueued, StringComparison.InvariantCultureIgnoreCase) ||
                             getUpgradeResponse.Status.Equals(upgradeStatusInProgress, StringComparison.InvariantCultureIgnoreCase));
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(UpgradePollingTimeInSeconds));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(upgradePollingTimeInSeconds));
             }
 
             // Make sure that server has new version
@@ -299,7 +315,7 @@ namespace Sql2.Tests.ScenarioTests
                     cancelSent = true;
                 }
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(UpgradePollingTimeInSeconds));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(upgradePollingTimeInSeconds));
             }
 
             var getResponse = sqlClient.Servers.Get(resourceGroupName, server.Name);
