@@ -1,7 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Authorization/permissions?api-version=2014-07-01-preview",
+      "RequestUri": "/subscriptions/e7fc6eb8-cb1d-469b-9203-449a8214a3e0/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Authorization/permissions?api-version=2014-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdmYzZlYjgtY2IxZC00NjliLTkyMDMtNDQ5YTgyMTRhM2UwL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcGVybWlzc2lvbnM/YXBpLXZlcnNpb249MjAxNC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -23,17 +24,20 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31938"
+        "Vary": [
+          "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1578ed5c-0b2a-4a62-971a-637e13d7578d"
+          "centralus:c45cbccf-33ce-470f-a7b4-9fd61cf52fad"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14924"
         ],
         "x-ms-correlation-request-id": [
-          "1578ed5c-0b2a-4a62-971a-637e13d7578d"
+          "80e8f173-caa7-486c-b913-21fcceb4e8ac"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20141014T014703Z:1578ed5c-0b2a-4a62-971a-637e13d7578d"
+          "CENTRALUS:20150603T231502Z:80e8f173-caa7-486c-b913-21fcceb4e8ac"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -42,7 +46,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 14 Oct 2014 01:47:03 GMT"
+          "Wed, 03 Jun 2015 23:15:01 GMT"
         ]
       },
       "StatusCode": 200
@@ -50,6 +54,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "e7fc6eb8-cb1d-469b-9203-449a8214a3e0"
   }
 }

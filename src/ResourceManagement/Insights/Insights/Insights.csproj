@@ -220,6 +220,7 @@
     <Compile Include="Generated\Management\Insights\Models\WindowsEventLog.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Microsoft.Azure.Insights.nuget.proj" />
     <None Include="Microsoft.Azure.Insights.nuspec" />
     <None Include="packages.config">

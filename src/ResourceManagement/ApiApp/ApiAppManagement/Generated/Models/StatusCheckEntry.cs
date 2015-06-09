@@ -21,30 +21,26 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.ApiApps.Models
 {
-    /// <summary>
-    /// Resource information with extended details.
-    /// </summary>
-    public partial class ResourceBaseExtended : ResourceBase
+    public partial class StatusCheckEntry
     {
-        private string _id;
+        private string _message;
         
         /// <summary>
-        /// Optional. Gets or sets the ID of the resource.
+        /// Optional. Gets or sets message
         /// </summary>
-        public string Id
+        public string Message
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Optional. Gets or sets name
         /// </summary>
         public string Name
         {
@@ -52,36 +48,22 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._name = value; }
         }
         
-        private string _type;
+        private string _statusLevel;
         
         /// <summary>
-        /// Optional. Gets or sets the type of the resource.
+        /// Optional. Gets or sets status level
         /// </summary>
-        public string Type
+        public string StatusLevel
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._statusLevel; }
+            set { this._statusLevel = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBaseExtended class.
+        /// Initializes a new instance of the StatusCheckEntry class.
         /// </summary>
-        public ResourceBaseExtended()
+        public StatusCheckEntry()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceBaseExtended class with
-        /// required arguments.
-        /// </summary>
-        public ResourceBaseExtended(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

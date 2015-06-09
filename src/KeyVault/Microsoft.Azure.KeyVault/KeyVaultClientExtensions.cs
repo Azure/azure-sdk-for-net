@@ -80,9 +80,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="plaintext">The plain text to encrypt</param>
         /// <returns></returns>
         public static async Task<KeyOperationResult> EncryptDataAsync( this KeyVaultClient client, JsonWebKey key, string algorithm, byte[] plaintext )
-        {
-            KeyOperationResult result = null;
-
+        {            
             if ( key == null )
                 throw new ArgumentNullException( "key" );
 
@@ -183,9 +181,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="signature">The signature to verify</param>
         /// <returns>true if verification succeeds, false if verification fails</returns>
         public static async Task<bool> VerifyAsync( this KeyVaultClient client, JsonWebKey verifyKey, string algorithm, byte[] digest, byte[] signature )
-        {
-            bool result = false;
-
+        {            
             if ( verifyKey == null )
                 throw new ArgumentNullException( "verifyKey" );
 
@@ -241,9 +237,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="algorithm">The algorithm to use. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm.</param>
         /// <returns>The wrapped key</returns>
         public static async Task<KeyOperationResult> WrapKeyAsync( this KeyVaultClient client, JsonWebKey wrappingKey, byte[] key, string algorithm )
-        {
-            KeyOperationResult result = null;
-
+        {            
             if ( wrappingKey == null )
                 throw new ArgumentNullException( "wrappingKey" );
 

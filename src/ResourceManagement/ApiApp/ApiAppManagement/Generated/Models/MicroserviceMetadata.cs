@@ -23,56 +23,54 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure.Management.ApiApps.Models;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.ApiApps.Models
 {
     /// <summary>
-    /// Resource information.
+    /// Data about an individual microservice
     /// </summary>
-    public partial class ResourceBase
+    public partial class MicroserviceMetadata
     {
-        private string _location;
+        private string _displayName;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Optional. Gets or sets display name
         /// </summary>
-        public string Location
+        public string DisplayName
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._displayName; }
+            set { this._displayName = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _microserviceId;
         
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Optional. Gets or sets service id
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string MicroserviceId
         {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._microserviceId; }
+            set { this._microserviceId = value; }
+        }
+        
+        private IList<ParameterMetadata> _parameters;
+        
+        /// <summary>
+        /// Optional. Gets or sets parameters
+        /// </summary>
+        public IList<ParameterMetadata> Parameters
+        {
+            get { return this._parameters; }
+            set { this._parameters = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
+        /// Initializes a new instance of the MicroserviceMetadata class.
         /// </summary>
-        public ResourceBase()
+        public MicroserviceMetadata()
         {
-            this.Tags = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceBase class with required
-        /// arguments.
-        /// </summary>
-        public ResourceBase(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
+            this.Parameters = new LazyList<ParameterMetadata>();
         }
     }
 }
