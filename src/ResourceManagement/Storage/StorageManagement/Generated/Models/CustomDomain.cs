@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Storage.Models
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// value is false. This should only be set on updates
         /// </summary>
         [JsonProperty(PropertyName = "useSubDomain")]
-        public bool UseSubDomain { get; set; }
+        public bool? UseSubDomain { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

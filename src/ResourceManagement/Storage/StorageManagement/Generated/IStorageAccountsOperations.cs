@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Storage
 {
     /// <summary>
     /// </summary>
-    public partial interface IStorageAccounts
+    public partial interface IStorageAccountsOperations
     {
         /// <summary>
         /// Checks that account name is valid and is not in use.
@@ -185,6 +185,30 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<StorageAccountKeys>> RegenerateKeyWithOperationResponseAsync(string resourceGroupName, string accountName, string regenerateKey, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountKeys>> RegenerateKeyWithOperationResponseAsync(string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all the storage accounts available under the subscription.
+        /// Note that storage keys are not returned; use the ListKeys
+        /// operation for this.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<StorageAccountListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all the storage accounts available under the given resource
+        /// group. Note that storage keys are not returned; use the ListKeys
+        /// operation for this.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<StorageAccountListResponse>> ListByResourceGroupNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

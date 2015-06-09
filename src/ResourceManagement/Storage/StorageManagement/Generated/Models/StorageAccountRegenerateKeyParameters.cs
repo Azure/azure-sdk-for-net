@@ -2,29 +2,26 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
     /// <summary>
     /// </summary>
-    public partial class StorageAccountCreateResponse
+    public partial class StorageAccountRegenerateKeyParameters
     {
         /// <summary>
-        /// Gets the storage account with the created properties populated.
         /// </summary>
-        [JsonProperty(PropertyName = "StorageAccount")]
-        public StorageAccount StorageAccount { get; set; }
+        [JsonProperty(PropertyName = "keyName")]
+        public string KeyName { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.StorageAccount != null)
-            {
-                this.StorageAccount.Validate();
-            }
+            //Nothing to validate
         }
     }
 }

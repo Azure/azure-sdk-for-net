@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Storage.Models
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// name has already been taken or invalid and cannot be used.
         /// </summary>
         [JsonProperty(PropertyName = "nameAvailable")]
-        public bool NameAvailable { get; set; }
+        public bool? NameAvailable { get; set; }
 
         /// <summary>
         /// Gets the reason that a storage account name could not be used. The

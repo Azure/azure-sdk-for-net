@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             /// <param name='apiVersion'>
             /// </param>
-            public static bool CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
+            public static bool? CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
                 return Task.Factory.StartNew(s => ((IResourcesOperations)s).CheckExistenceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool?> CheckExistenceAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool> result = await operations.CheckExistenceWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Subscriptions
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<List<TenantIdDescription>>(responseContent, this.Client.DeserializationSettings);
+              result.Body = JsonConvert.DeserializeObject<IList<TenantIdDescription>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

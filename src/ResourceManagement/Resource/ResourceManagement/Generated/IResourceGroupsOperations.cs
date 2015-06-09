@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<bool>> CheckExistenceWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<bool?>> CheckExistenceWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a resource group.
         /// </summary>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Storage.Models
@@ -10,13 +11,6 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccount : Resource
     {
-        /// <summary>
-        /// Gets the status of the storage account at the time the operation
-        /// was called.
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
-
         /// <summary>
         /// Gets the type of the storage account.
         /// </summary>
@@ -52,7 +46,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// StandardGRS or StandardRAGRS.
         /// </summary>
         [JsonProperty(PropertyName = "lastGeoFailoverTime")]
-        public DateTimeOffset LastGeoFailoverTime { get; set; }
+        public DateTime? LastGeoFailoverTime { get; set; }
 
         /// <summary>
         /// Gets the location of the geo replicated secondary for the storage
@@ -74,7 +68,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets the creation date and time of the storage account in UTC.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
-        public DateTimeOffset CreationTime { get; set; }
+        public DateTime? CreationTime { get; set; }
 
         /// <summary>
         /// Gets the user assigned custom domain assigned to this storage

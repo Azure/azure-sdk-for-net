@@ -29,11 +29,11 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.Common, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.3.0.5\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.3.0.6\lib\net45\Microsoft.Azure.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=0.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.0.9.7.4\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.0.9.7.6\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

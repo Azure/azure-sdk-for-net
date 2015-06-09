@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </summary>
         Uri BaseUri { get; set; }
 
-        IStorageAccounts StorageAccounts { get; }
+        IStorageAccountsOperations StorageAccounts { get; }
 
         }
 }

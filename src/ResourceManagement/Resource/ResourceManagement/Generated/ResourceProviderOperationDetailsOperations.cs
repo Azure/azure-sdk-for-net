@@ -129,12 +129,12 @@ namespace Microsoft.Azure.Management.Resources
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<List<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
+              result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
             {
-              result.Body = JsonConvert.DeserializeObject<List<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
+              result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

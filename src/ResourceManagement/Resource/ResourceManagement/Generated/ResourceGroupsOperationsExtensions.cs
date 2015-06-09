@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='resourceGroupName'>
             /// The name of the resource group to check. The name is case insensitive.
             /// </param>
-            public static bool CheckExistence(this IResourceGroupsOperations operations, string resourceGroupName)
+            public static bool? CheckExistence(this IResourceGroupsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).CheckExistenceAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool?> CheckExistenceAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool> result = await operations.CheckExistenceWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

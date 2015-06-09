@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest;
@@ -48,14 +49,14 @@ namespace Microsoft.Azure.Management.Storage
         /// <summary>
         /// The initial timeout for Long Running Operations.
         /// </summary>
-        public int LongRunningOperationInitialTimeout { get; set; }
+        public int? LongRunningOperationInitialTimeout { get; set; }
 
         /// <summary>
         /// The retry timeout for Long Running Operations.
         /// </summary>
-        public int LongRunningOperationRetryTimeout { get; set; }
+        public int? LongRunningOperationRetryTimeout { get; set; }
 
-        public virtual IStorageAccounts StorageAccounts { get; private set; }
+        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -162,19 +163,21 @@ namespace Microsoft.Azure.Management.Storage
         /// </summary>
         private void Initialize()
         {
-            this.StorageAccounts = new StorageAccounts(this);
+            this.StorageAccounts = new StorageAccountsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
-            this.LongRunningOperationInitialTimeout = -1;
-            this.LongRunningOperationRetryTimeout = -1;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
             DeserializationSettings = new JsonSerializerSettings{
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
