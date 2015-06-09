@@ -1660,38 +1660,16 @@
           "type": "object",
           "description": "Gets or sets the resource properties."
         },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource provisioning state."
-        },
         "plan": {
           "$ref": "#/definitions/Plan",
           "description": "Gets or sets the plan of the resource."
-        },
-        "id": {
-          "type": "string",
-          "description": "Gets or sets the ID of the resource."
-        },
-        "name": {
-          "type": "string",
-          "description": "Gets or sets the name of the resource."
-        },
-        "type": {
-          "type": "string",
-          "description": "Gets or sets the type of the resource."
-        },
-        "location": {
-          "type": "string",
-          "description": "Gets or sets the location of the resource."
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "allOf": [
+        {
+          "$ref": "Resource"
+        }
+      ],
       "description": "Resource information."
     },
     "ResourceListResult": {
@@ -1813,26 +1791,16 @@
           "type": "object",
           "description": "Gets or sets the resource properties."
         },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource provisioning state."
-        },
         "plan": {
           "$ref": "#/definitions/Plan",
           "description": "Gets or sets the plan of the resource."
-        },
-        "location": {
-          "type": "string",
-          "description": "Gets or sets the location of the resource."
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Gets or sets the tags attached to the resource."
         }
       },
+      "allOf": [
+        {
+          "$ref": "Resource"
+        }
+      ],
       "description": "Resource information."
     },
     "TagCount": {

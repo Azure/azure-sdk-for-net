@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Subscriptions
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<List<Subscription>>(responseContent, this.Client.DeserializationSettings);
+              result.Body = JsonConvert.DeserializeObject<IList<Subscription>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

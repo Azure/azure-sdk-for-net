@@ -34,11 +34,6 @@ namespace Storage.Tests.Helpers
     {
         public static bool IsTestTenant = false;
         private static SubscriptionCloudCredentials Creds = null;
-
-        // These should be filled in only if test tenant is true
-        private static string certName = null;
-        private static string certPassword = null;
-        private static string testSubscription = null;
         private static Uri testUri = null;
 
         // These are used to create default accounts
@@ -60,7 +55,7 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+                return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
             }
         }
 
@@ -68,24 +63,17 @@ namespace Storage.Tests.Helpers
         {
             if (IsTestTenant)
             {
-                return new StorageManagementClient(GetCreds(), testUri);
+                return new StorageManagementClient(testUri, GetCreds());
             }
             else
             {
                 handler.IsPassThrough = true;
-                return TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+                return TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
             }
         }
 
         private static SubscriptionCloudCredentials GetCreds() 
         {
-            if (Creds == null)
-            {
-                X509Certificate2 cert = new X509Certificate2(certName, certPassword);
-                Creds = new CertificateCloudCredentials(testSubscription, cert);
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
-            }
-
             return Creds;
         }
 
@@ -138,40 +126,40 @@ namespace Storage.Tests.Helpers
             Assert.NotNull(account.AccountType);
             Assert.NotNull(account.CreationTime);
 
-            Assert.Equal(AccountStatus.Available, account.StatusOfPrimary);
+            Assert.Equal("Available", account.StatusOfPrimary);
             Assert.Equal(account.Location, account.PrimaryLocation);
 
             Assert.NotNull(account.PrimaryEndpoints);
             Assert.NotNull(account.PrimaryEndpoints.Blob);
 
-            if (account.AccountType != AccountType.StandardZRS && account.AccountType != AccountType.PremiumLRS)
+            if (account.AccountType != "StandardZRS" && account.AccountType != "PremiumLRS")
             {
                 Assert.NotNull(account.PrimaryEndpoints.Queue);
                 Assert.NotNull(account.PrimaryEndpoints.Table);
             }
 
-            Assert.Equal(Microsoft.Azure.Management.Storage.Models.ProvisioningState.Succeeded, account.ProvisioningState);
+            Assert.Equal("Succeeded", account.ProvisioningState);
             Assert.Null(account.LastGeoFailoverTime);
 
             switch (account.AccountType)
             {
-                case AccountType.StandardLRS:
-                case AccountType.StandardZRS:
-                case AccountType.PremiumLRS:
+                case "StandardLRS":
+                case "StandardZRS":
+                case "PremiumLRS":
                     Assert.Equal("", account.SecondaryLocation); // TODO: make null when service is fixed
                     Assert.Null(account.StatusOfSecondary);
                     Assert.Null(account.SecondaryEndpoints);
                     break;
-                case AccountType.StandardRAGRS:
-                    Assert.Equal(AccountStatus.Available, account.StatusOfSecondary);
+                case "StandardRAGRS":
+                    Assert.Equal("Available", account.StatusOfSecondary);
                     Assert.NotNull(account.SecondaryLocation);
                     Assert.NotNull(account.SecondaryEndpoints);
                     Assert.NotNull(account.SecondaryEndpoints.Blob);
                     Assert.NotNull(account.SecondaryEndpoints.Queue);
                     Assert.NotNull(account.SecondaryEndpoints.Table);
                     break;
-                case AccountType.StandardGRS:
-                    Assert.Equal(AccountStatus.Available, account.StatusOfSecondary);
+                case "StandardGRS":
+                    Assert.Equal("Available", account.StatusOfSecondary);
                     Assert.NotNull(account.SecondaryLocation);
                     Assert.Null(account.SecondaryEndpoints);
                     break;

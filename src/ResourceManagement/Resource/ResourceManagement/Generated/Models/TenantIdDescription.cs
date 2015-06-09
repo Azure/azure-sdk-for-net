@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Subscriptions.Models

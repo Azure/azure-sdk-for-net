@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Resources.Models
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Gets or sets the timestamp of the template deployment.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
-        public DateTimeOffset? Timestamp { get; set; }
+        public DateTime? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets key/value pairs that represent deploymentoutput.

@@ -2,38 +2,42 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
     /// <summary>
     /// </summary>
-    public partial class StorageAccountUpdateParameters
+    public partial class StorageAccountUpdateParameters : Resource
     {
         /// <summary>
-        /// Gets or sets a list of key value pairs that describe the resource.
-        /// These tags can be used in viewing and grouping this resource
-        /// (across resource groups). A maximum of 15 tags can be provided
-        /// for a resource. Each tag must have a key no greater than 128
-        /// characters and value no greater than 256 characters. This is a
-        /// full replace so all the existing tags will be replaced on Update.
+        /// Gets or sets the account type. Note that StandardZRS and
+        /// PremiumLRS accounts cannot be changed to other account types, and
+        /// other account types cannot be changed to StandardZRS or
+        /// PremiumLRS.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "accountType")]
+        public string AccountType { get; set; }
 
         /// <summary>
+        /// User domain assigned to the storage account. Name is the CNAME
+        /// source. Only one custom domain is supported per storage account
+        /// at this time. To clear the existing custom domain, use an empty
+        /// string for the custom domain name property.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public StorageAccountPropertiesUpdateParametersJson Properties { get; set; }
+        [JsonProperty(PropertyName = "customDomain")]
+        public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (this.Properties != null)
+            base.Validate();
+            if (this.CustomDomain != null)
             {
-                this.Properties.Validate();
+                this.CustomDomain.Validate();
             }
         }
     }

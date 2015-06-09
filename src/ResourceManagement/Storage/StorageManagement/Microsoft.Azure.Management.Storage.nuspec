@@ -28,7 +28,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Azure.Common" version="[3.0.4,3.0)" />
+      <dependency id="Microsoft.Azure.Common" version="[3.0.6,3.0)" />
     </dependencies>
   </metadata>
   <files>

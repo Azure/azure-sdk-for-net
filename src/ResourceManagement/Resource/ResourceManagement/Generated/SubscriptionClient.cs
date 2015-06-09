@@ -49,12 +49,12 @@ namespace Microsoft.Azure.Subscriptions
         /// <summary>
         /// The initial timeout for Long Running Operations.
         /// </summary>
-        public int LongRunningOperationInitialTimeout { get; set; }
+        public int? LongRunningOperationInitialTimeout { get; set; }
 
         /// <summary>
         /// The retry timeout for Long Running Operations.
         /// </summary>
-        public int LongRunningOperationRetryTimeout { get; set; }
+        public int? LongRunningOperationRetryTimeout { get; set; }
 
         public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
@@ -169,16 +169,18 @@ namespace Microsoft.Azure.Subscriptions
             this.Tenants = new TenantsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-04-01-preview";
-            this.LongRunningOperationInitialTimeout = -1;
-            this.LongRunningOperationRetryTimeout = -1;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
             DeserializationSettings = new JsonSerializerSettings{
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()

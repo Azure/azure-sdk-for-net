@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// </summary>
-    public partial class GenericResourceExtended
+    public partial class GenericResourceExtended : Resource
     {
         /// <summary>
         /// Gets or sets the resource properties.
@@ -17,52 +18,17 @@ namespace Microsoft.Azure.Management.Resources.Models
         public object Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets resource provisioning state.
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
         /// Gets or sets the plan of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "plan")]
         public Plan Plan { get; set; }
 
         /// <summary>
-        /// Gets or sets the ID of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (this.Plan != null)
             {
                 this.Plan.Validate();
