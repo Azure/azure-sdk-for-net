@@ -423,6 +423,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["version"] = derived7.Version;
                             }
                             
+                            if (derived7.ClusterType != null)
+                            {
+                                propertiesValue["clusterType"] = derived7.ClusterType;
+                            }
+                            
                             propertiesValue["clusterSize"] = derived7.ClusterSize;
                             
                             propertiesValue["timeToLive"] = derived7.TimeToLive.ToString();
@@ -539,15 +544,30 @@ namespace Microsoft.Azure.Management.DataFactories
                                 }
                             }
                             
+                            if (derived7.SparkConfiguration != null)
+                            {
+                                if (derived7.SparkConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.SparkConfiguration).IsInitialized)
+                                {
+                                    JObject sparkConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair9 in derived7.SparkConfiguration)
+                                    {
+                                        string sparkConfigurationKey = pair9.Key;
+                                        string sparkConfigurationValue = pair9.Value;
+                                        sparkConfigurationDictionary[sparkConfigurationKey] = sparkConfigurationValue;
+                                    }
+                                    propertiesValue["sparkConfiguration"] = sparkConfigurationDictionary;
+                                }
+                            }
+                            
                             if (derived7.YarnConfiguration != null)
                             {
                                 if (derived7.YarnConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.YarnConfiguration).IsInitialized)
                                 {
                                     JObject yarnConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair9 in derived7.YarnConfiguration)
+                                    foreach (KeyValuePair<string, string> pair10 in derived7.YarnConfiguration)
                                     {
-                                        string yarnConfigurationKey = pair9.Key;
-                                        string yarnConfigurationValue = pair9.Value;
+                                        string yarnConfigurationKey = pair10.Key;
+                                        string yarnConfigurationValue = pair10.Value;
                                         yarnConfigurationDictionary[yarnConfigurationKey] = yarnConfigurationValue;
                                     }
                                     propertiesValue["yarnConfiguration"] = yarnConfigurationDictionary;
@@ -580,6 +600,41 @@ namespace Microsoft.Azure.Management.DataFactories
                                 hcatalogValue2["recoverPartitions"] = derived7.Hcatalog.RecoverPartitions;
                                 
                                 hcatalogValue2["alterSchema"] = derived7.Hcatalog.AlterSchema;
+                            }
+                            
+                            if (derived7.DataNodeSize != null)
+                            {
+                                propertiesValue["dataNodeSize"] = derived7.DataNodeSize;
+                            }
+                            
+                            if (derived7.HeadNodeSize != null)
+                            {
+                                propertiesValue["headNodeSize"] = derived7.HeadNodeSize;
+                            }
+                            
+                            if (derived7.ZookeeperNodeSize != null)
+                            {
+                                propertiesValue["zookeeperNodeSize"] = derived7.ZookeeperNodeSize;
+                            }
+                            
+                            if (derived7.OSType != null)
+                            {
+                                propertiesValue["osType"] = derived7.OSType;
+                            }
+                            
+                            if (derived7.SshPassword != null)
+                            {
+                                propertiesValue["sshPassword"] = derived7.SshPassword;
+                            }
+                            
+                            if (derived7.SshPublicKey != null)
+                            {
+                                propertiesValue["sshPublicKey"] = derived7.SshPublicKey;
+                            }
+                            
+                            if (derived7.SshUserName != null)
+                            {
+                                propertiesValue["sshUserName"] = derived7.SshUserName;
                             }
                             
                             if (derived7.Description != null)
@@ -1384,6 +1439,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.Version = versionInstance;
                                     }
                                     
+                                    JToken clusterTypeValue = propertiesValue2["clusterType"];
+                                    if (clusterTypeValue != null && clusterTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string clusterTypeInstance = ((string)clusterTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ClusterType = clusterTypeInstance;
+                                    }
+                                    
                                     JToken clusterSizeValue = propertiesValue2["clusterSize"];
                                     if (clusterSizeValue != null && clusterSizeValue.Type != JTokenType.Null)
                                     {
@@ -1489,13 +1551,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
+                                    JToken sparkConfigurationSequenceElement = ((JToken)propertiesValue2["sparkConfiguration"]);
+                                    if (sparkConfigurationSequenceElement != null && sparkConfigurationSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property9 in sparkConfigurationSequenceElement)
+                                        {
+                                            string sparkConfigurationKey2 = ((string)property9.Name);
+                                            string sparkConfigurationValue2 = ((string)property9.Value);
+                                            hDInsightOnDemandLinkedServiceInstance.SparkConfiguration.Add(sparkConfigurationKey2, sparkConfigurationValue2);
+                                        }
+                                    }
+                                    
                                     JToken yarnConfigurationSequenceElement = ((JToken)propertiesValue2["yarnConfiguration"]);
                                     if (yarnConfigurationSequenceElement != null && yarnConfigurationSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property9 in yarnConfigurationSequenceElement)
+                                        foreach (JProperty property10 in yarnConfigurationSequenceElement)
                                         {
-                                            string yarnConfigurationKey2 = ((string)property9.Name);
-                                            string yarnConfigurationValue2 = ((string)property9.Value);
+                                            string yarnConfigurationKey2 = ((string)property10.Name);
+                                            string yarnConfigurationValue2 = ((string)property10.Value);
                                             hDInsightOnDemandLinkedServiceInstance.YarnConfiguration.Add(yarnConfigurationKey2, yarnConfigurationValue2);
                                         }
                                     }
@@ -1535,6 +1608,55 @@ namespace Microsoft.Azure.Management.DataFactories
                                             bool alterSchemaInstance2 = ((bool)alterSchemaValue2);
                                             hcatalogInstance2.AlterSchema = alterSchemaInstance2;
                                         }
+                                    }
+                                    
+                                    JToken dataNodeSizeValue = propertiesValue2["dataNodeSize"];
+                                    if (dataNodeSizeValue != null && dataNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string dataNodeSizeInstance = ((string)dataNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.DataNodeSize = dataNodeSizeInstance;
+                                    }
+                                    
+                                    JToken headNodeSizeValue = propertiesValue2["headNodeSize"];
+                                    if (headNodeSizeValue != null && headNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string headNodeSizeInstance = ((string)headNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.HeadNodeSize = headNodeSizeInstance;
+                                    }
+                                    
+                                    JToken zookeeperNodeSizeValue = propertiesValue2["zookeeperNodeSize"];
+                                    if (zookeeperNodeSizeValue != null && zookeeperNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string zookeeperNodeSizeInstance = ((string)zookeeperNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ZookeeperNodeSize = zookeeperNodeSizeInstance;
+                                    }
+                                    
+                                    JToken osTypeValue = propertiesValue2["osType"];
+                                    if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string osTypeInstance = ((string)osTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.OSType = osTypeInstance;
+                                    }
+                                    
+                                    JToken sshPasswordValue = propertiesValue2["sshPassword"];
+                                    if (sshPasswordValue != null && sshPasswordValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPasswordInstance = ((string)sshPasswordValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPassword = sshPasswordInstance;
+                                    }
+                                    
+                                    JToken sshPublicKeyValue = propertiesValue2["sshPublicKey"];
+                                    if (sshPublicKeyValue != null && sshPublicKeyValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPublicKeyInstance = ((string)sshPublicKeyValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPublicKey = sshPublicKeyInstance;
+                                    }
+                                    
+                                    JToken sshUserNameValue = propertiesValue2["sshUserName"];
+                                    if (sshUserNameValue != null && sshUserNameValue.Type != JTokenType.Null)
+                                    {
+                                        string sshUserNameInstance = ((string)sshUserNameValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
                                     JToken descriptionValue7 = propertiesValue2["description"];
@@ -2760,6 +2882,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.Version = versionInstance;
                                     }
                                     
+                                    JToken clusterTypeValue = propertiesValue["clusterType"];
+                                    if (clusterTypeValue != null && clusterTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string clusterTypeInstance = ((string)clusterTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ClusterType = clusterTypeInstance;
+                                    }
+                                    
                                     JToken clusterSizeValue = propertiesValue["clusterSize"];
                                     if (clusterSizeValue != null && clusterSizeValue.Type != JTokenType.Null)
                                     {
@@ -2865,13 +2994,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
+                                    JToken sparkConfigurationSequenceElement = ((JToken)propertiesValue["sparkConfiguration"]);
+                                    if (sparkConfigurationSequenceElement != null && sparkConfigurationSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property9 in sparkConfigurationSequenceElement)
+                                        {
+                                            string sparkConfigurationKey = ((string)property9.Name);
+                                            string sparkConfigurationValue = ((string)property9.Value);
+                                            hDInsightOnDemandLinkedServiceInstance.SparkConfiguration.Add(sparkConfigurationKey, sparkConfigurationValue);
+                                        }
+                                    }
+                                    
                                     JToken yarnConfigurationSequenceElement = ((JToken)propertiesValue["yarnConfiguration"]);
                                     if (yarnConfigurationSequenceElement != null && yarnConfigurationSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property9 in yarnConfigurationSequenceElement)
+                                        foreach (JProperty property10 in yarnConfigurationSequenceElement)
                                         {
-                                            string yarnConfigurationKey = ((string)property9.Name);
-                                            string yarnConfigurationValue = ((string)property9.Value);
+                                            string yarnConfigurationKey = ((string)property10.Name);
+                                            string yarnConfigurationValue = ((string)property10.Value);
                                             hDInsightOnDemandLinkedServiceInstance.YarnConfiguration.Add(yarnConfigurationKey, yarnConfigurationValue);
                                         }
                                     }
@@ -2911,6 +3051,55 @@ namespace Microsoft.Azure.Management.DataFactories
                                             bool alterSchemaInstance2 = ((bool)alterSchemaValue2);
                                             hcatalogInstance2.AlterSchema = alterSchemaInstance2;
                                         }
+                                    }
+                                    
+                                    JToken dataNodeSizeValue = propertiesValue["dataNodeSize"];
+                                    if (dataNodeSizeValue != null && dataNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string dataNodeSizeInstance = ((string)dataNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.DataNodeSize = dataNodeSizeInstance;
+                                    }
+                                    
+                                    JToken headNodeSizeValue = propertiesValue["headNodeSize"];
+                                    if (headNodeSizeValue != null && headNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string headNodeSizeInstance = ((string)headNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.HeadNodeSize = headNodeSizeInstance;
+                                    }
+                                    
+                                    JToken zookeeperNodeSizeValue = propertiesValue["zookeeperNodeSize"];
+                                    if (zookeeperNodeSizeValue != null && zookeeperNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string zookeeperNodeSizeInstance = ((string)zookeeperNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ZookeeperNodeSize = zookeeperNodeSizeInstance;
+                                    }
+                                    
+                                    JToken osTypeValue = propertiesValue["osType"];
+                                    if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string osTypeInstance = ((string)osTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.OSType = osTypeInstance;
+                                    }
+                                    
+                                    JToken sshPasswordValue = propertiesValue["sshPassword"];
+                                    if (sshPasswordValue != null && sshPasswordValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPasswordInstance = ((string)sshPasswordValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPassword = sshPasswordInstance;
+                                    }
+                                    
+                                    JToken sshPublicKeyValue = propertiesValue["sshPublicKey"];
+                                    if (sshPublicKeyValue != null && sshPublicKeyValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPublicKeyInstance = ((string)sshPublicKeyValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPublicKey = sshPublicKeyInstance;
+                                    }
+                                    
+                                    JToken sshUserNameValue = propertiesValue["sshUserName"];
+                                    if (sshUserNameValue != null && sshUserNameValue.Type != JTokenType.Null)
+                                    {
+                                        string sshUserNameInstance = ((string)sshUserNameValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
                                     JToken descriptionValue7 = propertiesValue["description"];
@@ -4530,6 +4719,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.Version = versionInstance;
                                     }
                                     
+                                    JToken clusterTypeValue = propertiesValue["clusterType"];
+                                    if (clusterTypeValue != null && clusterTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string clusterTypeInstance = ((string)clusterTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ClusterType = clusterTypeInstance;
+                                    }
+                                    
                                     JToken clusterSizeValue = propertiesValue["clusterSize"];
                                     if (clusterSizeValue != null && clusterSizeValue.Type != JTokenType.Null)
                                     {
@@ -4635,13 +4831,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
+                                    JToken sparkConfigurationSequenceElement = ((JToken)propertiesValue["sparkConfiguration"]);
+                                    if (sparkConfigurationSequenceElement != null && sparkConfigurationSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property9 in sparkConfigurationSequenceElement)
+                                        {
+                                            string sparkConfigurationKey = ((string)property9.Name);
+                                            string sparkConfigurationValue = ((string)property9.Value);
+                                            hDInsightOnDemandLinkedServiceInstance.SparkConfiguration.Add(sparkConfigurationKey, sparkConfigurationValue);
+                                        }
+                                    }
+                                    
                                     JToken yarnConfigurationSequenceElement = ((JToken)propertiesValue["yarnConfiguration"]);
                                     if (yarnConfigurationSequenceElement != null && yarnConfigurationSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property9 in yarnConfigurationSequenceElement)
+                                        foreach (JProperty property10 in yarnConfigurationSequenceElement)
                                         {
-                                            string yarnConfigurationKey = ((string)property9.Name);
-                                            string yarnConfigurationValue = ((string)property9.Value);
+                                            string yarnConfigurationKey = ((string)property10.Name);
+                                            string yarnConfigurationValue = ((string)property10.Value);
                                             hDInsightOnDemandLinkedServiceInstance.YarnConfiguration.Add(yarnConfigurationKey, yarnConfigurationValue);
                                         }
                                     }
@@ -4681,6 +4888,55 @@ namespace Microsoft.Azure.Management.DataFactories
                                             bool alterSchemaInstance2 = ((bool)alterSchemaValue2);
                                             hcatalogInstance2.AlterSchema = alterSchemaInstance2;
                                         }
+                                    }
+                                    
+                                    JToken dataNodeSizeValue = propertiesValue["dataNodeSize"];
+                                    if (dataNodeSizeValue != null && dataNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string dataNodeSizeInstance = ((string)dataNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.DataNodeSize = dataNodeSizeInstance;
+                                    }
+                                    
+                                    JToken headNodeSizeValue = propertiesValue["headNodeSize"];
+                                    if (headNodeSizeValue != null && headNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string headNodeSizeInstance = ((string)headNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.HeadNodeSize = headNodeSizeInstance;
+                                    }
+                                    
+                                    JToken zookeeperNodeSizeValue = propertiesValue["zookeeperNodeSize"];
+                                    if (zookeeperNodeSizeValue != null && zookeeperNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string zookeeperNodeSizeInstance = ((string)zookeeperNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ZookeeperNodeSize = zookeeperNodeSizeInstance;
+                                    }
+                                    
+                                    JToken osTypeValue = propertiesValue["osType"];
+                                    if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string osTypeInstance = ((string)osTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.OSType = osTypeInstance;
+                                    }
+                                    
+                                    JToken sshPasswordValue = propertiesValue["sshPassword"];
+                                    if (sshPasswordValue != null && sshPasswordValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPasswordInstance = ((string)sshPasswordValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPassword = sshPasswordInstance;
+                                    }
+                                    
+                                    JToken sshPublicKeyValue = propertiesValue["sshPublicKey"];
+                                    if (sshPublicKeyValue != null && sshPublicKeyValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPublicKeyInstance = ((string)sshPublicKeyValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPublicKey = sshPublicKeyInstance;
+                                    }
+                                    
+                                    JToken sshUserNameValue = propertiesValue["sshUserName"];
+                                    if (sshUserNameValue != null && sshUserNameValue.Type != JTokenType.Null)
+                                    {
+                                        string sshUserNameInstance = ((string)sshUserNameValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
                                     JToken descriptionValue7 = propertiesValue["description"];
@@ -5817,6 +6073,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.Version = versionInstance;
                                     }
                                     
+                                    JToken clusterTypeValue = propertiesValue["clusterType"];
+                                    if (clusterTypeValue != null && clusterTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string clusterTypeInstance = ((string)clusterTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ClusterType = clusterTypeInstance;
+                                    }
+                                    
                                     JToken clusterSizeValue = propertiesValue["clusterSize"];
                                     if (clusterSizeValue != null && clusterSizeValue.Type != JTokenType.Null)
                                     {
@@ -5922,13 +6185,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
+                                    JToken sparkConfigurationSequenceElement = ((JToken)propertiesValue["sparkConfiguration"]);
+                                    if (sparkConfigurationSequenceElement != null && sparkConfigurationSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property9 in sparkConfigurationSequenceElement)
+                                        {
+                                            string sparkConfigurationKey = ((string)property9.Name);
+                                            string sparkConfigurationValue = ((string)property9.Value);
+                                            hDInsightOnDemandLinkedServiceInstance.SparkConfiguration.Add(sparkConfigurationKey, sparkConfigurationValue);
+                                        }
+                                    }
+                                    
                                     JToken yarnConfigurationSequenceElement = ((JToken)propertiesValue["yarnConfiguration"]);
                                     if (yarnConfigurationSequenceElement != null && yarnConfigurationSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property9 in yarnConfigurationSequenceElement)
+                                        foreach (JProperty property10 in yarnConfigurationSequenceElement)
                                         {
-                                            string yarnConfigurationKey = ((string)property9.Name);
-                                            string yarnConfigurationValue = ((string)property9.Value);
+                                            string yarnConfigurationKey = ((string)property10.Name);
+                                            string yarnConfigurationValue = ((string)property10.Value);
                                             hDInsightOnDemandLinkedServiceInstance.YarnConfiguration.Add(yarnConfigurationKey, yarnConfigurationValue);
                                         }
                                     }
@@ -5968,6 +6242,55 @@ namespace Microsoft.Azure.Management.DataFactories
                                             bool alterSchemaInstance2 = ((bool)alterSchemaValue2);
                                             hcatalogInstance2.AlterSchema = alterSchemaInstance2;
                                         }
+                                    }
+                                    
+                                    JToken dataNodeSizeValue = propertiesValue["dataNodeSize"];
+                                    if (dataNodeSizeValue != null && dataNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string dataNodeSizeInstance = ((string)dataNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.DataNodeSize = dataNodeSizeInstance;
+                                    }
+                                    
+                                    JToken headNodeSizeValue = propertiesValue["headNodeSize"];
+                                    if (headNodeSizeValue != null && headNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string headNodeSizeInstance = ((string)headNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.HeadNodeSize = headNodeSizeInstance;
+                                    }
+                                    
+                                    JToken zookeeperNodeSizeValue = propertiesValue["zookeeperNodeSize"];
+                                    if (zookeeperNodeSizeValue != null && zookeeperNodeSizeValue.Type != JTokenType.Null)
+                                    {
+                                        string zookeeperNodeSizeInstance = ((string)zookeeperNodeSizeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.ZookeeperNodeSize = zookeeperNodeSizeInstance;
+                                    }
+                                    
+                                    JToken osTypeValue = propertiesValue["osType"];
+                                    if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string osTypeInstance = ((string)osTypeValue);
+                                        hDInsightOnDemandLinkedServiceInstance.OSType = osTypeInstance;
+                                    }
+                                    
+                                    JToken sshPasswordValue = propertiesValue["sshPassword"];
+                                    if (sshPasswordValue != null && sshPasswordValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPasswordInstance = ((string)sshPasswordValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPassword = sshPasswordInstance;
+                                    }
+                                    
+                                    JToken sshPublicKeyValue = propertiesValue["sshPublicKey"];
+                                    if (sshPublicKeyValue != null && sshPublicKeyValue.Type != JTokenType.Null)
+                                    {
+                                        string sshPublicKeyInstance = ((string)sshPublicKeyValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshPublicKey = sshPublicKeyInstance;
+                                    }
+                                    
+                                    JToken sshUserNameValue = propertiesValue["sshUserName"];
+                                    if (sshUserNameValue != null && sshUserNameValue.Type != JTokenType.Null)
+                                    {
+                                        string sshUserNameInstance = ((string)sshUserNameValue);
+                                        hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
                                     JToken descriptionValue7 = propertiesValue["description"];
@@ -7171,6 +7494,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 hDInsightOnDemandLinkedServiceInstance.Version = versionInstance;
                                             }
                                             
+                                            JToken clusterTypeValue = propertiesValue["clusterType"];
+                                            if (clusterTypeValue != null && clusterTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string clusterTypeInstance = ((string)clusterTypeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.ClusterType = clusterTypeInstance;
+                                            }
+                                            
                                             JToken clusterSizeValue = propertiesValue["clusterSize"];
                                             if (clusterSizeValue != null && clusterSizeValue.Type != JTokenType.Null)
                                             {
@@ -7276,13 +7606,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
+                                            JToken sparkConfigurationSequenceElement = ((JToken)propertiesValue["sparkConfiguration"]);
+                                            if (sparkConfigurationSequenceElement != null && sparkConfigurationSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property9 in sparkConfigurationSequenceElement)
+                                                {
+                                                    string sparkConfigurationKey = ((string)property9.Name);
+                                                    string sparkConfigurationValue = ((string)property9.Value);
+                                                    hDInsightOnDemandLinkedServiceInstance.SparkConfiguration.Add(sparkConfigurationKey, sparkConfigurationValue);
+                                                }
+                                            }
+                                            
                                             JToken yarnConfigurationSequenceElement = ((JToken)propertiesValue["yarnConfiguration"]);
                                             if (yarnConfigurationSequenceElement != null && yarnConfigurationSequenceElement.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property9 in yarnConfigurationSequenceElement)
+                                                foreach (JProperty property10 in yarnConfigurationSequenceElement)
                                                 {
-                                                    string yarnConfigurationKey = ((string)property9.Name);
-                                                    string yarnConfigurationValue = ((string)property9.Value);
+                                                    string yarnConfigurationKey = ((string)property10.Name);
+                                                    string yarnConfigurationValue = ((string)property10.Value);
                                                     hDInsightOnDemandLinkedServiceInstance.YarnConfiguration.Add(yarnConfigurationKey, yarnConfigurationValue);
                                                 }
                                             }
@@ -7322,6 +7663,55 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     bool alterSchemaInstance2 = ((bool)alterSchemaValue2);
                                                     hcatalogInstance2.AlterSchema = alterSchemaInstance2;
                                                 }
+                                            }
+                                            
+                                            JToken dataNodeSizeValue = propertiesValue["dataNodeSize"];
+                                            if (dataNodeSizeValue != null && dataNodeSizeValue.Type != JTokenType.Null)
+                                            {
+                                                string dataNodeSizeInstance = ((string)dataNodeSizeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.DataNodeSize = dataNodeSizeInstance;
+                                            }
+                                            
+                                            JToken headNodeSizeValue = propertiesValue["headNodeSize"];
+                                            if (headNodeSizeValue != null && headNodeSizeValue.Type != JTokenType.Null)
+                                            {
+                                                string headNodeSizeInstance = ((string)headNodeSizeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.HeadNodeSize = headNodeSizeInstance;
+                                            }
+                                            
+                                            JToken zookeeperNodeSizeValue = propertiesValue["zookeeperNodeSize"];
+                                            if (zookeeperNodeSizeValue != null && zookeeperNodeSizeValue.Type != JTokenType.Null)
+                                            {
+                                                string zookeeperNodeSizeInstance = ((string)zookeeperNodeSizeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.ZookeeperNodeSize = zookeeperNodeSizeInstance;
+                                            }
+                                            
+                                            JToken osTypeValue = propertiesValue["osType"];
+                                            if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string osTypeInstance = ((string)osTypeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.OSType = osTypeInstance;
+                                            }
+                                            
+                                            JToken sshPasswordValue = propertiesValue["sshPassword"];
+                                            if (sshPasswordValue != null && sshPasswordValue.Type != JTokenType.Null)
+                                            {
+                                                string sshPasswordInstance = ((string)sshPasswordValue);
+                                                hDInsightOnDemandLinkedServiceInstance.SshPassword = sshPasswordInstance;
+                                            }
+                                            
+                                            JToken sshPublicKeyValue = propertiesValue["sshPublicKey"];
+                                            if (sshPublicKeyValue != null && sshPublicKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string sshPublicKeyInstance = ((string)sshPublicKeyValue);
+                                                hDInsightOnDemandLinkedServiceInstance.SshPublicKey = sshPublicKeyInstance;
+                                            }
+                                            
+                                            JToken sshUserNameValue = propertiesValue["sshUserName"];
+                                            if (sshUserNameValue != null && sshUserNameValue.Type != JTokenType.Null)
+                                            {
+                                                string sshUserNameInstance = ((string)sshUserNameValue);
+                                                hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                             }
                                             
                                             JToken descriptionValue7 = propertiesValue["description"];
@@ -8475,6 +8865,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 hDInsightOnDemandLinkedServiceInstance.Version = versionInstance;
                                             }
                                             
+                                            JToken clusterTypeValue = propertiesValue["clusterType"];
+                                            if (clusterTypeValue != null && clusterTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string clusterTypeInstance = ((string)clusterTypeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.ClusterType = clusterTypeInstance;
+                                            }
+                                            
                                             JToken clusterSizeValue = propertiesValue["clusterSize"];
                                             if (clusterSizeValue != null && clusterSizeValue.Type != JTokenType.Null)
                                             {
@@ -8580,13 +8977,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
+                                            JToken sparkConfigurationSequenceElement = ((JToken)propertiesValue["sparkConfiguration"]);
+                                            if (sparkConfigurationSequenceElement != null && sparkConfigurationSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property9 in sparkConfigurationSequenceElement)
+                                                {
+                                                    string sparkConfigurationKey = ((string)property9.Name);
+                                                    string sparkConfigurationValue = ((string)property9.Value);
+                                                    hDInsightOnDemandLinkedServiceInstance.SparkConfiguration.Add(sparkConfigurationKey, sparkConfigurationValue);
+                                                }
+                                            }
+                                            
                                             JToken yarnConfigurationSequenceElement = ((JToken)propertiesValue["yarnConfiguration"]);
                                             if (yarnConfigurationSequenceElement != null && yarnConfigurationSequenceElement.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property9 in yarnConfigurationSequenceElement)
+                                                foreach (JProperty property10 in yarnConfigurationSequenceElement)
                                                 {
-                                                    string yarnConfigurationKey = ((string)property9.Name);
-                                                    string yarnConfigurationValue = ((string)property9.Value);
+                                                    string yarnConfigurationKey = ((string)property10.Name);
+                                                    string yarnConfigurationValue = ((string)property10.Value);
                                                     hDInsightOnDemandLinkedServiceInstance.YarnConfiguration.Add(yarnConfigurationKey, yarnConfigurationValue);
                                                 }
                                             }
@@ -8626,6 +9034,55 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     bool alterSchemaInstance2 = ((bool)alterSchemaValue2);
                                                     hcatalogInstance2.AlterSchema = alterSchemaInstance2;
                                                 }
+                                            }
+                                            
+                                            JToken dataNodeSizeValue = propertiesValue["dataNodeSize"];
+                                            if (dataNodeSizeValue != null && dataNodeSizeValue.Type != JTokenType.Null)
+                                            {
+                                                string dataNodeSizeInstance = ((string)dataNodeSizeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.DataNodeSize = dataNodeSizeInstance;
+                                            }
+                                            
+                                            JToken headNodeSizeValue = propertiesValue["headNodeSize"];
+                                            if (headNodeSizeValue != null && headNodeSizeValue.Type != JTokenType.Null)
+                                            {
+                                                string headNodeSizeInstance = ((string)headNodeSizeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.HeadNodeSize = headNodeSizeInstance;
+                                            }
+                                            
+                                            JToken zookeeperNodeSizeValue = propertiesValue["zookeeperNodeSize"];
+                                            if (zookeeperNodeSizeValue != null && zookeeperNodeSizeValue.Type != JTokenType.Null)
+                                            {
+                                                string zookeeperNodeSizeInstance = ((string)zookeeperNodeSizeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.ZookeeperNodeSize = zookeeperNodeSizeInstance;
+                                            }
+                                            
+                                            JToken osTypeValue = propertiesValue["osType"];
+                                            if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string osTypeInstance = ((string)osTypeValue);
+                                                hDInsightOnDemandLinkedServiceInstance.OSType = osTypeInstance;
+                                            }
+                                            
+                                            JToken sshPasswordValue = propertiesValue["sshPassword"];
+                                            if (sshPasswordValue != null && sshPasswordValue.Type != JTokenType.Null)
+                                            {
+                                                string sshPasswordInstance = ((string)sshPasswordValue);
+                                                hDInsightOnDemandLinkedServiceInstance.SshPassword = sshPasswordInstance;
+                                            }
+                                            
+                                            JToken sshPublicKeyValue = propertiesValue["sshPublicKey"];
+                                            if (sshPublicKeyValue != null && sshPublicKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string sshPublicKeyInstance = ((string)sshPublicKeyValue);
+                                                hDInsightOnDemandLinkedServiceInstance.SshPublicKey = sshPublicKeyInstance;
+                                            }
+                                            
+                                            JToken sshUserNameValue = propertiesValue["sshUserName"];
+                                            if (sshUserNameValue != null && sshUserNameValue.Type != JTokenType.Null)
+                                            {
+                                                string sshUserNameInstance = ((string)sshUserNameValue);
+                                                hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                             }
                                             
                                             JToken descriptionValue7 = propertiesValue["description"];
