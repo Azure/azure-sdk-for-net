@@ -25,6 +25,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -60,6 +62,398 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupServicesManagementClient Client
         {
             get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Create new Protection Policy.
+        /// </summary>
+        /// <param name='addProtectionPolicyRequest'>
+        /// Required. The protection policy creation request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public async Task<OperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (addProtectionPolicyRequest == null)
+            {
+                throw new ArgumentNullException("addProtectionPolicyRequest");
+            }
+            if (addProtectionPolicyRequest.Schedule != null)
+            {
+                if (addProtectionPolicyRequest.Schedule.BackupType == null)
+                {
+                    throw new ArgumentNullException("addProtectionPolicyRequest.Schedule.BackupType");
+                }
+                if (addProtectionPolicyRequest.Schedule.RetentionPolicy == null)
+                {
+                    throw new ArgumentNullException("addProtectionPolicyRequest.Schedule.RetentionPolicy");
+                }
+                if (addProtectionPolicyRequest.Schedule.ScheduleRun == null)
+                {
+                    throw new ArgumentNullException("addProtectionPolicyRequest.Schedule.ScheduleRun");
+                }
+                if (addProtectionPolicyRequest.Schedule.ScheduleRunTimes == null)
+                {
+                    throw new ArgumentNullException("addProtectionPolicyRequest.Schedule.ScheduleRunTimes");
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("addProtectionPolicyRequest", addProtectionPolicyRequest);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "AddAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backupseadev01";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/protectionpolicies";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject addProtectionPolicyRequestValue = new JObject();
+                requestDoc = addProtectionPolicyRequestValue;
+                
+                if (addProtectionPolicyRequest.WorkloadType != null)
+                {
+                    addProtectionPolicyRequestValue["workloadtype"] = addProtectionPolicyRequest.WorkloadType;
+                }
+                
+                if (addProtectionPolicyRequest.PolicyName != null)
+                {
+                    addProtectionPolicyRequestValue["policyname"] = addProtectionPolicyRequest.PolicyName;
+                }
+                
+                if (addProtectionPolicyRequest.Schedule != null)
+                {
+                    JObject scheduleValue = new JObject();
+                    addProtectionPolicyRequestValue["schedule"] = scheduleValue;
+                    
+                    scheduleValue["BackupType"] = addProtectionPolicyRequest.Schedule.BackupType;
+                    
+                    scheduleValue["ScheduleRun"] = addProtectionPolicyRequest.Schedule.ScheduleRun;
+                    
+                    scheduleValue["ScheduleStartTime"] = addProtectionPolicyRequest.Schedule.ScheduleStartTime;
+                    
+                    if (addProtectionPolicyRequest.Schedule.ScheduleRunDays != null)
+                    {
+                        JArray scheduleRunDaysArray = new JArray();
+                        foreach (DayOfWeek scheduleRunDaysItem in addProtectionPolicyRequest.Schedule.ScheduleRunDays)
+                        {
+                            scheduleRunDaysArray.Add(scheduleRunDaysItem.ToString());
+                        }
+                        scheduleValue["ScheduleRunDays"] = scheduleRunDaysArray;
+                    }
+                    
+                    if (addProtectionPolicyRequest.Schedule.ScheduleRunTimes != null)
+                    {
+                        JArray scheduleRunTimesArray = new JArray();
+                        foreach (DateTime scheduleRunTimesItem in addProtectionPolicyRequest.Schedule.ScheduleRunTimes)
+                        {
+                            scheduleRunTimesArray.Add(scheduleRunTimesItem);
+                        }
+                        scheduleValue["ScheduleRunTimes"] = scheduleRunTimesArray;
+                    }
+                    
+                    JObject retentionPolicyValue = new JObject();
+                    scheduleValue["RetentionPolicy"] = retentionPolicyValue;
+                    
+                    retentionPolicyValue["RetentionType"] = addProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionType.ToString();
+                    
+                    retentionPolicyValue["Schedule"] = addProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionDuration;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Create new Protection Policy.
+        /// </summary>
+        /// <param name='protectionPolicyId'>
+        /// Required. The protection policy ID to be deleted.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public async Task<OperationResponse> DeleteAsync(string protectionPolicyId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (protectionPolicyId == null)
+            {
+                throw new ArgumentNullException("protectionPolicyId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("protectionPolicyId", protectionPolicyId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backupseadev01";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/protectionpolicies/";
+            url = url + Uri.EscapeDataString(protectionPolicyId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>
@@ -617,6 +1011,245 @@ namespace Microsoft.Azure.Management.BackupServices
                                 string skiptokenInstance = ((string)skiptokenValue);
                                 protectionPoliciesInstance.Skiptoken = skiptokenInstance;
                             }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update Protection Policy.
+        /// </summary>
+        /// <param name='protectionPolicyId'>
+        /// Required. The protection policy ID to be updated.
+        /// </param>
+        /// <param name='updateProtectionPolicyRequest'>
+        /// Required. The protection policy creation request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public async Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (protectionPolicyId == null)
+            {
+                throw new ArgumentNullException("protectionPolicyId");
+            }
+            if (updateProtectionPolicyRequest == null)
+            {
+                throw new ArgumentNullException("updateProtectionPolicyRequest");
+            }
+            if (updateProtectionPolicyRequest.Schedule != null)
+            {
+                if (updateProtectionPolicyRequest.Schedule.BackupType == null)
+                {
+                    throw new ArgumentNullException("updateProtectionPolicyRequest.Schedule.BackupType");
+                }
+                if (updateProtectionPolicyRequest.Schedule.RetentionPolicy == null)
+                {
+                    throw new ArgumentNullException("updateProtectionPolicyRequest.Schedule.RetentionPolicy");
+                }
+                if (updateProtectionPolicyRequest.Schedule.ScheduleRun == null)
+                {
+                    throw new ArgumentNullException("updateProtectionPolicyRequest.Schedule.ScheduleRun");
+                }
+                if (updateProtectionPolicyRequest.Schedule.ScheduleRunTimes == null)
+                {
+                    throw new ArgumentNullException("updateProtectionPolicyRequest.Schedule.ScheduleRunTimes");
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("protectionPolicyId", protectionPolicyId);
+                tracingParameters.Add("updateProtectionPolicyRequest", updateProtectionPolicyRequest);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backupseadev01";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/protectionpolicies/";
+            url = url + Uri.EscapeDataString(protectionPolicyId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject updateProtectionPolicyRequestValue = new JObject();
+                requestDoc = updateProtectionPolicyRequestValue;
+                
+                if (updateProtectionPolicyRequest.PolicyName != null)
+                {
+                    updateProtectionPolicyRequestValue["policyname"] = updateProtectionPolicyRequest.PolicyName;
+                }
+                
+                if (updateProtectionPolicyRequest.Schedule != null)
+                {
+                    JObject scheduleValue = new JObject();
+                    updateProtectionPolicyRequestValue["schedule"] = scheduleValue;
+                    
+                    scheduleValue["BackupType"] = updateProtectionPolicyRequest.Schedule.BackupType;
+                    
+                    scheduleValue["ScheduleRun"] = updateProtectionPolicyRequest.Schedule.ScheduleRun;
+                    
+                    scheduleValue["ScheduleStartTime"] = updateProtectionPolicyRequest.Schedule.ScheduleStartTime;
+                    
+                    if (updateProtectionPolicyRequest.Schedule.ScheduleRunDays != null)
+                    {
+                        JArray scheduleRunDaysArray = new JArray();
+                        foreach (DayOfWeek scheduleRunDaysItem in updateProtectionPolicyRequest.Schedule.ScheduleRunDays)
+                        {
+                            scheduleRunDaysArray.Add(scheduleRunDaysItem.ToString());
+                        }
+                        scheduleValue["ScheduleRunDays"] = scheduleRunDaysArray;
+                    }
+                    
+                    if (updateProtectionPolicyRequest.Schedule.ScheduleRunTimes != null)
+                    {
+                        JArray scheduleRunTimesArray = new JArray();
+                        foreach (DateTime scheduleRunTimesItem in updateProtectionPolicyRequest.Schedule.ScheduleRunTimes)
+                        {
+                            scheduleRunTimesArray.Add(scheduleRunTimesItem);
+                        }
+                        scheduleValue["ScheduleRunTimes"] = scheduleRunTimesArray;
+                    }
+                    
+                    JObject retentionPolicyValue = new JObject();
+                    scheduleValue["RetentionPolicy"] = retentionPolicyValue;
+                    
+                    retentionPolicyValue["RetentionType"] = updateProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionType.ToString();
+                    
+                    retentionPolicyValue["Schedule"] = updateProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionDuration;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
                         }
                         
                     }

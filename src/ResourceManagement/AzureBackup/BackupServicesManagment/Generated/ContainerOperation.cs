@@ -444,17 +444,8 @@ namespace Microsoft.Azure.Management.BackupServices
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken operationResponseValue = responseDoc["OperationResponse"];
-                        if (operationResponseValue != null && operationResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            OperationResponse operationResponseInstance = new OperationResponse();
-                            
-                            JToken operationIdValue = operationResponseValue["OperationId"];
-                            if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
-                            {
-                                Guid operationIdInstance = Guid.Parse(((string)operationIdValue));
-                                operationResponseInstance.OperationId = operationIdInstance;
-                            }
                         }
                         
                     }
@@ -647,17 +638,8 @@ namespace Microsoft.Azure.Management.BackupServices
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken operationResponseValue = responseDoc["OperationResponse"];
-                        if (operationResponseValue != null && operationResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            OperationResponse operationResponseInstance = new OperationResponse();
-                            
-                            JToken operationIdValue = operationResponseValue["OperationId"];
-                            if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
-                            {
-                                Guid operationIdInstance = Guid.Parse(((string)operationIdValue));
-                                operationResponseInstance.OperationId = operationIdInstance;
-                            }
                         }
                         
                     }
@@ -842,17 +824,8 @@ namespace Microsoft.Azure.Management.BackupServices
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken operationResponseValue = responseDoc["OperationResponse"];
-                        if (operationResponseValue != null && operationResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            OperationResponse operationResponseInstance = new OperationResponse();
-                            
-                            JToken operationIdValue = operationResponseValue["OperationId"];
-                            if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
-                            {
-                                Guid operationIdInstance = Guid.Parse(((string)operationIdValue));
-                                operationResponseInstance.OperationId = operationIdInstance;
-                            }
                         }
                         
                     }
