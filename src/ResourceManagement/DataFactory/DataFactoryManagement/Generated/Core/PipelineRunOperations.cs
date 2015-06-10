@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 queryParameters.Add("status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString()));
             }
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataSliceRunId);
             url = url + "/logInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("startTime=" + Uri.EscapeDataString(dataSliceStartTime));
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
