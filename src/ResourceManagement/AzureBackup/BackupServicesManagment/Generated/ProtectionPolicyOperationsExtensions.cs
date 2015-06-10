@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
@@ -90,9 +91,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IProtectionPolicyOperations operations, string protectionPolicyId, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Delete(this IProtectionPolicyOperations operations, string protectionPolicyId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -115,9 +117,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IProtectionPolicyOperations operations, string protectionPolicyId, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> DeleteAsync(this IProtectionPolicyOperations operations, string protectionPolicyId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.DeleteAsync(protectionPolicyId, customRequestHeaders, CancellationToken.None);
         }
