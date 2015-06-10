@@ -93,7 +93,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzY/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"DataFactory1236\",\r\n  \"location\": \"West US\"\r\n}",
@@ -147,7 +147,7 @@
           "Fri, 15 May 2015 19:18:13 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-05-01-preview"
+          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-07-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -159,7 +159,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzY/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -168,7 +168,7 @@
           "560d12d6-80af-4c1c-ad21-d93ed373a21d"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -219,7 +219,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzY/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -228,7 +228,7 @@
           "11edf2e6-390a-4d6b-ab9e-22de76a803f0"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -279,7 +279,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzY/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -336,7 +336,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1XaWtpcGVkaWFDbGlja0V2ZW50cz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"LinkedService-WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"type\": \"AzureStorageLinkedService\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=**********;AccountKey=**********\"\r\n    }\r\n  }\r\n}",
@@ -399,7 +399,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1XaWtpcGVkaWFDbGlja0V2ZW50cz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -408,7 +408,7 @@
           "860e40d4-b02f-4b87-a7df-33b6bfc97790"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -459,7 +459,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1DdXJhdGVkV2lraURhdGE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"LinkedService-CuratedWikiData\",\r\n  \"properties\": {\r\n    \"type\": \"AzureStorageLinkedService\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=**********;AccountKey=**********\"\r\n    }\r\n  }\r\n}",
@@ -522,7 +522,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1DdXJhdGVkV2lraURhdGE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -531,7 +531,7 @@
           "f8f99037-c3c1-4c56-92bf-f818bce358f8"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -582,7 +582,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1XaWtpQWdncmVnYXRlZERhdGE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"LinkedService-WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"type\": \"AzureSqlLinkedService\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"Server=tcp:**********,1433;Database=mdpwikisamplev2;User ID=**********;Password=**********;Trusted_Connection=False;Encrypt=True;Connection Timeout=30\"\r\n    }\r\n  }\r\n}",
@@ -645,7 +645,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1XaWtpQWdncmVnYXRlZERhdGE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -654,7 +654,7 @@
           "99016cae-7242-4117-b905-3ec10cedc7bb"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -705,7 +705,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/HDILinkedService?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/HDILinkedService?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvSERJTGlua2VkU2VydmljZT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"HDILinkedService\",\r\n  \"properties\": {\r\n    \"type\": \"HDInsightBYOCLinkedService\",\r\n    \"typeProperties\": {\r\n      \"clusterUri\": \"https://test1.azurehdinsight.net/\",\r\n      \"userName\": \"admin\",\r\n      \"password\": \"**********\",\r\n      \"linkedServiceName\": \"LinkedService-CuratedWikiData\"\r\n    }\r\n  }\r\n}",
@@ -768,7 +768,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/HDILinkedService?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/HDILinkedService?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvSERJTGlua2VkU2VydmljZT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -777,7 +777,7 @@
           "db1f7cee-c954-49da-879b-245816c4aa1c"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -828,7 +828,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"type\": \"AzureSqlTableLocation\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"structure\": [\r\n      {\r\n        \"name\": \"slicetimestamp\",\r\n        \"position\": 0,\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"projectname\",\r\n        \"position\": 1,\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"hits\",\r\n        \"position\": 2,\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 10\r\n      }\r\n    }\r\n  }\r\n}",
@@ -882,7 +882,7 @@
           "Fri, 15 May 2015 19:18:23 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-05-01-preview"
+          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -894,7 +894,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -903,7 +903,7 @@
           "32123551-4d81-4433-8546-8f312d332dc7"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -954,7 +954,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -963,7 +963,7 @@
           "0ecf8108-b64c-4bcd-b4c1-3e2457d4873d"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1014,7 +1014,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX0N1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"type\": \"AzureBlobLocation\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"structure\": [\r\n      {\r\n        \"name\": \"slicetimestamp\",\r\n        \"position\": 0,\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"projectname\",\r\n        \"position\": 1,\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"pageviews\",\r\n        \"position\": 2,\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    }\r\n  }\r\n}",
@@ -1068,7 +1068,7 @@
           "Fri, 15 May 2015 19:18:30 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-05-01-preview"
+          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-07-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1080,7 +1080,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX0N1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1089,7 +1089,7 @@
           "71df2db8-9883-4e9e-b1ba-7a34a16f989d"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1140,7 +1140,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX0N1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1149,7 +1149,7 @@
           "ffb099cf-2ce7-4b93-9ba5-47dcf2321752"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1200,7 +1200,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"DA_WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"type\": \"AzureBlobLocation\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledatain/\"\r\n    },\r\n    \"linkedServiceName\": \"LinkedService-WikipediaClickEvents\",\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1,\r\n      \"waitOnExternal\": {\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryTimeout\": \"00:10:00\",\r\n        \"maximumRetry\": 3\r\n      }\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumSizeMB\": 1.0\r\n      }\r\n    }\r\n  }\r\n}",
@@ -1254,7 +1254,7 @@
           "Fri, 15 May 2015 19:18:35 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-05-01-preview"
+          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1266,7 +1266,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1275,7 +1275,7 @@
           "69333114-285b-48b1-9e7f-9cbe64450beb"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1326,7 +1326,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1335,7 +1335,7 @@
           "86d35b5a-4355-4b73-80bd-24f32f204b9b"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1386,7 +1386,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvZGF0YXBpcGVsaW5lcy9EUF9XaWtpcGVkaWE1OTYyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"DP_WikipediaSamplePipeline\",\r\n  \"properties\": {\r\n    \"description\": \"DP Wikipedia Sample Pipelines\",\r\n    \"activities\": [\r\n      {\r\n        \"name\": \"WikiHiveActivity\",\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_WikipediaClickEvents\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"linkedServiceName\": \"HDILinkedService\",\r\n        \"type\": \"HDInsightHiveActivity\",\r\n        \"typeProperties\": {\r\n          \"script\": \"$$Text.Format('CREATE EXTERNAL TABLE IF NOT EXISTS values2 (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\' \\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@**********.blob.core.windows.net/wikisampledatain\\\\'; CREATE EXTERNAL TABLE IF NOT EXISTS stats2 (slicetimestamp string, projectname string, pageviews string) PARTITIONED BY (runtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\',\\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@**********.blob.core.windows.net/wikisampledataout\\\\'; ALTER TABLE stats2 ADD IF NOT EXISTS PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') LOCATION \\\\'wasb://wikidatagateway@**********.blob.core.windows.net/wikisampledataout/runtime={0:yyyyMMddHH}\\\\'; INSERT OVERWRITE TABLE stats2 PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\\\'{0:yyyy/MM/dd HH:00:00}\\\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\\\'[.]\\\\'))=1 THEN \\\\'wikipedia\\\\' ELSE CASE split(projectname, \\\\'[.]\\\\')[1] WHEN \\\\'b\\\\' THEN \\\\'wikibooks\\\\' WHEN \\\\'d\\\\' THEN \\\\'wiktionary\\\\' WHEN \\\\'m\\\\' THEN \\\\'wikimedia\\\\' WHEN \\\\'mv\\\\' THEN \\\\'wikipedia mobile\\\\' WHEN \\\\'n\\\\' THEN \\\\'wikinews\\\\' WHEN \\\\'q\\\\' THEN \\\\'wikiquote\\\\' WHEN \\\\'s\\\\' THEN \\\\'wikisource\\\\' WHEN \\\\'v\\\\' THEN \\\\'wikiversity\\\\' WHEN \\\\'w\\\\' THEN \\\\'mediawiki\\\\' ELSE \\\\'n/a\\\\' END END AS projectname, pageviews FROM values2) A GROUP BY slicetimestamp, projectname;', SliceStart)\"\r\n        },\r\n        \"policy\": {\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2,\r\n          \"timeout\": \"01:00:00\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"BlobToSqlCopyActivity\",\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_WikiAggregatedData\"\r\n          }\r\n        ],\r\n        \"type\": \"CopyActivity\",\r\n        \"typeProperties\": {\r\n          \"source\": {\r\n            \"type\": \"BlobSource\",\r\n            \"blobColumnSeparators\": \",\"\r\n          },\r\n          \"sink\": {\r\n            \"type\": \"SqlSink\",\r\n            \"writeBatchSize\": 1000000,\r\n            \"writeBatchTimeout\": \"01:00:00\"\r\n          }\r\n        },\r\n        \"policy\": {\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2,\r\n          \"timeout\": \"01:00:00\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -1440,7 +1440,7 @@
           "Fri, 15 May 2015 19:18:42 GMT"
         ],
         "Location": [
-          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-05-01-preview"
+          "https://api-current.resources.windows-int.net/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-07-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1452,7 +1452,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvZGF0YXBpcGVsaW5lcy9EUF9XaWtpcGVkaWE1OTYyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1461,7 +1461,7 @@
           "cbeb7c29-4227-43cb-ada5-f529dae2e1ce"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1512,7 +1512,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvZGF0YXBpcGVsaW5lcy9EUF9XaWtpcGVkaWE1OTYyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1521,7 +1521,7 @@
           "9b7ea2a4-d9e7-4ce7-b0e6-5f8b2b1fcf24"
         ],
         "x-ms-version": [
-          "2015-05-01-preview"
+          "2015-07-01-preview"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
@@ -1572,7 +1572,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962/update?start=2014-10-08T08:00:00&end=2014-10-08T10:00:00&autoResolve=false&forceRecalc=false&api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/datapipelines/DP_Wikipedia5962/update?start=2014-10-08T08:00:00&end=2014-10-08T10:00:00&autoResolve=false&forceRecalc=false&api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvZGF0YXBpcGVsaW5lcy9EUF9XaWtpcGVkaWE1OTYyL3VwZGF0ZT9zdGFydD0yMDE0LTEwLTA4VDA4JTNBMDAlM0EwMCZlbmQ9MjAxNC0xMC0wOFQxMCUzQTAwJTNBMDAmYXV0b1Jlc29sdmU9ZmFsc2UmZm9yY2VSZWNhbGM9ZmFsc2UmYXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "",
@@ -1626,7 +1626,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1XaWtpcGVkaWFDbGlja0V2ZW50cz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1683,7 +1683,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1DdXJhdGVkV2lraURhdGE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1740,7 +1740,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvTGlua2VkU2VydmljZS1XaWtpQWdncmVnYXRlZERhdGE/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1797,7 +1797,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/HDILinkedService?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/linkedservices/HDILinkedService?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvbGlua2Vkc2VydmljZXMvSERJTGlua2VkU2VydmljZT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1854,7 +1854,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1911,7 +1911,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX0N1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1968,7 +1968,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2025,7 +2025,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData/slices?start=2014-10-08T08:00:00&end=2014-10-08T10:00:00&api-version=2015-05-01-preview",
+      "RequestUri": "/subscriptions/0093e900-1f14-4f8c-8273-f6c454e3b30e/resourcegroups/resourcegroup8221/providers/Microsoft.DataFactory/datafactories/DataFactory1236/tables/DA_WikiAggregatedData/slices?start=2014-10-08T08:00:00&end=2014-10-08T10:00:00&api-version=2015-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5M2U5MDAtMWYxNC00ZjhjLTgyNzMtZjZjNDU0ZTNiMzBlL3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA4MjIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUZhY3RvcnkvZGF0YWZhY3Rvcmllcy9EYXRhRmFjdG9yeTEyMzYvdGFibGVzL0RBX1dpa2lBZ2dyZWdhdGVkRGF0YS9zbGljZXM/c3RhcnQ9MjAxNC0xMC0wOFQwOCUzQTAwJTNBMDAmZW5kPTIwMTQtMTAtMDhUMTAlM0EwMCUzQTAwJmFwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
