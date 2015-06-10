@@ -126,6 +126,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._instanceCount = value; }
         }
         
+        private string _operationalState;
+        
+        /// <summary>
+        /// Optional. Gets operational state of application gateway resource
+        /// </summary>
+        public string OperationalState
+        {
+            get { return this._operationalState; }
+            set { this._operationalState = value; }
+        }
+        
         private string _provisioningState;
         
         /// <summary>

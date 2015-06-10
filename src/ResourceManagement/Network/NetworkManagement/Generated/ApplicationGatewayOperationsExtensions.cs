@@ -164,18 +164,14 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Start ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        public static VirtualNetworkGatewayPutResponse BeginStart(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static VirtualNetworkGatewayPutResponse BeginStart(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApplicationGatewayOperations)s).BeginStartAsync(resourceGroupName, applicationGatewayName, parameters);
+                return ((IApplicationGatewayOperations)s).BeginStartAsync(resourceGroupName, applicationGatewayName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -194,16 +190,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Start ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        public static Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
-            return operations.BeginStartAsync(resourceGroupName, applicationGatewayName, parameters, CancellationToken.None);
+            return operations.BeginStartAsync(resourceGroupName, applicationGatewayName, CancellationToken.None);
         }
         
         /// <summary>
@@ -220,18 +212,14 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        public static VirtualNetworkGatewayPutResponse BeginStop(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static VirtualNetworkGatewayPutResponse BeginStop(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApplicationGatewayOperations)s).BeginStopAsync(resourceGroupName, applicationGatewayName, parameters);
+                return ((IApplicationGatewayOperations)s).BeginStopAsync(resourceGroupName, applicationGatewayName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -250,16 +238,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        public static Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
-            return operations.BeginStopAsync(resourceGroupName, applicationGatewayName, parameters, CancellationToken.None);
+            return operations.BeginStopAsync(resourceGroupName, applicationGatewayName, CancellationToken.None);
         }
         
         /// <summary>
@@ -516,10 +500,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Start ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
@@ -531,11 +511,11 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static AzureAsyncOperationResponse Start(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static AzureAsyncOperationResponse Start(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApplicationGatewayOperations)s).StartAsync(resourceGroupName, applicationGatewayName, parameters);
+                return ((IApplicationGatewayOperations)s).StartAsync(resourceGroupName, applicationGatewayName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -554,10 +534,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Start ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
@@ -569,9 +545,9 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<AzureAsyncOperationResponse> StartAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static Task<AzureAsyncOperationResponse> StartAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
-            return operations.StartAsync(resourceGroupName, applicationGatewayName, parameters, CancellationToken.None);
+            return operations.StartAsync(resourceGroupName, applicationGatewayName, CancellationToken.None);
         }
         
         /// <summary>
@@ -588,10 +564,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
@@ -603,11 +575,11 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static AzureAsyncOperationResponse Stop(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static AzureAsyncOperationResponse Stop(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApplicationGatewayOperations)s).StopAsync(resourceGroupName, applicationGatewayName, parameters);
+                return ((IApplicationGatewayOperations)s).StopAsync(resourceGroupName, applicationGatewayName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -626,10 +598,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
@@ -641,9 +609,9 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<AzureAsyncOperationResponse> StopAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
+        public static Task<AzureAsyncOperationResponse> StopAsync(this IApplicationGatewayOperations operations, string resourceGroupName, string applicationGatewayName)
         {
-            return operations.StopAsync(resourceGroupName, applicationGatewayName, parameters, CancellationToken.None);
+            return operations.StopAsync(resourceGroupName, applicationGatewayName, CancellationToken.None);
         }
     }
 }

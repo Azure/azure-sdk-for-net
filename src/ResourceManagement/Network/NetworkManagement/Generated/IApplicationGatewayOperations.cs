@@ -88,17 +88,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Begin Start ApplicationGateway operation
-        /// through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The STOP ApplicationGateway operation stops application gatewayin
@@ -110,17 +106,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Begin Stop ApplicationGateway operation
-        /// through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Put ApplicationGateway operation creates/updates a
@@ -222,10 +214,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Begin Start ApplicationGateway operation
-        /// through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -240,7 +228,7 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<AzureAsyncOperationResponse> StartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        Task<AzureAsyncOperationResponse> StartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The STOP ApplicationGateway operation stops application gatewayin
@@ -252,10 +240,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Begin Stop ApplicationGateway operation
-        /// through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -270,6 +254,6 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<AzureAsyncOperationResponse> StopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken);
+        Task<AzureAsyncOperationResponse> StopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken);
     }
 }

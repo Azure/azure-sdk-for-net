@@ -188,6 +188,11 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["fqdn"] = parameters.Fqdn;
                 }
                 
+                if (parameters.OperationalState != null)
+                {
+                    propertiesValue["operationalState"] = parameters.OperationalState;
+                }
+                
                 if (parameters.GatewayIpConfigurations != null)
                 {
                     if (parameters.GatewayIpConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.GatewayIpConfigurations).IsInitialized)
@@ -292,68 +297,68 @@ namespace Microsoft.Azure.Management.Network
                 {
                     if (parameters.FrontendIpConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.FrontendIpConfigurations).IsInitialized)
                     {
-                        JArray frontendIPConfigurationsArray = new JArray();
-                        foreach (ApplicationGatewayFrontendIpConfiguration frontendIPConfigurationsItem in parameters.FrontendIpConfigurations)
+                        JArray frontendIpConfigurationsArray = new JArray();
+                        foreach (ApplicationGatewayFrontendIpConfiguration frontendIpConfigurationsItem in parameters.FrontendIpConfigurations)
                         {
                             JObject applicationGatewayFrontendIpConfigurationJsonFormatValue = new JObject();
-                            frontendIPConfigurationsArray.Add(applicationGatewayFrontendIpConfigurationJsonFormatValue);
+                            frontendIpConfigurationsArray.Add(applicationGatewayFrontendIpConfigurationJsonFormatValue);
                             
                             JObject propertiesValue4 = new JObject();
                             applicationGatewayFrontendIpConfigurationJsonFormatValue["properties"] = propertiesValue4;
                             
-                            if (frontendIPConfigurationsItem.PrivateIpAddress != null)
+                            if (frontendIpConfigurationsItem.PrivateIpAddress != null)
                             {
-                                propertiesValue4["privateIPAddress"] = frontendIPConfigurationsItem.PrivateIpAddress;
+                                propertiesValue4["privateIPAddress"] = frontendIpConfigurationsItem.PrivateIpAddress;
                             }
                             
-                            if (frontendIPConfigurationsItem.PrivateIpAllocationMethod != null)
+                            if (frontendIpConfigurationsItem.PrivateIpAllocationMethod != null)
                             {
-                                propertiesValue4["privateIPAllocationMethod"] = frontendIPConfigurationsItem.PrivateIpAllocationMethod;
+                                propertiesValue4["privateIPAllocationMethod"] = frontendIpConfigurationsItem.PrivateIpAllocationMethod;
                             }
                             
-                            if (frontendIPConfigurationsItem.Subnet != null)
+                            if (frontendIpConfigurationsItem.Subnet != null)
                             {
                                 JObject subnetValue2 = new JObject();
                                 propertiesValue4["subnet"] = subnetValue2;
                                 
-                                if (frontendIPConfigurationsItem.Subnet.Id != null)
+                                if (frontendIpConfigurationsItem.Subnet.Id != null)
                                 {
-                                    subnetValue2["id"] = frontendIPConfigurationsItem.Subnet.Id;
+                                    subnetValue2["id"] = frontendIpConfigurationsItem.Subnet.Id;
                                 }
                             }
                             
-                            if (frontendIPConfigurationsItem.PublicIpAddress != null)
+                            if (frontendIpConfigurationsItem.PublicIpAddress != null)
                             {
                                 JObject publicIPAddressValue = new JObject();
                                 propertiesValue4["publicIPAddress"] = publicIPAddressValue;
                                 
-                                if (frontendIPConfigurationsItem.PublicIpAddress.Id != null)
+                                if (frontendIpConfigurationsItem.PublicIpAddress.Id != null)
                                 {
-                                    publicIPAddressValue["id"] = frontendIPConfigurationsItem.PublicIpAddress.Id;
+                                    publicIPAddressValue["id"] = frontendIpConfigurationsItem.PublicIpAddress.Id;
                                 }
                             }
                             
-                            if (frontendIPConfigurationsItem.ProvisioningState != null)
+                            if (frontendIpConfigurationsItem.ProvisioningState != null)
                             {
-                                propertiesValue4["provisioningState"] = frontendIPConfigurationsItem.ProvisioningState;
+                                propertiesValue4["provisioningState"] = frontendIpConfigurationsItem.ProvisioningState;
                             }
                             
-                            if (frontendIPConfigurationsItem.Name != null)
+                            if (frontendIpConfigurationsItem.Name != null)
                             {
-                                applicationGatewayFrontendIpConfigurationJsonFormatValue["name"] = frontendIPConfigurationsItem.Name;
+                                applicationGatewayFrontendIpConfigurationJsonFormatValue["name"] = frontendIpConfigurationsItem.Name;
                             }
                             
-                            if (frontendIPConfigurationsItem.Etag != null)
+                            if (frontendIpConfigurationsItem.Etag != null)
                             {
-                                applicationGatewayFrontendIpConfigurationJsonFormatValue["etag"] = frontendIPConfigurationsItem.Etag;
+                                applicationGatewayFrontendIpConfigurationJsonFormatValue["etag"] = frontendIpConfigurationsItem.Etag;
                             }
                             
-                            if (frontendIPConfigurationsItem.Id != null)
+                            if (frontendIpConfigurationsItem.Id != null)
                             {
-                                applicationGatewayFrontendIpConfigurationJsonFormatValue["id"] = frontendIPConfigurationsItem.Id;
+                                applicationGatewayFrontendIpConfigurationJsonFormatValue["id"] = frontendIpConfigurationsItem.Id;
                             }
                         }
-                        propertiesValue["frontendIPConfigurations"] = frontendIPConfigurationsArray;
+                        propertiesValue["frontendIpConfigurations"] = frontendIpConfigurationsArray;
                     }
                 }
                 
@@ -787,6 +792,13 @@ namespace Microsoft.Azure.Management.Network
                                     applicationGatewayInstance.Fqdn = fqdnInstance;
                                 }
                                 
+                                JToken operationalStateValue = propertiesValue10["operationalState"];
+                                if (operationalStateValue != null && operationalStateValue.Type != JTokenType.Null)
+                                {
+                                    string operationalStateInstance = ((string)operationalStateValue);
+                                    applicationGatewayInstance.OperationalState = operationalStateInstance;
+                                }
+                                
                                 JToken gatewayIpConfigurationsArray2 = propertiesValue10["gatewayIpConfigurations"];
                                 if (gatewayIpConfigurationsArray2 != null && gatewayIpConfigurationsArray2.Type != JTokenType.Null)
                                 {
@@ -906,15 +918,15 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken frontendIPConfigurationsArray2 = propertiesValue10["frontendIPConfigurations"];
-                                if (frontendIPConfigurationsArray2 != null && frontendIPConfigurationsArray2.Type != JTokenType.Null)
+                                JToken frontendIpConfigurationsArray2 = propertiesValue10["frontendIpConfigurations"];
+                                if (frontendIpConfigurationsArray2 != null && frontendIpConfigurationsArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray2))
+                                    foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray2))
                                     {
                                         ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
                                         applicationGatewayInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue13 = frontendIPConfigurationsValue["properties"];
+                                        JToken propertiesValue13 = frontendIpConfigurationsValue["properties"];
                                         if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                         {
                                             JToken privateIPAddressValue = propertiesValue13["privateIPAddress"];
@@ -967,21 +979,21 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue3 = frontendIPConfigurationsValue["name"];
+                                        JToken nameValue3 = frontendIpConfigurationsValue["name"];
                                         if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                         {
                                             string nameInstance3 = ((string)nameValue3);
                                             applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
                                         }
                                         
-                                        JToken etagValue3 = frontendIPConfigurationsValue["etag"];
+                                        JToken etagValue3 = frontendIpConfigurationsValue["etag"];
                                         if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                         {
                                             string etagInstance3 = ((string)etagValue3);
                                             applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
                                         }
                                         
-                                        JToken idValue6 = frontendIPConfigurationsValue["id"];
+                                        JToken idValue6 = frontendIpConfigurationsValue["id"];
                                         if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                         {
                                             string idInstance6 = ((string)idValue6);
@@ -1689,17 +1701,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Start ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        public async Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        public async Task<VirtualNetworkGatewayPutResponse> BeginStartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1709,14 +1717,6 @@ namespace Microsoft.Azure.Management.Network
             if (applicationGatewayName == null)
             {
                 throw new ArgumentNullException("applicationGatewayName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
             }
             
             // Tracing
@@ -1728,7 +1728,6 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("applicationGatewayName", applicationGatewayName);
-                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "BeginStartAsync", tracingParameters);
             }
             
@@ -1794,7 +1793,7 @@ namespace Microsoft.Azure.Management.Network
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1856,17 +1855,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response for PutVirtualNetworkGateway Api servive call
         /// </returns>
-        public async Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        public async Task<VirtualNetworkGatewayPutResponse> BeginStopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1876,14 +1871,6 @@ namespace Microsoft.Azure.Management.Network
             if (applicationGatewayName == null)
             {
                 throw new ArgumentNullException("applicationGatewayName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
             }
             
             // Tracing
@@ -1895,7 +1882,6 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("applicationGatewayName", applicationGatewayName);
-                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "BeginStopAsync", tracingParameters);
             }
             
@@ -1961,7 +1947,7 @@ namespace Microsoft.Azure.Management.Network
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -2314,6 +2300,13 @@ namespace Microsoft.Azure.Management.Network
                                     applicationGatewayInstance.Fqdn = fqdnInstance;
                                 }
                                 
+                                JToken operationalStateValue = propertiesValue["operationalState"];
+                                if (operationalStateValue != null && operationalStateValue.Type != JTokenType.Null)
+                                {
+                                    string operationalStateInstance = ((string)operationalStateValue);
+                                    applicationGatewayInstance.OperationalState = operationalStateInstance;
+                                }
+                                
                                 JToken gatewayIpConfigurationsArray = propertiesValue["gatewayIpConfigurations"];
                                 if (gatewayIpConfigurationsArray != null && gatewayIpConfigurationsArray.Type != JTokenType.Null)
                                 {
@@ -2433,15 +2426,15 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken frontendIPConfigurationsArray = propertiesValue["frontendIPConfigurations"];
-                                if (frontendIPConfigurationsArray != null && frontendIPConfigurationsArray.Type != JTokenType.Null)
+                                JToken frontendIpConfigurationsArray = propertiesValue["frontendIpConfigurations"];
+                                if (frontendIpConfigurationsArray != null && frontendIpConfigurationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray))
+                                    foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray))
                                     {
                                         ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
                                         applicationGatewayInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue4 = frontendIPConfigurationsValue["properties"];
+                                        JToken propertiesValue4 = frontendIpConfigurationsValue["properties"];
                                         if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                         {
                                             JToken privateIPAddressValue = propertiesValue4["privateIPAddress"];
@@ -2494,21 +2487,21 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue3 = frontendIPConfigurationsValue["name"];
+                                        JToken nameValue3 = frontendIpConfigurationsValue["name"];
                                         if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                         {
                                             string nameInstance3 = ((string)nameValue3);
                                             applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
                                         }
                                         
-                                        JToken etagValue3 = frontendIPConfigurationsValue["etag"];
+                                        JToken etagValue3 = frontendIpConfigurationsValue["etag"];
                                         if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                         {
                                             string etagInstance3 = ((string)etagValue3);
                                             applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
                                         }
                                         
-                                        JToken idValue6 = frontendIPConfigurationsValue["id"];
+                                        JToken idValue6 = frontendIpConfigurationsValue["id"];
                                         if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                         {
                                             string idInstance6 = ((string)idValue6);
@@ -3293,10 +3286,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Start ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -3311,7 +3300,7 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async Task<AzureAsyncOperationResponse> StartAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        public async Task<AzureAsyncOperationResponse> StartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken)
         {
             NetworkResourceProviderClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -3322,12 +3311,11 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("applicationGatewayName", applicationGatewayName);
-                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "StartAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            VirtualNetworkGatewayPutResponse response = await client.ApplicationGateways.BeginStartAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+            VirtualNetworkGatewayPutResponse response = await client.ApplicationGateways.BeginStartAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
@@ -3374,10 +3362,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='applicationGatewayName'>
         /// Required. The name of the application gateway.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Stop ApplicationGateway
-        /// operation through Network resource provider.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -3392,7 +3376,7 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async Task<AzureAsyncOperationResponse> StopAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken)
+        public async Task<AzureAsyncOperationResponse> StopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken)
         {
             NetworkResourceProviderClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -3403,12 +3387,11 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("applicationGatewayName", applicationGatewayName);
-                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            VirtualNetworkGatewayPutResponse response = await client.ApplicationGateways.BeginStopAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+            VirtualNetworkGatewayPutResponse response = await client.ApplicationGateways.BeginStopAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
