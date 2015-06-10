@@ -33,6 +33,7 @@
     <Compile Include="Generated\JobOperationsExtensions.cs" />
     <Compile Include="Generated\JobQueryParameter.cs" />
     <Compile Include="Generated\JobResponse.cs" />
+    <Compile Include="Generated\Models\AddProtectionPolicyRequest.cs" />
     <Compile Include="Generated\Models\BackupSchedule.cs" />
     <Compile Include="Generated\Models\ContainerInfo.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Generated\Models\RetentionDurationType.cs" />
     <Compile Include="Generated\Models\RetentionPolicy.cs" />
     <Compile Include="Generated\Models\UnregisterContainerRequest.cs" />
+    <Compile Include="Generated\Models\UpdateProtectionPolicyRequest.cs" />
     <Compile Include="Generated\Models\VaultCredUploadCertRequest.cs" />
     <Compile Include="Generated\Models\VaultCredUploadCertResponse.cs" />
     <Compile Include="Generated\ProtectableObjectOperations.cs" />
