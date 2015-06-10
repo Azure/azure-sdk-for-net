@@ -20,47 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// HDInsight activity properties.
+    /// The get Data Slice Run operation response.
     /// </summary>
-    public abstract partial class HDInsightActivityPropertiesBase
+    public partial class DataSliceRunGetResponse : AzureOperationResponse
     {
-        private IList<string> _arguments;
+        private DataSliceRun _dataSliceRun;
         
         /// <summary>
-        /// Optional. User specified arguments to HDInsightActivity.
+        /// Optional. Data Slice Run record.
         /// </summary>
-        public IList<string> Arguments
+        public DataSliceRun DataSliceRun
         {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
-        private IList<string> _storageLinkedServices;
-        
-        /// <summary>
-        /// Optional. Storage linked services.
-        /// </summary>
-        public IList<string> StorageLinkedServices
-        {
-            get { return this._storageLinkedServices; }
-            set { this._storageLinkedServices = value; }
+            get { return this._dataSliceRun; }
+            set { this._dataSliceRun = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the HDInsightActivityPropertiesBase
-        /// class.
+        /// Initializes a new instance of the DataSliceRunGetResponse class.
         /// </summary>
-        public HDInsightActivityPropertiesBase()
+        public DataSliceRunGetResponse()
         {
-            this.Arguments = new LazyList<string>();
-            this.StorageLinkedServices = new LazyList<string>();
         }
     }
 }

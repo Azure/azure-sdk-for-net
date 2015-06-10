@@ -55,6 +55,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._clusterSize = value; }
         }
         
+        private string _clusterType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the flavor for the HDInsight cluster.
+        /// </summary>
+        public string ClusterType
+        {
+            get { return this._clusterType; }
+            set { this._clusterType = value; }
+        }
+        
         private IDictionary<string, string> _coreConfiguration;
         
         /// <summary>
@@ -65,6 +76,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             get { return this._coreConfiguration; }
             set { this._coreConfiguration = value; }
+        }
+        
+        private string _dataNodeSize;
+        
+        /// <summary>
+        /// Optional. Gets or sets the size of the Data Node.
+        /// </summary>
+        public string DataNodeSize
+        {
+            get { return this._dataNodeSize; }
+            set { this._dataNodeSize = value; }
         }
         
         private IDictionary<string, string> _hBaseConfiguration;
@@ -100,6 +122,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             get { return this._hdfsConfiguration; }
             set { this._hdfsConfiguration = value; }
+        }
+        
+        private string _headNodeSize;
+        
+        /// <summary>
+        /// Optional. Gets or sets the size of the Head Node.
+        /// </summary>
+        public string HeadNodeSize
+        {
+            get { return this._headNodeSize; }
+            set { this._headNodeSize = value; }
         }
         
         private IDictionary<string, string> _hiveConfiguration;
@@ -161,6 +194,62 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._oozieConfiguration = value; }
         }
         
+        private string _oSType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of operating system installed on
+        /// cluster nodes.
+        /// </summary>
+        public string OSType
+        {
+            get { return this._oSType; }
+            set { this._oSType = value; }
+        }
+        
+        private IDictionary<string, string> _sparkConfiguration;
+        
+        /// <summary>
+        /// Optional. The Spark service configuration of this HDInsight cluster.
+        /// </summary>
+        public IDictionary<string, string> SparkConfiguration
+        {
+            get { return this._sparkConfiguration; }
+            set { this._sparkConfiguration = value; }
+        }
+        
+        private string _sshPassword;
+        
+        /// <summary>
+        /// Optional. Gets or sets SSH password.
+        /// </summary>
+        public string SshPassword
+        {
+            get { return this._sshPassword; }
+            set { this._sshPassword = value; }
+        }
+        
+        private string _sshPublicKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the public key to be used for SSH.
+        /// </summary>
+        public string SshPublicKey
+        {
+            get { return this._sshPublicKey; }
+            set { this._sshPublicKey = value; }
+        }
+        
+        private string _sshUserName;
+        
+        /// <summary>
+        /// Optional. Gets or sets SSH user name.
+        /// </summary>
+        public string SshUserName
+        {
+            get { return this._sshUserName; }
+            set { this._sshUserName = value; }
+        }
+        
         private IDictionary<string, string> _stormConfiguration;
         
         /// <summary>
@@ -207,6 +296,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._yarnConfiguration = value; }
         }
         
+        private string _zookeeperNodeSize;
+        
+        /// <summary>
+        /// Optional. Gets or sets the size of the Zookeeper Node.
+        /// </summary>
+        public string ZookeeperNodeSize
+        {
+            get { return this._zookeeperNodeSize; }
+            set { this._zookeeperNodeSize = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the HDInsightOnDemandLinkedService
         /// class.
@@ -220,6 +320,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.HiveConfiguration = new LazyDictionary<string, string>();
             this.MapReduceConfiguration = new LazyDictionary<string, string>();
             this.OozieConfiguration = new LazyDictionary<string, string>();
+            this.SparkConfiguration = new LazyDictionary<string, string>();
             this.StormConfiguration = new LazyDictionary<string, string>();
             this.YarnConfiguration = new LazyDictionary<string, string>();
         }

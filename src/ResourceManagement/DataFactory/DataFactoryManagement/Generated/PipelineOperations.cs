@@ -780,15 +780,30 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 transformationValue2["scriptLinkedService"] = derived15.ScriptLinkedService;
                                             }
                                             
+                                            if (derived15.Defines != null)
+                                            {
+                                                if (derived15.Defines is ILazyCollection == false || ((ILazyCollection)derived15.Defines).IsInitialized)
+                                                {
+                                                    JObject definesDictionary = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair2 in derived15.Defines)
+                                                    {
+                                                        string definesKey = pair2.Key;
+                                                        string definesValue = pair2.Value;
+                                                        definesDictionary[definesKey] = definesValue;
+                                                    }
+                                                    transformationValue2["defines"] = definesDictionary;
+                                                }
+                                            }
+                                            
                                             if (derived15.ExtendedProperties != null)
                                             {
                                                 if (derived15.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived15.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair2 in derived15.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair3 in derived15.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey = pair2.Key;
-                                                        string extendedPropertiesValue = pair2.Value;
+                                                        string extendedPropertiesKey = pair3.Key;
+                                                        string extendedPropertiesValue = pair3.Value;
                                                         extendedPropertiesDictionary[extendedPropertiesKey] = extendedPropertiesValue;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary;
@@ -803,6 +818,16 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     storageLinkedServicesArray.Add(storageLinkedServicesItem);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray;
+                                            }
+                                            
+                                            if (derived15.Arguments != null)
+                                            {
+                                                JArray argumentsArray = new JArray();
+                                                foreach (string argumentsItem in derived15.Arguments)
+                                                {
+                                                    argumentsArray.Add(argumentsItem);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray;
                                             }
                                         }
                                         if (derived14.Transformation is Pig)
@@ -830,10 +855,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 if (derived16.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived16.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary2 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair3 in derived16.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair4 in derived16.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey2 = pair3.Key;
-                                                        string extendedPropertiesValue2 = pair3.Value;
+                                                        string extendedPropertiesKey2 = pair4.Key;
+                                                        string extendedPropertiesValue2 = pair4.Value;
                                                         extendedPropertiesDictionary2[extendedPropertiesKey2] = extendedPropertiesValue2;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary2;
@@ -848,6 +873,16 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     storageLinkedServicesArray2.Add(storageLinkedServicesItem2);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray2;
+                                            }
+                                            
+                                            if (derived16.Arguments != null)
+                                            {
+                                                JArray argumentsArray2 = new JArray();
+                                                foreach (string argumentsItem2 in derived16.Arguments)
+                                                {
+                                                    argumentsArray2.Add(argumentsItem2);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray2;
                                             }
                                         }
                                         if (derived14.Transformation is MapReduce)
@@ -877,16 +912,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            if (derived17.Arguments != null)
+                                            if (derived17.Defines != null)
                                             {
-                                                if (derived17.Arguments is ILazyCollection == false || ((ILazyCollection)derived17.Arguments).IsInitialized)
+                                                if (derived17.Defines is ILazyCollection == false || ((ILazyCollection)derived17.Defines).IsInitialized)
                                                 {
-                                                    JArray argumentsArray = new JArray();
-                                                    foreach (string argumentsItem in derived17.Arguments)
+                                                    JObject definesDictionary2 = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair5 in derived17.Defines)
                                                     {
-                                                        argumentsArray.Add(argumentsItem);
+                                                        string definesKey2 = pair5.Key;
+                                                        string definesValue2 = pair5.Value;
+                                                        definesDictionary2[definesKey2] = definesValue2;
                                                     }
-                                                    transformationValue2["arguments"] = argumentsArray;
+                                                    transformationValue2["defines"] = definesDictionary2;
                                                 }
                                             }
                                             
@@ -895,10 +932,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 if (derived17.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived17.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary3 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair4 in derived17.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair6 in derived17.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey3 = pair4.Key;
-                                                        string extendedPropertiesValue3 = pair4.Value;
+                                                        string extendedPropertiesKey3 = pair6.Key;
+                                                        string extendedPropertiesValue3 = pair6.Value;
                                                         extendedPropertiesDictionary3[extendedPropertiesKey3] = extendedPropertiesValue3;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary3;
@@ -913,6 +950,16 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     storageLinkedServicesArray3.Add(storageLinkedServicesItem3);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray3;
+                                            }
+                                            
+                                            if (derived17.Arguments != null)
+                                            {
+                                                JArray argumentsArray3 = new JArray();
+                                                foreach (string argumentsItem3 in derived17.Arguments)
+                                                {
+                                                    argumentsArray3.Add(argumentsItem3);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray3;
                                             }
                                         }
                                         if (derived14.Transformation is Streaming)
@@ -964,16 +1011,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            if (derived18.Arguments != null)
+                                            if (derived18.Defines != null)
                                             {
-                                                if (derived18.Arguments is ILazyCollection == false || ((ILazyCollection)derived18.Arguments).IsInitialized)
+                                                if (derived18.Defines is ILazyCollection == false || ((ILazyCollection)derived18.Defines).IsInitialized)
                                                 {
-                                                    JArray argumentsArray2 = new JArray();
-                                                    foreach (string argumentsItem2 in derived18.Arguments)
+                                                    JObject definesDictionary3 = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair7 in derived18.Defines)
                                                     {
-                                                        argumentsArray2.Add(argumentsItem2);
+                                                        string definesKey3 = pair7.Key;
+                                                        string definesValue3 = pair7.Value;
+                                                        definesDictionary3[definesKey3] = definesValue3;
                                                     }
-                                                    transformationValue2["arguments"] = argumentsArray2;
+                                                    transformationValue2["defines"] = definesDictionary3;
                                                 }
                                             }
                                             
@@ -982,10 +1031,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 if (derived18.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived18.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary4 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair5 in derived18.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair8 in derived18.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey4 = pair5.Key;
-                                                        string extendedPropertiesValue4 = pair5.Value;
+                                                        string extendedPropertiesKey4 = pair8.Key;
+                                                        string extendedPropertiesValue4 = pair8.Value;
                                                         extendedPropertiesDictionary4[extendedPropertiesKey4] = extendedPropertiesValue4;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary4;
@@ -1000,6 +1049,16 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     storageLinkedServicesArray4.Add(storageLinkedServicesItem4);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray4;
+                                            }
+                                            
+                                            if (derived18.Arguments != null)
+                                            {
+                                                JArray argumentsArray4 = new JArray();
+                                                foreach (string argumentsItem4 in derived18.Arguments)
+                                                {
+                                                    argumentsArray4.Add(argumentsItem4);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray4;
                                             }
                                         }
                                     }
@@ -1124,10 +1183,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                             if (derived19.Transformation.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived19.Transformation.ExtendedProperties).IsInitialized)
                                             {
                                                 JObject extendedPropertiesDictionary5 = new JObject();
-                                                foreach (KeyValuePair<string, string> pair6 in derived19.Transformation.ExtendedProperties)
+                                                foreach (KeyValuePair<string, string> pair9 in derived19.Transformation.ExtendedProperties)
                                                 {
-                                                    string extendedPropertiesKey5 = pair6.Key;
-                                                    string extendedPropertiesValue5 = pair6.Value;
+                                                    string extendedPropertiesKey5 = pair9.Key;
+                                                    string extendedPropertiesValue5 = pair9.Value;
                                                     extendedPropertiesDictionary5[extendedPropertiesKey5] = extendedPropertiesValue5;
                                                 }
                                                 transformationValue3["extendedProperties"] = extendedPropertiesDictionary5;
@@ -1246,10 +1305,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                             if (derived20.Transformation.StoredProcedureActivityParameters is ILazyCollection == false || ((ILazyCollection)derived20.Transformation.StoredProcedureActivityParameters).IsInitialized)
                                             {
                                                 JObject storedProcedureParametersDictionary2 = new JObject();
-                                                foreach (KeyValuePair<string, string> pair7 in derived20.Transformation.StoredProcedureActivityParameters)
+                                                foreach (KeyValuePair<string, string> pair10 in derived20.Transformation.StoredProcedureActivityParameters)
                                                 {
-                                                    string storedProcedureParametersKey2 = pair7.Key;
-                                                    string storedProcedureParametersValue2 = pair7.Value;
+                                                    string storedProcedureParametersKey2 = pair10.Key;
+                                                    string storedProcedureParametersValue2 = pair10.Value;
                                                     storedProcedureParametersDictionary2[storedProcedureParametersKey2] = storedProcedureParametersValue2;
                                                 }
                                                 transformationValue4["storedProcedureParameters"] = storedProcedureParametersDictionary2;
@@ -1366,10 +1425,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                             if (derived21.Transformation.WebServiceParameters is ILazyCollection == false || ((ILazyCollection)derived21.Transformation.WebServiceParameters).IsInitialized)
                                             {
                                                 JObject webServiceParametersDictionary = new JObject();
-                                                foreach (KeyValuePair<string, string> pair8 in derived21.Transformation.WebServiceParameters)
+                                                foreach (KeyValuePair<string, string> pair11 in derived21.Transformation.WebServiceParameters)
                                                 {
-                                                    string webServiceParametersKey = pair8.Key;
-                                                    string webServiceParametersValue = pair8.Value;
+                                                    string webServiceParametersKey = pair11.Key;
+                                                    string webServiceParametersValue = pair11.Value;
                                                     webServiceParametersDictionary[webServiceParametersKey] = webServiceParametersValue;
                                                 }
                                                 transformationValue5["webServiceParameters"] = webServiceParametersDictionary;
@@ -2333,13 +2392,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue7["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey4 = ((string)property2.Name);
+                                                            string definesValue4 = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey4, definesValue4);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey6 = ((string)property2.Name);
-                                                            string extendedPropertiesValue6 = ((string)property2.Value);
+                                                            string extendedPropertiesKey6 = ((string)property3.Name);
+                                                            string extendedPropertiesValue6 = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey6, extendedPropertiesValue6);
                                                         }
                                                     }
@@ -2350,6 +2420,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray5))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray5 = transformationValue7["arguments"];
+                                                    if (argumentsArray5 != null && argumentsArray5.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray5))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -2382,10 +2461,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey7 = ((string)property3.Name);
-                                                            string extendedPropertiesValue7 = ((string)property3.Value);
+                                                            string extendedPropertiesKey7 = ((string)property4.Name);
+                                                            string extendedPropertiesValue7 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey7, extendedPropertiesValue7);
                                                         }
                                                     }
@@ -2396,6 +2475,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray6))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray6 = transformationValue7["arguments"];
+                                                    if (argumentsArray6 != null && argumentsArray6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray6))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -2434,22 +2522,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray3 = transformationValue7["arguments"];
-                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue7["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray3))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey5 = ((string)property5.Name);
+                                                            string definesValue5 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey5, definesValue5);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey8 = ((string)property4.Name);
-                                                            string extendedPropertiesValue8 = ((string)property4.Value);
+                                                            string extendedPropertiesKey8 = ((string)property6.Name);
+                                                            string extendedPropertiesValue8 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey8, extendedPropertiesValue8);
                                                         }
                                                     }
@@ -2460,6 +2550,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray7))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray7 = transformationValue7["arguments"];
+                                                    if (argumentsArray7 != null && argumentsArray7.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray7))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -2528,22 +2627,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray4 = transformationValue7["arguments"];
-                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue7["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray4))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey6 = ((string)property7.Name);
+                                                            string definesValue6 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey6, definesValue6);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey9 = ((string)property5.Name);
-                                                            string extendedPropertiesValue9 = ((string)property5.Value);
+                                                            string extendedPropertiesKey9 = ((string)property8.Name);
+                                                            string extendedPropertiesValue9 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey9, extendedPropertiesValue9);
                                                         }
                                                     }
@@ -2554,6 +2655,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray8))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray8 = transformationValue7["arguments"];
+                                                    if (argumentsArray8 != null && argumentsArray8.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray8))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -2734,10 +2844,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue8["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey10 = ((string)property6.Name);
-                                                        string extendedPropertiesValue10 = ((string)property6.Value);
+                                                        string extendedPropertiesKey10 = ((string)property9.Name);
+                                                        string extendedPropertiesValue10 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey10, extendedPropertiesValue10);
                                                     }
                                                 }
@@ -2896,10 +3006,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue9["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey4 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue3 = ((string)property7.Value);
+                                                        string storedProcedureParametersKey4 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue3 = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey4, storedProcedureParametersValue3);
                                                     }
                                                 }
@@ -3051,10 +3161,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue10["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey2 = ((string)property8.Name);
-                                                        string webServiceParametersValue2 = ((string)property8.Value);
+                                                        string webServiceParametersKey2 = ((string)property11.Name);
+                                                        string webServiceParametersValue2 = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey2, webServiceParametersValue2);
                                                     }
                                                 }
@@ -4234,13 +4344,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey = ((string)property2.Name);
+                                                            string definesValue = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey, definesValue);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property2.Name);
-                                                            string extendedPropertiesValue = ((string)property2.Value);
+                                                            string extendedPropertiesKey = ((string)property3.Name);
+                                                            string extendedPropertiesValue = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -4251,6 +4372,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray = transformationValue2["arguments"];
+                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -4283,10 +4413,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property3.Name);
-                                                            string extendedPropertiesValue2 = ((string)property3.Value);
+                                                            string extendedPropertiesKey2 = ((string)property4.Name);
+                                                            string extendedPropertiesValue2 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -4297,6 +4427,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray2 = transformationValue2["arguments"];
+                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -4335,22 +4474,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray = transformationValue2["arguments"];
-                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey2 = ((string)property5.Name);
+                                                            string definesValue2 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey3 = ((string)property4.Name);
-                                                            string extendedPropertiesValue3 = ((string)property4.Value);
+                                                            string extendedPropertiesKey3 = ((string)property6.Name);
+                                                            string extendedPropertiesValue3 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                         }
                                                     }
@@ -4361,6 +4502,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray3 = transformationValue2["arguments"];
+                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -4429,22 +4579,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray2 = transformationValue2["arguments"];
-                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey3 = ((string)property7.Name);
+                                                            string definesValue3 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property5.Name);
-                                                            string extendedPropertiesValue4 = ((string)property5.Value);
+                                                            string extendedPropertiesKey4 = ((string)property8.Name);
+                                                            string extendedPropertiesValue4 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -4455,6 +4607,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray4 = transformationValue2["arguments"];
+                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -4635,10 +4796,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey5 = ((string)property6.Name);
-                                                        string extendedPropertiesValue5 = ((string)property6.Value);
+                                                        string extendedPropertiesKey5 = ((string)property9.Name);
+                                                        string extendedPropertiesValue5 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                     }
                                                 }
@@ -4797,10 +4958,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue = ((string)property7.Value);
+                                                        string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
@@ -4952,10 +5113,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey = ((string)property8.Name);
-                                                        string webServiceParametersValue = ((string)property8.Value);
+                                                        string webServiceParametersKey = ((string)property11.Name);
+                                                        string webServiceParametersValue = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                     }
                                                 }
@@ -6528,13 +6689,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey = ((string)property2.Name);
+                                                            string definesValue = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey, definesValue);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property2.Name);
-                                                            string extendedPropertiesValue = ((string)property2.Value);
+                                                            string extendedPropertiesKey = ((string)property3.Name);
+                                                            string extendedPropertiesValue = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -6545,6 +6717,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray = transformationValue2["arguments"];
+                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -6577,10 +6758,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property3.Name);
-                                                            string extendedPropertiesValue2 = ((string)property3.Value);
+                                                            string extendedPropertiesKey2 = ((string)property4.Name);
+                                                            string extendedPropertiesValue2 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -6591,6 +6772,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray2 = transformationValue2["arguments"];
+                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -6629,22 +6819,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray = transformationValue2["arguments"];
-                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey2 = ((string)property5.Name);
+                                                            string definesValue2 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey3 = ((string)property4.Name);
-                                                            string extendedPropertiesValue3 = ((string)property4.Value);
+                                                            string extendedPropertiesKey3 = ((string)property6.Name);
+                                                            string extendedPropertiesValue3 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                         }
                                                     }
@@ -6655,6 +6847,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray3 = transformationValue2["arguments"];
+                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -6723,22 +6924,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray2 = transformationValue2["arguments"];
-                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey3 = ((string)property7.Name);
+                                                            string definesValue3 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property5.Name);
-                                                            string extendedPropertiesValue4 = ((string)property5.Value);
+                                                            string extendedPropertiesKey4 = ((string)property8.Name);
+                                                            string extendedPropertiesValue4 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -6749,6 +6952,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray4 = transformationValue2["arguments"];
+                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -6929,10 +7141,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey5 = ((string)property6.Name);
-                                                        string extendedPropertiesValue5 = ((string)property6.Value);
+                                                        string extendedPropertiesKey5 = ((string)property9.Name);
+                                                        string extendedPropertiesValue5 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                     }
                                                 }
@@ -7091,10 +7303,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue = ((string)property7.Value);
+                                                        string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
@@ -7246,10 +7458,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey = ((string)property8.Name);
-                                                        string webServiceParametersValue = ((string)property8.Value);
+                                                        string webServiceParametersKey = ((string)property11.Name);
+                                                        string webServiceParametersValue = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                     }
                                                 }
@@ -8342,13 +8554,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey = ((string)property2.Name);
+                                                            string definesValue = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey, definesValue);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property2.Name);
-                                                            string extendedPropertiesValue = ((string)property2.Value);
+                                                            string extendedPropertiesKey = ((string)property3.Name);
+                                                            string extendedPropertiesValue = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -8359,6 +8582,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray = transformationValue2["arguments"];
+                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -8391,10 +8623,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property3.Name);
-                                                            string extendedPropertiesValue2 = ((string)property3.Value);
+                                                            string extendedPropertiesKey2 = ((string)property4.Name);
+                                                            string extendedPropertiesValue2 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -8405,6 +8637,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray2 = transformationValue2["arguments"];
+                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -8443,22 +8684,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray = transformationValue2["arguments"];
-                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey2 = ((string)property5.Name);
+                                                            string definesValue2 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey3 = ((string)property4.Name);
-                                                            string extendedPropertiesValue3 = ((string)property4.Value);
+                                                            string extendedPropertiesKey3 = ((string)property6.Name);
+                                                            string extendedPropertiesValue3 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                         }
                                                     }
@@ -8469,6 +8712,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray3 = transformationValue2["arguments"];
+                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -8537,22 +8789,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray2 = transformationValue2["arguments"];
-                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey3 = ((string)property7.Name);
+                                                            string definesValue3 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property5.Name);
-                                                            string extendedPropertiesValue4 = ((string)property5.Value);
+                                                            string extendedPropertiesKey4 = ((string)property8.Name);
+                                                            string extendedPropertiesValue4 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -8563,6 +8817,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray4 = transformationValue2["arguments"];
+                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -8743,10 +9006,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey5 = ((string)property6.Name);
-                                                        string extendedPropertiesValue5 = ((string)property6.Value);
+                                                        string extendedPropertiesKey5 = ((string)property9.Name);
+                                                        string extendedPropertiesValue5 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                     }
                                                 }
@@ -8905,10 +9168,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue = ((string)property7.Value);
+                                                        string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
@@ -9060,10 +9323,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey = ((string)property8.Name);
-                                                        string webServiceParametersValue = ((string)property8.Value);
+                                                        string webServiceParametersKey = ((string)property11.Name);
+                                                        string webServiceParametersValue = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                     }
                                                 }
@@ -10223,13 +10486,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                             }
                                                             
+                                                            JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property2 in definesSequenceElement)
+                                                                {
+                                                                    string definesKey = ((string)property2.Name);
+                                                                    string definesValue = ((string)property2.Value);
+                                                                    hiveInstance.Defines.Add(definesKey, definesValue);
+                                                                }
+                                                            }
+                                                            
                                                             JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                                 {
-                                                                    string extendedPropertiesKey = ((string)property2.Name);
-                                                                    string extendedPropertiesValue = ((string)property2.Value);
+                                                                    string extendedPropertiesKey = ((string)property3.Name);
+                                                                    string extendedPropertiesValue = ((string)property3.Value);
                                                                     hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                                 }
                                                             }
@@ -10240,6 +10514,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                                 {
                                                                     hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray = transformationValue2["arguments"];
+                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                {
+                                                                    hiveInstance.Arguments.Add(((string)argumentsValue));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = hiveInstance;
@@ -10272,10 +10555,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                                 {
-                                                                    string extendedPropertiesKey2 = ((string)property3.Name);
-                                                                    string extendedPropertiesValue2 = ((string)property3.Value);
+                                                                    string extendedPropertiesKey2 = ((string)property4.Name);
+                                                                    string extendedPropertiesValue2 = ((string)property4.Value);
                                                                     pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                                 }
                                                             }
@@ -10286,6 +10569,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                                 {
                                                                     pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray2 = transformationValue2["arguments"];
+                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                {
+                                                                    pigInstance.Arguments.Add(((string)argumentsValue2));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = pigInstance;
@@ -10324,22 +10616,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray = transformationValue2["arguments"];
-                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                foreach (JProperty property5 in definesSequenceElement2)
                                                                 {
-                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                                    string definesKey2 = ((string)property5.Name);
+                                                                    string definesValue2 = ((string)property5.Value);
+                                                                    mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                                foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                                 {
-                                                                    string extendedPropertiesKey3 = ((string)property4.Name);
-                                                                    string extendedPropertiesValue3 = ((string)property4.Value);
+                                                                    string extendedPropertiesKey3 = ((string)property6.Name);
+                                                                    string extendedPropertiesValue3 = ((string)property6.Value);
                                                                     mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                                 }
                                                             }
@@ -10350,6 +10644,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                                 {
                                                                     mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray3 = transformationValue2["arguments"];
+                                                            if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                                {
+                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -10418,22 +10721,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray2 = transformationValue2["arguments"];
-                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                foreach (JProperty property7 in definesSequenceElement3)
                                                                 {
-                                                                    streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                                    string definesKey3 = ((string)property7.Name);
+                                                                    string definesValue3 = ((string)property7.Value);
+                                                                    streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                                foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                                 {
-                                                                    string extendedPropertiesKey4 = ((string)property5.Name);
-                                                                    string extendedPropertiesValue4 = ((string)property5.Value);
+                                                                    string extendedPropertiesKey4 = ((string)property8.Name);
+                                                                    string extendedPropertiesValue4 = ((string)property8.Value);
                                                                     streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                                 }
                                                             }
@@ -10444,6 +10749,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                                 {
                                                                     streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray4 = transformationValue2["arguments"];
+                                                            if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                                {
+                                                                    streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = streamingInstance;
@@ -10624,10 +10938,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                         if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                            foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                             {
-                                                                string extendedPropertiesKey5 = ((string)property6.Name);
-                                                                string extendedPropertiesValue5 = ((string)property6.Value);
+                                                                string extendedPropertiesKey5 = ((string)property9.Name);
+                                                                string extendedPropertiesValue5 = ((string)property9.Value);
                                                                 transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                             }
                                                         }
@@ -10786,10 +11100,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                         if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                            foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                             {
-                                                                string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                                string storedProcedureParametersValue = ((string)property7.Value);
+                                                                string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                                string storedProcedureParametersValue = ((string)property10.Value);
                                                                 transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                             }
                                                         }
@@ -10941,10 +11255,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                         if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                            foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                             {
-                                                                string webServiceParametersKey = ((string)property8.Name);
-                                                                string webServiceParametersValue = ((string)property8.Value);
+                                                                string webServiceParametersKey = ((string)property11.Name);
+                                                                string webServiceParametersValue = ((string)property11.Value);
                                                                 transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                             }
                                                         }
@@ -12054,13 +12368,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                             }
                                                             
+                                                            JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property2 in definesSequenceElement)
+                                                                {
+                                                                    string definesKey = ((string)property2.Name);
+                                                                    string definesValue = ((string)property2.Value);
+                                                                    hiveInstance.Defines.Add(definesKey, definesValue);
+                                                                }
+                                                            }
+                                                            
                                                             JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                                 {
-                                                                    string extendedPropertiesKey = ((string)property2.Name);
-                                                                    string extendedPropertiesValue = ((string)property2.Value);
+                                                                    string extendedPropertiesKey = ((string)property3.Name);
+                                                                    string extendedPropertiesValue = ((string)property3.Value);
                                                                     hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                                 }
                                                             }
@@ -12071,6 +12396,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                                 {
                                                                     hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray = transformationValue2["arguments"];
+                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                {
+                                                                    hiveInstance.Arguments.Add(((string)argumentsValue));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = hiveInstance;
@@ -12103,10 +12437,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                                 {
-                                                                    string extendedPropertiesKey2 = ((string)property3.Name);
-                                                                    string extendedPropertiesValue2 = ((string)property3.Value);
+                                                                    string extendedPropertiesKey2 = ((string)property4.Name);
+                                                                    string extendedPropertiesValue2 = ((string)property4.Value);
                                                                     pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                                 }
                                                             }
@@ -12117,6 +12451,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                                 {
                                                                     pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray2 = transformationValue2["arguments"];
+                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                {
+                                                                    pigInstance.Arguments.Add(((string)argumentsValue2));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = pigInstance;
@@ -12155,22 +12498,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray = transformationValue2["arguments"];
-                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                foreach (JProperty property5 in definesSequenceElement2)
                                                                 {
-                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                                    string definesKey2 = ((string)property5.Name);
+                                                                    string definesValue2 = ((string)property5.Value);
+                                                                    mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                                foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                                 {
-                                                                    string extendedPropertiesKey3 = ((string)property4.Name);
-                                                                    string extendedPropertiesValue3 = ((string)property4.Value);
+                                                                    string extendedPropertiesKey3 = ((string)property6.Name);
+                                                                    string extendedPropertiesValue3 = ((string)property6.Value);
                                                                     mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                                 }
                                                             }
@@ -12181,6 +12526,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                                 {
                                                                     mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray3 = transformationValue2["arguments"];
+                                                            if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                                {
+                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -12249,22 +12603,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray2 = transformationValue2["arguments"];
-                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                foreach (JProperty property7 in definesSequenceElement3)
                                                                 {
-                                                                    streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                                    string definesKey3 = ((string)property7.Name);
+                                                                    string definesValue3 = ((string)property7.Value);
+                                                                    streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                                foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                                 {
-                                                                    string extendedPropertiesKey4 = ((string)property5.Name);
-                                                                    string extendedPropertiesValue4 = ((string)property5.Value);
+                                                                    string extendedPropertiesKey4 = ((string)property8.Name);
+                                                                    string extendedPropertiesValue4 = ((string)property8.Value);
                                                                     streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                                 }
                                                             }
@@ -12275,6 +12631,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                                 {
                                                                     streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray4 = transformationValue2["arguments"];
+                                                            if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                                {
+                                                                    streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = streamingInstance;
@@ -12455,10 +12820,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                         if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                            foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                             {
-                                                                string extendedPropertiesKey5 = ((string)property6.Name);
-                                                                string extendedPropertiesValue5 = ((string)property6.Value);
+                                                                string extendedPropertiesKey5 = ((string)property9.Name);
+                                                                string extendedPropertiesValue5 = ((string)property9.Value);
                                                                 transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                             }
                                                         }
@@ -12617,10 +12982,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                         if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                            foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                             {
-                                                                string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                                string storedProcedureParametersValue = ((string)property7.Value);
+                                                                string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                                string storedProcedureParametersValue = ((string)property10.Value);
                                                                 transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                             }
                                                         }
@@ -12772,10 +13137,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                         if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                            foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                             {
-                                                                string webServiceParametersKey = ((string)property8.Name);
-                                                                string webServiceParametersValue = ((string)property8.Value);
+                                                                string webServiceParametersKey = ((string)property11.Name);
+                                                                string webServiceParametersValue = ((string)property11.Value);
                                                                 transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                             }
                                                         }
