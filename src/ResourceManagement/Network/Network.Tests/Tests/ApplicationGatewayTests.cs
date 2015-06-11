@@ -436,11 +436,11 @@ namespace Networks.Tests
 
                 // List AppGw
                 var listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                //Assert.Equal(1, listAppGw.ApplicationGateways.Count);
+                Assert.Equal(1, listAppGw.ApplicationGateways.Count);
 
                 // List all AppGw
                 var listAllAppGw = networkResourceProviderClient.ApplicationGateways.ListAll();
-                //Assert.Equal(1, listAllAppGw.ApplicationGateways.Count);
+                Assert.Equal(1, listAllAppGw.ApplicationGateways.Count);
 
                 //Add one more gateway
                 // Put AppGw
@@ -455,11 +455,11 @@ namespace Networks.Tests
 
                 // List AppGw
                 listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                //Assert.Equal(2, listAppGw.ApplicationGateways.Count);
+                Assert.Equal(2, listAppGw.ApplicationGateways.Count);
 
                 // List all AppGw
                 listAllAppGw = networkResourceProviderClient.ApplicationGateways.ListAll();
-                //Assert.Equal(2, listAllAppGw.ApplicationGateways.Count);
+                Assert.Equal(2, listAllAppGw.ApplicationGateways.Count);
 
                 //Start AppGw
                 var startResult = networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw.Name);

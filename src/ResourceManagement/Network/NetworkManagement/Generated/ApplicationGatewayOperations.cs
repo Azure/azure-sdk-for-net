@@ -3091,6 +3091,681 @@ namespace Microsoft.Azure.Management.Network
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    ApplicationGateway applicationGatewayJsonFormatInstance = new ApplicationGateway();
+                                    result.ApplicationGateways.Add(applicationGatewayJsonFormatInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken instanceCountValue = propertiesValue["instanceCount"];
+                                        if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                        {
+                                            int instanceCountInstance = ((int)instanceCountValue);
+                                            applicationGatewayJsonFormatInstance.InstanceCount = instanceCountInstance;
+                                        }
+                                        
+                                        JToken sizeValue = propertiesValue["size"];
+                                        if (sizeValue != null && sizeValue.Type != JTokenType.Null)
+                                        {
+                                            string sizeInstance = ((string)sizeValue);
+                                            applicationGatewayJsonFormatInstance.Size = sizeInstance;
+                                        }
+                                        
+                                        JToken fqdnValue = propertiesValue["fqdn"];
+                                        if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
+                                        {
+                                            string fqdnInstance = ((string)fqdnValue);
+                                            applicationGatewayJsonFormatInstance.Fqdn = fqdnInstance;
+                                        }
+                                        
+                                        JToken operationalStateValue = propertiesValue["operationalState"];
+                                        if (operationalStateValue != null && operationalStateValue.Type != JTokenType.Null)
+                                        {
+                                            string operationalStateInstance = ((string)operationalStateValue);
+                                            applicationGatewayJsonFormatInstance.OperationalState = operationalStateInstance;
+                                        }
+                                        
+                                        JToken gatewayIpConfigurationsArray = propertiesValue["gatewayIpConfigurations"];
+                                        if (gatewayIpConfigurationsArray != null && gatewayIpConfigurationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken gatewayIpConfigurationsValue in ((JArray)gatewayIpConfigurationsArray))
+                                            {
+                                                ApplicationGatewayIpConfiguration applicationGatewayIpConfigurationJsonFormatInstance = new ApplicationGatewayIpConfiguration();
+                                                applicationGatewayJsonFormatInstance.GatewayIpConfigurations.Add(applicationGatewayIpConfigurationJsonFormatInstance);
+                                                
+                                                JToken propertiesValue2 = gatewayIpConfigurationsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    JToken subnetValue = propertiesValue2["subnet"];
+                                                    if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId subnetInstance = new ResourceId();
+                                                        applicationGatewayIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                        
+                                                        JToken idValue = subnetValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance = ((string)idValue);
+                                                            subnetInstance.Id = idInstance;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                                        applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue = gatewayIpConfigurationsValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance = ((string)nameValue);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                                }
+                                                
+                                                JToken etagValue = gatewayIpConfigurationsValue["etag"];
+                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance = ((string)etagValue);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                                }
+                                                
+                                                JToken idValue2 = gatewayIpConfigurationsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Id = idInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken sslCertificatesArray = propertiesValue["sslCertificates"];
+                                        if (sslCertificatesArray != null && sslCertificatesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken sslCertificatesValue in ((JArray)sslCertificatesArray))
+                                            {
+                                                ApplicationGatewaySslCertificate applicationGatewaySslCertificateJsonFormatInstance = new ApplicationGatewaySslCertificate();
+                                                applicationGatewayJsonFormatInstance.SslCertificates.Add(applicationGatewaySslCertificateJsonFormatInstance);
+                                                
+                                                JToken propertiesValue3 = sslCertificatesValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    JToken dataValue = propertiesValue3["data"];
+                                                    if (dataValue != null && dataValue.Type != JTokenType.Null)
+                                                    {
+                                                        string dataInstance = ((string)dataValue);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.Data = dataInstance;
+                                                    }
+                                                    
+                                                    JToken passwordValue = propertiesValue3["password"];
+                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance = ((string)passwordValue);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.Password = passwordInstance;
+                                                    }
+                                                    
+                                                    JToken publicCertDataValue = propertiesValue3["publicCertData"];
+                                                    if (publicCertDataValue != null && publicCertDataValue.Type != JTokenType.Null)
+                                                    {
+                                                        string publicCertDataInstance = ((string)publicCertDataValue);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.PublicCertData = publicCertDataInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
+                                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue2 = sslCertificatesValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken etagValue2 = sslCertificatesValue["etag"];
+                                                if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance2 = ((string)etagValue2);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Etag = etagInstance2;
+                                                }
+                                                
+                                                JToken idValue3 = sslCertificatesValue["id"];
+                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance3 = ((string)idValue3);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Id = idInstance3;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken frontendIpConfigurationsArray = propertiesValue["frontendIpConfigurations"];
+                                        if (frontendIpConfigurationsArray != null && frontendIpConfigurationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray))
+                                            {
+                                                ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
+                                                applicationGatewayJsonFormatInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
+                                                
+                                                JToken propertiesValue4 = frontendIpConfigurationsValue["properties"];
+                                                if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                {
+                                                    JToken privateIPAddressValue = propertiesValue4["privateIPAddress"];
+                                                    if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        string privateIPAddressInstance = ((string)privateIPAddressValue);
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                    }
+                                                    
+                                                    JToken privateIPAllocationMethodValue = propertiesValue4["privateIPAllocationMethod"];
+                                                    if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
+                                                    {
+                                                        string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                    }
+                                                    
+                                                    JToken subnetValue2 = propertiesValue4["subnet"];
+                                                    if (subnetValue2 != null && subnetValue2.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId subnetInstance2 = new ResourceId();
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.Subnet = subnetInstance2;
+                                                        
+                                                        JToken idValue4 = subnetValue2["id"];
+                                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance4 = ((string)idValue4);
+                                                            subnetInstance2.Id = idInstance4;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken publicIPAddressValue = propertiesValue4["publicIPAddress"];
+                                                    if (publicIPAddressValue != null && publicIPAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId publicIPAddressInstance = new ResourceId();
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                        
+                                                        JToken idValue5 = publicIPAddressValue["id"];
+                                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance5 = ((string)idValue5);
+                                                            publicIPAddressInstance.Id = idInstance5;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue3 = propertiesValue4["provisioningState"];
+                                                    if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue3 = frontendIpConfigurationsValue["name"];
+                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance3 = ((string)nameValue3);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
+                                                }
+                                                
+                                                JToken etagValue3 = frontendIpConfigurationsValue["etag"];
+                                                if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance3 = ((string)etagValue3);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
+                                                }
+                                                
+                                                JToken idValue6 = frontendIpConfigurationsValue["id"];
+                                                if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance6 = ((string)idValue6);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Id = idInstance6;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken frontendPortsArray = propertiesValue["frontendPorts"];
+                                        if (frontendPortsArray != null && frontendPortsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken frontendPortsValue in ((JArray)frontendPortsArray))
+                                            {
+                                                ApplicationGatewayFrontendPort applicationGatewayFrontendPortJsonFormatInstance = new ApplicationGatewayFrontendPort();
+                                                applicationGatewayJsonFormatInstance.FrontendPorts.Add(applicationGatewayFrontendPortJsonFormatInstance);
+                                                
+                                                JToken propertiesValue5 = frontendPortsValue["properties"];
+                                                if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                {
+                                                    JToken portValue = propertiesValue5["port"];
+                                                    if (portValue != null && portValue.Type != JTokenType.Null)
+                                                    {
+                                                        int portInstance = ((int)portValue);
+                                                        applicationGatewayFrontendPortJsonFormatInstance.Port = portInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue4 = propertiesValue5["provisioningState"];
+                                                    if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance4 = ((string)provisioningStateValue4);
+                                                        applicationGatewayFrontendPortJsonFormatInstance.ProvisioningState = provisioningStateInstance4;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue4 = frontendPortsValue["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance4;
+                                                }
+                                                
+                                                JToken etagValue4 = frontendPortsValue["etag"];
+                                                if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance4 = ((string)etagValue4);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Etag = etagInstance4;
+                                                }
+                                                
+                                                JToken idValue7 = frontendPortsValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance7 = ((string)idValue7);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Id = idInstance7;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken backendAddressPoolsArray = propertiesValue["backendAddressPools"];
+                                        if (backendAddressPoolsArray != null && backendAddressPoolsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken backendAddressPoolsValue in ((JArray)backendAddressPoolsArray))
+                                            {
+                                                ApplicationGatewayBackendAddressPool applicationGatewayBackendAddressPoolJsonFormatInstance = new ApplicationGatewayBackendAddressPool();
+                                                applicationGatewayJsonFormatInstance.BackendAddressPools.Add(applicationGatewayBackendAddressPoolJsonFormatInstance);
+                                                
+                                                JToken propertiesValue6 = backendAddressPoolsValue["properties"];
+                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                {
+                                                    JToken backendIpConfigurationsArray = propertiesValue6["backendIpConfigurations"];
+                                                    if (backendIpConfigurationsArray != null && backendIpConfigurationsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken backendIpConfigurationsValue in ((JArray)backendIpConfigurationsArray))
+                                                        {
+                                                            ResourceId resourceIdInstance = new ResourceId();
+                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance);
+                                                            
+                                                            JToken idValue8 = backendIpConfigurationsValue["id"];
+                                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance8 = ((string)idValue8);
+                                                                resourceIdInstance.Id = idInstance8;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken backendAddressesArray = propertiesValue6["backendAddresses"];
+                                                    if (backendAddressesArray != null && backendAddressesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken backendAddressesValue in ((JArray)backendAddressesArray))
+                                                        {
+                                                            ApplicationGatewayBackendAddress applicationGatewayBackendAddressInstance = new ApplicationGatewayBackendAddress();
+                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendAddresses.Add(applicationGatewayBackendAddressInstance);
+                                                            
+                                                            JToken fqdnValue2 = backendAddressesValue["fqdn"];
+                                                            if (fqdnValue2 != null && fqdnValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string fqdnInstance2 = ((string)fqdnValue2);
+                                                                applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance2;
+                                                            }
+                                                            
+                                                            JToken ipAddressValue = backendAddressesValue["ipAddress"];
+                                                            if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
+                                                            {
+                                                                string ipAddressInstance = ((string)ipAddressValue);
+                                                                applicationGatewayBackendAddressInstance.IpAddress = ipAddressInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue5 = propertiesValue6["provisioningState"];
+                                                    if (provisioningStateValue5 != null && provisioningStateValue5.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance5 = ((string)provisioningStateValue5);
+                                                        applicationGatewayBackendAddressPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance5;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue5 = backendAddressPoolsValue["name"];
+                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance5 = ((string)nameValue5);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance5;
+                                                }
+                                                
+                                                JToken etagValue5 = backendAddressPoolsValue["etag"];
+                                                if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance5 = ((string)etagValue5);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Etag = etagInstance5;
+                                                }
+                                                
+                                                JToken idValue9 = backendAddressPoolsValue["id"];
+                                                if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance9 = ((string)idValue9);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Id = idInstance9;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken backendHttpSettingsCollectionArray = propertiesValue["backendHttpSettingsCollection"];
+                                        if (backendHttpSettingsCollectionArray != null && backendHttpSettingsCollectionArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken backendHttpSettingsCollectionValue in ((JArray)backendHttpSettingsCollectionArray))
+                                            {
+                                                ApplicationGatewayBackendHttpSettings applicationGatewayBackendHttpSettingsJsonFormatInstance = new ApplicationGatewayBackendHttpSettings();
+                                                applicationGatewayJsonFormatInstance.BackendHttpSettingsCollection.Add(applicationGatewayBackendHttpSettingsJsonFormatInstance);
+                                                
+                                                JToken propertiesValue7 = backendHttpSettingsCollectionValue["properties"];
+                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                                {
+                                                    JToken portValue2 = propertiesValue7["port"];
+                                                    if (portValue2 != null && portValue2.Type != JTokenType.Null)
+                                                    {
+                                                        int portInstance2 = ((int)portValue2);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.Port = portInstance2;
+                                                    }
+                                                    
+                                                    JToken protocolValue = propertiesValue7["protocol"];
+                                                    if (protocolValue != null && protocolValue.Type != JTokenType.Null)
+                                                    {
+                                                        string protocolInstance = ((string)protocolValue);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.Protocol = protocolInstance;
+                                                    }
+                                                    
+                                                    JToken cookieBasedAffinityValue = propertiesValue7["cookieBasedAffinity"];
+                                                    if (cookieBasedAffinityValue != null && cookieBasedAffinityValue.Type != JTokenType.Null)
+                                                    {
+                                                        string cookieBasedAffinityInstance = ((string)cookieBasedAffinityValue);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.CookieBasedAffinity = cookieBasedAffinityInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
+                                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
+                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance6 = ((string)nameValue6);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
+                                                }
+                                                
+                                                JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
+                                                if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance6 = ((string)etagValue6);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Etag = etagInstance6;
+                                                }
+                                                
+                                                JToken idValue10 = backendHttpSettingsCollectionValue["id"];
+                                                if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance10 = ((string)idValue10);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Id = idInstance10;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken httpListenersArray = propertiesValue["httpListeners"];
+                                        if (httpListenersArray != null && httpListenersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken httpListenersValue in ((JArray)httpListenersArray))
+                                            {
+                                                ApplicationGatewayHttpListener applicationGatewayHttpListenerJsonFormatInstance = new ApplicationGatewayHttpListener();
+                                                applicationGatewayJsonFormatInstance.HttpListeners.Add(applicationGatewayHttpListenerJsonFormatInstance);
+                                                
+                                                JToken propertiesValue8 = httpListenersValue["properties"];
+                                                if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                                {
+                                                    JToken frontendIpConfigurationValue = propertiesValue8["frontendIpConfiguration"];
+                                                    if (frontendIpConfigurationValue != null && frontendIpConfigurationValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId frontendIpConfigurationInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendIpConfiguration = frontendIpConfigurationInstance;
+                                                        
+                                                        JToken idValue11 = frontendIpConfigurationValue["id"];
+                                                        if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance11 = ((string)idValue11);
+                                                            frontendIpConfigurationInstance.Id = idInstance11;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken frontendPortValue = propertiesValue8["frontendPort"];
+                                                    if (frontendPortValue != null && frontendPortValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId frontendPortInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendPort = frontendPortInstance;
+                                                        
+                                                        JToken idValue12 = frontendPortValue["id"];
+                                                        if (idValue12 != null && idValue12.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance12 = ((string)idValue12);
+                                                            frontendPortInstance.Id = idInstance12;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken protocolValue2 = propertiesValue8["protocol"];
+                                                    if (protocolValue2 != null && protocolValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string protocolInstance2 = ((string)protocolValue2);
+                                                        applicationGatewayHttpListenerJsonFormatInstance.Protocol = protocolInstance2;
+                                                    }
+                                                    
+                                                    JToken sslCertificateValue = propertiesValue8["sslCertificate"];
+                                                    if (sslCertificateValue != null && sslCertificateValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId sslCertificateInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.SslCertificate = sslCertificateInstance;
+                                                        
+                                                        JToken idValue13 = sslCertificateValue["id"];
+                                                        if (idValue13 != null && idValue13.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance13 = ((string)idValue13);
+                                                            sslCertificateInstance.Id = idInstance13;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue7 = propertiesValue8["provisioningState"];
+                                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                        applicationGatewayHttpListenerJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue7 = httpListenersValue["name"];
+                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance7 = ((string)nameValue7);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance7;
+                                                }
+                                                
+                                                JToken etagValue7 = httpListenersValue["etag"];
+                                                if (etagValue7 != null && etagValue7.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance7 = ((string)etagValue7);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Etag = etagInstance7;
+                                                }
+                                                
+                                                JToken idValue14 = httpListenersValue["id"];
+                                                if (idValue14 != null && idValue14.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance14 = ((string)idValue14);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Id = idInstance14;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken requestRoutingRulesArray = propertiesValue["requestRoutingRules"];
+                                        if (requestRoutingRulesArray != null && requestRoutingRulesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken requestRoutingRulesValue in ((JArray)requestRoutingRulesArray))
+                                            {
+                                                ApplicationGatewayRequestRoutingRule applicationGatewayRequestRoutingRuleJsonFormatInstance = new ApplicationGatewayRequestRoutingRule();
+                                                applicationGatewayJsonFormatInstance.RequestRoutingRules.Add(applicationGatewayRequestRoutingRuleJsonFormatInstance);
+                                                
+                                                JToken propertiesValue9 = requestRoutingRulesValue["properties"];
+                                                if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
+                                                {
+                                                    JToken ruletypeValue = propertiesValue9["ruletype"];
+                                                    if (ruletypeValue != null && ruletypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string ruletypeInstance = ((string)ruletypeValue);
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruletypeInstance;
+                                                    }
+                                                    
+                                                    JToken backendAddressPoolValue = propertiesValue9["backendAddressPool"];
+                                                    if (backendAddressPoolValue != null && backendAddressPoolValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId backendAddressPoolInstance = new ResourceId();
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance;
+                                                        
+                                                        JToken idValue15 = backendAddressPoolValue["id"];
+                                                        if (idValue15 != null && idValue15.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance15 = ((string)idValue15);
+                                                            backendAddressPoolInstance.Id = idInstance15;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken backendHttpSettingsValue = propertiesValue9["backendHttpSettings"];
+                                                    if (backendHttpSettingsValue != null && backendHttpSettingsValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId backendHttpSettingsInstance = new ResourceId();
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.BackendHttpSettings = backendHttpSettingsInstance;
+                                                        
+                                                        JToken idValue16 = backendHttpSettingsValue["id"];
+                                                        if (idValue16 != null && idValue16.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance16 = ((string)idValue16);
+                                                            backendHttpSettingsInstance.Id = idInstance16;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken httpListenerValue = propertiesValue9["httpListener"];
+                                                    if (httpListenerValue != null && httpListenerValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId httpListenerInstance = new ResourceId();
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.HttpListener = httpListenerInstance;
+                                                        
+                                                        JToken idValue17 = httpListenerValue["id"];
+                                                        if (idValue17 != null && idValue17.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance17 = ((string)idValue17);
+                                                            httpListenerInstance.Id = idInstance17;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue8 = propertiesValue9["provisioningState"];
+                                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance8;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue8 = requestRoutingRulesValue["name"];
+                                                if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance8 = ((string)nameValue8);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance8;
+                                                }
+                                                
+                                                JToken etagValue8 = requestRoutingRulesValue["etag"];
+                                                if (etagValue8 != null && etagValue8.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance8 = ((string)etagValue8);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Etag = etagInstance8;
+                                                }
+                                                
+                                                JToken idValue18 = requestRoutingRulesValue["id"];
+                                                if (idValue18 != null && idValue18.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance18 = ((string)idValue18);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Id = idInstance18;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                            applicationGatewayJsonFormatInstance.ProvisioningState = provisioningStateInstance9;
+                                        }
+                                    }
+                                    
+                                    JToken etagValue9 = valueValue["etag"];
+                                    if (etagValue9 != null && etagValue9.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance9 = ((string)etagValue9);
+                                        applicationGatewayJsonFormatInstance.Etag = etagInstance9;
+                                    }
+                                    
+                                    JToken idValue19 = valueValue["id"];
+                                    if (idValue19 != null && idValue19.Type != JTokenType.Null)
+                                    {
+                                        string idInstance19 = ((string)idValue19);
+                                        applicationGatewayJsonFormatInstance.Id = idInstance19;
+                                    }
+                                    
+                                    JToken nameValue9 = valueValue["name"];
+                                    if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance9 = ((string)nameValue9);
+                                        applicationGatewayJsonFormatInstance.Name = nameInstance9;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        applicationGatewayJsonFormatInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        applicationGatewayJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            applicationGatewayJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                            
                             JToken nextLinkValue = responseDoc["nextLink"];
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
@@ -3238,6 +3913,681 @@ namespace Microsoft.Azure.Management.Network
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    ApplicationGateway applicationGatewayJsonFormatInstance = new ApplicationGateway();
+                                    result.ApplicationGateways.Add(applicationGatewayJsonFormatInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken instanceCountValue = propertiesValue["instanceCount"];
+                                        if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                        {
+                                            int instanceCountInstance = ((int)instanceCountValue);
+                                            applicationGatewayJsonFormatInstance.InstanceCount = instanceCountInstance;
+                                        }
+                                        
+                                        JToken sizeValue = propertiesValue["size"];
+                                        if (sizeValue != null && sizeValue.Type != JTokenType.Null)
+                                        {
+                                            string sizeInstance = ((string)sizeValue);
+                                            applicationGatewayJsonFormatInstance.Size = sizeInstance;
+                                        }
+                                        
+                                        JToken fqdnValue = propertiesValue["fqdn"];
+                                        if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
+                                        {
+                                            string fqdnInstance = ((string)fqdnValue);
+                                            applicationGatewayJsonFormatInstance.Fqdn = fqdnInstance;
+                                        }
+                                        
+                                        JToken operationalStateValue = propertiesValue["operationalState"];
+                                        if (operationalStateValue != null && operationalStateValue.Type != JTokenType.Null)
+                                        {
+                                            string operationalStateInstance = ((string)operationalStateValue);
+                                            applicationGatewayJsonFormatInstance.OperationalState = operationalStateInstance;
+                                        }
+                                        
+                                        JToken gatewayIpConfigurationsArray = propertiesValue["gatewayIpConfigurations"];
+                                        if (gatewayIpConfigurationsArray != null && gatewayIpConfigurationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken gatewayIpConfigurationsValue in ((JArray)gatewayIpConfigurationsArray))
+                                            {
+                                                ApplicationGatewayIpConfiguration applicationGatewayIpConfigurationJsonFormatInstance = new ApplicationGatewayIpConfiguration();
+                                                applicationGatewayJsonFormatInstance.GatewayIpConfigurations.Add(applicationGatewayIpConfigurationJsonFormatInstance);
+                                                
+                                                JToken propertiesValue2 = gatewayIpConfigurationsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    JToken subnetValue = propertiesValue2["subnet"];
+                                                    if (subnetValue != null && subnetValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId subnetInstance = new ResourceId();
+                                                        applicationGatewayIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                        
+                                                        JToken idValue = subnetValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance = ((string)idValue);
+                                                            subnetInstance.Id = idInstance;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                                        applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue = gatewayIpConfigurationsValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance = ((string)nameValue);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                                }
+                                                
+                                                JToken etagValue = gatewayIpConfigurationsValue["etag"];
+                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance = ((string)etagValue);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                                }
+                                                
+                                                JToken idValue2 = gatewayIpConfigurationsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Id = idInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken sslCertificatesArray = propertiesValue["sslCertificates"];
+                                        if (sslCertificatesArray != null && sslCertificatesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken sslCertificatesValue in ((JArray)sslCertificatesArray))
+                                            {
+                                                ApplicationGatewaySslCertificate applicationGatewaySslCertificateJsonFormatInstance = new ApplicationGatewaySslCertificate();
+                                                applicationGatewayJsonFormatInstance.SslCertificates.Add(applicationGatewaySslCertificateJsonFormatInstance);
+                                                
+                                                JToken propertiesValue3 = sslCertificatesValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    JToken dataValue = propertiesValue3["data"];
+                                                    if (dataValue != null && dataValue.Type != JTokenType.Null)
+                                                    {
+                                                        string dataInstance = ((string)dataValue);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.Data = dataInstance;
+                                                    }
+                                                    
+                                                    JToken passwordValue = propertiesValue3["password"];
+                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance = ((string)passwordValue);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.Password = passwordInstance;
+                                                    }
+                                                    
+                                                    JToken publicCertDataValue = propertiesValue3["publicCertData"];
+                                                    if (publicCertDataValue != null && publicCertDataValue.Type != JTokenType.Null)
+                                                    {
+                                                        string publicCertDataInstance = ((string)publicCertDataValue);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.PublicCertData = publicCertDataInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
+                                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                        applicationGatewaySslCertificateJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue2 = sslCertificatesValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken etagValue2 = sslCertificatesValue["etag"];
+                                                if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance2 = ((string)etagValue2);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Etag = etagInstance2;
+                                                }
+                                                
+                                                JToken idValue3 = sslCertificatesValue["id"];
+                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance3 = ((string)idValue3);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Id = idInstance3;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken frontendIpConfigurationsArray = propertiesValue["frontendIpConfigurations"];
+                                        if (frontendIpConfigurationsArray != null && frontendIpConfigurationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray))
+                                            {
+                                                ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
+                                                applicationGatewayJsonFormatInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
+                                                
+                                                JToken propertiesValue4 = frontendIpConfigurationsValue["properties"];
+                                                if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                {
+                                                    JToken privateIPAddressValue = propertiesValue4["privateIPAddress"];
+                                                    if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        string privateIPAddressInstance = ((string)privateIPAddressValue);
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                    }
+                                                    
+                                                    JToken privateIPAllocationMethodValue = propertiesValue4["privateIPAllocationMethod"];
+                                                    if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
+                                                    {
+                                                        string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                    }
+                                                    
+                                                    JToken subnetValue2 = propertiesValue4["subnet"];
+                                                    if (subnetValue2 != null && subnetValue2.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId subnetInstance2 = new ResourceId();
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.Subnet = subnetInstance2;
+                                                        
+                                                        JToken idValue4 = subnetValue2["id"];
+                                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance4 = ((string)idValue4);
+                                                            subnetInstance2.Id = idInstance4;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken publicIPAddressValue = propertiesValue4["publicIPAddress"];
+                                                    if (publicIPAddressValue != null && publicIPAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId publicIPAddressInstance = new ResourceId();
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                        
+                                                        JToken idValue5 = publicIPAddressValue["id"];
+                                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance5 = ((string)idValue5);
+                                                            publicIPAddressInstance.Id = idInstance5;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue3 = propertiesValue4["provisioningState"];
+                                                    if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance3 = ((string)provisioningStateValue3);
+                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue3 = frontendIpConfigurationsValue["name"];
+                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance3 = ((string)nameValue3);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
+                                                }
+                                                
+                                                JToken etagValue3 = frontendIpConfigurationsValue["etag"];
+                                                if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance3 = ((string)etagValue3);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
+                                                }
+                                                
+                                                JToken idValue6 = frontendIpConfigurationsValue["id"];
+                                                if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance6 = ((string)idValue6);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Id = idInstance6;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken frontendPortsArray = propertiesValue["frontendPorts"];
+                                        if (frontendPortsArray != null && frontendPortsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken frontendPortsValue in ((JArray)frontendPortsArray))
+                                            {
+                                                ApplicationGatewayFrontendPort applicationGatewayFrontendPortJsonFormatInstance = new ApplicationGatewayFrontendPort();
+                                                applicationGatewayJsonFormatInstance.FrontendPorts.Add(applicationGatewayFrontendPortJsonFormatInstance);
+                                                
+                                                JToken propertiesValue5 = frontendPortsValue["properties"];
+                                                if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                {
+                                                    JToken portValue = propertiesValue5["port"];
+                                                    if (portValue != null && portValue.Type != JTokenType.Null)
+                                                    {
+                                                        int portInstance = ((int)portValue);
+                                                        applicationGatewayFrontendPortJsonFormatInstance.Port = portInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue4 = propertiesValue5["provisioningState"];
+                                                    if (provisioningStateValue4 != null && provisioningStateValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance4 = ((string)provisioningStateValue4);
+                                                        applicationGatewayFrontendPortJsonFormatInstance.ProvisioningState = provisioningStateInstance4;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue4 = frontendPortsValue["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance4;
+                                                }
+                                                
+                                                JToken etagValue4 = frontendPortsValue["etag"];
+                                                if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance4 = ((string)etagValue4);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Etag = etagInstance4;
+                                                }
+                                                
+                                                JToken idValue7 = frontendPortsValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance7 = ((string)idValue7);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Id = idInstance7;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken backendAddressPoolsArray = propertiesValue["backendAddressPools"];
+                                        if (backendAddressPoolsArray != null && backendAddressPoolsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken backendAddressPoolsValue in ((JArray)backendAddressPoolsArray))
+                                            {
+                                                ApplicationGatewayBackendAddressPool applicationGatewayBackendAddressPoolJsonFormatInstance = new ApplicationGatewayBackendAddressPool();
+                                                applicationGatewayJsonFormatInstance.BackendAddressPools.Add(applicationGatewayBackendAddressPoolJsonFormatInstance);
+                                                
+                                                JToken propertiesValue6 = backendAddressPoolsValue["properties"];
+                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                {
+                                                    JToken backendIpConfigurationsArray = propertiesValue6["backendIpConfigurations"];
+                                                    if (backendIpConfigurationsArray != null && backendIpConfigurationsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken backendIpConfigurationsValue in ((JArray)backendIpConfigurationsArray))
+                                                        {
+                                                            ResourceId resourceIdInstance = new ResourceId();
+                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance);
+                                                            
+                                                            JToken idValue8 = backendIpConfigurationsValue["id"];
+                                                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance8 = ((string)idValue8);
+                                                                resourceIdInstance.Id = idInstance8;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken backendAddressesArray = propertiesValue6["backendAddresses"];
+                                                    if (backendAddressesArray != null && backendAddressesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken backendAddressesValue in ((JArray)backendAddressesArray))
+                                                        {
+                                                            ApplicationGatewayBackendAddress applicationGatewayBackendAddressInstance = new ApplicationGatewayBackendAddress();
+                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendAddresses.Add(applicationGatewayBackendAddressInstance);
+                                                            
+                                                            JToken fqdnValue2 = backendAddressesValue["fqdn"];
+                                                            if (fqdnValue2 != null && fqdnValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string fqdnInstance2 = ((string)fqdnValue2);
+                                                                applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance2;
+                                                            }
+                                                            
+                                                            JToken ipAddressValue = backendAddressesValue["ipAddress"];
+                                                            if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
+                                                            {
+                                                                string ipAddressInstance = ((string)ipAddressValue);
+                                                                applicationGatewayBackendAddressInstance.IpAddress = ipAddressInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue5 = propertiesValue6["provisioningState"];
+                                                    if (provisioningStateValue5 != null && provisioningStateValue5.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance5 = ((string)provisioningStateValue5);
+                                                        applicationGatewayBackendAddressPoolJsonFormatInstance.ProvisioningState = provisioningStateInstance5;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue5 = backendAddressPoolsValue["name"];
+                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance5 = ((string)nameValue5);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance5;
+                                                }
+                                                
+                                                JToken etagValue5 = backendAddressPoolsValue["etag"];
+                                                if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance5 = ((string)etagValue5);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Etag = etagInstance5;
+                                                }
+                                                
+                                                JToken idValue9 = backendAddressPoolsValue["id"];
+                                                if (idValue9 != null && idValue9.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance9 = ((string)idValue9);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Id = idInstance9;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken backendHttpSettingsCollectionArray = propertiesValue["backendHttpSettingsCollection"];
+                                        if (backendHttpSettingsCollectionArray != null && backendHttpSettingsCollectionArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken backendHttpSettingsCollectionValue in ((JArray)backendHttpSettingsCollectionArray))
+                                            {
+                                                ApplicationGatewayBackendHttpSettings applicationGatewayBackendHttpSettingsJsonFormatInstance = new ApplicationGatewayBackendHttpSettings();
+                                                applicationGatewayJsonFormatInstance.BackendHttpSettingsCollection.Add(applicationGatewayBackendHttpSettingsJsonFormatInstance);
+                                                
+                                                JToken propertiesValue7 = backendHttpSettingsCollectionValue["properties"];
+                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                                {
+                                                    JToken portValue2 = propertiesValue7["port"];
+                                                    if (portValue2 != null && portValue2.Type != JTokenType.Null)
+                                                    {
+                                                        int portInstance2 = ((int)portValue2);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.Port = portInstance2;
+                                                    }
+                                                    
+                                                    JToken protocolValue = propertiesValue7["protocol"];
+                                                    if (protocolValue != null && protocolValue.Type != JTokenType.Null)
+                                                    {
+                                                        string protocolInstance = ((string)protocolValue);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.Protocol = protocolInstance;
+                                                    }
+                                                    
+                                                    JToken cookieBasedAffinityValue = propertiesValue7["cookieBasedAffinity"];
+                                                    if (cookieBasedAffinityValue != null && cookieBasedAffinityValue.Type != JTokenType.Null)
+                                                    {
+                                                        string cookieBasedAffinityInstance = ((string)cookieBasedAffinityValue);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.CookieBasedAffinity = cookieBasedAffinityInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue6 = propertiesValue7["provisioningState"];
+                                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                        applicationGatewayBackendHttpSettingsJsonFormatInstance.ProvisioningState = provisioningStateInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
+                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance6 = ((string)nameValue6);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
+                                                }
+                                                
+                                                JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
+                                                if (etagValue6 != null && etagValue6.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance6 = ((string)etagValue6);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Etag = etagInstance6;
+                                                }
+                                                
+                                                JToken idValue10 = backendHttpSettingsCollectionValue["id"];
+                                                if (idValue10 != null && idValue10.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance10 = ((string)idValue10);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Id = idInstance10;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken httpListenersArray = propertiesValue["httpListeners"];
+                                        if (httpListenersArray != null && httpListenersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken httpListenersValue in ((JArray)httpListenersArray))
+                                            {
+                                                ApplicationGatewayHttpListener applicationGatewayHttpListenerJsonFormatInstance = new ApplicationGatewayHttpListener();
+                                                applicationGatewayJsonFormatInstance.HttpListeners.Add(applicationGatewayHttpListenerJsonFormatInstance);
+                                                
+                                                JToken propertiesValue8 = httpListenersValue["properties"];
+                                                if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                                {
+                                                    JToken frontendIpConfigurationValue = propertiesValue8["frontendIpConfiguration"];
+                                                    if (frontendIpConfigurationValue != null && frontendIpConfigurationValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId frontendIpConfigurationInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendIpConfiguration = frontendIpConfigurationInstance;
+                                                        
+                                                        JToken idValue11 = frontendIpConfigurationValue["id"];
+                                                        if (idValue11 != null && idValue11.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance11 = ((string)idValue11);
+                                                            frontendIpConfigurationInstance.Id = idInstance11;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken frontendPortValue = propertiesValue8["frontendPort"];
+                                                    if (frontendPortValue != null && frontendPortValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId frontendPortInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendPort = frontendPortInstance;
+                                                        
+                                                        JToken idValue12 = frontendPortValue["id"];
+                                                        if (idValue12 != null && idValue12.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance12 = ((string)idValue12);
+                                                            frontendPortInstance.Id = idInstance12;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken protocolValue2 = propertiesValue8["protocol"];
+                                                    if (protocolValue2 != null && protocolValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string protocolInstance2 = ((string)protocolValue2);
+                                                        applicationGatewayHttpListenerJsonFormatInstance.Protocol = protocolInstance2;
+                                                    }
+                                                    
+                                                    JToken sslCertificateValue = propertiesValue8["sslCertificate"];
+                                                    if (sslCertificateValue != null && sslCertificateValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId sslCertificateInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.SslCertificate = sslCertificateInstance;
+                                                        
+                                                        JToken idValue13 = sslCertificateValue["id"];
+                                                        if (idValue13 != null && idValue13.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance13 = ((string)idValue13);
+                                                            sslCertificateInstance.Id = idInstance13;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue7 = propertiesValue8["provisioningState"];
+                                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                        applicationGatewayHttpListenerJsonFormatInstance.ProvisioningState = provisioningStateInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue7 = httpListenersValue["name"];
+                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance7 = ((string)nameValue7);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance7;
+                                                }
+                                                
+                                                JToken etagValue7 = httpListenersValue["etag"];
+                                                if (etagValue7 != null && etagValue7.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance7 = ((string)etagValue7);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Etag = etagInstance7;
+                                                }
+                                                
+                                                JToken idValue14 = httpListenersValue["id"];
+                                                if (idValue14 != null && idValue14.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance14 = ((string)idValue14);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Id = idInstance14;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken requestRoutingRulesArray = propertiesValue["requestRoutingRules"];
+                                        if (requestRoutingRulesArray != null && requestRoutingRulesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken requestRoutingRulesValue in ((JArray)requestRoutingRulesArray))
+                                            {
+                                                ApplicationGatewayRequestRoutingRule applicationGatewayRequestRoutingRuleJsonFormatInstance = new ApplicationGatewayRequestRoutingRule();
+                                                applicationGatewayJsonFormatInstance.RequestRoutingRules.Add(applicationGatewayRequestRoutingRuleJsonFormatInstance);
+                                                
+                                                JToken propertiesValue9 = requestRoutingRulesValue["properties"];
+                                                if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
+                                                {
+                                                    JToken ruletypeValue = propertiesValue9["ruletype"];
+                                                    if (ruletypeValue != null && ruletypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string ruletypeInstance = ((string)ruletypeValue);
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruletypeInstance;
+                                                    }
+                                                    
+                                                    JToken backendAddressPoolValue = propertiesValue9["backendAddressPool"];
+                                                    if (backendAddressPoolValue != null && backendAddressPoolValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId backendAddressPoolInstance = new ResourceId();
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.BackendAddressPool = backendAddressPoolInstance;
+                                                        
+                                                        JToken idValue15 = backendAddressPoolValue["id"];
+                                                        if (idValue15 != null && idValue15.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance15 = ((string)idValue15);
+                                                            backendAddressPoolInstance.Id = idInstance15;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken backendHttpSettingsValue = propertiesValue9["backendHttpSettings"];
+                                                    if (backendHttpSettingsValue != null && backendHttpSettingsValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId backendHttpSettingsInstance = new ResourceId();
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.BackendHttpSettings = backendHttpSettingsInstance;
+                                                        
+                                                        JToken idValue16 = backendHttpSettingsValue["id"];
+                                                        if (idValue16 != null && idValue16.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance16 = ((string)idValue16);
+                                                            backendHttpSettingsInstance.Id = idInstance16;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken httpListenerValue = propertiesValue9["httpListener"];
+                                                    if (httpListenerValue != null && httpListenerValue.Type != JTokenType.Null)
+                                                    {
+                                                        ResourceId httpListenerInstance = new ResourceId();
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.HttpListener = httpListenerInstance;
+                                                        
+                                                        JToken idValue17 = httpListenerValue["id"];
+                                                        if (idValue17 != null && idValue17.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance17 = ((string)idValue17);
+                                                            httpListenerInstance.Id = idInstance17;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue8 = propertiesValue9["provisioningState"];
+                                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.ProvisioningState = provisioningStateInstance8;
+                                                    }
+                                                }
+                                                
+                                                JToken nameValue8 = requestRoutingRulesValue["name"];
+                                                if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance8 = ((string)nameValue8);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance8;
+                                                }
+                                                
+                                                JToken etagValue8 = requestRoutingRulesValue["etag"];
+                                                if (etagValue8 != null && etagValue8.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance8 = ((string)etagValue8);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Etag = etagInstance8;
+                                                }
+                                                
+                                                JToken idValue18 = requestRoutingRulesValue["id"];
+                                                if (idValue18 != null && idValue18.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance18 = ((string)idValue18);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Id = idInstance18;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                            applicationGatewayJsonFormatInstance.ProvisioningState = provisioningStateInstance9;
+                                        }
+                                    }
+                                    
+                                    JToken etagValue9 = valueValue["etag"];
+                                    if (etagValue9 != null && etagValue9.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance9 = ((string)etagValue9);
+                                        applicationGatewayJsonFormatInstance.Etag = etagInstance9;
+                                    }
+                                    
+                                    JToken idValue19 = valueValue["id"];
+                                    if (idValue19 != null && idValue19.Type != JTokenType.Null)
+                                    {
+                                        string idInstance19 = ((string)idValue19);
+                                        applicationGatewayJsonFormatInstance.Id = idInstance19;
+                                    }
+                                    
+                                    JToken nameValue9 = valueValue["name"];
+                                    if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance9 = ((string)nameValue9);
+                                        applicationGatewayJsonFormatInstance.Name = nameInstance9;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        applicationGatewayJsonFormatInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        applicationGatewayJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            applicationGatewayJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                            
                             JToken nextLinkValue = responseDoc["nextLink"];
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
