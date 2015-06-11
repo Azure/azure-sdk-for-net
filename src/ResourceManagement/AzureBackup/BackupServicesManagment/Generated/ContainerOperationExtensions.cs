@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Register(this IContainerOperation operations, RegisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Register(this IContainerOperation operations, RegisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> RegisterAsync(this IContainerOperation operations, RegisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> RegisterAsync(this IContainerOperation operations, RegisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.RegisterAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Unregister(this IContainerOperation operations, UnregisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Unregister(this IContainerOperation operations, UnregisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> UnregisterAsync(this IContainerOperation operations, UnregisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> UnregisterAsync(this IContainerOperation operations, UnregisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UnregisterAsync(parameters, customRequestHeaders, CancellationToken.None);
         }

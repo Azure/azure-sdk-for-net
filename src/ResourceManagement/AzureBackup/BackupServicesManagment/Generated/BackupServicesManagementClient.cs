@@ -141,6 +141,16 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._job; }
         }
         
+        private IOperationStatus _operationStatus;
+        
+        /// <summary>
+        /// Definition of Workflow operation for the Azure Backup extension.
+        /// </summary>
+        public virtual IOperationStatus OperationStatus
+        {
+            get { return this._operationStatus; }
+        }
+        
         private IProtectableObjectOperations _protectableObject;
         
         /// <summary>
@@ -196,6 +206,7 @@ namespace Microsoft.Azure.Management.BackupServices
             this._container = new ContainerOperation(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._operationStatus = new OperationStatus(this);
             this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
@@ -304,6 +315,7 @@ namespace Microsoft.Azure.Management.BackupServices
             this._container = new ContainerOperation(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._operationStatus = new OperationStatus(this);
             this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
