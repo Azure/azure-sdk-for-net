@@ -196,7 +196,7 @@ namespace Networks.Tests
                            {"test","value"}
                         },
                     GatewayIpAddress = gatewayIp,
-                    LocalNetworkSiteAddressSpace = new AddressSpace()
+                    LocalNetworkAddressSpace = new AddressSpace()
                     {
                         AddressPrefixes = new List<string>()
                         {
@@ -342,7 +342,7 @@ namespace Networks.Tests
                            {"test","value"}
                         },
                     GatewayIpAddress = gatewayIp,
-                    LocalNetworkSiteAddressSpace = new AddressSpace()
+                    LocalNetworkAddressSpace = new AddressSpace()
                     {
                         AddressPrefixes = new List<string>()
                         {
@@ -522,7 +522,7 @@ namespace Networks.Tests
                            {"test","value"}
                         },
                     GatewayIpAddress = gatewayIp,
-                    LocalNetworkSiteAddressSpace = new AddressSpace()
+                    LocalNetworkAddressSpace = new AddressSpace()
                     {
                         AddressPrefixes = new List<string>()
                         {
