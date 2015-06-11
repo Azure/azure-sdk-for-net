@@ -1,7 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Web//sites/csmr3777/providers/Microsoft.Authorization/permissions?api-version=2014-07-01-preview",
+      "RequestUri": "/subscriptions/e7fc6eb8-cb1d-469b-9203-449a8214a3e0/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Web//sites/csmr1350/providers/Microsoft.Authorization/permissions?api-version=2014-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTdmYzZlYjgtY2IxZC00NjliLTkyMDMtNDQ5YTgyMTRhM2UwL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvY3NtcjEzNTAvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRob3JpemF0aW9uL3Blcm1pc3Npb25zP2FwaS12ZXJzaW9uPTIwMTQtMDctMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -9,10 +10,10 @@
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NonExistentResourceGroup' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "45"
+          "116"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,17 +24,17 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31961"
+        "x-ms-failure-cause": [
+          "gateway"
         ],
         "x-ms-request-id": [
-          "245cc8df-ec0c-4569-b5ef-baf78dbe2b7f"
+          "ea3e5816-bc4d-45fb-b9b5-675ade3dbb78"
         ],
         "x-ms-correlation-request-id": [
-          "245cc8df-ec0c-4569-b5ef-baf78dbe2b7f"
+          "ea3e5816-bc4d-45fb-b9b5-675ade3dbb78"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20141014T014702Z:245cc8df-ec0c-4569-b5ef-baf78dbe2b7f"
+          "CENTRALUS:20150603T231345Z:ea3e5816-bc4d-45fb-b9b5-675ade3dbb78"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -42,18 +43,18 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 14 Oct 2014 01:47:02 GMT"
+          "Wed, 03 Jun 2015 23:13:45 GMT"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 404
     }
   ],
   "Names": {
     "GetNonExistentResourcePermissions": [
-      "csmr3777"
+      "csmr1350"
     ]
   },
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "e7fc6eb8-cb1d-469b-9203-449a8214a3e0"
   }
 }

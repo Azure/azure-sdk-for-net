@@ -15,9 +15,11 @@ namespace AzureRedisCache.Tests
             _response = response;
         }
 
+#pragma warning disable 1998
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
             return _response;
         }
+#pragma warning restore 1998
     }
 }
