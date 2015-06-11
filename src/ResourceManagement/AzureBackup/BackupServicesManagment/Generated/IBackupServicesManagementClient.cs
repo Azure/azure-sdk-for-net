@@ -141,10 +141,10 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Definition of Vault credential-related operations for the Azure
-        /// Backup extension.
+        /// Definition of Vault-related operations for the Azure Backup
+        /// extension.
         /// </summary>
-        IVaultCredentialOperations VaultCredentials
+        IVaultOperations Vault
         {
             get; 
         }
