@@ -23,16 +23,33 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of Vault credential-related operations for the Azure Backup
-    /// extension.
+    /// Definition of Vault-related operations for the Azure Backup extension.
     /// </summary>
-    public partial interface IVaultCredentialOperations
+    public partial interface IVaultOperations
     {
+        /// <summary>
+        /// Updates vault storage model type.
+        /// </summary>
+        /// <param name='updateVaultStorageTypeRequest'>
+        /// Update Vault Storage Type Request
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> UpdateStorageTypeAsync(UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Uploads vault credential certificate.
         /// </summary>
