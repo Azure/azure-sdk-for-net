@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.BackupServices;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the list containers operation.
+    /// The response model for the list jobs operation.
     /// </summary>
     public partial class JobListResponse : AzureOperationResponse
     {
         private JobResponse _jobs;
         
         /// <summary>
-        /// Optional. The list of containers for the resource id.
+        /// Optional. The list of jobs queried by filters for the resource id.
         /// </summary>
         public JobResponse Jobs
         {

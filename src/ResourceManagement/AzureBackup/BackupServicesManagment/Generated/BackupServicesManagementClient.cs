@@ -133,8 +133,7 @@ namespace Microsoft.Azure.Management.BackupServices
         private IJobOperations _job;
         
         /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
-        /// extension.
+        /// Definition of Job operations for Azure backup extension.
         /// </summary>
         public virtual IJobOperations Job
         {

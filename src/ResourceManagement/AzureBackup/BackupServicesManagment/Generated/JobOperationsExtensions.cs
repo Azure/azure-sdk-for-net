@@ -31,7 +31,53 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class JobOperationsExtensions
     {
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get details of a particular job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list jobs operation.
+        /// </returns>
+        public static JobByIdResponse Get(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetAsync(jobId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get details of a particular job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list jobs operation.
+        /// </returns>
+        public static Task<JobByIdResponse> GetAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetAsync(jobId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all jobs queried by specified filters.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -44,7 +90,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the list containers operation.
+        /// The response model for the list jobs operation.
         /// </returns>
         public static JobListResponse List(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
@@ -56,7 +102,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get the list of all jobs queried by specified filters.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -69,11 +115,57 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the list containers operation.
+        /// The response model for the list jobs operation.
         /// </returns>
         public static Task<JobListResponse> ListAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Trigger cancellation of a job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Optional. Id of the job whose details should be retrieved.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Custom request headers to make the call.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static OperationResponse Stop(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).StopAsync(jobId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Trigger cancellation of a job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Optional. Id of the job whose details should be retrieved.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Custom request headers to make the call.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static Task<OperationResponse> StopAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.StopAsync(jobId, customRequestHeaders, CancellationToken.None);
         }
     }
 }

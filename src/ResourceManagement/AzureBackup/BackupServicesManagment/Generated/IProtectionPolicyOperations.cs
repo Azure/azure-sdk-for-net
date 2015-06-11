@@ -36,23 +36,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all Protection Policy.
         /// </summary>
-        /// <param name='jobId'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list containers operation.
-        /// </returns>
-        Task<JobByIdResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>

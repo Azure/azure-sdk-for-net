@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private TimeSpan _duration;
         
         /// <summary>
-        /// Required. Duration of JobProperties.
+        /// Optional. Duration of Subtask.
         /// </summary>
         public TimeSpan Duration
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private System.DateTime? _endTime;
         
         /// <summary>
-        /// Required. EndTime of JobProperties.
+        /// Required. EndTime of Subtask.
         /// </summary>
         public System.DateTime? EndTime
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private System.DateTime? _startTime;
         
         /// <summary>
-        /// Required. StartTime of JobProperties.
+        /// Required. StartTime of Subtask.
         /// </summary>
         public System.DateTime? StartTime
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private string _status;
         
         /// <summary>
-        /// Required. Status of JobProperties.
+        /// Required. Status of Subtask.
         /// </summary>
         public string Status
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private string _taskId;
         
         /// <summary>
-        /// Required. TaskId of JobProperties.
+        /// Required. TaskId of Subtask.
         /// </summary>
         public string TaskId
         {

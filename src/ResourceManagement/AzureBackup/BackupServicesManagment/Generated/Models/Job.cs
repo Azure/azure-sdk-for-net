@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private IList<JobSupportedAction> _actionsInfo;
         
         /// <summary>
-        /// Required. ActionsInfo of Job.
+        /// Optional. ActionsInfo of Job.
         /// </summary>
         public IList<JobSupportedAction> ActionsInfo
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private TimeSpan _duration;
         
         /// <summary>
-        /// Required. Duration of Job.
+        /// Optional. Duration of Job.
         /// </summary>
         public TimeSpan Duration
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private DateTime _endTimestamp;
         
         /// <summary>
-        /// Required. EndTimestamp of Job.
+        /// Optional. EndTimestamp of Job.
         /// </summary>
         public DateTime EndTimestamp
         {
@@ -74,6 +74,17 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         {
             get { return this._entityFriendlyName; }
             set { this._entityFriendlyName = value; }
+        }
+        
+        private IList<ErrorInfo> _errorDetails;
+        
+        /// <summary>
+        /// Optional. ErrorDetails of Job.
+        /// </summary>
+        public IList<ErrorInfo> ErrorDetails
+        {
+            get { return this._errorDetails; }
+            set { this._errorDetails = value; }
         }
         
         private string _operation;
@@ -126,6 +137,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         public Job()
         {
             this.ActionsInfo = new LazyList<JobSupportedAction>();
+            this.ErrorDetails = new List<ErrorInfo>();
         }
     }
 }

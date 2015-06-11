@@ -29,13 +29,29 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of Protection Policy operations for the Azure Backup
-    /// extension.
+    /// Definition of Job operations for Azure backup extension.
     /// </summary>
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get details of a particular job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list jobs operation.
+        /// </returns>
+        Task<JobByIdResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all jobs queried by specified filters.
         /// </summary>
         /// <param name='parameters'>
         /// Job query parameter.
@@ -47,8 +63,25 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list containers operation.
+        /// The response model for the list jobs operation.
         /// </returns>
         Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Trigger cancellation of a job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Id of the job whose details should be retrieved.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Custom request headers to make the call.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> StopAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

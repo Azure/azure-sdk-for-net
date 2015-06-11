@@ -37,52 +37,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
         /// </param>
-        /// <param name='jobId'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The response model for the list containers operation.
-        /// </returns>
-        public static JobByIdResponse Get(this IProtectionPolicyOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProtectionPolicyOperations)s).GetAsync(jobId, customRequestHeaders);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
-        /// </param>
-        /// <param name='jobId'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The response model for the list containers operation.
-        /// </returns>
-        public static Task<JobByIdResponse> GetAsync(this IProtectionPolicyOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
-        {
-            return operations.GetAsync(jobId, customRequestHeaders, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get the list of all Protection Policy.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
-        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>

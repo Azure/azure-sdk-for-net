@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.BackupServices
         private string _endTime;
         
         /// <summary>
-        /// Optional. End range of start time in UTC.
+        /// Optional. End time of time range in UTC.
         /// </summary>
         public string EndTime
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.BackupServices
         private string _startTime;
         
         /// <summary>
-        /// Optional. Start time  in UTC.
+        /// Optional. Start time of time range in UTC.
         /// </summary>
         public string StartTime
         {

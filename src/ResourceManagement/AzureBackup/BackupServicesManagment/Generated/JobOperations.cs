@@ -35,8 +35,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of Protection Policy operations for the Azure Backup
-    /// extension.
+    /// Definition of Job operations for Azure backup extension.
     /// </summary>
     internal partial class JobOperations : IServiceOperations<BackupServicesManagementClient>, IJobOperations
     {
@@ -63,7 +62,365 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get details of a particular job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list jobs operation.
+        /// </returns>
+        public async Task<JobByIdResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backupseadev01";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/jobs/";
+            if (jobId != null)
+            {
+                url = url + Uri.EscapeDataString(jobId);
+            }
+            url = url + "/jobdetails";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    JobByIdResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobByIdResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JobProperties jobInstance = new JobProperties();
+                            result.Job = jobInstance;
+                            
+                            JToken tasksListArray = responseDoc["TasksList"];
+                            if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                {
+                                    JobTaskDetails jobTaskDetailsInstance = new JobTaskDetails();
+                                    jobInstance.TasksList.Add(jobTaskDetailsInstance);
+                                    
+                                    JToken taskIdValue = tasksListValue["TaskId"];
+                                    if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                    {
+                                        string taskIdInstance = ((string)taskIdValue);
+                                        jobTaskDetailsInstance.TaskId = taskIdInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = tasksListValue["StartTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobTaskDetailsInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = tasksListValue["EndTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        jobTaskDetailsInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken durationValue = tasksListValue["Duration"];
+                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                        jobTaskDetailsInstance.Duration = durationInstance;
+                                    }
+                                    
+                                    JToken statusValue = tasksListValue["Status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        jobTaskDetailsInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken instanceIdValue = tasksListValue["InstanceId"];
+                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string instanceIdInstance = ((string)instanceIdValue);
+                                        jobTaskDetailsInstance.InstanceId = instanceIdInstance;
+                                    }
+                                    
+                                    JToken nameValue = tasksListValue["Name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        jobTaskDetailsInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken operationInProgressValue = tasksListValue["OperationInProgress"];
+                                    if (operationInProgressValue != null && operationInProgressValue.Type != JTokenType.Null)
+                                    {
+                                        bool operationInProgressInstance = ((bool)operationInProgressValue);
+                                        jobTaskDetailsInstance.OperationInProgress = operationInProgressInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken propertyBagSequenceElement = ((JToken)responseDoc["PropertyBag"]);
+                            if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in propertyBagSequenceElement)
+                                {
+                                    string propertyBagKey = ((string)property.Name);
+                                    string propertyBagValue = ((string)property.Value);
+                                    jobInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["Type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                jobInstance.Type = typeInstance;
+                            }
+                            
+                            JToken operationValue = responseDoc["Operation"];
+                            if (operationValue != null && operationValue.Type != JTokenType.Null)
+                            {
+                                string operationInstance = ((string)operationValue);
+                                jobInstance.Operation = operationInstance;
+                            }
+                            
+                            JToken statusValue2 = responseDoc["Status"];
+                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                            {
+                                string statusInstance2 = ((string)statusValue2);
+                                jobInstance.Status = statusInstance2;
+                            }
+                            
+                            JToken startTimestampValue = responseDoc["StartTimestamp"];
+                            if (startTimestampValue != null && startTimestampValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimestampInstance = ((DateTime)startTimestampValue);
+                                jobInstance.StartTimestamp = startTimestampInstance;
+                            }
+                            
+                            JToken endTimestampValue = responseDoc["EndTimestamp"];
+                            if (endTimestampValue != null && endTimestampValue.Type != JTokenType.Null)
+                            {
+                                DateTime endTimestampInstance = ((DateTime)endTimestampValue);
+                                jobInstance.EndTimestamp = endTimestampInstance;
+                            }
+                            
+                            JToken durationValue2 = responseDoc["Duration"];
+                            if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
+                            {
+                                TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                jobInstance.Duration = durationInstance2;
+                            }
+                            
+                            JToken entityFriendlyNameValue = responseDoc["EntityFriendlyName"];
+                            if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
+                            {
+                                string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
+                                jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                            }
+                            
+                            JToken actionsInfoArray = responseDoc["ActionsInfo"];
+                            if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
+                                {
+                                    jobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
+                                }
+                            }
+                            
+                            JToken errorDetailsArray = responseDoc["ErrorDetails"];
+                            if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
+                                {
+                                    ErrorInfo errorInfoInstance = new ErrorInfo();
+                                    jobInstance.ErrorDetails.Add(errorInfoInstance);
+                                    
+                                    JToken errorCodeValue = errorDetailsValue["ErrorCode"];
+                                    if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                    {
+                                        int errorCodeInstance = ((int)errorCodeValue);
+                                        errorInfoInstance.ErrorCode = errorCodeInstance;
+                                    }
+                                    
+                                    JToken errorTitleValue = errorDetailsValue["ErrorTitle"];
+                                    if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
+                                    {
+                                        string errorTitleInstance = ((string)errorTitleValue);
+                                        errorInfoInstance.ErrorTitle = errorTitleInstance;
+                                    }
+                                    
+                                    JToken errorStringValue = errorDetailsValue["ErrorString"];
+                                    if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
+                                    {
+                                        string errorStringInstance = ((string)errorStringValue);
+                                        errorInfoInstance.ErrorString = errorStringInstance;
+                                    }
+                                    
+                                    JToken recommendationsArray = errorDetailsValue["Recommendations"];
+                                    if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                        {
+                                            errorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken instanceIdValue2 = responseDoc["InstanceId"];
+                            if (instanceIdValue2 != null && instanceIdValue2.Type != JTokenType.Null)
+                            {
+                                string instanceIdInstance2 = ((string)instanceIdValue2);
+                                jobInstance.InstanceId = instanceIdInstance2;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["Name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                jobInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken operationInProgressValue2 = responseDoc["OperationInProgress"];
+                            if (operationInProgressValue2 != null && operationInProgressValue2.Type != JTokenType.Null)
+                            {
+                                bool operationInProgressInstance2 = ((bool)operationInProgressValue2);
+                                jobInstance.OperationInProgress = operationInProgressInstance2;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the list of all jobs queried by specified filters.
         /// </summary>
         /// <param name='parameters'>
         /// Optional. Job query parameter.
@@ -75,7 +432,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list containers operation.
+        /// The response model for the list jobs operation.
         /// </returns>
         public async Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -110,7 +467,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/jobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01.1.0");
+            queryParameters.Add("api-version=2014-09-01");
             if (parameters != null && parameters.Status != null)
             {
                 queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));
@@ -121,7 +478,7 @@ namespace Microsoft.Azure.Management.BackupServices
             }
             if (parameters != null && parameters.Operation != null)
             {
-                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Operation));
+                queryParameters.Add("Operation=" + Uri.EscapeDataString(parameters.Operation));
             }
             if (parameters != null && parameters.JobId != null)
             {
@@ -278,6 +635,46 @@ namespace Microsoft.Azure.Management.BackupServices
                                         }
                                     }
                                     
+                                    JToken errorDetailsArray = objectsValue["ErrorDetails"];
+                                    if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
+                                        {
+                                            ErrorInfo errorInfoInstance = new ErrorInfo();
+                                            jobInstance.ErrorDetails.Add(errorInfoInstance);
+                                            
+                                            JToken errorCodeValue = errorDetailsValue["ErrorCode"];
+                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                            {
+                                                int errorCodeInstance = ((int)errorCodeValue);
+                                                errorInfoInstance.ErrorCode = errorCodeInstance;
+                                            }
+                                            
+                                            JToken errorTitleValue = errorDetailsValue["ErrorTitle"];
+                                            if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
+                                            {
+                                                string errorTitleInstance = ((string)errorTitleValue);
+                                                errorInfoInstance.ErrorTitle = errorTitleInstance;
+                                            }
+                                            
+                                            JToken errorStringValue = errorDetailsValue["ErrorString"];
+                                            if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
+                                            {
+                                                string errorStringInstance = ((string)errorStringValue);
+                                                errorInfoInstance.ErrorString = errorStringInstance;
+                                            }
+                                            
+                                            JToken recommendationsArray = errorDetailsValue["Recommendations"];
+                                            if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                                {
+                                                    errorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
                                     JToken instanceIdValue = objectsValue["InstanceId"];
                                     if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
                                     {
@@ -313,6 +710,175 @@ namespace Microsoft.Azure.Management.BackupServices
                             {
                                 string skiptokenInstance = ((string)skiptokenValue);
                                 jobsInstance.Skiptoken = skiptokenInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Trigger cancellation of a job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Optional. Id of the job whose details should be retrieved.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Custom request headers to make the call.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public async Task<OperationResponse> StopAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backupseadev01";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/jobs/";
+            if (jobId != null)
+            {
+                url = url + Uri.EscapeDataString(jobId);
+            }
+            url = url + "/cancel";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        JToken operationResponseValue = responseDoc["OperationResponse"];
+                        if (operationResponseValue != null && operationResponseValue.Type != JTokenType.Null)
+                        {
+                            OperationResponse operationResponseInstance = new OperationResponse();
+                            
+                            JToken operationIdValue = operationResponseValue["OperationId"];
+                            if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                            {
+                                Guid operationIdInstance = Guid.Parse(((string)operationIdValue));
+                                operationResponseInstance.OperationId = operationIdInstance;
                             }
                         }
                         

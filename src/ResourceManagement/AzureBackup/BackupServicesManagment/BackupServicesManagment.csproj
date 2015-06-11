@@ -41,6 +41,7 @@
     <Compile Include="Generated\Models\DataSourceResponse.cs" />
     <Compile Include="Generated\Models\DisableProtectionResponse.cs" />
     <Compile Include="Generated\Models\EnableProtectionResponse.cs" />
+    <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobByIdResponse.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs" />
