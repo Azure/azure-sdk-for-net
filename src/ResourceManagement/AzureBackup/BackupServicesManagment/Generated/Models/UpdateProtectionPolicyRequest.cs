@@ -21,33 +21,43 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.Azure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// Definition of Protectable ObjectOperation operations for the Azure
-    /// Backup extension.
+    /// The definition of a Management List Response.
     /// </summary>
-    public partial interface IProtectableObjectOperations
+    public partial class UpdateProtectionPolicyRequest : ManagementBaseObject
     {
+        private string _policyName;
+        
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Optional. Protection policy name
         /// </summary>
-        /// <param name='parameters'>
-        /// Job query parameter.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list ProtectableObject operation.
-        /// </returns>
-        Task<ProtectableObjectListResponse> ListAsync(POQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        public string PolicyName
+        {
+            get { return this._policyName; }
+            set { this._policyName = value; }
+        }
+        
+        private BackupSchedule _schedule;
+        
+        /// <summary>
+        /// Optional. Schedule of ProtectionPolicy.
+        /// </summary>
+        public BackupSchedule Schedule
+        {
+            get { return this._schedule; }
+            set { this._schedule = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UpdateProtectionPolicyRequest
+        /// class.
+        /// </summary>
+        public UpdateProtectionPolicyRequest()
+        {
+        }
     }
 }

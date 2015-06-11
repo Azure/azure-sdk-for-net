@@ -21,45 +21,41 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The request model for the upload vault credential certificate operation.
+    /// The definition of a DataSourceQueryParameter object.
     /// </summary>
-    public partial class VaultCredUploadCertRequest
+    public partial class DataSourceQueryParameter
     {
-        private RawCertificateData _rawCertificateData;
+        private string _containerName;
         
         /// <summary>
-        /// Required. Certificate properties.
+        /// Optional. ContainerName of item.
         /// </summary>
-        public RawCertificateData RawCertificateData
+        public string ContainerName
         {
-            get { return this._rawCertificateData; }
-            set { this._rawCertificateData = value; }
+            get { return this._containerName; }
+            set { this._containerName = value; }
+        }
+        
+        private string _protectionStatus;
+        
+        /// <summary>
+        /// Optional. Protection Status of item.
+        /// </summary>
+        public string ProtectionStatus
+        {
+            get { return this._protectionStatus; }
+            set { this._protectionStatus = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VaultCredUploadCertRequest class.
+        /// Initializes a new instance of the DataSourceQueryParameter class.
         /// </summary>
-        public VaultCredUploadCertRequest()
+        public DataSourceQueryParameter()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the VaultCredUploadCertRequest class
-        /// with required arguments.
-        /// </summary>
-        public VaultCredUploadCertRequest(RawCertificateData rawCertificateData)
-            : this()
-        {
-            if (rawCertificateData == null)
-            {
-                throw new ArgumentNullException("rawCertificateData");
-            }
-            this.RawCertificateData = rawCertificateData;
         }
     }
 }

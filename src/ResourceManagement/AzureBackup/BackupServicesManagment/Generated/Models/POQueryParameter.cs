@@ -21,45 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The request model for the upload vault credential certificate operation.
+    /// The definition of a POQueryParameter object.
     /// </summary>
-    public partial class VaultCredUploadCertRequest
+    public partial class POQueryParameter
     {
-        private RawCertificateData _rawCertificateData;
+        private string _status;
         
         /// <summary>
-        /// Required. Certificate properties.
+        /// Optional. Status Status of item.
         /// </summary>
-        public RawCertificateData RawCertificateData
+        public string Status
         {
-            get { return this._rawCertificateData; }
-            set { this._rawCertificateData = value; }
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VaultCredUploadCertRequest class.
+        /// Initializes a new instance of the POQueryParameter class.
         /// </summary>
-        public VaultCredUploadCertRequest()
+        public POQueryParameter()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the VaultCredUploadCertRequest class
-        /// with required arguments.
-        /// </summary>
-        public VaultCredUploadCertRequest(RawCertificateData rawCertificateData)
-            : this()
-        {
-            if (rawCertificateData == null)
-            {
-                throw new ArgumentNullException("rawCertificateData");
-            }
-            this.RawCertificateData = rawCertificateData;
         }
     }
 }

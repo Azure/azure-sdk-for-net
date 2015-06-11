@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
@@ -33,6 +34,40 @@ namespace Microsoft.Azure.Management.BackupServices
     /// </summary>
     public partial interface IProtectionPolicyOperations
     {
+        /// <summary>
+        /// Create new Protection Policy.
+        /// </summary>
+        /// <param name='addProtectionPolicyRequest'>
+        /// The protection policy creation request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create new Protection Policy.
+        /// </summary>
+        /// <param name='protectionPolicyId'>
+        /// The protection policy ID to be deleted.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string protectionPolicyId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Get the list of all Protection Policy.
         /// </summary>
@@ -46,5 +81,25 @@ namespace Microsoft.Azure.Management.BackupServices
         /// The response model for the list ProtectionPolicies operation.
         /// </returns>
         Task<ProtectionPolicyListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update Protection Policy.
+        /// </summary>
+        /// <param name='protectionPolicyId'>
+        /// The protection policy ID to be updated.
+        /// </param>
+        /// <param name='updateProtectionPolicyRequest'>
+        /// The protection policy creation request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

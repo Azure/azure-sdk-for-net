@@ -142,6 +142,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -391,10 +392,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -455,7 +452,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/Subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
             }
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
@@ -519,6 +516,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -715,10 +713,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -869,17 +863,8 @@ namespace Microsoft.Azure.Management.BackupServices
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken operationResponseValue = responseDoc["OperationResponse"];
-                        if (operationResponseValue != null && operationResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            OperationResponse operationResponseInstance = new OperationResponse();
-                            
-                            JToken operationIdValue = operationResponseValue["OperationId"];
-                            if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
-                            {
-                                Guid operationIdInstance = Guid.Parse(((string)operationIdValue));
-                                operationResponseInstance.OperationId = operationIdInstance;
-                            }
                         }
                         
                     }

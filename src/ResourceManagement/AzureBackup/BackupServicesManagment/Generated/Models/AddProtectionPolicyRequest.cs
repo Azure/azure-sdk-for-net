@@ -26,40 +26,48 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The request model for the upload vault credential certificate operation.
+    /// The definition of a Management List Response.
     /// </summary>
-    public partial class VaultCredUploadCertRequest
+    public partial class AddProtectionPolicyRequest : ManagementBaseObject
     {
-        private RawCertificateData _rawCertificateData;
+        private string _policyName;
         
         /// <summary>
-        /// Required. Certificate properties.
+        /// Optional. Protection policy name.
         /// </summary>
-        public RawCertificateData RawCertificateData
+        public string PolicyName
         {
-            get { return this._rawCertificateData; }
-            set { this._rawCertificateData = value; }
+            get { return this._policyName; }
+            set { this._policyName = value; }
+        }
+        
+        private BackupSchedule _schedule;
+        
+        /// <summary>
+        /// Optional. Schedule of ProtectionPolicy.
+        /// </summary>
+        public BackupSchedule Schedule
+        {
+            get { return this._schedule; }
+            set { this._schedule = value; }
+        }
+        
+        private string _workloadType;
+        
+        /// <summary>
+        /// Optional. WorkloadType of protection policy.
+        /// </summary>
+        public string WorkloadType
+        {
+            get { return this._workloadType; }
+            set { this._workloadType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VaultCredUploadCertRequest class.
+        /// Initializes a new instance of the AddProtectionPolicyRequest class.
         /// </summary>
-        public VaultCredUploadCertRequest()
+        public AddProtectionPolicyRequest()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the VaultCredUploadCertRequest class
-        /// with required arguments.
-        /// </summary>
-        public VaultCredUploadCertRequest(RawCertificateData rawCertificateData)
-            : this()
-        {
-            if (rawCertificateData == null)
-            {
-                throw new ArgumentNullException("rawCertificateData");
-            }
-            this.RawCertificateData = rawCertificateData;
         }
     }
 }

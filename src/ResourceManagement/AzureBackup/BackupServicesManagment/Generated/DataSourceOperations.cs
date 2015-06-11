@@ -396,6 +396,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all DataSpurce.
         /// </summary>
+        /// <param name='parameters'>
+        /// Optional. DataSource query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -405,7 +408,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The response model for the list DataSource operation.
         /// </returns>
-        public async Task<DataSourceListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<DataSourceListResponse> ListAsync(DataSourceQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -416,6 +419,7 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -438,6 +442,10 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/datasources";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
+            if (parameters != null && parameters.ContainerName != null)
+            {
+                queryParameters.Add("ContainerName=" + Uri.EscapeDataString(parameters.ContainerName));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

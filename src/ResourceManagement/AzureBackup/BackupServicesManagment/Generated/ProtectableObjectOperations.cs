@@ -64,6 +64,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all Protectable Objects.
         /// </summary>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -73,7 +76,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The response model for the list ProtectableObject operation.
         /// </returns>
-        public async Task<ProtectableObjectListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectableObjectListResponse> ListAsync(POQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -84,6 +87,7 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -106,6 +110,10 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/protectableobjects";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
+            if (parameters != null && parameters.Status != null)
+            {
+                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

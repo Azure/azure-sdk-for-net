@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Microsoft.Azure.Management.BackupServices.IVaultCredentialOperations.
         /// </param>
         /// <param name='certificateName'>
-        /// Optional. Name of the certificate.
+        /// Required. Name of the certificate.
         /// </param>
         /// <param name='vaultCredUploadCertRequest'>
-        /// Optional. Certificate parameters.
+        /// Required. Certificate parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -66,10 +66,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Microsoft.Azure.Management.BackupServices.IVaultCredentialOperations.
         /// </param>
         /// <param name='certificateName'>
-        /// Optional. Name of the certificate.
+        /// Required. Name of the certificate.
         /// </param>
         /// <param name='vaultCredUploadCertRequest'>
-        /// Optional. Certificate parameters.
+        /// Required. Certificate parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
