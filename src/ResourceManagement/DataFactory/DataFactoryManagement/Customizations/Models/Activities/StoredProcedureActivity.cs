@@ -33,6 +33,21 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// keys or values that can be used. User needs to consume and interpret the content accordingly in
         /// their customized Stored Procedure.
         /// </summary>
-        public IDictionary<string, string> StoredProcedureActivityParameters { get; set; }
+        public IDictionary<string, string> StoredProcedureParameters { get; set; }
+
+        public StoredProcedureActivity()
+        {
+        }
+
+        public StoredProcedureActivity(
+            string storedProcedureName,
+            IDictionary<string, string> storedProcedureActivityParameters = null)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(storedProcedureName, "storedProcedureName");
+
+            this.StoredProcedureName = storedProcedureName;
+            this.StoredProcedureParameters = storedProcedureActivityParameters;
+        }
     }
 }

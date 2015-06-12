@@ -35,9 +35,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public OperationStatus Status { get; set; }
 
+        public LinkedServiceCreateOrUpdateResponse()
+        {
+        }
+
         internal LinkedServiceCreateOrUpdateResponse(
             Core.Models.LinkedServiceCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.LinkedService, "internalResponse.LinkedService");

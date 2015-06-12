@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -51,5 +53,25 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Azure table insert type.
         /// </summary>
         public string AzureTableInsertType { get; set; }
+
+        public AzureTableSink()
+        {
+        }
+
+        public AzureTableSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
+
+        public AzureTableSink(
+            int writeBatchSize,
+            TimeSpan writeBatchTimeout,
+            int retryIntervalInSec,
+            int retryTimes)
+            : this(writeBatchSize, writeBatchTimeout)
+        {
+            this.AzureTableRetryIntervalInSec = retryIntervalInSec;
+            this.AzureTableRetryTimes = retryTimes;
+        }
     }
 }

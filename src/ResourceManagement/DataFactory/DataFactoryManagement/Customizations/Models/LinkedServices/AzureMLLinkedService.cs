@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public AzureMLLinkedService(string mlEndpoint, string apiKey)
             : this()
         {
-            Ensure.IsNotNull(mlEndpoint, "mlEndpoint");
-            Ensure.IsNotNull(apiKey, "apiKey");
+            Ensure.IsNotNullOrEmpty(mlEndpoint, "mlEndpoint");
+            Ensure.IsNotNullOrEmpty(apiKey, "apiKey");
 
             this.MlEndpoint = mlEndpoint;
             this.ApiKey = apiKey;

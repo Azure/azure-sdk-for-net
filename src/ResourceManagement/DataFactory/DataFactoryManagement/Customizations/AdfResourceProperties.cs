@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public string Type { get; private set; }
 
-        private readonly TExtensibleTypeProperties typeProperties;
+        private TExtensibleTypeProperties typeProperties;
 
         /// <summary>
         /// The properties specific to the resource type. 
@@ -42,11 +42,24 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             {
                 return this.typeProperties;
             }
+
+            set
+            {
+                this.SetTypeProperties(value);
+            }
         }
 
-        protected AdfResourceProperties(
-            TExtensibleTypeProperties properties,
-            string typeName = null)
+        protected AdfResourceProperties()
+        {
+        }
+
+        protected AdfResourceProperties(TExtensibleTypeProperties properties, string typeName = null)
+            : this()
+        {
+            this.SetTypeProperties(properties, typeName);
+        }
+
+        private void SetTypeProperties(TExtensibleTypeProperties properties, string typeName = null)
         {
             this.typeProperties = properties;
 
@@ -56,9 +69,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             {
                 if (typeName == null)
                 {
-                    throw new ArgumentException(string.Format(
+                    throw new ArgumentException(
+                        string.Format(
                             CultureInfo.InvariantCulture,
-                            "'typeName' cannot be null if 'properties' is a {0} instance.",
+                            "'typeName' cannot be null if 'properties' is a {0} instance. The setter "
+                            + "for 'typeProperties' cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity.",
                             genericTypePropertiesType.Name));
                 }
 

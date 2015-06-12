@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// A copy activity service bus sink.
     /// </summary>
@@ -25,6 +27,16 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Body stream column name.
         /// </summary>
         public string BodyStreamColumnName { get; set; }
+
+        public ServiceBusSink()
+        {
+        }
+
+        public ServiceBusSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
-#endif
 }
+
+#endif

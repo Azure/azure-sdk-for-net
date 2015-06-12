@@ -61,36 +61,34 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         /// <returns>A <see cref="Table"/> instance equivalent to <paramref name="internalTable"/>.</returns>
         public override Table ToWrapperType(Core.Models.Table internalTable)
         {
-            if (internalTable.Properties == null)
-            {
-                return null;
-            }
+            Ensure.IsNotNull(internalTable, "internalTable");
+            Ensure.IsNotNull(internalTable.Properties, "internalTable.Properties");
 
+            Type type;
             TableTypeProperties typeProperties = this.DeserializeTypeProperties(
                 internalTable.Properties.Type,
-                internalTable.Properties.TypeProperties);
+                internalTable.Properties.TypeProperties,
+                out type);
 
-            Table table = new Table()
-            {
-                Name = internalTable.Name, 
-                Properties = new TableProperties(
-                    typeProperties, 
-                    internalTable.Properties.Availability, 
-                    internalTable.Properties.Type)
-                    {
-                        Availability = internalTable.Properties.Availability,
-                        CreateTime = internalTable.Properties.CreateTime,
-                        Description = internalTable.Properties.Description,
-                        ErrorMessage = internalTable.Properties.ErrorMessage,
-                        LinkedServiceName = internalTable.Properties.LinkedServiceName,
-                        Policy = internalTable.Properties.Policy,
-                        ProvisioningState = internalTable.Properties.ProvisioningState,
-                        Published = internalTable.Properties.Published,
-                        Structure = internalTable.Properties.Structure
-                    }
-            };
+            string typeName = type == typeof(GenericTable) ? internalTable.Properties.Type : type.Name;
+            TableProperties properties = new TableProperties(
+                typeProperties,
+                internalTable.Properties.Availability,
+                internalTable.Properties.LinkedServiceName,
+                typeName)
+                     {
+                         Availability = internalTable.Properties.Availability,
+                         CreateTime = internalTable.Properties.CreateTime,
+                         Description = internalTable.Properties.Description,
+                         ErrorMessage = internalTable.Properties.ErrorMessage,
+                         LinkedServiceName = internalTable.Properties.LinkedServiceName,
+                         Policy = internalTable.Properties.Policy,
+                         ProvisioningState = internalTable.Properties.ProvisioningState,
+                         Published = internalTable.Properties.Published,
+                         Structure = internalTable.Properties.Structure
+                     };
 
-            return table;
+            return new Table() { Name = internalTable.Name, Properties = properties };
         }
 
         /// <summary>

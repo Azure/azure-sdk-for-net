@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// A copy activity Azure Search Index sink.
     /// </summary>
@@ -35,6 +37,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Azure Search SoftDeleteColumnName.
         /// </summary>
         public string SoftDeleteColumnName { get; set; }
+        
+        public AzureSearchIndexSink()
+        {
+        }
+
+        public AzureSearchIndexSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
-#endif
 }
+#endif

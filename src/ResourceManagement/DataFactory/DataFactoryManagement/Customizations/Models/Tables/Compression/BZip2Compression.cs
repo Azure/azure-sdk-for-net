@@ -13,23 +13,13 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Custom location.
+    /// The BZip2 compression method used on a table.
     /// </summary>
-    public sealed class CustomTableLocation : TableTypeProperties
+    [AdfTypeName("BZip2")]
+    public class BZip2Compression : Compression
     {
-        public CustomTableLocation()
-        {
-        }
-
-        public CustomTableLocation(IDictionary<string, JToken> serviceExtraProperties)
-        {
-            this.ServiceExtraProperties = serviceExtraProperties;
-        }
     }
 }

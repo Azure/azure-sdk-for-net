@@ -23,6 +23,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// The table name of the on-premises Oracle database.
         /// </summary>
+        [AdfRequired]
         public string TableName { get; set; }
+
+        public OnPremisesOracleTableLocation()
+        {
+        }
+
+        public OnPremisesOracleTableLocation(string tableName)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
+        }
     }
 }

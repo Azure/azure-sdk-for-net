@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+#if ADF_INTERNAL
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// A copy activity Document Database Collection sink.
     /// </summary>
@@ -25,6 +27,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Nested properties separator.
         /// </summary>
         public string NestingSeparator { get; set; }
+
+        public DocumentDbCollectionSink()
+        {
+        }
+
+        public DocumentDbCollectionSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
-#endif
 }
+#endif

@@ -18,10 +18,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public sealed class GenericTable : TableTypeProperties
+    public sealed class GenericTable : TableTypeProperties, IGenericTypeProperties
     {
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; } 
+
         public GenericTable()
         {
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
         public GenericTable(IDictionary<string, JToken> serviceExtraProperties)

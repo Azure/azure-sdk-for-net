@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -59,5 +61,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Blob writer add header.
         /// </summary>
         public bool? BlobWriterAddHeader { get; set; }
+
+        public BlobSink()
+        {
+        }
+
+        public BlobSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : base(writeBatchSize, writeBatchTimeout)
+        {
+        }
     }
 }

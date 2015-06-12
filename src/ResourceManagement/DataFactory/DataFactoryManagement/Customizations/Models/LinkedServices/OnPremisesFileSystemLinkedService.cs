@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public OnPremisesFileSystemLinkedService(string host, string gatewayName)
             : this()
         {
-            Ensure.IsNotNull(host, "host");
-            Ensure.IsNotNull(gatewayName, "gatewayName");
+            Ensure.IsNotNullOrEmpty(host, "host");
+            Ensure.IsNotNullOrEmpty(gatewayName, "gatewayName");
 
             this.Host = host;
             this.GatewayName = gatewayName;

@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 
         /// <summary>
         /// Type of the partition column. 
-        /// Should be one of the constant values of <see cref="PropertyDataType"/>.
+        /// Should be one of the constant values of 
+        /// <see cref="Microsoft.Azure.Management.DataFactories.Common.Models.PropertyDataType"/>.
         /// </summary>
         public string Type { get; set; }
     }

@@ -14,17 +14,17 @@
 //
 
 using System;
-using System.Collections.Generic;
 using Microsoft.Azure.Management.DataFactories.Conversion;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     public abstract class TypeProperties
     {
-        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+        protected TypeProperties()
+        {
+        }
 
         internal static TypeProperties DeserializeObject(string json, Type type)
         {
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                        {
                            new TypePropertiesConverter(), new PolymorphicTypeConverter<StorageFormat>(),
                            new PolymorphicTypeConverter<PartitionValue>(), new PolymorphicTypeConverter<CopyLocation>(),
-                           new PolymorphicTypeConverter<CopyTranslator>()
+                           new PolymorphicTypeConverter<CopyTranslator>(), new PolymorphicTypeConverter<Compression>()
                        };
         }
     }

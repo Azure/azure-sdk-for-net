@@ -16,10 +16,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public sealed class CustomActivity : ActivityTypeProperties
+    public sealed class CustomActivity : ActivityTypeProperties, IGenericTypeProperties
     {
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+
         public CustomActivity()
         {
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
         public CustomActivity(IDictionary<string, JToken> serviceExtraProperties)

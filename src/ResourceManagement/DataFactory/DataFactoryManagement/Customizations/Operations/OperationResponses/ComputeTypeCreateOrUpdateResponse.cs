@@ -30,9 +30,14 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public OperationStatus Status { get; set; }
 
+        public ComputeTypeCreateOrUpdateResponse()
+        {
+        }
+
         internal ComputeTypeCreateOrUpdateResponse(
             CoreRegistrationModel.ComputeTypeCreateOrUpdateResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.ComputeType = ((ComputeTypeOperations)client.ComputeTypes).Converter.ToWrapperType(internalResponse.ComputeType);

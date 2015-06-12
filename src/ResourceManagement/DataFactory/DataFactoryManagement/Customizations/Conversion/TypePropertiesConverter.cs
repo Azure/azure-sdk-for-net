@@ -38,32 +38,44 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             TypeProperties target = (TypeProperties)Activator.CreateInstance(objectType);
             serializer.Populate(obj.CreateReader(), target);
 
+            var genericTarget = target as IGenericTypeProperties;
+            if (genericTarget == null)
+            {
+                return target;
+            }
+
             List<string> props = objectType.GetProperties(ConversionCommon.DefaultBindingFlags)
                     .Select(p => this.camelCaseResolver.GetResolvedPropertyName(p.Name))
                     .ToList();
 
-            target.ServiceExtraProperties = new Dictionary<string, JToken>();
+            genericTarget.ServiceExtraProperties = new Dictionary<string, JToken>();
             foreach (KeyValuePair<string, JToken> kvp in obj)
             {
                 // Extra properties returned by the server but not present in the client model
                 // do not get deserialized; add them after the fact
                 if (!props.Contains(this.camelCaseResolver.GetResolvedPropertyName(kvp.Key)))
                 {
-                    target.ServiceExtraProperties.Add(kvp.Key, kvp.Value);
+                    genericTarget.ServiceExtraProperties.Add(kvp.Key, kvp.Value);
                 }
             }
 
-            return target;
+            return genericTarget as TypeProperties;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             TypeProperties typeProperties = (TypeProperties)value;
+            IDictionary<string, JToken> propertyBag = null;
 
-            // Remove properties in the property bag from the object to serialize
-            IDictionary<string, JToken> propertyBag = typeProperties.ServiceExtraProperties;
-            typeProperties.ServiceExtraProperties = null;
-
+            var genericTypeProperties = typeProperties as IGenericTypeProperties;
+            if (genericTypeProperties != null)
+            {
+                // Remove properties in the property bag from the object to serialize
+                propertyBag = genericTypeProperties.ServiceExtraProperties;
+                genericTypeProperties.ServiceExtraProperties = null;
+                typeProperties = genericTypeProperties as TypeProperties;
+            }
+            
             // Remove this converter from the list of converters used for serialization, 
             // otherwise JObject.FromObject() will throw an exception
             serializer.Converters.Remove(this);

@@ -28,9 +28,14 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public ComputeType ComputeType { get; set; }
 
+        public ComputeTypeGetResponse()
+        {
+        }
+
         internal ComputeTypeGetResponse(
             CoreRegistrationModel.ComputeTypeGetResponse internalResponse,
             DataFactoryManagementClient client)
+            : this()
         {
             DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
             this.ComputeType = ((ComputeTypeOperations)client.ComputeTypes).Converter.ToWrapperType(internalResponse.ComputeType);

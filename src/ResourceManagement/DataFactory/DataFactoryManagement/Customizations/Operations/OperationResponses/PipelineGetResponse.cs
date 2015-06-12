@@ -25,7 +25,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public Pipeline Pipeline { get; set; }
 
-        internal PipelineGetResponse(Core.Models.PipelineGetResponse internalResponse, DataFactoryManagementClient client)
+        public PipelineGetResponse()
+        {
+        }
+
+        internal PipelineGetResponse(
+            Core.Models.PipelineGetResponse internalResponse,
+            DataFactoryManagementClient client)
+            : this()
         {
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Pipeline, "internalResponse.Pipeline");

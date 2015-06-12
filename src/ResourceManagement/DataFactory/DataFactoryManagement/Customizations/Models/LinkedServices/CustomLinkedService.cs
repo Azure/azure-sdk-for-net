@@ -21,10 +21,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Custom linked service.
     /// </summary>
-    public sealed class CustomLinkedService : LinkedServiceTypeProperties
+    public sealed class CustomLinkedService : LinkedServiceTypeProperties, IGenericTypeProperties
     {
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+
         public CustomLinkedService()
         {   
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
         public CustomLinkedService(IDictionary<string, JToken> serviceExtraProperties)

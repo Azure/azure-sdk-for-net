@@ -14,6 +14,13 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\GenericCompression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\DeflateCompression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\GZipCompression.cs" />
+    <Compile Include="Customizations\Models\Tables\Compression\Compression.cs" />
+    <Compile Include="Customizations\Models\IGenericTypeProperties.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\IDataSliceRunOperations.cs" />
@@ -132,7 +139,7 @@
     <Compile Include="Customizations\Models\Tables\AzureSearchIndexLocation.cs" />
     <Compile Include="Customizations\Models\Tables\AzureSqlTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\AzureTableLocation.cs" />
-    <Compile Include="Customizations\Models\Tables\CustomTableLocation.cs" />
+    <Compile Include="Customizations\Models\Tables\CustomLocation.cs" />
     <Compile Include="Customizations\Models\Tables\DocumentDbCollectionLocation.cs" />
     <Compile Include="Customizations\Models\Tables\GenericTable.cs" />
     <Compile Include="Customizations\Models\Tables\MdsTableLocation.cs" />
@@ -201,7 +208,8 @@
     <Compile Include="Customizations\Operations\Tables\TableOperations.cs" />
     <Compile Include="Customizations\Operations\Tables\TableOperationsExtensions.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Customization.cs" />
-    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Generated\**\*.cs" Condition="'$(ADF_INTERNAL)'!='true'" />
+    <Compile Include="GeneratedInternal\**\*.cs" Condition="'$(ADF_INTERNAL)'=='true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec">

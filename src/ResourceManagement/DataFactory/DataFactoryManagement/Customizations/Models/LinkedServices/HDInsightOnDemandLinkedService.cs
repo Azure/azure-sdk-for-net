@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public HDInsightOnDemandLinkedService(int clusterSize, TimeSpan timeToLive, string linkedServiceName)
             : this()
         {
-            Ensure.IsNotNull(linkedServiceName, "linkedServiceName");
+            Ensure.IsNotNullOrEmpty(linkedServiceName, "linkedServiceName");
 
             this.ClusterSize = clusterSize;
             this.TimeToLive = timeToLive;

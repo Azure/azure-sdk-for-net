@@ -29,13 +29,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// The deserializer.
         /// </summary>
         public string Deserializer { get; set; }
-
-        /// <summary>
-        /// Compression.
-        /// </summary>
+        
 #if ADF_INTERNAL
-        public string Compression { get; set; }
-
         /// <summary>
         /// Encryption.
         /// </summary>
