@@ -126,4 +126,10 @@ namespace BackupServices.Tests.Helpers
     {
         public const int VaultCertificateExpiryInHoursForBackup = 48;
     }
+
+    public enum AzureBackupVaultStorageType
+    {
+        GeoRedundant = 1,
+        LocallyRedundant,
+    }
 }

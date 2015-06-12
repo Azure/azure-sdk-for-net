@@ -75,5 +75,30 @@ namespace BackupServices.Tests
                             "Downloaded and uploaded resource IDs don't match");
             }
         }
+
+        [Fact]
+        public void UpdateStorageTypeReturnsOK()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest = new UpdateVaultStorageTypeRequest()
+                {
+                    StorageTypeProperties = new StorageTypeProperties()
+                    {
+                        StorageModelType = AzureBackupVaultStorageType.LocallyRedundant.ToString(),
+                    },
+                };
+
+                OperationResponse response = client.Vault.UpdateStorageType(updateVaultStorageTypeRequest, GetCustomRequestHeaders());
+
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }
+        }
     }
 }
