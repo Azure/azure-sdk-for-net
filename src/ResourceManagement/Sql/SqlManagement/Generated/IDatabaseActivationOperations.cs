@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Start an Azure SQL Data Warehouse database pause operation.To
         /// determine the status of the operation call
-        /// GetDatabaseOperationStatus.
+        /// GetDatabaseActivationOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the Azure SQL Server
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Start an Azure SQL Data Warehouse database resume operation. To
         /// determine the status of the operation call
-        /// GetDatabaseOperationStatus.
+        /// GetDatabaseActivationOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the Azure SQL Server
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql
         /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Data Warehouse database to pause.
+        /// The name of the Azure SQL Data Warehouse database to resume.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Start an Azure SQL Data Warehouse database pause operation.To
         /// determine the status of the operation call
-        /// GetDatabaseOperationStatus.
+        /// GetDatabaseActivationOperationStatus.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Start an Azure SQL Data Warehouse database pause operation.To
         /// determine the status of the operation call
-        /// GetDatabaseOperationStatus.
+        /// GetDatabaseActivationOperationStatus.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Start an Azure SQL Data Warehouse database resume operation. To
         /// determine the status of the operation call
-        /// GetDatabaseOperationStatus.
+        /// GetDatabaseActivationOperationStatus.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='databaseName'>
         /// Required. The name of the Azure SQL Data Warehouse database to
-        /// pause.
+        /// resume.
         /// </param>
         /// <returns>
         /// Response for long running Azure Sql Database operations.
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Start an Azure SQL Data Warehouse database resume operation. To
         /// determine the status of the operation call
-        /// GetDatabaseOperationStatus.
+        /// GetDatabaseActivationOperationStatus.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='databaseName'>
         /// Required. The name of the Azure SQL Data Warehouse database to
-        /// pause.
+        /// resume.
         /// </param>
         /// <returns>
         /// Response for long running Azure Sql Database operations.
