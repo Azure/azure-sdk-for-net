@@ -38,7 +38,7 @@ namespace Storage.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? "North US" : "West US";
-        public static string DefaultAccountType = "StandardGRS";
+        public static string DefaultAccountType = "Standard_GRS";
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
             {
                 {"key1","value1"},
@@ -47,29 +47,36 @@ namespace Storage.Tests.Helpers
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
+            ResourceManagementClient resourcesClient;
             if (IsTestTenant)
             {
-                ResourceManagementClient resourcesClient = new ResourceManagementClient(GetCreds());
-                return resourcesClient;
+                resourcesClient = new ResourceManagementClient(GetCreds());
             }
             else
             {
                 handler.IsPassThrough = true;
-                return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
             }
+
+            resourcesClient.LongRunningOperationRetryTimeout = 0;
+            return resourcesClient;
         }
 
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
+            StorageManagementClient storageClient;
             if (IsTestTenant)
             {
-                return new StorageManagementClient(testUri, GetCreds());
+                storageClient = new StorageManagementClient(testUri, GetCreds());
             }
             else
             {
                 handler.IsPassThrough = true;
-                return TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
+                storageClient = TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
             }
+
+            storageClient.LongRunningOperationRetryTimeout = 0;
+            return storageClient;
         }
 
         private static SubscriptionCloudCredentials GetCreds() 
@@ -132,7 +139,7 @@ namespace Storage.Tests.Helpers
             Assert.NotNull(account.PrimaryEndpoints);
             Assert.NotNull(account.PrimaryEndpoints.Blob);
 
-            if (account.AccountType != "StandardZRS" && account.AccountType != "PremiumLRS")
+            if (account.AccountType != "Standard_ZRS" && account.AccountType != "Premium_LRS")
             {
                 Assert.NotNull(account.PrimaryEndpoints.Queue);
                 Assert.NotNull(account.PrimaryEndpoints.Table);
@@ -143,14 +150,14 @@ namespace Storage.Tests.Helpers
 
             switch (account.AccountType)
             {
-                case "StandardLRS":
-                case "StandardZRS":
-                case "PremiumLRS":
+                case "Standard_LRS":
+                case "Standard_ZRS":
+                case "Premium_LRS":
                     Assert.Equal("", account.SecondaryLocation); // TODO: make null when service is fixed
                     Assert.Null(account.StatusOfSecondary);
                     Assert.Null(account.SecondaryEndpoints);
                     break;
-                case "StandardRAGRS":
+                case "Standard_RAGRS":
                     Assert.Equal("Available", account.StatusOfSecondary);
                     Assert.NotNull(account.SecondaryLocation);
                     Assert.NotNull(account.SecondaryEndpoints);
@@ -158,7 +165,7 @@ namespace Storage.Tests.Helpers
                     Assert.NotNull(account.SecondaryEndpoints.Queue);
                     Assert.NotNull(account.SecondaryEndpoints.Table);
                     break;
-                case "StandardGRS":
+                case "Standard_GRS":
                     Assert.Equal("Available", account.StatusOfSecondary);
                     Assert.NotNull(account.SecondaryLocation);
                     Assert.Null(account.SecondaryEndpoints);

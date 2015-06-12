@@ -1,21 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest;
-using Newtonsoft.Json;
-using Microsoft.Azure.OData;
-using System.Linq.Expressions;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
-
 namespace Microsoft.Azure.Management.Resources
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
+    using Microsoft.Azure;
+    using Models;
+
     internal partial class TagsOperations : IServiceOperations<ResourceManagementClient>, ITagsOperations
     {
         /// <summary>
@@ -71,6 +71,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{tagName}", Uri.EscapeDataString(tagName));
             url = url.Replace("{tagValue}", Uri.EscapeDataString(tagValue));
@@ -163,6 +167,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{tagName}", Uri.EscapeDataString(tagName));
             url = url.Replace("{tagValue}", Uri.EscapeDataString(tagValue));
@@ -263,6 +271,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/tagNames/{tagName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{tagName}", Uri.EscapeDataString(tagName));
             List<string> queryParameters = new List<string>();
@@ -362,6 +374,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/tagNames/{tagName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{tagName}", Uri.EscapeDataString(tagName));
             List<string> queryParameters = new List<string>();
@@ -437,6 +453,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/tagNames";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             List<string> queryParameters = new List<string>();
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -529,7 +549,6 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = "{nextLink}";       
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)

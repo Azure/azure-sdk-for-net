@@ -50,27 +50,27 @@ namespace Storage.Tests
                 var createRequest = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 Assert.Equal(createRequest.Location, StorageManagementTestUtilities.DefaultLocation);
-                Assert.Equal(createRequest.AccountType, "StandardGRS");
+                Assert.Equal(createRequest.AccountType, "Standard_GRS");
                 Assert.Equal(createRequest.Tags.Count, 2);
 
                 // Make sure a second create returns immediately
                 createRequest = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 Assert.Equal(createRequest.Location, StorageManagementTestUtilities.DefaultLocation);
-                Assert.Equal(createRequest.AccountType, "StandardGRS");
+                Assert.Equal(createRequest.AccountType, "Standard_GRS");
                 Assert.Equal(createRequest.Tags.Count, 2);
 
                 // Create storage account with only required params
                 accountName = TestUtilities.GenerateName("sto");
                 parameters = new StorageAccountCreateParameters
                 {
-                    AccountType = "StandardGRS",
+                    AccountType = "Standard_GRS",
                     Location = StorageManagementTestUtilities.DefaultLocation
                 };
                 createRequest = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 Assert.Equal(createRequest.Location, StorageManagementTestUtilities.DefaultLocation);
-                Assert.Equal(createRequest.AccountType, "StandardGRS");
-                Assert.Empty(createRequest.Tags);
+                Assert.Equal(createRequest.AccountType, "Standard_GRS");
+                Assert.Null(createRequest.Tags);
             }
         }
 
@@ -123,35 +123,35 @@ namespace Storage.Tests
 
                 //Create and get a LRS storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                parameters.AccountType = "StandardLRS";
+                parameters.AccountType = "Standard_LRS";
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 var getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(getRequest, false);
 
                 // Create and get a GRS storage account
                 accountName = TestUtilities.GenerateName("sto");
-                parameters.AccountType = "StandardGRS";
+                parameters.AccountType = "Standard_GRS";
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(getRequest, true);
 
                 // Create and get a RAGRS storage account
                 accountName = TestUtilities.GenerateName("sto");
-                parameters.AccountType = "StandardRAGRS";
+                parameters.AccountType = "Standard_RAGRS";
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(getRequest, false);
                
                 // Create and get a ZRS storage account
                 accountName = TestUtilities.GenerateName("sto");
-                parameters.AccountType = "StandardZRS";
+                parameters.AccountType = "Standard_ZRS";
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(getRequest, false);
 
                 // Create and get a Premium LRS storage account
                 accountName = TestUtilities.GenerateName("sto");
-                parameters.AccountType = "PremiumLRS";
+                parameters.AccountType = "Premium_LRS";
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(getRequest, false);
@@ -353,13 +353,13 @@ namespace Storage.Tests
                 // Update storage account type
                 var parameters = new StorageAccountUpdateParameters
                 {
-                    AccountType = "StandardLRS"
+                    AccountType = "Standard_LRS"
                 };
                 var updateAccountTypeRequest = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
-                Assert.Equal(updateAccountTypeRequest.AccountType, "StandardLRS");
+                Assert.Equal(updateAccountTypeRequest.AccountType, "Standard_LRS");
 
                 var getRequest = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.Equal(getRequest.AccountType, "StandardLRS");
+                Assert.Equal(getRequest.AccountType, "Standard_LRS");
 
                 // Update storage tags
                 parameters = new StorageAccountUpdateParameters

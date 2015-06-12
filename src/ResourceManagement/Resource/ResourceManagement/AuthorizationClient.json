@@ -113,7 +113,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -121,7 +121,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -202,7 +202,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -210,7 +210,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -476,8 +476,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/ManagementLockObject"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/ManagementLockObject"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks": {
@@ -515,7 +515,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -523,7 +523,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -554,8 +554,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/ManagementLockObject"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/ManagementLockObject"
       }
     },
     "/{nextLink}": {
@@ -572,7 +572,7 @@
             "required": true,
             "type": "string",
             "description": "NextLink from the previous successful call to List operation.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           }
         ],
         "responses": {
@@ -583,7 +583,7 @@
             }
           }
         },
-        "x-pageable": true
+        "x-ms-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks": {
@@ -623,8 +623,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/ManagementLockObject"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/ManagementLockObject"
       }
     }
   },
@@ -725,7 +725,7 @@
           "description": "Resource Id"
         }
       },
-      "x-external": true
+      "x-ms-external": true
     }
   }
 }

@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Microsoft.Rest;
-using Microsoft.Rest.Serialization;
-using Microsoft.Azure;
-
 namespace Microsoft.Azure.Management.Resources.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Microsoft.Azure;
+
     /// <summary>
     /// </summary>
     public partial class DeploymentOperationProperties
     {
-        /// <summary>
-        /// Gets or sets the state of the provisioning.
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
-
         /// <summary>
         /// Gets or sets the date and time of the operation.
         /// </summary>
