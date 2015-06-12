@@ -10,12 +10,9 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\VaultTestHelper.cs" />
-    <Compile Include="ScenarioTests\AzureBackupItem\DisableAzureBakcupProtectionTest.cs" />
-    <Compile Include="ScenarioTests\AzureBackupItem\EnableAzureBackupProtectionTest.cs" />
-    <Compile Include="ScenarioTests\AzureBackupItem\GetAzureBackupItemPOTest.cs" />
-    <Compile Include="ScenarioTests\AzureBackupItem\GetAzureBackupItemsDSTest.cs" />
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
     <Compile Include="ScenarioTests\BackUpTests.cs" />
+    <Compile Include="ScenarioTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
     <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\VaultTests.cs" />
@@ -47,6 +44,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsValidResponseTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.DisableAzureBackupProtectionTest\DisableAzureBackupProtection.json" />
     <None Include="SessionRecords\BackupServices.Tests.EnableAzureBackupProtectionTest\EnableAzureBackupProtection.json" />
     <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemPOTest\ListAzureBackupItemPOTest.json" />

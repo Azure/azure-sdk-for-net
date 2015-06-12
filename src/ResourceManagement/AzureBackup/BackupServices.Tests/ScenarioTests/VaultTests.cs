@@ -77,7 +77,7 @@ namespace BackupServices.Tests
         }
 
         [Fact]
-        public void UpdateStorageTypeReturnsOK()
+        public void UpdateStorageTypeReturnsOKTest()
         {
             using (UndoContext undoContext = UndoContext.Current)
             {
