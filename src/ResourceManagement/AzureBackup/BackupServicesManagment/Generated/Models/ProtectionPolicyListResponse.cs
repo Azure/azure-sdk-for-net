@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private ProtectionPolicyInfoResponse _protectionPolicies;
         
         /// <summary>
-        /// Optional. The list of ProtectionPolicies for the resource id.
+        /// Optional. The list of ProtectionPolicies for a resource id.
         /// </summary>
         public ProtectionPolicyInfoResponse ProtectionPolicies
         {

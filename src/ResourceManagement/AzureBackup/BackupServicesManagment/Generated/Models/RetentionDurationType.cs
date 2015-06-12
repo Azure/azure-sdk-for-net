@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
+    /// <summary>
+    /// The RetentionDuration type.
+    /// </summary>
     public enum RetentionDurationType
     {
         /// <summary>
