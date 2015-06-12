@@ -4,10 +4,19 @@
     <ProjectGuid>{84F44D2D-6FED-4968-80E6-0ED31E19572B}</ProjectGuid>
     <AssemblyName>UsageAggregates.Tests</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>UsageAggregates.Tests</RootNamespace>
+  </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Compile Include="HttpPayload.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HttpPayload.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordedDelegatingHandler.cs" />
     <Compile Include="ScenarioTests\GetUsageForSubscription.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -22,5 +31,11 @@
       <Project>{9f6a517d-abf7-4a5a-9380-97dacb0bcfd5}</Project>
       <Name>UsageAggregates</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HttpPayload.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>HttpPayload.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

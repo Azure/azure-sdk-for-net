@@ -105,6 +105,17 @@ namespace Microsoft.Commerce.UsageAggregates.Models
             set { this._properties = value; }
         }
         
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Type of the resource being returned.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the UsageAggregation class.
         /// </summary>
@@ -727,13 +738,13 @@ namespace Microsoft.Commerce.UsageAggregates
         /// down into the instance metadata which is more granular.
         /// </param>
         /// <param name='continuationToken'>
-        /// Optional. Retrieved from previous calls, this is the bookmakr used
+        /// Optional. Retrieved from previous calls, this is the bookmark used
         /// for progress when the responses are paged.
         /// </param>
         /// <returns>
         /// The Get UsageAggregates operation response.
         /// </returns>
-        public static UsageAggregationGetResponse Get(this IUsageAggregationOperations operations, string reportedStartTime, string reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken)
+        public static UsageAggregationGetResponse Get(this IUsageAggregationOperations operations, DateTime reportedStartTime, DateTime reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -764,13 +775,13 @@ namespace Microsoft.Commerce.UsageAggregates
         /// down into the instance metadata which is more granular.
         /// </param>
         /// <param name='continuationToken'>
-        /// Optional. Retrieved from previous calls, this is the bookmakr used
+        /// Optional. Retrieved from previous calls, this is the bookmark used
         /// for progress when the responses are paged.
         /// </param>
         /// <returns>
         /// The Get UsageAggregates operation response.
         /// </returns>
-        public static Task<UsageAggregationGetResponse> GetAsync(this IUsageAggregationOperations operations, string reportedStartTime, string reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken)
+        public static Task<UsageAggregationGetResponse> GetAsync(this IUsageAggregationOperations operations, DateTime reportedStartTime, DateTime reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken)
         {
             return operations.GetAsync(reportedStartTime, reportedEndTime, aggregationGranularity, showDetails, continuationToken, CancellationToken.None);
         }
@@ -796,7 +807,7 @@ namespace Microsoft.Commerce.UsageAggregates
         /// instance metadata which is more granular.
         /// </param>
         /// <param name='continuationToken'>
-        /// Retrieved from previous calls, this is the bookmakr used for
+        /// Retrieved from previous calls, this is the bookmark used for
         /// progress when the responses are paged.
         /// </param>
         /// <param name='cancellationToken'>
@@ -805,7 +816,7 @@ namespace Microsoft.Commerce.UsageAggregates
         /// <returns>
         /// The Get UsageAggregates operation response.
         /// </returns>
-        Task<UsageAggregationGetResponse> GetAsync(string reportedStartTime, string reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken, CancellationToken cancellationToken);
+        Task<UsageAggregationGetResponse> GetAsync(DateTime reportedStartTime, DateTime reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken, CancellationToken cancellationToken);
     }
     
     internal partial class UsageAggregationOperations : IServiceOperations<UsageAggregationManagementClient>, IUsageAggregationOperations
@@ -850,7 +861,7 @@ namespace Microsoft.Commerce.UsageAggregates
         /// down into the instance metadata which is more granular.
         /// </param>
         /// <param name='continuationToken'>
-        /// Optional. Retrieved from previous calls, this is the bookmakr used
+        /// Optional. Retrieved from previous calls, this is the bookmark used
         /// for progress when the responses are paged.
         /// </param>
         /// <param name='cancellationToken'>
@@ -859,17 +870,9 @@ namespace Microsoft.Commerce.UsageAggregates
         /// <returns>
         /// The Get UsageAggregates operation response.
         /// </returns>
-        public async Task<UsageAggregationGetResponse> GetAsync(string reportedStartTime, string reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken, CancellationToken cancellationToken)
+        public async Task<UsageAggregationGetResponse> GetAsync(DateTime reportedStartTime, DateTime reportedEndTime, AggregationGranularity aggregationGranularity, bool showDetails, string continuationToken, CancellationToken cancellationToken)
         {
             // Validate
-            if (reportedStartTime == null)
-            {
-                throw new ArgumentNullException("reportedStartTime");
-            }
-            if (reportedEndTime == null)
-            {
-                throw new ArgumentNullException("reportedEndTime");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -989,6 +992,13 @@ namespace Microsoft.Commerce.UsageAggregates
                                     {
                                         string nameInstance = ((string)nameValue);
                                         usageAggregationInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        usageAggregationInstance.Type = typeInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];

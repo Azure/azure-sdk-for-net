@@ -13,22 +13,52 @@
 // limitations under the License.
 //
 
-using Hyak.Common.TransientFaultHandling;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Subscriptions;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
-using System.Linq;
+using System;
 using System.Net;
+using System.Net.Http;
+using Microsoft.Azure;
+using Microsoft.Azure.Test;
+using Microsoft.Commerce.UsageAggregates;
+using Microsoft.Commerce.UsageAggregates.Models;
+using UsageAggregates.Tests;
 using Xunit;
 
 namespace ScenarioTests
 {
     public class GetUsageForSubscription : TestBase
     {
-        [Fact]
-        public void GetSimpleUsage()
+        public UsageAggregationManagementClient GetUsageAggregationManagementClient(RecordedDelegatingHandler handler)
         {
+            handler.IsPassThrough = false;
+
+            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            UsageAggregationManagementClient client = new UsageAggregationManagementClient(token, new Uri("https://mn-azure/management/"));
+            client = client.WithHandler(handler);
+            return client;
+        }
+
+        private DateTime startDate = new DateTime(2016, 5, 1);
+        private DateTime endDate = new DateTime(2016, 5, 2);
+        
+        [Fact]
+        public void GetAggregate()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(HttpPayload.GetOneAggregates)
+            };
+
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetUsageAggregationManagementClient(handler);
+
+            UsageAggregationGetResponse result = client.UsageAggregates.Get(startDate, endDate, AggregationGranularity.Daily,
+                false, null);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Get, handler.Method);
+
+            Assert.Equal(1, result.UsageAggregations.Count);
         }
     }
 }
