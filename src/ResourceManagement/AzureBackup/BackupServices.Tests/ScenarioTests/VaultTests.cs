@@ -6,12 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BackupServices.Tests.ScenarioTests
+namespace BackupServices.Tests
 {
     public class VaultTests : BackupServicesTestsBase
     {
@@ -49,9 +50,12 @@ namespace BackupServices.Tests.ScenarioTests
                 VaultCredUploadCertResponse response =
                     client.Vault.UploadCertificate("IdMgmtInternalCert", vaultCredUploadCertRequest, GetCustomRequestHeaders());
 
-                // Basic Validation
+                // Response Validation
                 Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(response.ResourceCertificateAndACSDetails);
+
+                // Basic Validation                
                 Assert.True(string.Equals(rawCertDataString, response.ResourceCertificateAndACSDetails.Certificate),
                             "Downloaded and uploaded cert raw data don't match");
                 Assert.True(string.Equals(cert.Thumbprint, response.ResourceCertificateAndACSDetails.Thumbprint,
