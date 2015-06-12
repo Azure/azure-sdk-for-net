@@ -7,14 +7,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageAggregates", "UsageAgg
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Net40-Debug|Any CPU = Net40-Debug|Any CPU
+		Net40-Release|Any CPU = Net40-Release|Any CPU
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+		Portable-Debug|Any CPU = Portable-Debug|Any CPU
+		Portable-Release|Any CPU = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
-		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
