@@ -1,13 +1,9 @@
 [CmdletBinding()]
 Param(
 [Parameter(Mandatory=$False, Position=0)]
-[string]$Folder,
-[Parameter(Mandatory=$False)]
-[string]$BasePath
+[string]$Folder
 )
 
-if ($BasePath -eq '' -or $BasePath -eq $null) { $BasePath = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)\..\src" }
-echo "Base path: $BasePath" 
 $ErrorActionPreference = "Stop"
 
 # Function to update nuspec file
@@ -130,12 +126,4 @@ function SyncNuspecFile([string]$FolderPath)
     }
 }
 
-if ($Folder -eq '' -or $Folder -eq $null) {
-    $subFolders = Get-ChildItem -Directory -Path $BasePath
-    ForEach ($subFolder in $subFolders) {
-        SyncNuspecFile $subFolder.FullName
-    }
-} else {
-    SyncNuspecFile $Folder
-}
-
+SyncNuspecFile $Folder

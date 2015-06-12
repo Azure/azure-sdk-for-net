@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.WindowsAzure.Management.StorSimple</id>
+    <title>Microsoft Azure StorSimple Management Library</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides capabilities to manage Microsoft Azure StorSimple.</summary>
+    <description>Provides capabilities to manage Microsoft Azure StorSimple.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure Management StorSimple REST HTTP client windowsazureofficial</tags>
+    <references>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.StorSimple.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.0.4,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ServiceManagement\StorSimple\StorSimple\**\*.cs" target="src" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.StorSimple.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.StorSimple.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.StorSimple.xml" target="lib\net40" />
+  </files>
+</package>

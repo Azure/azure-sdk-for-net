@@ -1,0 +1,322 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"AdInfo\": null,\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"Created using AUX portal\",\r\n    \"DnsServers\": [],\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-02-01T10:26:19.152Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"simple\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"West US\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 1,\r\n    \"VnetName\": \"simplevnet-54e37997-fd0e-45f4-8d5b-182d84c9378c\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  },\r\n  {\r\n    \"AdInfo\": {\r\n      \"DomainName\": \"rdvmohoro.nttest.microsoft.com\",\r\n      \"OrganizationalUnit\": null,\r\n      \"ServiceAccountPassword\": \"*******\",\r\n      \"ServiceAccountUserName\": \"TestUser@service.com\"\r\n    },\r\n    \"BillingPlanName\": \"Standard\",\r\n    \"CustomRdpProperty\": null,\r\n    \"Description\": \"BVTDesktop\",\r\n    \"DnsServers\": [],\r\n    \"LastErrorCode\": \"\",\r\n    \"LastModifiedTimeUtc\": \"2015-02-01T09:00:51.242Z\",\r\n    \"MaxSessions\": 10,\r\n    \"Mode\": 1,\r\n    \"Name\": \"testd112\",\r\n    \"OfficeType\": 0,\r\n    \"ReadyForPublishing\": true,\r\n    \"Region\": \"\",\r\n    \"SessionWarningThreshold\": 8,\r\n    \"Status\": \"Active\",\r\n    \"SubnetName\": null,\r\n    \"TemplateImageName\": \"bluerefresh.2014.08.21.vhd\",\r\n    \"TrialOnly\": false,\r\n    \"Type\": 0,\r\n    \"VnetName\": \"CloudVnet\",\r\n    \"WaitBeforeShutdownInMinutes\": 0\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1128"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "5d3a8fec6a5c683bb572b60d882d5a5c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:49 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTIvYXBwbGljYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Alias\": \"80d8ea61-d45d-4b81-b0c9-5dbb78d771d5\",\r\n    \"AvailableToUsers\": true,\r\n    \"CommandLineArguments\": \"\",\r\n    \"IconPngUris\": [\r\n      {\r\n        \"Key\": 32,\r\n        \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default32.png?se=2015-02-01T11%3A07%3A50Z&sr=b&sp=r&sig=JNmCTI6%2BcplKOojmrDJaw9D%2FEXjdoVmT%2BJW2SBt1z9c%3D\"\r\n      }\r\n    ],\r\n    \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default.ico?se=2015-02-01T11%3A07%3A50Z&sr=b&sp=r&sig=%2Fjbs6zx95f4IqS3eDfShvQ7FDaqWFMFFsK3Tkmo42eg%3D\",\r\n    \"Name\": \"Paint\",\r\n    \"Status\": 4,\r\n    \"VirtualPath\": \"%SYSTEMDRIVE%\\\\Windows\\\\system32\\\\mspaint.exe\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "557"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "378c7a8625246e94ac9ad902e2a1f7d9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:50 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTIvYXBwbGljYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Alias\": \"80d8ea61-d45d-4b81-b0c9-5dbb78d771d5\",\r\n    \"AvailableToUsers\": true,\r\n    \"CommandLineArguments\": \"\",\r\n    \"IconPngUris\": [\r\n      {\r\n        \"Key\": 32,\r\n        \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default32.png?se=2015-02-01T11%3A08%3A04Z&sr=b&sp=r&sig=Kuy%2BHWR%2F%2B92rzebpF7DGSnfGr9Um3TYDziu5PxGuTi4%3D\"\r\n      }\r\n    ],\r\n    \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default.ico?se=2015-02-01T11%3A08%3A04Z&sr=b&sp=r&sig=Rp0vpCDCNbruAt42iuLUM6Nn27iglWRQ8MHXXc2BXlw%3D\",\r\n    \"Name\": \"Paint\",\r\n    \"Status\": 2,\r\n    \"VirtualPath\": \"%SYSTEMDRIVE%\\\\Windows\\\\system32\\\\mspaint.exe\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "555"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "6ec9b7eaea3f6cc9b92d1558ee7e5847"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:05 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTIvYXBwbGljYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Alias\": \"80d8ea61-d45d-4b81-b0c9-5dbb78d771d5\",\r\n    \"AvailableToUsers\": true,\r\n    \"CommandLineArguments\": \"\",\r\n    \"IconPngUris\": [\r\n      {\r\n        \"Key\": 32,\r\n        \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default32.png?se=2015-02-01T11%3A08%3A16Z&sr=b&sp=r&sig=X2LBO%2FH2yK%2BdHwDh71%2FaW2dNtuZoy1S7TXHVDqA%2Fhio%3D\"\r\n      }\r\n    ],\r\n    \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default.ico?se=2015-02-01T11%3A08%3A16Z&sr=b&sp=r&sig=yIpWM%2FNfV0F%2FBI6kNW2YIt%2B5VDfCk2TtnI429fVVMKc%3D\",\r\n    \"Name\": \"Paint\",\r\n    \"Status\": 2,\r\n    \"VirtualPath\": \"%SYSTEMDRIVE%\\\\Windows\\\\system32\\\\mspaint.exe\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "563"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "9250004fc74f64cf82585f4981c6a836"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:16 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTIvYXBwbGljYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "aee1c69fbec662b4afcc820c5a9a04d7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:28 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112/applications/unpublishAll?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTIvYXBwbGljYXRpb25zL3VucHVibGlzaEFsbD9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"ApplicationAlias\": \"80d8ea61-d45d-4b81-b0c9-5dbb78d771d5\",\r\n    \"ApplicationVirtualPath\": null,\r\n    \"ErrorMessage\": null,\r\n    \"Success\": true\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "eb48f319c9876a0a9a2295c47f1cfa92"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:37:52 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdst15/collections/testd112/applications?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHN0MTUvY29sbGVjdGlvbnMvdGVzdGQxMTIvYXBwbGljYXRpb25zP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "[\r\n  {\r\n    \"AvailableToUsers\": true,\r\n    \"Alias\": \"80d8ea61-d45d-4b81-b0c9-5dbb78d771d5\",\r\n    \"CommandLineArguments\": \"\",\r\n    \"IconUri\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default.ico?se=2015-02-01T11%3A07%3A50Z&sr=b&sp=r&sig=%2Fjbs6zx95f4IqS3eDfShvQ7FDaqWFMFFsK3Tkmo42eg%3D\",\r\n    \"Name\": \"Paint\",\r\n    \"Status\": 4,\r\n    \"IconPngUris\": {\r\n      \"IconPngUris\": [\r\n        {\r\n          \"Key\": \"32\",\r\n          \"Value\": \"https://cdvtest15rdcx.blob.core.windows.net/icons/default32.png?se=2015-02-01T11%3A07%3A50Z&sr=b&sp=r&sig=JNmCTI6%2BcplKOojmrDJaw9D%2FEXjdoVmT%2BJW2SBt1z9c%3D\"\r\n        }\r\n      ]\r\n    },\r\n    \"VirtualPath\": \"%SYSTEMDRIVE%\\\\Windows\\\\system32\\\\mspaint.exe\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "702"
+        ],
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RemoteApp.RemoteAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"ApplicationAlias\": \"56caf6bb-7919-487e-a4d6-355dc3e74aad\",\r\n    \"ApplicationVirtualPath\": \"%SYSTEMDRIVE%\\\\Windows\\\\system32\\\\mspaint.exe\",\r\n    \"ErrorMessage\": null,\r\n    \"Success\": true\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "169"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "efbb1a7941bb69378431cf2eac2ca5d8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 01 Feb 2015 10:38:30 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5218",
+          "(rd_rdfe_n.150128-1022)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

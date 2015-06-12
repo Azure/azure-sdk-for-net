@@ -22,7 +22,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
     /// </summary>
     public static class JsonWebKeyEncryptionAlgorithm
     {
-        public const string RSAOAEP = "RSA_OAEP";
+        public const string RSAOAEP = "RSA-OAEP";
         public const string RSA15   = "RSA1_5";
 
         /// <summary>

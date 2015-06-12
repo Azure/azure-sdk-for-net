@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{779C466E-5DF8-46D7-82E5-20BFFEF31C77}</ProjectGuid>
+    <RootNamespace>TrafficManager.Tests</RootNamespace>
+    <AssemblyName>TrafficManager.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Customizations\TrafficManagerCloudException.cs" />
+    <Compile Include="IntegrationTest\DefinitionTest.cs" />
+    <Compile Include="IntegrationTest\ProfileTest.cs" />
+    <Compile Include="ManagementTestUtilities.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestSupport\TrafficManagerTestBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionAny.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionAnyWithLocation.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionCloudService.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionNoWeight.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionPerformanceAnyNoLocationFails.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionWebsite.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.DefinitionTest\CreateDefinitionWithTrafficManagerEndpoint.json" />
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.ProfileTest\CheckDnsPrefixesAvailability.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.ProfileTest\CreateProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.ProfileTest\DeleteProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.ProfileTest\ListProfiles.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.TrafficManager.Testing.ProfileTest\UpdateProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Management.Compute">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.Compute.12.2.0-preview\lib\net40\Microsoft.WindowsAzure.Management.Compute.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Management.WebSites">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.WebSites.4.4.2-prerelease\lib\net40\Microsoft.WindowsAzure.Management.WebSites.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrafficManagerManagement\TrafficManagerManagement.csproj">
+      <Project>{7b0b141d-483e-4f32-af9b-eee20a3c4b2c}</Project>
+      <Name>TrafficManagerManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

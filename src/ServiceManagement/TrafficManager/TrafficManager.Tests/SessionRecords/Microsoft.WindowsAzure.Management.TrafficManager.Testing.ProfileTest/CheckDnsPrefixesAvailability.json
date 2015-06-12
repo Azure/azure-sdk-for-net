@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/279b0675-cf67-467f-98f0-67ae31eb540f/services/WATM/operations/isavailable/ATMTest6903.trafficmanager.net",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.TrafficManager.TrafficManagerManagementClient/1.0.5374.30294"
+        ]
+      },
+      "ResponseBody": "<AvailabilityResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Result>true</Result>\r\n</AvailabilityResponse>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "168"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "d105f179264d1f009955b3c91dc43538"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 19 Sep 2014 19:51:54 GMT"
+        ],
+        "Server": [
+          "1.0.6198.128",
+          "(rd_rdfe_stable.140917-1635)",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CheckDnsPrefixesAvailability": [
+      "ATMTest6903"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "279b0675-cf67-467f-98f0-67ae31eb540f",
+    "UserId": "destanko@microsoft.com"
+  }
+}

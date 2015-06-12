@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{405A836B-3EF2-49CB-B6EA-26FC2A6B4F04}</ProjectGuid>
+    <RootNamespace>StorSimple.Tests</RootNamespace>
+    <AssemblyName>StorSimple.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\BackupTests.cs" />
+    <Compile Include="Tests\CloneTests.cs" />
+    <Compile Include="Tests\DataContainerTests.cs" />
+    <Compile Include="Tests\DeviceFailoverTests.cs" />
+    <Compile Include="Tests\DeviceJobTests.cs" />
+    <Compile Include="Tests\DeviceDetailsTests.cs" />
+    <Compile Include="Tests\DevicePublicKeyTests.cs" />
+    <Compile Include="Tests\IscsiConnectionDetailsTest.cs" />
+    <Compile Include="Tests\MigrationUnitTest.cs" />
+    <Compile Include="Tests\ResourceEncryptionKeyTests.cs" />
+    <Compile Include="Tests\ServiceConfigurationTests.cs" />
+    <Compile Include="Tests\StorSimpleTestBase.cs" />
+    <Compile Include="Tests\DeviceConfigurationTests.cs" />
+    <Compile Include="Tests\TestHelpersTests.cs" />
+    <Compile Include="Tests\VirtualDeviceTests.cs" />
+    <Compile Include="Tests\VirtualDiskTests.cs" />
+    <Compile Include="Utilities\DataHelpers.cs" />
+    <Compile Include="Utilities\Helpers.cs" />
+    <Compile Include="Utilities\MigrationTestConfigParser.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Data\MigrationUnitTestConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.BackupTests\BackupScenarioTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.CloneTests\CloneScenarioMultipleDeviceTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.CloneTests\CloneScenarioSingleDeviceTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DataContainerTests\CanCreateDataContainerTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DataContainerTests\CanGetAllDataContainersTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceConfigurationTests\CanGetAllDevicesTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceDetailsTests\CanBeginUpdateDeviceDetailsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceDetailsTests\CanGetDeviceDetailsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceDetailsTests\CanUpdateDeviceDetailsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceFailoverTests\DeviceRestoreScenarioTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceJobTests\CanGetDeviceJobsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceJobTests\CanStopDeviceJobTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DevicePublicKeyTests\CanGetDevicePublicKey.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.DeviceRestoreTests\DeviceRestoreScenarioTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.IscsiConnectionDetailsTest\CanGetIscsiConnectionDetailsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.ResourceEncryptionKeyTests\GetResourceEncryptionKeyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.ServiceConfigurationTests\CanAddACRTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.ServiceConfigurationTests\CanGetServiceConfigTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.VirtualDeviceTests\VirtualDeviceScenarioTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.VirtualDiskTests\VirtualDiskScenarioTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StorSimple.Tests.Tests.MigrationHydraSpecTest\VerifyMigration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StorSimple\StorSimple.csproj">
+      <Project>{80d5051e-17f6-4353-9cba-748ee6b10b2b}</Project>
+      <Name>StorSimple</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.Dns</id>
+    <title>Microsoft Azure Dns Management Library</title>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides management capabilities for DNS zones, record sets and records.</summary>
+    <description>Provides management capabilities for DNS zones, record sets and records.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure Dns management "Dns" "Dns management" REST HTTP client windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.Azure.Management.Dns.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Management.Dns.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\Dns\DnsManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Dns.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Dns.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Dns.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.Dns.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.Dns.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.Dns.xml" target="lib\net40" />
+  </files>
+</package>

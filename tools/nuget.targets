@@ -5,22 +5,20 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <Import Project="$(LibrarySourceFolder)\Common\*.nuget.proj" 
-          Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Configuration\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Common.Authentication\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Authentication' "/>
-  <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj"
-          Condition=" '$(Scope)' == 'All' "/>
-  <Import Project="$(LibrarySourceFolder)\$(Scope)\*.nuget.proj" 
-          Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' and '$(Scope)' != 'Authentication' " />
-  <Import Project="$(LibrarySourceFolder)\KeyVault\*\*.nuget.proj"
-         Condition=" '$(Scope)' == 'All' "/>		 
+  <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*$(PackageName).nuget.proj"
+          Condition=" '$(Scope)' != 'all' "/>
+
+  <Import Project="$(LibrarySourceFolder)\ResourceManagement\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\ServiceManagement\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Common\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
-    <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
   </PropertyGroup>
 
   <ItemGroup>
@@ -60,7 +58,7 @@
                           LogReplacement="false" />
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; -BasePath &apos;$(LibrarySourceFolder)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;%(NuspecFilesToUpdate.RootDir)%(NuspecFilesToUpdate.Directory)&apos; }&quot;" />
 
     <!-- Second, use the new files as destructive replacement targets. -->
     <ItemGroup>
@@ -100,23 +98,14 @@
       <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
     </PropertyGroup>
 
-    <Message Importance="high" Text="Publishing NuGet packages to the cloud at $(NuGetPublishingSource)" />
+    <!--Ran 'nuget push' on the main package, will automatically push the symbol package at the same time-->
+    <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
     <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true"
           Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
 
-    <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)"
-             Condition=" $(NuGetSymbolPublishingSource) != '' "/>
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)"
-          Condition=" $(NuGetSymbolPublishingSource) != '' And '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' "
-          IgnoreExitCode="true"
-          ContinueOnError="true" />
-
     <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
-
-    <Warning Text="Symbol/source packages are not being pushed. The PublishSymbolSourcePackages property is not set to true."
-             Condition=" '$(PublishSymbolSourcePackages)' != 'true' " />
   </Target>
 
 </Project>
