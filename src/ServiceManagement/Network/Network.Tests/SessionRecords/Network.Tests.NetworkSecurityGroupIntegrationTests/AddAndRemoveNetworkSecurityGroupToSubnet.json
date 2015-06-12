@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/locations",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9sb2NhdGlvbnM=",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/locations",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9sb2NhdGlvbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -13,48 +13,45 @@
           "Microsoft.WindowsAzure.Management.ManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Locations xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Location>\r\n    <Name>West Europe</Name>\r\n    <DisplayName>West Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>North Europe</Name>\r\n    <DisplayName>North Europe</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US 2</Name>\r\n    <DisplayName>East US 2</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n        <RoleSize>Standard_G1</RoleSize>\r\n        <RoleSize>Standard_G2</RoleSize>\r\n        <RoleSize>Standard_G3</RoleSize>\r\n        <RoleSize>Standard_G4</RoleSize>\r\n        <RoleSize>Standard_G5</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>Central US</Name>\r\n    <DisplayName>Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>South Central US</Name>\r\n    <DisplayName>South Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>West US</Name>\r\n    <DisplayName>West US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n        <RoleSize>Standard_G1</RoleSize>\r\n        <RoleSize>Standard_G2</RoleSize>\r\n        <RoleSize>Standard_G3</RoleSize>\r\n        <RoleSize>Standard_G4</RoleSize>\r\n        <RoleSize>Standard_G5</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>North Central US</Name>\r\n    <DisplayName>North Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>East US</Name>\r\n    <DisplayName>East US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>Southeast Asia</Name>\r\n    <DisplayName>Southeast Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>East Asia</Name>\r\n    <DisplayName>East Asia</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>Japan West</Name>\r\n    <DisplayName>Japan West</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>Japan East</Name>\r\n    <DisplayName>Japan East</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>A8</RoleSize>\r\n        <RoleSize>A9</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n        <RoleSize>Standard_D1</RoleSize>\r\n        <RoleSize>Standard_D11</RoleSize>\r\n        <RoleSize>Standard_D12</RoleSize>\r\n        <RoleSize>Standard_D13</RoleSize>\r\n        <RoleSize>Standard_D14</RoleSize>\r\n        <RoleSize>Standard_D2</RoleSize>\r\n        <RoleSize>Standard_D3</RoleSize>\r\n        <RoleSize>Standard_D4</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>Brazil South</Name>\r\n    <DisplayName>Brazil South</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n      <AvailableService>HighMemory</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>A5</RoleSize>\r\n        <RoleSize>A6</RoleSize>\r\n        <RoleSize>A7</RoleSize>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n</Locations>",
+      "ResponseBody": "<Locations xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Location>\r\n    <Name>North Central US</Name>\r\n    <DisplayName>North Central US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n      <AvailableService>PersistentVMRole</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>ExtraSmall_Internal</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Medium_Internal</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n      </WebWorkerRoleSizes>\r\n      <VirtualMachinesRoleSizes>\r\n        <RoleSize>Basic_A0</RoleSize>\r\n        <RoleSize>Basic_A1</RoleSize>\r\n        <RoleSize>Basic_A2</RoleSize>\r\n        <RoleSize>Basic_A3</RoleSize>\r\n        <RoleSize>Basic_A4</RoleSize>\r\n        <RoleSize>ExtraLarge</RoleSize>\r\n        <RoleSize>ExtraSmall</RoleSize>\r\n        <RoleSize>Large</RoleSize>\r\n        <RoleSize>Medium</RoleSize>\r\n        <RoleSize>Small</RoleSize>\r\n      </VirtualMachinesRoleSizes>\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n  <Location>\r\n    <Name>West US</Name>\r\n    <DisplayName>West US</DisplayName>\r\n    <AvailableServices>\r\n      <AvailableService>Compute</AvailableService>\r\n      <AvailableService>Storage</AvailableService>\r\n    </AvailableServices>\r\n    <ComputeCapabilities>\r\n      <WebWorkerRoleSizes />\r\n      <VirtualMachinesRoleSizes />\r\n    </ComputeCapabilities>\r\n    <StorageCapabilities>\r\n      <StorageAccountTypes>\r\n        <StorageAccountType>Standard_LRS</StorageAccountType>\r\n        <StorageAccountType>Standard_ZRS</StorageAccountType>\r\n        <StorageAccountType>Standard_GRS</StorageAccountType>\r\n        <StorageAccountType>Standard_RAGRS</StorageAccountType>\r\n      </StorageAccountTypes>\r\n    </StorageCapabilities>\r\n  </Location>\r\n</Locations>",
       "ResponseHeaders": {
         "Content-Length": [
-          "24385"
+          "1931"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "x-ms-request-id": [
-          "22515717a099769fb710a5534a0ff70f"
+          "1a7ecad1bf5ccb649ae30b8b4d5342a7"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:00 GMT"
+          "Sun, 12 Apr 2015 02:15:22 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/networksecuritygroups",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL25ldHdvcmtzZWN1cml0eWdyb3Vwcw==",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/networksecuritygroups",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL25ldHdvcmtzZWN1cml0eWdyb3Vwcw==",
       "RequestMethod": "POST",
-      "RequestBody": "<NetworkSecurityGroup xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>NetworkTests5837</Name>\r\n  <Label>NetworkTests5128</Label>\r\n  <Location>North Central US</Location>\r\n</NetworkSecurityGroup>",
+      "RequestBody": "<NetworkSecurityGroup xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>NetworkTest1334</Name>\r\n  <Label>NetworkTest9357</Label>\r\n  <Location>North Central US</Location>\r\n</NetworkSecurityGroup>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "206"
+          "204"
         ],
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -65,43 +62,40 @@
         "Content-Length": [
           "0"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "59a25345b76d72429165dd031add3ee1"
+          "295d02a24138c22fa7165158409c14d5"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:01 GMT"
+          "Sun, 12 Apr 2015 02:15:24 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/59a25345b76d72429165dd031add3ee1",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zLzU5YTI1MzQ1Yjc2ZDcyNDI5MTY1ZGQwMzFhZGQzZWUx",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/295d02a24138c22fa7165158409c14d5",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzI5NWQwMmEyNDEzOGMyMmZhNzE2NTE1ODQwOWMxNGQ1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>59a25345-b76d-7242-9165-dd031add3ee1</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>295d02a2-4138-c22f-a716-5158409c14d5</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -109,43 +103,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6d9f44099c5d728dae063dac86ffeb5a"
+          "e235a78e4858ced9b5cf8a377f60ba28"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:01 GMT"
+          "Sun, 12 Apr 2015 02:15:24 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/59a25345b76d72429165dd031add3ee1",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zLzU5YTI1MzQ1Yjc2ZDcyNDI5MTY1ZGQwMzFhZGQzZWUx",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/295d02a24138c22fa7165158409c14d5",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzI5NWQwMmEyNDEzOGMyMmZhNzE2NTE1ODQwOWMxNGQ1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>59a25345-b76d-7242-9165-dd031add3ee1</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>295d02a2-4138-c22f-a716-5158409c14d5</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -153,37 +144,34 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ac185b74d68b7ff0ba2bb17ee6e6d05f"
+          "86cef635b699c8b5956bff32161b2560"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:31 GMT"
+          "Sun, 12 Apr 2015 02:15:55 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/media",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -197,37 +185,34 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d696ff7d4cc272beacff8390c88618e2"
+          "fd086ea9f002c367870f16c21f5954f1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:31 GMT"
+          "Sun, 12 Apr 2015 02:15:55 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/media",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -241,32 +226,29 @@
         "Content-Type": [
           "text/plain"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7b79b2b50c3475f49e185a04081ec290"
+          "4b97def42053cd8bb34e1c22a7f51f31"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:05:04 GMT"
+          "Sun, 12 Apr 2015 02:18:08 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/media",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
       "RequestMethod": "PUT",
       "RequestBody": "<NetworkConfiguration xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns>\r\n      <DnsServers />\r\n    </Dns>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" Location=\"North Central US\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"FrontEndSubnet5\">\r\n            <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <DnsServersRef />\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
       "RequestHeaders": {
@@ -277,7 +259,7 @@
           "770"
         ],
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -288,32 +270,29 @@
         "Content-Length": [
           "0"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "aba02eacac817a0fad5b7cf2a312a46f"
+          "f842ca21d40fcb109fdf48d112b6265e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:32 GMT"
+          "Sun, 12 Apr 2015 02:15:57 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/media",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
       "RequestMethod": "PUT",
       "RequestBody": "<NetworkConfiguration xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <VirtualNetworkConfiguration></VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
       "RequestHeaders": {
@@ -324,7 +303,7 @@
           "255"
         ],
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -335,43 +314,40 @@
         "Content-Length": [
           "0"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a8c23e38768f7667b99440493d165fe3"
+          "4a73f8d45cadc50c8165500d2ec7fd61"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:05:05 GMT"
+          "Sun, 12 Apr 2015 02:18:10 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/aba02eacac817a0fad5b7cf2a312a46f",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2FiYTAyZWFjYWM4MTdhMGZhZDViN2NmMmEzMTJhNDZm",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/f842ca21d40fcb109fdf48d112b6265e",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zL2Y4NDJjYTIxZDQwZmNiMTA5ZmRmNDhkMTEyYjYyNjVl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>aba02eac-ac81-7a0f-ad5b-7cf2a312a46f</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f842ca21-d40f-cb10-9fdf-48d112b6265e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -379,43 +355,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c38f7536214170aca552a1de7865f433"
+          "70eebc1dc2faccd6882dfef5998c01d8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:03:32 GMT"
+          "Sun, 12 Apr 2015 02:15:57 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/aba02eacac817a0fad5b7cf2a312a46f",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2FiYTAyZWFjYWM4MTdhMGZhZDViN2NmMmEzMTJhNDZm",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/f842ca21d40fcb109fdf48d112b6265e",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zL2Y4NDJjYTIxZDQwZmNiMTA5ZmRmNDhkMTEyYjYyNjVl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>aba02eac-ac81-7a0f-ad5b-7cf2a312a46f</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f842ca21-d40f-cb10-9fdf-48d112b6265e</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -423,43 +396,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "85d47c2e663070f3a52776e2b7aa6f42"
+          "f6052e77db9ec2bb87232f6cdf69cb51"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:02 GMT"
+          "Sun, 12 Apr 2015 02:16:28 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBz",
       "RequestMethod": "POST",
-      "RequestBody": "<NetworkSecurityGroup xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>NetworkTests5837</Name>\r\n</NetworkSecurityGroup>",
+      "RequestBody": "<NetworkSecurityGroup xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>NetworkTest1334</Name>\r\n</NetworkSecurityGroup>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "130"
+          "129"
         ],
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -470,43 +440,40 @@
         "Content-Length": [
           "0"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bf4f536c405e789e8e41f14122ea2303"
+          "dcf72896d6f2ceca9995d9c05f641d66"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:02 GMT"
+          "Sun, 12 Apr 2015 02:16:29 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/bf4f536c405e789e8e41f14122ea2303",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2JmNGY1MzZjNDA1ZTc4OWU4ZTQxZjE0MTIyZWEyMzAz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/dcf72896d6f2ceca9995d9c05f641d66",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zL2RjZjcyODk2ZDZmMmNlY2E5OTk1ZDljMDVmNjQxZDY2",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>bf4f536c-405e-789e-8e41-f14122ea2303</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>dcf72896-d6f2-ceca-9995-d9c05f641d66</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -514,43 +481,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f864e60e396770b7a6533a35f8dc4703"
+          "4bbcf3a5412fc9e49a3a199eb56c552b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:02 GMT"
+          "Sun, 12 Apr 2015 02:16:29 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/bf4f536c405e789e8e41f14122ea2303",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2JmNGY1MzZjNDA1ZTc4OWU4ZTQxZjE0MTIyZWEyMzAz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/dcf72896d6f2ceca9995d9c05f641d66",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zL2RjZjcyODk2ZDZmMmNlY2E5OTk1ZDljMDVmNjQxZDY2",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>bf4f536c-405e-789e-8e41-f14122ea2303</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>dcf72896-d6f2-ceca-9995-d9c05f641d66</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -558,125 +522,116 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth3"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4951b324dd5c76318a781d8e6d51e610"
+          "6d972d652b72c162933a4532d939c600"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:32 GMT"
+          "Sun, 12 Apr 2015 02:17:01 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3Jr",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3Jr",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<VirtualNetworkSites xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <VirtualNetworkSite>\r\n    <Name>virtualNetworkSiteName</Name>\r\n    <Id>cb83b114-d3e9-4e0b-949e-829fd0fac388</Id>\r\n    <State>Created</State>\r\n    <AddressSpace>\r\n      <AddressPrefixes>\r\n        <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n      </AddressPrefixes>\r\n    </AddressSpace>\r\n    <Subnets>\r\n      <Subnet>\r\n        <Name>FrontEndSubnet5</Name>\r\n        <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n        <NetworkSecurityGroup>NetworkTests5837</NetworkSecurityGroup>\r\n      </Subnet>\r\n    </Subnets>\r\n    <Location>North Central US</Location>\r\n  </VirtualNetworkSite>\r\n</VirtualNetworkSites>",
+      "ResponseBody": "<VirtualNetworkSites xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <VirtualNetworkSite>\r\n    <Name>virtualNetworkSiteName</Name>\r\n    <Id>1b1ceadb-02ef-4a8e-b2e1-07fedb4458f8</Id>\r\n    <State>Created</State>\r\n    <AddressSpace>\r\n      <AddressPrefixes>\r\n        <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n      </AddressPrefixes>\r\n    </AddressSpace>\r\n    <Subnets>\r\n      <Subnet>\r\n        <Name>FrontEndSubnet5</Name>\r\n        <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n        <NetworkSecurityGroup>NetworkTest1334</NetworkSecurityGroup>\r\n      </Subnet>\r\n    </Subnets>\r\n    <Location>North Central US</Location>\r\n  </VirtualNetworkSite>\r\n</VirtualNetworkSites>",
       "ResponseHeaders": {
         "Content-Length": [
-          "608"
+          "607"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7b391a73c08c78b3b5ab6d31ac4a66ab"
+          "54b1d83a1f30cbadb0806d8953edb9f2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:33 GMT"
+          "Sun, 12 Apr 2015 02:17:01 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<NetworkSecurityGroup xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Name>NetworkTests5837</Name>\r\n  <State>Created</State>\r\n</NetworkSecurityGroup>",
+      "ResponseBody": "<NetworkSecurityGroup xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Name>NetworkTest1334</Name>\r\n  <State>Created</State>\r\n</NetworkSecurityGroup>",
       "ResponseHeaders": {
         "Content-Length": [
-          "198"
+          "197"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3fb233552d0d7b44852f2f1feb95a52e"
+          "dc38203e16f5cfb39d9794a82340ab54"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:33 GMT"
+          "Sun, 12 Apr 2015 02:17:02 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -690,37 +645,34 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a5e5944441c97a489a1d5a57abf0929c"
+          "adf1a6cc23cacebcae41d27a8eef35fb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:05:04 GMT"
+          "Sun, 12 Apr 2015 02:17:34 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups/NetworkTests5837",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBzL05ldHdvcmtUZXN0czU4Mzc=",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork/virtualNetworkSiteName/subnets/FrontEndSubnet5/networksecuritygroups/NetworkTest1334",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvc3VibmV0cy9Gcm9udEVuZFN1Ym5ldDUvbmV0d29ya3NlY3VyaXR5Z3JvdXBzL05ldHdvcmtUZXN0MTMzNA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -731,43 +683,40 @@
         "Content-Length": [
           "0"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "adc472e2f0497fd7abf4eedb8c12f6f9"
+          "cc065805a380cddf9cd18a35281c5bbd"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:33 GMT"
+          "Sun, 12 Apr 2015 02:17:03 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/adc472e2f0497fd7abf4eedb8c12f6f9",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2FkYzQ3MmUyZjA0OTdmZDdhYmY0ZWVkYjhjMTJmNmY5",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/cc065805a380cddf9cd18a35281c5bbd",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zL2NjMDY1ODA1YTM4MGNkZGY5Y2QxOGEzNTI4MWM1YmJk",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>adc472e2-f049-7fd7-abf4-eedb8c12f6f9</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>cc065805-a380-cddf-9cd1-8a35281c5bbd</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -775,43 +724,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f063fb227f90715db1e3b5c8bbc625c0"
+          "1480be7a6cacc9e295e092bedf0bde04"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:04:33 GMT"
+          "Sun, 12 Apr 2015 02:17:03 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/adc472e2f0497fd7abf4eedb8c12f6f9",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2FkYzQ3MmUyZjA0OTdmZDdhYmY0ZWVkYjhjMTJmNmY5",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/cc065805a380cddf9cd18a35281c5bbd",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zL2NjMDY1ODA1YTM4MGNkZGY5Y2QxOGEzNTI4MWM1YmJk",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>adc472e2-f049-7fd7-abf4-eedb8c12f6f9</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>cc065805-a380-cddf-9cd1-8a35281c5bbd</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -819,43 +765,78 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9ec0c12330827e01853a428c5a227b69"
+          "fcb6d41a3afec799b853a3c653686f12"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:05:04 GMT"
+          "Sun, 12 Apr 2015 02:17:34 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/a8c23e38768f7667b99440493d165fe3",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2E4YzIzZTM4NzY4Zjc2NjdiOTk0NDA0OTNkMTY1ZmUz",
-      "RequestMethod": "GET",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/networksecuritygroups/NetworkTest1334",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL25ldHdvcmtzZWN1cml0eWdyb3Vwcy9OZXR3b3JrVGVzdDEzMzQ=",
+      "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>a8c23e38-768f-7667-b994-40493d165fe3</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2ec221f60d20c148b336d14519b6a8c6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 02:17:36 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/2ec221f60d20c148b336d14519b6a8c6",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzJlYzIyMWY2MGQyMGMxNDhiMzM2ZDE0NTE5YjZhOGM2",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2ec221f6-0d20-c148-b336-d14519b6a8c6</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -863,43 +844,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7af96c6fc41e793f98fe3f6fe022c70f"
+          "131ba3ce3eefc0b4a49ba2093b71a196"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:05:05 GMT"
+          "Sun, 12 Apr 2015 02:17:36 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/a8c23e38768f7667b99440493d165fe3",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2E4YzIzZTM4NzY4Zjc2NjdiOTk0NDA0OTNkMTY1ZmUz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/2ec221f60d20c148b336d14519b6a8c6",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzJlYzIyMWY2MGQyMGMxNDhiMzM2ZDE0NTE5YjZhOGM2",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>a8c23e38-768f-7667-b994-40493d165fe3</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2ec221f6-0d20-c148-b336-d14519b6a8c6</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -907,24 +885,103 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "0ed2de11b13671748744a408c7ce19f1"
+          "5199be6ca19fc9798da15246396c68ed"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 16 Feb 2015 22:05:35 GMT"
+          "Sun, 12 Apr 2015 02:18:07 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/4a73f8d45cadc50c8165500d2ec7fd61",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzRhNzNmOGQ0NWNhZGM1MGM4MTY1NTAwZDJlYzdmZDYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4a73f8d4-5cad-c50c-8165-500d2ec7fd61</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c061b1355e8ac718af9391b7f8e503ad"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 02:18:10 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/4a73f8d45cadc50c8165500d2ec7fd61",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzRhNzNmOGQ0NWNhZGM1MGM4MTY1NTAwZDJlYzdmZDYx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-04-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4a73f8d4-5cad-c50c-8165-500d2ec7fd61</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8d8b6a1a951bcf6b8c3775360e8c1a05"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 12 Apr 2015 02:18:41 GMT"
+        ],
+        "Server": [
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -933,11 +990,11 @@
   ],
   "Names": {
     "GenerateRandomName": [
-      "NetworkTests5837",
-      "NetworkTests5128"
+      "NetworkTest1334",
+      "NetworkTest9357"
     ]
   },
   "Variables": {
-    "SubscriptionId": "f771266f-1d85-498f-9280-ae4a6c3dae8b"
+    "SubscriptionId": "d2599f84-5099-4ef0-8548-d4765d6a0718"
   }
 }

@@ -1,145 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/media",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<NetworkConfiguration xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns />\r\n    <LocalNetworkSites>\r\n      <LocalNetworkSite name=\"localNetworkSiteName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>10.1.0.0/16</AddressPrefix>\r\n        </AddressSpace>\r\n        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>\r\n      </LocalNetworkSite>\r\n    </LocalNetworkSites>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" AffinityGroup=\"affinityGroupName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"frontendsubnet\">\r\n            <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"backendsubnet\">\r\n            <AddressPrefix>192.168.100.32/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"gatewaysubnet\">\r\n            <AddressPrefix>192.168.100.48/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <Gateway>\r\n          <VPNClientAddressPool>\r\n            <AddressPrefix>192.168.101.0/24</AddressPrefix>\r\n          </VPNClientAddressPool>\r\n          <ConnectionsToLocalNetwork>\r\n            <LocalNetworkSiteRef name=\"localNetworkSiteName\">\r\n              <Connection type=\"IPsec\" />\r\n            </LocalNetworkSiteRef>\r\n          </ConnectionsToLocalNetwork>\r\n        </Gateway>\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1726"
-        ],
-        "Content-Type": [
-          "text/plain"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "2fcccd499453785eb401d36d5b9b55bf"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:12 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<NetworkConfiguration xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns />\r\n    <LocalNetworkSites>\r\n      <LocalNetworkSite name=\"localNetworkSiteName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>10.1.0.0/16</AddressPrefix>\r\n        </AddressSpace>\r\n        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>\r\n      </LocalNetworkSite>\r\n    </LocalNetworkSites>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" AffinityGroup=\"affinityGroupName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"frontendsubnet\">\r\n            <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"backendsubnet\">\r\n            <AddressPrefix>192.168.100.32/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"gatewaysubnet\">\r\n            <AddressPrefix>192.168.100.48/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <Gateway>\r\n          <VPNClientAddressPool>\r\n            <AddressPrefix>192.168.101.0/24</AddressPrefix>\r\n          </VPNClientAddressPool>\r\n          <ConnectionsToLocalNetwork>\r\n            <LocalNetworkSiteRef name=\"localNetworkSiteName\">\r\n              <Connection type=\"IPsec\" />\r\n            </LocalNetworkSiteRef>\r\n          </ConnectionsToLocalNetwork>\r\n        </Gateway>\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1726"
-        ],
-        "Content-Type": [
-          "text/plain"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "55c149eee6bd7da08bd09fbe129307ab"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:12 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<NetworkConfiguration xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns />\r\n    <LocalNetworkSites>\r\n      <LocalNetworkSite name=\"localNetworkSiteName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>10.1.0.0/16</AddressPrefix>\r\n        </AddressSpace>\r\n        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>\r\n      </LocalNetworkSite>\r\n    </LocalNetworkSites>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" AffinityGroup=\"affinityGroupName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"frontendsubnet\">\r\n            <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"backendsubnet\">\r\n            <AddressPrefix>192.168.100.32/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"gatewaysubnet\">\r\n            <AddressPrefix>192.168.100.48/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <Gateway>\r\n          <VPNClientAddressPool>\r\n            <AddressPrefix>192.168.101.0/24</AddressPrefix>\r\n          </VPNClientAddressPool>\r\n          <ConnectionsToLocalNetwork>\r\n            <LocalNetworkSiteRef name=\"localNetworkSiteName\">\r\n              <Connection type=\"IPsec\" />\r\n            </LocalNetworkSiteRef>\r\n          </ConnectionsToLocalNetwork>\r\n        </Gateway>\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1726"
-        ],
-        "Content-Type": [
-          "text/plain"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "73d541c44d1a7c2a81dbf176f95f7b4a"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:14 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -153,37 +21,34 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "91e18525356f729babfdbec45d2d11e3"
+          "8e07118b6e0dcd6c8d05f8a6107b5106"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:33:46 GMT"
+          "Sun, 12 Apr 2015 02:01:17 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/media",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -197,263 +62,34 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3e88f406c5657c32b344a6166e7644d2"
+          "90df4e3fc284ce67ae5d8d13d9b9a0e2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:34:17 GMT"
+          "Sun, 12 Apr 2015 02:01:17 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualNetworkSiteName/gateway",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxOZXR3b3JrU2l0ZU5hbWUvZ2F0ZXdheQ==",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork/NonExistingVnetName/subnets/SubnetName/routetables",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL05vbkV4aXN0aW5nVm5ldE5hbWUvc3VibmV0cy9TdWJuZXROYW1lL3JvdXRldGFibGVz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Gateway xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <GatewayType>StaticRouting</GatewayType>\r\n  <LastEvent i:nil=\"true\" />\r\n  <State>NotProvisioned</State>\r\n  <GatewaySize>None</GatewaySize>\r\n</Gateway>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "246"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "f19f428334b071758aee836d56a99318"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:14 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
-      "RequestMethod": "PUT",
-      "RequestBody": "<NetworkConfiguration xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <VirtualNetworkConfiguration></VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/octet-stream"
-        ],
-        "Content-Length": [
-          "255"
-        ],
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "18a8a44f71277cdabc1c97c628801dc5"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:16 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/media",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL21lZGlh",
-      "RequestMethod": "PUT",
-      "RequestBody": "<NetworkConfiguration xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\">\r\n  <VirtualNetworkConfiguration>\r\n    <Dns />\r\n    <LocalNetworkSites>\r\n      <LocalNetworkSite name=\"localNetworkSiteName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>10.1.0.0/16</AddressPrefix>\r\n        </AddressSpace>\r\n        <VPNGatewayAddress>1.1.1.1</VPNGatewayAddress>\r\n      </LocalNetworkSite>\r\n    </LocalNetworkSites>\r\n    <VirtualNetworkSites>\r\n      <VirtualNetworkSite name=\"virtualNetworkSiteName\" AffinityGroup=\"affinityGroupName\">\r\n        <AddressSpace>\r\n          <AddressPrefix>192.168.100.0/24</AddressPrefix>\r\n        </AddressSpace>\r\n        <Subnets>\r\n          <Subnet name=\"frontendsubnet\">\r\n            <AddressPrefix>192.168.100.0/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"backendsubnet\">\r\n            <AddressPrefix>192.168.100.32/28</AddressPrefix>\r\n          </Subnet>\r\n          <Subnet name=\"gatewaysubnet\">\r\n            <AddressPrefix>192.168.100.48/28</AddressPrefix>\r\n          </Subnet>\r\n        </Subnets>\r\n        <Gateway>\r\n          <VPNClientAddressPool>\r\n            <AddressPrefix>192.168.101.0/24</AddressPrefix>\r\n          </VPNClientAddressPool>\r\n          <ConnectionsToLocalNetwork>\r\n            <LocalNetworkSiteRef name=\"localNetworkSiteName\">\r\n              <Connection type=\"IPsec\" />\r\n            </LocalNetworkSiteRef>\r\n          </ConnectionsToLocalNetwork>\r\n        </Gateway>\r\n      </VirtualNetworkSite>\r\n    </VirtualNetworkSites>\r\n  </VirtualNetworkConfiguration>\r\n</NetworkConfiguration>",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/octet-stream"
-        ],
-        "Content-Length": [
-          "1723"
-        ],
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "72717fae3ded787a8e64a0235026d9e4"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:34:18 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/18a8a44f71277cdabc1c97c628801dc5",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zLzE4YThhNDRmNzEyNzdjZGFiYzFjOTdjNjI4ODAxZGM1",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>18a8a44f-7127-7cda-bc1c-97c628801dc5</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "dfbd5e7adfbe70d68e087e4193edd5cd"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:16 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/18a8a44f71277cdabc1c97c628801dc5",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zLzE4YThhNDRmNzEyNzdjZGFiYzFjOTdjNjI4ODAxZGM1",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>18a8a44f-7127-7cda-bc1c-97c628801dc5</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "232"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "6b2e8623dfa277849492ff0d263d8ce5"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:33:46 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork/NonExistingVnetName/subnets/SubnetName/routetables",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL05vbkV4aXN0aW5nVm5ldE5hbWUvc3VibmV0cy9TdWJuZXROYW1lL3JvdXRldGFibGVz",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -467,37 +103,34 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ef827eafc8ef72aebbca9374a50f7688"
+          "7d31750d459fc2309b81bae0206630b6"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:33:46 GMT"
+          "Sun, 12 Apr 2015 02:01:18 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/virtualnetwork/NonExistingVnetName/subnets/SubnetName/routetables",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL05vbkV4aXN0aW5nVm5ldE5hbWUvc3VibmV0cy9TdWJuZXROYW1lL3JvdXRldGFibGVz",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/virtualnetwork/NonExistingVnetName/subnets/SubnetName/routetables",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrL05vbkV4aXN0aW5nVm5ldE5hbWUvc3VibmV0cy9TdWJuZXROYW1lL3JvdXRldGFibGVz",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -508,43 +141,40 @@
         "Content-Length": [
           "0"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bc65f33e18cd7d428728666abc954262"
+          "4e5e5cfff3e4c78aa97561a5bb184fe1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:33:46 GMT"
+          "Sun, 12 Apr 2015 02:01:20 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/bc65f33e18cd7d428728666abc954262",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2JjNjVmMzNlMThjZDdkNDI4NzI4NjY2YWJjOTU0MjYy",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/4e5e5cfff3e4c78aa97561a5bb184fe1",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzRlNWU1Y2ZmZjNlNGM3OGFhOTc1NjFhNWJiMTg0ZmUx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>bc65f33e-18cd-7d42-8728-666abc954262</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4e5e5cff-f3e4-c78a-a975-61a5bb184fe1</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -552,43 +182,40 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "17623ff936c578d4aa2fc2c6c8f525a9"
+          "6209b13c7247c40d8e75e80c5d97e56c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:33:46 GMT"
+          "Sun, 12 Apr 2015 02:01:20 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/bc65f33e18cd7d428728666abc954262",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zL2JjNjVmMzNlMThjZDdkNDI4NzI4NjY2YWJjOTU0MjYy",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/operations/4e5e5cfff3e4c78aa97561a5bb184fe1",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9vcGVyYXRpb25zLzRlNWU1Y2ZmZjNlNGM3OGFhOTc1NjFhNWJiMTg0ZmUx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>bc65f33e-18cd-7d42-8728-666abc954262</ID>\r\n  <Status>Failed</Status>\r\n  <HttpStatusCode>404</HttpStatusCode>\r\n  <Error>\r\n    <Code>ResourceNotFound</Code>\r\n    <Message>The virtual network NonExistingVnetName does not exist.</Message>\r\n  </Error>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4e5e5cff-f3e4-c78a-a975-61a5bb184fe1</ID>\r\n  <Status>Failed</Status>\r\n  <HttpStatusCode>404</HttpStatusCode>\r\n  <Error>\r\n    <Code>ResourceNotFound</Code>\r\n    <Message>The virtual network NonExistingVnetName does not exist.</Message>\r\n  </Error>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "347"
@@ -596,112 +223,21 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth3"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "72ad4380d20b76e799d3fbf1935200e6"
+          "62e3dc91898acc349e0829ba127ce2cd"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:34:17 GMT"
+          "Sun, 12 Apr 2015 02:01:51 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/72717fae3ded787a8e64a0235026d9e4",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zLzcyNzE3ZmFlM2RlZDc4N2E4ZTY0YTAyMzUwMjZkOWU0",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>72717fae-3ded-787a-8e64-a0235026d9e4</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "d016d91667f17ce39a48e2029d56d9ad"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:34:18 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/operations/72717fae3ded787a8e64a0235026d9e4",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9vcGVyYXRpb25zLzcyNzE3ZmFlM2RlZDc4N2E4ZTY0YTAyMzUwMjZkOWU0",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-02-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>72717fae-3ded-787a-8e64-a0235026d9e4</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "232"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "1a2a6e50e86670e0b9b7a2aa6487234e"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Feb 2015 23:34:48 GMT"
-        ],
-        "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -710,6 +246,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "f771266f-1d85-498f-9280-ae4a6c3dae8b"
+    "SubscriptionId": "d2599f84-5099-4ef0-8548-d4765d6a0718"
   }
 }

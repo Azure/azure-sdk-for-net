@@ -55,11 +55,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public const string Guid = "Guid";
         
         /// <summary>
-        /// File type.
-        /// </summary>
-        public const string File = "File";
-        
-        /// <summary>
         /// Boolean type.
         /// </summary>
         public const string Boolean = "Boolean";
@@ -73,10 +68,5 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Date type.
         /// </summary>
         public const string Date = "Date";
-        
-        /// <summary>
-        /// Binary type.
-        /// </summary>
-        public const string Binary = "Binary";
     }
 }

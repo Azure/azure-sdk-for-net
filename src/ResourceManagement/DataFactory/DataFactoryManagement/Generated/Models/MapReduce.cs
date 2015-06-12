@@ -32,17 +32,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class MapReduce : HDInsightActivityPropertiesBase
     {
-        private IList<string> _arguments;
-        
-        /// <summary>
-        /// Optional. User specified arguments to MapReduce.
-        /// </summary>
-        public IList<string> Arguments
-        {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
         private string _className;
         
         /// <summary>
@@ -52,6 +41,30 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             get { return this._className; }
             set { this._className = value; }
+        }
+        
+        private IDictionary<string, string> _defines;
+        
+        /// <summary>
+        /// Optional. Allows user to specify defines for mapreduce job request.
+        /// </summary>
+        public IDictionary<string, string> Defines
+        {
+            get { return this._defines; }
+            set { this._defines = value; }
+        }
+        
+        private IDictionary<string, string> _extendedProperties;
+        
+        /// <summary>
+        /// Optional. User specified property bag. There is no restriction on
+        /// the keys or values that can be used. These are passed as Defines
+        /// in the mapreduce job request
+        /// </summary>
+        public IDictionary<string, string> ExtendedProperties
+        {
+            get { return this._extendedProperties; }
+            set { this._extendedProperties = value; }
         }
         
         private string _jarFilePath;
@@ -92,7 +105,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public MapReduce()
         {
-            this.Arguments = new LazyList<string>();
+            this.Defines = new LazyDictionary<string, string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
             this.JarLibs = new LazyList<string>();
         }
         

@@ -31,6 +31,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
@@ -153,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -334,7 +336,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -359,6 +361,409 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement gatewayTypeElement = new XElement(XName.Get("gatewayType", "http://schemas.microsoft.com/windowsazure"));
                     gatewayTypeElement.Value = parameters.GatewayType;
                     createGatewayParametersElement.Add(gatewayTypeElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Creating Virtual network Gateway connection operation
+        /// creates a new network gateway connection.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Creating Gateway
+        /// Connection operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginCreatingGatewayConnectionAsync(GatewayConnectionCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingGatewayConnectionAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/gatewayconnections";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement createGatewayConnectionParametersElement = new XElement(XName.Get("CreateGatewayConnectionParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(createGatewayConnectionParametersElement);
+                
+                if (parameters.ConnectedEntityId != null)
+                {
+                    XElement connectedEntityIdElement = new XElement(XName.Get("ConnectedEntityId", "http://schemas.microsoft.com/windowsazure"));
+                    connectedEntityIdElement.Value = parameters.ConnectedEntityId;
+                    createGatewayConnectionParametersElement.Add(connectedEntityIdElement);
+                }
+                
+                if (parameters.GatewayConnectionName != null)
+                {
+                    XElement gatewayConnectionNameElement = new XElement(XName.Get("GatewayConnectionName", "http://schemas.microsoft.com/windowsazure"));
+                    gatewayConnectionNameElement.Value = parameters.GatewayConnectionName;
+                    createGatewayConnectionParametersElement.Add(gatewayConnectionNameElement);
+                }
+                
+                if (parameters.GatewayConnectionType != null)
+                {
+                    XElement gatewayConnectionTypeElement = new XElement(XName.Get("GatewayConnectionType", "http://schemas.microsoft.com/windowsazure"));
+                    gatewayConnectionTypeElement.Value = parameters.GatewayConnectionType;
+                    createGatewayConnectionParametersElement.Add(gatewayConnectionTypeElement);
+                }
+                
+                XElement virtualNetworkGatewayIdElement = new XElement(XName.Get("VirtualNetworkGatewayId", "http://schemas.microsoft.com/windowsazure"));
+                virtualNetworkGatewayIdElement.Value = parameters.VirtualNetworkGatewayId.ToString();
+                createGatewayConnectionParametersElement.Add(virtualNetworkGatewayIdElement);
+                
+                XElement routingWeightElement = new XElement(XName.Get("RoutingWeight", "http://schemas.microsoft.com/windowsazure"));
+                routingWeightElement.Value = parameters.RoutingWeight.ToString();
+                createGatewayConnectionParametersElement.Add(routingWeightElement);
+                
+                if (parameters.SharedKey != null)
+                {
+                    XElement sharedKeyElement = new XElement(XName.Get("SharedKey", "http://schemas.microsoft.com/windowsazure"));
+                    sharedKeyElement.Value = parameters.SharedKey;
+                    createGatewayConnectionParametersElement.Add(sharedKeyElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Creating Virtual network Gateway operation creates a new
+        /// network gateway.
+        /// </summary>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Creating Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginCreatingVirtualNetworkGatewayAsync(string networkName, VirtualNetworkGatewayCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (networkName == null)
+            {
+                throw new ArgumentNullException("networkName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("networkName", networkName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/";
+            url = url + Uri.EscapeDataString(networkName);
+            url = url + "/virtualnetworkgateways";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement createVirtualNetworkGatewayParametersElement = new XElement(XName.Get("CreateVirtualNetworkGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(createVirtualNetworkGatewayParametersElement);
+                
+                if (parameters.GatewayName != null)
+                {
+                    XElement gatewayNameElement = new XElement(XName.Get("GatewayName", "http://schemas.microsoft.com/windowsazure"));
+                    gatewayNameElement.Value = parameters.GatewayName;
+                    createVirtualNetworkGatewayParametersElement.Add(gatewayNameElement);
+                }
+                
+                if (parameters.GatewaySKU != null)
+                {
+                    XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
+                    gatewaySizeElement.Value = parameters.GatewaySKU;
+                    createVirtualNetworkGatewayParametersElement.Add(gatewaySizeElement);
+                }
+                
+                if (parameters.GatewayType != null)
+                {
+                    XElement gatewayTypeElement = new XElement(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
+                    gatewayTypeElement.Value = parameters.GatewayType;
+                    createVirtualNetworkGatewayParametersElement.Add(gatewayTypeElement);
+                }
+                
+                if (parameters.Location != null)
+                {
+                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                    locationElement.Value = parameters.Location;
+                    createVirtualNetworkGatewayParametersElement.Add(locationElement);
+                }
+                
+                if (parameters.VnetId != null)
+                {
+                    XElement vnetIdElement = new XElement(XName.Get("VnetId", "http://schemas.microsoft.com/windowsazure"));
+                    vnetIdElement.Value = parameters.VnetId;
+                    createVirtualNetworkGatewayParametersElement.Add(vnetIdElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -509,7 +914,317 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Deleting Virtual Network Gateway connection deletes a
+        /// network gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginDeletingGatewayConnectionAsync(string gatewayId, string connectedentityId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingGatewayConnectionAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/gatewayconnections/virtualnetworkgateway/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Deleting Virtual Network Gateway operation deletes a
+        /// network gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginDeletingVirtualNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -660,7 +1375,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -825,7 +1540,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -989,7 +1704,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1146,7 +1861,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1158,13 +1873,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 XElement updateGatewayParametersElement = new XElement(XName.Get("UpdateGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(updateGatewayParametersElement);
-                
-                if (parameters.GatewaySKU != null)
-                {
-                    XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
-                    gatewaySizeElement.Value = "Default";
-                    updateGatewayParametersElement.Add(gatewaySizeElement);
-                }
                 
                 XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
                 operationElement.Value = "Reset";
@@ -1339,7 +2047,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1355,6 +2063,359 @@ namespace Microsoft.WindowsAzure.Management.Network
                 XElement keyLengthElement = new XElement(XName.Get("KeyLength", "http://schemas.microsoft.com/windowsazure"));
                 keyLengthElement.Value = parameters.KeyLength.ToString();
                 resetSharedKeyElement.Add(keyLengthElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual Network Gateway Shared Key V2 operation
+        /// resets the shared key used between the gateway and customer vpn.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Reset Shared Key V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginResetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginResetSharedKeyV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            url = url + "/sharedkey";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement resetSharedKeyElement = new XElement(XName.Get("ResetSharedKey", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(resetSharedKeyElement);
+                
+                XElement keyLengthElement = new XElement(XName.Get("KeyLength", "http://schemas.microsoft.com/windowsazure"));
+                keyLengthElement.Value = parameters.KeyLength.ToString();
+                resetSharedKeyElement.Add(keyLengthElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Reset Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginResetVirtualNetworkGatewayAsync(string gatewayId, ResetGatewayParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginResetVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateGatewayParametersElement = new XElement(XName.Get("UpdateGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateGatewayParametersElement);
+                
+                XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
+                operationElement.Value = "Reset";
+                updateGatewayParametersElement.Add(operationElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -1511,7 +2572,185 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateGatewayParametersElement = new XElement(XName.Get("UpdateGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateGatewayParametersElement);
+                
+                if (parameters.GatewaySKU != null)
+                {
+                    XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
+                    gatewaySizeElement.Value = parameters.GatewaySKU;
+                    updateGatewayParametersElement.Add(gatewaySizeElement);
+                }
+                
+                XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
+                operationElement.Value = "Resize";
+                updateGatewayParametersElement.Add(operationElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Resize Virtual network Gateway operation resizes an
+        /// existing gateway to a different GatewaySKU.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Resize Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginResizeVirtualNetworkGatewayAsync(string gatewayId, ResizeGatewayParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginResizeVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1691,7 +2930,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1877,7 +3116,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1913,6 +3152,224 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement sALifeTimeSecondsElement = new XElement(XName.Get("SALifeTimeSeconds", "http://schemas.microsoft.com/windowsazure"));
                     sALifeTimeSecondsElement.Value = parameters.Parameters.SALifeTimeSeconds.ToString();
                     iPsecParametersElement.Add(sALifeTimeSecondsElement);
+                    
+                    if (parameters.Parameters.HashAlgorithm != null)
+                    {
+                        XElement hashAlgorithmElement = new XElement(XName.Get("HashAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                        hashAlgorithmElement.Value = parameters.Parameters.HashAlgorithm;
+                        iPsecParametersElement.Add(hashAlgorithmElement);
+                    }
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters V2 operation
+        /// sets the IPsec parameters on the virtual network gateway
+        /// connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set IPsec Parameters V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginSetIPsecParametersV2Async(string gatewayId, string connectedentityId, GatewaySetIPsecParametersParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSetIPsecParametersV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            url = url + "/ipsecparameters";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                if (parameters.Parameters != null)
+                {
+                    XElement iPsecParametersElement = new XElement(XName.Get("IPsecParameters", "http://schemas.microsoft.com/windowsazure"));
+                    requestDoc.Add(iPsecParametersElement);
+                    
+                    if (parameters.Parameters.EncryptionType != null)
+                    {
+                        XElement encryptionTypeElement = new XElement(XName.Get("EncryptionType", "http://schemas.microsoft.com/windowsazure"));
+                        encryptionTypeElement.Value = parameters.Parameters.EncryptionType;
+                        iPsecParametersElement.Add(encryptionTypeElement);
+                    }
+                    
+                    if (parameters.Parameters.PfsGroup != null)
+                    {
+                        XElement pfsGroupElement = new XElement(XName.Get("PfsGroup", "http://schemas.microsoft.com/windowsazure"));
+                        pfsGroupElement.Value = parameters.Parameters.PfsGroup;
+                        iPsecParametersElement.Add(pfsGroupElement);
+                    }
+                    
+                    XElement sADataSizeKilobytesElement = new XElement(XName.Get("SADataSizeKilobytes", "http://schemas.microsoft.com/windowsazure"));
+                    sADataSizeKilobytesElement.Value = parameters.Parameters.SADataSizeKilobytes.ToString();
+                    iPsecParametersElement.Add(sADataSizeKilobytesElement);
+                    
+                    XElement sALifeTimeSecondsElement = new XElement(XName.Get("SALifeTimeSeconds", "http://schemas.microsoft.com/windowsazure"));
+                    sALifeTimeSecondsElement.Value = parameters.Parameters.SALifeTimeSeconds.ToString();
+                    iPsecParametersElement.Add(sALifeTimeSecondsElement);
+                    
+                    if (parameters.Parameters.HashAlgorithm != null)
+                    {
+                        XElement hashAlgorithmElement = new XElement(XName.Get("HashAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                        hashAlgorithmElement.Value = parameters.Parameters.HashAlgorithm;
+                        iPsecParametersElement.Add(hashAlgorithmElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -2084,7 +3541,193 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement sharedKeyElement = new XElement(XName.Get("SharedKey", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(sharedKeyElement);
+                
+                if (parameters.Value != null)
+                {
+                    XElement valueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                    valueElement.Value = parameters.Value;
+                    sharedKeyElement.Add(valueElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Set Virtual Network Gateway Shared Key V2 operation sets
+        /// the shared key used between the gateway and customer vpn for the
+        /// specified site.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set Shared Key V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginSetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSetSharedKeyV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            url = url + "/sharedkey";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2262,7 +3905,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2306,6 +3949,400 @@ namespace Microsoft.WindowsAzure.Management.Network
                 XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
                 operationElement.Value = "StartDiagnostics";
                 updateGatewayPublicDiagnosticsElement.Add(operationElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Begin Start Diagnostics V2 operation begins an asynchronous
+        /// operation to starta diagnostics session for the specified virtual
+        /// network gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Start Diagnostics V2
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginStartDiagnosticsV2Async(string gatewayId, StartGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginStartDiagnosticsV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/publicdiagnostics";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateGatewayPublicDiagnosticsElement = new XElement(XName.Get("UpdateGatewayPublicDiagnostics", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateGatewayPublicDiagnosticsElement);
+                
+                if (parameters.CaptureDurationInSeconds != null)
+                {
+                    XElement captureDurationInSecondsElement = new XElement(XName.Get("CaptureDurationInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                    captureDurationInSecondsElement.Value = parameters.CaptureDurationInSeconds;
+                    updateGatewayPublicDiagnosticsElement.Add(captureDurationInSecondsElement);
+                }
+                
+                if (parameters.ContainerName != null)
+                {
+                    XElement containerNameElement = new XElement(XName.Get("ContainerName", "http://schemas.microsoft.com/windowsazure"));
+                    containerNameElement.Value = parameters.ContainerName;
+                    updateGatewayPublicDiagnosticsElement.Add(containerNameElement);
+                }
+                
+                if (parameters.CustomerStorageKey != null)
+                {
+                    XElement customerStorageKeyElement = new XElement(XName.Get("CustomerStorageKey", "http://schemas.microsoft.com/windowsazure"));
+                    customerStorageKeyElement.Value = parameters.CustomerStorageKey;
+                    updateGatewayPublicDiagnosticsElement.Add(customerStorageKeyElement);
+                }
+                
+                if (parameters.CustomerStorageName != null)
+                {
+                    XElement customerStorageNameElement = new XElement(XName.Get("CustomerStorageName", "http://schemas.microsoft.com/windowsazure"));
+                    customerStorageNameElement.Value = parameters.CustomerStorageName;
+                    updateGatewayPublicDiagnosticsElement.Add(customerStorageNameElement);
+                }
+                
+                XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
+                operationElement.Value = "StartDiagnostics";
+                updateGatewayPublicDiagnosticsElement.Add(operationElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Operation to update existing gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Update gateway
+        /// conneciton operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginUpdateGatewayConnectionAsync(string gatewayId, string connectedentityId, UpdateGatewayConnectionParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdateGatewayConnectionAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/gatewayconnections/virtualnetworkgateway/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateGatewayConnectionParametersElement = new XElement(XName.Get("UpdateGatewayConnectionParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateGatewayConnectionParametersElement);
+                
+                XElement routingWeightElement = new XElement(XName.Get("RoutingWeight", "http://schemas.microsoft.com/windowsazure"));
+                routingWeightElement.Value = parameters.RoutingWeight.ToString();
+                updateGatewayConnectionParametersElement.Add(routingWeightElement);
+                
+                if (parameters.SharedKey != null)
+                {
+                    XElement sharedKeyElement = new XElement(XName.Get("SharedKey", "http://schemas.microsoft.com/windowsazure"));
+                    sharedKeyElement.Value = parameters.SharedKey;
+                    updateGatewayConnectionParametersElement.Add(sharedKeyElement);
+                }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -2587,6 +4624,374 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Create Virtual network Gateway Connection operation creates a
+        /// new network gateway.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Creating Gateway
+        /// Connection operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> CreateGatewayConnectionAsync(GatewayConnectionCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateGatewayConnectionAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginCreatingGatewayConnectionAsync(parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Create Local network Gateway operation creates a new local
+        /// network gateway.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to Create Local Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Local Network Gateway operation response.
+        /// </returns>
+        public async Task<LocalNetworkGatewayCreateResponse> CreateLocalNetworkGatewayAsync(LocalNetworkGatewayCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateLocalNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/localnetworkgateways";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement createLocalNetworkGatewayParametersElement = new XElement(XName.Get("CreateLocalNetworkGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(createLocalNetworkGatewayParametersElement);
+                
+                if (parameters.AddressSpace != null)
+                {
+                    if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
+                    {
+                        XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                        XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+                        var addressSpaceSequenceElement = new XElement(defaultNs + "AddressSpace");
+                        addressSpaceSequenceElement.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+
+                        foreach (string addressSpaceItem in parameters.AddressSpace)
+                        {
+                            var addressSpaceItemElement = new XElement(array + "string", addressSpaceItem);
+                            addressSpaceSequenceElement.Add(addressSpaceItemElement);
+                        }
+                        createLocalNetworkGatewayParametersElement.Add(addressSpaceSequenceElement);
+                    }
+                }
+                
+                if (parameters.GatewayName != null)
+                {
+                    XElement gatewayNameElement = new XElement(XName.Get("GatewayName", "http://schemas.microsoft.com/windowsazure"));
+                    gatewayNameElement.Value = parameters.GatewayName;
+                    createLocalNetworkGatewayParametersElement.Add(gatewayNameElement);
+                }
+                
+                if (parameters.IpAddress != null)
+                {
+                    XElement ipAddressElement = new XElement(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                    ipAddressElement.Value = parameters.IpAddress;
+                    createLocalNetworkGatewayParametersElement.Add(ipAddressElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LocalNetworkGatewayCreateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new LocalNetworkGatewayCreateResponse();
+                        result.LocalNetworkGatewayId = responseContent;
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Create Virtual network Gateway operation creates a new network
+        /// gateway.
+        /// </summary>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> CreateVirtualNetworkGatewayAsync(string networkName, VirtualNetworkGatewayCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("networkName", networkName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginCreatingVirtualNetworkGatewayAsync(networkName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// The Delete Virtual Network Gateway operation deletes a network
         /// gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
@@ -2624,6 +5029,323 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             cancellationToken.ThrowIfCancellationRequested();
             GatewayOperationResponse response = await client.Gateways.BeginDeletingAsync(networkName, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Delete Virtual network Gateway Connection operation deletes a
+        /// network gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> DeleteGatewayConnectionAsync(string gatewayId, string connectedentityId, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                TracingAdapter.Enter(invocationId, this, "DeleteGatewayConnectionAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginDeletingGatewayConnectionAsync(gatewayId, connectedentityId, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Delete Local Network Gateway operation deletes a local network
+        /// gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The local network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> DeleteLocalNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                TracingAdapter.Enter(invocationId, this, "DeleteLocalNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/localnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Delete Virtual Network Gateway operation deletes a network
+        /// gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> DeleteVirtualNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                TracingAdapter.Enter(invocationId, this, "DeleteVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginDeletingVirtualNetworkGatewayAsync(gatewayId, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
@@ -2933,7 +5655,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3001,7 +5723,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement timestampElement = lastEventElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
                                 if (timestampElement != null)
                                 {
-                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     lastEventInstance.Timestamp = timestampInstance;
                                 }
                                 
@@ -3180,7 +5902,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3319,7 +6041,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3376,6 +6098,358 @@ namespace Microsoft.WindowsAzure.Management.Network
                             {
                                 string publicDiagnosticsUrlInstance = publicDiagnosticsUrlElement.Value;
                                 result.DiagnosticsUrl = publicDiagnosticsUrlInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Diagnostics V2 operation gets information about the current
+        /// virtual network gateway diagnostics session
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The status of a gateway diagnostics operation.
+        /// </returns>
+        public async Task<GatewayDiagnosticsStatus> GetDiagnosticsV2Async(string gatewayId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                TracingAdapter.Enter(invocationId, this, "GetDiagnosticsV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/publicdiagnostics";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayDiagnosticsStatus result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayDiagnosticsStatus();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayPublicDiagnosticsStatusElement = responseDoc.Element(XName.Get("GatewayPublicDiagnosticsStatus", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayPublicDiagnosticsStatusElement != null)
+                        {
+                            XElement stateElement = gatewayPublicDiagnosticsStatusElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                GatewayDiagnosticsState stateInstance = ((GatewayDiagnosticsState)Enum.Parse(typeof(GatewayDiagnosticsState), stateElement.Value, true));
+                                result.State = stateInstance;
+                            }
+                            
+                            XElement publicDiagnosticsUrlElement = gatewayPublicDiagnosticsStatusElement.Element(XName.Get("PublicDiagnosticsUrl", "http://schemas.microsoft.com/windowsazure"));
+                            if (publicDiagnosticsUrlElement != null)
+                            {
+                                string publicDiagnosticsUrlInstance = publicDiagnosticsUrlElement.Value;
+                                result.DiagnosticsUrl = publicDiagnosticsUrlInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Virtual Network Gateway Connection operation gets
+        /// information about the virtual network gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The virtual network gateway connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayConnectionGetResponse> GetGatewayConnectionAsync(string gatewayId, string connectedentityId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                TracingAdapter.Enter(invocationId, this, "GetGatewayConnectionAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/gatewayconnections/virtualnetworkgateway/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayConnectionGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayConnectionGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayConnectionElement = responseDoc.Element(XName.Get("GatewayConnection", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayConnectionElement != null)
+                        {
+                            XElement gatewayConnectionNameElement = gatewayConnectionElement.Element(XName.Get("GatewayConnectionName", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewayConnectionNameElement != null)
+                            {
+                                string gatewayConnectionNameInstance = gatewayConnectionNameElement.Value;
+                                result.GatewayConnectionName = gatewayConnectionNameInstance;
+                            }
+                            
+                            XElement virtualNetworkGatewayIdElement = gatewayConnectionElement.Element(XName.Get("VirtualNetworkGatewayId", "http://schemas.microsoft.com/windowsazure"));
+                            if (virtualNetworkGatewayIdElement != null)
+                            {
+                                Guid virtualNetworkGatewayIdInstance = Guid.Parse(virtualNetworkGatewayIdElement.Value);
+                                result.VirtualNetworkGatewayId = virtualNetworkGatewayIdInstance;
+                            }
+                            
+                            XElement connectedEntityIdElement = gatewayConnectionElement.Element(XName.Get("ConnectedEntityId", "http://schemas.microsoft.com/windowsazure"));
+                            if (connectedEntityIdElement != null)
+                            {
+                                string connectedEntityIdInstance = connectedEntityIdElement.Value;
+                                result.ConnectedEntityId = connectedEntityIdInstance;
+                            }
+                            
+                            XElement gatewayConnectionTypeElement = gatewayConnectionElement.Element(XName.Get("GatewayConnectionType", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewayConnectionTypeElement != null)
+                            {
+                                string gatewayConnectionTypeInstance = gatewayConnectionTypeElement.Value;
+                                result.GatewayConnectionType = gatewayConnectionTypeInstance;
+                            }
+                            
+                            XElement routingWeightElement = gatewayConnectionElement.Element(XName.Get("RoutingWeight", "http://schemas.microsoft.com/windowsazure"));
+                            if (routingWeightElement != null)
+                            {
+                                int routingWeightInstance = int.Parse(routingWeightElement.Value, CultureInfo.InvariantCulture);
+                                result.RoutingWeight = routingWeightInstance;
+                            }
+                            
+                            XElement sharedKeyElement = gatewayConnectionElement.Element(XName.Get("SharedKey", "http://schemas.microsoft.com/windowsazure"));
+                            if (sharedKeyElement != null)
+                            {
+                                string sharedKeyInstance = sharedKeyElement.Value;
+                                result.SharedKey = sharedKeyInstance;
                             }
                         }
                         
@@ -3486,7 +6560,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3560,6 +6634,385 @@ namespace Microsoft.WindowsAzure.Management.Network
                             {
                                 int sALifeTimeSecondsInstance = int.Parse(sALifeTimeSecondsElement.Value, CultureInfo.InvariantCulture);
                                 iPsecParametersInstance.SALifeTimeSeconds = sALifeTimeSecondsInstance;
+                            }
+                            
+                            XElement hashAlgorithmElement = iPsecParametersElement.Element(XName.Get("HashAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                            if (hashAlgorithmElement != null)
+                            {
+                                string hashAlgorithmInstance = hashAlgorithmElement.Value;
+                                iPsecParametersInstance.HashAlgorithm = hashAlgorithmInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get IPsec Parameters V2 operation gets the IPsec parameters
+        /// that have been set for the virtual network gateway  connection
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response that will be returned from a GetIPsecParameters
+        /// request. This contains the IPsec parameters for the specified
+        /// connection.
+        /// </returns>
+        public async Task<GatewayGetIPsecParametersResponse> GetIPsecParametersV2Async(string gatewayId, string connectedentityId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                TracingAdapter.Enter(invocationId, this, "GetIPsecParametersV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            url = url + "/ipsecparameters";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayGetIPsecParametersResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayGetIPsecParametersResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement iPsecParametersElement = responseDoc.Element(XName.Get("IPsecParameters", "http://schemas.microsoft.com/windowsazure"));
+                        if (iPsecParametersElement != null)
+                        {
+                            IPsecParameters iPsecParametersInstance = new IPsecParameters();
+                            result.IPsecParameters = iPsecParametersInstance;
+                            
+                            XElement encryptionTypeElement = iPsecParametersElement.Element(XName.Get("EncryptionType", "http://schemas.microsoft.com/windowsazure"));
+                            if (encryptionTypeElement != null)
+                            {
+                                string encryptionTypeInstance = encryptionTypeElement.Value;
+                                iPsecParametersInstance.EncryptionType = encryptionTypeInstance;
+                            }
+                            
+                            XElement pfsGroupElement = iPsecParametersElement.Element(XName.Get("PfsGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (pfsGroupElement != null)
+                            {
+                                string pfsGroupInstance = pfsGroupElement.Value;
+                                iPsecParametersInstance.PfsGroup = pfsGroupInstance;
+                            }
+                            
+                            XElement sADataSizeKilobytesElement = iPsecParametersElement.Element(XName.Get("SADataSizeKilobytes", "http://schemas.microsoft.com/windowsazure"));
+                            if (sADataSizeKilobytesElement != null)
+                            {
+                                int sADataSizeKilobytesInstance = int.Parse(sADataSizeKilobytesElement.Value, CultureInfo.InvariantCulture);
+                                iPsecParametersInstance.SADataSizeKilobytes = sADataSizeKilobytesInstance;
+                            }
+                            
+                            XElement sALifeTimeSecondsElement = iPsecParametersElement.Element(XName.Get("SALifeTimeSeconds", "http://schemas.microsoft.com/windowsazure"));
+                            if (sALifeTimeSecondsElement != null)
+                            {
+                                int sALifeTimeSecondsInstance = int.Parse(sALifeTimeSecondsElement.Value, CultureInfo.InvariantCulture);
+                                iPsecParametersInstance.SALifeTimeSeconds = sALifeTimeSecondsInstance;
+                            }
+                            
+                            XElement hashAlgorithmElement = iPsecParametersElement.Element(XName.Get("HashAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                            if (hashAlgorithmElement != null)
+                            {
+                                string hashAlgorithmInstance = hashAlgorithmElement.Value;
+                                iPsecParametersInstance.HashAlgorithm = hashAlgorithmInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Local Network Gateway operation gets information about the
+        /// local network gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The local network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<LocalNetworkGatewayGetResponse> GetLocalNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                TracingAdapter.Enter(invocationId, this, "GetLocalNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/localnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LocalNetworkGatewayGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new LocalNetworkGatewayGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement localNetworkGatewayElement = responseDoc.Element(XName.Get("LocalNetworkGateway", "http://schemas.microsoft.com/windowsazure"));
+                        if (localNetworkGatewayElement != null)
+                        {
+                            XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                            XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+                            var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
+                            addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+                            XElement addressSpaceSequenceElement = localNetworkGatewayElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
+
+                            if (addressSpaceSequenceElement != null)
+                            {
+                                var addressSpaceElementFormat = new XElement(array + "string");
+                                foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get(addressSpaceElementFormat.Name.ToString())))
+                                {
+                                    result.AddressSpace.Add(addressSpaceElement.Value);
+                                }
+                            }
+                            
+                            XElement idElement = localNetworkGatewayElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                Guid idInstance = Guid.Parse(idElement.Value);
+                                result.Id = idInstance;
+                            }
+                            
+                            XElement gatewayNameElement = localNetworkGatewayElement.Element(XName.Get("GatewayName", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewayNameElement != null)
+                            {
+                                string gatewayNameInstance = gatewayNameElement.Value;
+                                result.GatewayName = gatewayNameInstance;
+                            }
+                            
+                            XElement ipAddressElement = localNetworkGatewayElement.Element(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (ipAddressElement != null)
+                            {
+                                string ipAddressInstance = ipAddressElement.Value;
+                                result.IpAddress = ipAddressInstance;
                             }
                         }
                         
@@ -3666,7 +7119,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3862,7 +7315,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3912,6 +7365,422 @@ namespace Microsoft.WindowsAzure.Management.Network
                             {
                                 string valueInstance = valueElement.Value;
                                 result.SharedKey = valueInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Virtual Network Gateway Shared Key V2 operation gets the
+        /// shared key used between the gateway and customer vpn.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to the get shared key request.
+        /// </returns>
+        public async Task<GatewayGetSharedKeyResponse> GetSharedKeyV2Async(string gatewayId, string connectedentityId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (connectedentityId == null)
+            {
+                throw new ArgumentNullException("connectedentityId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                TracingAdapter.Enter(invocationId, this, "GetSharedKeyV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/connectedentity/";
+            url = url + Uri.EscapeDataString(connectedentityId);
+            url = url + "/sharedkey";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayGetSharedKeyResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayGetSharedKeyResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement sharedKeyElement = responseDoc.Element(XName.Get("SharedKey", "http://schemas.microsoft.com/windowsazure"));
+                        if (sharedKeyElement != null)
+                        {
+                            XElement valueElement = sharedKeyElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            if (valueElement != null)
+                            {
+                                string valueInstance = valueElement.Value;
+                                result.SharedKey = valueInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Virtual Network Gateway operation gets information about
+        /// the virtual network gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<VirtualNetworkGatewayGetResponse> GetVirtualNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                TracingAdapter.Enter(invocationId, this, "GetVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualNetworkGatewayGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualNetworkGatewayGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement virtualNetworkGatewayElement = responseDoc.Element(XName.Get("VirtualNetworkGateway", "http://schemas.microsoft.com/windowsazure"));
+                        if (virtualNetworkGatewayElement != null)
+                        {
+                            XElement gatewayIdElement = virtualNetworkGatewayElement.Element(XName.Get("GatewayId", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewayIdElement != null)
+                            {
+                                Guid gatewayIdInstance = Guid.Parse(gatewayIdElement.Value);
+                                result.GatewayId = gatewayIdInstance;
+                            }
+                            
+                            XElement lastEventElement = virtualNetworkGatewayElement.Element(XName.Get("LastEvent", "http://schemas.microsoft.com/windowsazure"));
+                            if (lastEventElement != null)
+                            {
+                                GatewayEvent lastEventInstance = new GatewayEvent();
+                                result.LastEvent = lastEventInstance;
+                                
+                                XElement timestampElement = lastEventElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
+                                if (timestampElement != null)
+                                {
+                                    DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                    lastEventInstance.Timestamp = timestampInstance;
+                                }
+                                
+                                XElement idElement = lastEventElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                                if (idElement != null)
+                                {
+                                    string idInstance = idElement.Value;
+                                    lastEventInstance.Id = idInstance;
+                                }
+                                
+                                XElement messageElement = lastEventElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    lastEventInstance.Message = messageInstance;
+                                }
+                                
+                                XElement dataElement = lastEventElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                                if (dataElement != null)
+                                {
+                                    string dataInstance = dataElement.Value;
+                                    lastEventInstance.Data = dataInstance;
+                                }
+                            }
+                            
+                            XElement gatewayNameElement = virtualNetworkGatewayElement.Element(XName.Get("GatewayName", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewayNameElement != null)
+                            {
+                                string gatewayNameInstance = gatewayNameElement.Value;
+                                result.GatewayName = gatewayNameInstance;
+                            }
+                            
+                            XElement gatewayTypeElement = virtualNetworkGatewayElement.Element(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewayTypeElement != null)
+                            {
+                                string gatewayTypeInstance = gatewayTypeElement.Value;
+                                result.GatewayType = gatewayTypeInstance;
+                            }
+                            
+                            XElement gatewaySizeElement = virtualNetworkGatewayElement.Element(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
+                            if (gatewaySizeElement != null)
+                            {
+                                string gatewaySizeInstance = gatewaySizeElement.Value;
+                                result.GatewaySKU = gatewaySizeInstance;
+                            }
+                            
+                            XElement stateElement = virtualNetworkGatewayElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                result.State = stateInstance;
+                            }
+                            
+                            XElement vIPAddressElement = virtualNetworkGatewayElement.Element(XName.Get("VIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (vIPAddressElement != null)
+                            {
+                                string vIPAddressInstance = vIPAddressElement.Value;
+                                result.VipAddress = vIPAddressInstance;
+                            }
+                            
+                            XElement locationElement = virtualNetworkGatewayElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement vnetIdElement = virtualNetworkGatewayElement.Element(XName.Get("VnetId", "http://schemas.microsoft.com/windowsazure"));
+                            if (vnetIdElement != null)
+                            {
+                                string vnetIdInstance = vnetIdElement.Value;
+                                result.VnetId = vnetIdInstance;
+                            }
+                            
+                            XElement subnetIdElement = virtualNetworkGatewayElement.Element(XName.Get("SubnetId", "http://schemas.microsoft.com/windowsazure"));
+                            if (subnetIdElement != null)
+                            {
+                                string subnetIdInstance = subnetIdElement.Value;
+                                result.SubnetId = subnetIdInstance;
+                            }
+                            
+                            XElement defaultSitesElement = virtualNetworkGatewayElement.Element(XName.Get("DefaultSites", "http://schemas.microsoft.com/windowsazure"));
+                            if (defaultSitesElement != null)
+                            {
+                                GatewayDefaultSite defaultSitesInstance = new GatewayDefaultSite();
+                                result.DefaultSite = defaultSitesInstance;
+                                
+                                XElement stringElement = defaultSitesElement.Element(XName.Get("string", "http://schemas.microsoft.com/windowsazure"));
+                                if (stringElement != null)
+                                {
+                                    string stringInstance = stringElement.Value;
+                                    defaultSitesInstance.Name = stringInstance;
+                                }
+                            }
+                            
+                            XElement enableBgpElement = virtualNetworkGatewayElement.Element(XName.Get("EnableBgp", "http://schemas.microsoft.com/windowsazure"));
+                            if (enableBgpElement != null)
+                            {
+                                bool enableBgpInstance = bool.Parse(enableBgpElement.Value);
+                                result.EnableBgp = enableBgpInstance;
                             }
                         }
                         
@@ -4012,7 +7881,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4085,7 +7954,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     XElement timestampElement = lastEventElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
                                     if (timestampElement != null)
                                     {
-                                        DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         lastEventInstance.Timestamp = timestampInstance;
                                     }
                                     
@@ -4128,7 +7997,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement lastConnectionEstablishedElement = connectionsElement.Element(XName.Get("LastConnectionEstablished", "http://schemas.microsoft.com/windowsazure"));
                                 if (lastConnectionEstablishedElement != null)
                                 {
-                                    DateTime lastConnectionEstablishedInstance = DateTime.Parse(lastConnectionEstablishedElement.Value, CultureInfo.InvariantCulture);
+                                    DateTime lastConnectionEstablishedInstance = DateTime.Parse(lastConnectionEstablishedElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     connectionInstance.LastConnectionEstablished = lastConnectionEstablishedInstance;
                                 }
                                 
@@ -4138,6 +8007,368 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     foreach (XElement allocatedIPAddressesElement in allocatedIPAddressesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         connectionInstance.AllocatedIPAddresses.Add(allocatedIPAddressesElement.Value);
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Connections operation Lists all GatewayConnections.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a ListGatewayConnections request to a Virtual
+        /// Network Gateway.
+        /// </returns>
+        public async Task<GatewayListGatewayConnectionsResponse> ListGatewayConnectionsAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                TracingAdapter.Enter(invocationId, this, "ListGatewayConnectionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/gatewayconnections";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayListGatewayConnectionsResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayListGatewayConnectionsResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayConnectionsSequenceElement = responseDoc.Element(XName.Get("GatewayConnections", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayConnectionsSequenceElement != null)
+                        {
+                            foreach (XElement gatewayConnectionsElement in gatewayConnectionsSequenceElement.Elements(XName.Get("GatewayConnection", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                GatewayListGatewayConnectionsResponse.VirtualNetworkGatewayConnection gatewayConnectionInstance = new GatewayListGatewayConnectionsResponse.VirtualNetworkGatewayConnection();
+                                result.VirtualNetworkGatewayConnections.Add(gatewayConnectionInstance);
+                                
+                                XElement gatewayConnectionNameElement = gatewayConnectionsElement.Element(XName.Get("GatewayConnectionName", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayConnectionNameElement != null)
+                                {
+                                    string gatewayConnectionNameInstance = gatewayConnectionNameElement.Value;
+                                    gatewayConnectionInstance.GatewayConnectionName = gatewayConnectionNameInstance;
+                                }
+                                
+                                XElement virtualNetworkGatewayIdElement = gatewayConnectionsElement.Element(XName.Get("VirtualNetworkGatewayId", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualNetworkGatewayIdElement != null)
+                                {
+                                    Guid virtualNetworkGatewayIdInstance = Guid.Parse(virtualNetworkGatewayIdElement.Value);
+                                    gatewayConnectionInstance.VirtualNetworkGatewayId = virtualNetworkGatewayIdInstance;
+                                }
+                                
+                                XElement connectedEntityIdElement = gatewayConnectionsElement.Element(XName.Get("ConnectedEntityId", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectedEntityIdElement != null)
+                                {
+                                    string connectedEntityIdInstance = connectedEntityIdElement.Value;
+                                    gatewayConnectionInstance.ConnectedEntityId = connectedEntityIdInstance;
+                                }
+                                
+                                XElement gatewayConnectionTypeElement = gatewayConnectionsElement.Element(XName.Get("GatewayConnectionType", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayConnectionTypeElement != null)
+                                {
+                                    string gatewayConnectionTypeInstance = gatewayConnectionTypeElement.Value;
+                                    gatewayConnectionInstance.GatewayConnectionType = gatewayConnectionTypeInstance;
+                                }
+                                
+                                XElement routingWeightElement = gatewayConnectionsElement.Element(XName.Get("RoutingWeight", "http://schemas.microsoft.com/windowsazure"));
+                                if (routingWeightElement != null)
+                                {
+                                    int routingWeightInstance = int.Parse(routingWeightElement.Value, CultureInfo.InvariantCulture);
+                                    gatewayConnectionInstance.RoutingWeight = routingWeightInstance;
+                                }
+                                
+                                XElement sharedKeyElement = gatewayConnectionsElement.Element(XName.Get("SharedKey", "http://schemas.microsoft.com/windowsazure"));
+                                if (sharedKeyElement != null)
+                                {
+                                    string sharedKeyInstance = sharedKeyElement.Value;
+                                    gatewayConnectionInstance.SharedKey = sharedKeyInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Local network gateways operation returns a list of the
+        /// local network gateways.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a ListLocalNetworkGateways request.
+        /// </returns>
+        public async Task<ListLocalNetworkGatewaysResponse> ListLocalNetworkGatewaysAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                TracingAdapter.Enter(invocationId, this, "ListLocalNetworkGatewaysAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/localnetworkgateways";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ListLocalNetworkGatewaysResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ListLocalNetworkGatewaysResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement localNetworkGatewaysSequenceElement = responseDoc.Element(XName.Get("LocalNetworkGateways", "http://schemas.microsoft.com/windowsazure"));
+                        if (localNetworkGatewaysSequenceElement != null)
+                        {
+                            foreach (XElement localNetworkGatewaysElement in localNetworkGatewaysSequenceElement.Elements(XName.Get("LocalNetworkGateway", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                ListLocalNetworkGatewaysResponse.LocalNetworkGateway localNetworkGatewayInstance = new ListLocalNetworkGatewaysResponse.LocalNetworkGateway();
+                                result.LocalNetworkGateways.Add(localNetworkGatewayInstance);
+                                
+                                XElement idElement = localNetworkGatewaysElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                                if (idElement != null)
+                                {
+                                    Guid idInstance = Guid.Parse(idElement.Value);
+                                    localNetworkGatewayInstance.Id = idInstance;
+                                }
+                                
+                                XElement gatewayNameElement = localNetworkGatewaysElement.Element(XName.Get("GatewayName", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayNameElement != null)
+                                {
+                                    string gatewayNameInstance = gatewayNameElement.Value;
+                                    localNetworkGatewayInstance.GatewayName = gatewayNameInstance;
+                                }
+                                
+                                XElement ipAddressElement = localNetworkGatewaysElement.Element(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                                if (ipAddressElement != null)
+                                {
+                                    string ipAddressInstance = ipAddressElement.Value;
+                                    localNetworkGatewayInstance.IpAddress = ipAddressInstance;
+                                }
+
+                                XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                                XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+                                var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
+                                addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+                                XElement addressSpaceSequenceElement = localNetworkGatewaysElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
+                                
+                                if (addressSpaceSequenceElement != null)
+                                {
+                                    var addressSpaceElementFormat = new XElement(array + "string");
+                                    foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get(addressSpaceElementFormat.Name.ToString())))
+                                    {
+                                        localNetworkGatewayInstance.AddressSpace.Add(addressSpaceElement.Value);
                                     }
                                 }
                             }
@@ -4230,7 +8461,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4323,6 +8554,267 @@ namespace Microsoft.WindowsAzure.Management.Network
                                             }
                                         }
                                     }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Virtual network gateways operation returns a list of the
+        /// virtual network gateways.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a ListVirtualNetworkGateways request.
+        /// </returns>
+        public async Task<ListVirtualNetworkGatewaysResponse> ListVirtualNetworkGatewaysAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                TracingAdapter.Enter(invocationId, this, "ListVirtualNetworkGatewaysAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ListVirtualNetworkGatewaysResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ListVirtualNetworkGatewaysResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement virtualNetworkGatewaysSequenceElement = responseDoc.Element(XName.Get("VirtualNetworkGateways", "http://schemas.microsoft.com/windowsazure"));
+                        if (virtualNetworkGatewaysSequenceElement != null)
+                        {
+                            foreach (XElement virtualNetworkGatewaysElement in virtualNetworkGatewaysSequenceElement.Elements(XName.Get("VirtualNetworkGateway", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                ListVirtualNetworkGatewaysResponse.VirtualNetworkGateway virtualNetworkGatewayInstance = new ListVirtualNetworkGatewaysResponse.VirtualNetworkGateway();
+                                result.VirtualNetworkGateways.Add(virtualNetworkGatewayInstance);
+                                
+                                XElement gatewayIdElement = virtualNetworkGatewaysElement.Element(XName.Get("GatewayId", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayIdElement != null)
+                                {
+                                    Guid gatewayIdInstance = Guid.Parse(gatewayIdElement.Value);
+                                    virtualNetworkGatewayInstance.GatewayId = gatewayIdInstance;
+                                }
+                                
+                                XElement lastEventElement = virtualNetworkGatewaysElement.Element(XName.Get("LastEvent", "http://schemas.microsoft.com/windowsazure"));
+                                if (lastEventElement != null)
+                                {
+                                    GatewayEvent lastEventInstance = new GatewayEvent();
+                                    virtualNetworkGatewayInstance.LastEvent = lastEventInstance;
+                                    
+                                    XElement timestampElement = lastEventElement.Element(XName.Get("Timestamp", "http://schemas.microsoft.com/windowsazure"));
+                                    if (timestampElement != null)
+                                    {
+                                        DateTime timestampInstance = DateTime.Parse(timestampElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                        lastEventInstance.Timestamp = timestampInstance;
+                                    }
+                                    
+                                    XElement idElement = lastEventElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                                    if (idElement != null)
+                                    {
+                                        string idInstance = idElement.Value;
+                                        lastEventInstance.Id = idInstance;
+                                    }
+                                    
+                                    XElement messageElement = lastEventElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                    if (messageElement != null)
+                                    {
+                                        string messageInstance = messageElement.Value;
+                                        lastEventInstance.Message = messageInstance;
+                                    }
+                                    
+                                    XElement dataElement = lastEventElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                                    if (dataElement != null)
+                                    {
+                                        string dataInstance = dataElement.Value;
+                                        lastEventInstance.Data = dataInstance;
+                                    }
+                                }
+                                
+                                XElement gatewayNameElement = virtualNetworkGatewaysElement.Element(XName.Get("GatewayName", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayNameElement != null)
+                                {
+                                    string gatewayNameInstance = gatewayNameElement.Value;
+                                    virtualNetworkGatewayInstance.GatewayName = gatewayNameInstance;
+                                }
+                                
+                                XElement gatewayTypeElement = virtualNetworkGatewaysElement.Element(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewayTypeElement != null)
+                                {
+                                    string gatewayTypeInstance = gatewayTypeElement.Value;
+                                    virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
+                                }
+                                
+                                XElement gatewaySizeElement = virtualNetworkGatewaysElement.Element(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
+                                if (gatewaySizeElement != null)
+                                {
+                                    string gatewaySizeInstance = gatewaySizeElement.Value;
+                                    virtualNetworkGatewayInstance.GatewaySKU = gatewaySizeInstance;
+                                }
+                                
+                                XElement stateElement = virtualNetworkGatewaysElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                if (stateElement != null)
+                                {
+                                    string stateInstance = stateElement.Value;
+                                    virtualNetworkGatewayInstance.State = stateInstance;
+                                }
+                                
+                                XElement vIPAddressElement = virtualNetworkGatewaysElement.Element(XName.Get("VIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                if (vIPAddressElement != null)
+                                {
+                                    string vIPAddressInstance = vIPAddressElement.Value;
+                                    virtualNetworkGatewayInstance.VipAddress = vIPAddressInstance;
+                                }
+                                
+                                XElement locationElement = virtualNetworkGatewaysElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    virtualNetworkGatewayInstance.Location = locationInstance;
+                                }
+                                
+                                XElement vnetIdElement = virtualNetworkGatewaysElement.Element(XName.Get("VnetId", "http://schemas.microsoft.com/windowsazure"));
+                                if (vnetIdElement != null)
+                                {
+                                    string vnetIdInstance = vnetIdElement.Value;
+                                    virtualNetworkGatewayInstance.VnetId = vnetIdInstance;
+                                }
+                                
+                                XElement subnetIdElement = virtualNetworkGatewaysElement.Element(XName.Get("SubnetId", "http://schemas.microsoft.com/windowsazure"));
+                                if (subnetIdElement != null)
+                                {
+                                    string subnetIdInstance = subnetIdElement.Value;
+                                    virtualNetworkGatewayInstance.SubnetId = subnetIdInstance;
+                                }
+                                
+                                XElement defaultSitesElement = virtualNetworkGatewaysElement.Element(XName.Get("DefaultSites", "http://schemas.microsoft.com/windowsazure"));
+                                if (defaultSitesElement != null)
+                                {
+                                    GatewayDefaultSite defaultSitesInstance = new GatewayDefaultSite();
+                                    virtualNetworkGatewayInstance.DefaultSite = defaultSitesInstance;
+                                    
+                                    XElement stringElement = defaultSitesElement.Element(XName.Get("string", "http://schemas.microsoft.com/windowsazure"));
+                                    if (stringElement != null)
+                                    {
+                                        string stringInstance = stringElement.Value;
+                                        defaultSitesInstance.Name = stringInstance;
+                                    }
+                                }
+                                
+                                XElement enableBgpElement = virtualNetworkGatewaysElement.Element(XName.Get("EnableBgp", "http://schemas.microsoft.com/windowsazure"));
+                                if (enableBgpElement != null)
+                                {
+                                    bool enableBgpInstance = bool.Parse(enableBgpElement.Value);
+                                    virtualNetworkGatewayInstance.EnableBgp = enableBgpInstance;
                                 }
                             }
                         }
@@ -4644,6 +9136,198 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Reset Virtual Network Gateway Shared Key V2 operation resets
+        /// the shared key used between the gateway and customer vpn.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Reset Shared Key request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> ResetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "ResetSharedKeyV2Async", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginResetSharedKeyV2Async(gatewayId, connectedentityId, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> ResetVirtualNetworkGatewayAsync(string gatewayId, ResetGatewayParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "ResetVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginResetVirtualNetworkGatewayAsync(gatewayId, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// The Begin Resize Virtual network Gateway operation resizes an
         /// existing gateway to a different GatewaySKU.
         /// </summary>
@@ -4684,6 +9368,100 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             cancellationToken.ThrowIfCancellationRequested();
             GatewayOperationResponse response = await client.Gateways.BeginResizeAsync(networkName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Begin Resize Virtual network Gateway operation resizes an
+        /// existing gateway to a different GatewaySKU.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Resize Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> ResizeVirtualNetworkGatewayAsync(string gatewayId, ResizeGatewayParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "ResizeVirtualNetworkGatewayAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginResizeVirtualNetworkGatewayAsync(gatewayId, parameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
@@ -4932,6 +9710,105 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters V2 operation
+        /// sets the IPsec parameters on the virtual network gateway
+        /// connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set IPsec Parameters V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> SetIPsecParametersV2Async(string gatewayId, string connectedentityId, GatewaySetIPsecParametersParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "SetIPsecParametersV2Async", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginSetIPsecParametersV2Async(gatewayId, connectedentityId, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// The Set Virtual Network Gateway Shared Key operation sets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -4980,6 +9857,105 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             cancellationToken.ThrowIfCancellationRequested();
             GatewayOperationResponse response = await client.Gateways.BeginSetSharedKeyAsync(networkName, localNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Set Virtual Network Gateway Shared Key V2 operation sets the
+        /// shared key used between the gateway and customer vpn for the
+        /// specified site.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to Virtual Network Gateway Set Shared
+        /// Key V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> SetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "SetSharedKeyV2Async", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginSetSharedKeyV2Async(gatewayId, connectedentityId, parameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
@@ -5129,6 +10105,99 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Start Diagnostics V2 operation starts a diagnostics session for
+        /// the specified virtual network gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Start Diagnostics V2 operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> StartDiagnosticsV2Async(string gatewayId, StartGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "StartDiagnosticsV2Async", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginStartDiagnosticsV2Async(gatewayId, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// The Stop Diagnostics operation begins an asynchronous operation to
         /// stopa diagnostics session for the specified virtual network
         /// gateway in Azure.  (see
@@ -5204,7 +10273,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5273,6 +10342,448 @@ namespace Microsoft.WindowsAzure.Management.Network
                         }
                         
                     }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Stop Diagnostics V2 operation begins an asynchronous operation
+        /// to stopa diagnostics session for the specified virtual network
+        /// gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to Stop Diagnostics V2 operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> StopDiagnosticsV2Async(string gatewayId, StopGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "StopDiagnosticsV2Async", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            url = url + "/publicdiagnostics";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateGatewayPublicDiagnosticsElement = new XElement(XName.Get("UpdateGatewayPublicDiagnostics", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateGatewayPublicDiagnosticsElement);
+                
+                XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
+                operationElement.Value = "StopDiagnostics";
+                updateGatewayPublicDiagnosticsElement.Add(operationElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayOperationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationAsyncResponseElement != null)
+                        {
+                            XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Operation to update existing gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// Required. The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Update gateway
+        /// conneciton operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> UpdateGatewayConnectionAsync(string gatewayId, string connectedentityId, UpdateGatewayConnectionParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("connectedentityId", connectedentityId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateGatewayConnectionAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayOperationResponse response = await client.Gateways.BeginUpdateGatewayConnectionAsync(gatewayId, connectedentityId, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != GatewayOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != GatewayOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Update Local Network Gateway operation updates a local network
+        /// gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// Required. The virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to update the Local Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> UpdateLocalNetworkGatewayAsync(string gatewayId, UpdateLocalNetworkGatewayParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException("gatewayId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("gatewayId", gatewayId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateLocalNetworkGatewayAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/localnetworkgateways/";
+            url = url + Uri.EscapeDataString(gatewayId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateLocalNetworkGatewayParametersElement = new XElement(XName.Get("UpdateLocalNetworkGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateLocalNetworkGatewayParametersElement);
+                
+                if (parameters.AddressSpace != null)
+                {
+                    if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
+                    {
+                        XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                        XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+                        var addressSpaceSequenceElement = new XElement(defaultNs + "AddressSpace");
+                        addressSpaceSequenceElement.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+
+                        foreach (string addressSpaceItem in parameters.AddressSpace)
+                        {
+                            var addressSpaceItemElement = new XElement(array + "string", addressSpaceItem);
+                            addressSpaceSequenceElement.Add(addressSpaceItemElement);
+                        }
+                        updateLocalNetworkGatewayParametersElement.Add(addressSpaceSequenceElement);
+                    }
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

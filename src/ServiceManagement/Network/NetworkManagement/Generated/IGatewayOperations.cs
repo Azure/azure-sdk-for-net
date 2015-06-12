@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
@@ -85,6 +86,43 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginCreatingAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Creating Virtual network Gateway connection operation
+        /// creates a new network gateway connection.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Creating Gateway Connection
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginCreatingGatewayConnectionAsync(GatewayConnectionCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Creating Virtual network Gateway operation creates a new
+        /// network gateway.
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Creating Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginCreatingVirtualNetworkGatewayAsync(string networkName, VirtualNetworkGatewayCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Deleting Virtual Network Gateway operation deletes a
         /// network gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
@@ -101,6 +139,41 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// request ID.
         /// </returns>
         Task<GatewayOperationResponse> BeginDeletingAsync(string networkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Deleting Virtual Network Gateway connection deletes a
+        /// network gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginDeletingGatewayConnectionAsync(string gatewayId, string connectedentityId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Deleting Virtual Network Gateway operation deletes a
+        /// network gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginDeletingVirtualNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Failover Virtual Network Gateway operation causes a
@@ -208,6 +281,49 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Reset Virtual Network Gateway Shared Key V2 operation
+        /// resets the shared key used between the gateway and customer vpn.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Virtual Network Gateway Reset
+        /// Shared Key V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginResetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginResetVirtualNetworkGatewayAsync(string gatewayId, ResetGatewayParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Resize Virtual network Gateway operation resizes an
         /// existing gateway to a different GatewaySKU.
         /// </summary>
@@ -226,6 +342,26 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// request ID.
         /// </returns>
         Task<GatewayOperationResponse> BeginResizeAsync(string networkName, ResizeGatewayParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Resize Virtual network Gateway operation resizes an
+        /// existing gateway to a different GatewaySKU.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Resize Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginResizeVirtualNetworkGatewayAsync(string gatewayId, ResizeGatewayParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Set Virtual Network Gateway Shared Key operation sets the
@@ -273,6 +409,30 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginSetIPsecParametersAsync(string networkName, string localNetworkName, GatewaySetIPsecParametersParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters V2 operation
+        /// sets the IPsec parameters on the virtual network gateway
+        /// connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Virtual Network Gateway Set IPsec
+        /// Parameters V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginSetIPsecParametersV2Async(string gatewayId, string connectedentityId, GatewaySetIPsecParametersParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Set Virtual Network Gateway Shared Key operation sets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -300,6 +460,30 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginSetSharedKeyAsync(string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway Shared Key V2 operation sets
+        /// the shared key used between the gateway and customer vpn for the
+        /// specified site.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Virtual Network Gateway Set Shared
+        /// Key V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginSetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Start Diagnostics operation begins an asynchronous
         /// operation to starta diagnostics session for the specified virtual
         /// network gateway in Azure.  (see
@@ -320,6 +504,48 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// request ID.
         /// </returns>
         Task<GatewayOperationResponse> BeginStartDiagnosticsAsync(string networkName, StartGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Start Diagnostics V2 operation begins an asynchronous
+        /// operation to starta diagnostics session for the specified virtual
+        /// network gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Start Diagnostics V2 operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginStartDiagnosticsV2Async(string gatewayId, StartGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Operation to update existing gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Update gateway conneciton
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginUpdateGatewayConnectionAsync(string gatewayId, string connectedentityId, UpdateGatewayConnectionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// To connect to, disconnect from, or test your connection to a local
@@ -384,6 +610,71 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> CreateAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Create Virtual network Gateway Connection operation creates a
+        /// new network gateway.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Creating Gateway Connection
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> CreateGatewayConnectionAsync(GatewayConnectionCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Create Local network Gateway operation creates a new local
+        /// network gateway.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to Create Local Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Local Network Gateway operation response.
+        /// </returns>
+        Task<LocalNetworkGatewayCreateResponse> CreateLocalNetworkGatewayAsync(LocalNetworkGatewayCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Create Virtual network Gateway operation creates a new network
+        /// gateway.
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> CreateVirtualNetworkGatewayAsync(string networkName, VirtualNetworkGatewayCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Delete Virtual Network Gateway operation deletes a network
         /// gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
@@ -407,6 +698,71 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<GatewayGetOperationStatusResponse> DeleteAsync(string networkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Delete Virtual network Gateway Connection operation deletes a
+        /// network gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> DeleteGatewayConnectionAsync(string gatewayId, string connectedentityId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Delete Local Network Gateway operation deletes a local network
+        /// gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The local network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteLocalNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Delete Virtual Network Gateway operation deletes a network
+        /// gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> DeleteVirtualNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Failover Virtual Network Gateway operation causes a network
@@ -522,6 +878,40 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayDiagnosticsStatus> GetDiagnosticsAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Diagnostics V2 operation gets information about the current
+        /// virtual network gateway diagnostics session
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The status of a gateway diagnostics operation.
+        /// </returns>
+        Task<GatewayDiagnosticsStatus> GetDiagnosticsV2Async(string gatewayId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Virtual Network Gateway Connection operation gets
+        /// information about the virtual network gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The virtual network gateway connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayConnectionGetResponse> GetGatewayConnectionAsync(string gatewayId, string connectedentityId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Get IPsec Parameters operation gets the IPsec parameters that
         /// have been set for the connection between the provided virtual
         /// network gateway and the provided local network site.
@@ -541,6 +931,42 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// connection.
         /// </returns>
         Task<GatewayGetIPsecParametersResponse> GetIPsecParametersAsync(string networkName, string localNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get IPsec Parameters V2 operation gets the IPsec parameters
+        /// that have been set for the virtual network gateway  connection
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response that will be returned from a GetIPsecParameters
+        /// request. This contains the IPsec parameters for the specified
+        /// connection.
+        /// </returns>
+        Task<GatewayGetIPsecParametersResponse> GetIPsecParametersV2Async(string gatewayId, string connectedentityId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Local Network Gateway operation gets information about the
+        /// local network gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The local network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<LocalNetworkGatewayGetResponse> GetLocalNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Virtual Network Gateway Operation Status gets information
@@ -590,6 +1016,40 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetSharedKeyResponse> GetSharedKeyAsync(string networkName, string localNetworkName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Virtual Network Gateway Shared Key V2 operation gets the
+        /// shared key used between the gateway and customer vpn.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to the get shared key request.
+        /// </returns>
+        Task<GatewayGetSharedKeyResponse> GetSharedKeyV2Async(string gatewayId, string connectedentityId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Virtual Network Gateway operation gets information about
+        /// the virtual network gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<VirtualNetworkGatewayGetResponse> GetVirtualNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The List Connections operation returns a list of the local network
         /// connections that can be accessed through the gateway.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154120.aspx
@@ -608,6 +1068,30 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayListConnectionsResponse> ListConnectionsAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The List Connections operation Lists all GatewayConnections.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a ListGatewayConnections request to a Virtual
+        /// Network Gateway.
+        /// </returns>
+        Task<GatewayListGatewayConnectionsResponse> ListGatewayConnectionsAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Local network gateways operation returns a list of the
+        /// local network gateways.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a ListLocalNetworkGateways request.
+        /// </returns>
+        Task<ListLocalNetworkGatewaysResponse> ListLocalNetworkGatewaysAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The List Virtual Network Gateway Supported Devices operation lists
         /// the supported, on-premise network devices that can connect to the
         /// gateway.  (see
@@ -621,6 +1105,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response to the list supported devices request.
         /// </returns>
         Task<GatewayListSupportedDevicesResponse> ListSupportedDevicesAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Virtual network gateways operation returns a list of the
+        /// virtual network gateways.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a ListVirtualNetworkGateways request.
+        /// </returns>
+        Task<ListVirtualNetworkGatewaysResponse> ListVirtualNetworkGatewaysAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// The Remove Virtual Network Gateway Shared Key operation sets the
@@ -707,6 +1203,62 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Reset Virtual Network Gateway Shared Key V2 operation resets
+        /// the shared key used between the gateway and customer vpn.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Virtual Network Gateway Reset
+        /// Shared Key request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> ResetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Reset Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> ResetVirtualNetworkGatewayAsync(string gatewayId, ResetGatewayParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Resize Virtual network Gateway operation resizes an
         /// existing gateway to a different GatewaySKU.
         /// </summary>
@@ -731,6 +1283,32 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<GatewayGetOperationStatusResponse> ResizeAsync(string networkName, ResizeGatewayParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Resize Virtual network Gateway operation resizes an
+        /// existing gateway to a different GatewaySKU.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Resize Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> ResizeVirtualNetworkGatewayAsync(string gatewayId, ResizeGatewayParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Set Virtual Network Gateway Shared Key operation sets the
@@ -792,6 +1370,37 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> SetIPsecParametersAsync(string networkName, string localNetworkName, GatewaySetIPsecParametersParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters V2 operation
+        /// sets the IPsec parameters on the virtual network gateway
+        /// connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Virtual Network Gateway Set IPsec
+        /// Parameters V2 request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> SetIPsecParametersV2Async(string gatewayId, string connectedentityId, GatewaySetIPsecParametersParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Set Virtual Network Gateway Shared Key operation sets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -826,6 +1435,37 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> SetSharedKeyAsync(string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Set Virtual Network Gateway Shared Key V2 operation sets the
+        /// shared key used between the gateway and customer vpn for the
+        /// specified site.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to Virtual Network Gateway Set Shared Key V2
+        /// request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> SetSharedKeyV2Async(string gatewayId, string connectedentityId, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Start Diagnostics operation starts a diagnostics session for
         /// the specified virtual network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
@@ -854,6 +1494,32 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> StartDiagnosticsAsync(string networkName, StartGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Start Diagnostics V2 operation starts a diagnostics session for
+        /// the specified virtual network gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Start Diagnostics V2 operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> StartDiagnosticsV2Async(string gatewayId, StartGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Stop Diagnostics operation begins an asynchronous operation to
         /// stopa diagnostics session for the specified virtual network
         /// gateway in Azure.  (see
@@ -874,5 +1540,73 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// request ID.
         /// </returns>
         Task<GatewayOperationResponse> StopDiagnosticsAsync(string networkName, StopGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Stop Diagnostics V2 operation begins an asynchronous operation
+        /// to stopa diagnostics session for the specified virtual network
+        /// gateway.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to Stop Diagnostics V2 operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> StopDiagnosticsV2Async(string gatewayId, StopGatewayPublicDiagnosticsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Operation to update existing gateway connection.
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network gateway Id.
+        /// </param>
+        /// <param name='connectedentityId'>
+        /// The connected entity Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Update gateway conneciton
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> UpdateGatewayConnectionAsync(string gatewayId, string connectedentityId, UpdateGatewayConnectionParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Update Local Network Gateway operation updates a local network
+        /// gateway
+        /// </summary>
+        /// <param name='gatewayId'>
+        /// The virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to update the Local Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> UpdateLocalNetworkGatewayAsync(string gatewayId, UpdateLocalNetworkGatewayParameters parameters, CancellationToken cancellationToken);
     }
 }

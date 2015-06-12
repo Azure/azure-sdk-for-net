@@ -139,6 +139,16 @@ namespace Microsoft.Azure.Management.Resources
             get { return this._resources; }
         }
         
+        private IResourceProviderOperationDetailsOperations _resourceProviderOperationDetails;
+        
+        /// <summary>
+        /// Operations for managing Resource provider operations.
+        /// </summary>
+        public virtual IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails
+        {
+            get { return this._resourceProviderOperationDetails; }
+        }
+        
         private ITagOperations _tags;
         
         /// <summary>
@@ -160,6 +170,7 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this._tags = new TagOperations(this);
             this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
@@ -231,6 +242,7 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this._tags = new TagOperations(this);
             this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;

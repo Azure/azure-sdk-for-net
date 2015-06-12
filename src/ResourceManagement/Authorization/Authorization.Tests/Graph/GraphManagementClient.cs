@@ -15,6 +15,7 @@
 
 using Hyak.Common;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -31,7 +32,7 @@ namespace Authorization.Tests
     {
         private const string DefaultUserDomain = "@aad191.ccsctp.net";
 
-        private const string DefaultTenantId = "1449d5b7-8a83-47db-ae4c-9b03e888bad0";
+        private const string DefaultTenantId = "e80a6e61-8b40-4a0b-9c90-fdc4db897423";
         
         private const string GraphApiVersion = "1.42-previewInternal";
 
@@ -218,8 +219,8 @@ namespace Authorization.Tests
             return string.Format(
                 GraphUriFormatter,
                 this.testEnvironment.Endpoints.GraphUri.ToString(),
-                this.testEnvironment.AuthorizationContext == null ? 
-                    GraphManagementClient.DefaultTenantId :
+                this.testEnvironment.AuthorizationContext == null ?
+                GraphManagementClient.DefaultTenantId :
                     this.testEnvironment.AuthorizationContext.TenatId,
                 suffix,
                 GraphManagementClient.GraphApiVersion);

@@ -35,10 +35,33 @@ namespace Microsoft.WindowsAzure.Management.Network
     public partial interface INetworkSecurityGroupOperations
     {
         /// <summary>
-        /// Adds a Network Security Group to a subnet.
+        /// Adds a Network Security Group to a network interface.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Network Security Group to subnet
+        /// Parameters supplied to the Add Network Security Group to a network
+        /// interface operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> AddToNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Adds a Network Security Group to a Role.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Add Network Security Group to Role
         /// operation.
         /// </param>
         /// <param name='cancellationToken'>
@@ -55,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<OperationStatusResponse> AddToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> AddToRoleAsync(string serviceName, string deploymentName, string roleName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Adds a Network Security Group to a subnet.
@@ -78,7 +101,76 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<OperationStatusResponse> BeginAddingToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> AddToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Adds a Network Security Group to a network interface.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Add Network Security Group to a network
+        /// interface operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginAddingToNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Adds a Network Security Group to a Role.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Add Network Security Group to Role
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginAddingToRoleAsync(string serviceName, string deploymentName, string roleName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Adds a Network Security Group to a subnet.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Add Network Security Group to subnet
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginAddingToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a new Network Security Group.
@@ -151,6 +243,44 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> BeginDeletingRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Removes a Network Security Group from a network interface.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginRemovingFromNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, string networkSecurityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Removes a Network Security Group from a role.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginRemovingFromRoleAsync(string serviceName, string deploymentName, string roleName, string networkSecurityGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Removes a Network Security Group from a subnet.
@@ -286,15 +416,41 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<NetworkSecurityGroupGetResponse> GetAsync(string networkSecurityGroupName, string detailLevel, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets the Network Security Group applied to a specific network
+        /// interface.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        Task<NetworkSecurityGroupGetAssociationResponse> GetForNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the Network Security Group applied to a specific role.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
+        /// </returns>
+        Task<NetworkSecurityGroupGetAssociationResponse> GetForRoleAsync(string serviceName, string deploymentName, string roleName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the Network Security Group applied to a specific subnet.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Network Security Group associated with a subnet.
+        /// The Network Security Group associated with an entity: subnet,
+        /// network interface or role.
         /// </returns>
-        Task<NetworkSecurityGroupGetForSubnetResponse> GetForSubnetAsync(string virtualNetworkName, string subnetName, CancellationToken cancellationToken);
+        Task<NetworkSecurityGroupGetAssociationResponse> GetForSubnetAsync(string virtualNetworkName, string subnetName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Lists all of the Network Security Groups for the subscription.
@@ -306,6 +462,44 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The List Definitions operation response.
         /// </returns>
         Task<NetworkSecurityGroupListResponse> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Removes a Network Security Group from a network interface.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> RemoveFromNetworkInterfaceAsync(string serviceName, string deploymentName, string roleName, string networkInterfaceName, string networkSecurityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Removes a Network Security Group from a role.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> RemoveFromRoleAsync(string serviceName, string deploymentName, string roleName, string networkSecurityGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Removes a Network Security Group from a subnet.

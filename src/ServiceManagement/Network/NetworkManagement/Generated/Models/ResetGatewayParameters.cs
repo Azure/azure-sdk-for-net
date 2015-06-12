@@ -27,17 +27,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     public partial class ResetGatewayParameters
     {
-        private string _gatewaySKU;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string GatewaySKU
-        {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
         private UpdateGatewayOperation _operation;
         
         /// <summary>

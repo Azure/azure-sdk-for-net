@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/routetables/MockRouteTableName?detailLevel=full",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tSb3V0ZVRhYmxlTmFtZT9kZXRhaWxMZXZlbD1mdWxs",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/routetables/MockRouteTableName?detailLevel=full",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tSb3V0ZVRhYmxlTmFtZT9kZXRhaWxMZXZlbD1mdWxs",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
@@ -21,32 +21,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ec3d662891bf77e189e47d156c79e657"
+          "37141cbb1cdb03f0b69aae45f69e68c7"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:00:40 GMT"
+          "Mon, 13 Apr 2015 16:38:58 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/f771266f-1d85-498f-9280-ae4a6c3dae8b/services/networking/routetables/MockRouteTableName/routes/MockRouteName",
-      "EncodedRequestUri": "L2Y3NzEyNjZmLTFkODUtNDk4Zi05MjgwLWFlNGE2YzNkYWU4Yi9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tSb3V0ZVRhYmxlTmFtZS9yb3V0ZXMvTW9ja1JvdXRlTmFtZQ==",
+      "RequestUri": "/d2599f84-5099-4ef0-8548-d4765d6a0718/services/networking/routetables/MockRouteTableName/routes/MockRouteName",
+      "EncodedRequestUri": "L2QyNTk5Zjg0LTUwOTktNGVmMC04NTQ4LWQ0NzY1ZDZhMDcxOC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tSb3V0ZVRhYmxlTmFtZS9yb3V0ZXMvTW9ja1JvdXRlTmFtZQ==",
       "RequestMethod": "PUT",
       "RequestBody": "<Route xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>MockRouteName</Name>\r\n  <AddressPrefix>0.0.0.0/0</AddressPrefix>\r\n</Route>",
       "RequestHeaders": {
@@ -57,38 +54,35 @@
           "141"
         ],
         "x-ms-version": [
-          "2015-02-01"
+          "2015-04-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>BadRequest</Code>\r\n  <Message>The next hop type is not specified. Please use next hop types VPNGateway,Backend.</Message>\r\n</Error>",
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>BadRequest</Code>\r\n  <Message>The next hop is a mandatory parameter, but it is not specified.</Message>\r\n</Error>",
       "ResponseHeaders": {
         "Content-Length": [
-          "240"
+          "222"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c1e74b20d4cd7a0bb15f81b9ad887c2d"
+          "c77a5f216f420e59a485dbb9fbbba607"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Feb 2015 23:00:41 GMT"
+          "Mon, 13 Apr 2015 16:39:00 GMT"
         ],
         "Server": [
-          "1.0.6198.187",
-          "(rd_rdfe_stable.150211-1556)",
+          "1.0.6190.5879",
+          "(rd_rdfe_n.150326-2000)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -97,6 +91,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "f771266f-1d85-498f-9280-ae4a6c3dae8b"
+    "SubscriptionId": "d2599f84-5099-4ef0-8548-d4765d6a0718"
   }
 }

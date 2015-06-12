@@ -13,12 +13,11 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test;
-using System;
 using System.Linq;
 using System.Net;
 using Xunit;
@@ -42,6 +41,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Name", "TestVMScenarioOperations")]
         public void TestVMScenarioOperations()
         {
             using (var context = UndoContext.Current)
@@ -58,7 +58,13 @@ namespace Compute.Tests
                 try
                 {
                     // Create Storage Account, so that both the VMs can share it
-                    var storageAccountOutput = CreateStorageAccount( rgName, storageAccountName );
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    var deleteVMResponse = m_CrpClient.VirtualMachines.Delete(rgName, "VMDoesNotExist");
+                    Assert.True(deleteVMResponse.Status == OperationStatus.Succeeded);
+
+                    var deleteASResponse = m_CrpClient.AvailabilitySets.Delete(rgName, "ASDoesNotExist");
+                    Assert.True(deleteASResponse.StatusCode == HttpStatusCode.NoContent);
 
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM);
 
@@ -81,7 +87,7 @@ namespace Compute.Tests
                     Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
 
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
                 }
                 finally
                 {
