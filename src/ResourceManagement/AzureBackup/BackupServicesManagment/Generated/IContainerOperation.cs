@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> RegisterAsync(RegisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> RegisterAsync(RegisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister the container.
@@ -97,6 +97,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UnregisterAsync(UnregisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UnregisterAsync(UnregisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

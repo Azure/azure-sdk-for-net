@@ -112,9 +112,10 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/containers";
             List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
             if (queryFilterString != null)
             {
-                queryParameters.Add("api-version=2014-09-01" + Uri.EscapeDataString(queryFilterString));
+                queryParameters.Add("dummy=" + Uri.EscapeDataString(queryFilterString));
             }
             if (queryParameters.Count > 0)
             {
@@ -416,7 +417,7 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -430,7 +431,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     // Create Result
                     OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -490,7 +491,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> RegisterAsync(RegisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> RegisterAsync(RegisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -501,9 +502,9 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 throw new ArgumentNullException("parameters.ContainerType");
             }
-            if (parameters.ContainerUniqueName == null)
+            if (parameters.ContainerUniqueNameList == null)
             {
-                throw new ArgumentNullException("parameters.ContainerUniqueName");
+                throw new ArgumentNullException("parameters.ContainerUniqueNameList");
             }
             
             // Tracing
@@ -523,7 +524,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/Subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
             }
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
@@ -573,23 +574,23 @@ namespace Microsoft.Azure.Management.BackupServices
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject registerContainerRequestValue = new JObject();
-                requestDoc = registerContainerRequestValue;
+                JObject registerContainerRequestInputValue = new JObject();
+                requestDoc = registerContainerRequestInputValue;
                 
-                if (parameters.ContainerUniqueName != null)
+                if (parameters.ContainerUniqueNameList != null)
                 {
-                    if (parameters.ContainerUniqueName is ILazyCollection == false || ((ILazyCollection)parameters.ContainerUniqueName).IsInitialized)
+                    if (parameters.ContainerUniqueNameList is ILazyCollection == false || ((ILazyCollection)parameters.ContainerUniqueNameList).IsInitialized)
                     {
-                        JArray containerUniqueNameArray = new JArray();
-                        foreach (string containerUniqueNameItem in parameters.ContainerUniqueName)
+                        JArray containerUniqueNameListArray = new JArray();
+                        foreach (string containerUniqueNameListItem in parameters.ContainerUniqueNameList)
                         {
-                            containerUniqueNameArray.Add(containerUniqueNameItem);
+                            containerUniqueNameListArray.Add(containerUniqueNameListItem);
                         }
-                        registerContainerRequestValue["ContainerUniqueName"] = containerUniqueNameArray;
+                        registerContainerRequestInputValue["ContainerUniqueNameList"] = containerUniqueNameListArray;
                     }
                 }
                 
-                registerContainerRequestValue["ContainerType"] = parameters.ContainerType;
+                registerContainerRequestInputValue["ContainerType"] = parameters.ContainerType;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -610,7 +611,7 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -624,7 +625,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     // Create Result
                     OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -684,7 +685,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> UnregisterAsync(UnregisterContainerRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UnregisterAsync(UnregisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -770,12 +771,12 @@ namespace Microsoft.Azure.Management.BackupServices
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject unregisterContainerRequestValue = new JObject();
-                requestDoc = unregisterContainerRequestValue;
+                JObject unregisterContainerRequestInputValue = new JObject();
+                requestDoc = unregisterContainerRequestInputValue;
                 
-                unregisterContainerRequestValue["ContainerUniqueName"] = parameters.ContainerUniqueName;
+                unregisterContainerRequestInputValue["ContainerUniqueName"] = parameters.ContainerUniqueName;
                 
-                unregisterContainerRequestValue["ContainerType"] = parameters.ContainerType;
+                unregisterContainerRequestInputValue["ContainerType"] = parameters.ContainerType;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
