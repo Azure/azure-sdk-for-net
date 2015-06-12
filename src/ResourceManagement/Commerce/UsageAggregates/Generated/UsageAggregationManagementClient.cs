@@ -29,11 +29,11 @@ using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure;
-using Microsoft.Commerce.UsageAggregates;
-using Microsoft.Commerce.UsageAggregates.Models;
+using Microsoft.Azure.Commerce.UsageAggregates;
+using Microsoft.Azure.Commerce.UsageAggregates.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Commerce.UsageAggregates.Models
+namespace Microsoft.Azure.Commerce.UsageAggregates.Models
 {
     public enum AggregationGranularity
     {
@@ -384,7 +384,7 @@ namespace Microsoft.Commerce.UsageAggregates.Models
     }
 }
 
-namespace Microsoft.Commerce.UsageAggregates
+namespace Microsoft.Azure.Commerce.UsageAggregates
 {
     public static partial class UsageAggregationManagementClientExtensions
     {
@@ -721,7 +721,7 @@ namespace Microsoft.Commerce.UsageAggregates
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Commerce.UsageAggregates.IUsageAggregationOperations.
+        /// Microsoft.Azure.Commerce.UsageAggregates.IUsageAggregationOperations.
         /// </param>
         /// <param name='reportedStartTime'>
         /// Required. The start of the time range to retrieve data for.
@@ -758,7 +758,7 @@ namespace Microsoft.Commerce.UsageAggregates
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Commerce.UsageAggregates.IUsageAggregationOperations.
+        /// Microsoft.Azure.Commerce.UsageAggregates.IUsageAggregationOperations.
         /// </param>
         /// <param name='reportedStartTime'>
         /// Required. The start of the time range to retrieve data for.
@@ -836,7 +836,7 @@ namespace Microsoft.Commerce.UsageAggregates
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Commerce.UsageAggregates.UsageAggregationManagementClient.
+        /// Microsoft.Azure.Commerce.UsageAggregates.UsageAggregationManagementClient.
         /// </summary>
         public UsageAggregationManagementClient Client
         {

@@ -17,9 +17,9 @@ using System;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Azure;
+using Microsoft.Azure.Commerce.UsageAggregates;
+using Microsoft.Azure.Commerce.UsageAggregates.Models;
 using Microsoft.Azure.Test;
-using Microsoft.Commerce.UsageAggregates;
-using Microsoft.Commerce.UsageAggregates.Models;
 using UsageAggregates.Tests;
 using Xunit;
 

@@ -7,11 +7,17 @@
     <ProjectGuid>{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Commerce.UsageAggregates</RootNamespace>
-    <AssemblyName>Microsoft.Commerce.UsageAggregates</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Commerce.UsageAggregates</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Commerce.UsageAggregates</AssemblyName>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
+    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Commerce.UsageAggregates.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Debug'">
+    <DocumentationFile>bin\Net40-Debug\Microsoft.Azure.Commerce.UsageAggregates.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
@@ -19,8 +25,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Commerce.UsageAggregates.nuget.proj" />
-    <None Include="Microsoft.Commerce.UsageAggregates.nuspec" />
+    <None Include="Microsoft.Azure.Commerce.UsageAggregates.nuget.proj" />
+    <None Include="Microsoft.Azure.Commerce.UsageAggregates.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
