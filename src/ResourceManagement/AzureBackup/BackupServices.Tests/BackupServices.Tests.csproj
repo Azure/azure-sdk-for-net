@@ -9,12 +9,22 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Compile Include="Helpers\VaultTestHelper.cs" />
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
     <Compile Include="ScenarioTests\BackUpTests.cs" />
     <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
     <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
+    <Compile Include="ScenarioTests\VaultTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Management.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Microsoft.WindowsAzure.Management.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Security.Cryptography, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Security.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
@@ -29,7 +39,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\ListProtectionPolicyTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json" />
@@ -39,5 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Microsoft.WindowsAzure.Management.Common.dll" />
+    <Content Include="Resources\Security.Cryptography.dll" />
   </ItemGroup>
 </Project>
