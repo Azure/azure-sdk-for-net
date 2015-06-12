@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Management List Response.
+    /// The definition of a UpdateProtectionPolicy Request.
     /// </summary>
     public partial class UpdateProtectionPolicyRequest : ManagementBaseObject
     {

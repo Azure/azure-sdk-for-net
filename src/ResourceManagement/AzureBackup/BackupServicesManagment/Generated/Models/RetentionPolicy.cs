@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Container Info object.
+    /// The definition of a RetentionPolicy object.
     /// </summary>
     public partial class RetentionPolicy
     {
         private int _retentionDuration;
         
         /// <summary>
-        /// Required. Schedule of ProtectionPolicy.
+        /// Required. RetentionDuration of ProtectionPolicy.
         /// </summary>
         public int RetentionDuration
         {
