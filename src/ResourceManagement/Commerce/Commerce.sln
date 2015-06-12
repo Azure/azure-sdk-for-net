@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageAggregates", "UsageAggregates\UsageAggregates.csproj", "{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{9F6A517D-ABF7-4A5A-9380-97DACB0BCFD5}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
