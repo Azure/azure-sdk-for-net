@@ -78,9 +78,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<OperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (addProtectionPolicyRequest == null)
@@ -257,9 +258,9 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    result = new OperationResponse();
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)
@@ -286,7 +287,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Create new Protection Policy.
+        /// Delete a Protection Policy.
         /// </summary>
         /// <param name='protectionPolicyId'>
         /// Required. The protection policy ID to be deleted.
@@ -1027,9 +1028,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionPolicyId == null)
@@ -1207,9 +1209,9 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    result = new OperationResponse();
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)
