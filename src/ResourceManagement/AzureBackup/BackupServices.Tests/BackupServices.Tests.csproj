@@ -49,7 +49,10 @@
     <None Include="SessionRecords\BackupServices.Tests.EnableAzureBackupProtectionTest\EnableAzureBackupProtection.json" />
     <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemPOTest\ListAzureBackupItemPOTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemsDSTest\ListAzureBackupItemDSTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\AddProtectionPolicyTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\DeleteProtectionPolicyTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\ListProtectionPolicyTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\UpdateProtectionPolicyTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json" />
   </ItemGroup>

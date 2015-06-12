@@ -56,7 +56,7 @@ namespace BackupServices.Tests
 
                 var response = client.ProtectionPolicy.Add(addProtectionPolicyRequest, GetCustomRequestHeaders());
 
-                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
 
@@ -75,7 +75,7 @@ namespace BackupServices.Tests
                 string policyId = ConfigurationManager.AppSettings["PolicyId"];
                 updateProtectionPolicyRequest.Schedule = backupSchedule; var response = client.ProtectionPolicy.Update(policyId, updateProtectionPolicyRequest, GetCustomRequestHeaders());
 
-                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
 
