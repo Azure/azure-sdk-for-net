@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Sql;
@@ -322,6 +323,110 @@ namespace Sql2.Tests.ScenarioTests
 
                     TestUtilities.ValidateOperationResponse(deleteDb2, HttpStatusCode.OK);
                     //////////////////////////////////////////////////////////////////////
+                }
+                finally
+                {
+                    // Clean up the resource group.
+                    resClient.ResourceGroups.Delete(resGroupName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Test for Azure SQL DW pause and resume operations.
+        /// </summary>
+        [Fact]
+        public void DatabaseActivationTest()
+        {
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                // Variables for server creation.
+                string serverName = TestUtilities.GenerateName("csm-sql-activation");
+                string resGroupName = TestUtilities.GenerateName("csm-rg-activation");
+                
+                string serverLocation = "Southeast Asia";
+                string adminLogin = "testlogin";
+                string adminPass = "NotYukon!9";
+                string version = "12.0";
+                 
+
+                // Constants for database creation.
+                var defaultDatabaseSize = 250L * 1024L * 1024L * 1024L; // 250 GB
+                Guid dwSlo = new Guid("4E63CB0E-91B9-46FD-B05C-51FDD2367618 "); // DW100
+                var defaultCollation = "SQL_Latin1_General_CP1_CI_AS";
+                var databaseName = TestUtilities.GenerateName("csm-sql-activation-db");
+                string databaseEdition = "DataWarehouse";
+                 
+                // Create the resource group.
+                resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
+                {
+                    Location = serverLocation,
+                });
+
+                try
+                {
+                    //////////////////////////////////////////////////////////////////////
+                    // Create server for test.
+                    var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new ServerCreateOrUpdateProperties()
+                        {
+                            AdministratorLogin = adminLogin,
+                            AdministratorLoginPassword = adminPass,
+                            Version = version,
+                        }
+                    });
+
+                    // Verify the the response from the service contains the right information
+                    TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
+                    VerifyServerInformation(serverName, serverLocation, adminLogin, adminPass, version, createResponse.Server);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Create database test.
+
+                    // Create only required
+                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new DatabaseCreateOrUpdateProperties()
+                        {
+                            MaxSizeBytes = defaultDatabaseSize,
+                            Edition = databaseEdition,
+                            RequestedServiceObjectiveId = dwSlo,
+                        },
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
+                    VerifyDatabaseInformation(serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo, createDbResponse.Database);
+                    //////////////////////////////////////////////////////////////////////
+
+                    //////////////////////////////////////////////////////////////////////
+                    // Pause database.
+
+                    // Pause
+                    var pauseResponse = sqlClient.DatabaseActivation.Pause(resGroupName, serverName, databaseName);
+
+                    TestUtilities.ValidateOperationResponse(pauseResponse, HttpStatusCode.OK);
+                    VerifyDatabaseInformation(serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo, pauseResponse.Database);
+                    ///////////////////////////////////////////////////////////////////////
+
+                    ///////////////////////////////////////////////////////////////////////
+                    // Resume
+                    var resumeResponse = sqlClient.DatabaseActivation.Resume(resGroupName, serverName, databaseName);
+
+                    TestUtilities.ValidateOperationResponse(resumeResponse, HttpStatusCode.OK);
+                    VerifyDatabaseInformation(serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo, resumeResponse.Database);
+                    ///////////////////////////////////////////////////////////////////////
                 }
                 finally
                 {

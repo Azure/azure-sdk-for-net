@@ -60,6 +60,7 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedElasticPoolScenarioTests\ListPoolsExpanded.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseActivationTest.json" />
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
