@@ -10,6 +10,7 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
+    <Compile Include="ScenarioTests\JobsTests.cs" />
     <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
   </ItemGroup>
   <ItemGroup>
