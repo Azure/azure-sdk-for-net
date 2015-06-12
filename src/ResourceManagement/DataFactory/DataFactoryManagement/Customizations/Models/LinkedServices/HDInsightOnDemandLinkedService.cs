@@ -109,14 +109,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string Version { get; set; }
 
         /// <summary>
-        /// The name of Azure SQL linked service.
+        /// The name of Azure SQL linked service that point to the HCatalog database.
         /// </summary>
         public string HcatalogLinkedServiceName { get; set; }
 
         /// <summary>
-        /// Schema generation properties
+        /// Define what options to use for generating/altering table for input and outputs of a HDInsight activity.
         /// </summary>
         public HDInsightSchemaGenerationProperties SchemaGeneration { get; set; }
+
         /// <summary>
         /// Gets or sets the size of the Data Node.
         /// </summary>

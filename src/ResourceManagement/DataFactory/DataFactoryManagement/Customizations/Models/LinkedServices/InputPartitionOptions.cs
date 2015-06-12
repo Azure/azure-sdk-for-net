@@ -13,26 +13,17 @@
 // limitations under the License.
 //
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.DataFactories.Customizations.Models
 {
     /// <summary>
-    /// Schema generation options for activities that execute against HDInsight clusters
+    /// All available input partition options.
     /// </summary>
-    public class HDInsightSchemaGenerationProperties
+    public static class InputPartitionOptions
     {
-        /// <summary>
-        /// The <see cref="SchemaGenerationTypes "/> used.
-        /// </summary>
-        public string Type { get; set; }
+        public const string None = "None";
 
-        /// <summary>
-        /// The <see cref="InputPartitionOptions "/> used.
-        /// </summary>
-        public string InputPartition { get; set; }
+        public const string Recover = "Recover";
 
-        /// <summary>
-        /// Flag to indicate if alter schema should be performed.
-        /// </summary>
-        public bool AlterSchema { get; set; }
+        public const string CurrentSlice = "CurrentSlice";
     }
 }
