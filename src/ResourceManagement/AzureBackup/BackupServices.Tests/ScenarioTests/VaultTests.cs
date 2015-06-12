@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BackupServices.Tests.ScenarioTests
+namespace BackupServices.Tests
 {
     public class VaultTests : BackupServicesTestsBase
     {
