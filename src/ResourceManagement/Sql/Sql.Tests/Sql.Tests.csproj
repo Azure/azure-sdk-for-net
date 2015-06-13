@@ -84,6 +84,9 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithCancel.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithElasticPool.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithRecommendedDatabase.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
