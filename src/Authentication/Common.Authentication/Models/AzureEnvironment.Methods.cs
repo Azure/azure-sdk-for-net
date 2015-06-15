@@ -350,6 +350,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKonaCatalogAndJobEndpointSuffix = "microsoftkonacompute.net";
 
-        public const string AzureDataLakeFileSystemEndpointSuffix = "projectcabostore.net";
+        public const string AzureDataLakeFileSystemEndpointSuffix = "azuredatalake.net";
     }
 }
