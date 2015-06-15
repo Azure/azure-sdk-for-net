@@ -176,16 +176,22 @@ namespace Microsoft.Azure.Management.Network
                 JObject propertiesValue = new JObject();
                 applicationGatewayJsonFormatValue["properties"] = propertiesValue;
                 
-                propertiesValue["instanceCount"] = parameters.InstanceCount;
-                
-                if (parameters.Size != null)
+                if (parameters.Sku != null)
                 {
-                    propertiesValue["size"] = parameters.Size;
-                }
-                
-                if (parameters.Fqdn != null)
-                {
-                    propertiesValue["fqdn"] = parameters.Fqdn;
+                    JObject skuValue = new JObject();
+                    propertiesValue["sku"] = skuValue;
+                    
+                    if (parameters.Sku.Name != null)
+                    {
+                        skuValue["name"] = parameters.Sku.Name;
+                    }
+                    
+                    if (parameters.Sku.Tier != null)
+                    {
+                        skuValue["tier"] = parameters.Sku.Tier;
+                    }
+                    
+                    skuValue["capacity"] = parameters.Sku.Capacity;
                 }
                 
                 if (parameters.OperationalState != null)
@@ -771,25 +777,32 @@ namespace Microsoft.Azure.Management.Network
                             JToken propertiesValue10 = responseDoc["properties"];
                             if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
                             {
-                                JToken instanceCountValue = propertiesValue10["instanceCount"];
-                                if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                JToken skuValue2 = propertiesValue10["sku"];
+                                if (skuValue2 != null && skuValue2.Type != JTokenType.Null)
                                 {
-                                    int instanceCountInstance = ((int)instanceCountValue);
-                                    applicationGatewayInstance.InstanceCount = instanceCountInstance;
-                                }
-                                
-                                JToken sizeValue = propertiesValue10["size"];
-                                if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                {
-                                    string sizeInstance = ((string)sizeValue);
-                                    applicationGatewayInstance.Size = sizeInstance;
-                                }
-                                
-                                JToken fqdnValue = propertiesValue10["fqdn"];
-                                if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
-                                {
-                                    string fqdnInstance = ((string)fqdnValue);
-                                    applicationGatewayInstance.Fqdn = fqdnInstance;
+                                    ApplicationGatewaySku skuInstance = new ApplicationGatewaySku();
+                                    applicationGatewayInstance.Sku = skuInstance;
+                                    
+                                    JToken nameValue = skuValue2["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        skuInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken tierValue = skuValue2["tier"];
+                                    if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                    {
+                                        string tierInstance = ((string)tierValue);
+                                        skuInstance.Tier = tierInstance;
+                                    }
+                                    
+                                    JToken capacityValue = skuValue2["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
                                 }
                                 
                                 JToken operationalStateValue = propertiesValue10["operationalState"];
@@ -832,11 +845,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue = gatewayIpConfigurationsValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                            string nameInstance2 = ((string)nameValue2);
+                                            applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
                                         }
                                         
                                         JToken etagValue = gatewayIpConfigurationsValue["etag"];
@@ -895,11 +908,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue2 = sslCertificatesValue["name"];
-                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        JToken nameValue3 = sslCertificatesValue["name"];
+                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                         {
-                                            string nameInstance2 = ((string)nameValue2);
-                                            applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance2;
+                                            string nameInstance3 = ((string)nameValue3);
+                                            applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance3;
                                         }
                                         
                                         JToken etagValue2 = sslCertificatesValue["etag"];
@@ -979,11 +992,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue3 = frontendIpConfigurationsValue["name"];
-                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                        JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                         {
-                                            string nameInstance3 = ((string)nameValue3);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
+                                            string nameInstance4 = ((string)nameValue4);
+                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
                                         }
                                         
                                         JToken etagValue3 = frontendIpConfigurationsValue["etag"];
@@ -1028,11 +1041,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue4 = frontendPortsValue["name"];
-                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                        JToken nameValue5 = frontendPortsValue["name"];
+                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
                                         {
-                                            string nameInstance4 = ((string)nameValue4);
-                                            applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance4;
+                                            string nameInstance5 = ((string)nameValue5);
+                                            applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance5;
                                         }
                                         
                                         JToken etagValue4 = frontendPortsValue["etag"];
@@ -1087,11 +1100,11 @@ namespace Microsoft.Azure.Management.Network
                                                     ApplicationGatewayBackendAddress applicationGatewayBackendAddressInstance = new ApplicationGatewayBackendAddress();
                                                     applicationGatewayBackendAddressPoolJsonFormatInstance.BackendAddresses.Add(applicationGatewayBackendAddressInstance);
                                                     
-                                                    JToken fqdnValue2 = backendAddressesValue["fqdn"];
-                                                    if (fqdnValue2 != null && fqdnValue2.Type != JTokenType.Null)
+                                                    JToken fqdnValue = backendAddressesValue["fqdn"];
+                                                    if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
                                                     {
-                                                        string fqdnInstance2 = ((string)fqdnValue2);
-                                                        applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance2;
+                                                        string fqdnInstance = ((string)fqdnValue);
+                                                        applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance;
                                                     }
                                                     
                                                     JToken ipAddressValue = backendAddressesValue["ipAddress"];
@@ -1111,11 +1124,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue5 = backendAddressPoolsValue["name"];
-                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                        JToken nameValue6 = backendAddressPoolsValue["name"];
+                                        if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
                                         {
-                                            string nameInstance5 = ((string)nameValue5);
-                                            applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance5;
+                                            string nameInstance6 = ((string)nameValue6);
+                                            applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance6;
                                         }
                                         
                                         JToken etagValue5 = backendAddressPoolsValue["etag"];
@@ -1174,11 +1187,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
-                                        if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                        JToken nameValue7 = backendHttpSettingsCollectionValue["name"];
+                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
                                         {
-                                            string nameInstance6 = ((string)nameValue6);
-                                            applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
+                                            string nameInstance7 = ((string)nameValue7);
+                                            applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance7;
                                         }
                                         
                                         JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
@@ -1265,11 +1278,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue7 = httpListenersValue["name"];
-                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                        JToken nameValue8 = httpListenersValue["name"];
+                                        if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                                         {
-                                            string nameInstance7 = ((string)nameValue7);
-                                            applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance7;
+                                            string nameInstance8 = ((string)nameValue8);
+                                            applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance8;
                                         }
                                         
                                         JToken etagValue7 = httpListenersValue["etag"];
@@ -1356,11 +1369,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue8 = requestRoutingRulesValue["name"];
-                                        if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                        JToken nameValue9 = requestRoutingRulesValue["name"];
+                                        if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
                                         {
-                                            string nameInstance8 = ((string)nameValue8);
-                                            applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance8;
+                                            string nameInstance9 = ((string)nameValue9);
+                                            applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance9;
                                         }
                                         
                                         JToken etagValue8 = requestRoutingRulesValue["etag"];
@@ -1401,11 +1414,11 @@ namespace Microsoft.Azure.Management.Network
                                 applicationGatewayInstance.Id = idInstance19;
                             }
                             
-                            JToken nameValue9 = responseDoc["name"];
-                            if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                            JToken nameValue10 = responseDoc["name"];
+                            if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
                             {
-                                string nameInstance9 = ((string)nameValue9);
-                                applicationGatewayInstance.Name = nameInstance9;
+                                string nameInstance10 = ((string)nameValue10);
+                                applicationGatewayInstance.Name = nameInstance10;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -2279,25 +2292,32 @@ namespace Microsoft.Azure.Management.Network
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                JToken instanceCountValue = propertiesValue["instanceCount"];
-                                if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                JToken skuValue = propertiesValue["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
                                 {
-                                    int instanceCountInstance = ((int)instanceCountValue);
-                                    applicationGatewayInstance.InstanceCount = instanceCountInstance;
-                                }
-                                
-                                JToken sizeValue = propertiesValue["size"];
-                                if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                {
-                                    string sizeInstance = ((string)sizeValue);
-                                    applicationGatewayInstance.Size = sizeInstance;
-                                }
-                                
-                                JToken fqdnValue = propertiesValue["fqdn"];
-                                if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
-                                {
-                                    string fqdnInstance = ((string)fqdnValue);
-                                    applicationGatewayInstance.Fqdn = fqdnInstance;
+                                    ApplicationGatewaySku skuInstance = new ApplicationGatewaySku();
+                                    applicationGatewayInstance.Sku = skuInstance;
+                                    
+                                    JToken nameValue = skuValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        skuInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken tierValue = skuValue["tier"];
+                                    if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                    {
+                                        string tierInstance = ((string)tierValue);
+                                        skuInstance.Tier = tierInstance;
+                                    }
+                                    
+                                    JToken capacityValue = skuValue["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
                                 }
                                 
                                 JToken operationalStateValue = propertiesValue["operationalState"];
@@ -2340,11 +2360,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue = gatewayIpConfigurationsValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                            string nameInstance2 = ((string)nameValue2);
+                                            applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
                                         }
                                         
                                         JToken etagValue = gatewayIpConfigurationsValue["etag"];
@@ -2403,11 +2423,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue2 = sslCertificatesValue["name"];
-                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        JToken nameValue3 = sslCertificatesValue["name"];
+                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                         {
-                                            string nameInstance2 = ((string)nameValue2);
-                                            applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance2;
+                                            string nameInstance3 = ((string)nameValue3);
+                                            applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance3;
                                         }
                                         
                                         JToken etagValue2 = sslCertificatesValue["etag"];
@@ -2487,11 +2507,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue3 = frontendIpConfigurationsValue["name"];
-                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                        JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                         {
-                                            string nameInstance3 = ((string)nameValue3);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
+                                            string nameInstance4 = ((string)nameValue4);
+                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
                                         }
                                         
                                         JToken etagValue3 = frontendIpConfigurationsValue["etag"];
@@ -2536,11 +2556,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue4 = frontendPortsValue["name"];
-                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                        JToken nameValue5 = frontendPortsValue["name"];
+                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
                                         {
-                                            string nameInstance4 = ((string)nameValue4);
-                                            applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance4;
+                                            string nameInstance5 = ((string)nameValue5);
+                                            applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance5;
                                         }
                                         
                                         JToken etagValue4 = frontendPortsValue["etag"];
@@ -2595,11 +2615,11 @@ namespace Microsoft.Azure.Management.Network
                                                     ApplicationGatewayBackendAddress applicationGatewayBackendAddressInstance = new ApplicationGatewayBackendAddress();
                                                     applicationGatewayBackendAddressPoolJsonFormatInstance.BackendAddresses.Add(applicationGatewayBackendAddressInstance);
                                                     
-                                                    JToken fqdnValue2 = backendAddressesValue["fqdn"];
-                                                    if (fqdnValue2 != null && fqdnValue2.Type != JTokenType.Null)
+                                                    JToken fqdnValue = backendAddressesValue["fqdn"];
+                                                    if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
                                                     {
-                                                        string fqdnInstance2 = ((string)fqdnValue2);
-                                                        applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance2;
+                                                        string fqdnInstance = ((string)fqdnValue);
+                                                        applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance;
                                                     }
                                                     
                                                     JToken ipAddressValue = backendAddressesValue["ipAddress"];
@@ -2619,11 +2639,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue5 = backendAddressPoolsValue["name"];
-                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                        JToken nameValue6 = backendAddressPoolsValue["name"];
+                                        if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
                                         {
-                                            string nameInstance5 = ((string)nameValue5);
-                                            applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance5;
+                                            string nameInstance6 = ((string)nameValue6);
+                                            applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance6;
                                         }
                                         
                                         JToken etagValue5 = backendAddressPoolsValue["etag"];
@@ -2682,11 +2702,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
-                                        if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                        JToken nameValue7 = backendHttpSettingsCollectionValue["name"];
+                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
                                         {
-                                            string nameInstance6 = ((string)nameValue6);
-                                            applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
+                                            string nameInstance7 = ((string)nameValue7);
+                                            applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance7;
                                         }
                                         
                                         JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
@@ -2773,11 +2793,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue7 = httpListenersValue["name"];
-                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                        JToken nameValue8 = httpListenersValue["name"];
+                                        if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                                         {
-                                            string nameInstance7 = ((string)nameValue7);
-                                            applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance7;
+                                            string nameInstance8 = ((string)nameValue8);
+                                            applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance8;
                                         }
                                         
                                         JToken etagValue7 = httpListenersValue["etag"];
@@ -2864,11 +2884,11 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken nameValue8 = requestRoutingRulesValue["name"];
-                                        if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                        JToken nameValue9 = requestRoutingRulesValue["name"];
+                                        if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
                                         {
-                                            string nameInstance8 = ((string)nameValue8);
-                                            applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance8;
+                                            string nameInstance9 = ((string)nameValue9);
+                                            applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance9;
                                         }
                                         
                                         JToken etagValue8 = requestRoutingRulesValue["etag"];
@@ -2909,11 +2929,11 @@ namespace Microsoft.Azure.Management.Network
                                 applicationGatewayInstance.Id = idInstance19;
                             }
                             
-                            JToken nameValue9 = responseDoc["name"];
-                            if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                            JToken nameValue10 = responseDoc["name"];
+                            if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
                             {
-                                string nameInstance9 = ((string)nameValue9);
-                                applicationGatewayInstance.Name = nameInstance9;
+                                string nameInstance10 = ((string)nameValue10);
+                                applicationGatewayInstance.Name = nameInstance10;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -3102,25 +3122,32 @@ namespace Microsoft.Azure.Management.Network
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        JToken instanceCountValue = propertiesValue["instanceCount"];
-                                        if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                        JToken skuValue = propertiesValue["sku"];
+                                        if (skuValue != null && skuValue.Type != JTokenType.Null)
                                         {
-                                            int instanceCountInstance = ((int)instanceCountValue);
-                                            applicationGatewayJsonFormatInstance.InstanceCount = instanceCountInstance;
-                                        }
-                                        
-                                        JToken sizeValue = propertiesValue["size"];
-                                        if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                        {
-                                            string sizeInstance = ((string)sizeValue);
-                                            applicationGatewayJsonFormatInstance.Size = sizeInstance;
-                                        }
-                                        
-                                        JToken fqdnValue = propertiesValue["fqdn"];
-                                        if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
-                                        {
-                                            string fqdnInstance = ((string)fqdnValue);
-                                            applicationGatewayJsonFormatInstance.Fqdn = fqdnInstance;
+                                            ApplicationGatewaySku skuInstance = new ApplicationGatewaySku();
+                                            applicationGatewayJsonFormatInstance.Sku = skuInstance;
+                                            
+                                            JToken nameValue = skuValue["name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                skuInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken tierValue = skuValue["tier"];
+                                            if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                            {
+                                                string tierInstance = ((string)tierValue);
+                                                skuInstance.Tier = tierInstance;
+                                            }
+                                            
+                                            JToken capacityValue = skuValue["capacity"];
+                                            if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                            {
+                                                int capacityInstance = ((int)capacityValue);
+                                                skuInstance.Capacity = capacityInstance;
+                                            }
                                         }
                                         
                                         JToken operationalStateValue = propertiesValue["operationalState"];
@@ -3163,11 +3190,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue = gatewayIpConfigurationsValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
                                                 }
                                                 
                                                 JToken etagValue = gatewayIpConfigurationsValue["etag"];
@@ -3226,11 +3253,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue2 = sslCertificatesValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue3 = sslCertificatesValue["name"];
+                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance2;
+                                                    string nameInstance3 = ((string)nameValue3);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance3;
                                                 }
                                                 
                                                 JToken etagValue2 = sslCertificatesValue["etag"];
@@ -3310,11 +3337,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue3 = frontendIpConfigurationsValue["name"];
-                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance3 = ((string)nameValue3);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
                                                 }
                                                 
                                                 JToken etagValue3 = frontendIpConfigurationsValue["etag"];
@@ -3359,11 +3386,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue4 = frontendPortsValue["name"];
-                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                JToken nameValue5 = frontendPortsValue["name"];
+                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance4 = ((string)nameValue4);
-                                                    applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance4;
+                                                    string nameInstance5 = ((string)nameValue5);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance5;
                                                 }
                                                 
                                                 JToken etagValue4 = frontendPortsValue["etag"];
@@ -3418,11 +3445,11 @@ namespace Microsoft.Azure.Management.Network
                                                             ApplicationGatewayBackendAddress applicationGatewayBackendAddressInstance = new ApplicationGatewayBackendAddress();
                                                             applicationGatewayBackendAddressPoolJsonFormatInstance.BackendAddresses.Add(applicationGatewayBackendAddressInstance);
                                                             
-                                                            JToken fqdnValue2 = backendAddressesValue["fqdn"];
-                                                            if (fqdnValue2 != null && fqdnValue2.Type != JTokenType.Null)
+                                                            JToken fqdnValue = backendAddressesValue["fqdn"];
+                                                            if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
                                                             {
-                                                                string fqdnInstance2 = ((string)fqdnValue2);
-                                                                applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance2;
+                                                                string fqdnInstance = ((string)fqdnValue);
+                                                                applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance;
                                                             }
                                                             
                                                             JToken ipAddressValue = backendAddressesValue["ipAddress"];
@@ -3442,11 +3469,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue5 = backendAddressPoolsValue["name"];
-                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                JToken nameValue6 = backendAddressPoolsValue["name"];
+                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance5 = ((string)nameValue5);
-                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance5;
+                                                    string nameInstance6 = ((string)nameValue6);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance6;
                                                 }
                                                 
                                                 JToken etagValue5 = backendAddressPoolsValue["etag"];
@@ -3505,11 +3532,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
-                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                JToken nameValue7 = backendHttpSettingsCollectionValue["name"];
+                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance6 = ((string)nameValue6);
-                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
+                                                    string nameInstance7 = ((string)nameValue7);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance7;
                                                 }
                                                 
                                                 JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
@@ -3596,11 +3623,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue7 = httpListenersValue["name"];
-                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                JToken nameValue8 = httpListenersValue["name"];
+                                                if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance7 = ((string)nameValue7);
-                                                    applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance7;
+                                                    string nameInstance8 = ((string)nameValue8);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance8;
                                                 }
                                                 
                                                 JToken etagValue7 = httpListenersValue["etag"];
@@ -3687,11 +3714,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue8 = requestRoutingRulesValue["name"];
-                                                if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                JToken nameValue9 = requestRoutingRulesValue["name"];
+                                                if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance8 = ((string)nameValue8);
-                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance8;
+                                                    string nameInstance9 = ((string)nameValue9);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance9;
                                                 }
                                                 
                                                 JToken etagValue8 = requestRoutingRulesValue["etag"];
@@ -3732,11 +3759,11 @@ namespace Microsoft.Azure.Management.Network
                                         applicationGatewayJsonFormatInstance.Id = idInstance19;
                                     }
                                     
-                                    JToken nameValue9 = valueValue["name"];
-                                    if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                    JToken nameValue10 = valueValue["name"];
+                                    if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
                                     {
-                                        string nameInstance9 = ((string)nameValue9);
-                                        applicationGatewayJsonFormatInstance.Name = nameInstance9;
+                                        string nameInstance10 = ((string)nameValue10);
+                                        applicationGatewayJsonFormatInstance.Name = nameInstance10;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -3924,25 +3951,32 @@ namespace Microsoft.Azure.Management.Network
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        JToken instanceCountValue = propertiesValue["instanceCount"];
-                                        if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                        JToken skuValue = propertiesValue["sku"];
+                                        if (skuValue != null && skuValue.Type != JTokenType.Null)
                                         {
-                                            int instanceCountInstance = ((int)instanceCountValue);
-                                            applicationGatewayJsonFormatInstance.InstanceCount = instanceCountInstance;
-                                        }
-                                        
-                                        JToken sizeValue = propertiesValue["size"];
-                                        if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                        {
-                                            string sizeInstance = ((string)sizeValue);
-                                            applicationGatewayJsonFormatInstance.Size = sizeInstance;
-                                        }
-                                        
-                                        JToken fqdnValue = propertiesValue["fqdn"];
-                                        if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
-                                        {
-                                            string fqdnInstance = ((string)fqdnValue);
-                                            applicationGatewayJsonFormatInstance.Fqdn = fqdnInstance;
+                                            ApplicationGatewaySku skuInstance = new ApplicationGatewaySku();
+                                            applicationGatewayJsonFormatInstance.Sku = skuInstance;
+                                            
+                                            JToken nameValue = skuValue["name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                skuInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken tierValue = skuValue["tier"];
+                                            if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                            {
+                                                string tierInstance = ((string)tierValue);
+                                                skuInstance.Tier = tierInstance;
+                                            }
+                                            
+                                            JToken capacityValue = skuValue["capacity"];
+                                            if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                            {
+                                                int capacityInstance = ((int)capacityValue);
+                                                skuInstance.Capacity = capacityInstance;
+                                            }
                                         }
                                         
                                         JToken operationalStateValue = propertiesValue["operationalState"];
@@ -3985,11 +4019,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue = gatewayIpConfigurationsValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance;
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
                                                 }
                                                 
                                                 JToken etagValue = gatewayIpConfigurationsValue["etag"];
@@ -4048,11 +4082,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue2 = sslCertificatesValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue3 = sslCertificatesValue["name"];
+                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance2;
+                                                    string nameInstance3 = ((string)nameValue3);
+                                                    applicationGatewaySslCertificateJsonFormatInstance.Name = nameInstance3;
                                                 }
                                                 
                                                 JToken etagValue2 = sslCertificatesValue["etag"];
@@ -4132,11 +4166,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue3 = frontendIpConfigurationsValue["name"];
-                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance3 = ((string)nameValue3);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance3;
+                                                    string nameInstance4 = ((string)nameValue4);
+                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
                                                 }
                                                 
                                                 JToken etagValue3 = frontendIpConfigurationsValue["etag"];
@@ -4181,11 +4215,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue4 = frontendPortsValue["name"];
-                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                JToken nameValue5 = frontendPortsValue["name"];
+                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance4 = ((string)nameValue4);
-                                                    applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance4;
+                                                    string nameInstance5 = ((string)nameValue5);
+                                                    applicationGatewayFrontendPortJsonFormatInstance.Name = nameInstance5;
                                                 }
                                                 
                                                 JToken etagValue4 = frontendPortsValue["etag"];
@@ -4240,11 +4274,11 @@ namespace Microsoft.Azure.Management.Network
                                                             ApplicationGatewayBackendAddress applicationGatewayBackendAddressInstance = new ApplicationGatewayBackendAddress();
                                                             applicationGatewayBackendAddressPoolJsonFormatInstance.BackendAddresses.Add(applicationGatewayBackendAddressInstance);
                                                             
-                                                            JToken fqdnValue2 = backendAddressesValue["fqdn"];
-                                                            if (fqdnValue2 != null && fqdnValue2.Type != JTokenType.Null)
+                                                            JToken fqdnValue = backendAddressesValue["fqdn"];
+                                                            if (fqdnValue != null && fqdnValue.Type != JTokenType.Null)
                                                             {
-                                                                string fqdnInstance2 = ((string)fqdnValue2);
-                                                                applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance2;
+                                                                string fqdnInstance = ((string)fqdnValue);
+                                                                applicationGatewayBackendAddressInstance.Fqdn = fqdnInstance;
                                                             }
                                                             
                                                             JToken ipAddressValue = backendAddressesValue["ipAddress"];
@@ -4264,11 +4298,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue5 = backendAddressPoolsValue["name"];
-                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                JToken nameValue6 = backendAddressPoolsValue["name"];
+                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance5 = ((string)nameValue5);
-                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance5;
+                                                    string nameInstance6 = ((string)nameValue6);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.Name = nameInstance6;
                                                 }
                                                 
                                                 JToken etagValue5 = backendAddressPoolsValue["etag"];
@@ -4327,11 +4361,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue6 = backendHttpSettingsCollectionValue["name"];
-                                                if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                JToken nameValue7 = backendHttpSettingsCollectionValue["name"];
+                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance6 = ((string)nameValue6);
-                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance6;
+                                                    string nameInstance7 = ((string)nameValue7);
+                                                    applicationGatewayBackendHttpSettingsJsonFormatInstance.Name = nameInstance7;
                                                 }
                                                 
                                                 JToken etagValue6 = backendHttpSettingsCollectionValue["etag"];
@@ -4418,11 +4452,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue7 = httpListenersValue["name"];
-                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                JToken nameValue8 = httpListenersValue["name"];
+                                                if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance7 = ((string)nameValue7);
-                                                    applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance7;
+                                                    string nameInstance8 = ((string)nameValue8);
+                                                    applicationGatewayHttpListenerJsonFormatInstance.Name = nameInstance8;
                                                 }
                                                 
                                                 JToken etagValue7 = httpListenersValue["etag"];
@@ -4509,11 +4543,11 @@ namespace Microsoft.Azure.Management.Network
                                                     }
                                                 }
                                                 
-                                                JToken nameValue8 = requestRoutingRulesValue["name"];
-                                                if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                JToken nameValue9 = requestRoutingRulesValue["name"];
+                                                if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance8 = ((string)nameValue8);
-                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance8;
+                                                    string nameInstance9 = ((string)nameValue9);
+                                                    applicationGatewayRequestRoutingRuleJsonFormatInstance.Name = nameInstance9;
                                                 }
                                                 
                                                 JToken etagValue8 = requestRoutingRulesValue["etag"];
@@ -4554,11 +4588,11 @@ namespace Microsoft.Azure.Management.Network
                                         applicationGatewayJsonFormatInstance.Id = idInstance19;
                                     }
                                     
-                                    JToken nameValue9 = valueValue["name"];
-                                    if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                    JToken nameValue10 = valueValue["name"];
+                                    if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
                                     {
-                                        string nameInstance9 = ((string)nameValue9);
-                                        applicationGatewayJsonFormatInstance.Name = nameInstance9;
+                                        string nameInstance10 = ((string)nameValue10);
+                                        applicationGatewayJsonFormatInstance.Name = nameInstance10;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

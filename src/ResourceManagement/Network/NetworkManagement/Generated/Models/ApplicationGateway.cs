@@ -56,17 +56,6 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._backendHttpSettingsCollection = value; }
         }
         
-        private string _fqdn;
-        
-        /// <summary>
-        /// Optional. Gets fqdn of application gateway resource
-        /// </summary>
-        public string Fqdn
-        {
-            get { return this._fqdn; }
-            set { this._fqdn = value; }
-        }
-        
         private IList<ApplicationGatewayFrontendIpConfiguration> _frontendIpConfigurations;
         
         /// <summary>
@@ -114,18 +103,6 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._httpListeners = value; }
         }
         
-        private int _instanceCount;
-        
-        /// <summary>
-        /// Optional. Gets or sets instance count of application gateway
-        /// resource
-        /// </summary>
-        public int InstanceCount
-        {
-            get { return this._instanceCount; }
-            set { this._instanceCount = value; }
-        }
-        
         private string _operationalState;
         
         /// <summary>
@@ -161,15 +138,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._requestRoutingRules = value; }
         }
         
-        private string _size;
+        private ApplicationGatewaySku _sku;
         
         /// <summary>
-        /// Optional. Gets or sets size of application gateway resource
+        /// Optional. Gets or sets sku of application gateway resource
         /// </summary>
-        public string Size
+        public ApplicationGatewaySku Sku
         {
-            get { return this._size; }
-            set { this._size = value; }
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         private IList<ApplicationGatewaySslCertificate> _sslCertificates;

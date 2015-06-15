@@ -24,21 +24,50 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class ApplicationGatewaySize
+    /// <summary>
+    /// SKU of application gateway
+    /// </summary>
+    public partial class ApplicationGatewaySku
     {
-        /// <summary>
-        /// Application gateway small size type
-        /// </summary>
-        public const string Small = "Small";
+        private int _capacity;
         
         /// <summary>
-        /// Application gateway medium size type
+        /// Optional. Gets or sets capacity (instance count) of application
+        /// gateway
         /// </summary>
-        public const string Medium = "Medium";
+        public int Capacity
+        {
+            get { return this._capacity; }
+            set { this._capacity = value; }
+        }
+        
+        private string _name;
         
         /// <summary>
-        /// Application gateway large size type
+        /// Optional. Gets or sets name of application gateway SKU
         /// </summary>
-        public const string Large = "Large";
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _tier;
+        
+        /// <summary>
+        /// Optional. Gets or sets tier of application gateway
+        /// </summary>
+        public string Tier
+        {
+            get { return this._tier; }
+            set { this._tier = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ApplicationGatewaySku class.
+        /// </summary>
+        public ApplicationGatewaySku()
+        {
+        }
     }
 }
