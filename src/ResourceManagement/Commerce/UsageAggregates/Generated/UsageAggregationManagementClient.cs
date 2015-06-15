@@ -719,8 +719,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
         /// <summary>
         /// Query aggregated Azure subscription consumption data for a date
         /// range.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/1ea5b323-54bb-423d-916f-190de96c6a3c
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -759,8 +759,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
         /// <summary>
         /// Query aggregated Azure subscription consumption data for a date
         /// range.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/1ea5b323-54bb-423d-916f-190de96c6a3c
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -798,8 +798,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
         /// <summary>
         /// Query aggregated Azure subscription consumption data for a date
         /// range.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/1ea5b323-54bb-423d-916f-190de96c6a3c
+        /// for more information)
         /// </summary>
         /// <param name='reportedStartTime'>
         /// The start of the time range to retrieve data for.
@@ -855,8 +855,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
         /// <summary>
         /// Query aggregated Azure subscription consumption data for a date
         /// range.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
-        /// more information)
+        /// https://msdn.microsoft.com/library/azure/1ea5b323-54bb-423d-916f-190de96c6a3c
+        /// for more information)
         /// </summary>
         /// <param name='reportedStartTime'>
         /// Required. The start of the time range to retrieve data for.
