@@ -717,7 +717,10 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
     public static partial class UsageAggregationOperationsExtensions
     {
         /// <summary>
-        /// Query aggregate Azure subscription consumption data.
+        /// Query aggregated Azure subscription consumption data for a date
+        /// range.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
+        /// more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -754,7 +757,10 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
         }
         
         /// <summary>
-        /// Query aggregate Azure subscription consumption data.
+        /// Query aggregated Azure subscription consumption data for a date
+        /// range.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
+        /// more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -790,7 +796,10 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
     public partial interface IUsageAggregationOperations
     {
         /// <summary>
-        /// Query aggregate Azure subscription consumption data.
+        /// Query aggregated Azure subscription consumption data for a date
+        /// range.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
+        /// more information)
         /// </summary>
         /// <param name='reportedStartTime'>
         /// The start of the time range to retrieve data for.
@@ -844,7 +853,10 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
         }
         
         /// <summary>
-        /// Query aggregate Azure subscription consumption data.
+        /// Query aggregated Azure subscription consumption data for a date
+        /// range.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/xxxxxxx for
+        /// more information)
         /// </summary>
         /// <param name='reportedStartTime'>
         /// Required. The start of the time range to retrieve data for.
