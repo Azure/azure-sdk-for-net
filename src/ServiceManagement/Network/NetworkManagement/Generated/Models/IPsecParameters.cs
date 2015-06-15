@@ -37,6 +37,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._encryptionType = value; }
         }
         
+        private string _hashAlgorithm;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string HashAlgorithm
+        {
+            get { return this._hashAlgorithm; }
+            set { this._hashAlgorithm = value; }
+        }
+        
         private string _pfsGroup;
         
         /// <summary>

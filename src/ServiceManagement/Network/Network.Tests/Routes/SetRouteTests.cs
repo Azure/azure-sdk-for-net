@@ -79,7 +79,7 @@ namespace Network.Tests.Routes
                 catch (Hyak.Common.CloudException e)
                 {
                     Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The address prefix  is not supported yet. Please use address prefix 0.0.0.0/0.", e.Error.Message);
+                    Assert.Equal("The address prefix is a mandatory parameter, but it is not specified.", e.Error.Message);
                     Assert.NotNull(e.Response);
                     Assert.Equal("Bad Request", e.Response.ReasonPhrase);
                     Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -101,7 +101,7 @@ namespace Network.Tests.Routes
                 catch (Hyak.Common.CloudException e)
                 {
                     Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The address prefix  is not supported yet. Please use address prefix 0.0.0.0/0.", e.Error.Message);
+                    Assert.Equal("The address prefix is a mandatory parameter, but it is not specified.", e.Error.Message);
                     Assert.NotNull(e.Response);
                     Assert.Equal("Bad Request", e.Response.ReasonPhrase);
                     Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -124,7 +124,7 @@ namespace Network.Tests.Routes
                 catch (Hyak.Common.CloudException e)
                 {
                     Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The address prefix MockAddressPrefix is not supported yet. Please use address prefix 0.0.0.0/0.", e.Error.Message);
+                    Assert.Equal("The address prefix MockAddressPrefix is invalid. Please use valid CIDR notation.", e.Error.Message);
                     Assert.NotNull(e.Response);
                     Assert.Equal("Bad Request", e.Response.ReasonPhrase);
                     Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -148,7 +148,7 @@ namespace Network.Tests.Routes
                 catch (Hyak.Common.CloudException e)
                 {
                     Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The next hop type is not specified. Please use next hop types VPNGateway,Backend.", e.Error.Message);
+                    Assert.Equal("The next hop is a mandatory parameter, but it is not specified.", e.Error.Message);
                     Assert.NotNull(e.Response);
                     Assert.Equal("Bad Request", e.Response.ReasonPhrase);
                     Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -171,7 +171,7 @@ namespace Network.Tests.Routes
                 catch (Hyak.Common.CloudException e)
                 {
                     Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The next hop type  is not supported yet. Please use next hop type VPNGateway.", e.Error.Message);
+                    Assert.Equal("The next hop type is invalid. Please use next hop types VPNGateway, VirtualAppliance, Internet, VNETLocal, Null.", e.Error.Message);
                     Assert.NotNull(e.Response);
                     Assert.Equal("Bad Request", e.Response.ReasonPhrase);
                     Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -194,7 +194,7 @@ namespace Network.Tests.Routes
                 catch (Hyak.Common.CloudException e)
                 {
                     Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The next hop type  is not supported yet. Please use next hop type VPNGateway.", e.Error.Message);
+                    Assert.Equal("The next hop type is invalid. Please use next hop types VPNGateway, VirtualAppliance, Internet, VNETLocal, Null.", e.Error.Message);
                     Assert.NotNull(e.Response);
                     Assert.Equal("Bad Request", e.Response.ReasonPhrase);
                     Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
@@ -264,29 +264,6 @@ namespace Network.Tests.Routes
                 Assert.Equal(HttpStatusCode.OK, setResponse.StatusCode);
                 Assert.NotNull(setResponse.RequestId);
                 Assert.NotEqual(0, setResponse.RequestId.Length);
-            }
-        }
-        [Fact]
-        [Trait("Feature", "Routes")]
-        public void SetRouteWhenRouteAlreadyExistsInRouteTable()
-        {
-            using (NetworkTestClient networkTestClient = new NetworkTestClient())
-            {
-                networkTestClient.Routes.EnsureRouteExists("MockRouteTableName", "MockRouteName");
-
-                SetRouteParameters parameters = CreateParameters("MockRouteName", "0.0.0.0/0", "VPNGateway");
-
-                try
-                {
-                    networkTestClient.Routes.SetRoute("MockRouteTableName", "MockRouteName", parameters);
-                    Assert.True(false, "SetRoute should have thrown a CloudException when the route already exists in the provided route table.");
-                }
-                catch (Hyak.Common.CloudException e)
-                {
-                    Assert.Equal("BadRequest", e.Error.Code);
-                    Assert.Equal("The Route MockRouteTableName cannot be added to Route Table MockRouteName. A Route with the specified name already exists.", e.Error.Message);
-                    Assert.Null(e.Response);
-                }
             }
         }
 

@@ -24,55 +24,53 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Resource information.
+    /// Parameters supplied to the Create Local Network Gateway operation.
     /// </summary>
-    public partial class ResourceBase
+    public partial class LocalNetworkGatewayCreateParameters
     {
-        private string _location;
+        private IList<string> _addressSpace;
         
         /// <summary>
-        /// Required. Gets or sets the location of the resource.
+        /// Optional. Address space of local network gateway
         /// </summary>
-        public string Location
+        public IList<string> AddressSpace
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._addressSpace; }
+            set { this._addressSpace = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _gatewayName;
         
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Optional. The name of the local network gateway.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string GatewayName
         {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._gatewayName; }
+            set { this._gatewayName = value; }
+        }
+        
+        private string _ipAddress;
+        
+        /// <summary>
+        /// Optional. The Ip address of the local network gateway.
+        /// </summary>
+        public string IpAddress
+        {
+            get { return this._ipAddress; }
+            set { this._ipAddress = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBase class.
+        /// Initializes a new instance of the
+        /// LocalNetworkGatewayCreateParameters class.
         /// </summary>
-        public ResourceBase()
+        public LocalNetworkGatewayCreateParameters()
         {
-            this.Tags = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceBase class with required
-        /// arguments.
-        /// </summary>
-        public ResourceBase(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
+            this.AddressSpace = new LazyList<string>();
         }
     }
 }

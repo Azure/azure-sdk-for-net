@@ -20,42 +20,32 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
+using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Resource information with extended details.
+    /// The next hop of this route.
     /// </summary>
-    public partial class ResourceBaseExtended : ResourceBase
+    public partial class EffectiveNextHop
     {
-        private string _id;
+        private IList<string> _ipAddresses;
         
         /// <summary>
-        /// Optional. Gets or sets the ID of the resource.
+        /// Required. Gets or sets the effective next hop IP addresses.
         /// </summary>
-        public string Id
+        public IList<string> IpAddresses
         {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the resource.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._ipAddresses; }
+            set { this._ipAddresses = value; }
         }
         
         private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets the type of the resource.
+        /// Required. Gets or sets the type of the effective next hop.
         /// </summary>
         public string Type
         {
@@ -64,24 +54,30 @@ namespace Microsoft.Azure.Management.Resources.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBaseExtended class.
+        /// Initializes a new instance of the EffectiveNextHop class.
         /// </summary>
-        public ResourceBaseExtended()
+        public EffectiveNextHop()
         {
+            this.IpAddresses = new LazyList<string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceBaseExtended class with
+        /// Initializes a new instance of the EffectiveNextHop class with
         /// required arguments.
         /// </summary>
-        public ResourceBaseExtended(string location)
+        public EffectiveNextHop(string type, IList<string> ipAddresses)
             : this()
         {
-            if (location == null)
+            if (type == null)
             {
-                throw new ArgumentNullException("location");
+                throw new ArgumentNullException("type");
             }
-            this.Location = location;
+            if (ipAddresses == null)
+            {
+                throw new ArgumentNullException("ipAddresses");
+            }
+            this.Type = type;
+            this.IpAddresses = ipAddresses;
         }
     }
 }
