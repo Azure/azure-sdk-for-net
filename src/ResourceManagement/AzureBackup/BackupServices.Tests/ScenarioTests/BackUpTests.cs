@@ -23,16 +23,6 @@ namespace BackupServices.Tests
                 string dataSourceId = ConfigurationManager.AppSettings["DataSourceId"];
 
                 var response = client.BackUp.TriggerBackUp(GetCustomRequestHeaders(), containerName, dataSourceType, dataSourceId);
-
-                
-                /*
-                foreach (var ppo in response.RecoveryPoints.Objects)
-                {
-                    Assert.True(!string.IsNullOrEmpty(ppo.InstanceId), "RecoveryPointId can't be null or empty");
-                    Assert.True((ppo.RecoveryPointTime != null), "RecoveryPointTime can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(ppo.RecoveryPointType), "RecoveryPointType can't be null or empty");
-                }
-                */
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }
