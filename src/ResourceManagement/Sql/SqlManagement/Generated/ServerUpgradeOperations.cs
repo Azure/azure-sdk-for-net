@@ -349,6 +349,13 @@ namespace Microsoft.Azure.Management.Sql
                                 string statusInstance = ((string)statusValue);
                                 result.Status = statusInstance;
                             }
+                            
+                            JToken scheduleUpgradeAfterTimeValue = responseDoc["scheduleUpgradeAfterTime"];
+                            if (scheduleUpgradeAfterTimeValue != null && scheduleUpgradeAfterTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime scheduleUpgradeAfterTimeInstance = ((DateTime)scheduleUpgradeAfterTimeValue);
+                                result.ScheduleUpgradeAfterTime = scheduleUpgradeAfterTimeInstance;
+                            }
                         }
                         
                     }
@@ -529,6 +536,56 @@ namespace Microsoft.Azure.Management.Sql
                             }
                         }
                         serverUpgradePropertiesValue["DatabaseCollection"] = databaseCollectionArray;
+                    }
+                }
+                
+                if (parameters.Properties.ElasticPoolCollection != null)
+                {
+                    if (parameters.Properties.ElasticPoolCollection is ILazyCollection == false || ((ILazyCollection)parameters.Properties.ElasticPoolCollection).IsInitialized)
+                    {
+                        JArray elasticPoolCollectionArray = new JArray();
+                        foreach (UpgradeRecommendedElasticPoolProperties elasticPoolCollectionItem in parameters.Properties.ElasticPoolCollection)
+                        {
+                            JObject upgradeRecommendedElasticPoolPropertiesValue = new JObject();
+                            elasticPoolCollectionArray.Add(upgradeRecommendedElasticPoolPropertiesValue);
+                            
+                            if (elasticPoolCollectionItem.Name != null)
+                            {
+                                upgradeRecommendedElasticPoolPropertiesValue["Name"] = elasticPoolCollectionItem.Name;
+                            }
+                            
+                            if (elasticPoolCollectionItem.Edition != null)
+                            {
+                                upgradeRecommendedElasticPoolPropertiesValue["Edition"] = elasticPoolCollectionItem.Edition;
+                            }
+                            
+                            upgradeRecommendedElasticPoolPropertiesValue["Dtu"] = elasticPoolCollectionItem.Dtu;
+                            
+                            upgradeRecommendedElasticPoolPropertiesValue["StorageMb"] = elasticPoolCollectionItem.StorageMb;
+                            
+                            upgradeRecommendedElasticPoolPropertiesValue["DatabaseDtuMin"] = elasticPoolCollectionItem.DatabaseDtuMin;
+                            
+                            upgradeRecommendedElasticPoolPropertiesValue["DatabaseDtuMax"] = elasticPoolCollectionItem.DatabaseDtuMax;
+                            
+                            if (elasticPoolCollectionItem.DatabaseCollection != null)
+                            {
+                                if (elasticPoolCollectionItem.DatabaseCollection is ILazyCollection == false || ((ILazyCollection)elasticPoolCollectionItem.DatabaseCollection).IsInitialized)
+                                {
+                                    JArray databaseCollectionArray2 = new JArray();
+                                    foreach (string databaseCollectionItem2 in elasticPoolCollectionItem.DatabaseCollection)
+                                    {
+                                        databaseCollectionArray2.Add(databaseCollectionItem2);
+                                    }
+                                    upgradeRecommendedElasticPoolPropertiesValue["DatabaseCollection"] = databaseCollectionArray2;
+                                }
+                            }
+                            
+                            if (elasticPoolCollectionItem.IncludeAllDatabases != null)
+                            {
+                                upgradeRecommendedElasticPoolPropertiesValue["IncludeAllDatabases"] = elasticPoolCollectionItem.IncludeAllDatabases.Value;
+                            }
+                        }
+                        serverUpgradePropertiesValue["ElasticPoolCollection"] = elasticPoolCollectionArray;
                     }
                 }
                 

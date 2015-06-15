@@ -22,42 +22,31 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.ApiApps.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.ApiApps.Models
 {
     /// <summary>
-    /// Represents the response to a Get request for Upgrade status of an Azure
-    /// SQL Database Server.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public partial class ServerUpgradeGetResponse : AzureOperationResponse
+    public partial class GetApiAppResponse : AzureOperationResponse
     {
-        private System.DateTime? _scheduleUpgradeAfterTime;
+        private ApiApp _apiApp;
         
         /// <summary>
-        /// Optional. Gets the schedule time of the Azure SQL Database Server
-        /// Upgrade.
+        /// Optional.
         /// </summary>
-        public System.DateTime? ScheduleUpgradeAfterTime
+        public ApiApp ApiApp
         {
-            get { return this._scheduleUpgradeAfterTime; }
-            set { this._scheduleUpgradeAfterTime = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. Gets the status of the Azure SQL Database Server Upgrade.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._apiApp; }
+            set { this._apiApp = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerUpgradeGetResponse class.
+        /// Initializes a new instance of the GetApiAppResponse class.
         /// </summary>
-        public ServerUpgradeGetResponse()
+        public GetApiAppResponse()
         {
         }
     }
