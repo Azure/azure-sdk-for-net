@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
 
-        public const string AzureKonaCatalogAndJobEndpointSuffix = "projectkonacompute.net";
+        public const string AzureKonaCatalogAndJobEndpointSuffix = "microsoftkonacompute.net";
 
         public const string AzureDataLakeFileSystemEndpointSuffix = "projectcabostore.net";
     }
