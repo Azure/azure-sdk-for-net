@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-namespace Microsoft.Azure.Management.DataFactories.Customizations.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// All available input partition options.
     /// </summary>
-    public static class InputPartitionOptions
+    public static class InputPartitionOption
     {
         public const string None = "None";
 

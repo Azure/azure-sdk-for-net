@@ -14,7 +14,7 @@
 //
 
 
-namespace Microsoft.Azure.Management.DataFactories.Customizations.Models.LinkedServices
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// All available chema generation types.
