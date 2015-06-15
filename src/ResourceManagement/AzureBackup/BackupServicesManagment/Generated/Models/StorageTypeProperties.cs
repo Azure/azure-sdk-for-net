@@ -21,30 +21,29 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the Enable Protection operation.
+    /// Model for storage type properties.
     /// </summary>
-    public partial class EnableProtectionResponse : AzureOperationResponse
+    public partial class StorageTypeProperties
     {
-        private Guid _jobId;
+        private string _storageModelType;
         
         /// <summary>
-        /// Optional. Job Id for Enable Protection.
+        /// Optional. Gets or sets the storage model type.
         /// </summary>
-        public Guid JobId
+        public string StorageModelType
         {
-            get { return this._jobId; }
-            set { this._jobId = value; }
+            get { return this._storageModelType; }
+            set { this._storageModelType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EnableProtectionResponse class.
+        /// Initializes a new instance of the StorageTypeProperties class.
         /// </summary>
-        public EnableProtectionResponse()
+        public StorageTypeProperties()
         {
         }
     }

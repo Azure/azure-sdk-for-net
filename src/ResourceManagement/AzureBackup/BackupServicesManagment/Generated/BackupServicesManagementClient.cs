@@ -140,6 +140,16 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._job; }
         }
         
+        private IOperationStatus _operationStatus;
+        
+        /// <summary>
+        /// Definition of Workflow operation for the Azure Backup extension.
+        /// </summary>
+        public virtual IOperationStatus OperationStatus
+        {
+            get { return this._operationStatus; }
+        }
+        
         private IProtectableObjectOperations _protectableObject;
         
         /// <summary>
@@ -173,15 +183,15 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._recoveryPoint; }
         }
         
-        private IVaultCredentialOperations _vaultCredentials;
+        private IVaultOperations _vault;
         
         /// <summary>
-        /// Definition of Vault credential-related operations for the Azure
-        /// Backup extension.
+        /// Definition of Vault-related operations for the Azure Backup
+        /// extension.
         /// </summary>
-        public virtual IVaultCredentialOperations VaultCredentials
+        public virtual IVaultOperations Vault
         {
-            get { return this._vaultCredentials; }
+            get { return this._vault; }
         }
         
         /// <summary>
@@ -195,10 +205,11 @@ namespace Microsoft.Azure.Management.BackupServices
             this._container = new ContainerOperation(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._operationStatus = new OperationStatus(this);
             this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
-            this._vaultCredentials = new VaultCredentialOperations(this);
+            this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -303,10 +314,11 @@ namespace Microsoft.Azure.Management.BackupServices
             this._container = new ContainerOperation(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
+            this._operationStatus = new OperationStatus(this);
             this._protectableObject = new ProtectableObjectOperations(this);
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
-            this._vaultCredentials = new VaultCredentialOperations(this);
+            this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

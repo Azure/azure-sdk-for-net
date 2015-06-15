@@ -21,31 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.Azure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// The response model for the Disable Protection operation.
+    /// Definition of Workflow operation for the Azure Backup extension.
     /// </summary>
-    public partial class DisableProtectionResponse : AzureOperationResponse
+    public partial interface IOperationStatus
     {
-        private Guid _jobId;
-        
         /// <summary>
-        /// Optional. Job Id for Disable Protection.
+        /// Get the Operation Status.
         /// </summary>
-        public Guid JobId
-        {
-            get { return this._jobId; }
-            set { this._jobId = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DisableProtectionResponse class.
-        /// </summary>
-        public DisableProtectionResponse()
-        {
-        }
+        /// <param name='operationId'>
+        /// OperationId.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a BMSOperationStatusResponse.
+        /// </returns>
+        Task<BMSOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

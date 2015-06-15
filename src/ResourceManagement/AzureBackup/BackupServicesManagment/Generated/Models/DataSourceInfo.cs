@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private string _type;
         
         /// <summary>
-        /// Optional. WorkloadType of DataSource.
+        /// Optional. Type of DataSource.
         /// </summary>
         public string Type
         {

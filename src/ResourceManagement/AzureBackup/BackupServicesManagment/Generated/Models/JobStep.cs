@@ -21,51 +21,63 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a DataSourceQueryParameter object.
+    /// The definition of a Service resource base object without name.
     /// </summary>
-    public partial class DataSourceQueryParameter
+    public partial class JobStep : ManagementBaseObject
     {
-        private string _protectionStatus;
+        private string _detail;
         
         /// <summary>
-        /// Optional. Protection Status of item.
+        /// Optional. Detail
         /// </summary>
-        public string ProtectionStatus
+        public string Detail
         {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
+            get { return this._detail; }
+            set { this._detail = value; }
         }
         
-        private string _status;
+        private string _message;
         
         /// <summary>
-        /// Optional. Status of item.
+        /// Optional. Message
         /// </summary>
-        public string Status
+        public string Message
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._message; }
+            set { this._message = value; }
         }
         
-        private string _type;
+        private string _operationResult;
         
         /// <summary>
-        /// Optional. Type of item.
+        /// Optional. Operation Result
         /// </summary>
-        public string Type
+        public string OperationResult
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._operationResult; }
+            set { this._operationResult = value; }
+        }
+        
+        private string _operationStatus;
+        
+        /// <summary>
+        /// Optional. Operation Status
+        /// </summary>
+        public string OperationStatus
+        {
+            get { return this._operationStatus; }
+            set { this._operationStatus = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataSourceQueryParameter class.
+        /// Initializes a new instance of the JobStep class.
         /// </summary>
-        public DataSourceQueryParameter()
+        public JobStep()
         {
         }
     }

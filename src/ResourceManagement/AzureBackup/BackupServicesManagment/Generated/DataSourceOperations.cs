@@ -24,9 +24,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 using Newtonsoft.Json.Linq;
@@ -75,15 +78,26 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='dataSourceId'>
         /// Optional.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Container to be register.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Disable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        public async Task<DisableProtectionResponse> DisableProtectionAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> DisableProtectionAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, RemoveProtectionRequestInput parameters, CancellationToken cancellationToken)
         {
             // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.RemoveProtectionOption == null)
+            {
+                throw new ArgumentNullException("parameters.RemoveProtectionOption");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -96,6 +110,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("dataSourceType", dataSourceType);
                 tracingParameters.Add("dataSourceId", dataSourceId);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "DisableProtectionAsync", tracingParameters);
             }
             
@@ -164,6 +179,29 @@ namespace Microsoft.Azure.Management.BackupServices
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject removeProtectionRequestInputValue = new JObject();
+                requestDoc = removeProtectionRequestInputValue;
+                
+                removeProtectionRequestInputValue["RemoveProtectionOption"] = parameters.RemoveProtectionOption;
+                
+                if (parameters.Reason != null)
+                {
+                    removeProtectionRequestInputValue["Reason"] = parameters.Reason;
+                }
+                
+                if (parameters.Comments != null)
+                {
+                    removeProtectionRequestInputValue["Comments"] = parameters.Comments;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -179,10 +217,10 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -191,13 +229,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    DisableProtectionResponse result = null;
+                    OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DisableProtectionResponse();
+                        result = new OperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -206,8 +244,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Guid jobIdInstance = Guid.Parse(((string)responseDoc));
-                            result.JobId = jobIdInstance;
                         }
                         
                     }
@@ -246,15 +282,34 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Container to be register.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Enable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        public async Task<EnableProtectionResponse> EnableProtectionAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> EnableProtectionAsync(CustomRequestHeaders customRequestHeaders, SetProtectionRequestInput parameters, CancellationToken cancellationToken)
         {
             // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.PolicyId == null)
+            {
+                throw new ArgumentNullException("parameters.PolicyId");
+            }
+            if (parameters.ProtectableObjects == null)
+            {
+                throw new ArgumentNullException("parameters.ProtectableObjects");
+            }
+            if (parameters.ProtectableObjectType == null)
+            {
+                throw new ArgumentNullException("parameters.ProtectableObjectType");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -264,6 +319,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "EnableProtectionAsync", tracingParameters);
             }
             
@@ -317,6 +373,34 @@ namespace Microsoft.Azure.Management.BackupServices
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject setProtectionRequestInputValue = new JObject();
+                requestDoc = setProtectionRequestInputValue;
+                
+                if (parameters.ProtectableObjects != null)
+                {
+                    if (parameters.ProtectableObjects is ILazyCollection == false || ((ILazyCollection)parameters.ProtectableObjects).IsInitialized)
+                    {
+                        JArray protectableObjectsArray = new JArray();
+                        foreach (string protectableObjectsItem in parameters.ProtectableObjects)
+                        {
+                            protectableObjectsArray.Add(protectableObjectsItem);
+                        }
+                        setProtectionRequestInputValue["ProtectableObjects"] = protectableObjectsArray;
+                    }
+                }
+                
+                setProtectionRequestInputValue["ProtectableObjectType"] = parameters.ProtectableObjectType;
+                
+                setProtectionRequestInputValue["PolicyId"] = parameters.PolicyId;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -332,10 +416,10 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -344,13 +428,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    EnableProtectionResponse result = null;
+                    OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new EnableProtectionResponse();
+                        result = new OperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -359,8 +443,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Guid jobIdInstance = Guid.Parse(((string)responseDoc));
-                            result.JobId = jobIdInstance;
                         }
                         
                     }
@@ -442,9 +524,17 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/datasources";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
-            if (parameters != null && parameters.ContainerName != null)
+            if (parameters != null && parameters.ProtectionStatus != null)
             {
-                queryParameters.Add("ContainerName=" + Uri.EscapeDataString(parameters.ContainerName));
+                queryParameters.Add("ProtectionStatus=" + Uri.EscapeDataString(parameters.ProtectionStatus));
+            }
+            if (parameters != null && parameters.Status != null)
+            {
+                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));
+            }
+            if (parameters != null && parameters.Type != null)
+            {
+                queryParameters.Add("Type=" + Uri.EscapeDataString(parameters.Type));
             }
             if (queryParameters.Count > 0)
             {
@@ -552,11 +642,11 @@ namespace Microsoft.Azure.Management.BackupServices
                                         dataSourceInfoInstance.ContainerType = containerTypeInstance;
                                     }
                                     
-                                    JToken workloadTypeValue = objectsValue["WorkloadType"];
-                                    if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
+                                    JToken typeValue = objectsValue["Type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string workloadTypeInstance = ((string)workloadTypeValue);
-                                        dataSourceInfoInstance.Type = workloadTypeInstance;
+                                        string typeInstance = ((string)typeValue);
+                                        dataSourceInfoInstance.Type = typeInstance;
                                     }
                                     
                                     JToken statusValue = objectsValue["Status"];

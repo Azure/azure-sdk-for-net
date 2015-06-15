@@ -20,14 +20,16 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a UnRegisterContainer Request Object.
+    /// The definition of a RegisterContainer Request Object.
     /// </summary>
-    public partial class UnregisterContainerRequest
+    public partial class RegisterContainerRequestInput
     {
         private string _containerType;
         
@@ -40,40 +42,42 @@ namespace Microsoft.Azure.Management.BackupServices.Models
             set { this._containerType = value; }
         }
         
-        private string _containerUniqueName;
+        private IList<string> _containerUniqueNameList;
         
         /// <summary>
-        /// Required. Containers information for Unregistration.
+        /// Required. Containers information for registration.
         /// </summary>
-        public string ContainerUniqueName
+        public IList<string> ContainerUniqueNameList
         {
-            get { return this._containerUniqueName; }
-            set { this._containerUniqueName = value; }
+            get { return this._containerUniqueNameList; }
+            set { this._containerUniqueNameList = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UnregisterContainerRequest class.
+        /// Initializes a new instance of the RegisterContainerRequestInput
+        /// class.
         /// </summary>
-        public UnregisterContainerRequest()
+        public RegisterContainerRequestInput()
         {
+            this.ContainerUniqueNameList = new LazyList<string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the UnregisterContainerRequest class
-        /// with required arguments.
+        /// Initializes a new instance of the RegisterContainerRequestInput
+        /// class with required arguments.
         /// </summary>
-        public UnregisterContainerRequest(string containerUniqueName, string containerType)
+        public RegisterContainerRequestInput(IList<string> containerUniqueNameList, string containerType)
             : this()
         {
-            if (containerUniqueName == null)
+            if (containerUniqueNameList == null)
             {
-                throw new ArgumentNullException("containerUniqueName");
+                throw new ArgumentNullException("containerUniqueNameList");
             }
             if (containerType == null)
             {
                 throw new ArgumentNullException("containerType");
             }
-            this.ContainerUniqueName = containerUniqueName;
+            this.ContainerUniqueNameList = containerUniqueNameList;
             this.ContainerType = containerType;
         }
     }

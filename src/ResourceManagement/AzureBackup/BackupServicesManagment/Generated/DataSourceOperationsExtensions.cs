@@ -49,14 +49,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='dataSourceId'>
         /// Optional.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Container to be register.
+        /// </param>
         /// <returns>
-        /// The response model for the Disable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        public static DisableProtectionResponse DisableProtection(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId)
+        public static OperationResponse DisableProtection(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, RemoveProtectionRequestInput parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).DisableProtectionAsync(customRequestHeaders, containerName, dataSourceType, dataSourceId);
+                return ((IDataSourceOperations)s).DisableProtectionAsync(customRequestHeaders, containerName, dataSourceType, dataSourceId, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -80,12 +83,15 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='dataSourceId'>
         /// Optional.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Container to be register.
+        /// </param>
         /// <returns>
-        /// The response model for the Disable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        public static Task<DisableProtectionResponse> DisableProtectionAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId)
+        public static Task<OperationResponse> DisableProtectionAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, RemoveProtectionRequestInput parameters)
         {
-            return operations.DisableProtectionAsync(customRequestHeaders, containerName, dataSourceType, dataSourceId, CancellationToken.None);
+            return operations.DisableProtectionAsync(customRequestHeaders, containerName, dataSourceType, dataSourceId, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -98,14 +104,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Container to be register.
+        /// </param>
         /// <returns>
-        /// The response model for the Enable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        public static EnableProtectionResponse EnableProtection(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse EnableProtection(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, SetProtectionRequestInput parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).EnableProtectionAsync(customRequestHeaders);
+                return ((IDataSourceOperations)s).EnableProtectionAsync(customRequestHeaders, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -120,12 +129,15 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Container to be register.
+        /// </param>
         /// <returns>
-        /// The response model for the Enable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        public static Task<EnableProtectionResponse> EnableProtectionAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> EnableProtectionAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, SetProtectionRequestInput parameters)
         {
-            return operations.EnableProtectionAsync(customRequestHeaders, CancellationToken.None);
+            return operations.EnableProtectionAsync(customRequestHeaders, parameters, CancellationToken.None);
         }
         
         /// <summary>

@@ -21,41 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a POQueryParameter object.
+    /// The request model for the update vault storage type operation.
     /// </summary>
-    public partial class POQueryParameter
+    public partial class UpdateVaultStorageTypeRequest
     {
-        private string _status;
+        private StorageTypeProperties _storageTypeProperties;
         
         /// <summary>
-        /// Optional. Status Status of item.
+        /// Required. Storage type properties.
         /// </summary>
-        public string Status
+        public StorageTypeProperties StorageTypeProperties
         {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Type of item.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._storageTypeProperties; }
+            set { this._storageTypeProperties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the POQueryParameter class.
+        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
+        /// class.
         /// </summary>
-        public POQueryParameter()
+        public UpdateVaultStorageTypeRequest()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
+        /// class with required arguments.
+        /// </summary>
+        public UpdateVaultStorageTypeRequest(StorageTypeProperties storageTypeProperties)
+            : this()
+        {
+            if (storageTypeProperties == null)
+            {
+                throw new ArgumentNullException("storageTypeProperties");
+            }
+            this.StorageTypeProperties = storageTypeProperties;
         }
     }
 }

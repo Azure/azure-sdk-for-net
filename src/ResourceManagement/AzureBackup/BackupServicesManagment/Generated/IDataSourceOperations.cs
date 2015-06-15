@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
@@ -38,13 +39,16 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
+        /// <param name='parameters'>
+        /// Container to be register.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Disable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        Task<DisableProtectionResponse> DisableProtectionAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken);
+        Task<OperationResponse> DisableProtectionAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, RemoveProtectionRequestInput parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Enable protection for given item.
@@ -52,13 +56,16 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
+        /// <param name='parameters'>
+        /// Container to be register.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Enable Protection operation.
+        /// The definition of a Operation Response.
         /// </returns>
-        Task<EnableProtectionResponse> EnableProtectionAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> EnableProtectionAsync(CustomRequestHeaders customRequestHeaders, SetProtectionRequestInput parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all DataSpurce.

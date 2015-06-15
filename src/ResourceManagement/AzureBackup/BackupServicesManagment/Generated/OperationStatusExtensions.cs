@@ -28,58 +28,52 @@ using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public static partial class VaultCredentialOperationsExtensions
+    public static partial class OperationStatusExtensions
     {
         /// <summary>
-        /// Uploads vault credential certificate.
+        /// Get the Operation Status.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IVaultCredentialOperations.
+        /// Microsoft.Azure.Management.BackupServices.IOperationStatus.
         /// </param>
-        /// <param name='certificateName'>
-        /// Required. Name of the certificate.
-        /// </param>
-        /// <param name='vaultCredUploadCertRequest'>
-        /// Required. Certificate parameters.
+        /// <param name='operationId'>
+        /// Required. OperationId.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a certificate response.
+        /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        public static VaultCredUploadCertResponse UploadCertificate(this IVaultCredentialOperations operations, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders)
+        public static BMSOperationStatusResponse Get(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVaultCredentialOperations)s).UploadCertificateAsync(certificateName, vaultCredUploadCertRequest, customRequestHeaders);
+                return ((IOperationStatus)s).GetAsync(operationId, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Uploads vault credential certificate.
+        /// Get the Operation Status.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IVaultCredentialOperations.
+        /// Microsoft.Azure.Management.BackupServices.IOperationStatus.
         /// </param>
-        /// <param name='certificateName'>
-        /// Required. Name of the certificate.
-        /// </param>
-        /// <param name='vaultCredUploadCertRequest'>
-        /// Required. Certificate parameters.
+        /// <param name='operationId'>
+        /// Required. OperationId.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a certificate response.
+        /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        public static Task<VaultCredUploadCertResponse> UploadCertificateAsync(this IVaultCredentialOperations operations, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders)
+        public static Task<BMSOperationStatusResponse> GetAsync(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UploadCertificateAsync(certificateName, vaultCredUploadCertRequest, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(operationId, customRequestHeaders, CancellationToken.None);
         }
     }
 }
