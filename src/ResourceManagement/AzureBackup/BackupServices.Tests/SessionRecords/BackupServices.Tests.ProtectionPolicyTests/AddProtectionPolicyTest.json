@@ -1,0 +1,78 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backupseadev01/BackupVault/backuprn/protectionpolicies?api-version=2014-09-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3Vwc2VhZGV2MDEvQmFja3VwVmF1bHQvYmFja3Vwcm4vcHJvdGVjdGlvbnBvbGljaWVzP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"workloadtype\": \"VM\",\r\n  \"policyname\": \"ProtPolicy01\",\r\n  \"schedule\": {\r\n    \"BackupType\": \"Full\",\r\n    \"ScheduleRun\": \"Daily\",\r\n    \"ScheduleStartTime\": \"0001-01-01T00:00:00\",\r\n    \"ScheduleRunDays\": [],\r\n    \"ScheduleRunTimes\": [\r\n      \"2015-06-12T19:30:00\"\r\n    ],\r\n    \"RetentionPolicy\": {\r\n      \"RetentionType\": \"Days\",\r\n      \"RetentionDuration\": 30\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "377"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "f0253337-7620-40bc-80a5-9f728411cdf5"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"00000000-0000-0000-0000-000000000000\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c9dd20a2-3ff0-4cfc-a520-1d3eee2ed99e"
+        ],
+        "x-ms-client-request-id": [
+          "f0253337-7620-40bc-80a5-9f728411cdf5",
+          "f0253337-7620-40bc-80a5-9f728411cdf5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9dd20a2-3ff0-4cfc-a520-1d3eee2ed99e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150612T211619Z:c9dd20a2-3ff0-4cfc-a520-1d3eee2ed99e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Jun 2015 21:16:18 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}

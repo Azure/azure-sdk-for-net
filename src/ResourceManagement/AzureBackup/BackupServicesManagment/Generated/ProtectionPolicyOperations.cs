@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 using Newtonsoft.Json.Linq;
@@ -76,9 +77,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<OperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (addProtectionPolicyRequest == null)
@@ -221,7 +223,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     
                     retentionPolicyValue["RetentionType"] = addProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionType.ToString();
                     
-                    retentionPolicyValue["Schedule"] = addProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionDuration;
+                    retentionPolicyValue["RetentionDuration"] = addProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionDuration;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -255,24 +257,9 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new OperationResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                        }
-                        
-                    }
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)
@@ -299,7 +286,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Create new Protection Policy.
+        /// Delete a Protection Policy.
         /// </summary>
         /// <param name='protectionPolicyId'>
         /// Required. The protection policy ID to be deleted.
@@ -311,9 +298,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string protectionPolicyId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string protectionPolicyId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionPolicyId == null)
@@ -374,7 +362,7 @@ namespace Microsoft.Azure.Management.BackupServices
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Delete;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -400,7 +388,7 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -412,24 +400,9 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new OperationResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                        }
-                        
-                    }
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)
@@ -651,11 +624,11 @@ namespace Microsoft.Azure.Management.BackupServices
                                                 retentionPolicyInstance.RetentionType = retentionTypeInstance;
                                             }
                                             
-                                            JToken scheduleValue2 = retentionPolicyValue["Schedule"];
-                                            if (scheduleValue2 != null && scheduleValue2.Type != JTokenType.Null)
+                                            JToken retentionDurationValue = retentionPolicyValue["RetentionDuration"];
+                                            if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
                                             {
-                                                int scheduleInstance2 = ((int)scheduleValue2);
-                                                retentionPolicyInstance.RetentionDuration = scheduleInstance2;
+                                                int retentionDurationInstance = ((int)retentionDurationValue);
+                                                retentionPolicyInstance.RetentionDuration = retentionDurationInstance;
                                             }
                                         }
                                     }
@@ -740,9 +713,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionPolicyId == null)
@@ -827,7 +801,7 @@ namespace Microsoft.Azure.Management.BackupServices
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
+                httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -886,7 +860,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     
                     retentionPolicyValue["RetentionType"] = updateProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionType.ToString();
                     
-                    retentionPolicyValue["Schedule"] = updateProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionDuration;
+                    retentionPolicyValue["RetentionDuration"] = updateProtectionPolicyRequest.Schedule.RetentionPolicy.RetentionDuration;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -920,24 +894,9 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new OperationResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                        }
-                        
-                    }
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)

@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backupseadev01/BackupVault/backuprn/certificates/IdMgmtInternalCert?api-version=2015-03-15",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3Vwc2VhZGV2MDEvQmFja3VwVmF1bHQvYmFja3Vwcm4vY2VydGlmaWNhdGVzL0lkTWdtdEludGVybmFsQ2VydD9hcGktdmVyc2lvbj0yMDE1LTAzLTE1",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"certificate\": \"MIIC3TCCAcWgAwIBAgIQNqirwlfJ4ZRG+u9AVoEgrDANBgkqhkiG9w0BAQUFADAeMRwwGgYDVQQDExNXaW5kb3dzIEF6dXJlIFRvb2xzMB4XDTE1MDYxMjEzNTE0MFoXDTE1MDYxNDE0MDE0MFowHjEcMBoGA1UEAxMTV2luZG93cyBBenVyZSBUb29sczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK9Fz9jV/BBD2zzMwofuiHa+l2zKEUVofDGJNNriz5SorfZFjhbwpaD4R0yTDghFemEqiXxr/8jGD+HuIOsXeXSXw43iWGyeT9AMITXMnj/ZdYH9HH5hoyK73SC/FQ5gpdIgdIAU52Vj3SK3yo/G2oEj2ZfFIjE3+dYEsTn5QJ+AEBe5136qOpklKUZOsTKm+yETwWIDBBnMJSxNRxIyLqyzlKhasEyyiDsxsEx+6g0hCIkEskUPkFWMR0tOi8JzBGafbM35XMfIlUpph56qdXcTg1d9dP0RrqeXIdoW9ghADSi1QqZ7T9FFvM3kAjsUxE0qqG9FOw1SsluJFosjhwkCAwEAAaMXMBUwEwYDVR0lBAwwCgYIKwYBBQUHAwIwDQYJKoZIhvcNAQEFBQADggEBAJ1oiV7TXekzkKnlvTaD0CRSPPEe0n1VIXYZFDXNA0eXoockn8a9Xt2qmygbeZbF+sqKq8UMVwb/uMGTHZelYQSTotsILuGWPmAUmA1EZ0XtW+qdEXhEOb0DiZqm3VtWdbrPUDRa2n8lg91/XBuQ9wuIX51SHO7ZH0qfOVUIbRgnmB0jJ5Wqnm9297NPea2lkfCEaRVl06CIOOgC5yuyk8ZdM+86cZWOTiC8pUnl/qrozIe+4p2OfG/6+PL1DRyWfeAk1kT7wmZQ+IP/OHPlYOWqBJmnxZ1RESg+8mBKksHN4Jwd2nFEGAOERE45snT7CBBOUgfID+UmaB1tEo0YTgg=\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "1035"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-version": [
+          "2013-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"certificate\": \"MIIC3TCCAcWgAwIBAgIQNqirwlfJ4ZRG+u9AVoEgrDANBgkqhkiG9w0BAQUFADAeMRwwGgYDVQQDExNXaW5kb3dzIEF6dXJlIFRvb2xzMB4XDTE1MDYxMjEzNTE0MFoXDTE1MDYxNDE0MDE0MFowHjEcMBoGA1UEAxMTV2luZG93cyBBenVyZSBUb29sczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK9Fz9jV/BBD2zzMwofuiHa+l2zKEUVofDGJNNriz5SorfZFjhbwpaD4R0yTDghFemEqiXxr/8jGD+HuIOsXeXSXw43iWGyeT9AMITXMnj/ZdYH9HH5hoyK73SC/FQ5gpdIgdIAU52Vj3SK3yo/G2oEj2ZfFIjE3+dYEsTn5QJ+AEBe5136qOpklKUZOsTKm+yETwWIDBBnMJSxNRxIyLqyzlKhasEyyiDsxsEx+6g0hCIkEskUPkFWMR0tOi8JzBGafbM35XMfIlUpph56qdXcTg1d9dP0RrqeXIdoW9ghADSi1QqZ7T9FFvM3kAjsUxE0qqG9FOw1SsluJFosjhwkCAwEAAaMXMBUwEwYDVR0lBAwwCgYIKwYBBQUHAwIwDQYJKoZIhvcNAQEFBQADggEBAJ1oiV7TXekzkKnlvTaD0CRSPPEe0n1VIXYZFDXNA0eXoockn8a9Xt2qmygbeZbF+sqKq8UMVwb/uMGTHZelYQSTotsILuGWPmAUmA1EZ0XtW+qdEXhEOb0DiZqm3VtWdbrPUDRa2n8lg91/XBuQ9wuIX51SHO7ZH0qfOVUIbRgnmB0jJ5Wqnm9297NPea2lkfCEaRVl06CIOOgC5yuyk8ZdM+86cZWOTiC8pUnl/qrozIe+4p2OfG/6+PL1DRyWfeAk1kT7wmZQ+IP/OHPlYOWqBJmnxZ1RESg+8mBKksHN4Jwd2nFEGAOERE45snT7CBBOUgfID+UmaB1tEo0YTgg=\",\r\n    \"resourceId\": 3420983535961922368,\r\n    \"globalAcsNamespace\": \"seadev01rp1users\",\r\n    \"globalAcsHostName\": \"accesscontrol.windows.net\",\r\n    \"globalAcsRPRealm\": \"http://windowscloudbackup/m3\",\r\n    \"subject\": \"CN=Windows Azure Tools\",\r\n    \"validFrom\": \"2015-06-12T19:21:40+05:30\",\r\n    \"validTo\": \"2015-06-14T19:31:40+05:30\",\r\n    \"thumbprint\": \"602A899D5C4EEB9215807D6AF0A5A92E0465BA51\",\r\n    \"friendlyName\": \"\",\r\n    \"issuer\": \"CN=Windows Azure Tools\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1409"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "40d4ac02-ceac-466e-bc25-811385748ee1"
+        ],
+        "x-ms-client-request-id": [
+          "f552a659-6209-4990-9641-ce140d4d6691",
+          "f552a659-6209-4990-9641-ce140d4d6691"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "40d4ac02-ceac-466e-bc25-811385748ee1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150612T140146Z:40d4ac02-ceac-466e-bc25-811385748ee1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 12 Jun 2015 14:01:46 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}
