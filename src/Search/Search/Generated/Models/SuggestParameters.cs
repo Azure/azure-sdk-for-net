@@ -72,6 +72,21 @@ namespace Microsoft.Azure.Search.Models
             set { this._highlightPreTag = value; }
         }
         
+        private double? _minimumCoverage;
+        
+        /// <summary>
+        /// Optional. Gets or sets a number between 0 and 100 indicating the
+        /// percentage of the index that must be covered by a suggestion query
+        /// in order for the query to be reported as a success. This parameter
+        /// can be useful for ensuring search availability even for services
+        /// with only one replica. The default is 80.
+        /// </summary>
+        public double? MinimumCoverage
+        {
+            get { return this._minimumCoverage; }
+            set { this._minimumCoverage = value; }
+        }
+        
         private IList<string> _orderBy;
         
         /// <summary>
@@ -88,21 +103,6 @@ namespace Microsoft.Azure.Search.Models
         {
             get { return this._orderBy; }
             set { this._orderBy = value; }
-        }
-        
-        private double? _percentagePartitionsRequired;
-        
-        /// <summary>
-        /// Optional. Gets or sets a number between 0 and 100 indicating the
-        /// percentage of partitions that must respond to a suggestion query
-        /// in order for the query to be reported as a success. This parameter
-        /// can be useful for ensuring search availability even for services
-        /// with only one replica. The default is 100.
-        /// </summary>
-        public double? PercentagePartitionsRequired
-        {
-            get { return this._percentagePartitionsRequired; }
-            set { this._percentagePartitionsRequired = value; }
         }
         
         private IList<string> _searchFields;

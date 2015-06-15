@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.Null(response.ContinuationToken);
                 Assert.Null(response.Count);
+                Assert.Null(response.Coverage);
                 Assert.Null(response.Facets);
                 Assert.NotNull(response.Results);
                 
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.Null(response.ContinuationToken);
                 Assert.Null(response.Count);
+                Assert.Null(response.Coverage);
                 Assert.Null(response.Facets);
                 Assert.NotNull(response.Results);
 
@@ -499,6 +501,22 @@ namespace Microsoft.Azure.Search.Tests
                 AssertKeySequenceEqual(response, expectedIds.Last());
 
                 Assert.Null(response.ContinuationToken);
+            });
+        }
+
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanSearchWithMinimumCoverage()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+
+                var parameters = new SearchParameters() { MinimumCoverage = 50 };
+                DocumentSearchResponse<Hotel> response = client.Documents.Search<Hotel>("*", parameters);
+
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(100, response.Coverage);
             });
         }
 

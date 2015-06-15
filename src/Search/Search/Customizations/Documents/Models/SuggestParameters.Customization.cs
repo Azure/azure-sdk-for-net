@@ -48,14 +48,14 @@ namespace Microsoft.Azure.Search.Models
                 yield return new QueryOption("highlightPostTag", Uri.EscapeDataString(HighlightPostTag));
             }
 
+            if (MinimumCoverage != null)
+            {
+                yield return new QueryOption("minimumCoverage", MinimumCoverage.ToString());
+            }
+
             if (OrderBy.Any())
             {
                 yield return new QueryOption("$orderby", OrderBy);
-            }
-
-            if (PercentagePartitionsRequired != null)
-            {
-                yield return new QueryOption("percentagePartitionsRequired", PercentagePartitionsRequired.ToString());
             }
 
             if (SearchFields.Any())

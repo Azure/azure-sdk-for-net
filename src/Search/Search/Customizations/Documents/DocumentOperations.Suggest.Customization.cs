@@ -182,6 +182,7 @@ namespace Microsoft.Azure.Search
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
                         DocumentSuggestResponseFormat<TResult, TDoc> deserializedResult = deserialize(responseContent);
+                        result.Coverage = deserializedResult.Coverage;
                         result.Results = deserializedResult.Documents;
                     }
 
@@ -219,6 +220,9 @@ namespace Microsoft.Azure.Search
             where TResult : SuggestResultBase<TDoc>
             where TDoc : class 
         {
+            [JsonProperty("@search.coverage")]
+            public double? Coverage { get; set; }
+
             [JsonProperty("value")]
             public List<TResult> Documents { get; set; }
         }
