@@ -35,8 +35,14 @@ namespace Microsoft.Azure.Management.ApiApps
     public partial interface IApiAppOperations
     {
         /// <summary>
-        /// Return list of the deployed ApiApps for the resource group
+        /// Get information about a specific ApiApp
         /// </summary>
+        /// <param name='resourceGroup'>
+        /// The resource group containing the api app
+        /// </param>
+        /// <param name='name'>
+        /// The instance name of the apiapp
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -44,7 +50,26 @@ namespace Microsoft.Azure.Management.ApiApps
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<ListApiAppsResponse> ListAsync(string resourceGroup, CancellationToken cancellationToken);
+        Task<GetApiAppResponse> GetAsync(string resourceGroup, string name, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Return list of the deployed ApiApps for the resource group
+        /// </summary>
+        /// <param name='resourceGroup'>
+        /// Name of the resource group containing the apiapps to list
+        /// </param>
+        /// <param name='expand'>
+        /// Option controlling how much data to return, valid options are
+        /// "basic" or "detail"
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<ListApiAppsResponse> ListAsync(string resourceGroup, string expand, CancellationToken cancellationToken);
         
         /// <summary>
         /// Return list of the deployed ApiApps for this subscription
