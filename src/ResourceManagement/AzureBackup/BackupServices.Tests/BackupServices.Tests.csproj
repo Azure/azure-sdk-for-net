@@ -30,7 +30,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\ListProtectionPolicyTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json" />
