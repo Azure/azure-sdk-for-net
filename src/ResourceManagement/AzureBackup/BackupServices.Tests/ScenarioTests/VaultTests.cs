@@ -76,8 +76,9 @@ namespace BackupServices.Tests
             }
         }
 
+        // NOTE: Test will fail till RRP gets upgraded with sd18 changes in seadev01
         [Fact]
-        public void UpdateStorageTypeReturnsOKTest()
+        public void UpdateStorageTypeReturnsValidCodeTest()
         {
             using (UndoContext undoContext = UndoContext.Current)
             {
@@ -97,7 +98,7 @@ namespace BackupServices.Tests
 
                 // Response Validation
                 Assert.NotNull(response);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
             }
         }
     }
