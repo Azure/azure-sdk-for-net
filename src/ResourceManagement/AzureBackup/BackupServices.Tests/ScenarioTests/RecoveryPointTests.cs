@@ -24,13 +24,11 @@ namespace BackupServices.Tests
 
                 var response = client.RecoveryPoint.List(GetCustomRequestHeaders(), containerName, dataSourceType, dataSourceId);
 
-                Assert.True(response.RecoveryPoints.ResultCount > 0, "Recovery Points Result count can't be less than 1");
-
-                foreach (var ppo in response.RecoveryPoints.Objects)
+                foreach (var rpo in response.RecoveryPoints.Objects)
                 {
-                    Assert.True(!string.IsNullOrEmpty(ppo.InstanceId), "RecoveryPointId can't be null or empty");
-                    Assert.True((ppo.RecoveryPointTime != null), "RecoveryPointTime can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(ppo.RecoveryPointType), "RecoveryPointType can't be null or empty");
+                    Assert.True(!string.IsNullOrEmpty(rpo.InstanceId), "RecoveryPointId can't be null or empty");
+                    Assert.True((rpo.RecoveryPointTime != null), "RecoveryPointTime can't be null or empty");
+                    Assert.True(!string.IsNullOrEmpty(rpo.RecoveryPointType), "RecoveryPointType can't be null or empty");
                 }
                 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
