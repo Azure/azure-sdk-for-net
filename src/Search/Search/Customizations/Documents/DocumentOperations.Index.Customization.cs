@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Search
             }
             
             // Construct URL
-            string url = "docs/index?api-version=2015-02-28";
+            string url = "docs/search.index?api-version=2015-02-28";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
 
             // Trim '/' character from the end of baseUrl and beginning of url.

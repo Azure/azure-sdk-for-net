@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search
         {
             // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
             // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).
-            Uri indexBaseUri = new Uri(_client.BaseUri, String.Format("indexes/{0}/", indexName));
+            Uri indexBaseUri = new Uri(_client.BaseUri, String.Format("indexes('{0}')", indexName));
             return new SearchIndexClient(_client.Credentials, indexBaseUri);
         }
 
