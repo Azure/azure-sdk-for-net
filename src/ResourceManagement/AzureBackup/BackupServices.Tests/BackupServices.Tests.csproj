@@ -48,8 +48,6 @@
     </None>
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsValidResponseTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemPOTest\ListAzureBackupItemPOTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemsDSTest\ListAzureBackupItemDSTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\ListGetJobsTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\AddProtectionPolicyTest.json" />
