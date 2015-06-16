@@ -526,7 +526,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/Subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);

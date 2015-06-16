@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        public static BMSOperationStatusResponse Get(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static AzureBackupOperationStatusResponse Get(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        public static Task<BMSOperationStatusResponse> GetAsync(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureBackupOperationStatusResponse> GetAsync(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(operationId, customRequestHeaders, CancellationToken.None);
         }

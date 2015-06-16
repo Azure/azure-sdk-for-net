@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        public async Task<BMSOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureBackupOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (operationId == null)
@@ -141,7 +141,6 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -174,88 +173,85 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    BMSOperationStatusResponse result = null;
+                    AzureBackupOperationStatusResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new BMSOperationStatusResponse();
+                        result = new AzureBackupOperationStatusResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken bMSOperationStatusResponseValue = responseDoc["BMSOperationStatusResponse"];
-                        if (bMSOperationStatusResponseValue != null && bMSOperationStatusResponseValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            BMSOperationStatusResponse bMSOperationStatusResponseInstance = new BMSOperationStatusResponse();
-                            
-                            JToken operationStatusValue = bMSOperationStatusResponseValue["OperationStatus"];
+                            JToken operationStatusValue = responseDoc["OperationStatus"];
                             if (operationStatusValue != null && operationStatusValue.Type != JTokenType.Null)
                             {
                                 string operationStatusInstance = ((string)operationStatusValue);
-                                bMSOperationStatusResponseInstance.OperationStatus = operationStatusInstance;
+                                result.OperationStatus = operationStatusInstance;
                             }
                             
-                            JToken operationResultValue = bMSOperationStatusResponseValue["OperationResult"];
+                            JToken operationResultValue = responseDoc["OperationResult"];
                             if (operationResultValue != null && operationResultValue.Type != JTokenType.Null)
                             {
                                 string operationResultInstance = ((string)operationResultValue);
-                                bMSOperationStatusResponseInstance.OperationResult = operationResultInstance;
+                                result.OperationResult = operationResultInstance;
                             }
                             
-                            JToken messageValue = bMSOperationStatusResponseValue["Message"];
+                            JToken messageValue = responseDoc["Message"];
                             if (messageValue != null && messageValue.Type != JTokenType.Null)
                             {
                                 string messageInstance = ((string)messageValue);
-                                bMSOperationStatusResponseInstance.Message = messageInstance;
+                                result.Message = messageInstance;
                             }
                             
-                            JToken objectsArray = bMSOperationStatusResponseValue["Objects"];
+                            JToken objectsArray = responseDoc["Objects"];
                             if (objectsArray != null && objectsArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken objectsValue in ((JArray)objectsArray))
                                 {
-                                    JobStep managementBaseObjectInstance = new JobStep();
-                                    bMSOperationStatusResponseInstance.JobSteps.Add(managementBaseObjectInstance);
+                                    JobStep jobStepInstance = new JobStep();
+                                    result.JobSteps.Add(jobStepInstance);
                                     
                                     JToken operationStatusValue2 = objectsValue["OperationStatus"];
                                     if (operationStatusValue2 != null && operationStatusValue2.Type != JTokenType.Null)
                                     {
                                         string operationStatusInstance2 = ((string)operationStatusValue2);
-                                        managementBaseObjectInstance.OperationStatus = operationStatusInstance2;
+                                        jobStepInstance.OperationStatus = operationStatusInstance2;
                                     }
                                     
                                     JToken operationResultValue2 = objectsValue["OperationResult"];
                                     if (operationResultValue2 != null && operationResultValue2.Type != JTokenType.Null)
                                     {
                                         string operationResultInstance2 = ((string)operationResultValue2);
-                                        managementBaseObjectInstance.OperationResult = operationResultInstance2;
+                                        jobStepInstance.OperationResult = operationResultInstance2;
                                     }
                                     
                                     JToken messageValue2 = objectsValue["Message"];
                                     if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                     {
                                         string messageInstance2 = ((string)messageValue2);
-                                        managementBaseObjectInstance.Message = messageInstance2;
+                                        jobStepInstance.Message = messageInstance2;
                                     }
                                     
                                     JToken detailValue = objectsValue["Detail"];
                                     if (detailValue != null && detailValue.Type != JTokenType.Null)
                                     {
                                         string detailInstance = ((string)detailValue);
-                                        managementBaseObjectInstance.Detail = detailInstance;
+                                        jobStepInstance.Detail = detailInstance;
                                     }
                                 }
                             }
                             
-                            JToken errorCodeValue = bMSOperationStatusResponseValue["ErrorCode"];
+                            JToken errorCodeValue = responseDoc["ErrorCode"];
                             if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                             {
                                 string errorCodeInstance = ((string)errorCodeValue);
-                                bMSOperationStatusResponseInstance.ErrorCode = errorCodeInstance;
+                                result.ErrorCode = errorCodeInstance;
                             }
                         }
                         
