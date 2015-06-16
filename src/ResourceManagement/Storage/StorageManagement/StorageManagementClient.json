@@ -450,7 +450,8 @@
           "enum": [
             "AccountNameInvalid",
             "AlreadyExists"
-          ]
+          ],
+          "x-ms-enum": "Reason"
         },
         "message": {
           "type": "string",
@@ -470,7 +471,8 @@
             "StandardGRS",
             "StandardRAGRS",
             "PremiumLRS"
-          ]
+          ],
+          "x-ms-enum": "AccountType"
         }
       }
     },
@@ -528,7 +530,8 @@
             "StandardGRS",
             "StandardRAGRS",
             "PremiumLRS"
-          ]
+          ],
+          "x-ms-enum": "AccountType"
         },
         "primaryEndpoints": {
           "$ref": "#/definitions/Endpoints",
@@ -544,7 +547,8 @@
           "enum": [
             "Available",
             "Unavailable"
-          ]
+          ],
+          "x-ms-enum": "AccountStatus"
         },
         "lastGeoFailoverTime": {
           "type": "string",
@@ -561,7 +565,8 @@
           "enum": [
             "Available",
             "Unavailable"
-          ]
+          ],
+          "x-ms-enum": "AccountStatus"
         },
         "creationTime": {
           "type": "string",
@@ -631,7 +636,8 @@
             "StandardGRS",
             "StandardRAGRS",
             "PremiumLRS"
-          ]
+          ],
+          "x-ms-enum": "AccountType"
         },
         "customDomain": {
           "$ref": "#/definitions/CustomDomain",
@@ -659,7 +665,8 @@
           "enum": [
             "Key1",
             "Key2"
-          ]
+          ],
+          "x-ms-enum": "KeyName"
         }
       }
     },

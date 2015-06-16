@@ -12,16 +12,16 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountRegenerateKeyParameters
     {
         /// <summary>
+        /// Possible values for this property include: 'Key1', 'Key2'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        public KeyName? KeyName { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            //Nothing to validate
         }
     }
 }

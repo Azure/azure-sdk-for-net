@@ -38,7 +38,7 @@ namespace Storage.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? "North US" : "West US";
-        public static string DefaultAccountType = "Standard_GRS";
+        public static AccountType DefaultAccountType = AccountType.StandardGRS;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
             {
                 {"key1","value1"},
@@ -133,13 +133,13 @@ namespace Storage.Tests.Helpers
             Assert.NotNull(account.AccountType);
             Assert.NotNull(account.CreationTime);
 
-            Assert.Equal("Available", account.StatusOfPrimary);
+            Assert.Equal(AccountStatus.Available, account.StatusOfPrimary);
             Assert.Equal(account.Location, account.PrimaryLocation);
 
             Assert.NotNull(account.PrimaryEndpoints);
             Assert.NotNull(account.PrimaryEndpoints.Blob);
 
-            if (account.AccountType != "Standard_ZRS" && account.AccountType != "Premium_LRS")
+            if (account.AccountType != AccountType.StandardZRS && account.AccountType != AccountType.PremiumLRS)
             {
                 Assert.NotNull(account.PrimaryEndpoints.Queue);
                 Assert.NotNull(account.PrimaryEndpoints.Table);
@@ -150,23 +150,23 @@ namespace Storage.Tests.Helpers
 
             switch (account.AccountType)
             {
-                case "Standard_LRS":
-                case "Standard_ZRS":
-                case "Premium_LRS":
+                case AccountType.StandardLRS:
+                case AccountType.StandardZRS:
+                case AccountType.PremiumLRS:
                     Assert.Equal("", account.SecondaryLocation); // TODO: make null when service is fixed
                     Assert.Null(account.StatusOfSecondary);
                     Assert.Null(account.SecondaryEndpoints);
                     break;
-                case "Standard_RAGRS":
-                    Assert.Equal("Available", account.StatusOfSecondary);
+                case AccountType.StandardRAGRS:
+                    Assert.Equal(AccountStatus.Available, account.StatusOfSecondary);
                     Assert.NotNull(account.SecondaryLocation);
                     Assert.NotNull(account.SecondaryEndpoints);
                     Assert.NotNull(account.SecondaryEndpoints.Blob);
                     Assert.NotNull(account.SecondaryEndpoints.Queue);
                     Assert.NotNull(account.SecondaryEndpoints.Table);
                     break;
-                case "Standard_GRS":
-                    Assert.Equal("Available", account.StatusOfSecondary);
+                case AccountType.StandardGRS:
+                    Assert.Equal(AccountStatus.Available, account.StatusOfSecondary);
                     Assert.NotNull(account.SecondaryLocation);
                     Assert.Null(account.SecondaryEndpoints);
                     break;

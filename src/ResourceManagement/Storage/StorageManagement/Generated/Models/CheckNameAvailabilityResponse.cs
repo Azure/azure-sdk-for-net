@@ -22,9 +22,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the reason that a storage account name could not be used. The
         /// Reason element is only returned if NameAvailable is false.
+        /// Possible values for this property include: 'AccountNameInvalid',
+        /// 'AlreadyExists'
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
-        public string Reason { get; set; }
+        public Reason? Reason { get; set; }
 
         /// <summary>
         /// Gets an error message explaining the Reason value in more detail.
@@ -37,7 +39,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         public virtual void Validate()
         {
-            //Nothing to validate
         }
     }
 }

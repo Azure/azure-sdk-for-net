@@ -15,10 +15,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets the account type. Note that StandardZRS and
         /// PremiumLRS accounts cannot be changed to other account types, and
         /// other account types cannot be changed to StandardZRS or
-        /// PremiumLRS.
+        /// PremiumLRS. Possible values for this property include:
+        /// 'StandardLRS', 'StandardZRS', 'StandardGRS', 'StandardRAGRS',
+        /// 'PremiumLRS'
         /// </summary>
         [JsonProperty(PropertyName = "accountType")]
-        public string AccountType { get; set; }
+        public AccountType? AccountType { get; set; }
 
         /// <summary>
         /// User domain assigned to the storage account. Name is the CNAME

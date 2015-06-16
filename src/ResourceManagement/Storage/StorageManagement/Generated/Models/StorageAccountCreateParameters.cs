@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountCreateParameters : Resource
     {
         /// <summary>
-        /// Gets or sets the account type.
+        /// Gets or sets the account type. Possible values for this property
+        /// include: 'StandardLRS', 'StandardZRS', 'StandardGRS',
+        /// 'StandardRAGRS', 'PremiumLRS'
         /// </summary>
         [JsonProperty(PropertyName = "accountType")]
-        public string AccountType { get; set; }
+        public AccountType? AccountType { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccount : Resource
     {
         /// <summary>
-        /// Gets the type of the storage account.
+        /// Gets the type of the storage account. Possible values for this
+        /// property include: 'StandardLRS', 'StandardZRS', 'StandardGRS',
+        /// 'StandardRAGRS', 'PremiumLRS'
         /// </summary>
         [JsonProperty(PropertyName = "accountType")]
-        public string AccountType { get; set; }
+        public AccountType? AccountType { get; set; }
 
         /// <summary>
         /// Gets the URLs that are used to perform a retrieval of a public
@@ -33,10 +35,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets the status indicating whether the primary location of the
-        /// storage account is available or unavailable.
+        /// storage account is available or unavailable. Possible values for
+        /// this property include: 'Available', 'Unavailable'
         /// </summary>
         [JsonProperty(PropertyName = "statusOfPrimary")]
-        public string StatusOfPrimary { get; set; }
+        public AccountStatus? StatusOfPrimary { get; set; }
 
         /// <summary>
         /// Gets the timestamp of the most recent instance of a failover to
@@ -59,10 +62,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the status indicating whether the secondary location of the
         /// storage account is available or unavailable. Only available if
-        /// the accountType is StandardGRS or StandardRAGRS.
+        /// the accountType is StandardGRS or StandardRAGRS. Possible values
+        /// for this property include: 'Available', 'Unavailable'
         /// </summary>
         [JsonProperty(PropertyName = "statusOfSecondary")]
-        public string StatusOfSecondary { get; set; }
+        public AccountStatus? StatusOfSecondary { get; set; }
 
         /// <summary>
         /// Gets the creation date and time of the storage account in UTC.
