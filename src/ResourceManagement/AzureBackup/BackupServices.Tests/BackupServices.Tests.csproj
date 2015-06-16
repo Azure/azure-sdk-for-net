@@ -10,8 +10,8 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\VaultTestHelper.cs" />
+    <Compile Include="ScenarioTests\AzureBackupItemTests.cs" />
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
-    <Compile Include="ScenarioTests\JobsTests.cs" />
     <Compile Include="ScenarioTests\BackUpTests.cs" />
     <Compile Include="ScenarioTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
@@ -44,6 +44,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\EnableDisableAzureBackupProtectionTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemDSTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemPOTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsValidResponseTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.DisableAzureBackupProtectionTest\DisableAzureBackupProtection.json" />
