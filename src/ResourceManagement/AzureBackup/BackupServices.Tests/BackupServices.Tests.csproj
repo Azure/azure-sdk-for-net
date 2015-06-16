@@ -46,6 +46,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\EnableDsbaleAzureBackupProtectionTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemDSTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemPOTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsValidResponseTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json" />
