@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private IList<RecoveryPointInfo> _objects;
         
         /// <summary>
-        /// Optional. The ID of the source Server.
+        /// Optional. The definition of List of ProtectionPolicyInfo.
         /// </summary>
         public IList<RecoveryPointInfo> Objects
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private int _resultCount;
         
         /// <summary>
-        /// Optional. The ID of the source Server.
+        /// Optional. The definition of ResultCount.
         /// </summary>
         public int ResultCount
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         private string _skiptoken;
         
         /// <summary>
-        /// Optional. The ID of the source Server.
+        /// Optional. The definition of Skiptoken.
         /// </summary>
         public string Skiptoken
         {
