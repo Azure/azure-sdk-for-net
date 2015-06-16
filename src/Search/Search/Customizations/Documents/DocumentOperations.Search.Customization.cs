@@ -78,10 +78,7 @@ namespace Microsoft.Azure.Search
             where TDoc : class
         {
             // Validate
-            if (searchText == null)
-            {
-                throw new ArgumentNullException("searchText");
-            }
+            searchText = searchText ?? "*";
 
             if (searchParameters == null)
             {
@@ -187,6 +184,7 @@ namespace Microsoft.Azure.Search
                     {
                         DocumentSearchResponseFormat<TResult, TDoc> deserializedResult = deserialize(responseContent);
                         result.Count = deserializedResult.Count;
+                        result.Coverage = deserializedResult.Coverage;
                         result.Facets = deserializedResult.Facets;
                         result.Results = deserializedResult.Documents;
                         result.ContinuationToken =
@@ -230,6 +228,9 @@ namespace Microsoft.Azure.Search
         {
             [JsonProperty("@odata.count")]
             public long? Count { get; set; }
+
+            [JsonProperty("@search.coverage")]
+            public double? Coverage { get; set; }
 
             [JsonProperty("@search.facets")]
             public FacetResults Facets { get; set; }
