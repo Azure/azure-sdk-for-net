@@ -16,23 +16,14 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// HCatalog properties.
+    /// All available input partition options.
     /// </summary>
-    public class HCatalogProperties
+    public static class InputPartitionOption
     {
-        /// <summary>
-        /// The name of Azure SQL linked service.
-        /// </summary>
-        public string LinkedServiceName { get; set; }
+        public const string None = "None";
 
-        /// <summary>
-        /// Flag to indicate to recover partitions.
-        /// </summary>
-        public bool RecoverPartitions { get; set; }
+        public const string Recover = "Recover";
 
-        /// <summary>
-        /// Flag to indicate if alter schema should be performed.
-        /// </summary>
-        public bool AlterSchema { get; set; }
+        public const string CurrentSlice = "CurrentSlice";
     }
 }
