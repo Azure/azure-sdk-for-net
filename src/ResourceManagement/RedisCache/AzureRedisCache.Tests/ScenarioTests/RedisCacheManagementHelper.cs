@@ -70,16 +70,16 @@ namespace AzureRedisCache.Tests
                                     });
 
             RedisGetResponse response = redisClient.Redis.Get(resourceGroupName: resourceGroupName, name: cacheName);
-            ThrowIfTrue(!response.Id.Contains(cacheName), "Cache name not found inside Id.");
-            ThrowIfTrue(!response.Name.Equals(cacheName), string.Format("Cache name is not equal to {0}", cacheName));
-            ThrowIfTrue(!response.Properties.HostName.Contains(cacheName), "Cache name not found inside host name.");
+            ThrowIfTrue(!response.Resource.Id.Contains(cacheName), "Cache name not found inside Id.");
+            ThrowIfTrue(!response.Resource.Name.Equals(cacheName), string.Format("Cache name is not equal to {0}", cacheName));
+            ThrowIfTrue(!response.Resource.Properties.HostName.Contains(cacheName), "Cache name not found inside host name.");
 
             // wait for maximum 30 minutes for cache to create
             for (int i = 0; i < 60; i++)
             {
                 TestUtilities.Wait(new TimeSpan(0, 0, 30));
                 RedisGetResponse responseGet = redisClient.Redis.Get(resourceGroupName: resourceGroupName, name: cacheName);
-                if ("succeeded".Equals(responseGet.Properties.ProvisioningState, StringComparison.InvariantCultureIgnoreCase))
+                if ("succeeded".Equals(responseGet.Resource.Properties.ProvisioningState, StringComparison.InvariantCultureIgnoreCase))
                 {
                     break;
                 }
