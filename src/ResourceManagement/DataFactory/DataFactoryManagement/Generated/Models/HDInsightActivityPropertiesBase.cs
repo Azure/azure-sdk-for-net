@@ -31,6 +31,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public abstract partial class HDInsightActivityPropertiesBase
     {
+        private IList<string> _arguments;
+        
+        /// <summary>
+        /// Optional. User specified arguments to HDInsightActivity.
+        /// </summary>
+        public IList<string> Arguments
+        {
+            get { return this._arguments; }
+            set { this._arguments = value; }
+        }
+        
         private IList<string> _storageLinkedServices;
         
         /// <summary>
@@ -48,6 +59,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public HDInsightActivityPropertiesBase()
         {
+            this.Arguments = new LazyList<string>();
             this.StorageLinkedServices = new LazyList<string>();
         }
     }

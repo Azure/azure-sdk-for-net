@@ -370,13 +370,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         dataSliceRunInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken activityinputpropertiesSequenceElement = ((JToken)valueValue["activityinputproperties"]);
+                                    if (activityinputpropertiesSequenceElement != null && activityinputpropertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in activityinputpropertiesSequenceElement)
+                                        {
+                                            string activityinputpropertiesKey = ((string)property.Name);
+                                            string activityinputpropertiesValue = ((string)property.Value);
+                                            dataSliceRunInstance.ActivityInputProperties.Add(activityinputpropertiesKey, activityinputpropertiesValue);
+                                        }
+                                    }
+                                    
                                     JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                     if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in propertiesSequenceElement)
+                                        foreach (JProperty property2 in propertiesSequenceElement)
                                         {
-                                            string propertiesKey = ((string)property.Name);
-                                            string propertiesValue = ((string)property.Value);
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
                                             dataSliceRunInstance.Properties.Add(propertiesKey, propertiesValue);
                                         }
                                     }
@@ -766,13 +777,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                         dataSliceRunInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken activityinputpropertiesSequenceElement = ((JToken)valueValue["activityinputproperties"]);
+                                    if (activityinputpropertiesSequenceElement != null && activityinputpropertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in activityinputpropertiesSequenceElement)
+                                        {
+                                            string activityinputpropertiesKey = ((string)property.Name);
+                                            string activityinputpropertiesValue = ((string)property.Value);
+                                            dataSliceRunInstance.ActivityInputProperties.Add(activityinputpropertiesKey, activityinputpropertiesValue);
+                                        }
+                                    }
+                                    
                                     JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                     if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in propertiesSequenceElement)
+                                        foreach (JProperty property2 in propertiesSequenceElement)
                                         {
-                                            string propertiesKey = ((string)property.Name);
-                                            string propertiesValue = ((string)property.Value);
+                                            string propertiesKey = ((string)property2.Name);
+                                            string propertiesValue = ((string)property2.Value);
                                             dataSliceRunInstance.Properties.Add(propertiesKey, propertiesValue);
                                         }
                                     }

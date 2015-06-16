@@ -476,8 +476,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/datasources/";
+            url = url + "/datasources('";
             url = url + Uri.EscapeDataString(dataSource.Name);
+            url = url + "')";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
@@ -803,8 +804,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/datasources/";
+            url = url + "/datasources('";
             url = url + Uri.EscapeDataString(dataSourceName);
+            url = url + "')";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
@@ -935,8 +937,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/datasources/";
+            url = url + "/datasources('";
             url = url + Uri.EscapeDataString(dataSourceName);
+            url = url + "')";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
