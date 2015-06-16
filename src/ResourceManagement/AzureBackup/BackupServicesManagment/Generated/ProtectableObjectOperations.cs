@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Get the list of all Protectable Objects.
         /// </summary>
         /// <param name='parameters'>
-        /// Optional. Job query parameter.
+        /// Optional. Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.

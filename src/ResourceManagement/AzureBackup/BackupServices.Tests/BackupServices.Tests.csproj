@@ -50,6 +50,7 @@
     <None Include="SessionRecords\BackupServices.Tests.EnableAzureBackupProtectionTest\EnableAzureBackupProtection.json" />
     <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemPOTest\ListAzureBackupItemPOTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemsDSTest\ListAzureBackupItemDSTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.JobsTests\CancelJobTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\ListGetJobsTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\AddProtectionPolicyTest.json" />

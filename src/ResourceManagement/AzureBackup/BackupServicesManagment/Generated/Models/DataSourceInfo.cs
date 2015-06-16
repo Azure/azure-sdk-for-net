@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Container Info object.
+    /// The definition of a Datasource Info object.
     /// </summary>
     public partial class DataSourceInfo : ManagementResponseObject
     {

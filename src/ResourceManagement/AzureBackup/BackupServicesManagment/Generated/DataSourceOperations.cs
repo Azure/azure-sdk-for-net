@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Container to be register.
+        /// Required. Disable protection input.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -244,6 +244,8 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
+                            result.OperationId = operationIdInstance;
                         }
                         
                     }
@@ -283,7 +285,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Container to be register.
+        /// Required. Set protection request input.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -443,6 +445,8 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
+                            result.OperationId = operationIdInstance;
                         }
                         
                     }
@@ -476,7 +480,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all DataSpurce.
+        /// Get the list of all Datasources.
         /// </summary>
         /// <param name='parameters'>
         /// Optional. DataSource query parameter.

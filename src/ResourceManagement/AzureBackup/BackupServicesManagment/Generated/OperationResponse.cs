@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.BackupServices
         private Guid _operationId;
         
         /// <summary>
-        /// Optional. The Objects of the JobResponse.
+        /// Optional. The definition of OperationId.
         /// </summary>
         public Guid OperationId
         {

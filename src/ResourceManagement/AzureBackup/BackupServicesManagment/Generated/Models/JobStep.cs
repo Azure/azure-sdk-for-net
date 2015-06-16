@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Service resource base object without name.
+    /// Job steps
     /// </summary>
     public partial class JobStep : ManagementBaseObject
     {

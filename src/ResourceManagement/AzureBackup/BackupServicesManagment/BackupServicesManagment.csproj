@@ -35,6 +35,7 @@
     <Compile Include="Generated\JobQueryParameter.cs" />
     <Compile Include="Generated\JobResponse.cs" />
     <Compile Include="Generated\Models\AddProtectionPolicyRequest.cs" />
+    <Compile Include="Generated\Models\AzureBackupOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BackupSchedule.cs" />
     <Compile Include="Generated\Models\BMSOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\ContainerInfo.cs" />

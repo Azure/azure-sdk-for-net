@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Optional. Job query parameter.
+        /// Optional. Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Optional. Job query parameter.
+        /// Optional. Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.

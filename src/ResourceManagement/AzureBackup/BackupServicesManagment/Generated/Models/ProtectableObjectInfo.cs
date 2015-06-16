@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Container Info object.
+    /// The definition of a Protectable Object Info.
     /// </summary>
     public partial class ProtectableObjectInfo : ManagementResponseObject
     {

@@ -47,6 +47,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        Task<BMSOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureBackupOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

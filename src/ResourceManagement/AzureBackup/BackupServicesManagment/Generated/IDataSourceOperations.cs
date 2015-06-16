@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Request header parameters.
         /// </param>
         /// <param name='parameters'>
-        /// Container to be register.
+        /// Disable protection input.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Request header parameters.
         /// </param>
         /// <param name='parameters'>
-        /// Container to be register.
+        /// Set protection request input.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.BackupServices
         Task<OperationResponse> EnableProtectionAsync(CustomRequestHeaders customRequestHeaders, SetProtectionRequestInput parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list of all DataSpurce.
+        /// Get the list of all Datasources.
         /// </summary>
         /// <param name='parameters'>
         /// DataSource query parameter.
