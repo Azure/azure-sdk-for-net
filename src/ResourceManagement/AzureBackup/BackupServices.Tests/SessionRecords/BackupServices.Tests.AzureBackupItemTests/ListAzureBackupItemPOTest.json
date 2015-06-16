@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backupseadev01/BackupVault/backuprn/protectableobjects?api-version=2014-09-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3Vwc2VhZGV2MDEvQmFja3VwVmF1bHQvYmFja3Vwcm4vcHJvdGVjdGFibGVvYmplY3RzP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept-Language": [
+          "en-us"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Objects\": [\r\n    {\r\n      \"FriendlyName\": \"dev01Testing\",\r\n      \"Type\": \"VM\",\r\n      \"ProtectionStatus\": \"Protected\",\r\n      \"ContainerName\": \"iaasvmcontainer;dev01testing;dev01testing\",\r\n      \"ContainerFriendlyName\": \"dev01Testing\",\r\n      \"ContainerType\": \"IaasVMContainer\",\r\n      \"ParentContainerName\": \"dev01Testing\",\r\n      \"ParentContainerFriendlyName\": \"dev01Testing\",\r\n      \"ParentContainerType\": \"IaasVMServiceContainer\",\r\n      \"InstanceId\": \"iaasvmcontainer;dev01testing;dev01testing\",\r\n      \"Name\": \"iaasvmcontainer;dev01testing;dev01testing\",\r\n      \"OperationInProgress\": false\r\n    },\r\n    {\r\n      \"FriendlyName\": \"mkheranivmps05\",\r\n      \"Type\": \"VM\",\r\n      \"ProtectionStatus\": \"NotProtected\",\r\n      \"ContainerName\": \"iaasvmcontainer;mkheranivmps02;mkheranivmps05\",\r\n      \"ContainerFriendlyName\": \"mkheranivmps05\",\r\n      \"ContainerType\": \"IaasVMContainer\",\r\n      \"ParentContainerName\": \"mkheranivmps02\",\r\n      \"ParentContainerFriendlyName\": \"mkheranivmps02\",\r\n      \"ParentContainerType\": \"IaasVMServiceContainer\",\r\n      \"InstanceId\": \"iaasvmcontainer;mkheranivmps02;mkheranivmps05\",\r\n      \"Name\": \"iaasvmcontainer;mkheranivmps02;mkheranivmps05\",\r\n      \"OperationInProgress\": false\r\n    }\r\n  ],\r\n  \"ResultCount\": 2,\r\n  \"Skiptoken\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1015"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "40473922-3d62-4893-a8bd-f62e1ce583e8"
+        ],
+        "x-ms-client-request-id": [
+          "fa37c5ef-6482-40df-8081-a04b32d50b19",
+          "fa37c5ef-6482-40df-8081-a04b32d50b19"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "40473922-3d62-4893-a8bd-f62e1ce583e8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150616T081901Z:40473922-3d62-4893-a8bd-f62e1ce583e8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 16 Jun 2015 08:19:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}
