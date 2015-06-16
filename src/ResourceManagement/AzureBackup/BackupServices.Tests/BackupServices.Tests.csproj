@@ -14,6 +14,7 @@
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
     <Compile Include="ScenarioTests\BackUpTests.cs" />
     <Compile Include="ScenarioTests\ContainerTests.cs" />
+    <Compile Include="ScenarioTests\JobsTests.cs" />
     <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
     <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\VaultTests.cs" />
