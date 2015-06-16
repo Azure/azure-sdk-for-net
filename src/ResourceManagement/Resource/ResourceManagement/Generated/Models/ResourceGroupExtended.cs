@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Microsoft.Rest;
-using Microsoft.Rest.Serialization;
-using Microsoft.Azure;
-
 namespace Microsoft.Azure.Management.Resources.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Microsoft.Azure;
+
     /// <summary>
     /// </summary>
     public partial class ResourceGroupExtended
@@ -43,12 +43,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource group provisioning state.
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

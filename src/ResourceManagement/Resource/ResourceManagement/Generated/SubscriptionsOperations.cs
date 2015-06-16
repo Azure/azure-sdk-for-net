@@ -1,19 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest;
-using Newtonsoft.Json;
-using Microsoft.Azure;
-using Microsoft.Azure.Subscriptions.Models;
-
 namespace Microsoft.Azure.Subscriptions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using Microsoft.Azure;
+    using Models;
+
     internal partial class SubscriptionsOperations : IServiceOperations<SubscriptionClient>, ISubscriptionsOperations
     {
         /// <summary>
@@ -61,7 +61,6 @@ namespace Microsoft.Azure.Subscriptions
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(subscriptionId));
             List<string> queryParameters = new List<string>();
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -147,7 +146,6 @@ namespace Microsoft.Azure.Subscriptions
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             List<string> queryParameters = new List<string>();
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)

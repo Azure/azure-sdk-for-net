@@ -1,21 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest;
-using Newtonsoft.Json;
-using Microsoft.Azure.OData;
-using System.Linq.Expressions;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
-
 namespace Microsoft.Azure.Management.Resources
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
+    using Microsoft.Azure;
+    using Models;
+
     internal partial class ManagementLocksOperations : IServiceOperations<AuthorizationClient>, IManagementLocksOperations
     {
         /// <summary>
@@ -83,6 +83,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
@@ -240,6 +244,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -388,6 +396,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -488,6 +500,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
             List<string> queryParameters = new List<string>();
@@ -591,6 +607,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
             List<string> queryParameters = new List<string>();
@@ -674,6 +694,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
             List<string> queryParameters = new List<string>();
@@ -781,6 +805,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Authorization/locks/{lockName}";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroup}", Uri.EscapeDataString(resourceGroup));
             url = url.Replace("{lockName}", Uri.EscapeDataString(lockName));
@@ -869,6 +897,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/locks";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             List<string> queryParameters = new List<string>();
@@ -1003,6 +1035,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
@@ -1105,7 +1141,6 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//{nextLink}";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -1195,6 +1230,10 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/providers/Microsoft.Authorization/locks";
+            if (this.Client.Credentials == null)
+            {
+                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
+            }
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (filter != null)
@@ -1291,7 +1330,6 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = "{nextLink}";       
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
@@ -1383,7 +1421,6 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = "{nextLink}";       
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
@@ -1475,7 +1512,6 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = "{nextLink}";       
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)
@@ -1567,7 +1603,6 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = "{nextLink}";       
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{nextLink}", nextLink);
             List<string> queryParameters = new List<string>();
             if (queryParameters.Count > 0)

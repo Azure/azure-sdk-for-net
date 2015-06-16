@@ -1,23 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest;
-using Microsoft.Rest.Serialization;
-using Newtonsoft.Json;
-using Microsoft.Azure.OData;
-using System.Linq.Expressions;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
-
 namespace Microsoft.Azure.Management.Resources
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
+    using Microsoft.Azure;
+    using Models;
+
     /// <summary>
     /// </summary>
     public partial class ResourceManagementClient : ServiceClient<ResourceManagementClient>, IResourceManagementClient, IAzureClient
@@ -47,11 +47,6 @@ namespace Microsoft.Azure.Management.Resources
         /// subscription.
         /// </summary>
         public SubscriptionCloudCredentials Credentials { get; set; }
-
-        /// <summary>
-        /// The initial timeout for Long Running Operations.
-        /// </summary>
-        public int? LongRunningOperationInitialTimeout { get; set; }
 
         /// <summary>
         /// The retry timeout for Long Running Operations.
@@ -195,6 +190,7 @@ namespace Microsoft.Azure.Management.Resources
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
+            SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings = new JsonSerializerSettings{
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,

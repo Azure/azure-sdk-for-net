@@ -31,7 +31,7 @@
             "required": true,
             "type": "string",
             "description": "Id of the subscription.",
-            "x-global-parameter": false
+            "x-ms-global-parameter": false
           },
           {
             "name": "api-version",
@@ -188,7 +188,7 @@
           "description": "Resource Id"
         }
       },
-      "x-external": true
+      "x-ms-external": true
     }
   }
 }

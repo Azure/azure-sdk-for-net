@@ -47,7 +47,7 @@
             }
           }
         },
-        "x-pageable": true
+        "x-ms-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features": {
@@ -87,7 +87,7 @@
             }
           }
         },
-        "x-pageable": true
+        "x-ms-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}": {
@@ -276,7 +276,7 @@
           "description": "Resource Id"
         }
       },
-      "x-external": true
+      "x-ms-external": true
     }
   }
 }

@@ -133,7 +133,7 @@
             }
           }
         },
-        "x-pageable": true
+        "x-ms-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}": {
@@ -227,8 +227,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/GenericResourceExtendedFilter"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/GenericResourceExtendedFilter"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}": {
@@ -357,7 +357,7 @@
             "description": ""
           }
         },
-        "x-long-running-operation": true
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -488,8 +488,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/ResourceGroupExtendedFilter"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/ResourceGroupExtendedFilter"
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources": {
@@ -582,8 +582,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/GenericResourceExtendedFilter"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/GenericResourceExtendedFilter"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}": {
@@ -621,7 +621,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -629,7 +629,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -643,7 +643,7 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "x-global-parameter": false
+            "x-ms-global-parameter": false
           }
         ],
         "responses": {
@@ -689,7 +689,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -697,7 +697,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -711,7 +711,7 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "x-global-parameter": false
+            "x-ms-global-parameter": false
           }
         ],
         "responses": {
@@ -760,7 +760,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -768,7 +768,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -782,7 +782,7 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "x-global-parameter": false
+            "x-ms-global-parameter": false
           },
           {
             "name": "parameters",
@@ -843,7 +843,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceType",
@@ -851,7 +851,7 @@
             "required": true,
             "type": "string",
             "description": "Resource identity.",
-            "x-skip-url-encoding": true
+            "x-ms-skip-url-encoding": true
           },
           {
             "name": "resourceName",
@@ -865,7 +865,7 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "x-global-parameter": false
+            "x-ms-global-parameter": false
           }
         ],
         "responses": {
@@ -1092,7 +1092,7 @@
             }
           }
         },
-        "x-pageable": true
+        "x-ms-pageable": true
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations/{operationId}": {
@@ -1200,7 +1200,7 @@
             }
           }
         },
-        "x-pageable": true
+        "x-ms-pageable": true
       }
     },
     "/providers/{resourceProviderNamespace}/operations": {
@@ -1223,7 +1223,7 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "x-global-parameter": false
+            "x-ms-global-parameter": false
           }
         ],
         "responses": {
@@ -1509,8 +1509,8 @@
             }
           }
         },
-        "x-pageable": true,
-        "x-odata": "#/definitions/DeploymentExtendedFilter"
+        "x-ms-pageable": true,
+        "x-ms-odata": "#/definitions/DeploymentExtendedFilter"
       }
     }
   },
@@ -1625,12 +1625,7 @@
       "description": "List of resource providers."
     },
     "ResourceJsonFormat.ResourceProperties": {
-      "properties": {
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource provisioning state."
-        }
-      },
+      "properties": {},
       "description": "The resource properties."
     },
     "Plan": {
@@ -1704,21 +1699,12 @@
             "type": "string"
           },
           "description": "Gets or sets the tags attached to the resource group."
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
         }
       },
       "description": "Resource group information."
     },
     "ResourceGroupJsonFormat.ResourceProperties": {
-      "properties": {
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
-        }
-      },
+      "properties": {},
       "description": "The resource group properties."
     },
     "ResourceGroupExtended": {
@@ -1745,10 +1731,6 @@
             "type": "string"
           },
           "description": "Gets or sets the tags attached to the resource group."
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
         }
       },
       "description": "Resource group information."
@@ -1892,10 +1874,6 @@
     },
     "DeploymentOperationProperties": {
       "properties": {
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets the state of the provisioning."
-        },
         "timestamp": {
           "type": "string",
           "format": "date-time",
@@ -2132,10 +2110,6 @@
     },
     "DeploymentPropertiesExtended": {
       "properties": {
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets the state of the provisioning."
-        },
         "correlationId": {
           "type": "string",
           "description": "Gets or sets the correlation ID of the deployment."
@@ -2242,7 +2216,7 @@
           "description": "Resource Id"
         }
       },
-      "x-external": true
+      "x-ms-external": true
     }
   }
 }

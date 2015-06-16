@@ -1,21 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest;
-using Newtonsoft.Json;
-using Microsoft.Azure.OData;
-using System.Linq.Expressions;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
-
 namespace Microsoft.Azure.Management.Resources
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
+    using Microsoft.Azure;
+    using Models;
+
     internal partial class ResourceProviderOperationDetailsOperations : IServiceOperations<ResourceManagementClient>, IResourceProviderOperationDetailsOperations
     {
         /// <summary>
@@ -70,7 +70,6 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//providers/{resourceProviderNamespace}/operations";
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
             List<string> queryParameters = new List<string>();
             if (apiVersion != null)
