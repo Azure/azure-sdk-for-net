@@ -30,7 +30,7 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void CanRegisterLinkedServiceType()
         {
-            this.Client.RegisterType<MyLinkedServiceType>();
+            this.Client.RegisterType<MyLinkedServiceType>(true);
 
             Assert.True(
                 this.Client.TypeIsRegistered<MyLinkedServiceType>(),
@@ -53,9 +53,9 @@ namespace DataFactory.Tests.UnitTests
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringLinkedServiceTypeTwiceThrowsException()
+        public void RegisteringLinkedServiceTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.RegisterType<MyLinkedServiceType>();
+            this.Client.RegisterType<MyLinkedServiceType>(true);
 
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
                 () => this.Client.RegisterType<MyLinkedServiceType>());

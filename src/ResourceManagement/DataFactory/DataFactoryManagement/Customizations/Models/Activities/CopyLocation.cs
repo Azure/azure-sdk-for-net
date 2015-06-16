@@ -17,7 +17,7 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public abstract class CopyLocation : IRegisteredType
+    public abstract class CopyLocation : IRegisteredTypeInternal
     {
     }
 }

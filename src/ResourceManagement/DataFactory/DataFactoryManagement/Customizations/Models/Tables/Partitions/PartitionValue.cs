@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// The value of a partition.
     /// </summary>
-    public abstract class PartitionValue : IRegisteredType
+    public abstract class PartitionValue : IRegisteredTypeInternal
     {
     }
 }

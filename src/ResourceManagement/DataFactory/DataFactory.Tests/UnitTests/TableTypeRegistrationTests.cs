@@ -30,7 +30,7 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void CanRegisterTableType()
         {
-            this.Client.RegisterType<MyTableType>();
+            this.Client.RegisterType<MyTableType>(true);
 
             Assert.True(
                 this.Client.TypeIsRegistered<MyTableType>(),
@@ -55,9 +55,9 @@ namespace DataFactory.Tests.UnitTests
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringTableTypeTwiceThrowsException()
+        public void RegisteringTableTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.RegisterType<MyTableType>();
+            this.Client.RegisterType<MyTableType>(true);
 
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.Client.RegisterType<MyTableType>());

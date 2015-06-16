@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.DataFactories
     {
         internal PipelineConverter Converter { get; set; }
 
-        internal void RegisterType<T>()
+        internal void RegisterType<T>(bool force = false)
         {
-            this.Converter.RegisterType<T>(typeof(Activity));
+            this.Converter.RegisterType<T>(force, typeof(Activity));
         }
 
         internal bool TypeIsRegistered<T>() 

@@ -30,7 +30,7 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void CanRegisterActivityTypeForPipeline()
         {
-            this.Client.RegisterType<MyActivityType>();
+            this.Client.RegisterType<MyActivityType>(true);
 
             Assert.True(
                 this.Client.TypeIsRegistered<MyActivityType>(),

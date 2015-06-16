@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.DataFactories
     {
         internal LinkedServiceConverter Converter { get; set; }
 
-        internal void RegisterType<T>() 
+        internal void RegisterType<T>(bool force = false) 
         {
-            this.Converter.RegisterType<T>(typeof(LinkedService));
+            this.Converter.RegisterType<T>(force, typeof(LinkedService));
         }
 
         internal bool TypeIsRegistered<T>() 

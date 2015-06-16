@@ -16,13 +16,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-
-using Microsoft.Azure.Management.DataFactories.Models;
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using IRegisteredType = Microsoft.Azure.Management.DataFactories.Registration.Models.IRegisteredType;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
@@ -30,21 +26,23 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
     /// Used to de/serialize any polymorphic types inside the typeProperties section of a resource. 
     /// </summary>
     internal class GenericRegisteredTypeConverter<TRegistered> : PolymorphicTypeConverter<TRegistered> 
-        where TRegistered : IRegisteredType
+        where TRegistered : IRegisteredTypeInternal
     {
-        protected IDictionary<string, Type> TypeMap { get; set; }
+        protected static IDictionary<string, Type> TypeMap { get; set; }
 
-        public GenericRegisteredTypeConverter()
+        static GenericRegisteredTypeConverter()
         {
-            this.TypeMap = new Dictionary<string, Type>();
+            TypeMap = new Dictionary<string, Type>();
         }
 
         /// <summary>
         /// Registers a type for conversion inside the TypeProperties of an ADF resource.
         /// </summary>
         /// <typeparam name="T">The type to register.</typeparam>
+        /// <param name="force">If true, register the type <typeparamref name="T"/> 
+        /// even if it has already been registered.</param>
         /// <param name="wrapperType">The type to use for displaying any error messages.</param>
-        public virtual void RegisterType<T>(Type wrapperType = null)
+        public virtual void RegisterType<T>(bool force, Type wrapperType = null)
         {
             this.EnsureIsAssignableRegisteredType<T>();
 
@@ -61,16 +59,23 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                         typeName));
             }
 
-            if (this.TypeMap.ContainsKey(typeName))
+            if (TypeMap.ContainsKey(typeName))
             {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "A {0} type with the name '{1}' is already registered.",
-                        wrapperTypeName,
-                        typeName));
+                if (force)
+                {
+                    TypeMap.Remove(typeName);
+                }
+                else
+                {
+                    throw new InvalidOperationException(string.Format(
+                            CultureInfo.InvariantCulture,
+                            "A {0} type with the name '{1}' is already registered.",
+                            wrapperTypeName,
+                            typeName));
+                }
             }
 
-            this.TypeMap.Add(typeName, type);
+            TypeMap.Add(typeName, type);
         }
 
         public bool TypeIsRegistered<T>()
@@ -78,12 +83,41 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             this.EnsureIsAssignableRegisteredType<T>();
 
             string typeName = typeof(T).Name;
-            return ReservedTypes.ContainsKey(typeName) || this.TypeMap.ContainsKey(typeName);
+            return ReservedTypes.ContainsKey(typeName) || TypeMap.ContainsKey(typeName);
         }
 
         public bool TryGetRegisteredType(string typeName, out Type type)
         {
-            return ReservedTypes.TryGetValue(typeName, out type) || this.TypeMap.TryGetValue(typeName, out type);
+            return ReservedTypes.TryGetValue(typeName, out type) || TypeMap.TryGetValue(typeName, out type);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            JObject obj = JObject.Load(reader);
+
+            JToken token;
+            if (!obj.TryGetTypeProperty(out token))
+            {
+                throw new InvalidOperationException(string.Format(
+                        CultureInfo.InvariantCulture,
+                        "Could not find a string property '{0}' for the following JSON: {1}",
+                        DataFactoryConstants.KeyPolymorphicType,
+                        obj));
+            }
+
+            Type type;
+            if (!this.TryGetRegisteredType(token.ToString(), out type))
+            {
+                throw new InvalidOperationException(string.Format(
+                        CultureInfo.InvariantCulture,
+                        "There is no type available with the name '{0}'.",
+                        token));
+            }
+
+            TRegistered target = (TRegistered)Activator.CreateInstance(type);
+            serializer.Populate(obj.CreateReader(), target);
+
+            return target;
         }
 
         protected virtual void EnsureIsAssignableRegisteredType<T>()
@@ -99,5 +133,5 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                         typeof(TRegistered).FullName));
             }
         }
-    }
+    } 
 }

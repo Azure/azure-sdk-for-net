@@ -21,7 +21,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public abstract class TypeProperties : IRegisteredType
+    public abstract class TypeProperties : IRegisteredTypeInternal
     {
         protected TypeProperties()
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                     {
                         Converters = Converters(), 
                         NullValueHandling = NullValueHandling.Ignore, 
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(), 
+                        ReferenceLoopHandling = ReferenceLoopHandling.Serialize
                     });
         }
 
@@ -54,7 +55,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
                        {
                            new TypePropertiesConverter(), new GenericRegisteredTypeConverter<StorageFormat>(), 
                            new GenericRegisteredTypeConverter<PartitionValue>(), new GenericRegisteredTypeConverter<CopyLocation>(),
-                           new GenericRegisteredTypeConverter<CopyTranslator>(), new GenericRegisteredTypeConverter<Compression>()
+                           new GenericRegisteredTypeConverter<CopyTranslator>(), new GenericRegisteredTypeConverter<Compression>(), 
+                           DataFactoryManagementClient.GenericConverter
                        };
         }
     }

@@ -22,6 +22,7 @@ using DataFactory.Tests.Framework.JsonSamples;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
 using Xunit;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
@@ -151,7 +152,7 @@ namespace DataFactory.Tests.UnitTests
     }
 }";
 
-            this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>();
+            this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>(true);
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
         }
@@ -177,7 +178,7 @@ namespace DataFactory.Tests.UnitTests
     }
 }";
 
-            this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>();
+            this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>(true);
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
             Assert.Contains("is required", ex.Message);
@@ -208,7 +209,7 @@ namespace DataFactory.Tests.UnitTests
     }
 }";
 
-            this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>();
+            this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>(true);
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
         }
@@ -233,12 +234,53 @@ namespace DataFactory.Tests.UnitTests
     }
 }";
 
-            this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>();
+            this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>(true);
 
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
             Assert.Contains("is required", ex.Message);
         }
+
+
+        public class MyLsType : LinkedServiceTypeProperties
+        {
+            public MyType Poly { get; set; }
+        }
+
+        public abstract class Subtype : IRegisteredType { }
+
+        public class MyType : Subtype
+        {
+            public int NumberValue { get; set; }
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void GenericTypeTest()
+        {
+            // clusterUri, userName and password are required
+            string json = @"{
+    name: ""Test-BYOC-HDInsight-linkedService"",
+    properties:
+    {
+        type: ""MyLsType"",
+        typeProperties:
+        {
+            poly: {
+                type: ""MyType"", 
+                numberValue: 1
+            }
+        }
+    }
+}
+";
+            this.Client.RegisterType<MyLsType>(true);
+            this.Client.RegisterType<MyType>(true);
+            this.TestLinkedServiceValidation(json);
+            this.TestLinkedServiceJson(json);
+        }
+
 #endif 
 
         #endregion Tests

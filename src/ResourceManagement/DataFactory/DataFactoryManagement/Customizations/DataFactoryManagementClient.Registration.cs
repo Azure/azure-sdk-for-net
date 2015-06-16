@@ -14,36 +14,45 @@
 //
 
 using System;
+using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
-using IRegisteredType = Microsoft.Azure.Management.DataFactories.Registration.Models.IRegisteredType;
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
     public partial class DataFactoryManagementClient
     {
-        internal void RegisterType<T>() where T : IRegisteredType
+        internal static GenericRegisteredTypeConverter<IRegisteredType> GenericConverter  { get; set; }
+
+        static DataFactoryManagementClient()
+        {
+            GenericConverter = new GenericRegisteredTypeConverter<IRegisteredType>();
+        }
+
+        internal void RegisterType<T>(bool force = false) where T : IRegisteredTypeInternal
         {
             Type type = typeof(T);
 
+            // TODO bgold09: allow registration of CopyLocation, etc. from friend assemblies
             if (typeof(LinkedServiceTypeProperties).IsAssignableFrom(type))
             {
-                ((LinkedServiceOperations)this.LinkedServices).RegisterType<T>();
+                ((LinkedServiceOperations)this.LinkedServices).RegisterType<T>(force);
             }
             else if (typeof(TableTypeProperties).IsAssignableFrom(type))
             {
-                ((TableOperations)this.Tables).RegisterType<T>();
+                ((TableOperations)this.Tables).RegisterType<T>(force);
             }
-            else if (typeof(ActivityTypeProperties).IsAssignableFrom(type))
+            else if (typeof(Models.ActivityTypeProperties).IsAssignableFrom(type))
             {
-                ((PipelineOperations)this.Pipelines).RegisterType<T>();
+                ((PipelineOperations)this.Pipelines).RegisterType<T>(force);
             }
             else
             {
-                throw new NotImplementedException();
+                GenericConverter.RegisterType<T>(force);
             }
         }
 
-        internal bool TypeIsRegistered<T>() where T : IRegisteredType
+        internal bool TypeIsRegistered<T>() where T : IRegisteredTypeInternal
         {
             Type type = typeof(T);
 
@@ -51,18 +60,18 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 return ((LinkedServiceOperations)this.LinkedServices).TypeIsRegistered<T>();
             }
-            else if (typeof(TableTypeProperties).IsAssignableFrom(type))
+
+            if (typeof(TableTypeProperties).IsAssignableFrom(type))
             {
                 return ((TableOperations)this.Tables).TypeIsRegistered<T>();
             }
-            else if (typeof(ActivityTypeProperties).IsAssignableFrom(type))
+
+            if (typeof(Models.ActivityTypeProperties).IsAssignableFrom(type))
             {
                 return ((PipelineOperations)this.Pipelines).TypeIsRegistered<T>();
             }
-            else
-            {
-                return false;
-            }
+
+            return GenericConverter.TypeIsRegistered<T>();
         }
     }
 }
