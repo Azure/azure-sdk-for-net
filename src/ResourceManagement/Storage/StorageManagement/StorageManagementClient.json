@@ -466,11 +466,11 @@
           "type": "string",
           "description": "Gets or sets the account type.",
           "enum": [
-            "StandardLRS",
-            "StandardZRS",
-            "StandardGRS",
-            "StandardRAGRS",
-            "PremiumLRS"
+            "Standard_LRS",
+            "Standard_ZRS",
+            "Standard_GRS",
+            "Standard_RAGRS",
+            "Premium_LRS"
           ],
           "x-ms-enum": "AccountType"
         }
@@ -525,11 +525,11 @@
           "type": "string",
           "description": "Gets the type of the storage account.",
           "enum": [
-            "StandardLRS",
-            "StandardZRS",
-            "StandardGRS",
-            "StandardRAGRS",
-            "PremiumLRS"
+            "Standard_LRS",
+            "Standard_ZRS",
+            "Standard_GRS",
+            "Standard_RAGRS",
+            "Premium_LRS"
           ],
           "x-ms-enum": "AccountType"
         },
@@ -631,11 +631,11 @@
           "type": "string",
           "description": "Gets or sets the account type. Note that StandardZRS and PremiumLRS accounts cannot be changed to other account types, and other account types cannot be changed to StandardZRS or PremiumLRS.",
           "enum": [
-            "StandardLRS",
-            "StandardZRS",
-            "StandardGRS",
-            "StandardRAGRS",
-            "PremiumLRS"
+            "Standard_LRS",
+            "Standard_ZRS",
+            "Standard_GRS",
+            "Standard_RAGRS",
+            "Premium_LRS"
           ],
           "x-ms-enum": "AccountType"
         },
@@ -663,8 +663,8 @@
         "keyName": {
           "type": "string",
           "enum": [
-            "Key1",
-            "Key2"
+            "key1",
+            "key2"
           ],
           "x-ms-enum": "KeyName"
         }

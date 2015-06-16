@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccountRegenerateKeyParameters
     {
         /// <summary>
-        /// Possible values for this property include: 'Key1', 'Key2'
+        /// Possible values for this property include: 'key1', 'key2'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public KeyName? KeyName { get; set; }

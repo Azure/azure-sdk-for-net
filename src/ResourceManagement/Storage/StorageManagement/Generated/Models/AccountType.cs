@@ -10,15 +10,15 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AccountType
     {
-        [EnumMember(Value = "StandardLRS")]
+        [EnumMember(Value = "Standard_LRS")]
         StandardLRS,
-        [EnumMember(Value = "StandardZRS")]
+        [EnumMember(Value = "Standard_ZRS")]
         StandardZRS,
-        [EnumMember(Value = "StandardGRS")]
+        [EnumMember(Value = "Standard_GRS")]
         StandardGRS,
-        [EnumMember(Value = "StandardRAGRS")]
+        [EnumMember(Value = "Standard_RAGRS")]
         StandardRAGRS,
-        [EnumMember(Value = "PremiumLRS")]
+        [EnumMember(Value = "Premium_LRS")]
         PremiumLRS
     }
 }

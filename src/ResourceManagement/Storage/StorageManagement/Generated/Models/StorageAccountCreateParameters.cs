@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     {
         /// <summary>
         /// Gets or sets the account type. Possible values for this property
-        /// include: 'StandardLRS', 'StandardZRS', 'StandardGRS',
-        /// 'StandardRAGRS', 'PremiumLRS'
+        /// include: 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS',
+        /// 'Standard_RAGRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "accountType")]
         public AccountType? AccountType { get; set; }

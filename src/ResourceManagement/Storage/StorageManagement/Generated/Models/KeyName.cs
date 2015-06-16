@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum KeyName
     {
-        [EnumMember(Value = "Key1")]
+        [EnumMember(Value = "key1")]
         Key1,
-        [EnumMember(Value = "Key2")]
+        [EnumMember(Value = "key2")]
         Key2
     }
 }

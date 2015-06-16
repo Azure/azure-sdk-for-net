@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// PremiumLRS accounts cannot be changed to other account types, and
         /// other account types cannot be changed to StandardZRS or
         /// PremiumLRS. Possible values for this property include:
-        /// 'StandardLRS', 'StandardZRS', 'StandardGRS', 'StandardRAGRS',
-        /// 'PremiumLRS'
+        /// 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS', 'Standard_RAGRS',
+        /// 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "accountType")]
         public AccountType? AccountType { get; set; }
