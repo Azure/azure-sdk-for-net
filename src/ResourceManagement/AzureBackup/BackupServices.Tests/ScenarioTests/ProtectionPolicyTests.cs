@@ -74,8 +74,8 @@ namespace BackupServices.Tests
                 updateProtectionPolicyRequest.PolicyName = ConfigurationManager.AppSettings["ModifiedPolicyName"];
                 string policyId = ConfigurationManager.AppSettings["PolicyId"];
                 updateProtectionPolicyRequest.Schedule = backupSchedule; var response = client.ProtectionPolicy.Update(policyId, updateProtectionPolicyRequest, GetCustomRequestHeaders());
-
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                var isSuccess = (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted) ? true : false;
+                Assert.Equal(true, isSuccess);
             }
         }
 
