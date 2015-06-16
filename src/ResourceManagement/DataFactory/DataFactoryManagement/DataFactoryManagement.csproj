@@ -12,6 +12,9 @@
     <NuGetPackageImportStamp>0be9922d</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <PropertyGroup>
+    <DefineConstants>ADF_INTERNAL</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\GenericCompression.cs" />
@@ -208,8 +211,7 @@
     <Compile Include="Customizations\Operations\Tables\TableOperations.cs" />
     <Compile Include="Customizations\Operations\Tables\TableOperationsExtensions.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Customization.cs" />
-    <Compile Include="Generated\**\*.cs" Condition="'$(ADF_INTERNAL)'!='true'" />
-    <Compile Include="GeneratedInternal\**\*.cs" Condition="'$(ADF_INTERNAL)'=='true'" />
+    <Compile Include="GeneratedInternal\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec">
