@@ -8,6 +8,7 @@
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>
     <ProjectGuid>{BE9D7270-27CB-45EB-BD26-FEA68087E835}</ProjectGuid>
+    <RootNamespace>Resource.Tests</RootNamespace>
     <AssemblyName>Resource.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />

@@ -18,7 +18,7 @@ namespace Networks.Tests
                     {
                        {"key","value"}
                     },
-                PublicIpAllocationMethod = IpAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = "Dynamic",
                 DnsSettings = new PublicIpAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
@@ -27,11 +27,10 @@ namespace Networks.Tests
 
             // Put nic1PublicIpAddress
             var putPublicIpAddressResponse = nrpClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, name, publicIp);
-            Assert.Equal(HttpStatusCode.OK, putPublicIpAddressResponse.StatusCode);
-            Assert.Equal("Succeeded", putPublicIpAddressResponse.Status);
+            Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
             var getPublicIpAddressResponse = nrpClient.PublicIpAddresses.Get(resourceGroupName, name);
 
-            return getPublicIpAddressResponse.PublicIpAddress;
+            return getPublicIpAddressResponse;
         }
 
         public static NetworkInterface CreateNetworkInterface(
@@ -56,7 +55,7 @@ namespace Networks.Tests
                     new NetworkInterfaceIpConfiguration()
                     {
                          Name = ipConfigName,
-                         PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
+                         PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
                          
                          Subnet = new ResourceId()
                          {
