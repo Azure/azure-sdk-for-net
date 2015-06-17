@@ -114,6 +114,17 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._databaseActivation; }
         }
         
+        private IDatabaseBackupOperations _backup;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// restore points. Contains operations to: List restore points.
+        /// </summary>
+        public virtual IDatabaseBackupOperations Backup
+        {
+            get { return this._backup; }
+        }
+        
         private IDatabaseOperations _databases;
         
         /// <summary>
@@ -252,6 +263,7 @@ namespace Microsoft.Azure.Management.Sql
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
+            this._backup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
@@ -330,6 +342,7 @@ namespace Microsoft.Azure.Management.Sql
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
+            this._backup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
