@@ -626,7 +626,7 @@ namespace Microsoft.Azure.Management.Network
                             
                             if (requestRoutingRulesItem.RuleType != null)
                             {
-                                propertiesValue9["ruletype"] = requestRoutingRulesItem.RuleType;
+                                propertiesValue9["ruleType"] = requestRoutingRulesItem.RuleType;
                             }
                             
                             if (requestRoutingRulesItem.BackendAddressPool != null)
@@ -1312,11 +1312,11 @@ namespace Microsoft.Azure.Management.Network
                                         JToken propertiesValue18 = requestRoutingRulesValue["properties"];
                                         if (propertiesValue18 != null && propertiesValue18.Type != JTokenType.Null)
                                         {
-                                            JToken ruletypeValue = propertiesValue18["ruletype"];
-                                            if (ruletypeValue != null && ruletypeValue.Type != JTokenType.Null)
+                                            JToken ruleTypeValue = propertiesValue18["ruleType"];
+                                            if (ruleTypeValue != null && ruleTypeValue.Type != JTokenType.Null)
                                             {
-                                                string ruletypeInstance = ((string)ruletypeValue);
-                                                applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruletypeInstance;
+                                                string ruleTypeInstance = ((string)ruleTypeValue);
+                                                applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruleTypeInstance;
                                             }
                                             
                                             JToken backendAddressPoolValue2 = propertiesValue18["backendAddressPool"];
@@ -2827,11 +2827,11 @@ namespace Microsoft.Azure.Management.Network
                                         JToken propertiesValue9 = requestRoutingRulesValue["properties"];
                                         if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                         {
-                                            JToken ruletypeValue = propertiesValue9["ruletype"];
-                                            if (ruletypeValue != null && ruletypeValue.Type != JTokenType.Null)
+                                            JToken ruleTypeValue = propertiesValue9["ruleType"];
+                                            if (ruleTypeValue != null && ruleTypeValue.Type != JTokenType.Null)
                                             {
-                                                string ruletypeInstance = ((string)ruletypeValue);
-                                                applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruletypeInstance;
+                                                string ruleTypeInstance = ((string)ruleTypeValue);
+                                                applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruleTypeInstance;
                                             }
                                             
                                             JToken backendAddressPoolValue = propertiesValue9["backendAddressPool"];
@@ -3657,11 +3657,11 @@ namespace Microsoft.Azure.Management.Network
                                                 JToken propertiesValue9 = requestRoutingRulesValue["properties"];
                                                 if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                                 {
-                                                    JToken ruletypeValue = propertiesValue9["ruletype"];
-                                                    if (ruletypeValue != null && ruletypeValue.Type != JTokenType.Null)
+                                                    JToken ruleTypeValue = propertiesValue9["ruleType"];
+                                                    if (ruleTypeValue != null && ruleTypeValue.Type != JTokenType.Null)
                                                     {
-                                                        string ruletypeInstance = ((string)ruletypeValue);
-                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruletypeInstance;
+                                                        string ruleTypeInstance = ((string)ruleTypeValue);
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruleTypeInstance;
                                                     }
                                                     
                                                     JToken backendAddressPoolValue = propertiesValue9["backendAddressPool"];
@@ -4486,11 +4486,11 @@ namespace Microsoft.Azure.Management.Network
                                                 JToken propertiesValue9 = requestRoutingRulesValue["properties"];
                                                 if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                                 {
-                                                    JToken ruletypeValue = propertiesValue9["ruletype"];
-                                                    if (ruletypeValue != null && ruletypeValue.Type != JTokenType.Null)
+                                                    JToken ruleTypeValue = propertiesValue9["ruleType"];
+                                                    if (ruleTypeValue != null && ruleTypeValue.Type != JTokenType.Null)
                                                     {
-                                                        string ruletypeInstance = ((string)ruletypeValue);
-                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruletypeInstance;
+                                                        string ruleTypeInstance = ((string)ruleTypeValue);
+                                                        applicationGatewayRequestRoutingRuleJsonFormatInstance.RuleType = ruleTypeInstance;
                                                     }
                                                     
                                                     JToken backendAddressPoolValue = propertiesValue9["backendAddressPool"];
