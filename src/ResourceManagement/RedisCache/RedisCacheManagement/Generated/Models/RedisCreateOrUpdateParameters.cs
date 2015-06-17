@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis.Models;
 
 namespace Microsoft.Azure.Management.Redis.Models
@@ -28,19 +29,8 @@ namespace Microsoft.Azure.Management.Redis.Models
     /// <summary>
     /// Parameters supplied to the CreateOrUpdate Redis operation.
     /// </summary>
-    public partial class RedisCreateOrUpdateParameters
+    public partial class RedisCreateOrUpdateParameters : ResourceBase
     {
-        private string _location;
-        
-        /// <summary>
-        /// Required. Redis cache data center location.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
         private RedisProperties _properties;
         
         /// <summary>
@@ -64,19 +54,19 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the RedisCreateOrUpdateParameters
         /// class with required arguments.
         /// </summary>
-        public RedisCreateOrUpdateParameters(string location, RedisProperties properties)
+        public RedisCreateOrUpdateParameters(RedisProperties properties, string location)
             : this()
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            this.Location = location;
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
             this.Properties = properties;
+            this.Location = location;
         }
     }
 }

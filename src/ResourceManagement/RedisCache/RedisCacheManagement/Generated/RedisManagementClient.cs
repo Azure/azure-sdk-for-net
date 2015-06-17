@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Redis
             : base()
         {
             this._redis = new RedisOperations(this);
-            this._apiVersion = "2014-04-01-preview";
+            this._apiVersion = "2015-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Redis
             : base(httpClient)
         {
             this._redis = new RedisOperations(this);
-            this._apiVersion = "2014-04-01-preview";
+            this._apiVersion = "2015-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

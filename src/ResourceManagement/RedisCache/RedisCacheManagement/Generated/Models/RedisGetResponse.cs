@@ -31,59 +31,15 @@ namespace Microsoft.Azure.Management.Redis.Models
     /// </summary>
     public partial class RedisGetResponse : AzureOperationResponse
     {
-        private string _id;
+        private RedisResource _resource;
         
         /// <summary>
-        /// Optional. The id of the created redis cache.
+        /// Optional. Results of the get operation
         /// </summary>
-        public string Id
+        public RedisResource Resource
         {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _location;
-        
-        /// <summary>
-        /// Optional. Redis cache resource's geographic location.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Name of the redis cache.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private RedisReadableProperties _properties;
-        
-        /// <summary>
-        /// Optional. Redis cache properties
-        /// </summary>
-        public RedisReadableProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Redis cache resource's type.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._resource; }
+            set { this._resource = value; }
         }
         
         /// <summary>
