@@ -45,15 +45,12 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\EnableDisableAzureBackupProtectionTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\DisableAzureBackupProtectionTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\EnableAzureBackupProtectionTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemDSTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemPOTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsValidResponseTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.DisableAzureBackupProtectionTest\DisableAzureBackupProtection.json" />
-    <None Include="SessionRecords\BackupServices.Tests.EnableAzureBackupProtectionTest\EnableAzureBackupProtection.json" />
-    <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemPOTest\ListAzureBackupItemPOTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemsDSTest\ListAzureBackupItemDSTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\CancelJobTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.JobsTests\ListGetJobsTest.json" />

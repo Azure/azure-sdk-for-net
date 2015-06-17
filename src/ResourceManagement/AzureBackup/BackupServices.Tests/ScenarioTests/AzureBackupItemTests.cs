@@ -31,7 +31,7 @@ namespace BackupServices.Tests
     public class AzureBackupItemTests : BackupServicesTestsBase
     {
         [Fact]
-        public void EnableDisbaleAzureBackupProtectionTest()
+        public void EnableAzureBackupProtectionTest()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -43,24 +43,27 @@ namespace BackupServices.Tests
                 input.ProtectableObjectType = ConfigurationManager.AppSettings["DataSourceType"];
                 var response = client.DataSource.EnableProtection(GetCustomRequestHeaders(), input);
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            }
+        }
 
-                Thread.Sleep(1000 * 20);
+        [Fact]
+        public void DisableAzureBackupProtectionTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                var client = GetServiceClient<BackupServicesManagementClient>();
+                context.Start();
                 RemoveProtectionRequestInput input1 = new RemoveProtectionRequestInput();
                 input1.RemoveProtectionOption = "RetainBackupData";
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 string dataSourceType = ConfigurationManager.AppSettings["DataSourceType"];
                 string dataSourceId = ConfigurationManager.AppSettings["DataSourceId"];
-                var response1 = client.DataSource.DisableProtection(GetCustomRequestHeaders(),
+                var response = client.DataSource.DisableProtection(GetCustomRequestHeaders(),
                     containerName,
                     dataSourceType,
                     dataSourceId,
                     input1);
-                Assert.Equal(HttpStatusCode.Accepted, response1.StatusCode);
-
-                Thread.Sleep(1000 * 20);
-                var response3 = client.DataSource.EnableProtection(GetCustomRequestHeaders(), input);
-                Assert.Equal(HttpStatusCode.Accepted, response3.StatusCode);
-
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }
 
