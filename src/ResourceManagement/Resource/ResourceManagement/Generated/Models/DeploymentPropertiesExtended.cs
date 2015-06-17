@@ -12,6 +12,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     public partial class DeploymentPropertiesExtended
     {
         /// <summary>
+        /// Gets or sets the state of the provisioning.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets or sets the correlation ID of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "correlationId")]
@@ -70,10 +76,11 @@ namespace Microsoft.Azure.Management.Resources.Models
         public ParametersLink ParametersLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment mode.
+        /// Gets or sets the deployment mode. Possible values for this
+        /// property include: 'Incremental'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
-        public string Mode { get; set; }
+        public DeploymentMode? Mode { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

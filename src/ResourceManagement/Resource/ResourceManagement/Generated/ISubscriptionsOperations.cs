@@ -29,6 +29,16 @@ namespace Microsoft.Azure.Subscriptions
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<Subscription>>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionListResult>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of the subscriptionIds.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SubscriptionListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

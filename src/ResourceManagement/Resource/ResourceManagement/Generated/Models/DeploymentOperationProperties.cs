@@ -12,6 +12,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     public partial class DeploymentOperationProperties
     {
         /// <summary>
+        /// Gets or sets the state of the provisioning.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets or sets the date and time of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]

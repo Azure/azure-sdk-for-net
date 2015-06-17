@@ -32,7 +32,6 @@ namespace ResourceGroups.Tests
             var client = this.GetResourceManagementClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 

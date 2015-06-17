@@ -31,7 +31,6 @@ namespace ResourceGroups.Tests
             var client = this.GetResourceManagementClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 
@@ -44,14 +43,13 @@ namespace ResourceGroups.Tests
             var client = this.GetSubscriptionClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 
             return client;
         }
 
-        [Fact(Skip = "Bugs in Hydra Spec Converter that the PassThrough flag is not handled correctly")]
+        [Fact]
         public void ListSubscriptions()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -65,11 +63,11 @@ namespace ResourceGroups.Tests
                 var subscriptions = client.Subscriptions.List();
 
                 Assert.NotNull(subscriptions);
-                Assert.NotEqual(0, subscriptions.Count);
-                Assert.NotNull(subscriptions[0].Id);
-                Assert.NotNull(subscriptions[0].SubscriptionId);
-                Assert.NotNull(subscriptions[0].DisplayName);
-                Assert.NotNull(subscriptions[0].State);
+                Assert.NotEqual(0, subscriptions.Value.Count);
+                Assert.NotNull(subscriptions.Value[0].Id);
+                Assert.NotNull(subscriptions.Value[0].SubscriptionId);
+                Assert.NotNull(subscriptions.Value[0].DisplayName);
+                Assert.NotNull(subscriptions.Value[0].State);
             }
         }
         

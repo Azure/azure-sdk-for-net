@@ -228,7 +228,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/GenericResourceExtendedFilter"
+        "x-ms-odata": "#/definitions/GenericResourceFilter"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}": {
@@ -261,10 +261,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "404": {
             "description": ""
           },
-          "404": {
+          "204": {
             "description": ""
           }
         }
@@ -583,7 +583,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/GenericResourceExtendedFilter"
+        "x-ms-odata": "#/definitions/GenericResourceFilter"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}": {
@@ -647,10 +647,10 @@
           }
         ],
         "responses": {
-          "404": {
+          "204": {
             "description": ""
           },
-          "204": {
+          "404": {
             "description": ""
           }
         }
@@ -715,13 +715,13 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": ""
-          },
           "204": {
             "description": ""
           },
           "202": {
+            "description": ""
+          },
+          "200": {
             "description": ""
           }
         }
@@ -795,16 +795,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/GenericResourceExtended"
-            }
-          },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/GenericResourceExtended"
+              "$ref": "#/definitions/GenericResource"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GenericResource"
             }
           }
         }
@@ -869,16 +869,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/GenericResourceExtended"
-            }
-          },
           "204": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/GenericResourceExtended"
+              "$ref": "#/definitions/GenericResource"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GenericResource"
             }
           }
         }
@@ -965,13 +965,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagValue"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagValue"
@@ -1053,10 +1053,10 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": ""
           },
-          "204": {
+          "200": {
             "description": ""
           }
         }
@@ -1227,7 +1227,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "",
             "schema": {
               "type": "array",
@@ -1236,7 +1236,7 @@
               }
             }
           },
-          "204": {
+          "200": {
             "description": "",
             "schema": {
               "type": "array",
@@ -1524,7 +1524,7 @@
       },
       "description": "Deployment filter."
     },
-    "GenericResourceExtendedFilter": {
+    "GenericResourceFilter": {
       "properties": {
         "resourceType": {
           "type": "string",
@@ -1624,9 +1624,23 @@
       },
       "description": "List of resource providers."
     },
-    "ResourceJsonFormat.ResourceProperties": {
-      "properties": {},
-      "description": "The resource properties."
+    "GenericResource": {
+      "properties": {
+        "plan": {
+          "$ref": "#/definitions/Plan",
+          "description": "Gets or sets the plan of the resource."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Gets or sets the resource properties."
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "Resource"
+        }
+      ],
+      "description": "Resource information."
     },
     "Plan": {
       "properties": {
@@ -1649,30 +1663,12 @@
       },
       "description": "Plan for the resource."
     },
-    "GenericResourceExtended": {
-      "properties": {
-        "properties": {
-          "type": "object",
-          "description": "Gets or sets the resource properties."
-        },
-        "plan": {
-          "$ref": "#/definitions/Plan",
-          "description": "Gets or sets the plan of the resource."
-        }
-      },
-      "allOf": [
-        {
-          "$ref": "Resource"
-        }
-      ],
-      "description": "Resource information."
-    },
     "ResourceListResult": {
       "properties": {
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/GenericResourceExtended"
+            "$ref": "#/definitions/GenericResource"
           },
           "description": "Gets or sets the list of resource groups."
         },
@@ -1703,8 +1699,13 @@
       },
       "description": "Resource group information."
     },
-    "ResourceGroupJsonFormat.ResourceProperties": {
-      "properties": {},
+    "ResourceGroupFormatResourceProperties": {
+      "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
+        }
+      },
       "description": "The resource group properties."
     },
     "ResourceGroupExtended": {
@@ -1718,8 +1719,7 @@
           "description": "Gets or sets the Name of the resource group."
         },
         "properties": {
-          "type": "object",
-          "description": "Gets or sets the resource group properties."
+          "$ref": "#/definitions/ResourceGroupFormatResourceProperties"
         },
         "location": {
           "type": "string",
@@ -1766,24 +1766,6 @@
         }
       },
       "description": "Parameters of move resources."
-    },
-    "GenericResource": {
-      "properties": {
-        "properties": {
-          "type": "object",
-          "description": "Gets or sets the resource properties."
-        },
-        "plan": {
-          "$ref": "#/definitions/Plan",
-          "description": "Gets or sets the plan of the resource."
-        }
-      },
-      "allOf": [
-        {
-          "$ref": "Resource"
-        }
-      ],
-      "description": "Resource information."
     },
     "TagCount": {
       "properties": {
@@ -1874,6 +1856,10 @@
     },
     "DeploymentOperationProperties": {
       "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the state of the provisioning."
+        },
         "timestamp": {
           "type": "string",
           "format": "date-time",
@@ -2014,7 +2000,8 @@
           "description": "Gets or sets the deployment mode.",
           "enum": [
             "Incremental"
-          ]
+          ],
+          "x-ms-enum": "DeploymentMode"
         }
       },
       "description": "Deployment properties."
@@ -2110,6 +2097,10 @@
     },
     "DeploymentPropertiesExtended": {
       "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the state of the provisioning."
+        },
         "correlationId": {
           "type": "string",
           "description": "Gets or sets the correlation ID of the deployment."
@@ -2158,7 +2149,8 @@
           "description": "Gets or sets the deployment mode.",
           "enum": [
             "Incremental"
-          ]
+          ],
+          "x-ms-enum": "DeploymentMode"
         }
       },
       "description": "Deployment properties with additional details."

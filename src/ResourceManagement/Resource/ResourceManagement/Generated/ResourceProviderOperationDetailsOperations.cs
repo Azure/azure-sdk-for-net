@@ -104,9 +104,9 @@ namespace Microsoft.Azure.Management.Resources
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -122,18 +122,18 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<IList<ResourceProviderOperationDefinition>> result = new AzureOperationResponse<IList<ResourceProviderOperationDefinition>>();
+            var result = new AzureOperationResponse<IList<ResourceProviderOperationDefinition>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-              result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
-            }
-            // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
             {
-              result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

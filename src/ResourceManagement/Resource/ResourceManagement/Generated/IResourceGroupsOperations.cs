@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ResourceListResult>> ListResourcesWithOperationResponseAsync(string resourceGroupName, Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceListResult>> ListResourcesWithOperationResponseAsync(string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks whether resource group exists.
         /// </summary>

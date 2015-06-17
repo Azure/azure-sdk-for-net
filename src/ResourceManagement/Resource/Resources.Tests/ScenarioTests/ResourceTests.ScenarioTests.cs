@@ -34,7 +34,7 @@ namespace ResourceGroups.Tests
             get { return "South Central US"; }
         }
 
-        public static ResourceIdentity CreateResourceIdentity(GenericResourceExtended resource)
+        public static ResourceIdentity CreateResourceIdentity(GenericResource resource)
         {
             string[] parts = resource.Type.Split('/');
             return new ResourceIdentity { ResourceType = parts[1], ResourceProviderNamespace = parts[0], ResourceName = resource.Name, ResourceProviderApiVersion = WebResourceProviderVersion };

@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions.Models
 {
     using System;
     using System.Collections.Generic;
@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Resources.Models
 
     /// <summary>
     /// </summary>
-    public partial class ResourceListResult
+    public partial class SubscriptionListResult
     {
         /// <summary>
-        /// Gets or sets the list of resource groups.
+        /// Gets or sets subscriptions.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<GenericResource> Value { get; set; }
+        public IList<Subscription> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.

@@ -36,7 +36,7 @@ namespace ResourceGroups.Tests
             return new ResourceManagementClient(token, handler);
         }
 
-        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
+        [Fact]
         public void ResourceGroupCreateOrUpdateValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -78,7 +78,7 @@ namespace ResourceGroups.Tests
 
             // Validate response
             Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
-            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
             Assert.Equal("foo", result.Name);
             Assert.Equal("finance", result.Tags["department"]);
             Assert.Equal("tagvalue", result.Tags["tagname"]);
@@ -109,7 +109,7 @@ namespace ResourceGroups.Tests
             Assert.Empty(handler.Request);
 
             // Validate response
-            Assert.True(result);
+            Assert.True(result.Value);
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace ResourceGroups.Tests
             Assert.Empty(handler.Request);
 
             // Validate response
-            Assert.False(result);
+            Assert.False(result.Value);
         }
 
         [Fact()]
@@ -136,7 +136,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<CloudException>(() => client.ResourceGroups.CheckExistence("foo"));
         }
 
-        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
+        [Fact]
         public void ResourceGroupPatchValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -173,7 +173,7 @@ namespace ResourceGroups.Tests
 
             // Validate response
             Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
-            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
             Assert.Equal("foo", result.Name);
             Assert.Equal("WestEurope", result.Location);
         }
@@ -189,7 +189,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.Patch("~`123", new ResourceGroup()));
         }
 
-        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
+        [Fact]
         public void ResourceGroupGetValidateMessage()
         { 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -217,8 +217,8 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
             Assert.Equal("WestEurope", result.Location);
             Assert.Equal("foo", result.Name);
-            Assert.Equal("Succeeded", result.ProvisioningState);
-            Assert.True(result.Properties.ToString().Contains("provisioningState"));
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
+            Assert.True(result.Properties.ProvisioningState == "Succeeded");
         }
 
         [Fact]
@@ -252,7 +252,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.Get("~`123"));
         }
 
-        [Fact(Skip = "Resource \'provisioningState\' field is not handled correctly at code-gen, the work is on-going.")]
+        [Fact]
         public void ResourceGroupListAllValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -291,7 +291,7 @@ namespace ResourceGroups.Tests
             // Validate result
             Assert.Equal(2, result.Value.Count);
             Assert.Equal("myresourcegroup1", result.Value[0].Name);
-            Assert.Equal("Succeeded", result.Value[0].ProvisioningState);
+            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
             Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Value[0].Id);
             Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
         }
@@ -316,36 +316,7 @@ namespace ResourceGroups.Tests
             // Validate result
             Assert.Equal(0, result.Value.Count);
         }
-
-        [Fact]
-        public void ResourceDeploymentGetDeleteOperationStatusValidateMessage()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            response.Headers.Add("Location", "http://foo");
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.Accepted,
-                SubsequentStatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var client = GetResourceManagementClient(handler);
-
-            var result = client.GetLongRunningOperationStatusAsync("http://test", CancellationToken.None)
-                .ConfigureAwait(false).GetAwaiter().GetResult();
-
-            // Validate headers
-            Assert.Equal(HttpStatusCode.Accepted, result.Response.StatusCode);
-            Assert.Equal("InProgress", result.Body.Status);
-
-            result = client.GetLongRunningOperationStatusAsync("http://test", CancellationToken.None)
-                .ConfigureAwait(false).GetAwaiter().GetResult();
-
-            // Validate headers
-            Assert.Equal(HttpStatusCode.OK, result.Response.StatusCode);
-            Assert.Equal("Succeeded", result.Body.Status);
-        }
-
+        
         [Fact]
         public void ResourceGroupListValidateMessage()
         {

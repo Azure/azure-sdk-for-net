@@ -9,30 +9,26 @@ namespace Microsoft.Azure.Management.Resources.Models
 
     /// <summary>
     /// </summary>
-    public partial class GenericResourceExtended : Resource
+    public partial class ResourceGroupFilter
     {
         /// <summary>
-        /// Gets or sets the resource properties.
+        /// Gets or sets the tag name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        [JsonProperty(PropertyName = "tagName")]
+        public string TagName { get; set; }
 
         /// <summary>
-        /// Gets or sets the plan of the resource.
+        /// Gets or sets the tag value.
         /// </summary>
-        [JsonProperty(PropertyName = "plan")]
-        public Plan Plan { get; set; }
+        [JsonProperty(PropertyName = "tagValue")]
+        public string TagValue { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (this.Plan != null)
-            {
-                this.Plan.Validate();
-            }
+            //Nothing to validate
         }
     }
 }

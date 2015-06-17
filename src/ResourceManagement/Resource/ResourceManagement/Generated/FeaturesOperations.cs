@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Resources
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -107,13 +107,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<FeatureOperationsListResult> result = new AzureOperationResponse<FeatureOperationsListResult>();
+            var result = new AzureOperationResponse<FeatureOperationsListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Resources
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -205,13 +205,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<FeatureOperationsListResult> result = new AzureOperationResponse<FeatureOperationsListResult>();
+            var result = new AzureOperationResponse<FeatureOperationsListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Resources
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -312,13 +312,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<FeatureResponse> result = new AzureOperationResponse<FeatureResponse>();
+            var result = new AzureOperationResponse<FeatureResponse>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<FeatureResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureResponse>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.Resources
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -419,13 +419,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<FeatureResponse> result = new AzureOperationResponse<FeatureResponse>();
+            var result = new AzureOperationResponse<FeatureResponse>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<FeatureResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureResponse>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.Resources
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -511,13 +511,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<FeatureOperationsListResult> result = new AzureOperationResponse<FeatureOperationsListResult>();
+            var result = new AzureOperationResponse<FeatureOperationsListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Management.Resources
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -602,13 +602,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<FeatureOperationsListResult> result = new AzureOperationResponse<FeatureOperationsListResult>();
+            var result = new AzureOperationResponse<FeatureOperationsListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureOperationsListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

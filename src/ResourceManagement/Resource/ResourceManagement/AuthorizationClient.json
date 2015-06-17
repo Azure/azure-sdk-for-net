@@ -234,10 +234,10 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           },
           "204": {
@@ -285,13 +285,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ManagementLockObject"
@@ -331,10 +331,10 @@
           "204": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           }
         }
@@ -638,7 +638,7 @@
       },
       "description": "Deployment filter."
     },
-    "GenericResourceExtendedFilter": {
+    "GenericResourceFilter": {
       "properties": {
         "resourceType": {
           "type": "string",

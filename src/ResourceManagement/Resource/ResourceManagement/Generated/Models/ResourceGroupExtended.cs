@@ -24,10 +24,9 @@ namespace Microsoft.Azure.Management.Resources.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource group properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        public ResourceGroupFormatResourceProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the resource group. It cannot be
@@ -49,6 +48,10 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public virtual void Validate()
         {
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
         }
     }
 }

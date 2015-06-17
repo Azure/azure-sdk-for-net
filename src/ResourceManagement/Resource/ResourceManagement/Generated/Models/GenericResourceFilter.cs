@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Resources.Models
 
     /// <summary>
     /// </summary>
-    public partial class GenericResourceExtendedFilter
+    public partial class GenericResourceFilter
     {
         /// <summary>
         /// Gets or sets the resource type.
