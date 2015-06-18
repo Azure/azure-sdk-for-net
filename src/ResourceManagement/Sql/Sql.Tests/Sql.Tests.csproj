@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="Helpers\BasicDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\Sql2.BackupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ElasticPoolScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServiceTierAdvisorScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedElasticPoolScenarioTests.cs" />
@@ -27,6 +28,7 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2AuditScenarioTest\ServerAuditingPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\ListRestorePointsTest.json" />
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2DataMaskingScenarioTests\DataMaskingPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

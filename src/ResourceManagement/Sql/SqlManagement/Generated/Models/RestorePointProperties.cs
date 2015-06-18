@@ -29,25 +29,25 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// </summary>
     public partial class RestorePointProperties
     {
-        private string _earliestRestoreDate;
+        private System.DateTime? _earliestRestoreDate;
         
         /// <summary>
         /// Optional. Earliest restore time. Populated when restorePointType =
         /// DISCRETE. Null otherwise.
         /// </summary>
-        public string EarliestRestoreDate
+        public System.DateTime? EarliestRestoreDate
         {
             get { return this._earliestRestoreDate; }
             set { this._earliestRestoreDate = value; }
         }
         
-        private string _restorePointCreationDate;
+        private System.DateTime? _restorePointCreationDate;
         
         /// <summary>
         /// Optional. Earliest restore time. Populated when restorePointType =
         /// CONTINUOUS. Null otherwise.
         /// </summary>
-        public string RestorePointCreationDate
+        public System.DateTime? RestorePointCreationDate
         {
             get { return this._restorePointCreationDate; }
             set { this._restorePointCreationDate = value; }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._restorePointType = value; }
         }
         
-        private string _sizeBytes;
+        private int _sizeBytes;
         
         /// <summary>
         /// Optional. Backup size in blob storage of the restore point. For
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// continuous restore point, the value is the total backup storage
         /// usage of the database.
         /// </summary>
-        public string SizeBytes
+        public int SizeBytes
         {
             get { return this._sizeBytes; }
             set { this._sizeBytes = value; }

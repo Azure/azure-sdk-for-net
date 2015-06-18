@@ -225,21 +225,21 @@ namespace Microsoft.Azure.Management.Sql
                                         JToken restorePointCreationDateValue = propertiesValue["restorePointCreationDate"];
                                         if (restorePointCreationDateValue != null && restorePointCreationDateValue.Type != JTokenType.Null)
                                         {
-                                            string restorePointCreationDateInstance = ((string)restorePointCreationDateValue);
+                                            DateTime restorePointCreationDateInstance = ((DateTime)restorePointCreationDateValue);
                                             propertiesInstance.RestorePointCreationDate = restorePointCreationDateInstance;
                                         }
                                         
                                         JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
                                         if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
                                         {
-                                            string earliestRestoreDateInstance = ((string)earliestRestoreDateValue);
+                                            DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
                                             propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
                                         }
                                         
                                         JToken sizeBytesValue = propertiesValue["sizeBytes"];
                                         if (sizeBytesValue != null && sizeBytesValue.Type != JTokenType.Null)
                                         {
-                                            string sizeBytesInstance = ((string)sizeBytesValue);
+                                            int sizeBytesInstance = ((int)sizeBytesValue);
                                             propertiesInstance.SizeBytes = sizeBytesInstance;
                                         }
                                     }

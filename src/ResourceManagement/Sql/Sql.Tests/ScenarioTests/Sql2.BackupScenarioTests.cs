@@ -31,14 +31,14 @@ namespace Sql2.Tests.ScenarioTests
     /// <summary>
     /// Contains tests for server CRUD, database CRUD, and firewall CRUD
     /// </summary>
-    public class Sql2ScenarioTest : TestBase
+    public class Sql2BackupScenarioTest : TestBase
     {
 
         /// <summary>
         /// Test for Azure SQL Data Warehouse database pause and resume operations.
         /// </summary>
         [Fact]
-        public void DatabaseActivationTest()
+        public void ListRestorePointsTest()
         {
             var handler = new BasicDelegatingHandler();
 
@@ -51,21 +51,25 @@ namespace Sql2.Tests.ScenarioTests
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
                 // Variables for server creation.
-                string serverName = TestUtilities.GenerateName("csm-sql-activation");
-                string resGroupName = TestUtilities.GenerateName("csm-rg-activation");
+                string serverName = TestUtilities.GenerateName("csm-sql-backup");
+                string resGroupName = TestUtilities.GenerateName("csm-rg-backup");
 
-                string serverLocation = "Southeast Asia";
+                string serverLocation = "Japan East";
                 string adminLogin = "testlogin";
                 string adminPass = "NotYukon!9";
                 string version = "12.0";
 
-
-                // Constants for database creation.
+                // Constants for Azure SQL Data Warehouse database creation.
                 var defaultDatabaseSize = 250L * 1024L * 1024L * 1024L; // 250 GB
                 Guid dwSlo = new Guid("4E63CB0E-91B9-46FD-B05C-51FDD2367618 "); // DW100
-                var defaultCollation = "SQL_Latin1_General_CP1_CI_AS";
-                var databaseName = TestUtilities.GenerateName("csm-sql-activation-db");
+                var databaseName = TestUtilities.GenerateName("csm-sql-backup-dwdb");
                 string databaseEdition = "DataWarehouse";
+
+                // Constants for Azure SQL standard database creation.
+                var standardDefaultDatabaseSize = 1L * 1024L * 1024L * 1024L; // 1 GB
+                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
+                var standardDatabaseName = TestUtilities.GenerateName("csm-sql-backup-db");
+                string standardDatabaseEdition = "Standard";
 
                 // Create the resource group.
                 resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
@@ -90,13 +94,12 @@ namespace Sql2.Tests.ScenarioTests
 
                     // Verify the the response from the service contains the right information
                     TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
-                    VerifyServerInformation(serverName, serverLocation, adminLogin, adminPass, version, createResponse.Server);
                     //////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
                     // Create database test.
 
-                    // Create only required
+                    // Create data warehouse database
                     var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
                     {
                         Location = serverLocation,
@@ -109,25 +112,40 @@ namespace Sql2.Tests.ScenarioTests
                     });
 
                     TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
-                    VerifyDatabaseInformation(createDbResponse.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo);
+
+                    // Create standard database
+                    createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
+                    {
+                        Location = serverLocation,
+                        Properties = new DatabaseCreateOrUpdateProperties()
+                        {
+                            MaxSizeBytes = standardDefaultDatabaseSize,
+                            Edition = standardDatabaseEdition,
+                            RequestedServiceObjectiveId = dbSloS0,
+                        },
+                    });
+
+                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
                     //////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
-                    // Pause database.
+                    // Get restore points for data warehouse database.
 
-                    var pauseResponse = sqlClient.DatabaseActivation.Pause(resGroupName, serverName, databaseName);
+                    RestorePointListResponse restorePointsListResponse = sqlClient.Backup.ListRestorePoints(resGroupName, serverName, databaseName);
+                    
+                    TestUtilities.ValidateOperationResponse(restorePointsListResponse, HttpStatusCode.OK);
 
-                    TestUtilities.ValidateOperationResponse(pauseResponse, HttpStatusCode.OK);
-                    VerifyDatabaseInformation(pauseResponse.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo, "Paused");
+                    // This is 0 until backup functionality is available on staging to test against.
+                    ValidateRestorePointListResponse(restorePointsListResponse, true, 0, 0);
                     ///////////////////////////////////////////////////////////////////////
 
-                    ///////////////////////////////////////////////////////////////////////
-                    // Resume database.
+                    //////////////////////////////////////////////////////////////////////
+                    // Get restore points for standard database.
 
-                    var resumeResponse = sqlClient.DatabaseActivation.Resume(resGroupName, serverName, databaseName);
+                    restorePointsListResponse = sqlClient.Backup.ListRestorePoints(resGroupName, serverName, standardDatabaseName);
 
-                    TestUtilities.ValidateOperationResponse(resumeResponse, HttpStatusCode.OK);
-                    VerifyDatabaseInformation(resumeResponse.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dwSlo, dwSlo, "Online");
+                    TestUtilities.ValidateOperationResponse(restorePointsListResponse, HttpStatusCode.OK);
+                    ValidateRestorePointListResponse(restorePointsListResponse, false, 0, 1);
                     ///////////////////////////////////////////////////////////////////////
                 }
                 finally
@@ -135,6 +153,37 @@ namespace Sql2.Tests.ScenarioTests
                     // Clean up the resource group.
                     resClient.ResourceGroups.Delete(resGroupName);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validates the RestorePointListResponse.
+        /// </summary>
+        /// <param name="restorePointsListResponse">Response to validate.</param>
+        /// <param name="isDataWarehouseDatabase">Is this response from a data warehouse database? Data warehouse databases return different values than other databases.</param>
+        /// <param name="expectedSizeBytes">Expected SizeBytes.</param>
+        /// <param name="expectedCount">Expected number of restore points.</param>
+        private static void ValidateRestorePointListResponse(RestorePointListResponse restorePointsListResponse, bool isDataWarehouseDatabase, int expectedSizeBytes, int expectedCount)
+        {
+            Assert.Equal(expectedCount, restorePointsListResponse.Count());
+            int count = restorePointsListResponse.Count();
+            if (count == expectedCount && count > 0)
+            {
+                RestorePoint selectedRestorePoint = restorePointsListResponse.RestorePoints.First();
+                if (isDataWarehouseDatabase)
+                {
+                    Assert.Equal("DISCRETE", selectedRestorePoint.Properties.RestorePointType);
+                    Assert.Null(selectedRestorePoint.Properties.EarliestRestoreDate);
+                    Assert.NotNull(selectedRestorePoint.Properties.RestorePointCreationDate);
+                }
+                else
+                {
+                    Assert.Equal("CONTINUOUS", selectedRestorePoint.Properties.RestorePointType);
+                    Assert.NotNull(selectedRestorePoint.Properties.EarliestRestoreDate);
+                    Assert.Null(selectedRestorePoint.Properties.RestorePointCreationDate);
+                }
+
+                Assert.Equal(expectedSizeBytes, selectedRestorePoint.Properties.SizeBytes);
             }
         }
     }
