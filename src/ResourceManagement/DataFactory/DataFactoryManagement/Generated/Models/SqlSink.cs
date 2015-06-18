@@ -32,6 +32,29 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class SqlSink : CopySink
     {
+        private string _sliceIdentifierColumnName;
+        
+        /// <summary>
+        /// Optional. Name of the SQL column which is used to save slice
+        /// identifier information, to support idempotent copy.
+        /// </summary>
+        public string SliceIdentifierColumnName
+        {
+            get { return this._sliceIdentifierColumnName; }
+            set { this._sliceIdentifierColumnName = value; }
+        }
+        
+        private string _sqlWriterCleanupScript;
+        
+        /// <summary>
+        /// Optional. SQL writer cleanup script.
+        /// </summary>
+        public string SqlWriterCleanupScript
+        {
+            get { return this._sqlWriterCleanupScript; }
+            set { this._sqlWriterCleanupScript = value; }
+        }
+        
         private string _sqlWriterStoredProcedureName;
         
         /// <summary>

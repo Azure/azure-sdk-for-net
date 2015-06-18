@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class OnPremisesFileSystemLocation : TableLocation
     {
+        private Compression _compression;
+        
+        /// <summary>
+        /// Optional. The data compression method used on files.
+        /// </summary>
+        public Compression Compression
+        {
+            get { return this._compression; }
+            set { this._compression = value; }
+        }
+        
         private string _fileFilter;
         
         /// <summary>
