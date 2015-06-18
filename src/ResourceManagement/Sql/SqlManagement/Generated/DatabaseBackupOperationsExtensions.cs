@@ -52,10 +52,12 @@ namespace Microsoft.Azure.Management.Sql
         /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database to list restore points.
+        /// Required. The name of the Azure SQL Database from which to retrieve
+        /// available restore points.
         /// </param>
         /// <returns>
-        /// Represents the response to a List Azure Sql Database request.
+        /// Represents the response to a List Azure Sql Database restore points
+        /// request.
         /// </returns>
         public static RestorePointListResponse ListRestorePoints(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
@@ -82,10 +84,12 @@ namespace Microsoft.Azure.Management.Sql
         /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database to list restore points.
+        /// Required. The name of the Azure SQL Database from which to retrieve
+        /// available restore points.
         /// </param>
         /// <returns>
-        /// Represents the response to a List Azure Sql Database request.
+        /// Represents the response to a List Azure Sql Database restore points
+        /// request.
         /// </returns>
         public static Task<RestorePointListResponse> ListRestorePointsAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
         {

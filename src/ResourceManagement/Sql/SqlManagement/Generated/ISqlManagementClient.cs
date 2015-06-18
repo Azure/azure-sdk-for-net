@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Represents all the operations for operating on Azure SQL Database
         /// restore points. Contains operations to: List restore points.
         /// </summary>
-        IDatabaseBackupOperations Backup
+        IDatabaseBackupOperations DatabaseBackup
         {
             get; 
         }

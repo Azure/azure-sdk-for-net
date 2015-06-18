@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Optional. Gets the restore point type of the Azure SQL Database
-        /// restore point. Possible values are: discrete and continuous.
+        /// restore point.
         /// </summary>
         public string RestorePointType
         {
@@ -68,10 +68,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         private int _sizeBytes;
         
         /// <summary>
-        /// Optional. Backup size in blob storage of the restore point. For
-        /// discrete restore point, the value is the database snap size; for
-        /// continuous restore point, the value is the total backup storage
-        /// usage of the database.
+        /// Optional. Size of the backup in blob storage. For discrete restore
+        /// points, the value is the database snapshot size; for continuous
+        /// restore points, the value is the total backup storage usage of the
+        /// database.
         /// </summary>
         public int SizeBytes
         {

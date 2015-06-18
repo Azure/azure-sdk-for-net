@@ -33,7 +33,6 @@ namespace Sql2.Tests.ScenarioTests
     /// </summary>
     public class Sql2BackupScenarioTest : TestBase
     {
-
         /// <summary>
         /// Test for Azure SQL Data Warehouse database pause and resume operations.
         /// </summary>
@@ -131,18 +130,17 @@ namespace Sql2.Tests.ScenarioTests
                     //////////////////////////////////////////////////////////////////////
                     // Get restore points for data warehouse database.
 
-                    RestorePointListResponse restorePointsListResponse = sqlClient.Backup.ListRestorePoints(resGroupName, serverName, databaseName);
+                    RestorePointListResponse restorePointsListResponse = sqlClient.DatabaseBackup.ListRestorePoints(resGroupName, serverName, databaseName);
                     
+                    // Creating a data warehouse database should not have any discrete restore points right after.
                     TestUtilities.ValidateOperationResponse(restorePointsListResponse, HttpStatusCode.OK);
-
-                    // This is 0 until backup functionality is available on staging to test against.
                     ValidateRestorePointListResponse(restorePointsListResponse, true, 0, 0);
                     ///////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
                     // Get restore points for standard database.
 
-                    restorePointsListResponse = sqlClient.Backup.ListRestorePoints(resGroupName, serverName, standardDatabaseName);
+                    restorePointsListResponse = sqlClient.DatabaseBackup.ListRestorePoints(resGroupName, serverName, standardDatabaseName);
 
                     TestUtilities.ValidateOperationResponse(restorePointsListResponse, HttpStatusCode.OK);
                     ValidateRestorePointListResponse(restorePointsListResponse, false, 0, 1);

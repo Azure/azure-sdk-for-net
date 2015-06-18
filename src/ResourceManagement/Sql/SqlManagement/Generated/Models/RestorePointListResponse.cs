@@ -29,15 +29,16 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a List Azure Sql Database request.
+    /// Represents the response to a List Azure Sql Database restore points
+    /// request.
     /// </summary>
     public partial class RestorePointListResponse : AzureOperationResponse, IEnumerable<RestorePoint>
     {
         private IList<RestorePoint> _restorePoints;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Databases housed in
-        /// the server.
+        /// Optional. Gets or sets the list of a given Azure Sql Database
+        /// restore points.
         /// </summary>
         public IList<RestorePoint> RestorePoints
         {
