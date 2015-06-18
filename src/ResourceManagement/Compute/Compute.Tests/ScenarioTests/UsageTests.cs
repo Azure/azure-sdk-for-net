@@ -45,7 +45,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -57,7 +57,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM);
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
                     // List Usages, and do weak validation to assure that some usages were returned.
                     var luResponse = m_CrpClient.Usage.List(vm1.Location);
@@ -79,7 +79,7 @@ namespace Compute.Tests
         public void ValidateListUsageResponse(ListUsagesResponse luResponse)
         {
             Assert.True(luResponse.StatusCode == HttpStatusCode.OK);
-            Assert.True(luResponse.Usages != null);
+            Assert.NotNull(luResponse.Usages);
             Assert.True(luResponse.Usages.Count > 0);
 
             // Can't do any validation on primitive fields, but will make sure strings are populated and non-null as expected.
