@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.KeyVault
             url = url + "/vaults/";
             url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-19-PREVIEW");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -500,7 +500,7 @@ namespace Microsoft.Azure.Management.KeyVault
             url = url + "/vaults/";
             url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-19-PREVIEW");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.KeyVault
             url = url + "/vaults/";
             url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-19-PREVIEW");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

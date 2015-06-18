@@ -99,9 +99,6 @@
     <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioWithPlan.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Compute.Tests.VMSizesTests\TestListVMSizes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
