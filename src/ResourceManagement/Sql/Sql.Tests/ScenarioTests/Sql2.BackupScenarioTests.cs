@@ -29,12 +29,12 @@ using Xunit;
 namespace Sql2.Tests.ScenarioTests
 {
     /// <summary>
-    /// Contains tests for server CRUD, database CRUD, and firewall CRUD
+    /// Contains tests for Azure SQL Database backup operations.
     /// </summary>
     public class Sql2BackupScenarioTest : TestBase
     {
         /// <summary>
-        /// Test for Azure SQL Data Warehouse database pause and resume operations.
+        /// Test for List Azure SQL Database Restore Points operations.
         /// </summary>
         [Fact]
         public void ListRestorePointsTest()
