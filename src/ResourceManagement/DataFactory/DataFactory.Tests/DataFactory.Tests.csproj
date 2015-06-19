@@ -71,7 +71,7 @@
     <None Include="Resources\LinkedService_WikipediaClickEvents.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\DataFactory.Tests.ScenarioTests.PipelineTests\WikipediaPipelineTest.json">
+    <None Include="SessionRecords\DataFactory.Tests.ScenarioTests.PipelineTests\WikipediaPipelineE2ETest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
