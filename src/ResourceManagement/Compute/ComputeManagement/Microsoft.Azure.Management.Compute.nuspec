@@ -11,8 +11,8 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides virtual machine and availability set management capabilities to developers. Launch, restart, scale, and manage VMs, hosted services, virtual disks, operating system images, and more.</summary>
-    <description>Provides virtual machine and availability set management capabilities to developers. Launch, restart, scale, and manage VMs, hosted services, virtual disks, operating system images, and more.</description>
+    <summary>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more.</summary>
+    <description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
