@@ -134,7 +134,7 @@ namespace Sql2.Tests.ScenarioTests
                     
                     // Creating a data warehouse database should not have any discrete restore points right after.
                     TestUtilities.ValidateOperationResponse(restorePointsListResponse, HttpStatusCode.OK);
-                    ValidateRestorePointListResponse(restorePointsListResponse, true, 0, 0);
+                    ValidateRestorePointListResponse(restorePointsListResponse, true, 0);
                     ///////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@ namespace Sql2.Tests.ScenarioTests
                     restorePointsListResponse = sqlClient.DatabaseBackup.ListRestorePoints(resGroupName, serverName, standardDatabaseName);
 
                     TestUtilities.ValidateOperationResponse(restorePointsListResponse, HttpStatusCode.OK);
-                    ValidateRestorePointListResponse(restorePointsListResponse, false, 0, 1);
+                    ValidateRestorePointListResponse(restorePointsListResponse, false, 1);
                     ///////////////////////////////////////////////////////////////////////
                 }
                 finally
@@ -159,9 +159,8 @@ namespace Sql2.Tests.ScenarioTests
         /// </summary>
         /// <param name="restorePointsListResponse">Response to validate.</param>
         /// <param name="isDataWarehouseDatabase">Is this response from a data warehouse database? Data warehouse databases return different values than other databases.</param>
-        /// <param name="expectedSizeBytes">Expected SizeBytes.</param>
         /// <param name="expectedCount">Expected number of restore points.</param>
-        private static void ValidateRestorePointListResponse(RestorePointListResponse restorePointsListResponse, bool isDataWarehouseDatabase, int expectedSizeBytes, int expectedCount)
+        private static void ValidateRestorePointListResponse(RestorePointListResponse restorePointsListResponse, bool isDataWarehouseDatabase, int expectedCount)
         {
             Assert.Equal(expectedCount, restorePointsListResponse.Count());
             int count = restorePointsListResponse.Count();
@@ -180,8 +179,6 @@ namespace Sql2.Tests.ScenarioTests
                     Assert.NotNull(selectedRestorePoint.Properties.EarliestRestoreDate);
                     Assert.Null(selectedRestorePoint.Properties.RestorePointCreationDate);
                 }
-
-                Assert.Equal(expectedSizeBytes, selectedRestorePoint.Properties.SizeBytes);
             }
         }
     }

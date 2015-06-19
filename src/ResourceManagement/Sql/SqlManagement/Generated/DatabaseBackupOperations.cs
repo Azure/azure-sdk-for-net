@@ -237,13 +237,6 @@ namespace Microsoft.Azure.Management.Sql
                                             DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
                                             propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
                                         }
-                                        
-                                        JToken sizeBytesValue = propertiesValue["sizeBytes"];
-                                        if (sizeBytesValue != null && sizeBytesValue.Type != JTokenType.Null)
-                                        {
-                                            int sizeBytesInstance = ((int)sizeBytesValue);
-                                            propertiesInstance.SizeBytes = sizeBytesInstance;
-                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];

@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         private System.DateTime? _restorePointCreationDate;
         
         /// <summary>
-        /// Optional. Earliest restore time. Populated when restorePointType =
-        /// CONTINUOUS. Null otherwise.
+        /// Optional. Restore point creation time. Populated when
+        /// restorePointType = CONTINUOUS. Null otherwise.
         /// </summary>
         public System.DateTime? RestorePointCreationDate
         {
@@ -63,20 +63,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._restorePointType; }
             set { this._restorePointType = value; }
-        }
-        
-        private int _sizeBytes;
-        
-        /// <summary>
-        /// Optional. Size of the backup in blob storage. For discrete restore
-        /// points, the value is the database snapshot size; for continuous
-        /// restore points, the value is the total backup storage usage of the
-        /// database.
-        /// </summary>
-        public int SizeBytes
-        {
-            get { return this._sizeBytes; }
-            set { this._sizeBytes = value; }
         }
         
         /// <summary>

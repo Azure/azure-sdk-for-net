@@ -31,9 +31,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     public static partial class RestorePointTypes
     {
         /// <summary>
-        /// Discrete restore points describe the possible snapshot
-        /// point-in-times that an Azure SQL Data Warehouse database can be
-        /// restored to.
+        /// Discrete restore points describe the possible point-in-times that
+        /// an Azure SQL database can be restored to.
         /// </summary>
         public const string DISCRETE = "DISCRETE";
         
