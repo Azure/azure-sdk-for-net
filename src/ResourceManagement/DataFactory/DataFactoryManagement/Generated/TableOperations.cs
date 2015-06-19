@@ -692,6 +692,18 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         locationValue["linkedServiceName"] = derived23.LinkedServiceName;
                     }
+                    if (parameters.Table.Properties.Location is DocumentDbCollectionLocation)
+                    {
+                        locationValue["type"] = "DocumentDbCollectionLocation";
+                        DocumentDbCollectionLocation derived24 = ((DocumentDbCollectionLocation)parameters.Table.Properties.Location);
+                        
+                        if (derived24.CollectionName != null)
+                        {
+                            locationValue["collectionName"] = derived24.CollectionName;
+                        }
+                        
+                        locationValue["linkedServiceName"] = derived24.LinkedServiceName;
+                    }
                     
                     JObject availabilityValue = new JObject();
                     propertiesValue["availability"] = availabilityValue;
@@ -1463,6 +1475,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                             relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance11;
                                         }
                                         propertiesInstance.Location = relationalTableLocationInstance;
+                                    }
+                                    if (typeName == "DocumentDbCollectionLocation")
+                                    {
+                                        DocumentDbCollectionLocation documentDbCollectionLocationInstance = new DocumentDbCollectionLocation();
+                                        
+                                        JToken collectionNameValue = locationValue2["collectionName"];
+                                        if (collectionNameValue != null && collectionNameValue.Type != JTokenType.Null)
+                                        {
+                                            string collectionNameInstance = ((string)collectionNameValue);
+                                            documentDbCollectionLocationInstance.CollectionName = collectionNameInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue12 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue12 != null && linkedServiceNameValue12.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance12 = ((string)linkedServiceNameValue12);
+                                            documentDbCollectionLocationInstance.LinkedServiceName = linkedServiceNameInstance12;
+                                        }
+                                        propertiesInstance.Location = documentDbCollectionLocationInstance;
                                     }
                                 }
                                 
@@ -2448,6 +2479,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                             relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance11;
                                         }
                                         propertiesInstance.Location = relationalTableLocationInstance;
+                                    }
+                                    if (typeName == "DocumentDbCollectionLocation")
+                                    {
+                                        DocumentDbCollectionLocation documentDbCollectionLocationInstance = new DocumentDbCollectionLocation();
+                                        
+                                        JToken collectionNameValue = locationValue["collectionName"];
+                                        if (collectionNameValue != null && collectionNameValue.Type != JTokenType.Null)
+                                        {
+                                            string collectionNameInstance = ((string)collectionNameValue);
+                                            documentDbCollectionLocationInstance.CollectionName = collectionNameInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue12 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue12 != null && linkedServiceNameValue12.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance12 = ((string)linkedServiceNameValue12);
+                                            documentDbCollectionLocationInstance.LinkedServiceName = linkedServiceNameInstance12;
+                                        }
+                                        propertiesInstance.Location = documentDbCollectionLocationInstance;
                                     }
                                 }
                                 
@@ -3827,6 +3877,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = relationalTableLocationInstance;
                                     }
+                                    if (typeName == "DocumentDbCollectionLocation")
+                                    {
+                                        DocumentDbCollectionLocation documentDbCollectionLocationInstance = new DocumentDbCollectionLocation();
+                                        
+                                        JToken collectionNameValue = locationValue["collectionName"];
+                                        if (collectionNameValue != null && collectionNameValue.Type != JTokenType.Null)
+                                        {
+                                            string collectionNameInstance = ((string)collectionNameValue);
+                                            documentDbCollectionLocationInstance.CollectionName = collectionNameInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue12 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue12 != null && linkedServiceNameValue12.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance12 = ((string)linkedServiceNameValue12);
+                                            documentDbCollectionLocationInstance.LinkedServiceName = linkedServiceNameInstance12;
+                                        }
+                                        propertiesInstance.Location = documentDbCollectionLocationInstance;
+                                    }
                                 }
                                 
                                 JToken availabilityValue = propertiesValue["availability"];
@@ -4723,6 +4792,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                             relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance11;
                                         }
                                         propertiesInstance.Location = relationalTableLocationInstance;
+                                    }
+                                    if (typeName == "DocumentDbCollectionLocation")
+                                    {
+                                        DocumentDbCollectionLocation documentDbCollectionLocationInstance = new DocumentDbCollectionLocation();
+                                        
+                                        JToken collectionNameValue = locationValue["collectionName"];
+                                        if (collectionNameValue != null && collectionNameValue.Type != JTokenType.Null)
+                                        {
+                                            string collectionNameInstance = ((string)collectionNameValue);
+                                            documentDbCollectionLocationInstance.CollectionName = collectionNameInstance;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue12 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue12 != null && linkedServiceNameValue12.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance12 = ((string)linkedServiceNameValue12);
+                                            documentDbCollectionLocationInstance.LinkedServiceName = linkedServiceNameInstance12;
+                                        }
+                                        propertiesInstance.Location = documentDbCollectionLocationInstance;
                                     }
                                 }
                                 
@@ -5688,6 +5776,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 propertiesInstance.Location = relationalTableLocationInstance;
                                             }
+                                            if (typeName == "DocumentDbCollectionLocation")
+                                            {
+                                                DocumentDbCollectionLocation documentDbCollectionLocationInstance = new DocumentDbCollectionLocation();
+                                                
+                                                JToken collectionNameValue = locationValue["collectionName"];
+                                                if (collectionNameValue != null && collectionNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string collectionNameInstance = ((string)collectionNameValue);
+                                                    documentDbCollectionLocationInstance.CollectionName = collectionNameInstance;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue12 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue12 != null && linkedServiceNameValue12.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance12 = ((string)linkedServiceNameValue12);
+                                                    documentDbCollectionLocationInstance.LinkedServiceName = linkedServiceNameInstance12;
+                                                }
+                                                propertiesInstance.Location = documentDbCollectionLocationInstance;
+                                            }
                                         }
                                         
                                         JToken availabilityValue = propertiesValue["availability"];
@@ -6601,6 +6708,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     relationalTableLocationInstance.LinkedServiceName = linkedServiceNameInstance11;
                                                 }
                                                 propertiesInstance.Location = relationalTableLocationInstance;
+                                            }
+                                            if (typeName == "DocumentDbCollectionLocation")
+                                            {
+                                                DocumentDbCollectionLocation documentDbCollectionLocationInstance = new DocumentDbCollectionLocation();
+                                                
+                                                JToken collectionNameValue = locationValue["collectionName"];
+                                                if (collectionNameValue != null && collectionNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string collectionNameInstance = ((string)collectionNameValue);
+                                                    documentDbCollectionLocationInstance.CollectionName = collectionNameInstance;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue12 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue12 != null && linkedServiceNameValue12.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance12 = ((string)linkedServiceNameValue12);
+                                                    documentDbCollectionLocationInstance.LinkedServiceName = linkedServiceNameInstance12;
+                                                }
+                                                propertiesInstance.Location = documentDbCollectionLocationInstance;
                                             }
                                         }
                                         
