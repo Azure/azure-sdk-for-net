@@ -74,7 +74,6 @@ namespace Networks.Tests
                            {"key","value"}
                         },
                     EnableBgp = false,
-                    //GatewaySize = VirtualNetworkGatewaySize.Default,                   
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
                     IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
@@ -102,39 +101,19 @@ namespace Networks.Tests
                 // 2. GetVirtualNetworkGateway API
                 var getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
                 Assert.Equal(HttpStatusCode.OK, getVirtualNetworkGatewayResponse.StatusCode);
-                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3}, VpnType={4} GatewaySize={5}",
+                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3}, VpnType={4}",
                     getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Location,
                     getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Id, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Name,
-                    getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewayType, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.VpnType,
-                    getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewaySize);
+                    getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewayType, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.VpnType);
                 Assert.Equal(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewayType);
                 Assert.Equal(VpnType.RouteBased, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.VpnType);
-                Assert.Equal(VirtualNetworkGatewaySize.Default, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewaySize);
 
-                //ToDo: Enable this API later as its currently not available to customer.
-                // 3A. UpdateVirtualNetworkGateway API :- GatewaySize update from Default -> HighPerformance 
-                //getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewaySize = VirtualNetworkGatewaySize.HighPerformance;
-
-                //putVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Name,
-                //    getVirtualNetworkGatewayResponse.VirtualNetworkGateway);
-                //Assert.Equal(HttpStatusCode.OK, putVirtualNetworkGatewayResponse.StatusCode);
-                //Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.Status);
-
-                //// 3B. GetVirtualNetworkgateway API after Updating GatewaySKU from Default -> HighPerformance
-                //getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                //Assert.Equal(HttpStatusCode.OK, getVirtualNetworkGatewayResponse.StatusCode);
-                //Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3}, VpnType={4} ",
-                //    getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Location,
-                //    getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Id, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Name,
-                //    getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewayType, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.VpnType);
-                //Assert.Equal(VirtualNetworkGatewaySize.HighPerformance, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewaySize);
-
-                // 4A. ResetVirtualNetworkGateway API
+                // 3A. ResetVirtualNetworkGateway API
                 var resetVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
                 Assert.Equal(HttpStatusCode.OK, resetVirtualNetworkGatewayResponse.StatusCode);
                 Assert.Equal("Succeeded", resetVirtualNetworkGatewayResponse.Status);
 
-                // 4B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called
+                // 3B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called
                 getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
                 Assert.Equal(HttpStatusCode.OK, getVirtualNetworkGatewayResponse.StatusCode);
                 Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3} ",
@@ -142,17 +121,17 @@ namespace Networks.Tests
                     getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Id, getVirtualNetworkGatewayResponse.VirtualNetworkGateway.Name,
                     getVirtualNetworkGatewayResponse.VirtualNetworkGateway.GatewayType);
 
-                // 5. ListVitualNetworkGateways API
+                // 4. ListVitualNetworkGateways API
                 var listVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.List(resourceGroupName);
                 Assert.Equal(HttpStatusCode.OK, listVirtualNetworkGatewayResponse.StatusCode);
                 Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.VirtualNetworkGateways.Count);
                 Assert.Equal(1, listVirtualNetworkGatewayResponse.VirtualNetworkGateways.Count);
 
-                // 6A. DeleteVirtualNetworkGateway API
+                // 5A. DeleteVirtualNetworkGateway API
                 var deleteVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Delete(resourceGroupName, virtualNetworkGatewayName);
                 Assert.Equal(HttpStatusCode.OK, deleteVirtualNetworkGatewayResponse.StatusCode);
 
-                // 6B. ListVitualNetworkGateways API after deleting VirtualNetworkGateway
+                // 5B. ListVitualNetworkGateways API after deleting VirtualNetworkGateway
                 listVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.List(resourceGroupName);
                 Assert.Equal(HttpStatusCode.OK, listVirtualNetworkGatewayResponse.StatusCode);
                 Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.VirtualNetworkGateways.Count);
@@ -317,7 +296,6 @@ namespace Networks.Tests
                            {"key","value"}
                         },
                     EnableBgp = false,
-                    //GatewaySize = VirtualNetworkGatewaySize.Default,                   
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
                     IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
@@ -499,7 +477,6 @@ namespace Networks.Tests
                            {"key","value"}
                         },
                     EnableBgp = false,
-                    //GatewaySize = VirtualNetworkGatewaySize.Default,
                     GatewayType = VirtualNetworkGatewayType.Vpn,
                     VpnType = VpnType.RouteBased,
                     IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()

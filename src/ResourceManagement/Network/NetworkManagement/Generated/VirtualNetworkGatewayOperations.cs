@@ -246,11 +246,6 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                if (parameters.GatewaySize != null)
-                {
-                    propertiesValue["gatewaySize"] = parameters.GatewaySize;
-                }
-                
                 if (parameters.GatewayType != null)
                 {
                     propertiesValue["gatewayType"] = parameters.GatewayType;
@@ -436,13 +431,6 @@ namespace Microsoft.Azure.Management.Network
                                             virtualNetworkGatewayIpConfigurationJsonFormatInstance.Id = idInstance3;
                                         }
                                     }
-                                }
-                                
-                                JToken gatewaySizeValue = propertiesValue3["gatewaySize"];
-                                if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                {
-                                    string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                    virtualNetworkGatewayInstance.GatewaySize = gatewaySizeInstance;
                                 }
                                 
                                 JToken gatewayTypeValue = propertiesValue3["gatewayType"];
@@ -963,11 +951,6 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                if (parameters.GatewaySize != null)
-                {
-                    propertiesValue["gatewaySize"] = parameters.GatewaySize;
-                }
-                
                 if (parameters.GatewayType != null)
                 {
                     propertiesValue["gatewayType"] = parameters.GatewayType;
@@ -1153,13 +1136,6 @@ namespace Microsoft.Azure.Management.Network
                                             virtualNetworkGatewayIpConfigurationJsonFormatInstance.Id = idInstance3;
                                         }
                                     }
-                                }
-                                
-                                JToken gatewaySizeValue = propertiesValue3["gatewaySize"];
-                                if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                {
-                                    string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                    virtualNetworkGatewayInstance.GatewaySize = gatewaySizeInstance;
                                 }
                                 
                                 JToken gatewayTypeValue = propertiesValue3["gatewayType"];
@@ -1712,13 +1688,6 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken gatewaySizeValue = propertiesValue["gatewaySize"];
-                                if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                {
-                                    string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                    virtualNetworkGatewayInstance.GatewaySize = gatewaySizeInstance;
-                                }
-                                
                                 JToken gatewayTypeValue = propertiesValue["gatewayType"];
                                 if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                 {
@@ -2037,13 +2006,6 @@ namespace Microsoft.Azure.Management.Network
                                                     virtualNetworkGatewayIpConfigurationJsonFormatInstance.Id = idInstance3;
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken gatewaySizeValue = propertiesValue["gatewaySize"];
-                                        if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                        {
-                                            string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                            virtualNetworkGatewayJsonFormatInstance.GatewaySize = gatewaySizeInstance;
                                         }
                                         
                                         JToken gatewayTypeValue = propertiesValue["gatewayType"];
