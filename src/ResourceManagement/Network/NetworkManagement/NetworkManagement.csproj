@@ -141,11 +141,11 @@
     <Compile Include="Generated\Models\VirtualNetworkGatewayIpConfiguration.cs" />
     <Compile Include="Generated\Models\VirtualNetworkGatewayListResponse.cs" />
     <Compile Include="Generated\Models\VirtualNetworkGatewayPutResponse.cs" />
-    <Compile Include="Generated\Models\VirtualNetworkGatewaySize.cs" />
+    <Compile Include="Generated\Models\VirtualNetworkGatewayType.cs" />
     <Compile Include="Generated\Models\VirtualNetworkGetResponse.cs" />
     <Compile Include="Generated\Models\VirtualNetworkListResponse.cs" />
     <Compile Include="Generated\Models\VirtualNetworkPutResponse.cs" />
-    <Compile Include="Generated\Models\VpnGatewayType.cs" />
+    <Compile Include="Generated\Models\VpnType.cs" />
     <Compile Include="Generated\NetworkInterfaceOperations.cs" />
     <Compile Include="Generated\NetworkInterfaceOperationsExtensions.cs" />
     <Compile Include="Generated\NetworkResourceProviderClient.cs" />
@@ -165,7 +165,7 @@
     <Compile Include="Generated\VirtualNetworkGatewayOperations.cs" />
     <Compile Include="Generated\VirtualNetworkGatewayOperationsExtensions.cs" />
     <Compile Include="Generated\VirtualNetworkOperations.cs" />
-    <Compile Include="Generated\VirtualNetworkOperationsExtensions.cs" />    
+    <Compile Include="Generated\VirtualNetworkOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
