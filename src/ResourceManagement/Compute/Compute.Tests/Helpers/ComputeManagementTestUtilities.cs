@@ -20,16 +20,18 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;
+using System.Net;
 
 namespace Compute.Tests
 {
     public static class ComputeManagementTestUtilities
     {
-        public static string DefaultLocation = "EastAsia";
+        public static string DefaultLocation = "SoutheastAsia";
 
-        public static ComputeManagementClient GetComputeManagementClient(RecordedDelegatingHandler handler)
+        public static ComputeManagementClient GetComputeManagementClient(RecordedDelegatingHandler handler = null)
         {
-            return GetComputeManagementClient(new CSMTestEnvironmentFactory(), handler);
+            return GetComputeManagementClient(new CSMTestEnvironmentFactory(), 
+                handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
 
         public static ComputeManagementClient GetComputeManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)

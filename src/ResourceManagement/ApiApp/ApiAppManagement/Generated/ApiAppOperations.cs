@@ -63,10 +63,13 @@ namespace Microsoft.Azure.Management.ApiApps
         }
         
         /// <summary>
-        /// Return list of the deployed ApiApps for the resource group
+        /// Get information about a specific ApiApp
         /// </summary>
         /// <param name='resourceGroup'>
-        /// Required.
+        /// Required. The resource group containing the api app
+        /// </param>
+        /// <param name='name'>
+        /// Required. The instance name of the apiapp
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -75,7 +78,434 @@ namespace Microsoft.Azure.Management.ApiApps
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<ListApiAppsResponse> ListAsync(string resourceGroup, CancellationToken cancellationToken)
+        public async Task<GetApiAppResponse> GetAsync(string resourceGroup, string name, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException("resourceGroup");
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroup", resourceGroup);
+                tracingParameters.Add("name", name);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroup);
+            url = url + "/providers/Microsoft.AppService/apiapps/";
+            url = url + Uri.EscapeDataString(name);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GetApiAppResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GetApiAppResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ApiApp apiAppInstance = new ApiApp();
+                            result.ApiApp = apiAppInstance;
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                apiAppInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                apiAppInstance.Name = nameInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                apiAppInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    apiAppInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JToken packageValue = propertiesValue["package"];
+                                if (packageValue != null && packageValue.Type != JTokenType.Null)
+                                {
+                                    MicroservicePackage packageInstance = new MicroservicePackage();
+                                    apiAppInstance.Package = packageInstance;
+                                    
+                                    JToken idValue2 = packageValue["id"];
+                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    {
+                                        string idInstance2 = ((string)idValue2);
+                                        packageInstance.Id = idInstance2;
+                                    }
+                                    
+                                    JToken versionValue = packageValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        string versionInstance = ((string)versionValue);
+                                        packageInstance.Version = versionInstance;
+                                    }
+                                    
+                                    JToken authenticationArray = packageValue["authentication"];
+                                    if (authenticationArray != null && authenticationArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken authenticationValue in ((JArray)authenticationArray))
+                                        {
+                                            MicroserviceAuthentication microserviceAuthenticationInstance = new MicroserviceAuthentication();
+                                            packageInstance.Authentication.Add(microserviceAuthenticationInstance);
+                                            
+                                            JToken typeValue2 = authenticationValue["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance = ((string)typeValue2);
+                                                microserviceAuthenticationInstance.Type = typeInstance;
+                                            }
+                                            
+                                            JToken scopesArray = authenticationValue["scopes"];
+                                            if (scopesArray != null && scopesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken scopesValue in ((JArray)scopesArray))
+                                                {
+                                                    microserviceAuthenticationInstance.Scopes.Add(((string)scopesValue));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken linksArray = packageValue["links"];
+                                    if (linksArray != null && linksArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken linksValue in ((JArray)linksArray))
+                                        {
+                                            MicroserviceLink microserviceLinkInstance = new MicroserviceLink();
+                                            packageInstance.Links.Add(microserviceLinkInstance);
+                                            
+                                            JToken textValue = linksValue["text"];
+                                            if (textValue != null && textValue.Type != JTokenType.Null)
+                                            {
+                                                string textInstance = ((string)textValue);
+                                                microserviceLinkInstance.Text = textInstance;
+                                            }
+                                            
+                                            JToken urlValue = linksValue["Url"];
+                                            if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                            {
+                                                string urlInstance = ((string)urlValue);
+                                                microserviceLinkInstance.Url = urlInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken updatePolicyValue = propertiesValue["updatePolicy"];
+                                if (updatePolicyValue != null && updatePolicyValue.Type != JTokenType.Null)
+                                {
+                                    string updatePolicyInstance = ((string)updatePolicyValue);
+                                    apiAppInstance.UpdatePolicy = updatePolicyInstance;
+                                }
+                                
+                                JToken accessLevelValue = propertiesValue["accessLevel"];
+                                if (accessLevelValue != null && accessLevelValue.Type != JTokenType.Null)
+                                {
+                                    string accessLevelInstance = ((string)accessLevelValue);
+                                    apiAppInstance.AccessLevel = accessLevelInstance;
+                                }
+                                
+                                JToken apiValue = propertiesValue["api"];
+                                if (apiValue != null && apiValue.Type != JTokenType.Null)
+                                {
+                                    MicroserviceApi apiInstance = new MicroserviceApi();
+                                    apiAppInstance.Api = apiInstance;
+                                    
+                                    JToken endpointValue = apiValue["endpoint"];
+                                    if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                    {
+                                        string endpointInstance = ((string)endpointValue);
+                                        apiInstance.Endpoint = endpointInstance;
+                                    }
+                                    
+                                    JToken hasDefinitionValue = apiValue["hasDefinition"];
+                                    if (hasDefinitionValue != null && hasDefinitionValue.Type != JTokenType.Null)
+                                    {
+                                        bool hasDefinitionInstance = ((bool)hasDefinitionValue);
+                                        apiInstance.HasDefinition = hasDefinitionInstance;
+                                    }
+                                }
+                                
+                                JToken hostValue = propertiesValue["host"];
+                                if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                {
+                                    ResourceReference hostInstance = new ResourceReference();
+                                    apiAppInstance.Host = hostInstance;
+                                    
+                                    JToken idValue3 = hostValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    {
+                                        string idInstance3 = ((string)idValue3);
+                                        hostInstance.Id = idInstance3;
+                                    }
+                                    
+                                    JToken resourceNameValue = hostValue["resourceName"];
+                                    if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceNameInstance = ((string)resourceNameValue);
+                                        hostInstance.ResourceName = resourceNameInstance;
+                                    }
+                                    
+                                    JToken resourceTypeValue = hostValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceTypeInstance = ((string)resourceTypeValue);
+                                        hostInstance.ResourceType = resourceTypeInstance;
+                                    }
+                                }
+                                
+                                JToken gatewayValue = propertiesValue["gateway"];
+                                if (gatewayValue != null && gatewayValue.Type != JTokenType.Null)
+                                {
+                                    ResourceReference gatewayInstance = new ResourceReference();
+                                    apiAppInstance.Gateway = gatewayInstance;
+                                    
+                                    JToken idValue4 = gatewayValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    {
+                                        string idInstance4 = ((string)idValue4);
+                                        gatewayInstance.Id = idInstance4;
+                                    }
+                                    
+                                    JToken resourceNameValue2 = gatewayValue["resourceName"];
+                                    if (resourceNameValue2 != null && resourceNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string resourceNameInstance2 = ((string)resourceNameValue2);
+                                        gatewayInstance.ResourceName = resourceNameInstance2;
+                                    }
+                                    
+                                    JToken resourceTypeValue2 = gatewayValue["resourceType"];
+                                    if (resourceTypeValue2 != null && resourceTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string resourceTypeInstance2 = ((string)resourceTypeValue2);
+                                        gatewayInstance.ResourceType = resourceTypeInstance2;
+                                    }
+                                }
+                                
+                                JToken dependenciesArray = propertiesValue["dependencies"];
+                                if (dependenciesArray != null && dependenciesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken dependenciesValue in ((JArray)dependenciesArray))
+                                    {
+                                        apiAppInstance.Dependencies.Add(((string)dependenciesValue));
+                                    }
+                                }
+                                
+                                JToken statusArray = propertiesValue["status"];
+                                if (statusArray != null && statusArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken statusValue in ((JArray)statusArray))
+                                    {
+                                        StatusCheckEntry statusCheckEntryInstance = new StatusCheckEntry();
+                                        apiAppInstance.Status.Add(statusCheckEntryInstance);
+                                        
+                                        JToken nameValue2 = statusValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            statusCheckEntryInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken messageValue = statusValue["message"];
+                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance = ((string)messageValue);
+                                            statusCheckEntryInstance.Message = messageInstance;
+                                        }
+                                        
+                                        JToken statusLevelValue = statusValue["statusLevel"];
+                                        if (statusLevelValue != null && statusLevelValue.Type != JTokenType.Null)
+                                        {
+                                            string statusLevelInstance = ((string)statusLevelValue);
+                                            statusCheckEntryInstance.StatusLevel = statusLevelInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken authenticationValue2 = propertiesValue["authentication"];
+                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                {
+                                    MicroserviceAuthentication authenticationInstance = new MicroserviceAuthentication();
+                                    apiAppInstance.Authentication = authenticationInstance;
+                                    
+                                    JToken typeValue3 = authenticationValue2["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance2 = ((string)typeValue3);
+                                        authenticationInstance.Type = typeInstance2;
+                                    }
+                                    
+                                    JToken scopesArray2 = authenticationValue2["scopes"];
+                                    if (scopesArray2 != null && scopesArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken scopesValue2 in ((JArray)scopesArray2))
+                                        {
+                                            authenticationInstance.Scopes.Add(((string)scopesValue2));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Return list of the deployed ApiApps for the resource group
+        /// </summary>
+        /// <param name='resourceGroup'>
+        /// Required. Name of the resource group containing the apiapps to list
+        /// </param>
+        /// <param name='expand'>
+        /// Optional. Option controlling how much data to return, valid options
+        /// are "basic" or "detail"
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<ListApiAppsResponse> ListAsync(string resourceGroup, string expand, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroup == null)
@@ -91,6 +521,7 @@ namespace Microsoft.Azure.Management.ApiApps
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroup", resourceGroup);
+                tracingParameters.Add("expand", expand);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -105,6 +536,10 @@ namespace Microsoft.Azure.Management.ApiApps
             url = url + Uri.EscapeDataString(resourceGroup);
             url = url + "/providers/Microsoft.AppService/apiapps";
             List<string> queryParameters = new List<string>();
+            if (expand != null)
+            {
+                queryParameters.Add("$expand=" + Uri.EscapeDataString(expand));
+            }
             queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {

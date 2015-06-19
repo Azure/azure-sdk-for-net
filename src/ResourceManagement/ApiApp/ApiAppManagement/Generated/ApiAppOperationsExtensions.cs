@@ -39,6 +39,54 @@ namespace Microsoft.Azure.Management.ApiApps
     public static partial class ApiAppOperationsExtensions
     {
         /// <summary>
+        /// Get information about a specific ApiApp
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.ApiApps.IApiAppOperations.
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Required. The resource group containing the api app
+        /// </param>
+        /// <param name='name'>
+        /// Required. The instance name of the apiapp
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GetApiAppResponse Get(this IApiAppOperations operations, string resourceGroup, string name)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IApiAppOperations)s).GetAsync(resourceGroup, name);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get information about a specific ApiApp
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.ApiApps.IApiAppOperations.
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Required. The resource group containing the api app
+        /// </param>
+        /// <param name='name'>
+        /// Required. The instance name of the apiapp
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GetApiAppResponse> GetAsync(this IApiAppOperations operations, string resourceGroup, string name)
+        {
+            return operations.GetAsync(resourceGroup, name, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Return list of the deployed ApiApps for the resource group
         /// </summary>
         /// <param name='operations'>
@@ -46,17 +94,21 @@ namespace Microsoft.Azure.Management.ApiApps
         /// Microsoft.Azure.Management.ApiApps.IApiAppOperations.
         /// </param>
         /// <param name='resourceGroup'>
-        /// Required.
+        /// Required. Name of the resource group containing the apiapps to list
+        /// </param>
+        /// <param name='expand'>
+        /// Optional. Option controlling how much data to return, valid options
+        /// are "basic" or "detail"
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static ListApiAppsResponse List(this IApiAppOperations operations, string resourceGroup)
+        public static ListApiAppsResponse List(this IApiAppOperations operations, string resourceGroup, string expand)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApiAppOperations)s).ListAsync(resourceGroup);
+                return ((IApiAppOperations)s).ListAsync(resourceGroup, expand);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -69,15 +121,19 @@ namespace Microsoft.Azure.Management.ApiApps
         /// Microsoft.Azure.Management.ApiApps.IApiAppOperations.
         /// </param>
         /// <param name='resourceGroup'>
-        /// Required.
+        /// Required. Name of the resource group containing the apiapps to list
+        /// </param>
+        /// <param name='expand'>
+        /// Optional. Option controlling how much data to return, valid options
+        /// are "basic" or "detail"
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<ListApiAppsResponse> ListAsync(this IApiAppOperations operations, string resourceGroup)
+        public static Task<ListApiAppsResponse> ListAsync(this IApiAppOperations operations, string resourceGroup, string expand)
         {
-            return operations.ListAsync(resourceGroup, CancellationToken.None);
+            return operations.ListAsync(resourceGroup, expand, CancellationToken.None);
         }
         
         /// <summary>
