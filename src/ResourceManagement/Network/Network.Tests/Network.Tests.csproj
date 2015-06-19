@@ -26,6 +26,9 @@
     <Compile Include="Tests\CheckDnsAvailabilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ApplicationGatewayCertificate\GW5000.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\ApplicationGatewayApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

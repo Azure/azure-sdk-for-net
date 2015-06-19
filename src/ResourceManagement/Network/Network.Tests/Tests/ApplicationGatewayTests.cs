@@ -57,7 +57,7 @@ namespace Networks.Tests
 
         private ApplicationGatewaySslCertificate CreateSslCertificate(string sslCertName, string password)
         {
-            X509Certificate2 cert = new X509Certificate2("D:\\AppGWe2eTest\\GW5000.pfx", password, X509KeyStorageFlags.Exportable);
+            X509Certificate2 cert = new X509Certificate2("ApplicationGatewayCertificate\\GW5000.pfx", password, X509KeyStorageFlags.Exportable);
             ApplicationGatewaySslCertificate sslCert = new ApplicationGatewaySslCertificate()
             {
                 Name = sslCertName,
