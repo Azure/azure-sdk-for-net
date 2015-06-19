@@ -102,6 +102,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._auditingPolicy; }
         }
         
+        private IDatabaseActivationOperations _databaseActivation;
+        
+        /// <summary>
+        /// Represents all the operations for operating pertaining to
+        /// activation on Azure SQL Data Warehouse databases. Contains
+        /// operations to: Pause and Resume databases
+        /// </summary>
+        public virtual IDatabaseActivationOperations DatabaseActivation
+        {
+            get { return this._databaseActivation; }
+        }
+        
         private IDatabaseOperations _databases;
         
         /// <summary>
@@ -239,6 +251,7 @@ namespace Microsoft.Azure.Management.Sql
             : base()
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._databaseActivation = new DatabaseActivationOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
@@ -316,6 +329,7 @@ namespace Microsoft.Azure.Management.Sql
             : base(httpClient)
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._databaseActivation = new DatabaseActivationOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);

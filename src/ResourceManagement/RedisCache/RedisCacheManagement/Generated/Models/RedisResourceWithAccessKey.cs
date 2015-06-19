@@ -21,42 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Redis.Models;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Know values for MaxMemoryPolicy property.
+    /// A redis item in CreateOrUpdate Operation response.
     /// </summary>
-    public static partial class MaxMemoryPolicy
+    public partial class RedisResourceWithAccessKey : ResourceBaseExtended
     {
-        /// <summary>
-        /// VolatileLRU (volatile-lru in redis.conf).
-        /// </summary>
-        public const string VolatileLRU = "VolatileLRU";
+        private RedisReadablePropertiesWithAccessKey _properties;
         
         /// <summary>
-        /// AllKeysLRU (allkeys-lru in redis.conf).
+        /// Optional. Redis cache properties
         /// </summary>
-        public const string AllKeysLRU = "AllKeysLRU";
+        public RedisReadablePropertiesWithAccessKey Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
         
         /// <summary>
-        /// VolatileRandom (volatile-random in redis.conf).
+        /// Initializes a new instance of the RedisResourceWithAccessKey class.
         /// </summary>
-        public const string VolatileRandom = "VolatileRandom";
+        public RedisResourceWithAccessKey()
+        {
+        }
         
         /// <summary>
-        /// AllKeysRandom (allkeys-random in redis.conf).
+        /// Initializes a new instance of the RedisResourceWithAccessKey class
+        /// with required arguments.
         /// </summary>
-        public const string AllKeysRandom = "AllKeysRandom";
-        
-        /// <summary>
-        /// VolatileTTL (volatile-ttl in redis.conf).
-        /// </summary>
-        public const string VolatileTTL = "VolatileTTL";
-        
-        /// <summary>
-        /// NoEviction (noeviction in redis.conf).
-        /// </summary>
-        public const string NoEviction = "NoEviction";
+        public RedisResourceWithAccessKey(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
+        }
     }
 }

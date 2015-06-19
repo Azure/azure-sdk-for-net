@@ -1,30 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/providers/Microsoft.Cache/register?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/providers/Microsoft.Cache/register?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVnaXN0ZXI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [\r\n        \"\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/metricDefinitions\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/metrics\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"RedisConfigDefinition\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/metricDefinitions\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Brazil South\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"South Central US\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/diagnosticSettings\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Brazil South\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"South Central US\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registering\"\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "1231"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1190"
         ],
         "x-ms-request-id": [
-          "399f4413-9794-4d9c-bf97-ef3e4249ff72"
+          "133d29be-b275-47d3-ba9b-e4b3e6b3d777"
         ],
         "x-ms-correlation-request-id": [
-          "399f4413-9794-4d9c-bf97-ef3e4249ff72"
+          "133d29be-b275-47d3-ba9b-e4b3e6b3d777"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221329Z:399f4413-9794-4d9c-bf97-ef3e4249ff72"
+          "CENTRALUS:20150427T234949Z:133d29be-b275-47d3-ba9b-e4b3e6b3d777"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -33,36 +43,46 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:13:29 GMT"
+          "Mon, 27 Apr 2015 23:49:48 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/providers/Microsoft.Cache?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/providers/Microsoft.Cache?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGU/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [\r\n        \"\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/metricDefinitions\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/metrics\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"RedisConfigDefinition\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/metricDefinitions\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Brazil South\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"South Central US\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"Redis/diagnosticSettings\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Brazil South\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"South Central US\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registering\"\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "1231"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31790"
+          "31674"
         ],
         "x-ms-request-id": [
-          "904d6601-975c-4f8a-a42e-83659ee53fa6"
+          "76941bdc-a3c8-4dab-ae00-376b10b709e2"
         ],
         "x-ms-correlation-request-id": [
-          "904d6601-975c-4f8a-a42e-83659ee53fa6"
+          "76941bdc-a3c8-4dab-ae00-376b10b709e2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221330Z:904d6601-975c-4f8a-a42e-83659ee53fa6"
+          "CENTRALUS:20150427T234950Z:76941bdc-a3c8-4dab-ae00-376b10b709e2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -71,36 +91,52 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:13:29 GMT"
+          "Mon, 27 Apr 2015 23:49:50 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourcegroups/hydra19407?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourcegroups/hydra15354?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlZ3JvdXBzL2h5ZHJhMTUzNTQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"North Central US\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"North Central US\"\r\n}",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407\",\r\n  \"name\": \"hydra19407\",\r\n  \"location\": \"northcentralus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354\",\r\n  \"name\": \"hydra15354\",\r\n  \"location\": \"northcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "181"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1189"
         ],
         "x-ms-request-id": [
-          "eaad8e6e-b3b3-4204-910a-b020a6076e3c"
+          "75c6944c-dd6a-44c3-a733-f83dcf4aa96b"
         ],
         "x-ms-correlation-request-id": [
-          "eaad8e6e-b3b3-4204-910a-b020a6076e3c"
+          "75c6944c-dd6a-44c3-a733-f83dcf4aa96b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221330Z:eaad8e6e-b3b3-4204-910a-b020a6076e3c"
+          "CENTRALUS:20150427T234950Z:75c6944c-dd6a-44c3-a733-f83dcf4aa96b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -109,36 +145,46 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:13:29 GMT"
+          "Mon, 27 Apr 2015 23:49:50 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourcegroups/hydra19407?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourcegroups/hydra15354?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlZ3JvdXBzL2h5ZHJhMTUzNTQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407\",\r\n  \"name\": \"hydra19407\",\r\n  \"location\": \"northcentralus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354\",\r\n  \"name\": \"hydra15354\",\r\n  \"location\": \"northcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "181"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31789"
+          "31673"
         ],
         "x-ms-request-id": [
-          "ea1cfdbe-a06d-4f8e-b53d-3c7e653bfc17"
+          "32989165-0318-4ae9-ba59-183c05f312c2"
         ],
         "x-ms-correlation-request-id": [
-          "ea1cfdbe-a06d-4f8e-b53d-3c7e653bfc17"
+          "32989165-0318-4ae9-ba59-183c05f312c2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221330Z:ea1cfdbe-a06d-4f8e-b53d-3c7e653bfc17"
+          "CENTRALUS:20150427T234950Z:32989165-0318-4ae9-ba59-183c05f312c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -147,51 +193,67 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:13:29 GMT"
+          "Mon, 27 Apr 2015 23:49:50 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"North Central US\",\r\n  \"properties\": {\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false\r\n  },\r\n  \"location\": \"North Central US\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "226"
+        ],
         "User-Agent": [
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": {\r\n      \"primaryKey\": \"wnhtuKx3NtJFkgyjl6cuBUsOYsGGoARw2woAJ1B1VPM=\",\r\n      \"secondaryKey\": \"GBcpPU0v4Ftd9i1WAItaOhhP4RGFwsJOAKEG27cmsw8=\"\r\n    },\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": {\r\n      \"primaryKey\": \"lit8Hk6w+iQrATV4SIpxeBnPh1hDpkyoO7owKn41B+Q=\",\r\n      \"secondaryKey\": \"pyNN4B1/lHntNAmFzJdO6cLmei0RAmFfXBQQmIRxZSI=\"\r\n    },\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "605"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "dd2b2cc9-d712-4538-b86f-d5f9fbaf099d"
+          "2366b8ab-18a4-4fcc-bbdd-5f19edd76232"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1188"
         ],
         "x-ms-correlation-request-id": [
-          "af7ac1f6-4257-477e-b9ad-b12ee0422f76"
+          "0860fb29-b13a-4840-b953-511bc985d8eb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221351Z:af7ac1f6-4257-477e-b9ad-b12ee0422f76"
+          "CENTRALUS:20150427T234953Z:0860fb29-b13a-4840-b953-511bc985d8eb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:13:51 GMT"
+          "Mon, 27 Apr 2015 23:49:52 GMT"
         ],
         "Location": [
-          "https://westus.cache.azure-test.net:10225/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1"
+          "https://cur-rp-ncus.cacheinfra.icbbvt.windows-int.net:10225/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -200,7 +262,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -208,34 +271,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4257251b-bfb5-423d-984e-1f8047dc142c"
+          "042ddef4-e8ed-45d3-9255-3431fe3bcd02"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31738"
+          "31672"
         ],
         "x-ms-correlation-request-id": [
-          "74eb3c94-1734-4d67-b7e5-77945f536e26"
+          "0078f868-d6b7-44b4-8a92-79d40fac1c71"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221351Z:74eb3c94-1734-4d67-b7e5-77945f536e26"
+          "CENTRALUS:20150427T234953Z:0078f868-d6b7-44b4-8a92-79d40fac1c71"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:13:51 GMT"
+          "Mon, 27 Apr 2015 23:49:53 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -244,7 +316,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -252,34 +325,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "28f8f6a3-69c1-4c7b-9720-5d94c6914fe8"
+          "319c8f6b-db71-462b-b2be-13c409f8e16d"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31728"
+          "31664"
         ],
         "x-ms-correlation-request-id": [
-          "7e77a87f-6c47-48af-8507-8c8967b1c091"
+          "175f04ad-4b1c-4759-95da-b87f6de682f2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221427Z:7e77a87f-6c47-48af-8507-8c8967b1c091"
+          "CENTRALUS:20150427T235023Z:175f04ad-4b1c-4759-95da-b87f6de682f2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:14:26 GMT"
+          "Mon, 27 Apr 2015 23:50:22 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -288,7 +370,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -296,34 +379,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "05b6a02b-f80a-4e1a-a8d2-aff1269c1c4f"
+          "18d3ebf8-f4ef-4510-94eb-8c1857e1f6e3"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31727"
+          "31662"
         ],
         "x-ms-correlation-request-id": [
-          "7fb943b8-6b5c-443c-98c1-f7e422f20524"
+          "94ccdcc7-db47-4f87-86c2-6830dff5c6d3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221458Z:7fb943b8-6b5c-443c-98c1-f7e422f20524"
+          "CENTRALUS:20150427T235053Z:94ccdcc7-db47-4f87-86c2-6830dff5c6d3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:14:57 GMT"
+          "Mon, 27 Apr 2015 23:50:53 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -332,7 +424,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -340,34 +433,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "70cadeec-63bc-47b3-aee6-b976facdd6ca"
+          "796d57e4-fbfe-4de6-ba4d-26df370cc09f"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31749"
+          "31652"
         ],
         "x-ms-correlation-request-id": [
-          "8a43c1b0-375e-4a8e-a2c1-3564b2da53bc"
+          "ae582ce1-5040-43d8-a0a9-9c25a012ff1f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221528Z:8a43c1b0-375e-4a8e-a2c1-3564b2da53bc"
+          "CENTRALUS:20150427T235124Z:ae582ce1-5040-43d8-a0a9-9c25a012ff1f"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:15:27 GMT"
+          "Mon, 27 Apr 2015 23:51:23 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -376,7 +478,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -384,34 +487,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b25b5cce-fce1-4e30-8d3b-0fa96edc2f4a"
+          "94320211-83f3-4c66-b5f7-88be781763f8"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31748"
+          "31650"
         ],
         "x-ms-correlation-request-id": [
-          "2a800305-4b18-49f9-b97a-55499df2cc23"
+          "4ecb9609-5cf0-4fc9-a12f-d041d01521ac"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221558Z:2a800305-4b18-49f9-b97a-55499df2cc23"
+          "CENTRALUS:20150427T235154Z:4ecb9609-5cf0-4fc9-a12f-d041d01521ac"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:15:58 GMT"
+          "Mon, 27 Apr 2015 23:51:54 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -420,7 +532,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -428,34 +541,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1c2ff82c-dc8f-469f-a7c1-944303c6dbcb"
+          "16b12433-31c4-4cb1-be8c-3f2485d3ba13"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31744"
+          "31647"
         ],
         "x-ms-correlation-request-id": [
-          "77e9ab8e-f81e-4567-9c4e-2a8d11afbc17"
+          "f91592d9-ed98-490b-8d03-eb5747c097c1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221628Z:77e9ab8e-f81e-4567-9c4e-2a8d11afbc17"
+          "CENTRALUS:20150427T235224Z:f91592d9-ed98-490b-8d03-eb5747c097c1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:16:28 GMT"
+          "Mon, 27 Apr 2015 23:52:23 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -464,7 +586,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -472,34 +595,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "16546749-d9f6-4cfe-b227-bf656945011d"
+          "6806f7e9-a235-4522-9f3e-cd74ee7cac39"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31743"
+          "31645"
         ],
         "x-ms-correlation-request-id": [
-          "0a03f81b-40d0-4037-8aaf-4f7cadd266a0"
+          "5462488e-89d1-451d-8a0f-81caa5cf28ba"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221659Z:0a03f81b-40d0-4037-8aaf-4f7cadd266a0"
+          "CENTRALUS:20150427T235254Z:5462488e-89d1-451d-8a0f-81caa5cf28ba"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:16:58 GMT"
+          "Mon, 27 Apr 2015 23:52:53 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -508,7 +640,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -516,34 +649,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2d333619-5528-4e1f-9706-19a73b87cf24"
+          "7c1eb213-556b-4f70-8f60-8cf26bbe7f1e"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31737"
+          "31641"
         ],
         "x-ms-correlation-request-id": [
-          "3a68e928-1ea5-4ae2-9ca8-6f88788b904f"
+          "61a5ba89-f54a-4f2f-bf03-495d2ee24597"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221729Z:3a68e928-1ea5-4ae2-9ca8-6f88788b904f"
+          "CENTRALUS:20150427T235324Z:61a5ba89-f54a-4f2f-bf03-495d2ee24597"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:17:28 GMT"
+          "Mon, 27 Apr 2015 23:53:23 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -552,7 +694,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -560,34 +703,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "94606e18-2751-4e24-8184-1ca2f4f44623"
+          "757dcfb8-bc09-44a2-887a-51a8ac194785"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31736"
+          "31639"
         ],
         "x-ms-correlation-request-id": [
-          "7224f7ca-5e49-453d-9e4b-e181ed9ebb36"
+          "88a60d31-5f99-49cf-a00d-7046ef1fd6fd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221759Z:7224f7ca-5e49-453d-9e4b-e181ed9ebb36"
+          "CENTRALUS:20150427T235354Z:88a60d31-5f99-49cf-a00d-7046ef1fd6fd"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:17:58 GMT"
+          "Mon, 27 Apr 2015 23:53:54 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -596,7 +748,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -604,34 +757,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "91517b28-52ea-49c4-b58e-7c0a0295768a"
+          "fdc967fd-a8a6-4726-8001-756910839b9a"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31732"
+          "31637"
         ],
         "x-ms-correlation-request-id": [
-          "0711b2ca-4810-4340-8cf4-f2348566207b"
+          "327ccdc4-240f-4f61-b3b7-4e5975bf33e3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221830Z:0711b2ca-4810-4340-8cf4-f2348566207b"
+          "CENTRALUS:20150427T235424Z:327ccdc4-240f-4f61-b3b7-4e5975bf33e3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:18:30 GMT"
+          "Mon, 27 Apr 2015 23:54:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -640,7 +802,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -648,34 +811,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ad0da716-0fb7-4fbe-9bff-09f0c1954380"
+          "fba33fc7-c9bd-474d-bca1-323c12c95217"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31731"
+          "31635"
         ],
         "x-ms-correlation-request-id": [
-          "4614cf4e-ab61-47d1-a114-7ed9e03424be"
+          "14089abd-0c18-4735-ab23-e3500d4082f4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221900Z:4614cf4e-ab61-47d1-a114-7ed9e03424be"
+          "CENTRALUS:20150427T235454Z:14089abd-0c18-4735-ab23-e3500d4082f4"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:19:00 GMT"
+          "Mon, 27 Apr 2015 23:54:53 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -684,7 +856,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -692,34 +865,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0cd8e8dd-7650-45dc-9abe-560845aedc04"
+          "b59f5d1f-fb90-4a8b-9ccf-97b188e691fc"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31726"
+          "31638"
         ],
         "x-ms-correlation-request-id": [
-          "723eda91-f5e8-4325-a339-e270f619a7ec"
+          "78ec561a-1619-49b0-8b89-14ca8d64f560"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T221930Z:723eda91-f5e8-4325-a339-e270f619a7ec"
+          "CENTRALUS:20150427T235524Z:78ec561a-1619-49b0-8b89-14ca8d64f560"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:19:30 GMT"
+          "Mon, 27 Apr 2015 23:55:23 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -728,7 +910,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -736,34 +919,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "02b7d5e2-4502-4eb0-baf4-836a58c61f0b"
+          "ae87bb8e-1bc7-4936-a521-3d4895b6fa95"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31737"
+          "31636"
         ],
         "x-ms-correlation-request-id": [
-          "7db89176-c047-4290-b465-27f99cedad0a"
+          "79930d0a-0ea5-4d7e-afe2-793676bc61cf"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222001Z:7db89176-c047-4290-b465-27f99cedad0a"
+          "CENTRALUS:20150427T235554Z:79930d0a-0ea5-4d7e-afe2-793676bc61cf"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:20:01 GMT"
+          "Mon, 27 Apr 2015 23:55:54 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -772,7 +964,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -780,34 +973,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "becd9491-f27a-412c-b47a-75edd62c2689"
+          "1855e21c-a633-4aae-9c9c-6be05eb87d39"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31734"
+          "31634"
         ],
         "x-ms-correlation-request-id": [
-          "669b06bf-68da-4ddc-b450-1244df27e878"
+          "d568a7ba-bfb2-49f0-9f0e-76d4507a30f3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222031Z:669b06bf-68da-4ddc-b450-1244df27e878"
+          "CENTRALUS:20150427T235625Z:d568a7ba-bfb2-49f0-9f0e-76d4507a30f3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:20:31 GMT"
+          "Mon, 27 Apr 2015 23:56:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -816,7 +1018,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -824,34 +1027,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6dba180c-71c8-4e90-9193-dcf66185cccc"
+          "fc2565ab-59b7-4642-80f5-3d77d28a0394"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31733"
+          "31632"
         ],
         "x-ms-correlation-request-id": [
-          "145db4bd-3468-4a34-b931-8f58ce7fb1e3"
+          "2c95f511-49c4-4838-af12-f2c99fbe9e7a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222101Z:145db4bd-3468-4a34-b931-8f58ce7fb1e3"
+          "CENTRALUS:20150427T235655Z:2c95f511-49c4-4838-af12-f2c99fbe9e7a"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:21:01 GMT"
+          "Mon, 27 Apr 2015 23:56:55 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -860,7 +1072,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -868,34 +1081,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a626d311-58b8-4831-b8fa-4e1c1a6f7aaf"
+          "f7bed9f6-9804-4871-acb8-ff73e66280f9"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31732"
+          "31630"
         ],
         "x-ms-correlation-request-id": [
-          "f0e9fbdb-2014-4e34-a311-e8a1e1ab3ca6"
+          "6d981701-2297-4621-b8b6-6b3d6d9a0e3d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222132Z:f0e9fbdb-2014-4e34-a311-e8a1e1ab3ca6"
+          "CENTRALUS:20150427T235725Z:6d981701-2297-4621-b8b6-6b3d6d9a0e3d"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:21:31 GMT"
+          "Mon, 27 Apr 2015 23:57:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -904,7 +1126,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -912,34 +1135,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "aa7ade8d-4711-4e0c-869b-951cd24d60c9"
+          "d36e0240-5f65-4dd2-9a3c-acdc137da060"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31731"
+          "31627"
         ],
         "x-ms-correlation-request-id": [
-          "6fdeb32d-dc5b-4cd6-854b-aa9a837bf508"
+          "585b27b3-a516-48e0-b925-cf3edbce1af8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222202Z:6fdeb32d-dc5b-4cd6-854b-aa9a837bf508"
+          "CENTRALUS:20150427T235755Z:585b27b3-a516-48e0-b925-cf3edbce1af8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:22:02 GMT"
+          "Mon, 27 Apr 2015 23:57:54 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -948,7 +1180,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -956,34 +1189,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7162b485-b04f-4d9c-9b8b-a1f350d374dc"
+          "02ccc084-a916-49fc-b31d-46029355b718"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31728"
+          "31626"
         ],
         "x-ms-correlation-request-id": [
-          "185f2f4a-da4f-42e4-8169-68a644d53bcf"
+          "2a359c1e-d124-43cd-b076-8fdbc245a587"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222232Z:185f2f4a-da4f-42e4-8169-68a644d53bcf"
+          "CENTRALUS:20150427T235825Z:2a359c1e-d124-43cd-b076-8fdbc245a587"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:22:32 GMT"
+          "Mon, 27 Apr 2015 23:58:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -992,7 +1234,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1000,34 +1243,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "49a765f9-1107-41c7-a882-2dad6385d229"
+          "78d17e2e-259c-40b2-936c-8c553473b1f8"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31727"
+          "31624"
         ],
         "x-ms-correlation-request-id": [
-          "f6b70b9e-a830-4c0c-909f-3d8010980ee2"
+          "abc99a82-ade9-4802-bb9f-72dfa446f836"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222303Z:f6b70b9e-a830-4c0c-909f-3d8010980ee2"
+          "CENTRALUS:20150427T235855Z:abc99a82-ade9-4802-bb9f-72dfa446f836"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:23:03 GMT"
+          "Mon, 27 Apr 2015 23:58:54 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1036,7 +1288,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1044,34 +1297,43 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "003e365f-8373-4bf9-b084-4ca1c49b8948"
+          "d583aff5-5165-4f20-afdb-a863b24bb843"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31723"
+          "31621"
         ],
         "x-ms-correlation-request-id": [
-          "bb3ab048-ddcf-4da6-8d40-62960d232587"
+          "2625a5ec-d0d2-44ab-bc6d-5a4a08405f3a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222333Z:bb3ab048-ddcf-4da6-8d40-62960d232587"
+          "CENTRALUS:20150427T235925Z:2625a5ec-d0d2-44ab-bc6d-5a4a08405f3a"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:23:32 GMT"
+          "Mon, 27 Apr 2015 23:59:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1080,7 +1342,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1088,34 +1351,367 @@
           "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f435d8e1-f7a0-4f79-adf7-b1a564728140/resourceGroups/hydra19407/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"maxMemoryPolicy\": null,\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ee1535bf-64ce-4b94-a4ba-9ef6cc8ad18e"
+          "9c76cf79-95b5-46ff-943d-d5dcc66729b4"
         ],
         "x-rp-server-mvid": [
-          "ada78035-ec7d-467d-993c-7ac34724eb72"
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31722"
+          "31619"
         ],
         "x-ms-correlation-request-id": [
-          "19f5da2a-00d3-444f-b6b1-6cbdf1ca7ca4"
+          "4dc280a2-3a61-4e89-9d29-0f8c180a238c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140902T222403Z:19f5da2a-00d3-444f-b6b1-6cbdf1ca7ca4"
+          "CENTRALUS:20150427T235955Z:4dc280a2-3a61-4e89-9d29-0f8c180a238c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 Sep 2014 22:24:03 GMT"
+          "Mon, 27 Apr 2015 23:59:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "be2c5068-b74b-4634-99de-879f6d41c02d"
+        ],
+        "x-rp-server-mvid": [
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31622"
+        ],
+        "x-ms-correlation-request-id": [
+          "3b49b2b1-2719-4369-b141-d1fb57b4ffcf"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150428T000025Z:3b49b2b1-2719-4369-b141-d1fb57b4ffcf"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Apr 2015 00:00:25 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6587af79-be10-4ab8-a229-a643b9f8cc0a"
+        ],
+        "x-rp-server-mvid": [
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31620"
+        ],
+        "x-ms-correlation-request-id": [
+          "87cf40fa-963e-48be-90fb-a67c4603891a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150428T000055Z:87cf40fa-963e-48be-90fb-a67c4603891a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Apr 2015 00:00:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "39c965af-fc34-42ad-aef4-3a85826670b4"
+        ],
+        "x-rp-server-mvid": [
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31617"
+        ],
+        "x-ms-correlation-request-id": [
+          "c04aec13-69b8-4f27-aa3a-c86234d3b1c6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150428T000126Z:c04aec13-69b8-4f27-aa3a-c86234d3b1c6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Apr 2015 00:01:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "034143be-7df5-4b5f-9521-6960cad13985"
+        ],
+        "x-rp-server-mvid": [
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31614"
+        ],
+        "x-ms-correlation-request-id": [
+          "97403527-01a4-4b08-934e-a64e10600be7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150428T000156Z:97403527-01a4-4b08-934e-a64e10600be7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Apr 2015 00:01:56 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9cd543e9-31b7-4e42-872e-94a624c108cd"
+        ],
+        "x-rp-server-mvid": [
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31612"
+        ],
+        "x-ms-correlation-request-id": [
+          "c6d62b74-377f-438f-9bd4-188bd68d1aab"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150428T000226Z:c6d62b74-377f-438f-9bd4-188bd68d1aab"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Apr 2015 00:02:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFiM2ZiZGQtYmQ4Ni00NTZhLTkwMzctOWZkMGQ3N2Q1MDVkL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTUzNTQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11b3fbdd-bd86-456a-9037-9fd0d77d505d/resourceGroups/hydra15354/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"2.8\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {},\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "487"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1b3ca39e-2550-4139-8a4a-fb74fe4b023b"
+        ],
+        "x-rp-server-mvid": [
+          "abcfd837-facc-44a4-a7a5-ce6da16587c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "31609"
+        ],
+        "x-ms-correlation-request-id": [
+          "5cf156e1-91ba-4215-8ab6-cdf5e8eeb8cb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150428T000256Z:5cf156e1-91ba-4215-8ab6-cdf5e8eeb8cb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Apr 2015 00:02:55 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1126,10 +1722,10 @@
   ],
   "Names": {
     ".ctor": [
-      "hydra19407"
+      "hydra15354"
     ]
   },
   "Variables": {
-    "SubscriptionId": "f435d8e1-f7a0-4f79-adf7-b1a564728140"
+    "SubscriptionId": "11b3fbdd-bd86-456a-9037-9fd0d77d505d"
   }
 }

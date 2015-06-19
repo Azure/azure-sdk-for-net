@@ -35,7 +35,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 string rgName = TestUtilities.GenerateName(TestPrefix);
                 string asName = TestUtilities.GenerateName("as");
@@ -61,7 +61,7 @@ namespace Compute.Tests
 
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
-                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imgRefId, asetId, nicResponse.NetworkInterface.Id);
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.NetworkInterface.Id);
                     
                     string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
@@ -80,7 +80,7 @@ namespace Compute.Tests
                     var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse.NetworkInterface.Name);
                     Assert.NotNull(getNicResponse.NetworkInterface.MacAddress);
                     Assert.NotNull(getNicResponse.NetworkInterface.Primary);
-                    Assert.True(getNicResponse.NetworkInterface.Primary.Value);
+                    Assert.True(getNicResponse.NetworkInterface.Primary != null && getNicResponse.NetworkInterface.Primary.Value);
                 }
                 finally
                 {
@@ -99,7 +99,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 string rgName = TestUtilities.GenerateName(TestPrefix);
                 string asName = TestUtilities.GenerateName("as");
@@ -127,7 +127,7 @@ namespace Compute.Tests
                     NetworkInterfaceGetResponse nicResponse2 = CreateNIC(rgName, subnetResponse.Subnet, null, nicname2);
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
-                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imgRefId, asetId, nicResponse1.NetworkInterface.Id);
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.NetworkInterface.Id);
 
                     inputVM.HardwareProfile.VirtualMachineSize = VirtualMachineSizeTypes.StandardA4;
                     inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
@@ -154,12 +154,12 @@ namespace Compute.Tests
                     var getNicResponse1 = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse1.NetworkInterface.Name);
                     Assert.NotNull(getNicResponse1.NetworkInterface.MacAddress);
                     Assert.NotNull(getNicResponse1.NetworkInterface.Primary);
-                    Assert.False(getNicResponse1.NetworkInterface.Primary.Value);
+                    Assert.True(getNicResponse1.NetworkInterface.Primary != null && !getNicResponse1.NetworkInterface.Primary.Value);
 
                     var getNicResponse2 = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse2.NetworkInterface.Name);
                     Assert.NotNull(getNicResponse2.NetworkInterface.MacAddress);
                     Assert.NotNull(getNicResponse2.NetworkInterface.Primary);
-                    Assert.True(getNicResponse2.NetworkInterface.Primary.Value);
+                    Assert.True(getNicResponse2.NetworkInterface.Primary != null && getNicResponse2.NetworkInterface.Primary.Value);
                 }
                 finally
                 {

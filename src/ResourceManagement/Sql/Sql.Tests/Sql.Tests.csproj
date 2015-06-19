@@ -60,6 +60,9 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedElasticPoolScenarioTests\ListPoolsExpanded.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseActivationTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -82,6 +85,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithCancel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithElasticPool.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithRecommendedDatabase.json">

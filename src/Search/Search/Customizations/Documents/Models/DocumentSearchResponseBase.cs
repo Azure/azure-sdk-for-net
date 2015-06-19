@@ -53,6 +53,12 @@ namespace Microsoft.Azure.Search.Models
         public long? Count { get; set; }
 
         /// <summary>
+        /// Gets a value indicating the percentage of the index that was included in the query, or null if
+        /// MinimumCoverage was not set in the <c cref="SearchParameters">SearchParameters</c>.
+        /// </summary>
+        public double? Coverage { get; set; }
+
+        /// <summary>
         /// Gets the facet query results for the search operation, or null if the query did not include any facet
         /// expressions.
         /// </summary>

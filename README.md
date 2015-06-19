@@ -19,7 +19,7 @@ Using Visual Studio:
   - Invoke "build" command.
   - Most solutions support 3 solution configurations, "Net40", "Net45", and "Portable". you can use "Configruation Manager" to switch and build.
 
-Using command line:
+Using the command line:
 
   - Ensure "msbuild.exe" is under environment pathes, which you can run the command file pre-installed by Visual Studio.
         *C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat*
@@ -36,8 +36,15 @@ Using Visual Studio:
   - Build.
   - "Test Explorer" window will get populated with tests. Go select and invoke.
 
-Using command line:
+Using the command line:
 
   - Refer to the "To build" section to get the command window set up.
   - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
         *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
+
+### Issues with Generated Code
+Much of the SDK code is generated from metadata specs about the REST APIs. Do not submit PRs that modify generated code. Instead, file an issue describing the problem, OR refer to the the [AutoRest project](AutoRest) to view and modify the generator. 
+>Note: the generated code in the master branch is from a private project. The SDK is migrating to use AutoRest with generated code described by Swagger. Not all of the generator code is public yet, but it will be over the next few weeks. (July 2015).
+
+[AutoRest]:https://github.com/azure/autorest
+
