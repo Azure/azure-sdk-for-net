@@ -24,16 +24,16 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VpnGatewayType
+    public static partial class VpnType
     {
         /// <summary>
         /// Virtual network StaticRouting gateway type
         /// </summary>
-        public const string StaticRouting = "StaticRouting";
+        public const string PolicyBased = "PolicyBased";
         
         /// <summary>
         /// Virtual network DynamicRouting gateway type
         /// </summary>
-        public const string DynamicRouting = "DynamicRouting";
+        public const string RouteBased = "RouteBased";
     }
 }
