@@ -43,47 +43,15 @@ namespace Networks.Tests
         private void Init()
         {
             vnetName = "azsmnet_vnetName";
-            subnetName = "azsmnet_subnetName";
-            resourceGroupName = "azsmnet_resourceGroupName";
-            location = "WestUs";
+            subnetName = "azsmnet_subnetName";     
             subnet = CreateSubnet();
         }
 
         private Subnet CreateSubnet()
         {
-            var vnet = new VirtualNetwork()
-            {
-                Location = location,
-
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = new List<string>()
-                        {
-                            "10.0.0.0/16",
-                        }
-                },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = new List<string>()
-                        {
-                            "10.1.1.1",
-                            "10.1.2.4"
-                        }
-                },
-                Subnets = new List<Subnet>()
-                    {
-                        new Subnet()
-                        {
-                            Name = subnetName,
-                            AddressPrefix = "10.0.0.0/24",
-                        }
-                    }
-            };
-
-            var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
-            Assert.Equal(HttpStatusCode.OK, putVnetResponse.StatusCode);
-
-            var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+            var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkResourceProviderClient);
+            var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnetName);            
+            Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Subnet.Id);
             return getSubnetResponse.Subnet;
         }
 
@@ -99,7 +67,6 @@ namespace Networks.Tests
 
             return sslCert;
         }
-
 
         private ApplicationGateway CreateApplicationGateway()
         {
@@ -388,45 +355,19 @@ namespace Networks.Tests
 
             using (var context = UndoContext.Current)
             {
-                context.Start();                                 
+                context.Start();
 
-                #region LocalNRPRun
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
+                networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
                 
-                System.Uri nrpBaseUri = new System.Uri("http://kaga/");
-                string subscriptionId = "947008ac-b143-4b7d-83ca-c99fbfd6c330";                
-                X509Certificate2 nrpManagementCertificate = new X509Certificate2();
-                nrpManagementCertificate.Import(@"D:\git_networking_nrp_dev\Networking\nrp\src\Certs\nrpclienttest.pfx", 
-                    "rdPa$$w0rd", X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
-                CertificateCloudCredentials credentials = new CertificateCloudCredentials(subscriptionId, nrpManagementCertificate);
+                location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/applicationgateways");
 
-                #region RegisterSubscriptionToNRP_OneTimeLocalSetup
-                // Register Subscription
-                var certHandler = new WebRequestHandler();
-                certHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                certHandler.UseDefaultCredentials = false;
-                certHandler.ClientCertificates.Add(nrpManagementCertificate);
-
-                HttpClient httpClient = new HttpClient(certHandler);                
-                httpClient.BaseAddress = new Uri("http://kaga/");
-                //httpClient.BaseAddress = new Uri("https://nrp7.windows.azure-test.net");
-
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, "subscriptions/947008ac-b143-4b7d-83ca-c99fbfd6c330?api-version=2014-04-01");                
-
-                req.Content = new StringContent("{\"state\":\"Registered\"}", Encoding.UTF8, "application/json");
-                httpClient.DefaultRequestHeaders.Add("x-ms-client-role", "PlatformServiceAdministrator");
-                httpClient.SendAsync(req).ContinueWith(respTask =>
-                {
-                    Console.WriteLine("Response: {0}", respTask.Result);
-                });
-
-                #endregion RegisterSubscriptionToNRP_OneTimeLocalSetup
-
-                //LocalNRP
-                networkResourceProviderClient = new NetworkResourceProviderClient(credentials, nrpBaseUri);
-                networkResourceProviderClient.HttpClient.DefaultRequestHeaders.Add("x-ms-client-role", "NrpUser");
-
-                #endregion
+                resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
 
                 Init();
                 
