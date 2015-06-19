@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             private string _odbcReaderQuery;
             
             /// <summary>
-            /// Required. ODBC reader query.
+            /// Required. Gets or sets ODBC reader query.
             /// </summary>
             public string OdbcReaderQuery
             {

@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _sliceIdentifierColumnName;
         
         /// <summary>
-        /// Optional. Name of the SQL column which is used to save slice
-        /// identifier information, to support idempotent copy.
+        /// Optional. Gets or sets name of the SQL column which is used to save
+        /// slice identifier information, to support idempotent copy.
         /// </summary>
         public string SliceIdentifierColumnName
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _sqlWriterCleanupScript;
         
         /// <summary>
-        /// Optional. SQL writer cleanup script.
+        /// Optional. Gets or sets SQL writer cleanup script.
         /// </summary>
         public string SqlWriterCleanupScript
         {

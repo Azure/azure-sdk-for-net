@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _quoteChar;
         
         /// <summary>
-        /// Optional. The quote character.
+        /// Optional. Gets or sets the quote character.
         /// </summary>
         public string QuoteChar
         {

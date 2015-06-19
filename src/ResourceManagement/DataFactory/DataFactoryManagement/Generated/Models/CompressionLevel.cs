@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public static partial class CompressionLevel
     {
         /// <summary>
-        /// The optimal compression level.
+        /// Gets or sets the optimal compression level.
         /// </summary>
         public const string Optimal = "Optimal";
         
         /// <summary>
-        /// The fastest compression level.
+        /// Gets or sets the fastest compression level.
         /// </summary>
         public const string Fastest = "Fastest";
     }

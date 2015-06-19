@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _authenticationType;
         
         /// <summary>
-        /// Required. The authentication type used to access the data source,
-        /// e.g. windows authentication (Windows), database authentication
-        /// (Database) or anonymous authentication (Anonymous).
+        /// Required. Gets or sets the authentication type used to access the
+        /// data source, e.g. windows authentication (Windows), database
+        /// authentication (Database) or anonymous authentication (Anonymous).
         /// </summary>
         public string AuthenticationType
         {
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _credentialConnectionString;
         
         /// <summary>
-        /// Optional. The access credential portion of the connection string
-        /// specified in driver-specific property-value format, e.g.
-        /// "Uid=<user ID>;Pwd=<password>;RefreshToken=<secret refresh
-        /// token>;".
+        /// Optional. Gets or sets the access credential portion of the
+        /// connection string specified in driver-specific property-value
+        /// format, e.g. "Uid=<user ID>;Pwd=<password>;RefreshToken=<secret
+        /// refresh token>;".
         /// </summary>
         public string CredentialConnectionString
         {
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _encryptedCredentialConnectionString;
         
         /// <summary>
-        /// Optional. On-premises gateway generated connection string which
-        /// contains the encrypted access credential.
+        /// Optional. Gets or sets on-premises gateway generated connection
+        /// string which contains the encrypted access credential.
         /// </summary>
         public string EncryptedCredentialConnectionString
         {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _gatewayName;
         
         /// <summary>
-        /// Required. The on-premises gateway name.
+        /// Required. Gets or sets the on-premises gateway name.
         /// </summary>
         public string GatewayName
         {
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _nonCredentialConnectionString;
         
         /// <summary>
-        /// Optional. The non-credential portion of the connection string
-        /// specified in driver-specific property-value format, e.g.
+        /// Optional. Gets or sets the non-credential portion of the connection
+        /// string specified in driver-specific property-value format, e.g.
         /// "Driver=<ODBC driver name>;Server=<server name>;Database=<database
         /// name>;".
         /// </summary>
@@ -98,7 +98,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _password;
         
         /// <summary>
-        /// Optional. The on-premises windows authentication password.
+        /// Optional. Gets or sets the on-premises windows authentication
+        /// password.
         /// </summary>
         public string Password
         {
@@ -109,7 +110,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _userName;
         
         /// <summary>
-        /// Optional. The on-premises windows authentication user name.
+        /// Optional. Gets or sets the on-premises windows authentication user
+        /// name.
         /// </summary>
         public string UserName
         {

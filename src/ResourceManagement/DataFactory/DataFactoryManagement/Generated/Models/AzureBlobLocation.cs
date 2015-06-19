@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private Compression _compression;
         
         /// <summary>
-        /// Optional. The data compression method used for the blob storage.
+        /// Optional. Gets or sets the data compression method used for the
+        /// blob storage.
         /// </summary>
         public Compression Compression
         {

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _level;
         
         /// <summary>
-        /// Optional. The compression level.
+        /// Optional. Gets or sets the compression level.
         /// </summary>
         public string Level
         {

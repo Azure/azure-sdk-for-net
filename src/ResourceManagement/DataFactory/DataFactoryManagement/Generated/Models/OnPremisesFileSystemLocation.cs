@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private Compression _compression;
         
         /// <summary>
-        /// Optional. The data compression method used on files.
+        /// Optional. Gets or sets the data compression method used on files.
         /// </summary>
         public Compression Compression
         {

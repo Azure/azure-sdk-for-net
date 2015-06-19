@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _resource;
         
         /// <summary>
-        /// Optional. The table name of the OData resource.
+        /// Optional. Gets or sets the table name of the OData resource.
         /// </summary>
         public string Resource
         {

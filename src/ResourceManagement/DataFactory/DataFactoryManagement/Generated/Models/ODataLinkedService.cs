@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _authenticationType;
         
         /// <summary>
-        /// Required. AuthenticationType to be used for connection.
+        /// Required. Gets or sets authenticationType to be used for connection.
         /// </summary>
         public string AuthenticationType
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _password;
         
         /// <summary>
-        /// Optional. Password for authentication.
+        /// Optional. Gets or sets password for authentication.
         /// </summary>
         public string Password
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _url;
         
         /// <summary>
-        /// Required. OData url.
+        /// Required. Gets or sets OData url.
         /// </summary>
         public string Url
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _username;
         
         /// <summary>
-        /// Optional. Username for authentication.
+        /// Optional. Gets or sets username for authentication.
         /// </summary>
         public string Username
         {
