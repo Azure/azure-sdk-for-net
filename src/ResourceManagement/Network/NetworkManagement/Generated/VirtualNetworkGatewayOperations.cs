@@ -256,6 +256,11 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["gatewayType"] = parameters.GatewayType;
                 }
                 
+                if (parameters.VpnType != null)
+                {
+                    propertiesValue["vpnType"] = parameters.VpnType;
+                }
+                
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
                 
                 if (parameters.ProvisioningState != null)
@@ -445,6 +450,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     string gatewayTypeInstance = ((string)gatewayTypeValue);
                                     virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
+                                }
+                                
+                                JToken vpnTypeValue = propertiesValue3["vpnType"];
+                                if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                {
+                                    string vpnTypeInstance = ((string)vpnTypeValue);
+                                    virtualNetworkGatewayInstance.VpnType = vpnTypeInstance;
                                 }
                                 
                                 JToken enableBgpValue = propertiesValue3["enableBgp"];
@@ -863,7 +875,7 @@ namespace Microsoft.Azure.Management.Network
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
+                httpRequest.Method = HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -961,6 +973,11 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["gatewayType"] = parameters.GatewayType;
                 }
                 
+                if (parameters.VpnType != null)
+                {
+                    propertiesValue["vpnType"] = parameters.VpnType;
+                }
+                
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
                 
                 if (parameters.ProvisioningState != null)
@@ -1021,7 +1038,7 @@ namespace Microsoft.Azure.Management.Network
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1035,7 +1052,7 @@ namespace Microsoft.Azure.Management.Network
                     // Create Result
                     VirtualNetworkGatewayPutResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1150,6 +1167,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     string gatewayTypeInstance = ((string)gatewayTypeValue);
                                     virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
+                                }
+                                
+                                JToken vpnTypeValue = propertiesValue3["vpnType"];
+                                if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                {
+                                    string vpnTypeInstance = ((string)vpnTypeValue);
+                                    virtualNetworkGatewayInstance.VpnType = vpnTypeInstance;
                                 }
                                 
                                 JToken enableBgpValue = propertiesValue3["enableBgp"];
@@ -1702,6 +1726,13 @@ namespace Microsoft.Azure.Management.Network
                                     virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
                                 }
                                 
+                                JToken vpnTypeValue = propertiesValue["vpnType"];
+                                if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                {
+                                    string vpnTypeInstance = ((string)vpnTypeValue);
+                                    virtualNetworkGatewayInstance.VpnType = vpnTypeInstance;
+                                }
+                                
                                 JToken enableBgpValue = propertiesValue["enableBgp"];
                                 if (enableBgpValue != null && enableBgpValue.Type != JTokenType.Null)
                                 {
@@ -2020,6 +2051,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             string gatewayTypeInstance = ((string)gatewayTypeValue);
                                             virtualNetworkGatewayJsonFormatInstance.GatewayType = gatewayTypeInstance;
+                                        }
+                                        
+                                        JToken vpnTypeValue = propertiesValue["vpnType"];
+                                        if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string vpnTypeInstance = ((string)vpnTypeValue);
+                                            virtualNetworkGatewayJsonFormatInstance.VpnType = vpnTypeInstance;
                                         }
                                         
                                         JToken enableBgpValue = propertiesValue["enableBgp"];

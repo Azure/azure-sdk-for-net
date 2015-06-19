@@ -33,15 +33,5 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Default gateway size.
         /// </summary>
         public const string Default = "Default";
-        
-        /// <summary>
-        /// HighPerformance gateway size.
-        /// </summary>
-        public const string HighPerformance = "HighPerformance";
-        
-        /// <summary>
-        /// Standard gateway size.
-        /// </summary>
-        public const string Standard = "Standard";
     }
 }

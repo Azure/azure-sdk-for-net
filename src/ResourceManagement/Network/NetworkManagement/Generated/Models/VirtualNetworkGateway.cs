@@ -88,6 +88,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
+        private string _vpnType;
+        
+        /// <summary>
+        /// Optional. The type of this virtual network gateway.
+        /// </summary>
+        public string VpnType
+        {
+            get { return this._vpnType; }
+            set { this._vpnType = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
