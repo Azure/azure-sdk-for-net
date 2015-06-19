@@ -24,19 +24,11 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    /// <summary>
-    /// The different SKUs that a gateway can have.
-    /// </summary>
-    public static partial class VirtualNetworkGatewaySize
+    public static partial class VirtualNetworkGatewayType
     {
         /// <summary>
-        /// Default gateway size.
+        /// VPN Gateways
         /// </summary>
-        public const string Default = "Default";
-        
-        /// <summary>
-        /// HighPerformance gateway size.
-        /// </summary>
-        public const string HighPerformance = "HighPerformance";
+        public const string Vpn = "Vpn";
     }
 }
