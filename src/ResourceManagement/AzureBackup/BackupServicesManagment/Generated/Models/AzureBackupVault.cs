@@ -21,64 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// Job steps
+    /// Resource information with extended details.
     /// </summary>
-    public partial class JobStep : ManagementBaseObject
+    public partial class AzureBackupVault : ResourceBaseExtended
     {
-        private string _detail;
+        private AzureBackupVaultProperties _properties;
         
         /// <summary>
-        /// Optional. Detail
+        /// Optional. Properties of the vault
         /// </summary>
-        public string Detail
+        public AzureBackupVaultProperties Properties
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _message;
-        
-        /// <summary>
-        /// Optional. Message
-        /// </summary>
-        public string Message
-        {
-            get { return this._message; }
-            set { this._message = value; }
-        }
-        
-        private string _operationResult;
-        
-        /// <summary>
-        /// Optional. Operation Result
-        /// </summary>
-        public string OperationResult
-        {
-            get { return this._operationResult; }
-            set { this._operationResult = value; }
-        }
-        
-        private string _operationStatus;
-        
-        /// <summary>
-        /// Optional. Operation Status
-        /// </summary>
-        public string OperationStatus
-        {
-            get { return this._operationStatus; }
-            set { this._operationStatus = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobStep class.
+        /// Initializes a new instance of the AzureBackupVault class.
         /// </summary>
-        public JobStep()
+        public AzureBackupVault()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AzureBackupVault class with
+        /// required arguments.
+        /// </summary>
+        public AzureBackupVault(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

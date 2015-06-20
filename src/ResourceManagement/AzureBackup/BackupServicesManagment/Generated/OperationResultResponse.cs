@@ -20,18 +20,15 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.Azure.Management.BackupServices.Models
+namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
     /// The definition of a BMSOperationStatusResponse.
     /// </summary>
-    public partial class AzureBackupOperationStatusResponse : AzureOperationResponse
+    public partial class OperationResultResponse : AzureOperationResponse
     {
         private string _errorCode;
         
@@ -42,17 +39,6 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         {
             get { return this._errorCode; }
             set { this._errorCode = value; }
-        }
-        
-        private IList<JobStep> _jobSteps;
-        
-        /// <summary>
-        /// Optional. List of containers.
-        /// </summary>
-        public IList<JobStep> JobSteps
-        {
-            get { return this._jobSteps; }
-            set { this._jobSteps = value; }
         }
         
         private string _message;
@@ -89,12 +75,10 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// AzureBackupOperationStatusResponse class.
+        /// Initializes a new instance of the OperationResultResponse class.
         /// </summary>
-        public AzureBackupOperationStatusResponse()
+        public OperationResultResponse()
         {
-            this.JobSteps = new LazyList<JobStep>();
         }
     }
 }

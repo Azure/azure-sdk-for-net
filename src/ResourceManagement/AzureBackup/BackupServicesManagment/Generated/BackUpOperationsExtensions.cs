@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class BackUpOperationsExtensions
     {
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// BackUp the AzureBackUpItem.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// BackUp the AzureBackUpItem.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
